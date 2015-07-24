@@ -1,5 +1,7 @@
 # README
 
+[![Build Status](https://travis-ci.org/Vizzuality/gfw-climate.svg?branch=master)](https://travis-ci.org/Vizzuality/gfw-climate)
+
 ## Requirements
 
   - **Ruby version:** mri 2.2.2
