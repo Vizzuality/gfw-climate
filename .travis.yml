@@ -1,0 +1,22 @@
+language: ruby
+cache: bundler
+
+rvm:
+  - 2.2.2
+
+script: 'bundle exec rake'
+
+env:
+  - RAILS_VERSION="~>4.2.3"
+
+notifications:
+  email:
+    recipients:
+      - sebastian.schkudlara@vizzuality.com
+    on_failure: change
+    on_success: never
+
+# addons:
+#   code_climate:
+#     repo_token: 
+
