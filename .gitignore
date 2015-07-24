@@ -13,3 +13,4 @@
 /tmp
 .env
 .idea/
+.DS_Store

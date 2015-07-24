@@ -8,6 +8,8 @@ script: 'bundle exec rake'
 
 env:
   - RAILS_VERSION="~>4.2.3"
+  - GFW_API_HOST=gfw-apis.appspot.com
+  - TERMS_COOKIE=cookie_terms
 
 notifications:
   email:
