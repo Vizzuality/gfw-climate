@@ -1,6 +1,6 @@
 # README
 
-[![Build Status](https://travis-ci.org/Vizzuality/gfw-climate.svg?branch=master)](https://travis-ci.org/Vizzuality/gfw-climate)
+[![Build Status](https://travis-ci.org/Vizzuality/gfw-climate.svg?branch=master)](https://travis-ci.org/Vizzuality/gfw-climate) [![Code Climate](https://codeclimate.com/github/Vizzuality/gfw-climate/badges/gpa.svg)](https://codeclimate.com/github/Vizzuality/gfw-climate)
 
 ## Requirements
 
@@ -13,7 +13,7 @@ Just execute the script file in bin/setup
   - Depends on gfwc [repository](https://github.com/Vizzuality/gfw-climate)
   - create .env with:
 
-```ruby
+```
 GFW_API_HOST=gfw-apis.appspot.com
 TERMS_COOKIE=cookie_terms
 ```
