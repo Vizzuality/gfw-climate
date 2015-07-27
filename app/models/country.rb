@@ -30,7 +30,7 @@ class Country
       if cached = $redis.get(cache_key_countries)
         JSON[cached]
       else
-        $redis.set(cache_key_countries, countries.to_json)
+        $redis.set(cache_key_countries)
       end
     end
 
@@ -49,7 +49,7 @@ class Country
       timeouts do
         countries_caching do
           get(url)['countries']
-        end
+        end rescue get(url)['countries']
       end
     end
 
@@ -58,7 +58,7 @@ class Country
       timeouts do
         country_caching(country_id) do
           get(url)
-        end
+        end rescue get(url)
       end
     end
 
