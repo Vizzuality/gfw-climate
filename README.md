@@ -18,6 +18,16 @@ GFW_API_HOST=gfw-apis.appspot.com
 TERMS_COOKIE=cookie_terms
 ```
 
+### REDIS
+
+  - OS X
+```
+brew install redis
+brew info redis
+launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
+```
+
 ## TEST
 
   - Run rspec:

@@ -14,7 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'slim-rails'
 
-gem 'typhoeus',      '~> 0.7'
+gem 'httparty'
 
 group :development do
   gem 'foreman'
@@ -33,7 +33,12 @@ end
 
 group :test do
   gem 'rspec-rails', '~> 3.0'
+  gem "codeclimate-test-reporter", require: nil
 end
 
 gem 'puma'
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
+gem 'redis-rack-cache'
 gem 'rails_12factor', group: :production
