@@ -30,7 +30,7 @@ class Country
       if cached = $redis.get(cache_key_countries)
         JSON[cached]
       else
-        $redis.set(cache_key_countries)
+        $redis.set(cache_key_countries, get_all.to_json)
       end
     end
 
@@ -44,12 +44,17 @@ class Country
       end
     end
 
+    def get_all
+      url = "#{ base_path }"
+      get(url)['countries']
+    end
+
     def find_all
       url = "#{ base_path }"
       timeouts do
         countries_caching do
           get(url)['countries']
-        end rescue get(url)['countries']
+        end
       end
     end
 
@@ -58,7 +63,7 @@ class Country
       timeouts do
         country_caching(country_id) do
           get(url)
-        end rescue get(url)
+        end
       end
     end
 
