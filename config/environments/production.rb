@@ -14,6 +14,8 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  config.serve_static_assets = true
+
   config.cache_store = :redis_store, ENV['REDISTOGO_URL'], { expires_in: 90.minutes }
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
