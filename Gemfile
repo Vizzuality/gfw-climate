@@ -34,6 +34,7 @@ end
 group :test do
   gem 'rspec-rails', '~> 3.0'
   gem "codeclimate-test-reporter", require: nil
+  gem 'coveralls', require: false
 end
 
 gem 'puma'
