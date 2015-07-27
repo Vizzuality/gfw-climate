@@ -54,7 +54,7 @@ class Country
       timeouts do
         countries_caching do
           get(url)['countries']
-        end #rescue get(url)['countries']
+        end rescue get(url)['countries']
       end
     end
 
@@ -63,7 +63,7 @@ class Country
       timeouts do
         country_caching(country_id) do
           get(url)
-        end #rescue get(url)
+        end rescue get(url)
       end
     end
 
