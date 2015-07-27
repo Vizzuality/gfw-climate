@@ -1,1 +1,1 @@
-$redis = Redis::Namespace.new("gfwc", :redis => Redis.new(url: ENV["REDISTOGO_URL"]))
+$redis = Redis::Namespace.new("gfwc", :redis => Redis.new(url: ENV["REDISCLOUD_URL"]))
