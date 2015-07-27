@@ -13,8 +13,6 @@ Bundler.require(*Rails.groups)
 module Gfwc
   class Application < Rails::Application
 
-    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
-
     config.generators do |g|
       g.test_framework  :rspec
       g.view_specs      false

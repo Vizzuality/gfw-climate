@@ -11,12 +11,6 @@
 Just execute the script file in bin/setup
 
   - Depends on gfwc [repository](https://github.com/Vizzuality/gfw-climate)
-  - create .env with:
-
-```
-GFW_API_HOST=gfw-apis.appspot.com
-TERMS_COOKIE=cookie_terms
-```
 
 ### REDIS
 
@@ -26,6 +20,14 @@ brew install redis
 brew info redis
 launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
+```
+
+  - create .env with:
+
+```
+GFW_API_HOST=gfw-apis.appspot.com
+TERMS_COOKIE=cookie_terms
+REDISTOGO_URL=redis://localhost:6379/0/cache
 ```
 
 ## TEST
