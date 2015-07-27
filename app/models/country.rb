@@ -52,9 +52,7 @@ class Country
     def find_all
       url = "#{ base_path }"
       timeouts do
-        countries_caching do
-          get(url)['countries']
-        end rescue get(url)['countries']
+        get(url)['countries']
       end
     end
 
