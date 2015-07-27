@@ -28,7 +28,6 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'teaspoon-mocha'
-  gem 'dotenv-rails'
 end
 
 group :test do
@@ -37,6 +36,7 @@ group :test do
   gem 'coveralls', require: false
 end
 
+gem 'dotenv-rails'
 gem 'puma'
 gem 'redis'
 gem 'redis-namespace'
