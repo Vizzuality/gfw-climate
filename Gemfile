@@ -41,5 +41,4 @@ gem 'puma'
 gem 'redis'
 gem 'redis-namespace'
 gem 'redis-rails'
-gem 'redis-rack-cache'
 gem 'rails_12factor', group: :production
