@@ -14,7 +14,7 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  config.cache_store = :redis_store, ENV['REDISTOGO_URL'], { expires_in: 90.minutes }
+  config.cache_store = :redis_store, ENV['REDISCLOUD_URL'], { expires_in: 90.minutes }
   
   config.serve_static_files = true
   
