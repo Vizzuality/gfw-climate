@@ -1,6 +1,6 @@
 # README
 
-[![Build Status](https://travis-ci.org/Vizzuality/gfw-climate.svg?branch=master)](https://travis-ci.org/Vizzuality/gfw-climate) [![Code Climate](https://codeclimate.com/github/Vizzuality/gfw-climate/badges/gpa.svg)](https://codeclimate.com/github/Vizzuality/gfw-climate)
+[![Build Status](https://travis-ci.org/Vizzuality/gfw-climate.svg?branch=master)](https://travis-ci.org/Vizzuality/gfw-climate) [![Code Climate](https://codeclimate.com/github/Vizzuality/gfw-climate/badges/gpa.svg)](https://codeclimate.com/github/Vizzuality/gfw-climate) [![Coverage Status](https://coveralls.io/repos/Vizzuality/gfw-climate/badge.svg?branch=master&service=github)](https://coveralls.io/github/Vizzuality/gfw-climate?branch=master)
 
 ## Requirements
 
@@ -27,7 +27,7 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 ```
 GFW_API_HOST=gfw-apis.appspot.com
 TERMS_COOKIE=cookie_terms
-REDISCLOUD_URL=redis://localhost:6379/0/cache
+REDISCLOUD_URL=redis://localhost:6379
 ```
 
   - Useful commands
