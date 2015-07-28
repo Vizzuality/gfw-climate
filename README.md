@@ -27,7 +27,14 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 ```
 GFW_API_HOST=gfw-apis.appspot.com
 TERMS_COOKIE=cookie_terms
-REDISTOGO_URL=redis://localhost:6379/0/cache
+REDISCLOUD_URL=redis://localhost:6379/0/cache
+```
+
+  - Useful commands
+
+```
+redis-cli monitor
+redis-cli flushall
 ```
 
 ## TEST
@@ -39,6 +46,10 @@ REDISTOGO_URL=redis://localhost:6379/0/cache
   - Run teaspoon
 
     rake teaspoon
+
+  - Run all
+
+    rake
 
 ## DEPLOYMENT
 

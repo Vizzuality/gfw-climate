@@ -1,1 +1,15 @@
-h1= @country['name']
+h1= @name
+
+p #{link_to 'Home', root_path} #{link_to 'countries', countries_path}
+
+h2 Info
+
+p Name: #{@name}
+p ISO:  #{@iso}
+
+- if @links.present?
+  p 
+    | External links: 
+    - @get_links.each do |link|
+      =' link_to link['title'], link['url'], target: '_blank'
+      '|
