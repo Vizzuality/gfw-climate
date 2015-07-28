@@ -2,7 +2,7 @@ require 'httparty'
 
 class Country
   include HTTParty
-  default_timeout 10
+  default_timeout 5
 
   class << self
 
@@ -47,7 +47,7 @@ class Country
     end
 
     def find_all
-      url = "#{ base_path }"
+      url = base_path
       timeouts do
         countries_caching do
           get(url)['countries']
@@ -65,5 +65,4 @@ class Country
     end
 
   end
-
 end

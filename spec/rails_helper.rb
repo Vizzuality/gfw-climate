@@ -10,6 +10,9 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = false
 
+  config.before(:each) do
+    $redis.flushall
+  end
 
   config.include AccessHelper
   config.infer_spec_type_from_file_location!
