@@ -1,0 +1,7 @@
+h1 Countries
+
+p= link_to 'Home', root_path
+
+- @countries.each do |country|
+  - if country['iso'].present?
+    p=raw "#{country['name']} (#{country['iso']}) #{link_to 'view', country_path(country['iso'])}"

@@ -10,7 +10,11 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
-/tmp
+/tmp/*
+!/tmp/cache/
+/tmp/cache/*
+!/tmp/cache/.keep
 .env
 .idea/
 .DS_Store
+coverage

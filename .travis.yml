@@ -6,6 +6,9 @@ rvm:
 
 script: 'bundle exec rake'
 
+services:
+  - redis-server
+
 notifications:
   email:
     recipients:
