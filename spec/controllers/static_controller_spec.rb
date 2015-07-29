@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe StaticController, type: :controller do
 
-  describe "Terms page" do
+  context "Terms page" do
 
     it "GET terms returns http redirect to accept_terms_path" do
       get :terms
@@ -19,7 +19,7 @@ RSpec.describe StaticController, type: :controller do
 
   end
 
-  describe "About page" do
+  context "About page" do
 
     it "GET about returns http redirect to accept_terms_path" do
       get :about
@@ -36,7 +36,7 @@ RSpec.describe StaticController, type: :controller do
 
   end
 
-  describe "Accept terms page" do
+  context "Accept terms page" do
 
     it "GET accept terms returns http success" do
       get :accept_terms

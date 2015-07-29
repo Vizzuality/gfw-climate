@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AccessController, type: :controller do
 
-  describe "Accept terms" do
+  context "Accept terms" do
 
     it "Post accept_and_redirect returns http redirect to homepage" do
       post :accept_and_redirect

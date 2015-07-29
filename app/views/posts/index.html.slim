@@ -1,0 +1,11 @@
+h1 Blog
+
+p = render 'shared/navigation'
+
+p
+  - 1.upto(15) do |p|
+    span = link_to p, posts_path(page: p)
+
+- @posts.each do |post|
+  h3 = link_to post['title'], post_path(URI.parse(post['link']).path)
+  p  =raw post['description']
