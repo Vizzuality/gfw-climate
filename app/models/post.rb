@@ -37,11 +37,11 @@ class Post
     end
 
     def post_caching(options)
-      if cached = $redis.get(cache_key_posts(options))
+      if cached = $redis.get(cache_key_post(options))
         JSON.parse(cached)
       else
         yield.tap do |post|
-          $redis.set(cache_key_posts(options), post.to_json)
+          $redis.set(cache_key_post(options), post.to_json)
         end
       end
     end
