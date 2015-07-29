@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe HomeController, type: :controller do
 
-  describe "Homepage" do
+  context "Homepage" do
 
     it "GET index returns http redirect to accept_terms_path" do
       get :index

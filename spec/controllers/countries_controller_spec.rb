@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CountriesController, type: :controller do
 
-  describe "Countries page" do
+  context "Countries page" do
 
     render_views
 
@@ -22,7 +22,7 @@ RSpec.describe CountriesController, type: :controller do
 
   end
 
-  describe "Country page" do
+  context "Country page" do
 
     render_views
 
