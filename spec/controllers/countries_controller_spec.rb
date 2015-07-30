@@ -20,6 +20,17 @@ RSpec.describe CountriesController, type: :controller do
       expect(response.body).to match 'Afghanistan'
     end
 
+    it "GET cached countries page", type: :feature do
+      set_cookie
+      expect($redis.set('countries_all_/', 'items')).to eq('OK')
+      expect($redis.exists('countries_all_/')).to eq(true)
+      get :index
+      expect(response).to be_success
+      expect($redis.get('countries_all_/')).to match 'items'
+      expect(response).to have_http_status(200)
+      expect(response.body).to match 'Afghanistan'
+    end
+
   end
 
   context "Country page" do
@@ -36,6 +47,18 @@ RSpec.describe CountriesController, type: :controller do
       set_cookie
       get :show, id: 'AFG'
       expect(response).to be_success
+      expect(response).to have_http_status(200)
+      expect(response.body).to match 'Afghanistan'
+    end
+
+    it "GET cached certain country page", type: :feature do
+      set_cookie
+      expect($redis.set('country/item_/AFG/', 'item')).to eq('OK')
+      expect($redis.exists('country/item_/AFG/')).to eq(true)
+      get :show, id: 'AFG'
+      expect(response).to be_success
+      get :show, id: 'afg'
+      expect($redis.get('country/item_/AFG/')).to match 'item'
       expect(response).to have_http_status(200)
       expect(response.body).to match 'Afghanistan'
     end

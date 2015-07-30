@@ -1,7 +1,5 @@
 class AccessController < ApplicationController
 
-  helper_method :base_api_url, :base_blog_url
-
   before_action :check_terms, except: :accept_and_redirect
 
   def accept_and_redirect
@@ -17,14 +15,6 @@ class AccessController < ApplicationController
 
     def accepted_terms?
       terms_cookie
-    end
-
-    def base_api_url
-      ENV['GFW_API_HOST']
-    end
-
-    def base_blog_url
-      ENV['BLOG_HOST']
     end
 
 end
