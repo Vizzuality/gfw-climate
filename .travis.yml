@@ -13,7 +13,8 @@ services:
 before_script:
   - npm -g update
   - npm install -g bower
-  - bower install
+  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - bower install -f
 
 script: 'bundle exec rake'
 
