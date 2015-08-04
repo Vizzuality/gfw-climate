@@ -15,8 +15,5 @@
   "bugs": {
     "url": "https://github.com/Vizzuality/gfw-climate/issues"
   },
-  "homepage": "https://github.com/Vizzuality/gfw-climate#readme",
-  "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install"
-  }
+  "homepage": "https://github.com/Vizzuality/gfw-climate#readme"
 }

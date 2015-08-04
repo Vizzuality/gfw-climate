@@ -11,10 +11,9 @@ services:
   - redis-server
 
 before_script:
-  - npm -g update
   - npm install -g bower
-  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - bower install -f
+  - rm -rf .bower
+  - bower install
 
 script: 'bundle exec rake'
 
