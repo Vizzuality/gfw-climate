@@ -14,6 +14,8 @@ Bundler.require(*Rails.groups)
 module Gfwc
   class Application < Rails::Application
 
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
+
     config.generators do |g|
       g.test_framework  :rspec
       g.view_specs      false

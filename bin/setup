@@ -11,7 +11,9 @@ Dir.chdir APP_ROOT do
   puts "== Installing dependencies =="
   system "gem install bundler --conservative"
   system "npm install -g phantomjs bower"
+  system "npm install -g bower"
   system "bundle check || bundle install"
+  system "bower install"
 
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")

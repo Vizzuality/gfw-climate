@@ -5,12 +5,21 @@
 ## Requirements
 
   - **Ruby version:** mri 2.2.2
+  - **NodeJs version:** 0.10+
+  - **Redis** Homebrew: brew install redis
 
 ## SETUP
 
 Just execute the script file in bin/setup
 
   - Depends on gfwc [repository](https://github.com/Vizzuality/gfw-climate)
+
+  - Create .env file with:
+
+```
+GFW_API_HOST=gfw-apis.appspot.com
+TERMS_COOKIE=cookie_terms
+```
 
 ### REDIS
 
@@ -22,11 +31,9 @@ launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 ```
 
-  - create .env with:
+  - Add to .env:
 
 ```
-GFW_API_HOST=gfw-apis.appspot.com
-TERMS_COOKIE=cookie_terms
 REDISCLOUD_URL=redis://localhost:6379
 ```
 
@@ -37,20 +44,36 @@ redis-cli monitor
 redis-cli flushall
 ```
 
+### Install global dependencies:
+
+    npm install -g bower
+
+### Install gems:
+
+    bundle install
+
+### Install assets and front end dependencies:
+    
+    bower install
+
+### Run application:
+
+    foreman start
+
 ## TEST
 
-  - Run rspec:
+  - Run rspec: bin/rspec
 
-    bin/rspec
+  - Run teaspoon: rake teaspoon
 
-  - Run teaspoon
-
-    rake teaspoon
-
-  - Run all
-
-    rake
+  - Run all: rake
 
 ## DEPLOYMENT
 
 ### Heroku
+
+**Automatic deploys from  staging are enabled**
+
+Every push to staging will deploy a new version of this app. Deploys happen automatically: be sure that this branch in GitHub is always in a deployable state and any tests have passed before you push.
+
+Heroku wait for CI to pass before deploy.

@@ -4,10 +4,17 @@ cache: bundler
 rvm:
   - 2.2.2
 
-script: 'bundle exec rake'
+before_install:
+  - 'npm install'
 
 services:
   - redis-server
+
+before_script:
+  - npm install -g bower
+  - bower install
+
+script: 'bundle exec rake'
 
 notifications:
   email:
