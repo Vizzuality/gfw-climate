@@ -11,6 +11,7 @@ services:
   - redis-server
 
 before_script:
+  - npm install n
   - npm install -g bower
   - bower install
 
