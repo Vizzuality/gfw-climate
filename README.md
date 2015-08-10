@@ -17,7 +17,8 @@ Just execute the script file in bin/setup
   - Create .env file with:
 
 ```
-GFW_API_HOST=gfw-apis.appspot.com
+GFW_API_HOST=http://gfw-apis.appspot.com
+BLOG_HOST=http://blog.globalforestwatch.org
 TERMS_COOKIE=cookie_terms
 ```
 
