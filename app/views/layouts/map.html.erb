@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title><%= @title %> | Global Forest Watch</title>
+    <meta name="description" content="<%= @desc %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="<%= @keywords %>">
+    <meta name="author" content="Simbiótica">
+
+    <meta name="DC.title" content="<%= @title %> | Global Forest Watch">
+    <meta property="og:title" content="<%= @title %> | Global Forest Watch">
+    <meta property="og:description" content="<%= @desc %>">
+    <meta property="og:type" content="Visualization">
+    <meta property="og:url" content="http://www.globalforestwatch.org/">
+
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,500,300' rel='stylesheet' type='text/css'>
+
+    <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a">
+    <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
+    <%= render 'shared/icons' %>
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
+    <%= stylesheet_link_tag "map", :media => "all" %>
+    <%= csrf_meta_tags %>
+    <script>
+        var gfw = window.gfw = {
+          config: {
+            GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
+            GFW_MOBILE: 1000
+          },
+          cacheVersion: "<%= ENV['CACHE_VERSION'] %>",
+          layer_spec: "<%= ENV['LAYER_SPEC'] %>"
+        };
+    </script>
+
+  </head>
+
+  <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
+
+    <%= yield %>
+    <a class="feedback-link" href="/getinvolved/provide-feedback"><span>Feedback</span></a>
+
+    <div class="backdrop"></div>
+
+    <%= render 'shared/modal' %>
+    <%= render 'shared/notifications' %>
+
+    <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA&v=3.12" %>
+    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/3.13.6/cartodb.js" %>
+    <%#= javascript_include_tag "/assets/cartodbGFW.js" %>
+    <script src="//www.google-analytics.com/cx/api.js"></script>
+
+    <%= requirejs_include_tag "map" %>
+    <%= render "shared/js_footer" %>
+  </body>
+</html>
