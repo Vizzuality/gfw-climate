@@ -91,7 +91,7 @@
     left: auto;
   }
   &:before {
-    background: image-url('svg-icons/arrow-left.svg') center no-repeat;
+    background: image-url('svg/arrow-left.svg') center no-repeat;
     transform: translate(-2px,0);
   }
 }
@@ -103,7 +103,7 @@
     right: auto;
   }
   &:before {
-    background: image-url('svg-icons/arrow-right.svg') center no-repeat;
+    background: image-url('svg/arrow-right.svg') center no-repeat;
     transform: translate(0px,0);
   }
 }
