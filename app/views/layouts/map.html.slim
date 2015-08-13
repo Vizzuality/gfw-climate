@@ -23,8 +23,17 @@ html
 
     == render 'shared/icons'
     = stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all'
-    = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag "map", :media => "all"
     = csrf_meta_tags
+    javascript:
+      var gfw = window.gfw = {
+        config: {
+          GFW_API_HOST: "#{ENV['GFW_API_HOST']}",
+          GFW_MOBILE: 1000
+        },
+        cacheVersion: "#{ENV['CACHE_VERSION']}",
+        layer_spec: "#{ENV['LAYER_SPEC']}"
+      };
 
   body class="is-#{params[:controller]}-page is-#{params[:action]}-action"
 
@@ -37,10 +46,14 @@ html
 
     == yield
 
-    == render "shared/footer"
-
     == render 'shared/modal'
     == render 'shared/notifications'
 
-    = requirejs_include_tag "application"
+    = javascript_include_tag \
+      "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA&v=3.12",
+      "http://libs.cartocdn.com/cartodb.js/v3/3.13.6/cartodb.js",
+      "/assets/cartodbGFW.js"
+    script src="//www.google-analytics.com/cx/api.js"
+
+    = requirejs_include_tag "map"
     == render "shared/js_footer"

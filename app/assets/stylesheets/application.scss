@@ -1,0 +1,40 @@
+// Compass
+@import "reset";
+
+//   // Images
+// @import
+//   "icons/*.png",
+//   "logos/*.png",
+//   "basemaps/*.png",
+//   "home-icons/*.png",
+//   "static-icons/*.png",
+//   "static-logos/*.png",
+//   "country-icons/*.png",
+//   "stories-icons/*.png";
+
+// General
+@import "settings";
+@import "fonts";
+@import "mixins";
+@import "animations";
+@import "base";
+
+
+// Layout
+@import "header";
+@import "footer";
+@import "grid";
+
+//modules
+@import "modules/shared";
+@import "modules/buttons";
+@import "modules/icons";
+@import "modules/slick";
+@import "modules/notifications";;
+
+
+
+
+// Common
+@import "states";
+
