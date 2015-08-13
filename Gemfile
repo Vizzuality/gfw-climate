@@ -15,7 +15,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'requirejs-rails'
 
-# gem 'slim-rails'
+gem 'slim-rails'
 
 gem 'httparty'
 
