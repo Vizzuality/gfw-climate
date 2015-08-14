@@ -1,0 +1,18 @@
+javascript:
+  if (! !!location.hostname.includes('globalforestwatch.org'))
+    window.liveSettings={api_key:"9eda410a7db74687ba40771c56abd357",staging:true};
+
+javascript type="text/javascript" src="//cdn.transifex.com/live.js"
+header#headerView.layout-header
+  .layout-header-top
+  	.inner
+  		 == render 'shared/navbar_landing'
+  .layout-header-bottom
+  	.inner
+  		== render 'shared/navbar2_landing'
+  .layout-share-mobile
+    a.share-link (href="#" data-hideembed="1")
+      svg
+        use (xlink:href="#shape-share")
+    = content_for :headerMobile do
+      == yield :headerMobile

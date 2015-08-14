@@ -1,0 +1,66 @@
+.notifications{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1101;
+  padding: 20px 40px 20px 20px;
+  transition: all 0.25s $easeInOutSine;
+  transform: translate(0,-100%);
+  @media (min-width: $br-mobileMap){
+    padding: 20px;
+    text-align: center;
+  }
+
+  // CLOSE BUTTON
+  .close {
+    display: block;
+    position: absolute;
+    top: 50%; right: 0px;
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+    transform: translate(0,-50%);
+    svg{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 50%;
+      fill: $white;
+      transform: translate(-50%,-50%);
+    }
+    &:hover{
+      svg{
+        fill: darken($white,10%);
+      }
+    }
+  }
+
+  .content{
+    p{
+      color: $white;
+      font-size: 14px;
+    }
+  }
+
+  // STATES
+  &.active{
+    transform: translate(0,0%);
+  }
+
+
+  // COLORS
+  &.success{
+    background: rgba($cGreen, 0.85);
+  }
+  &.info{
+    background: rgba(#3182bd, 0.85);
+  }
+  &.warning{
+    background: rgba(#ED4602, 0.85);
+  }
+  &.error{
+    background: rgba(#FF4848, 0.85);
+  }
+}

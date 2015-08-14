@@ -37,6 +37,9 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.2)
+    autoprefixer-rails (5.2.1.1)
+      execjs
+      json
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -169,6 +172,8 @@ GEM
       redis-store (~> 1.1.0)
     redis-store (1.1.6)
       redis (>= 2.2)
+    requirejs-rails (0.9.8)
+      railties (>= 3.1.1)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -253,6 +258,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
   better_errors
   binding_of_caller
   byebug
@@ -272,6 +278,7 @@ DEPENDENCIES
   redis
   redis-namespace
   redis-rails
+  requirejs-rails
   rspec-rails (~> 3.0)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
@@ -282,4 +289,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.10.5
+   1.10.6

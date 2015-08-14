@@ -1,0 +1,92 @@
+modules:
+  - name: 'map'
+  # - name: 'static'
+  # - name: 'landing'
+  # - name: 'stories'
+  # - name: 'countries'
+
+waitSeconds: 200
+
+wrap: false
+
+paths:
+  # Libs
+  amplify: "amplify/lib/amplify"
+  underscore: "underscore/underscore"
+  backbone: "backbone/backbone"
+  jquery: "jquery/dist/jquery"
+  d3: "d3/d3"
+  topojson: "topojson/topojson"
+  cartodb: "cartodb.js/index"
+  moment: "moment/moment"
+  text: "requirejs-text/text"
+  mps: "minpubsub/minpubsub.src"
+  _string: "underscore.string/dist/underscore.string.min"
+  chosen: "chosen/chosen.jquery.min"
+  jqueryujs: "jquery-ujs/src/rails"
+  markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
+  geojsonArea: "geojson-area"
+  uri: "uri-templates/uri-templates"
+  handlebars: "handlebars/handlebars"
+  slick: "slick.js/slick/slick.min"
+  simplePagination: "jquery.simplePagination/jquery.simplePagination"
+  keymaster: "keymaster/keymaster"
+  enquire: "enquire/dist/enquire"
+
+  wax: "wax.g.min"
+  store: "store"
+  Class: "Class.js/Class"
+  jasmine: "jasmine"
+
+  # Map
+  utils: "map/utils"
+
+  # General
+  abstract: "abstract"
+  helpers: "helpers"
+  templates: "templates"
+  views: "views"
+
+shim:
+  underscore:
+    exports: "_"
+  _string:
+    exports: "_string"
+    deps:
+      - "underscore"
+  amplify:
+    deps:
+      - "jquery"
+    exports: "amplify"
+  backbone:
+    deps:
+      - "jquery"
+      - "underscore"
+    exports: "Backbone"
+  jqueryui:
+    deps:
+      - "jquery"
+    exports: "$"
+  chosen:
+    deps:
+      - "jquery"
+    exports: 'chosen'
+  pagination:
+    deps:
+      - "jquery"
+    exports: 'simplePagination'
+  Class:
+    exports: "Class"
+  uri:
+    exports: "UriTemplate"
+  handlebars:
+    exports: "Handlebars"
+
+
+  geojson:
+    exports: "geojson"
+
+  jqueryujs:
+    deps:
+      - "jquery"
+    exports: "jqueryujs"

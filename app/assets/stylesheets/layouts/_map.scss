@@ -1,0 +1,237 @@
+body,html{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.layout-header-bottom {
+  padding: 0;
+  border: 0;
+}
+
+@media (max-width:$br-mobile - 1){
+  .layout-header{
+    top: auto;
+    bottom: 0;
+    .layout-header-top{
+      position: absolute;
+    }
+    .layout-header-bottom {
+      position: fixed;
+    }
+  }
+}
+
+
+
+
+.layout-content {
+  margin-bottom: 0;
+  position: absolute;
+  overflow: hidden;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  @media (min-width:$br-mobile){
+    height: calc(100% - 34px);
+    top: 34px;
+  }
+}
+
+.map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  background: #B3E2FF;
+
+  // Footer
+  .gm-style{
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 38px;
+      background: rgba($dark,0.5);
+      z-index: 0;
+    }
+  }
+  .footer-toggle{
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%,0);
+    margin-left: 15px;
+    height: 38px;
+    border: none;
+    border-radius: 0;
+    padding: 0 20px;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+}
+
+#map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
+
+  @include user-select(none);
+  transition: opacity 1s ease;
+
+  &.is-loaded {
+    opacity: 1;
+  }
+}
+
+#zoom_controls,
+#zoom_controls_subscribe {
+
+  $zoomWidth: 36px;
+  $zoomHeight: 29px; // height of the top button + border line
+
+  position: absolute;
+  left: 15px;
+  top:  27px;
+
+  .zoom-in,
+  .zoom-out {
+    position:relative;
+    width: $zoomWidth;
+    height: $zoomHeight;
+    cursor: pointer;
+  }
+
+  .zoom-in {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 0;
+    &:hover {
+      background-position: (-$zoomWidth) 0;
+    }
+    &:active {
+      background-position: -(2*$zoomWidth) 0;
+    }
+  }
+
+  .zoom-out {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 (-$zoomHeight);
+    &:hover {
+      background-position: (-$zoomWidth) (-$zoomHeight);
+    }
+    &:active {
+      background-position: -(2*$zoomWidth) -29px;
+    }
+  }
+}
+
+
+.map-viewfinder {
+  // @include home-icons-sprite(viewfinder);
+  background-image: url(home-icons/viewfinder.png);
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  height: 17px;
+  width: 19px;
+  margin: -10px 0 0 -8px;
+  pointer-events:none;
+  &.hide{
+    opacity: 0;
+    visibility: hidden;
+  }
+
+}
+
+.map-logos {
+  position: absolute;
+  bottom: 0px;
+  left: 70px;
+  height: 38px;
+  z-index: 100;
+  display: none;
+  @media (min-width:$br-mobile){
+    display: block;
+  }
+
+  .map-logo {
+    display: inline-block;
+    margin-left: 15px;
+    position: relative;
+    top: 3px;
+  }
+
+  img {
+    border: none;
+  }
+}
+
+
+
+.map-latlng {
+  position: absolute;
+  bottom: 20px;
+  right: 12px;
+  color: #FFF;
+  font-size: 11px;
+  font-weight: 500;
+  text-shadow: 0px 0px 3px #000;
+  &.hidden{
+    display: none;
+  }
+}
+
+.overlay-mobile{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 22;
+  background: rgba($dark,0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s $easeInOutSine;
+  @media (min-width:$br-mobile){
+    display: none !important;
+  }
+
+  &.active{
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+#credit-control{
+  display: none;
+  font-size: 9px;
+  font-family: Arial, 'sans-serif';
+  margin: 0;
+  padding: 1px 6px;
+  background-color: #D2DADE;
+  color: $dark;
+  white-space: nowrap;
+  z-index: 9999999 !important;
+  a{
+    color: $dark;
+  }
+}
+
+
+@media (max-width:$br-mobile - 1){
+  .gmnoprint, .gm-style-cc {
+    top: 0 !important;
+    bottom: auto !important;
+  }
+  .gm-style .gm-style-cc span, .gm-style .gm-style-cc a, .gm-style .gm-style-mtc div {
+    font-size: 8px !important;
+  }
+}
+

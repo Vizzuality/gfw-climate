@@ -1,15 +1,71 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
-// listed below.
-//
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or any plugin's vendor/assets/javascripts directory can be referenced here using a relative path.
-//
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file.
-//
-// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
-// about supported directives.
-//
-//= require jquery
-//= require jquery_ujs
-//= require_tree .
+/**
+ * Application entry point.
+ */
+require([
+  'jquery',
+  'underscore',
+  'Class',
+  'backbone',
+  '_string'
+], function($, _, Class, Backbone) {
+
+  'use strict';
+
+  var HomePage = Class.extend({
+
+    $el: $('body'),
+
+    init: function() {
+      // var router = new Router(this);
+      // this._cartodbHack();
+      // this._initViews();
+      // this._initApp();
+
+      // // For dev
+      // window.router = router;
+      // window.mps = mps;
+      // window.analysis = AnalysisService;
+      // window.countryService = CountryService;
+      // window.ds = DataService;
+    },
+
+    /**
+     * Initialize the map by starting the history.
+     */
+    _initApp: function() {
+      if (!Backbone.History.started) {
+        Backbone.history.start({pushState: true});
+      }
+    },
+
+    /**
+     * Initialize Application Views.
+     * CAUTION: Don't change the order of initanciations if
+     * you are not completely sure.
+     */
+    _initViews: function() {
+      // Google Experiments
+      // new ExperimentsPresenter();
+
+
+      // var mapView = new MapView();
+
+      // new MapControlsView(mapView.map);
+      // new TabsView(mapView.map);
+      // new AnalysisResultsView();
+      // new LayersNavView();
+      // new LegendView();
+      // new TimelineView();
+      // new NavMobileView();
+      // new FooterView();
+      // new HeaderView();
+      // new SourceWindowView();
+      // new SourceMobileFriendlyView();
+      // new NotificationsView();
+    }
+
+  });
+
+  new HomePage();
+
+});
