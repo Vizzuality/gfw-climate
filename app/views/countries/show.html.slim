@@ -1,6 +1,6 @@
 h1= @name
 
-p = render 'shared/navigation'
+/ p = render 'shared/navigation'
 
 h2 Info
 
@@ -8,7 +8,7 @@ p Name: #{@name}
 p ISO:  #{@iso}
 
 - if @links.present?
-  p 
-    | External links: 
+  p
+    | External links:
     - @get_links.each do |link|
       =raw "#{link_to link['title'], link['url'], target: '_blank'} | "

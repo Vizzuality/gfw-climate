@@ -1,1 +1,158 @@
+.layout-content
+  section#main-slider.main-slider
+    nav.mobile-hide
+      h2
+        | Suggestions for getting started
+        #get-started.box-button
+          .btn.huge.green click here!
+          ul.tooltip-getstarted.bottom
+            li
+              a.gotomap (href="/map" data-dialog="regular_dialog" data-ga="Explore map")
+                strong  Explore
+                | forest data on the
+                strong GFW Interactive Map
+                  i.img.map
+
+              li
+                a.gotomap (data-dialog="alerts_dialog" href="/map/3/15.00/27.00/ALL/grayscale/forma/612" data-ga="Receive alerts from wdpa") Receive deforestation
+                  strong alerts
+                  | for a protected area
+                  i.img.alerts
+              li
+                a.gotomap (href="/map" data-dialog="country_dialog_jurisdiction" data-ga="Analyze map") Analyze forest change within a
+                  strong country
+                  | or
+                  strong subnational jurisdiction
+                  i.img.country
+
+              li
+                a.gotomap (href="/map" data-dialog="country_dialog_interest" data-ga="Analyze map") Visualize data for your
+                  strong country of interest
+                  i.img.countries-data
+
+              li
+                a.gotomap (href="/stories/new" data-ga="Add story")Report forest change by
+                  strong adding a story
+                  | to the GFW Interactive Map
+                  i.img.report-story
+
+              li
+                a.gotomap (href="http://commodities.globalforestwatch.org/#v=map&amp;x=116.43&amp;y=2.32&amp;l=5&amp;lyrs=tcc%2Closs&amp;wiz=open" data-ga="Commodities app") Analyze forest change within palm oil
+                  strong concessions
+                  | or a custom area
+                  i.img.concessions
+
+              li
+                a.gotomap (href="http://fires.globalforestwatch.org/#v=map&amp;x=115&amp;y=0&amp;l=5&amp;lyrs=Active_Fires%3AAir_Quality%3AWind_Direction&amp;dirty=true" data-ga="Fires app")View high resolution imagery of
+                  strong active fires
+                  | and burn scars in
+                  strong Indonesia
+                  i.img.active-fires
+
+              li
+                a.gotomap (href="/howto" data-ga="Howto")Watch
+                  strong>tutorial videos
+                  | and learn how to use GFW
+                  i.img.tutorial-videos
+    ul.main-slider-viewport
+      li.slide.slide7.current
+        a href="http://bit.ly/1HSyDPa?referral=carousel"
+        .inner
+          aside
+            h2 Zooming In
+            h3
+              span Forest Fires
+              span Blaze in Indonesia’s
+              span Tesso Nilo National Park
+            .link
+              span.mobile-hide more info
+              span.mobile-show +
+        p.credits Photo: DIGITAL GLOBE
+      li.slide.slide5
+        a href="http://bit.ly/1I8Mq09?referral=carousel"
+        .inner
+          aside
+            h2 Zooming In
+            h3
+              span "Sustainable" Cocoa Producer
+              span Destroys Pristine
+              span Peruvian Rainforest
+            .link
+              span.mobile-hide more info
+              span.mobile-show +
+        p.credits Photo: EIA
+      li.slide.slide1
+        a href="/map?referral=carousel"
+        .inner
+          aside
+            h2 Explore
+            h3
+              span Explore forest data
+              span on the GFW
+              span Interactive Map
+            .link
+              span.mobile-hide more info
+              span.mobile-show +
+      li.slide.slide2
+        a href="/stories/new?referral=carousel"
+        .inner
+          aside
+            h2 Report
+            h3
+              span HAVE A STORY
+              span TO SHARE ABOUT
+              span FOREST CHANGE?
+            .link
+              span.mobile-hide more info
+              span.mobile-show +
+      li.slide.slide3
+        a.mobile-friendly href="http://fires.globalforestwatch.org/#v=map&x=115&y=0&l=5&lyrs=Active_Fires%3AAir_Quality%3AWind_Direction&dirty=true&referral=carousel"
+        .inner
+          aside
+            h2 Fires
+            h3
+              span See how fires in
+              span southeast asia are
+              span affecting air quality
+            .link
+              span.mobile-hide more info
+              span.mobile-show +
+      li.slide.slide4
+        a.mobile-friendly href="http://commodities.globalforestwatch.org/#v=map&x=116.43&y=2.32&l=5&lyrs=tcc%2Closs&wiz=open&referral=carousel"
+        .inner
+          aside
+            h2 COMMODITIES
+            h3
+              span ANALYZE LAND USE
+              span CHANGE WITHIN RSPO
+              span CERTIFIED AREAS
+            .link
+              span.mobile-hide more info
+              span.mobile-show +
+
+      a#go-to-apps.circle-marker (href="#applications")
+        svg
+          use (xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-arrow-down")
+  section#applications.apps
+    .main-apps
+      .inner
+        .row
+          .col.col6
+            a (href="/explore")
+              .icon
+                svg
+                  use (xlink:href="#shape-world" xmlns:xlink="http://www.w3.org/1999/xlink")
+              h3 Explore the map
+          .col.col6
+            a (href="/countries")
+              .icon
+                svg
+                  use (xlink:href="#shape-country" xmlns:xlink="http://www.w3.org/1999/xlink")
+              h3 Select a country
+          .col.col6
+            a (href="/stayinformed")
+              .icon
+                svg
+                  use (xlink:href="#shape-country" xmlns:xlink="http://www.w3.org/1999/xlink")
+              h3 Stay informed
 

@@ -24,15 +24,24 @@
 @import "header";
 @import "footer";
 @import "grid";
+@import 'layouts/landing';
 
 //modules
 @import "modules/shared";
 @import "modules/buttons";
 @import "modules/icons";
 @import "modules/slick";
-@import "modules/notifications";;
+@import "modules/notifications";
 
+@import "modules/slick";
 
+@import
+// Modules
+  "modules/navbar",
+  "modules/feedback",
+  "modules/form",
+  "modules/modal",
+  "modules/dialog";
 
 
 // Common

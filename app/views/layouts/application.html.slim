@@ -21,26 +21,26 @@ html
     meta (name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a")
     meta (name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak")
 
-    == render 'shared/icons'
+    = render 'shared/icons'
     = stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all'
     = stylesheet_link_tag "application", :media => "all"
     = csrf_meta_tags
 
   body class="is-#{params[:controller]}-page is-#{params[:action]}-action"
 
-    == render 'shared/svg_icons'
-    == render 'shared/svg_icons_map'
-    == render 'shared/svg_icons_applications'
-    == render 'shared/svg_icons_layers'
+    = render 'shared/svg_icons'
+    = render 'shared/svg_icons_map'
+    = render 'shared/svg_icons_applications'
+    = render 'shared/svg_icons_layers'
 
-    == render "shared/header"
+    = render "shared/header"
 
-    == yield
+    = yield
 
-    == render "shared/footer"
+    = render "shared/footer"
 
-    == render 'shared/modal'
-    == render 'shared/notifications'
+    = render 'shared/modal'
+    = render 'shared/notifications'
 
     = requirejs_include_tag "application"
-    == render "shared/js_footer"
+    = render "shared/js_footer"
