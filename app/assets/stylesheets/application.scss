@@ -18,13 +18,13 @@
 @import "mixins";
 @import "animations";
 @import "base";
+@import "states";
 
 
 // Layout
 @import "header";
 @import "footer";
 @import "grid";
-@import 'layouts/landing';
 
 //modules
 @import "modules/shared";
@@ -45,5 +45,5 @@
 
 
 // Common
-@import "states";
+@import 'layouts/application';
 
