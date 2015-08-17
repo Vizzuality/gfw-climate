@@ -10,8 +10,10 @@
       .search-countries-box
         input#searchCountry(autofocus="true" type="text" placeholder="Type country name")
 
-  / p = render 'shared/navigation'
-
-  - @countries.each do |country|
-    - if country['iso'].present?
-      p =raw "#{country['name']} (#{country['iso']}) #{link_to 'view', country_path(country['iso'])}"
+    ul.inner.countries_list_index
+      - @countries.each do |country|
+        - if country['iso'].present?
+          li(id="#{country['iso']}" class="country")
+            a.country-href (href="#{country_path(country['iso'])}")
+              span.country-content
+                h3.country-name #{country['name']}
