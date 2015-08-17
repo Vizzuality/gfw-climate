@@ -48,7 +48,6 @@ RSpec.describe CountriesController, type: :controller do
       get :show, id: 'AFG'
       expect(response).to be_success
       expect(response).to have_http_status(200)
-      # expect(response.body).to match 'Afghanistan'
     end
 
     it "GET cached certain country page", type: :feature do
@@ -57,10 +56,8 @@ RSpec.describe CountriesController, type: :controller do
       expect($redis.exists('country/item_/AFG/')).to eq(true)
       get :show, id: 'AFG'
       expect(response).to be_success
-      get :show, id: 'afg'
       expect($redis.get('country/item_/AFG/')).to match 'item'
       expect(response).to have_http_status(200)
-      # expect(response.body).to match 'Afghanistan'
     end
 
   end
