@@ -28,7 +28,7 @@ paths:
   geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
   handlebars: "handlebars/handlebars"
-  slick: "slick.js/slick/slick.min"
+  slick: "slick-carousel/slick/slick.min"
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
   keymaster: "keymaster/keymaster"
   enquire: "enquire/dist/enquire"

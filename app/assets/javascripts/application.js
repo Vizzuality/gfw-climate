@@ -6,8 +6,9 @@ require([
   'underscore',
   'Class',
   'backbone',
-  '_string'
-], function($, _, Class, Backbone) {
+  '_string',
+  'home/views/sliderView'
+], function($, _, Class, Backbone, _string, sliderView) {
 
   'use strict';
 
@@ -18,7 +19,7 @@ require([
     init: function() {
       // var router = new Router(this);
       // this._cartodbHack();
-      // this._initViews();
+      this._initViews();
       // this._initApp();
 
       // // For dev
@@ -46,7 +47,7 @@ require([
     _initViews: function() {
       // Google Experiments
       // new ExperimentsPresenter();
-
+      new sliderView();
 
       // var mapView = new MapView();
 

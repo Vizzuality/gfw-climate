@@ -1,7 +1,7 @@
 h1 Countries
 
-p = render 'shared/navigation'
+/ p = render 'shared/navigation'
 
-- @countries.each do |country|
-  - if country['iso'].present?
-    p =raw "#{country['name']} (#{country['iso']}) #{link_to 'view', country_path(country['iso'])}"
+/ - @countries.each do |country|
+/   - if country['iso'].present?
+/     p =raw "#{country['name']} (#{country['iso']}) #{link_to 'view', country_path(country['iso'])}"
