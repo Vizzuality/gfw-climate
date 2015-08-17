@@ -1,6 +1,6 @@
 # README
 
-[![Build Status](https://travis-ci.org/Vizzuality/gfw-climate.svg?branch=master)](https://travis-ci.org/Vizzuality/gfw-climate) [![Code Climate](https://codeclimate.com/github/Vizzuality/gfw-climate/badges/gpa.svg)](https://codeclimate.com/github/Vizzuality/gfw-climate) [![Coverage Status](https://coveralls.io/repos/Vizzuality/gfw-climate/badge.svg?branch=master&service=github)](https://coveralls.io/github/Vizzuality/gfw-climate?branch=master)
+[![Build Status](https://travis-ci.org/Vizzuality/gfw-climate.svg?branch=develop)](https://travis-ci.org/Vizzuality/gfw-climate) [![Code Climate](https://codeclimate.com/github/Vizzuality/gfw-climate/badges/gpa.svg)](https://codeclimate.com/github/Vizzuality/gfw-climate) [![Coverage Status](https://coveralls.io/repos/Vizzuality/gfw-climate/badge.svg?branch=develop&service=github)](https://coveralls.io/github/Vizzuality/gfw-climate?branch=develop)
 
 ## Requirements
 

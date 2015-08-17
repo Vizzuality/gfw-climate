@@ -7,31 +7,18 @@ require([
   'Class',
   'backbone',
   '_string',
-  'countries/views/CountryListView'
-], function($, _, Class, Backbone, _string, CountryListView) {
+  'countries/router'
+], function($, _, Class, Backbone, _string, RouterView) {
 
   'use strict';
 
-  var CountriesPage = Class.extend({
+  var CountriesPage = Backbone.View.extend({
 
-    $el: $('body'),
+    el: document.body,
 
-    init: function() {
-
-      // this._cartodbHack();
-      this._initViews();
+    initialize: function() {
       this._initApp();
-
-      // // For dev
-      // window.router = router;
-      // window.mps = mps;
-      // window.analysis = AnalysisService;
-      // window.countryService = CountryService;
-      // window.ds = DataService;
-    },
-
-    test: function() {
-      debugger;
+      this._initRouter();
     },
 
     /**
@@ -41,8 +28,10 @@ require([
       if (!Backbone.History.started) {
         Backbone.history.start({pushState: true});
       }
+    },
 
-
+    _initRouter: function() {
+      this.router = new RouterView();
     },
 
     /**
@@ -53,7 +42,7 @@ require([
     _initViews: function() {
       // Google Experiments
       // new ExperimentsPresenter();
-      new CountryListView();
+      // new CountryListView();
 
       // var mapView = new MapView();
 
