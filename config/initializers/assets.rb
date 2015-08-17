@@ -21,3 +21,4 @@ Rails.application.config.assets.precompile += %w( countries.css )
 unless Rails.env.production?
   Rails.application.config.assets.precompile += %w( teaspoon.css )
   Rails.application.config.assets.precompile += %w( teaspoon-teaspoon.js )
+end

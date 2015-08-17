@@ -17,17 +17,7 @@ require([
     $el: $('body'),
 
     init: function() {
-      // var router = new Router(this);
-      // this._cartodbHack();
       this._initViews();
-      // this._initApp();
-
-      // // For dev
-      // window.router = router;
-      // window.mps = mps;
-      // window.analysis = AnalysisService;
-      // window.countryService = CountryService;
-      // window.ds = DataService;
     },
 
     /**
@@ -45,24 +35,7 @@ require([
      * you are not completely sure.
      */
     _initViews: function() {
-      // Google Experiments
-      // new ExperimentsPresenter();
       new sliderView();
-
-      // var mapView = new MapView();
-
-      // new MapControlsView(mapView.map);
-      // new TabsView(mapView.map);
-      // new AnalysisResultsView();
-      // new LayersNavView();
-      // new LegendView();
-      // new TimelineView();
-      // new NavMobileView();
-      // new FooterView();
-      // new HeaderView();
-      // new SourceWindowView();
-      // new SourceMobileFriendlyView();
-      // new NotificationsView();
     }
 
   });

@@ -12,8 +12,15 @@ define([
     },
 
     _initList: function() {
-      console.log('inti');
       new CountryListView();
+    },
+
+    _initShow: function() {
+      console.log('show');
+    },
+
+    _initOverview: function() {
+
     }
 
   });

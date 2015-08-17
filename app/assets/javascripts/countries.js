@@ -17,8 +17,8 @@ require([
     el: document.body,
 
     initialize: function() {
-      this._initApp();
       this._initRouter();
+      this._initApp();
     },
 
     /**
@@ -32,32 +32,6 @@ require([
 
     _initRouter: function() {
       this.router = new RouterView();
-    },
-
-    /**
-     * Initialize Application Views.
-     * CAUTION: Don't change the order of initanciations if
-     * you are not completely sure.
-     */
-    _initViews: function() {
-      // Google Experiments
-      // new ExperimentsPresenter();
-      // new CountryListView();
-
-      // var mapView = new MapView();
-
-      // new MapControlsView(mapView.map);
-      // new TabsView(mapView.map);
-      // new AnalysisResultsView();
-      // new LayersNavView();
-      // new LegendView();
-      // new TimelineView();
-      // new NavMobileView();
-      // new FooterView();
-      // new HeaderView();
-      // new SourceWindowView();
-      // new SourceMobileFriendlyView();
-      // new NotificationsView();
     }
 
   });
