@@ -34,7 +34,6 @@ define([
 
     slickSlider: function(){
       //INIT
-      console.log(slick);
       $('.main-slider-viewport').slick({
         infinite: true,
         speed: 500,

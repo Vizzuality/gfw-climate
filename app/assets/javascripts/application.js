@@ -19,7 +19,6 @@ require([
     init: function() {
       // var router = new Router(this);
       // this._cartodbHack();
-      console.log(sliderView);
       this._initViews();
       // this._initApp();
 
