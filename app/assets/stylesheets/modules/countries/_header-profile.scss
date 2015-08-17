@@ -1,0 +1,110 @@
+.title-section {
+  font-size: 35px;
+  padding: 85px 20px 15px;
+  text-transform: lowercase;
+  color: #555;
+  &:first-letter {
+    text-transform: uppercase;
+  }
+  .embed & {
+    padding: 15px 20px 15px;
+    text-align: left;
+  }
+  @media (min-width: 480px){
+    padding: 40px 0 15px;
+    text-align: center;
+  }
+  @media (min-width: $br-mobile){
+    font-size: 47px;
+    display: block;
+  }
+}
+
+.countries-list-title {
+  padding: 0 20px;
+  @media (min-width: $br-mobile){
+    text-align: center;
+    display: block;
+  }
+  h3 {
+    font-size: 20px;
+    text-transform: lowercase;
+    color: #555;
+    @media (min-width: $br-mobile){
+      font-size: 25px;
+    }
+    &:first-letter {
+      text-transform: uppercase;
+    }
+    a{
+      color: $cGreen;
+      &:hover{
+        color: darken($cGreen, 5%);
+      }
+    }
+  }
+}
+
+// SEARCH BOX
+.search-countries-box{
+  margin: 20px auto;
+  position: relative;
+  clear: both;
+  @extend .clearfix;
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background: image-url('countries/search.svg') no-repeat center;
+    background-size: contain;
+    transform: translate(0, -50%);
+    visibility: visible;
+  }
+  input {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    padding-left: 50px;
+    margin: 0;
+    border-radius: 3px;
+    font-size: 29px;
+    background: #FFF;
+    color: #666;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    min-height: 20px;
+    outline: none;
+    font-family: inherit;
+    font-weight: 300;
+    @media only screen and (max-width: 768px) {
+      font-size: 20px;
+    }
+    &.is-active{
+      background: rgba($cGreen1,0.3);
+    }
+    &::-webkit-input-placeholder {
+       color: #666;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+       color: #666;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+       color: #666;
+    }
+
+    &:-ms-input-placeholder {
+       color: #666;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+}

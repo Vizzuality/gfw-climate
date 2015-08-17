@@ -1,7 +1,7 @@
 class CountriesController < AccessController
 
   def index
-    # @countries = Country.find_all
+    @countries = Country.find_all
   end
 
   def show
