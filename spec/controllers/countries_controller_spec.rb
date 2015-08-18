@@ -58,6 +58,7 @@ RSpec.describe CountriesController, type: :controller do
       expect(response).to be_success
       expect($redis.get('country/item_/AFG/')).to match 'item'
       expect(response).to have_http_status(200)
+      expect(response.body).to match 'Afghanistan'
     end
 
   end
