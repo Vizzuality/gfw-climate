@@ -223,10 +223,10 @@ $story-w: 215px;
         }
         p{
           margin: 5px 0 0;
-          color: $cGreen;
+          color: $blue;
           font-size: 12px;
           &:hover{
-            color: lighten($cGreen, 5%);
+            color: lighten($blue, 5%);
           }
         }
       }
