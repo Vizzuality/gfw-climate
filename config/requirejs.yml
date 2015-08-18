@@ -1,9 +1,9 @@
 modules:
   - name: 'map'
   # - name: 'static'
-  # - name: 'landing'
+  - name: 'application'
   # - name: 'stories'
-  # - name: 'countries'
+  - name: 'countries'
 
 waitSeconds: 200
 
