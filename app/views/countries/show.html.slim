@@ -1,14 +1,37 @@
-/ h1= @name
-
-/ p = render 'shared/navigation'
-
-h2 Info
-
-/ p Name: #{@name}
-/ p ISO:  #{@iso}
-
-/ - if @links.present?
-/   p
-/     | External links:
-/     - @get_links.each do |link|
-/       =raw "#{link_to link['title'], link['url'], target: '_blank'} | "
+.layout-content
+  section#countryShowView (data-iso="#{@iso}")
+    .container-country
+      .container-country__header-country
+        .inner
+          .header-country__title-country
+            h1 #{@name}
+          .header-country__selector-area-country
+            select#areaSelector.selector-area-country--white
+              option.dark value="default" Select jurisdiction
+            .selector-remove
+            .selector-arrow
+          .header-country__preview-country
+        .header-country__options-country
+      .container-country__sub-header-country
+        .inner
+          ul.options
+            li.options_item
+              svg
+                use (xlink:href="#shape-share")
+              button#share-country share
+            li.options_item
+              svg
+                use (xlink:href="#shape-share")
+              button#print-country save/print report
+            li.options_item
+              svg
+                use (xlink:href="#shape-country")
+              a#analyze-country (href="#") analyze on map
+      .container-country__content-country
+        .inner
+          .row
+            section#deforestationRate
+        section#reportIndicators.content-country__report-indicators
+          .inner
+            h3 Customize your report
+            button#addIndicators.btn.medium.white(data-source="indicators") Add indicators

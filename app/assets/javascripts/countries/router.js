@@ -1,7 +1,9 @@
 define([
   'backbone',
-  'countries/views/CountryListView'
-], function(Backbone, CountryListView) {
+  'countries/views/CountryListView',
+  'countries/views/CountryShowHeaderView',
+  'countries/views/CountryIndicatorsView',
+], function(Backbone, CountryListView, CountryShowHeaderView, CountryIndicatorsView) {
 
   var Router = Backbone.Router.extend({
 
@@ -16,7 +18,8 @@ define([
     },
 
     _initShow: function() {
-      console.log('show');
+      new CountryShowHeaderView();
+      new CountryIndicatorsView();
     },
 
     _initOverview: function() {

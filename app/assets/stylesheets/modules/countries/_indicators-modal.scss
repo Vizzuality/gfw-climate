@@ -1,0 +1,47 @@
+.source_window--countries {
+  width: 750px;
+
+  .source_header {
+    margin: 10px 0 25px;
+    padding: 0;
+    .source_title {
+      font-size: 32px;
+      font-weight: 400;
+      text-transform: inherit;
+    }
+  }
+
+  .indicator-list {
+    display: flex;
+    flex-wrap: wrap;
+    .indicator {
+      display: inline-flex;
+      width: 33%;
+      padding: 10px 15px;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      .indicator__name {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid transparent;
+        color: $dark;
+        font-size: 14px;
+        text-transform: uppercase;
+        &.indicator__name--selected {
+          border: 1px solid $blue;
+          border-radius: 7px;
+          color: $blue;
+        }
+      }
+    }
+  }
+  .row {
+    text-align: center;
+    button {
+      margin-top: 20px;
+    }
+  }
+}
