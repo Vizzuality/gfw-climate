@@ -1,0 +1,125 @@
+.container-country__header-country {
+  background-color: #333;
+  padding-bottom: 25px;
+
+  .header-country__title-country {
+    padding: 55px 0 25px;
+    h1 {
+      display: inline-block;
+      color: white;
+      font-size: 47px;
+      font-weight: 300;
+    }
+  }
+
+  .header-country__selector-area-country {
+    position: relative;
+    display: inline-block;
+    height: 39px;
+    width: 310px;
+    border: 1px solid #6B6B6B;
+    border-radius: 39px;
+
+
+    select {
+      border: none;
+      font-size: 13px;
+      text-transform: uppercase;
+      background: transparent;
+      color: #FFF;
+      -webkit-appearance: none;
+      padding: 10px 15px;
+      width: 100%;
+      -moz-appearance: none;
+      text-indent: 0.01px;
+      text-overflow: '';
+      &::-ms-expand {
+        display: none;
+      }
+
+      &:focus {
+        outline: 0;
+      }
+    }
+
+    .selector-area-country--white {
+      color: $white;
+    }
+
+    .selector-area-country--dark {
+      color: $dark;
+    }
+
+    .selector-area-country--embed & {
+      display: none;
+    }
+
+    .selector-arrow {
+      border-color: #73707D transparent;
+      border-style: solid;
+      border-width: 6px 5px 0 5px;
+      width: 0;
+      height: 0;
+      top: 50%;
+      right: 20px;
+      margin-top: -3px;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .selector-remove {
+      padding: 5px;
+      color: #73707D;
+      font-size: 13px;
+      top: 9px;
+      right: 35px;
+      position: absolute;
+      cursor: pointer;
+      display: none;
+      &:hover {
+        color: lighten(#73707D, 10);
+      }
+    }
+  }
+
+  .header-country__preview-country {
+    float: right;
+  }
+}
+
+.container-country__sub-header-country {
+  display: inline-block;
+  width: 100%;
+  .options {
+    float: right;
+    margin: 5px 0;
+    .options_item {
+      float: left;
+      padding: 5px 20px;
+
+      svg {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        vertical-align: middle;
+        fill: $dark;
+      }
+
+      button {
+        padding: 0;
+        background: none;
+        border: 0;
+        font-family: inherit;
+        cursor: pointer;
+      }
+      a, button {
+        margin-left: 5px;
+        font-size: 14px;
+        color: $dark;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
