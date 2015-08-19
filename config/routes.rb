@@ -44,7 +44,8 @@ Rails.application.routes.draw do
   # End API routes
 
   root 'home#index'
-
+  
+  # API Documentation
   mount Raddocs::App => "api/docs"
 
 end

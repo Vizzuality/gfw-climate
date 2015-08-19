@@ -20,10 +20,14 @@ class Post
       end
     end
     
-    def find_post(link)
+    def find_post(filter_params)
+      link         = filter_params[:link]
+      thresh_value = nil
+      format       = 'html'
+
       url = "#{base_path}/#{link}"
       timeouts do
-        item_caching(link, 'html') do
+        item_caching(link, format, thresh_value) do
           get(url)
         end
       end

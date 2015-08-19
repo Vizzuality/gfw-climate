@@ -14,8 +14,8 @@ RSpec.describe Country, type: :model do
   context "Get certain country" do
 
     it "Find country by iso" do
-      country = Country.find_country('afg')
-      expect(country['name']).to eq 'Afghanistan'
+      country = Country.find_country(id: 'bra')
+      expect(country['name']).to eq 'Brazil'
     end
 
   end

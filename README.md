@@ -23,18 +23,10 @@ RACK_ENV=development
 GFW_API_HOST=http://gfw-apis.appspot.com
 BLOG_HOST=http://blog.globalforestwatch.org
 TERMS_COOKIE=cookie_terms
-REDISCLOUD_URL=redis://localhost:6379
+REDISCLOUD_URL=redis://localhost:6379/0
 CODECLIMATE_REPO_TOKEN=c5c128fcb301371d4b89bec2df714028e0a75deb8d732f49f922626aa84c3524
-
-AWS_HOST=
 LAYER_SPEC=layerspec_nuclear_hazard
-TERMS_COOKIE=true
-S3_BUCKET_NAME=
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-ANALYTICS_PROPERTY_ID='UA-XXXXX-X'
 FEEDBACK_MAIL=example@gfw-climate.com
-CACHE_VERSION=54
 ```
 
 ### REDIS ###

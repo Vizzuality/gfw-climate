@@ -13,8 +13,12 @@ module Api::V1
     end
 
     private
+      def filter_params
+        params.permit(:id, :thresh)
+      end
+
       def set_country
-        @country = Country.find_country(params[:id])
+        @country = Country.find_country(filter_params)
       end
 
   end

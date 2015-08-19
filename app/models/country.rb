@@ -19,10 +19,20 @@ class Country
       end
     end
 
-    def find_country(country_id)
-      url = "#{ base_path }/#{ country_id }"
+    def find_country(filter_params)
+      country_id   = filter_params[:id]
+      thresh_value = filter_params[:thresh] if filter_params[:thresh].present?
+      format       = nil
+
+      # Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75
+      url = if thresh_value.present? 
+              "#{ base_path }/#{ country_id }?thresh=#{ thresh_value }"
+            else
+              "#{ base_path }/#{ country_id }"
+            end
+
       timeouts do
-        item_caching(country_id) do
+        item_caching(country_id, format, thresh_value) do
           get(url)
         end
       end
@@ -31,4 +41,5 @@ class Country
     include Concerns::Cached
 
   end
+
 end
