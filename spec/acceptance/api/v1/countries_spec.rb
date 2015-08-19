@@ -21,13 +21,22 @@ resource 'Countries' do
     example_request "Getting a specific country" do
       expect(status).to eq(200)
       country = JSON.parse(response_body)['country']
-
-      expect(country['name']).to eq('Australia')
+      
       expect(country['iso']).to eq('AUS')
+      expect(country['thresh']).to eq(10)
       expect(country['enabled']).to eq(true)
-      expect(country['coordinates'].count).to eq(5)
-      expect(country['type']).to eq('Polygon')
+      expect(country['name']).to eq('Australia')
+      expect(country['conventions'].count).to eq(10)
       expect(country['emissions']).not_to be_nil
+      expect(country['carbon_stocks']).to be_nil
+      expect(country['gva']).not_to be_nil
+      expect(country['gva_percent']).not_to be_nil
+      expect(country['bounds']['coordinates'].count).to eq(5)
+      expect(country['bounds']['type']).to eq('Polygon')
+      expect(country['tenure'].count).to eq(5)
+      expect(country['forests'].count).to eq(3)
+      expect(country['umd']).not_to be_nil
+      expect(country['jurisdictions']).not_to be_nil
     end
   end
 

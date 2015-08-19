@@ -1,20 +1,22 @@
-# README
+# GFW-CLIMATE #
 
 [![Build Status](https://travis-ci.org/Vizzuality/gfw-climate.svg?branch=develop)](https://travis-ci.org/Vizzuality/gfw-climate) [![Code Climate](https://codeclimate.com/github/Vizzuality/gfw-climate/badges/gpa.svg)](https://codeclimate.com/github/Vizzuality/gfw-climate) [![Coverage Status](https://coveralls.io/repos/Vizzuality/gfw-climate/badge.svg?branch=develop&service=github)](https://coveralls.io/github/Vizzuality/gfw-climate?branch=develop)
 
-## Requirements
+## Requirements ##
 
-  - **Ruby version:** mri 2.2.2
-  - **NodeJs version:** 0.10+
-  - **Redis** Homebrew: brew install redis
+  **Ruby version:** mri 2.2.2
 
-## SETUP
+  **NodeJs version:** 0.10+
+
+  **Redis** Homebrew: brew install redis
+
+## SETUP ##
 
 Just execute the script file in bin/setup
 
-  - Depends on gfwc [repository](https://github.com/Vizzuality/gfw-climate)
+  Depends on gfwc [repository](https://github.com/Vizzuality/gfw-climate)
 
-  - Create .env file with:
+  Create .env file with:
 
 ```
 RACK_ENV=development
@@ -35,64 +37,87 @@ FEEDBACK_MAIL=example@gfw-climate.com
 CACHE_VERSION=54
 ```
 
-### REDIS
+### REDIS ###
 
-  - OS X
+OS X
 ```
 brew install redis
 brew info redis
 launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 ```
-
-  - Add to .env:
+Add to .env:
 
 ```
 REDISCLOUD_URL=redis://localhost:6379
 ```
-
-  - Useful commands
+Useful commands
 
 ```
 redis-cli monitor
 redis-cli flushall
 ```
 
-### Install global dependencies:
+### Install global dependencies: ###
 
     npm install -g bower
 
-### Install gems:
+### Install gems: ###
 
     bundle install
 
-### Install assets and front end dependencies:
+### Install assets and front end dependencies: ###
     
     bower install
 
-### Run application:
+### Run application: ###
 
     foreman start
 
-## TEST
+## TEST ##
 
-  - Run rspec: bin/rspec
+  Run rspec: 
+  ```ruby
+    bin/rspec
+  ```
+  Run teaspoon: 
+  ```ruby  
+    rake teaspoon
+  ```
+  Run all: 
+  ```ruby
+    rake
+  ```
 
-  - Run teaspoon: rake teaspoon
+## API ##
 
-  - Run all: rake
+### SAMPLE ###
+  
+  Getting a list of enabled countries
+  
+    curl "http://localhost:5000/api/countries" -X GET \
+    -H "Accept: application/json; application/gfwc-v1+json" \
+    -H "Content-Type: application/json"
 
-## API DOCUMENTATION
+  Getting a specific country
+  
+    curl "http://localhost:5000/api/countries/aus" -X GET \
+    -H "Accept: application/json; application/gfwc-v1+json" \
+    -H "Content-Type: application/json"
+
+### API DOCUMENTATION ###
    
-   - For API documentation visit /api/docs
+   For API documentation visit /api/docs
 
-   - Generate the docs!
+   Generate the docs!
 
-   rake docs:generate
+```ruby
+rake docs:generate
+```
 
-## DEPLOYMENT
+## DEPLOYMENT ##
 
-### Heroku
+### Heroku ###
 
 **Automatic deploys from  staging are enabled**
 
