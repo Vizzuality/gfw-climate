@@ -18,6 +18,11 @@ gem 'requirejs-rails'
 gem 'slim-rails'
 
 gem 'httparty'
+gem 'rabl'
+gem 'oj'
+gem 'responders', '~> 2.0'
+
+gem 'raddocs'
 
 group :development do
   gem 'foreman'
@@ -31,6 +36,7 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'teaspoon-mocha'
+  gem 'rspec_api_documentation'
 end
 
 group :test do

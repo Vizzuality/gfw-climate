@@ -27,7 +27,24 @@ Rails.application.routes.draw do
     list_show_only.resources :countries
     list_show_only.resources :posts, path: :blog
   end
+  
+  # API routes
+  namespace :api, defaults: {format: 'json'} do
+
+    # Set APIVersion.new(version: X, default: true) for dafault API version
+    scope module: :v1, constraints: APIVersion.new(version: 1, current: true) do
+
+      with_options only: [:index, :show] do |list_show_only|
+        list_show_only.resources :countries
+      end
+
+    end
+
+  end
+  # End API routes
 
   root 'home#index'
+
+  mount Raddocs::App => "api/docs"
 
 end

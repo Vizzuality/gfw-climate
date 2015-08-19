@@ -82,6 +82,14 @@ redis-cli flushall
 
   - Run all: rake
 
+## API DOCUMENTATION
+   
+   - For API documentation visit /api/docs
+
+   - Generate the docs!
+
+   rake docs:generate
+
 ## DEPLOYMENT
 
 ### Heroku

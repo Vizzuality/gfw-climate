@@ -1,3 +1,7 @@
+# 1.1.0
+
+* Setting Up API
+
 # 1.0.0
 
 * Setting Up Bower on Rails for Heroku

@@ -1,0 +1,45 @@
+{
+  "resource": "Countries",
+  "http_method": "GET",
+  "route": "/api/countries/aus",
+  "description": "Getting a specific country",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/countries/aus",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"country\":{\"iso\":\"AUS\",\"name\":\"Australia\",\"enabled\":true,\"coordinates\":[[112.919444207084,-54.7504208307568],[112.919444207084,-9.24016692456394],[159.106455925001,-9.24016692456394],[159.106455925001,-54.7504208307568],[112.919444207084,-54.7504208307568]],\"type\":\"Polygon\",\"emissions\":5.349078754}}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"a0152f1b075e5a7d441cfb8e44e39eaa\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "446aef79-d3d6-4f6f-b11e-9225ce6c604e",
+        "X-Runtime": "0.298280",
+        "Content-Length": "301"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/countries/aus\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}
