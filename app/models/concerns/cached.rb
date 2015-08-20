@@ -13,8 +13,8 @@ module Concerns::Cached
     "#{ self.name.pluralize.downcase }_all_#{ options }"
   end
 
-  def cache_key_item(options)
-    "#{ self.name.downcase }/item_#{ options }"
+  def cache_key_item(options, thresh_value=nil)
+    "#{ self.name.downcase }/item_#{ options }_#{ thresh_value }"
   end
 
   def items_caching(options=nil)
@@ -27,8 +27,8 @@ module Concerns::Cached
     end
   end
 
-  def item_caching(options, format=nil)
-    if cached = $redis.get(cache_key_item(options))
+  def item_caching(options, format=nil, thresh_value=nil)
+    if cached = $redis.get(cache_key_item(options, thresh_value))
       if format.present?
         cached
       else
@@ -37,9 +37,9 @@ module Concerns::Cached
     else
       yield.tap do |item|
         if format.present?
-          $redis.set(cache_key_item(options), item.to_s)
+          $redis.set(cache_key_item(options, thresh_value), item.to_s)
         else
-          $redis.set(cache_key_item(options), item.to_json)
+          $redis.set(cache_key_item(options, thresh_value), item.to_json)
         end
       end
     end

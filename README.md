@@ -1,90 +1,115 @@
-# README
+# GFW-CLIMATE #
 
 [![Build Status](https://travis-ci.org/Vizzuality/gfw-climate.svg?branch=develop)](https://travis-ci.org/Vizzuality/gfw-climate) [![Code Climate](https://codeclimate.com/github/Vizzuality/gfw-climate/badges/gpa.svg)](https://codeclimate.com/github/Vizzuality/gfw-climate) [![Coverage Status](https://coveralls.io/repos/Vizzuality/gfw-climate/badge.svg?branch=develop&service=github)](https://coveralls.io/github/Vizzuality/gfw-climate?branch=develop)
 
-## Requirements
+## Requirements ##
 
-  - **Ruby version:** mri 2.2.2
-  - **NodeJs version:** 0.10+
-  - **Redis** Homebrew: brew install redis
+  **Ruby version:** mri 2.2.2
 
-## SETUP
+  **NodeJs version:** 0.10+
+
+  **Redis** Homebrew: brew install redis
+
+## SETUP ##
 
 Just execute the script file in bin/setup
 
-  - Depends on gfwc [repository](https://github.com/Vizzuality/gfw-climate)
+  Depends on gfwc [repository](https://github.com/Vizzuality/gfw-climate)
 
-  - Create .env file with:
+  Create .env file with:
 
 ```
 RACK_ENV=development
 GFW_API_HOST=http://gfw-apis.appspot.com
 BLOG_HOST=http://blog.globalforestwatch.org
 TERMS_COOKIE=cookie_terms
-REDISCLOUD_URL=redis://localhost:6379
+REDISCLOUD_URL=redis://localhost:6379/0
 CODECLIMATE_REPO_TOKEN=c5c128fcb301371d4b89bec2df714028e0a75deb8d732f49f922626aa84c3524
-
-AWS_HOST=
 LAYER_SPEC=layerspec_nuclear_hazard
-TERMS_COOKIE=true
-S3_BUCKET_NAME=
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-ANALYTICS_PROPERTY_ID='UA-XXXXX-X'
 FEEDBACK_MAIL=example@gfw-climate.com
-CACHE_VERSION=54
 ```
 
-### REDIS
+### REDIS ###
 
-  - OS X
+OS X
 ```
 brew install redis
 brew info redis
 launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.redis.plist
 ```
-
-  - Add to .env:
+Add to .env:
 
 ```
 REDISCLOUD_URL=redis://localhost:6379
 ```
-
-  - Useful commands
+Useful commands
 
 ```
 redis-cli monitor
 redis-cli flushall
 ```
 
-### Install global dependencies:
+### Install global dependencies: ###
 
     npm install -g bower
 
-### Install gems:
+### Install gems: ###
 
     bundle install
 
-### Install assets and front end dependencies:
+### Install assets and front end dependencies: ###
     
     bower install
 
-### Run application:
+### Run application: ###
 
     foreman start
 
-## TEST
+## TEST ##
 
-  - Run rspec: bin/rspec
+  Run rspec: 
+  ```ruby
+    bin/rspec
+  ```
+  Run teaspoon: 
+  ```ruby  
+    rake teaspoon
+  ```
+  Run all: 
+  ```ruby
+    rake
+  ```
 
-  - Run teaspoon: rake teaspoon
+## API ##
 
-  - Run all: rake
+### SAMPLE ###
+  
+  Getting a list of enabled countries
+  
+    curl "http://localhost:5000/api/countries" -X GET \
+    -H "Accept: application/json; application/gfwc-v1+json" \
+    -H "Content-Type: application/json"
 
-## DEPLOYMENT
+  Getting a specific country
+  
+    curl "http://localhost:5000/api/countries/aus" -X GET \
+    -H "Accept: application/json; application/gfwc-v1+json" \
+    -H "Content-Type: application/json"
 
-### Heroku
+### API DOCUMENTATION ###
+   
+   For API documentation visit /api/docs
+
+   Generate the docs!
+
+```ruby
+rake docs:generate
+```
+
+## DEPLOYMENT ##
+
+### Heroku ###
 
 **Automatic deploys from  staging are enabled**
 

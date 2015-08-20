@@ -1,0 +1,19 @@
+{
+  "resources": [
+    {
+      "name": "Countries",
+      "examples": [
+        {
+          "description": "Getting a list of enabled countries",
+          "link": "countries/getting_a_list_of_enabled_countries.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific country",
+          "link": "countries/getting_a_specific_country.json",
+          "groups": "all"
+        }
+      ]
+    }
+  ]
+}
