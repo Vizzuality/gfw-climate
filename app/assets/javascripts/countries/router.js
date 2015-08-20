@@ -8,17 +8,20 @@ define([
   var Router = Backbone.Router.extend({
 
     routes: {
-      'countries' : '_initList',
-      'countries/:id' : '_initShow',
-      'countries/overview' : '_initOverview',
+      'countries'                        : '_initList',
+      'countries/:country(/:jurisdiction)' : '_initShow',
+      'countries/overview'               : '_initOverview',
     },
 
     _initList: function() {
       new CountryListView();
     },
 
-    _initShow: function() {
-      new CountryShowHeaderView();
+    _initShow: function(country, jurisdiction) {
+      new CountryShowHeaderView({
+        country: country,
+        jurisdiction: jurisdiction
+      });
       new CountryIndicatorsView();
     },
 

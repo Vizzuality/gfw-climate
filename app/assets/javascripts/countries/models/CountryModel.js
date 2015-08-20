@@ -1,19 +1,19 @@
 define([
   'backbone',
-], function(Backbone) {
+  'jquery'
+], function(Backbone, $) {
 
   var CountryModel = Backbone.Model.extend({
 
-    url: '/countries/',
+    url: '/api/countries/',
 
-    initialize: function(arguments) {
-      // this.fetch({data: {
-      //   iso: arguments.iso
-      // }});
+    setCountry: function(country) {
+      this.url += country;
+      console.log(this.url);
     },
 
     parse: function(data) {
-      return data;
+      return data.country;
     }
 
   });
