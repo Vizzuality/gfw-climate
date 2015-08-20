@@ -9,7 +9,6 @@ define([
 
     setCountry: function(country) {
       this.url += country;
-      console.log(this.url);
     },
 
     parse: function(data) {

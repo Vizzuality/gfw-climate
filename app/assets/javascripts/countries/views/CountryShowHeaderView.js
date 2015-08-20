@@ -19,7 +19,6 @@ define([
 
       $.when.apply($, complete).done(_.bind(function() {
         this._populateJurisdictions();
-        console.log(this.model.toJSON());
       }, this));
     },
 
@@ -44,7 +43,6 @@ define([
       if (jurisdiction.value !== 'default'  && jurisdiction.value !== '') {
         Backbone.history.navigate('/countries/' + this.model.get('iso') + '/' + jurisdiction.value, {trigger: true});
       }
-
     }
 
   });
