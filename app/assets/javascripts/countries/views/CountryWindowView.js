@@ -3,10 +3,10 @@ define([
   'backbone',
   'underscore',
   'handlebars',
-  'mps',
+  'countries/presenters/show/CountryWindowPresenter',
   'views/SourceWindowView',
   'text!countries/templates/country-indicators-window.handlebars'
-], function($,Backbone, _,Handlebars,mps, SourceWindowView, tpl) {
+], function($,Backbone, _,Handlebars, CountryWindowPresenter, SourceWindowView, tpl) {
 
   'use strict';
 
@@ -18,19 +18,17 @@ define([
 
     events: function() {
       return _.extend({}, SourceWindowView.prototype.events, {
-        'click .indicator': '_toggleIndicator',
-        'click #btn-done': 'done'
+        'click .indicator' : '_toggleWidgets',
+        'click #btn-done'  : '_submitWidgets'
       });
     },
 
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
+      this.presenter = new CountryWindowPresenter(this);
       this.$el.addClass('source_window--countries')
+      this.enabledIndicators = [];
       this.render();
-    },
-
-    _toggleIndicator: function(e) {
-      $(e.currentTarget).find('span').toggleClass('indicator__name--selected');
     },
 
     show: function(e) {
@@ -38,8 +36,33 @@ define([
       this.model.set('hidden', false);
     },
 
-    done: function() {
-      console.log('done!')
+    _toggleWidgets: function(e) {
+      var indicator = e.currentTarget;
+      var id = $(indicator).attr('id');
+
+      $(indicator).toggleClass('indicator--selected');
+
+      if ($(indicator).hasClass('indicator--selected')) {
+
+        if (_.contains(this.enabledIndicators, id)) {
+          return;
+        }
+
+        this.enabledIndicators.push(id);
+
+      } else {
+
+        if (!_.contains(this.enabledIndicators, id)) {
+          return;
+        }
+
+        this.enabledIndicators = _.without(this.enabledIndicators, id);
+      }
+    },
+
+    _submitWidgets: function() {
+      this.presenter.onRenderWidgets(this.enabledIndicators);
+      this.hide();
     },
 
     render: function() {
@@ -47,5 +70,7 @@ define([
     }
 
   });
+
   return CountryWindowView;
+
 });
