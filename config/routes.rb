@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     list_show_only.resources :countries
     list_show_only.resources :posts, path: :blog
   end
+
+  get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
   
   # API routes
   namespace :api, defaults: {format: 'json'} do
@@ -37,6 +39,8 @@ Rails.application.routes.draw do
       with_options only: [:index, :show] do |list_show_only|
         list_show_only.resources :countries
       end
+
+      get 'countries/:id/:id_1', to: 'countries#show_jurisdiction', as: :jurisdiction
 
     end
 

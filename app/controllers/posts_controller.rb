@@ -15,7 +15,7 @@ class PostsController < AccessController
     end
 
     def filter_params
-      params.permit(:link)
+      params.permit(:id)
     end
 
     def set_post
