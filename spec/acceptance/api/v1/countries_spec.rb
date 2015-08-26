@@ -63,4 +63,40 @@ resource 'Countries' do
     end
   end
 
+  get "/api/countries/bra/1" do
+    parameter :thresh, "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+
+    example_request "Getting a specific jurisdiction", thresh: 50 do
+      expect(status).to eq(200)
+      jurisdiction = JSON.parse(response_body)['jurisdiction']
+      expect(jurisdiction['iso']).to eq('BRA')
+      expect(jurisdiction['thresh']).to eq('50')
+      expect(jurisdiction['country_name']).to eq('Brazil')
+      expect(jurisdiction['name']).to eq('Acre')
+      expect(jurisdiction['id']).to eq(1)
+      expect(jurisdiction['bounds']).not_to be_nil
+      expect(jurisdiction['umd']).not_to be_nil
+    end
+
+    example "Getting a specific jurisdiction with thresh 75", document: false do
+      do_request(thresh: '75')
+      expect(status).to eq(200)
+      jurisdiction = JSON.parse(response_body)['jurisdiction']
+      
+      expect(jurisdiction['iso']).to eq('BRA')
+      expect(jurisdiction['thresh']).to eq('75')
+      expect(jurisdiction['umd'][0]['thresh']).to eq(75)
+    end
+
+    example "Getting a specific jurisdiction without thresh", document: false do
+      do_request
+      expect(status).to eq(200)
+      jurisdiction = JSON.parse(response_body)['jurisdiction']
+      
+      expect(jurisdiction['iso']).to eq('BRA')
+      expect(jurisdiction['thresh']).to eq(10)
+      expect(jurisdiction['umd'][0]['thresh']).to eq(10)
+    end
+  end
+
 end

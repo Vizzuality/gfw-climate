@@ -1,14 +1,8 @@
-/ h1= @name
+h1= @name
 
-/ p = render 'shared/navigation'
+p Name: #{@name}
+p ISO:  #{@iso}
 
-h2 Info
-
-/ p Name: #{@name}
-/ p ISO:  #{@iso}
-
-/ - if @links.present?
-/   p
-/     | External links:
-/     - @get_links.each do |link|
-/       =raw "#{link_to link['title'], link['url'], target: '_blank'} | "
+- if @jurisdictions.present?
+  - @jurisdictions.each do |link|
+    p= link_to link['name_1'], jurisdiction_path(id: @iso, id_1: link['id_1'])
