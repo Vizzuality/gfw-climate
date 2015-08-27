@@ -12,14 +12,8 @@ define([
     },
 
     initialize: function(arguments) {
-      this.model = new CountryModel();
-      this.model.setCountry(arguments.country);
-
-      var complete = _.invoke([this.model], 'fetch')
-
-      $.when.apply($, complete).done(_.bind(function() {
-        this._populateJurisdictions();
-      }, this));
+      this.model = CountryModel;
+      this._populateJurisdictions();
     },
 
     _populateJurisdictions: function() {

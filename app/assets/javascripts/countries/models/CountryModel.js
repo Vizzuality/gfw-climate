@@ -17,6 +17,6 @@ define([
 
   });
 
-  return CountryModel;
+  return new CountryModel();
 
 });

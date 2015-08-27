@@ -3,7 +3,7 @@ define([
   'mps',
   'countries/models/CountryModel',
   'countries/presenters/show/WidgetGridPresenter',
-  'views/WidgetView'
+  'views/WidgetView',
 ], function(Backbone, mps, CountryModel, WidgetGridPresenter, WidgetView) {
 
   'use strict';

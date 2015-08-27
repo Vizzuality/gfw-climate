@@ -8,14 +8,14 @@ define([
     el: '#reportIndicators',
 
     events: {
-      'click #addIndicators' : 'show'
+      'click #addIndicators' : '_show'
     },
 
     initialize: function() {
       this.modal = new CountryWindowView();
     },
 
-    show: function(e) {
+    _show: function(e) {
       this.modal.show(e);
     }
 

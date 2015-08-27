@@ -30,7 +30,9 @@
         color: $dark;
         font-size: 14px;
         text-transform: uppercase;
-        &.indicator__name--selected {
+      }
+      &.indicator--selected {
+        .indicator__name {
           border: 1px solid $blue;
           border-radius: 7px;
           color: $blue;

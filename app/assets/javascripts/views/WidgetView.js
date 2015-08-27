@@ -8,10 +8,12 @@ define([
 
   var WidgetView = Backbone.View.extend({
 
+    el: '#reports',
+
     template: Handlebars.compile(tpl),
 
     events: {
-      'click #delete' : '_delete',
+      'click .close' : '_close',
       'click #info'   : '_info',
       'click #share'  : '_share'
     },
@@ -20,8 +22,9 @@ define([
 
     },
 
-    _delete: function() {
-      $(this).remove();
+    _close: function(e) {
+      e && e.preventDefault();
+      this.$el.remove();
     },
 
     _info: function() {},
@@ -29,7 +32,8 @@ define([
     _share: function() {},
 
     render: function() {
-      return this.$el.html(this.template({id: this.id}));
+      $(this.el).html(this.template({id: this.id}));
+      return this;
     }
 
   });
