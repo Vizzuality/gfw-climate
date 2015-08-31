@@ -1,18 +1,18 @@
 define([
   'underscore',
   'handlebars',
-  'views/WidgetView',
+  'countries/views/show/IndicatorView',
   'text!countries/templates/country-map-widget.handlebars'
-], function(_, Handleabars, WidgetView, TPL) {
+], function(_, Handleabars, IndicatorView, TPL) {
 
   'use strict';
 
-  var MapWidget = WidgetView.extend({
+  var MapIndicator = IndicatorView.extend({
 
     template: Handlebars.compile(TPL),
 
     events: function() {
-      return _.extend({}, WidgetView.prototype.events, {});
+      return _.extend({}, IndicatorView.prototype.events, {});
     },
 
     initialize: function() {
@@ -21,13 +21,13 @@ define([
     },
 
     render: function() {
-      var widgetView = this.constructor.__super__.render();
+      var indicatorView = this.constructor.__super__.render();
       this.el = widgetView.template();
       this.$el.find('.country-widget__content').html(this.template);
     }
 
   });
 
-  return MapWidget;
+  return MapIndicator;
 
 });

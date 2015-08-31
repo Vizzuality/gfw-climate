@@ -1,14 +1,14 @@
 define([
   'underscore',
-  'views/WidgetView'
-], function(_,WidgetView) {
+  'countries/views/show/IndicatorView'
+], function(_, IndicatorView) {
 
   'use strict';
 
-  var GraphChart = WidgetView.extend({
+  var GraphIndicator = IndicatorView.extend({
 
     events: function() {
-      return _.extend({}, WidgetView.prototype.events, {});
+      return _.extend({}, IndicatorView.prototype.events, {});
     },
 
     initialize: function() {
@@ -17,6 +17,6 @@ define([
 
   });
 
-  return GraphChart;
+  return GraphIndicator;
 
 });
