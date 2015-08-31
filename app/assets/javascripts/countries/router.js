@@ -1,22 +1,23 @@
 define([
   'backbone',
-  'countries/views/CountryListView'
-], function(Backbone, CountryListView) {
+  'countries/views/CountryIndexView',
+  'countries/views/CountryShowView'
+], function(Backbone, CountryIndexView, CountryShowView) {
 
   var Router = Backbone.Router.extend({
 
     routes: {
-      'countries' : '_initList',
-      'countries/:id' : '_initShow',
-      'countries/overview' : '_initOverview',
+      'countries'                          : '_initIndex',
+      'countries/overview'                 : '_initOverview',
+      'countries/:country(/:jurisdiction)' : '_initShow'
     },
 
-    _initList: function() {
-      new CountryListView();
+    _initIndex: function() {
+      new CountryIndexView();
     },
 
-    _initShow: function() {
-      console.log('show');
+    _initShow: function(arguments) {
+      new CountryShowView({data: arguments});
     },
 
     _initOverview: function() {

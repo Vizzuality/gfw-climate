@@ -1,15 +1,8 @@
-/**
- * The Header view.
- */
 define([
   'jquery',
   'backbone',
   'underscore',
-  'mps',
-  'presenters/SourceWindowPresenter',
-], function($,Backbone, _,mps, Presenter) {
-
-  'use strict';
+], function($,Backbone, _) {
 
   var SourceWindowModel = Backbone.Model.extend({
     defaults: {
@@ -17,7 +10,7 @@ define([
     }
   });
 
-  var SourceWindowView = Backbone.View.extend({
+  var sourceWindowView = Backbone.View.extend({
 
     el: 'body',
 
@@ -28,20 +21,26 @@ define([
 
     initialize: function() {
       // Model
-      this.presenter = new Presenter(this);
       this.model = new SourceWindowModel();
 
       // Cache
+      this._initVars();
+
+      // Init
+      // this.render();
+      this.model.on("change:hidden", this._toggle, this);
+    },
+
+    _initVars: function() {
       this.$htmlbody = $('html, body');
       this.$window = $(window);
       this.$document = $(document);
       this.$sourceWindow = $('#window');
       this.$backdrop = $('#backdrop');
       this.mobile = (this.$window.width() > 850) ? false : true;
-
-      // Init
-      this.render();
-      this.model.on("change:hidden", this._toggle, this);
+      this.$content = this.$sourceWindow.find('.content');
+      this.$contentWrapper = this.$sourceWindow.find('.content-wrapper');
+      this.$close = this.$sourceWindow.find('.close');
     },
 
     _initBindings: function() {
@@ -98,28 +97,18 @@ define([
       var data_iframe = $(e.currentTarget).data('iframe');
       (data_iframe) ? this.$sourceWindow.addClass('iframe') : this.$sourceWindow.removeClass('iframe');
       this.$content.html($('#' + data_slug).clone());
-      ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', data_slug);
       return this;
-    },
+    }
 
-    showByParam: function(data_slug,link){
-      this.model.set('hidden', false);
-      var $clone = $('#' + data_slug).clone();
-      this.$content.html($clone);
-      if (link) {
-        $clone.find('.set-link').attr('href',link);
-      }
-      ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', data_slug);
-      return this;
-    },
-
-    render: function() {
-      this.$content = this.$sourceWindow.find('.content');
-      this.$contentWrapper = this.$sourceWindow.find('.content-wrapper');
-      this.$close = this.$sourceWindow.find('.close');
-      return this.$sourceWindow;
-    },
+    // render: function() {
+    //   this.$content = this.$sourceWindow.find('.content');
+    //   this.$contentWrapper = this.$sourceWindow.find('.content-wrapper');
+    //   this.$close = this.$sourceWindow.find('.close');
+    //   return this.$sourceWindow;
+    // }
 
   });
-  return SourceWindowView;
+
+  return sourceWindowView;
+
 });

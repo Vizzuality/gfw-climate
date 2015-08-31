@@ -104,9 +104,9 @@ $height: auto;
         list-style: none;
       }
       a:not(.btn){
-        color: $cGreen;
+        color: $blue;
         &:hover{
-          color: darken($cGreen,5%);
+          color: darken($blue,5%);
         }
       }
       .img-box {
@@ -356,8 +356,8 @@ $height: auto;
   }
 
   .source_category_title {
-    color: $cGreen;
-    border-bottom-color: $cGreen;
+    color: $blue;
+    border-bottom-color: $blue;
   }
 
   .hidden {
@@ -372,7 +372,7 @@ $height: auto;
       font-weight: 500;
       font-size: 22px;
       text-transform: uppercase;
-      color: $cGreen;
+      color: $blue;
       text-align: center;
       margin: 30px 0 0;
     }
@@ -454,7 +454,7 @@ $height: auto;
       font-weight: 500;
       font-size: 22px;
       text-transform: uppercase;
-      color: $cGreen;
+      color: $blue;
       text-align: center;
       margin: 30px 0 0;
     }
@@ -670,7 +670,7 @@ $height: auto;
       transform: translate(-50%,-50%);
       @include animation(loader,1s,infinite,$easeInOutCubic);
       z-index: 11;
-      border: 3px dashed $cGreen;
+      border: 3px dashed $blue;
     }
     &.active{
       visibility: visible;
