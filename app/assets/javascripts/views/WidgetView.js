@@ -29,6 +29,7 @@ define([
       this.indicators = [];
 
       this._setIndicators();
+      this._loadIndicator();
     },
 
     _setCurrentIndicator: function(e) {
@@ -42,7 +43,7 @@ define([
     },
 
     _loadIndicator: function(indicator) {
-      var indicatorType = indicator.getAttribute('data-name');
+      // var indicatorType = indicator.getAttribute('data-name');
       // TO-DO: API call
       var graphChart = new GraphChartIndicator();
 
@@ -81,6 +82,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({indicators: this.indicators}))
+      $('.indicators-grid__item:first-child').trigger('click');
 
       // $(this.el).html(this.template({id: this.id}));
       // return this;

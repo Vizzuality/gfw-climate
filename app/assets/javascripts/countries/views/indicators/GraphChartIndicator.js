@@ -21,6 +21,7 @@ define([
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
       this.model = CountryModel;
+      console.log('init');
 
       this._getData();
       this.render();
@@ -158,37 +159,17 @@ var self = this;
 
 
           var index = Math.round(x.invert(d3.mouse(this)[0]));
-          console.log(index);
-          //       cy = h - y_scale(data[index].alerts) + marginTop;
-                // date = new Date(data[index].date),
-                // formattedDate = that.helper.config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
-                //
-          console.log(self.ticks);
-            var currentYear = moment(index).format('YYYY');
-            var xPos;
-            switch(currentYear) {
-
-              case '2006':
-                xPos = Number(1100000000000);
-                break;
-              case '2008':
-                xPos = 1150000000000;
-                break;
-              case '2010':
-                xPos = 1200000000000;
-                break;
-            }
 
 
-            console.log(d3.mouse(this)[0] - margin.left);
+            // console.log(d3.mouse(this)[0] - margin.left);
 
             // marker
             //   .attr('cx', cx)
             //   .attr('cy', cy);
 
-            positioner
-              .attr('x1', xPos)
-              .attr('x2', xPos);
+            // positioner
+            //   .attr('x1', d3.mouse(this)[0] - margin.left)
+            //   .attr('x2', d3.mouse(this)[0] - margin.left);
 
             // if (d && d.loss) {
             //   tooltip.html('<span class="data">' + d.loss + '</span>'  + ' ha in ' + d.year.format('YYYY'))
@@ -218,7 +199,6 @@ var self = this;
     },
 
     render: function() {
-
 
       this.$el.html(this.template({}));
 

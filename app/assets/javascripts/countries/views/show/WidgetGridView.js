@@ -19,6 +19,7 @@ define([
       this.presenter = new WidgetGridPresenter(this);
 
       this._setListeners();
+      this.renderWidgets();
     },
 
     _setListeners: function() {},
@@ -52,6 +53,8 @@ define([
       var enabledWidgets = this._checkEnabledWidgets(),
         newWidgets = arg;
 
+      var defaultWidgets = [2];
+
       if (enabledWidgets.length > 0) {
 
         // Add only new widgets, don't touch the current ones
@@ -64,6 +67,8 @@ define([
           this._removeDisabledWidgets(removeWidgets);
         }
       }
+
+      newWidgets = newWidgets ? newWidgets : defaultWidgets;
 
       newWidgets.forEach(_.bind(function(widget) {
         this.render(new WidgetView({id: widget}));
