@@ -3,6 +3,7 @@
   width: 50%;
   min-height: 250px;
   .country-widget__header {
+    overflow: hidden;
 
     .country-widget__name {
       float: left;
@@ -30,6 +31,42 @@
           fill: #bebcc2;
         }
       }
+    }
+  }
+
+  .country-widget__content {
+    margin-top: 25px;
+    .indicators-grid {
+      display: flex;
+      justify-content: space-around;
+      .indicators-grid__item {
+        width: 100%;
+        padding: 15px;
+        font-size: 12px;
+        text-align: center;
+        background-color: #f2f2f3;
+        border: 1px solid #e5e5e5;
+        border-right: 0;
+        cursor: pointer;
+        &:first-child {
+          border-right: 0;
+        }
+        &.is-selected {
+          background: $white;
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+  select.selector {
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    padding: 3px;
+    border-radius: 11px;
+    &.blue {
+      border: 1px solid $blue;
     }
   }
 }

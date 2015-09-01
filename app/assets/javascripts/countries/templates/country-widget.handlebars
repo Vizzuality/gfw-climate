@@ -22,12 +22,14 @@
   <div class="country-widget__content">
 
     {{#if indicators}}
-      <div class="indicators">
+      <div class="indicators-grid">
       {{#each indicators}}
-        <div class="indicator" data-name="{{this}}">{{this}}</div>
+        <div class="indicators-grid__item" data-name="{{this}}">{{this}}</div>
       {{/each}}
       </div>
-      <div class="indicators__content"></div>
+      <div class="indicators__content">
+        <div class="graph-container"></div>
+      </div>
     {{/if}}
   </div>
 </section>

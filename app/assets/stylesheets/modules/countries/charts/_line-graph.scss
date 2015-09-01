@@ -1,0 +1,45 @@
+.sup-options {
+  overflow: hidden;
+  margin: 25px 0 10px 0;
+  font-size: 12px;
+
+  .canopy-treshold {
+    float: right;
+  }
+}
+
+
+.line-chart {
+  path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+  }
+
+  .tick {
+    text {
+      font-size: 11px;
+      color: $dark;
+    }
+  }
+}
+
+.sub-options {
+  margin-bottom: 15px;
+  padding-top: 20px;
+  font-size: 12px;
+  border-top: 1px solid #e5e5e5;
+
+  .total-areas {
+    margin-left: 15px;
+    font-size: 19px;
+  }
+}

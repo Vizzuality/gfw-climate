@@ -20,7 +20,8 @@ define([
     events: {
       'click .close' : '_close',
       'click #info'   : '_info',
-      'click #share'  : '_share'
+      'click #share'  : '_share',
+      'click .indicators-grid__item': '_setCurrentIndicator'
     },
 
     initialize: function(data) {
@@ -30,14 +31,26 @@ define([
       this._setIndicators();
     },
 
+    _setCurrentIndicator: function(e) {
+      var indicatorTabs = document.getElementsByClassName('is-selected'),
+        currentIndicator = e.currentTarget;
+
+      $(indicatorTabs).toggleClass('is-selected');
+      $(currentIndicator).addClass('is-selected');
+
+      this._loadIndicator(currentIndicator);
+    },
+
+    _loadIndicator: function(indicator) {
+      var indicatorType = indicator.getAttribute('data-name');
+      // TO-DO: API call
+      var graphChart = new GraphChartIndicator();
+
+    },
+
     _setIndicators: function() {
 
-      // if (this.model.attribues.hasOwnProperty('umd')) {
-      //   this.indicators.push('umd');
-      // }
-
-      // if (this.model.attribues.hasOwnProperty('forests')) {};
-      //   this.indicators.push()
+      console.log(this.model.attributes);
 
       for(var prop in this.model.attributes) {
         if (prop === 'umd') {
@@ -47,8 +60,11 @@ define([
         if (prop === 'forests') {
           this.indicators.push(prop);
         }
-      }
 
+        if (prop === 'tenure') {
+          this.indicators.push(prop);
+        }
+      }
 
       this.render();
 
