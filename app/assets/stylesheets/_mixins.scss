@@ -88,9 +88,32 @@
     background-image: linear-gradient($origin, $start, $stop);
 }
 
-@mixin user-select($select){  
+@mixin user-select($select){
   -webkit-user-select: $select;  /* Chrome all / Safari all */
   -moz-user-select: $select;     /* Firefox all */
   -ms-user-select: $select;      /* IE 10+ */
-  user-select: $select;          /* Likely future */  
+  user-select: $select;          /* Likely future */
+}
+
+// Triangle
+@mixin equi-triangle ($width, $color, $direction) {
+  width: 0;
+  height: 0;
+  @if $direction == 'top' {
+    border-left: $width solid transparent;
+    border-right: $width solid transparent;
+    border-bottom: $width solid $color;
+  } @else if $direction == 'bottom' {
+    border-left: $width solid transparent;
+    border-right: $width solid transparent;
+    border-top: $width solid $color;
+  } @else if $direction == 'left' {
+    border-top: $width solid transparent;
+    border-bottom: $width solid transparent;
+    border-right: $width solid $color;
+  } @if $direction == 'right' {
+    border-top: $width solid transparent;
+    border-bottom: $width solid transparent;
+    border-left: $width solid $color;
+  }
 }

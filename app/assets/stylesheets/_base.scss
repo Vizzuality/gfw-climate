@@ -20,12 +20,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-svg {
-  width: 100%;
-  height: 100%;
-  transition: all .15s $easeInOutSine;
-}
-
 a{
   text-decoration: none;
   color: $blue;

@@ -30,10 +30,11 @@ define([
       // API call
       this.data = this.model.get('umd');
 
-      this._drawGraph();
+      // this._drawGraph();
     },
 
     _drawGraph: function() {
+      this.ticks = [];
 
       var margin = {
         top: 35,
@@ -41,16 +42,22 @@ define([
         bottom: 30,
         left: 58
       },
-      width = 550 - margin.left - margin.right,
-      height = 280 - margin.top - margin.bottom;
+      width = 525 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
 
       // Ranges
-      var x = d3.scale.linear().range([0, width]),
+      var x = d3.time.scale().range([0, width]),
           y = d3.scale.linear().range([height, 0]);
+
+
+      // Tooltip
+      var tooltip = d3.select('body').append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0);
 
       // Line
       var valueline = d3.svg.line()
-          .interpolate("basis")
+          .interpolate("cardinal")
           .x(function(d) {
             return x(d.year);
           })
@@ -59,29 +66,35 @@ define([
           });
 
       // SVG Canvas
-      var svgElem = document.createElement('div');
-      svgElem.setAttribute('class', 'line-graph-container');
-      var svg = d3.select(svgElem)
+      var svg = d3.select('.graph-container')
         .append('svg')
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom)
           .attr('class', 'line-chart')
         .append('g')
-          .attr('transform', 'translate(' + margin.left + ', 0)');
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+      // Vertical line positioner
+      var positioner = svg.append('svg:line')
+          .attr('x1', 0)
+          .attr('y1', 0)
+          .attr('x2', 0)
+          .attr('y2', height)
+          .style('visibility', 'hidden')
+          .style('stroke', '#aaa');
 
       // Data
-
       var data = [];
 
       this.data.forEach(function(d) {
 
-        if (Number(d.year % 2) === 0) {
+        // if (Number(d.year % 2) === 0) {
 
           data.push({
             year: moment(d.year + '-01-01'),
             loss: d.loss
           });
-        }
+        // }
 
       });
 
@@ -94,12 +107,7 @@ define([
       var yAxis = d3.svg.axis().scale(y).orient('left').ticks(data.length).tickSize(0).tickPadding(10);
 
       // Scale range of the data
-      x.domain(d3.extent(data, function(d) {
-        var fullYear = Number(d.year.format('YYYY'));
-        if (fullYear % 2 === 0) {
-          return d.year;
-        }
-      }));
+      x.domain(d3.extent(data, function(d) { return d.year; }));
 
       y.domain([0, d3.max(data, function(d) { return d.loss; })]);
 
@@ -109,28 +117,113 @@ define([
         .attr('class', 'line')
         .attr('d', valueline(data));
 
+
+
+      // Add scatterplote
+      svg.selectAll('circle.dot')
+      .data(data)
+      .enter().append('circle')
+        .attr('class', 'dot')
+        .attr('r', 5)
+        .attr('cx', function(d) { return x(d.year);})
+        .attr('cy', function(d) { return y(d.loss);})
+        // .on('mouseover', function(d) {
+        //   tooltip.transition()
+        //     .duration(200)
+        //     .style('opacity', 1);
+        //   tooltip.html('<span class="data">' + d.loss + '</span>'  + ' ha in ' + d.year.format('YYYY'))
+        //     .style('left', (d3.event.pageX - 125) + 'px')
+        //     .style('top', (d3.event.pageY - 28) + 'px');
+        //   })
+        // .on('mouseout', function(d) {
+        //   tooltip.transition()
+        //     .duration(500)
+        //     .style('opacity', 0);
+        // });
+
+var self = this;
+
+
+      // Animate positioner
+      d3.select('.graph-container')
+        .on("mouseout", function() {
+          // positioner.style("visibility", "hidden");
+          tooltip.transition()
+            .duration(500)
+            .style('opacity', 0);
+        })
+        .on('mousemove', function() {
+          positioner.style("visibility", "visible");
+          var cx = d3.mouse(this)[0] + margin.left;
+
+
+          var index = Math.round(x.invert(d3.mouse(this)[0]));
+          console.log(index);
+          //       cy = h - y_scale(data[index].alerts) + marginTop;
+                // date = new Date(data[index].date),
+                // formattedDate = that.helper.config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
+                //
+          console.log(self.ticks);
+            var currentYear = moment(index).format('YYYY');
+            var xPos;
+            switch(currentYear) {
+
+              case '2006':
+                xPos = Number(1100000000000);
+                break;
+              case '2008':
+                xPos = 1150000000000;
+                break;
+              case '2010':
+                xPos = 1200000000000;
+                break;
+            }
+
+
+            console.log(d3.mouse(this)[0] - margin.left);
+
+            // marker
+            //   .attr('cx', cx)
+            //   .attr('cy', cy);
+
+            positioner
+              .attr('x1', xPos)
+              .attr('x2', xPos);
+
+            // if (d && d.loss) {
+            //   tooltip.html('<span class="data">' + d.loss + '</span>'  + ' ha in ' + d.year.format('YYYY'))
+            //   tooltip.transition()
+            //     .duration(200)
+            //     .style('opacity', 1)
+            //     .style("top", "-20px")
+            //     .style("left", (cx - 162) + "px");
+            // };
+        });
+
+
+
       // Add X axis
       svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis);
+        .call(xAxis).selectAll('.tick').each(function(d, i) {
+        console.log(i);
+        self.ticks.push(d);
+      });
 
       // Add Y axis
       svg.append('g')
         .attr('class', 'y axis')
         .call(yAxis);
-
-      return svgElem.innerHTML;
     },
 
     render: function() {
-      var lineChart = this._drawGraph();
 
-      this.$el.html(this.template({
-        svg: lineChart
-      }));
 
-      // this.$el.find('.sub-options').prepend(lineChart.innerHTML);
+      this.$el.html(this.template({}));
+
+      this._drawGraph();
+
     }
 
   });
