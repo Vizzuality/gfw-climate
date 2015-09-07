@@ -21,7 +21,6 @@ define([
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
       this.model = CountryModel;
-      console.log('init');
 
       this._getData();
       this.render();
@@ -51,10 +50,7 @@ define([
           y = d3.scale.linear().range([height, 0]);
 
 
-      // Tooltip
-      var tooltip = d3.select('body').append('div')
-            .attr('class', 'tooltip')
-            .style('opacity', 0);
+
 
       // Line
       var valueline = d3.svg.line()
@@ -142,7 +138,8 @@ define([
         //     .style('opacity', 0);
         // });
 
-var self = this;
+
+      var bisecDate = d3.bisector(function(d) { return d.year; }).left;
 
 
       // Animate positioner
@@ -158,27 +155,32 @@ var self = this;
           var cx = d3.mouse(this)[0] + margin.left;
 
 
-          var index = Math.round(x.invert(d3.mouse(this)[0]));
+          // var index = Math.round(x.invert(d3.mouse(this)[0]));
 
+            var x0 = x.invert(d3.mouse(this)[0] - margin.left),
+              index = bisecDate(data, x0, 1);
+
+            console.log(index);
+
+            console.log(data[index]);
+
+            console.log(cx);
 
             // console.log(d3.mouse(this)[0] - margin.left);
 
-            // marker
-            //   .attr('cx', cx)
-            //   .attr('cy', cy);
-
             // positioner
-            //   .attr('x1', d3.mouse(this)[0] - margin.left)
-            //   .attr('x2', d3.mouse(this)[0] - margin.left);
+            //   .attr('x1', xPos)
+            //   .attr('x2', xPos);
 
-            // if (d && d.loss) {
-            //   tooltip.html('<span class="data">' + d.loss + '</span>'  + ' ha in ' + d.year.format('YYYY'))
-            //   tooltip.transition()
-            //     .duration(200)
-            //     .style('opacity', 1)
-            //     .style("top", "-20px")
-            //     .style("left", (cx - 162) + "px");
-            // };
+            if (data[index]) {
+
+              tooltip.html('<span class="data">' + data[index].loss + '</span>'  + ' ha in ' + data[index].year.format('YYYY'))
+              tooltip.transition()
+                .duration(200)
+                .style('opacity', 1)
+                .style("top", "-20px")
+                .style("left", (cx - 162) + "px");
+            };
         });
 
 
@@ -187,18 +189,21 @@ var self = this;
       svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + height + ')')
-        .call(xAxis).selectAll('.tick').each(function(d, i) {
-        console.log(i);
-        self.ticks.push(d);
-      });
+        .call(xAxis);
 
       // Add Y axis
       svg.append('g')
         .attr('class', 'y axis')
         .call(yAxis);
+
+      // Tooltip
+      var tooltip = d3.select('.graph-container').append('div')
+          .attr('class', 'tooltip')
+          .style('opacity', 0);
     },
 
     render: function() {
+
 
       this.$el.html(this.template({}));
 

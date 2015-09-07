@@ -1,19 +1,25 @@
 define([
   'backbone',
+  'mps',
   'countries/models/CountryModel'
-], function(Backbone, CountryModel) {
+], function(Backbone, mps, CountryModel) {
 
   var CountryShowHeaderView = Backbone.View.extend({
 
     el: '#headerCountry',
 
     events: {
-      'change #areaSelector': '_setJurisdictions'
+      'change #areaSelector': '_setJurisdictions',
+      'click #customizeReports': '_openReportPanel'
     },
 
     initialize: function(arguments) {
       this.model = CountryModel;
       this._populateJurisdictions();
+    },
+
+    _openReportPanel: function() {
+      mps.publish('ReportsPanel/open', []);
     },
 
     _populateJurisdictions: function() {

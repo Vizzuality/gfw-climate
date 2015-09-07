@@ -1,7 +1,8 @@
 define([
   'backbone',
-  'countries/views/CountryWindowView',
-], function(Backbone, CountryWindowView) {
+  'mps',
+  'countries/views/CountryWindowView'
+], function(Backbone, mps, CountryWindowView) {
 
   var CountryIndicatorsView = Backbone.View.extend({
 
@@ -11,12 +12,10 @@ define([
       'click #addIndicators' : '_show'
     },
 
-    initialize: function() {
-      this.modal = new CountryWindowView();
-    },
+    initialize: function() {},
 
     _show: function(e) {
-      this.modal.show(e);
+      mps.publish('ReportsPanel/open', []);
     }
 
   });

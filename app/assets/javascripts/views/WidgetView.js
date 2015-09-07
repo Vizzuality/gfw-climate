@@ -20,8 +20,8 @@ define([
     events: {
       'click .close' : '_close',
       'click #info'   : '_info',
-      'click #share'  : '_share',
-      'click .indicators-grid__item': '_setCurrentIndicator'
+      'click #share'  : '_share'
+      // 'click .indicators-grid__item': '_setCurrentIndicator'
     },
 
     initialize: function(data) {
