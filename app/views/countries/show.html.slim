@@ -32,9 +32,9 @@
             button#customizeReports.btn.medium.blue.btn-customize-report customize report
             .header-country__display-options
               ul
-                li list all
-                li by theme
-                li.is-selected selector
+                li(data-display="all") list all
+                li(data-display="theme") by theme
+                li.is-selected (data-display="selector") selector
         .header-country__options-country
 
       .container-country__content-country

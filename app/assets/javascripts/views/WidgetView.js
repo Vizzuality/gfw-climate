@@ -45,13 +45,10 @@ define([
     _loadIndicator: function(indicator) {
       // var indicatorType = indicator.getAttribute('data-name');
       // TO-DO: API call
-      var graphChart = new GraphChartIndicator();
-
+      // var graphChart = new GraphChartIndicator();
     },
 
     _setIndicators: function() {
-
-      console.log(this.model.attributes);
 
       for(var prop in this.model.attributes) {
         if (prop === 'umd') {
@@ -81,7 +78,7 @@ define([
     _share: function() {},
 
     render: function() {
-      this.$el.html(this.template({indicators: this.indicators}))
+      //this.$el.html(this.template({indicators: this.indicators}))
       $('.indicators-grid__item:first-child').trigger('click');
 
       // $(this.el).html(this.template({id: this.id}));

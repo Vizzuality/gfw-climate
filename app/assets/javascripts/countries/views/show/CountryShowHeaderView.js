@@ -1,8 +1,8 @@
 define([
   'backbone',
-  'mps',
-  'countries/models/CountryModel'
-], function(Backbone, mps, CountryModel) {
+  'countries/models/CountryModel',
+  'countries/presenters/show/CountryHeaderPresenter'
+], function(Backbone, CountryModel, CountryHeaderPresenter) {
 
   var CountryShowHeaderView = Backbone.View.extend({
 
@@ -10,16 +10,29 @@ define([
 
     events: {
       'change #areaSelector': '_setJurisdictions',
-      'click #customizeReports': '_openReportPanel'
+      'click #customizeReports': '_openReportPanel',
+      'click .header-country__display-options li': '_setDisplay'
     },
 
     initialize: function(arguments) {
       this.model = CountryModel;
+      this.presenter = new CountryHeaderPresenter(this);
       this._populateJurisdictions();
+      this._setDisplay();
     },
 
     _openReportPanel: function() {
-      mps.publish('ReportsPanel/open', []);
+      this.presenter.onOpenReportsPanel();
+    },
+
+    _setDisplay: function(e) {
+      var display = 'all';
+      if (e) {
+        $(e.currentTarget).toggleClass('is-selected');
+        display = $(e.currentTarget).data('display');
+      }
+
+      this.presenter.onSwitchDisplay(display);
     },
 
     _populateJurisdictions: function() {

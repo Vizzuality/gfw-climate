@@ -3,9 +3,7 @@ define([
   'countries/presenters/PresenterClass'
 ], function(mps, PresenterClass) {
 
-  'use strict';
-
-  var ShowPresenter = PresenterClass.extend({
+  var SelectorPresenter = PresenterClass.extend({
 
     init: function(view) {
       this._super();
@@ -15,14 +13,13 @@ define([
     /**
      * Application subscriptions.
      */
-    _subscriptions: [{}],
+    _subscriptions: [{
 
-    onRenderWidgets: function(widgets) {
-      mps.publish('WidgetGrid/render', [widgets]);
-    }
+    }],
+
 
   });
 
-  return ShowPresenter;
+  return SelectorPresenter;
 
-});
+})

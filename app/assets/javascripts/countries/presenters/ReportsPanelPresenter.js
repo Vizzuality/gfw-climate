@@ -1,28 +1,31 @@
 define([
   'mps',
-  'countries/presenters/PresenterClass',
-  'countries/views/CountryWindowView'
-], function(mps, PresenterClass, CountryWindowView) {
+  'countries/presenters/PresenterClass'
+], function(mps, PresenterClass) {
 
   var ReportsPanelPresenter = PresenterClass.extend({
 
     init: function(view) {
       this._super();
-      this.view = new CountryWindowView ();
+      this.view = view;
     },
 
     _subscriptions: [{
-      'ReportsPanel/open':function() {
+      'ReportsPanel/open': function() {
         this.view.show();
       }
     }, {
       'ReportsPanel/close': function() {
         this.view.hide();
       }
-    }]
+    }],
+
+    _onSubmitWidgets: function(enabledIndicators) {
+      mps.publish('Widgets/render', [enabledIndicators]);
+    }
 
   });
 
-  return new ReportsPanelPresenter();
+  return ReportsPanelPresenter;
 
 });

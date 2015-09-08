@@ -1,8 +1,7 @@
 define([
   'backbone',
-  'mps',
-  'countries/views/CountryWindowView'
-], function(Backbone, mps, CountryWindowView) {
+  'mps'
+], function(Backbone, mps) {
 
   var CountryIndicatorsView = Backbone.View.extend({
 

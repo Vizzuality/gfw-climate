@@ -11,8 +11,16 @@ define([
     },
 
     _subscriptions: [{
-      'WidgetGrid/render':function(widgets) {
-        this.view.renderWidgets(widgets);
+      'Widgets/render': function(widgets) {
+        this.view.model.set({
+          'widgets': widgets
+        });
+      }
+    }, {
+      'CountryHeader/switchDisplay': function(display) {
+        this.view.model.set({
+          'display': display
+        });
       }
     }],
 

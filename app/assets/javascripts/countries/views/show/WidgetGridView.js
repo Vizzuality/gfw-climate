@@ -1,10 +1,10 @@
 define([
   'backbone',
-  'mps',
-  'countries/models/CountryModel',
   'countries/presenters/show/WidgetGridPresenter',
+  'countries/views/show/ThemeTabsView',
+  'countries/views/show/SelectorView',
   'views/WidgetView',
-], function(Backbone, mps, CountryModel, WidgetGridPresenter, WidgetView) {
+], function(Backbone, WidgetGridPresenter, ThemeTabsView, SelectorView, WidgetView) {
 
   'use strict';
 
@@ -14,27 +14,71 @@ define([
 
     events: {},
 
+    model: new (Backbone.Model.extend({
+      defaults:{
+        display: 'all',
+        widgets: [1, 2, 3, 4, 5, 6],
+        theme: 'national-data',
+        selector: 'country'
+      }
+    })),
+
     initialize: function() {
-      this.model = CountryModel;
-      this.presenter = new WidgetGridPresenter(this);
+      this.status = new WidgetGridPresenter(this);
 
       this._setListeners();
-      this.renderWidgets();
+
+      // this.renderWidgets();
     },
 
-    _setListeners: function() {},
+    _setListeners: function() {
+      this.model.on('change:display', this._setDisplay, this);
+      this.model.on('change:widgets', this.renderWidgets, this);
+    },
 
-    _checkEnabledWidgets: function() {
-      var enabledWidgets = $('.country-widget');
-      var ids = [];
+    _setDisplay: function() {
+      var display = this.model.get('display');
 
-      if (enabledWidgets.length > 0) {
-        _.each(enabledWidgets, function(widget) {
-          ids.push($(widget).attr('id'));
-        });
+      if (display === 'theme') {
+        new ThemeTabsView();
       }
 
-      return ids;
+      if (display === 'selector') {
+        new SelectorView();
+      }
+    },
+
+    _checkEnabledWidgets: function() {
+      console.log('checking..!');
+      var newIndicators = this.model.get('widgets');
+      var currentWidgets = $('.country-widget'),
+        enabledWidgets = [];
+
+      if (currentWidgets.length > 0) {
+        _.each(currentWidgets, function(widget) {
+          enabledWidgets.push($(widget).attr('id'));
+        });
+
+        if (newIndicators && newIndicators.length > 0) {
+
+          // Add only new widgets, don't touch the current ones
+          enabledWidgets = _.difference(newIndicators, enabledWidgets);
+
+          // If neccesary, remove previously disabled widgets
+          var removeWidgets = _.difference(enabledWidgets, newIndicators);
+
+          if (removeWidgets.length > 0) {
+            this._removeDisabledWidgets(removeWidgets);
+          }
+        }
+
+      } else {
+        enabledWidgets = newIndicators;
+      }
+
+      console.log(enabledWidgets, newIndicators);
+
+      this.model.set({'widgets': enabledWidgets}, { silent: true });
     },
 
     _removeDisabledWidgets: function(removeWidgets) {
@@ -49,28 +93,15 @@ define([
       });
     },
 
-    renderWidgets: function(arg) {
-      var enabledWidgets = this._checkEnabledWidgets(),
-        newWidgets = arg;
+    renderWidgets: function() {
 
-      var defaultWidgets = [2];
+      this._checkEnabledWidgets();
 
-      if (enabledWidgets.length > 0) {
+      var enabledWidgets = this.model.get('widgets');
 
-        // Add only new widgets, don't touch the current ones
-        newWidgets = _.difference(arg, enabledWidgets);
+      console.log(enabledWidgets);
 
-        // If neccesary, remove previously disabled widgets
-        var removeWidgets = _.difference(enabledWidgets, arg);
-
-        if (removeWidgets.length > 0) {
-          this._removeDisabledWidgets(removeWidgets);
-        }
-      }
-
-      newWidgets = newWidgets ? newWidgets : defaultWidgets;
-
-      newWidgets.forEach(_.bind(function(widget) {
+      enabledWidgets.forEach(_.bind(function(widget) {
         this.render(new WidgetView({id: widget}));
       }, this));
     },
