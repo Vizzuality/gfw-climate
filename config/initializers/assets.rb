@@ -22,3 +22,11 @@ unless Rails.env.production?
   Rails.application.config.assets.precompile += %w( teaspoon.css )
   Rails.application.config.assets.precompile += %w( teaspoon-teaspoon.js )
 end
+
+# Heroku Asset Pippeline
+if Rails.env.production?
+  Rails.application.config.requirejs.logical_asset_filter += [/\.handlebars$/]
+  Rails.application.config.requirejs.logical_asset_filter += [/\.pgsql$/]
+  Rails.application.config.requirejs.logical_asset_filter += [/\.json$/]
+  Rails.application.config.requirejs.logical_asset_filter += [/\.cartocss$/]
+end
