@@ -82,9 +82,9 @@ Rails.application.configure do
   # config.active_record.dump_schema_after_migration = false
   # Heroku Asset Pippeline
 
-  config.requirejs.logical_asset_filter += [/\.handlebars$/]
-  config.requirejs.logical_asset_filter += [/\.pgsql$/]
-  config.requirejs.logical_asset_filter += [/\.json$/]
-  config.requirejs.logical_asset_filter += [/\.cartocss$/]
+  config.requirejs.logical_path_patterns += [/\.handlebars$/]
+  config.requirejs.logical_path_patterns += [/\.pgsql$/]
+  config.requirejs.logical_path_patterns += [/\.json$/]
+  config.requirejs.logical_path_patterns += [/\.cartocss$/]
 
 end
