@@ -13,21 +13,21 @@ define([
 
   var WidgetView = Backbone.View.extend({
 
-    el: '#reports',
+    el: '.reports-grid',
 
     template: Handlebars.compile(tpl),
 
     events: {
       'click .close' : '_close',
       'click #info'   : '_info',
-      'click #share'  : '_share'
-      // 'click .indicators-grid__item': '_setCurrentIndicator'
+      'click #share'  : '_share',
+      'click .indicators-grid__item': '_setCurrentIndicator'
     },
 
     initialize: function(data) {
       this.model = CountryModel;
       this.indicators = [];
-
+      this.id = data.id;
       this._setIndicators();
       this._loadIndicator();
     },
@@ -39,13 +39,13 @@ define([
       $(indicatorTabs).toggleClass('is-selected');
       $(currentIndicator).addClass('is-selected');
 
-      this._loadIndicator(currentIndicator);
+      // this._loadIndicator(currentIndicator);
     },
 
     _loadIndicator: function(indicator) {
-      // var indicatorType = indicator.getAttribute('data-name');
+      //var indicatorType = indicator.getAttribute('data-name');
       // TO-DO: API call
-      // var graphChart = new GraphChartIndicator();
+      var graphChart = new GraphChartIndicator();
     },
 
     _setIndicators: function() {
@@ -65,7 +65,6 @@ define([
       }
 
       this.render();
-
     },
 
     _close: function(e) {
@@ -78,11 +77,18 @@ define([
     _share: function() {},
 
     render: function() {
-      //this.$el.html(this.template({indicators: this.indicators}))
+
+
+      this.$el.html(this.template({
+        id: this.id,
+        indicators: this.indicators
+      }));
+
+      this.$el.find('.graph-container').html(new GraphChartIndicator().render());
+
       $('.indicators-grid__item:first-child').trigger('click');
 
-      // $(this.el).html(this.template({id: this.id}));
-      // return this;
+      return this.$el.html();
     }
 
   });

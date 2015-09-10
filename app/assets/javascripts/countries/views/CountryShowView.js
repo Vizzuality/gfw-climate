@@ -4,10 +4,9 @@ define([
   'countries/models/CountryModel',
   'countries/views/show/CountryShowHeaderView',
   'countries/views/show/WidgetGridView',
-  'countries/views/show/CountryIndicatorsView',
   'countries/views/CountryModalView',
 ], function(Backbone, $, CountryModel, CountryShowHeaderView,
-  WidgetGridView, CountryIndicatorsView, CountryModalView) {
+  WidgetGridView, CountryModalView) {
 
   var CountryShowView = Backbone.View.extend({
 
@@ -20,7 +19,6 @@ define([
       $.when.apply($, complete).done(_.bind(function() {
         new CountryShowHeaderView();
         new WidgetGridView();
-        new CountryIndicatorsView();
         new CountryModalView();
       }, this));
     }

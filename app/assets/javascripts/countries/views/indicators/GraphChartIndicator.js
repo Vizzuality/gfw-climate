@@ -12,6 +12,8 @@ define([
 
   var GraphIndicator = IndicatorView.extend({
 
+    el: '.graph-container',
+
     template: Handlebars.compile(tpl),
 
     events: function() {
@@ -23,12 +25,12 @@ define([
       this.model = CountryModel;
 
       this._getData();
-      this.render();
+      // this.render();
     },
 
     _getData: function() {
       // API call
-      this.data = this.model.get('umd');
+      this.data = this.model.attributes.umd;
 
       // this._drawGraph();
     },
@@ -48,9 +50,6 @@ define([
       // Ranges
       var x = d3.time.scale().range([0, width]),
           y = d3.scale.linear().range([height, 0]);
-
-
-
 
       // Line
       var valueline = d3.svg.line()
@@ -203,12 +202,8 @@ define([
     },
 
     render: function() {
-
-
-      this.$el.html(this.template({}));
-
       this._drawGraph();
-
+      return this.$el.html();
     }
 
   });

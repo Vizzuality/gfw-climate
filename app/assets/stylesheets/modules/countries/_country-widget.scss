@@ -4,6 +4,9 @@
   min-height: 250px;
   .country-widget__header {
     overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     .country-widget__name {
       float: left;
@@ -17,19 +20,43 @@
       display: flex;
       float: right;
 
-      a {
+      svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        fill: #bebcc2;
+      }
+
+      .close {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 50px;
+        padding-right: 3px;
+        font-size: 10px;
+        color: #7f7f7f;
+        border: 1px #bebcc2 solid;
+        border-radius: 8px;
+        svg {
+          left: 3px;
+          transform: translate(0, -50%);
+        }
+      }
+
+      .info,
+      .share {
+        position: relative;
         display: inline-block;
-        width: 12px;
-        height: 12px;
+        width: 18px;
+        height: 18px;
         margin: 0 3px;
         border: 1px #bebcc2 solid;
         border-radius: 50%;
-        svg {
-          width: 10px;
-          height: 10px;
-          vertical-align: top;
-          fill: #bebcc2;
-        }
+
       }
     }
   }

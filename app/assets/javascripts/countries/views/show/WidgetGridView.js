@@ -1,10 +1,11 @@
 define([
   'backbone',
   'countries/presenters/show/WidgetGridPresenter',
-  'countries/views/show/ThemeTabsView',
-  'countries/views/show/SelectorView',
-  'views/WidgetView',
-], function(Backbone, WidgetGridPresenter, ThemeTabsView, SelectorView, WidgetView) {
+  'countries/views/show/reports/NationalView',
+  'countries/views/show/reports/SubNationalView',
+  'countries/views/show/reports/AreasView',
+], function(Backbone, WidgetGridPresenter, NationalView,
+    SubNationalView, AreasView) {
 
   'use strict';
 
@@ -12,45 +13,60 @@ define([
 
     el: '#reports',
 
-    events: {},
+    events: {
+      'click .addIndicators' : '_showModal',
+      'click .themes li': '_setCurrentTab'
+    },
 
     model: new (Backbone.Model.extend({
       defaults:{
-        display: 'all',
-        widgets: [1, 2, 3, 4, 5, 6],
-        theme: 'national-data',
-        selector: 'country'
+        display: 'national',
+        widgets: [1,2,3]
       }
     })),
 
     initialize: function() {
-      this.status = new WidgetGridPresenter(this);
+      this.presenter = new WidgetGridPresenter(this);
 
       this._setListeners();
-
-      // this.renderWidgets();
+      this._setCurrentTab();
     },
 
     _setListeners: function() {
-      this.model.on('change:display', this._setDisplay, this);
-      this.model.on('change:widgets', this.renderWidgets, this);
+      this.model.on('change:display', this.render, this);
+      this.model.on('change:widgets', this.render, this);
     },
 
-    _setDisplay: function() {
-      var display = this.model.get('display');
+    _setCurrentTab: function(e) {
+      var $tab = e ? $(e.currentTarget) : this.$el.find('.themes > li:first-child');
+      this.$el.find('.themes > li').removeClass('is-selected');
+      $tab.toggleClass('is-selected');
 
-      if (display === 'theme') {
-        new ThemeTabsView();
-      }
+      var display = $tab ? $tab.data('display') : this.model.attributes.display;
+      this._setDisplay(display)
+    },
 
-      if (display === 'selector') {
-        new SelectorView();
-      }
+    _setDisplay: function(display) {
+      this.model.set({
+        'display': display
+      });
+    },
+
+    _setWidgets: function(widgets) {
+      this.model.set({
+        'widgets': _.clone(widgets)
+      }, { silent: true });
+
+      this._checkEnabledWidgets();
+    },
+
+    _showModal: function(e) {
+      e && e.preventDefault();
+      this.presenter._onOpenModal();
     },
 
     _checkEnabledWidgets: function() {
-      console.log('checking..!');
-      var newIndicators = this.model.get('widgets');
+      var newIndicators = this.model.attributes.widgets;
       var currentWidgets = $('.country-widget'),
         enabledWidgets = [];
 
@@ -76,9 +92,7 @@ define([
         enabledWidgets = newIndicators;
       }
 
-      console.log(enabledWidgets, newIndicators);
-
-      this.model.set({'widgets': enabledWidgets}, { silent: true });
+      this.model.set({'widgets': enabledWidgets});
     },
 
     _removeDisabledWidgets: function(removeWidgets) {
@@ -93,21 +107,26 @@ define([
       });
     },
 
-    renderWidgets: function() {
+    render: function() {
 
-      this._checkEnabledWidgets();
+      var subview;
 
-      var enabledWidgets = this.model.get('widgets');
+      console.log(this.model);
 
-      console.log(enabledWidgets);
+      switch(this.model.attributes.display) {
 
-      enabledWidgets.forEach(_.bind(function(widget) {
-        this.render(new WidgetView({id: widget}));
-      }, this));
-    },
+        case 'national':
+          subview = new NationalView(this.model);
+          break;
+        case 'subnational':
+          subview = new SubNationalView(this.model);
+          break;
+        case 'areas-interest':
+          subview = new AreasView(this.model);
+          break;
+      }
 
-    render: function(widget) {
-      this.$el.append(widget.render());
+      this.$el.find('.reports-grid').html(subview.render());
     }
 
   });
