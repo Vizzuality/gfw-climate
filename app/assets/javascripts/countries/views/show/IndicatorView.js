@@ -6,6 +6,8 @@ define([
 
   var IndicatorView = Backbone.View.extend({
 
+    el: '.indicators__content',
+
     events: {},
 
     initialize: function() {},

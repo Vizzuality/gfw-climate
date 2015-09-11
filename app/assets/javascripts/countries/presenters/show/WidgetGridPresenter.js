@@ -1,7 +1,8 @@
 define([
   'mps',
+  'underscore',
   'countries/presenters/PresenterClass'
-], function(mps, PresenterClass) {
+], function(mps, _, PresenterClass) {
 
   var WidgetGridPresenter = PresenterClass.extend({
 
@@ -11,10 +12,18 @@ define([
     },
 
     _subscriptions: [{
-      'WidgetGrid/render':function(widgets) {
-        this.view.renderWidgets(widgets);
+      'Widgets/render': function(widgets) {
+        this.view._setWidgets(widgets);
+      }
+    }, {
+      'CountryHeader/switchDisplay': function(display) {
+        this.view._setDisplay(display);
       }
     }],
+
+    _onOpenModal: function() {
+      mps.publish('ReportsPanel/open', []);
+    },
 
   });
 

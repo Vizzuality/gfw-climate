@@ -1,24 +1,22 @@
 define([
   'underscore',
-  'views/WidgetView'
-], function(_,WidgetView) {
+  'countries/views/show/IndicatorView',
+], function(_,IndicatorView) {
 
   'use strict';
 
-  var PieChartWidget = WidgetView.extend({
+  var PieChartIndicator = IndicatorView.extend({
 
     events: function() {
-      return _.extend({}, WidgetView.prototype.events, {});
+      return _.extend({}, IndicatorView.prototype.events, {});
     },
 
     initialize: function(widget) {
-      console.log(widget);
-      console.log('init PieChart Widget')
       this.constructor.__super__.initialize.apply(this);
     }
 
-  })
+  });
 
-  return PieChartWidget;
+  return PieChartIndicator;
 
 });

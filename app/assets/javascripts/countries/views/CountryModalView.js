@@ -3,14 +3,14 @@ define([
   'backbone',
   'underscore',
   'handlebars',
-  'countries/presenters/show/CountryWindowPresenter',
+  'countries/presenters/ReportsPanelPresenter',
   'views/SourceWindowView',
   'text!countries/templates/country-indicators-window.handlebars'
-], function($,Backbone, _,Handlebars, CountryWindowPresenter, SourceWindowView, tpl) {
+], function($, Backbone, _,Handlebars, ReportsPanelPresenter, SourceWindowView, tpl) {
 
   'use strict';
 
-  var CountryWindowView = SourceWindowView.extend({
+  var CountryModalView = SourceWindowView.extend({
 
     template: Handlebars.compile(tpl),
 
@@ -25,9 +25,11 @@ define([
 
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
-      this.presenter = new CountryWindowPresenter(this);
-      this.$el.addClass('source_window--countries')
+      this.presenter = new ReportsPanelPresenter(this);
+
       this.enabledIndicators = [];
+
+      this.$el.addClass('source_window--countries')
       this.render();
     },
 
@@ -40,9 +42,9 @@ define([
       var indicator = e.currentTarget;
       var id = $(indicator).attr('id');
 
-      $(indicator).toggleClass('indicator--selected');
+      $(indicator).toggleClass('is-selected');
 
-      if ($(indicator).hasClass('indicator--selected')) {
+      if ($(indicator).hasClass('is-selected')) {
 
         if (_.contains(this.enabledIndicators, id)) {
           return;
@@ -61,8 +63,8 @@ define([
     },
 
     _submitWidgets: function() {
-      this.presenter.onRenderWidgets(this.enabledIndicators);
       this.hide();
+      this.presenter._onSubmitWidgets(this.enabledIndicators);
     },
 
     render: function() {
@@ -71,6 +73,6 @@ define([
 
   });
 
-  return CountryWindowView;
+  return CountryModalView;
 
 });

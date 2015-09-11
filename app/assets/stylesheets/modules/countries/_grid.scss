@@ -1,0 +1,37 @@
+.reports-content {
+  height: 100%;
+}
+
+.themes {
+  display: flex;
+  justify-content: space-around;
+  background-color: #eee;
+  li {
+    list-style: none;
+    flex-grow: 3;
+    padding: 10px 0;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    &.is-selected {
+      background-color: $white;
+    }
+  }
+}
+
+.no-indicators-warning {
+  margin: 75px 0;
+  text-align: center;
+  h3 {
+    font-size: 32px;
+    font-weight: 300;
+  }
+  .btn {
+    margin-top: 45px;
+  }
+}
+
+.reports-grid {
+  overflow: hidden;
+}

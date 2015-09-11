@@ -1,44 +1,76 @@
 .source_window--countries {
-  width: 750px;
+  width: 820px;
 
   .source_header {
     margin: 10px 0 25px;
     padding: 0;
     .source_title {
       font-size: 32px;
-      font-weight: 400;
+      font-weight: 300;
       text-transform: inherit;
     }
   }
 
   .indicator-list {
     display: flex;
-    flex-wrap: wrap;
-    .indicator {
-      display: inline-flex;
-      width: 33%;
-      padding: 10px 15px;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border: 1px solid #ddd;
-      cursor: pointer;
-      .indicator__name {
-        display: inline-block;
-        padding: 5px 10px;
-        border: 1px solid transparent;
-        color: $dark;
-        font-size: 14px;
-        text-transform: uppercase;
+
+    .col {
+      margin: 0 1px;
+      &:first-child {
+        margin-left: 0;
       }
-      &.indicator--selected {
-        .indicator__name {
-          border: 1px solid $blue;
-          border-radius: 7px;
-          color: $blue;
+      &:last-child {
+        margin-right: 0;
+      }
+
+      h3 {
+        color: $dark;
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      ul {
+        margin-top: 10px;
+        .indicator {
+          display: inline-flex;
+          align-items: center;
+          width: 100%;
+          min-height: 52px;
+          margin: 2px;
+          padding: 10px;
+          justify-content: space-between;
+          border: 1px solid #e6e6e6;
+          border-radius: 6px;
+          line-height: 1.1;
+          cursor: pointer;
+          .indicator__name {
+            display: inline-block;
+            color: rgba($black, .5);
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+          }
+          &.is-selected {
+            border-color: $blue;
+            .indicator__name {
+              color: $blue;
+            }
+            svg {
+              fill: $blue;
+            }
+          }
+          svg {
+            width: 18px;
+            height: 18px;
+            fill: #e6e6e6;
+          }
         }
       }
+
     }
+
   }
   .row {
     text-align: center;
