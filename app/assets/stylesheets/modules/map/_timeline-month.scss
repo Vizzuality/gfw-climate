@@ -137,7 +137,7 @@
   }
 
   .domain {
-    stroke: $cGreen1;
+    stroke: $blue1;
     stroke-width: 4;
     // shape-rendering: crispEdges;
   }
@@ -147,7 +147,7 @@
     fill: $dark;
     font-weight: 500;
     &.active {
-      fill: $cGreen1;
+      fill: $blue1;
     }
   }
 

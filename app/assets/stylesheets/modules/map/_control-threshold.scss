@@ -133,7 +133,7 @@
         position: absolute;
         top: 0;
         text-align: center;
-        color: $cGreen;
+        color: $blue;
         font-weight: 500;
         font-size: 10px;
       }
@@ -148,13 +148,13 @@
       li{
         position: absolute;
         text-align: center;
-        color: $cGreen;
+        color: $blue;
         font-size: 10px;
         font-weight: 500;
         cursor: pointer;
         transform: translate(-50%,0);
         &:hover{
-          color: darken($cGreen, 5%);
+          color: darken($blue, 5%);
         }
         @for $i from 0 through 6 {
           &:nth-child(#{$i + 1}){
@@ -186,7 +186,7 @@
           height: 4px;
           margin: -2px 0 0;
           cursor: pointer;
-          background: $cGreen;
+          background: $blue;
           border-radius: 2px;
         }
       }
@@ -198,7 +198,7 @@
         height: 4px;
         margin: -1px 0 0;
         cursor: pointer;
-        background: $cGreen;
+        background: $blue;
         border-radius: 2px;
       }
     }

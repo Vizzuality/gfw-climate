@@ -71,7 +71,7 @@
       &.closed{
         padding: 0 20px 10px;
         .category-name {
-          &:after{ 
+          &:after{
             transform: translate(0,-100%) rotate(180deg);
           }
           em{ display: inline-block;}
@@ -265,17 +265,17 @@
         font-weight: 500;
       }
       .canopy-button{
-        background: $cGreen;
+        background: $blue;
         color: $white;
         display: inline-block;
         padding: 1px 5px 0;
         margin: 0 2px;
         border-radius: 10px;
         cursor: pointer;
-        box-shadow: 0 0 0 2px $cGreen;
+        box-shadow: 0 0 0 2px $blue;
         &:hover{
-          background: darken($cGreen,5%);
-          box-shadow: 0 0 0 2px darken($cGreen,5%);
+          background: darken($blue,5%);
+          box-shadow: 0 0 0 2px darken($blue,5%);
         }
       }
     }

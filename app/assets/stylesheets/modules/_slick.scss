@@ -170,7 +170,7 @@ $slick-opacity-not-active: .25 !default;
     border-radius: 50%;
     &:hover, &:focus {
       outline: none;
-      background: $cGreen;
+      background: $blue;
       color: transparent;
       &:before {
         opacity: $slick-opacity-on-hover;

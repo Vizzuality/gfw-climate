@@ -29,7 +29,7 @@
   transition: background .15s linear;
 
   &:hover {
-    background: $cGreen;
+    background: $blue;
     text-decoration: none !important;
   }
 
@@ -89,20 +89,20 @@
   &.gray {
     color: $dark;
     background: $white;
-    border-color: $cGreen;
+    border-color: $blue;
     &:hover {
       background: darken($white,5%);
     }
   }
-  &.green {
+  &.blue {
     color: $white;
-    background: $cGreen;
+    background: $blue;
     &:hover {
-      background: darken($cGreen,10%);
+      background: darken($blue,10%);
     }
     &.disabled{
       &:hover {
-        background: $cGreen;
+        background: $blue;
       }
     }
   }
@@ -202,6 +202,6 @@
   }
 
   &:hover {
-    background: $cGreen;
+    background: $blue;
   }
 }

@@ -47,16 +47,16 @@
       span { background:none; }
 
       &.selected {
-        background: $cGreen;
+        background: $blue;
         color: #fff;
 
         &:hover {
-          background: $cGreen;
+          background: $blue;
         }
       }
 
       &:hover {
-        background: rgba($cGreen, .5);
+        background: rgba($blue, .5);
       }
     }
   }
