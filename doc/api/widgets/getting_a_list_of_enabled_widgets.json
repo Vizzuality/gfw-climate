@@ -1,0 +1,45 @@
+{
+  "resource": "Widgets",
+  "http_method": "GET",
+  "route": "/api/widgets",
+  "description": "Getting a list of enabled widgets",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/widgets",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"widgets\":[{\"id\":1,\"name\":\"Deforestation rate\"},{\"id\":2,\"name\":\"Test 2 rate\"}]}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"8220b466da3b1de59f6e4813ac4b4adf\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "d9fe10b0-3e87-49bc-9fea-032af61fa62d",
+        "X-Runtime": "0.063248",
+        "Content-Length": "80"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}

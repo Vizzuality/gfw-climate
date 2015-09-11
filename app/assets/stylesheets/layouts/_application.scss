@@ -159,7 +159,7 @@
           background: darken($white,2%);
         }
         strong {
-          color: $cGreen;
+          color: $blue;
         }
       }
     }
@@ -349,7 +349,7 @@
         transform: translate(-50%,-50%);
       }
       &:hover {
-        background: $cGreen;
+        background: $blue;
       }
       @media (min-width: $br-mobile) {
         top: auto;
@@ -405,7 +405,7 @@
 			height: 70px;
 			padding: 15px;
 			border-radius: 50%;
-			background: $cGreen;
+			background: $blue;
       transition: all .15s $easeInOutSine;
       @media (min-width: $br-mobile) {
         width: 100px;
@@ -484,7 +484,7 @@
         }
         &:hover {
           .icon {
-            fill: $cGreen;
+            fill: $blue;
             &.fires { fill: $red; }
             &.commodities { fill: $orange; }
           }

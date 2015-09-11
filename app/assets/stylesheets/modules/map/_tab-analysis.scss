@@ -101,14 +101,14 @@
         }
         &:hover{
           svg{
-            fill: $cGreen;
+            fill: $blue;
           }
         }
         &.active{
           background: $light;
           // border-bottom: 2px solid $dark;
           svg{
-            fill: $cGreen;
+            fill: $blue;
           }
         }
         &.disabled{
@@ -219,7 +219,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      fill: $cGreen;
+      fill: $blue;
     }
   }
 }
@@ -576,7 +576,7 @@
             padding: 8px 10px;
             display: block;
             border-bottom: 1px solid #f2f2f2;
-            color: $cGreen;
+            color: $blue;
             &:hover{
               background-color: darken($white,2.5%);
             }
@@ -657,7 +657,7 @@
         padding: 0 0 15px;
         text-align: center;
         span{
-          color: $cGreen;
+          color: $blue;
           &.source{ cursor: pointer;}
         }
       }

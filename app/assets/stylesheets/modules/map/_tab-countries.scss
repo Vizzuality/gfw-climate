@@ -54,7 +54,7 @@ $letterW: 20px;
           overflow: hidden;
           >li{
             float: left;
-            color: $cGreen;
+            color: $blue;
             width: $letterW;
             height: $letterW;
             line-height: $letterW;
@@ -160,7 +160,7 @@ $letterW: 20px;
             .btn{
               @media (max-width: $br-mobileMap - 1){
                 font-size: 14px;
-                color: $cGreen;
+                color: $blue;
                 border: none;
                 padding: 0;
                 background: none;

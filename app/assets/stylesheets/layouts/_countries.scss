@@ -17,7 +17,7 @@
     }
   }
   span{
-    color: darken($cGreen, 5%);
+    color: darken($blue, 5%);
   }
 }
 
@@ -159,7 +159,7 @@
       font-size: 20px;
     }
     &.is-active{
-      background: rgba($cGreen1,0.3);
+      background: rgba($blue1,0.3);
     }
     &::-webkit-input-placeholder {
        color: #666;

@@ -266,7 +266,7 @@
   .figure {
     color: #6D6DE5;
     &.extent {
-      color: $cGreen;
+      color: $blue;
     }
   }
   @media only screen and (max-width: 480px) {
@@ -582,7 +582,7 @@
     fill: #FF6699;
 
     &.extent {
-      fill: $cGreen;
+      fill: $blue;
     }
   }
 
@@ -861,7 +861,7 @@
       }
       &.no_def {
         svg{
-          fill: $cGreen;
+          fill: $blue;
         }
       }
     }

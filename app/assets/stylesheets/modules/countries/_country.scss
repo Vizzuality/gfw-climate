@@ -80,7 +80,7 @@
 
       .country_main,
       .country_alt {
-        fill: $cGreen;
+        fill: $blue;
       }
       @media (min-width: 480px){
         transform: scale(1.1);
@@ -164,9 +164,9 @@
       text-transform: uppercase;
     }
     a{
-      color: $cGreen;
+      color: $blue;
       &:hover{
-        color: darken($cGreen, 5%);
+        color: darken($blue, 5%);
       }
     }
   }

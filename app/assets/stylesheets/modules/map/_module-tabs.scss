@@ -71,7 +71,7 @@ $w-control: 44px;
           }
           &.changed{
             svg{
-              fill: $cGreen;
+              fill: $blue;
             }
           }
           @media (max-width: $br-mobileMap - 1){
@@ -110,7 +110,7 @@ $w-control: 44px;
         padding: 0 0 15px;
         text-align: center;
         span{
-          color: $cGreen;
+          color: $blue;
           &.source{ cursor: pointer;}
         }
       }
@@ -232,7 +232,7 @@ $w-control: 44px;
       //     width: 0;
       //     height: 0;
       //     border-top: 5px solid transparent;
-      //     border-right: 10px solid $cGreen;
+      //     border-right: 10px solid $blue;
       //     border-bottom: 5px solid transparent;
       //     position: absolute;
       //     top: 50%;
@@ -263,7 +263,7 @@ $w-control: 44px;
             width: 0;
             height: 0;
             border-top: 5px solid transparent;
-            border-left: 10px solid $cGreen;
+            border-left: 10px solid $blue;
             border-bottom: 5px solid transparent;
             position: absolute;
             top: 50%;
