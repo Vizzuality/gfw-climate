@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
       with_options only: [:index, :show] do |list_show_only|
         list_show_only.resources :countries
+        list_show_only.resources :widgets
       end
 
       get 'countries/:id/:id_1', to: 'countries#show_jurisdiction', as: :jurisdiction

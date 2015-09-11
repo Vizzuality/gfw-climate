@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "name": "Deforestation rate",
+    "type": "line",
+    "indicators": [
+      {
+        "id": 1,
+        "name": "Hansen/Google/UMD",
+        "data_source": "UMD"
+      },
+      {
+        "id": 2,
+        "name": "National Data",
+        "data_source": "NATDAT"
+      },
+      {
+        "id": 3,
+        "name": "FAO",
+        "data_source": "FAO"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Test 2 rate",
+    "type": "pie",
+    "indicators": [
+      {
+        "id": 4,
+        "name": "Test",
+        "data_source": "TEST"
+      }
+    ]
+  }
+]
