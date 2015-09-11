@@ -19,6 +19,31 @@
           "groups": "all"
         }
       ]
+    },
+    {
+      "name": "Widgets",
+      "examples": [
+        {
+          "description": "Getting a list of enabled widgets",
+          "link": "widgets/getting_a_list_of_enabled_widgets.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific widget by id for a country",
+          "link": "widgets/getting_a_specific_widget_by_id_for_a_country.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific widget by id for a juridiction",
+          "link": "widgets/getting_a_specific_widget_by_id_for_a_juridiction.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific widget by id for a juridiction and thresh",
+          "link": "widgets/getting_a_specific_widget_by_id_for_a_juridiction_and_thresh.json",
+          "groups": "all"
+        }
+      ]
     }
   ]
 }
