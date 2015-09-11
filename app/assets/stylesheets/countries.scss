@@ -26,7 +26,11 @@
 @import "modules/countries/indicators-modal";
 @import "modules/countries/show";
 @import "modules/countries/country-widget";
+
+// Grids
 @import "modules/countries/grid";
+@import "modules/countries/reports/subnational-grid";
+@import "modules/countries/reports/areas-grid";
 
 // Charts
 @import "modules/countries/charts/line-graph";

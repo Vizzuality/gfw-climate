@@ -21,7 +21,7 @@ define([
     model: new (Backbone.Model.extend({
       defaults:{
         display: 'national',
-        widgets: [1,2,3]
+        widgets: [1]
       }
     })),
 
@@ -30,7 +30,9 @@ define([
 
       this._setListeners();
       this._cacheVars();
+
       this._setCurrentTab();
+      this._toggleWarnings();
     },
 
     _setListeners: function() {
@@ -53,7 +55,6 @@ define([
         this.$moreIndicatorsWarning.addClass('is-hidden');
         this.$noIndicatorsWarning.removeClass('is-hidden');
       }
-
     },
 
     _setCurrentTab: function(e) {
@@ -112,8 +113,6 @@ define([
       }
 
       this.model.set({'widgets': _.clone(enabledWidgets)});
-
-      console.log(this.model.hasChanged('widgets'));
     },
 
     _removeDisabledWidgets: function(removeWidgets) {

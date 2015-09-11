@@ -10,8 +10,27 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    events: {
+      'click .areaSelector': '_toggleAvailableAreas',
+      'click .available-areas-menu span' : '_selectArea',
+      'click #submitAreas': '_setAreas'
+    },
+
     initialize: function(model) {
       this.model = model;
+
+    },
+
+    _toggleAvailableAreas: function() {
+      $('.available-areas-menu').toggleClass('is-hidden');
+    },
+
+    _selectArea: function(e) {
+      $(e.currentTarget).parent().toggleClass('is-selected');
+    },
+
+    _setAreas: function() {
+
     },
 
     render: function() {
