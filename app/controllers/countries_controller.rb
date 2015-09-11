@@ -9,6 +9,7 @@ class CountriesController < AccessController
   def show
     @name = @country['name']
     @iso  = @country['params']['iso']
+    @jurisdictions = @country['subnat_bounds']
   end
 
   private

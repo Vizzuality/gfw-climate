@@ -12,6 +12,11 @@
           "description": "Getting a specific country",
           "link": "countries/getting_a_specific_country.json",
           "groups": "all"
+        },
+        {
+          "description": "Getting a specific jurisdiction",
+          "link": "countries/getting_a_specific_jurisdiction.json",
+          "groups": "all"
         }
       ]
     }
