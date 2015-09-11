@@ -29,12 +29,31 @@ define([
       this.presenter = new WidgetGridPresenter(this);
 
       this._setListeners();
+      this._cacheVars();
       this._setCurrentTab();
     },
 
     _setListeners: function() {
       this.model.on('change:display', this.render, this);
       this.model.on('change:widgets', this.render, this);
+    },
+
+    _cacheVars: function() {
+      this.$noIndicatorsWarning = $('.no-indicators-warning');
+      this.$moreIndicatorsWarning = $('.more-indicators-warning');
+    },
+
+    _toggleWarnings: function() {
+      var widgetsOnGrid = this.model.attributes.widgets.length;
+
+      if (widgetsOnGrid > 0) {
+        this.$moreIndicatorsWarning.removeClass('is-hidden');
+        this.$noIndicatorsWarning.addClass('is-hidden');
+      } else {
+        this.$moreIndicatorsWarning.addClass('is-hidden');
+        this.$noIndicatorsWarning.removeClass('is-hidden');
+      }
+
     },
 
     _setCurrentTab: function(e) {
@@ -54,7 +73,7 @@ define([
 
     _setWidgets: function(widgets) {
       this.model.set({
-        'widgets': _.clone(widgets)
+        'widgets': widgets
       }, { silent: true });
 
       this._checkEnabledWidgets();
@@ -92,7 +111,9 @@ define([
         enabledWidgets = newIndicators;
       }
 
-      this.model.set({'widgets': enabledWidgets});
+      this.model.set({'widgets': _.clone(enabledWidgets)});
+
+      console.log(this.model.hasChanged('widgets'));
     },
 
     _removeDisabledWidgets: function(removeWidgets) {
@@ -109,9 +130,11 @@ define([
 
     render: function() {
 
-      var subview;
+      console.log('render?');
 
-      console.log(this.model);
+      this._toggleWarnings();
+
+      var subview;
 
       switch(this.model.attributes.display) {
 

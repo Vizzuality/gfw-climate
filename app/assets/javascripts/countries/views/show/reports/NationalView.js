@@ -2,7 +2,7 @@ define([
   'backbone',
   'handlebars',
   'views/WidgetView',
-  'text!countries/templates/country-national.handlebars'
+  'text!countries/templates/country-national-grid.handlebars'
 ], function(Backbone, Handlebars, WidgetView, tpl) {
 
   var NationalView = Backbone.View.extend({
