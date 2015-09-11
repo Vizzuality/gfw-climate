@@ -51,9 +51,7 @@ RSpec.describe CountriesController, type: :controller do
       set_cookie
       get :show, id: 'bra'
       expect(response).to be_success
-      expect($redis.get('country/item_bra_')).to match 'item'
-      expect(response).to have_http_status(200)
-      expect(response.body).to match 'Afghanistan'
+      expect($redis.exists('country/item_bra')).to eq(true)
     end
 
   end
