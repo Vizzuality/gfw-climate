@@ -9,6 +9,13 @@
       border: 1px solid #6B6B6B;
       border-radius: 39px;
       cursor: pointer;
+      span {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translate(0, -50%);
+        text-transform: uppercase;
+      }
     }
     .available-areas-menu {
       padding: 15px;

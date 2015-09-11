@@ -30,13 +30,14 @@ define([
     },
 
     _setAreas: function() {
-
+      // Set areas in model
+      this._toggleAvailableAreas();
     },
 
     render: function() {
       this.$el.html(this.template);
 
-      return this.$el.html();
+      return this;
     }
 
   });

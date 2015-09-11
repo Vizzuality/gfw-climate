@@ -84,11 +84,11 @@ define([
         indicators: this.indicators
       }));
 
-      this.$el.find('.graph-container').html(new GraphChartIndicator().render());
+      this.$el.find('.graph-container').append(new GraphChartIndicator().render().el);
 
       $('.indicators-grid__item:first-child').trigger('click');
 
-      return this.$el.html();
+      return this;
     }
 
   });

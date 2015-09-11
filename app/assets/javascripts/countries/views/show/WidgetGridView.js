@@ -148,7 +148,9 @@ define([
           break;
       }
 
-      this.$el.find('.reports-grid').html(subview.render());
+      console.log(subview.render().el);
+
+      this.$el.find('.reports-grid').append(subview.render().el);
     }
 
   });

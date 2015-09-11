@@ -22,10 +22,11 @@ define([
       this.$el.html(this.template);
 
       enabledWidgets.forEach(_.bind(function(widget, i) {
-        this.$el.find('.national').html(new WidgetView({id: widget}).render());
+        console.log(new WidgetView({id: widget}).render().el);
+        this.$el.find('.national').append(new WidgetView({id: widget}).render().el);
       }, this));
 
-      return this.$el.html();
+      return this;
     }
 
   });

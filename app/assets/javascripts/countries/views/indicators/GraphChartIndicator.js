@@ -203,7 +203,10 @@ define([
 
     render: function() {
       this._drawGraph();
-      return this.$el.html();
+
+      // console.log(this.$el.html());
+
+      return this;
     }
 
   });

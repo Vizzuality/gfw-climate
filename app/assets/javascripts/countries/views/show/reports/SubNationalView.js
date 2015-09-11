@@ -2,8 +2,9 @@ define([
   'backbone',
   'handlebars',
   'countries/models/CountryModel',
+  'views/WidgetView',
   'text!countries/templates/country-subnational-grid.handlebars'
-], function(Bakcbone, Handlebars, CountryModel, tpl) {
+], function(Bakcbone, Handlebars, CountryModel, WidgetView, tpl) {
 
   var SubNationalView = Backbone.View.extend({
 
@@ -28,23 +29,21 @@ define([
       $select.html(options);
     },
 
-    // _setJurisdictions: function(e) {
-    //   var jurisdiction;
-    //   if (e) {
-    //     jurisdiction = e.currentTarget;
-    //   }
-
-    //   if (jurisdiction.value !== 'default'  && jurisdiction.value !== '') {
-    //     Backbone.history.navigate('/countries/' + this.model.get('iso') + '/' + jurisdiction.value, {trigger: true});
-    //   }
-    // }
 
     render: function() {
+      var enabledWidgets = this.model.attributes.widgets;
+
       this.$el.html(this.template);
 
       this._populateJurisdictions();
 
-      return this.$el.html()
+      enabledWidgets.forEach(_.bind(function(widget, i) {
+        this.$el.find('.subnational-grid').append(new WidgetView({id: widget}).render());
+      }, this));
+
+      this.$el.html();
+
+      return this;
     }
 
   });
