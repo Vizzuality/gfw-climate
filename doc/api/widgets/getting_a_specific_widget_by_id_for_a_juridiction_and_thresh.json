@@ -1,0 +1,59 @@
+{
+  "resource": "Widgets",
+  "http_method": "GET",
+  "route": "/api/widgets/:id",
+  "description": "Getting a specific widget by id for a juridiction and thresh",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "iso",
+      "description": "Country iso"
+    },
+    {
+      "name": "id_1",
+      "description": "Jurisdiction id"
+    },
+    {
+      "name": "thresh",
+      "description": "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/widgets/1?iso=aus&id_1=1&thresh=25",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "iso": "aus",
+        "id_1": "1",
+        "thresh": "25"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"widget\":{\"id\":1,\"name\":\"Deforestation rate\",\"type\":\"line\",\"indicators\":[{\"id\":1,\"name\":\"Hansen/Google/UMD\",\"data\":\"/api/countries/aus/1?thresh=25\"},{\"id\":2,\"name\":\"National Data\",\"data\":\"\"},{\"id\":3,\"name\":\"FAO\",\"data\":\"\"}]}}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"fe93094ba0aba71f9ad3586764c990df\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "eda55110-756d-4514-9475-1133c2ea9ff0",
+        "X-Runtime": "0.003114",
+        "Content-Length": "226"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets/1?iso=aus&id_1=1&thresh=25\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}
