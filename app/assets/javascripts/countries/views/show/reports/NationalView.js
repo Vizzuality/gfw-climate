@@ -24,7 +24,7 @@ define([
         this.$el.append(new WidgetView({
           el: this.el,
           id: widgetId
-        }).render().el);
+        }).el);
       }, this));
 
       return this;

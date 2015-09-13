@@ -1,6 +1,6 @@
 <section class="country-widget" id="{{id}}">
   <div class="country-widget__header">
-    <h2 class="country-widget__name">WIDGET TITLE</h2>
+    <h2 class="country-widget__name">{{name}}</h2>
     <div class="options">
       <a class="close" href="#">Delete
         <svg>
@@ -19,12 +19,12 @@
       </a>
     </div>
   </div>
-  <div class="country-widget__content">
+  <div class="country-widget__content" data-type="{{type}}">
 
     {{#if indicators}}
       <div class="indicators-grid">
       {{#each indicators}}
-        <div class="indicators-grid__item" data-name="{{this}}">{{this}}</div>
+        <div class="indicators-grid__item" id="{{id}}">{{name}}</div>
       {{/each}}
       </div>
       <div class="indicators__content">

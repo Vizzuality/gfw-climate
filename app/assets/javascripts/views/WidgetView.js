@@ -13,7 +13,7 @@ define([
 
   var WidgetView = Backbone.View.extend({
 
-    // el: '.reports-grid',
+    url: '/api/widgets/',
 
     template: Handlebars.compile(tpl),
 
@@ -29,7 +29,7 @@ define([
       this.indicators = [];
       this.id = data.id;
       this.el = data.el;
-      this._setIndicators();
+      this._loadMetaData();
     },
 
     _setCurrentIndicator: function(e) {
@@ -37,37 +37,33 @@ define([
       var indicatorTabs = document.querySelectorAll('.indicators-grid__item'),
         currentIndicator = e.currentTarget;
 
-      // console.log(indicatorTabs);
-
       $(indicatorTabs).toggleClass('is-selected');
       $(currentIndicator).addClass('is-selected');
 
-      // this._loadIndicator(currentIndicator);
+      //this._loadIndicator(currentIndicator);
     },
 
-    _loadIndicator: function(indicator) {
+    _loadMetaData: function() {
       //var indicatorType = indicator.getAttribute('data-name');
       // TO-DO: API call
-      var graphChart = new GraphChartIndicator();
-    },
+      var iso = CountryModel.attributes.iso;
 
-    _setIndicators: function() {
+      var url = this.url + '/' + this.id;
+      
 
-      for(var prop in this.model.attributes) {
-        if (prop === 'umd') {
-          this.indicators.push(prop);
+      $.ajax({
+        url: url,
+        data: {
+          iso: iso
+        },
+        success: _.bind(function(data) {
+          console.log(data);
+          this.render(data.widget)
+        }, this),
+        error: function(err) {
+          throw err;
         }
-
-        if (prop === 'forests') {
-          this.indicators.push(prop);
-        }
-
-        if (prop === 'tenure') {
-          this.indicators.push(prop);
-        }
-      }
-
-      // this.render();
+      });
     },
 
     _close: function(e) {
@@ -79,14 +75,24 @@ define([
 
     _share: function() {},
 
-    render: function() {
+    render: function(data) {
 
-      this.$el.find('.national-grid').append(this.template({
-        id: this.id,
-        indicators: this.indicators
+      console.log(data);
+
+      this.$el.find('.national-grid').prepend(this.template({
+        id: data.id,
+        name: data.name,
+        type: data.type,
+        indicators: data.indicators
       }));
 
-      this.$el.find('.graph-container').append(new GraphChartIndicator().render().el);
+      if (data.type === 'line') {
+        this.$el.find('.graph-container').append(new GraphChartIndicator().render().el);        
+      } 
+
+      if (data.type === "pie") {
+        this.$el.find('.graph-container').append(new PieChartIndicator().render().el);  
+      }
 
       // $('.indicators-grid__item:first-child').trigger('click');
 
