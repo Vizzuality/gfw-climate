@@ -21,7 +21,7 @@ define([
     model: new (Backbone.Model.extend({
       defaults:{
         display: 'national',
-        widgets: [1]
+        widgets: [1, 2]
       }
     })),
 
@@ -33,6 +33,8 @@ define([
 
       this._setCurrentTab();
       this._toggleWarnings();
+
+      this.render();  
     },
 
     _setListeners: function() {
@@ -129,8 +131,6 @@ define([
 
     render: function() {
 
-      console.log('render?');
-
       this._toggleWarnings();
 
       var subview;
@@ -147,8 +147,6 @@ define([
           subview = new AreasView(this.model);
           break;
       }
-
-      console.log(subview.render().el);
 
       this.$el.find('.reports-grid').append(subview.render().el);
     }

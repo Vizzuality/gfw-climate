@@ -13,7 +13,7 @@ define([
 
   var WidgetView = Backbone.View.extend({
 
-    el: '.reports-grid',
+    // el: '.reports-grid',
 
     template: Handlebars.compile(tpl),
 
@@ -28,13 +28,16 @@ define([
       this.model = CountryModel;
       this.indicators = [];
       this.id = data.id;
+      this.el = data.el;
       this._setIndicators();
-      this._loadIndicator();
     },
 
     _setCurrentIndicator: function(e) {
-      var indicatorTabs = document.getElementsByClassName('is-selected'),
+      // debugger;
+      var indicatorTabs = document.querySelectorAll('.indicators-grid__item'),
         currentIndicator = e.currentTarget;
+
+      // console.log(indicatorTabs);
 
       $(indicatorTabs).toggleClass('is-selected');
       $(currentIndicator).addClass('is-selected');
@@ -64,7 +67,7 @@ define([
         }
       }
 
-      this.render();
+      // this.render();
     },
 
     _close: function(e) {
@@ -78,15 +81,14 @@ define([
 
     render: function() {
 
-
-      this.$el.html(this.template({
+      this.$el.find('.national-grid').append(this.template({
         id: this.id,
         indicators: this.indicators
       }));
 
       this.$el.find('.graph-container').append(new GraphChartIndicator().render().el);
 
-      $('.indicators-grid__item:first-child').trigger('click');
+      // $('.indicators-grid__item:first-child').trigger('click');
 
       return this;
     }

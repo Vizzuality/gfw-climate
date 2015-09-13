@@ -16,14 +16,15 @@ define([
     },
 
     render: function() {
-      console.log('render national');
       var enabledWidgets = this.model.attributes.widgets;
 
       this.$el.html(this.template);
 
-      enabledWidgets.forEach(_.bind(function(widget, i) {
-        console.log(new WidgetView({id: widget}).render().el);
-        this.$el.find('.national').append(new WidgetView({id: widget}).render().el);
+      enabledWidgets.forEach(_.bind(function(widgetId) {
+        this.$el.append(new WidgetView({
+          el: this.el,
+          id: widgetId
+        }).render().el);
       }, this));
 
       return this;
