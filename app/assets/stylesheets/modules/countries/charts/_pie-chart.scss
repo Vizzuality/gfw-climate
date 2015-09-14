@@ -1,0 +1,26 @@
+.piechart-container {
+  .description {
+    margin: 20px 0;
+    font-size: 32px;
+    color: $dark;
+    span {
+      color: $blue;
+    }
+  }
+
+  svg {
+    float: right;
+    text {
+      font-size: 13px;
+      fill: $white;
+    }
+
+    .legend {
+      fill: $white;
+      text {
+        fill: $dark;
+      }
+    }
+  }
+
+}

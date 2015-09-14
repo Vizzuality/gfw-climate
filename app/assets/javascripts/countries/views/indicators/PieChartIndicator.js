@@ -31,15 +31,15 @@ define([
                 .call(GraphHelper.createLegend);
 
       // Positioning the legend
-      // var svgDOM = document.querySelector('svg')
-      //   legendDOM = document.querySelector('.legend rect')
-      //   legendWidth = parseInt(legendDOM.getAttribute('width'));
+      var svgDOM = document.querySelector('svg'),
+        legendDOM = document.querySelector('.legend rect'),
+        legendWidth = parseInt(legendDOM.getAttribute('width'));
 
-      // var x = -(svgDOM.getAttribute('width') / 2) + legendWidth;
-      // var y = 0;
+      var x = -(svgDOM.getAttribute('width') / 2);
+      var y = 0;
 
-      // legend.select('g')
-      //   .attr('transform', 'translate(' + x + ', ' + y + ')');
+      legend.select('g')
+        .attr('transform', 'translate(' + x + ', ' + y + ')');
     },
 
     _drawPieChart: function() {
@@ -75,7 +75,7 @@ define([
         .sort(null)
         .value(function(d) { return d.value});
 
-      var svg = d3.select('.graph-container').append('svg')
+      var svg = d3.select('.piechart-container').append('svg')
           .attr('width', width)
           .attr('height', height)
         .append('g')
@@ -107,7 +107,7 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template);
+      this.$el.append(this.template);
 
       this._drawPieChart();
 
