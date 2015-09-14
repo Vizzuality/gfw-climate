@@ -9,9 +9,7 @@ define([
 
   'use strict';
 
-  var PieChartIndicator = IndicatorView.extend({
-
-    el: '.graph-container',
+  var PieChartIndicator = Backbone.View.extend({
 
     template: Handlebars.compile(tpl),
 
@@ -19,27 +17,31 @@ define([
       return _.extend({}, IndicatorView.prototype.events, {});
     },
 
-    initialize: function(widget) {
+    initialize: function() {
       this.constructor.__super__.initialize.apply(this);
     },
 
-    _addLegend: function(svg) {
+    _addLegend: function(json) {
 
-      console.log(GraphHelper);
-      var legend = svg.append('g')
-                .attr('class', 'legend')
-                .call(GraphHelper.createLegend);
 
-      // Positioning the legend
-      var svgDOM = document.querySelector('svg'),
-        legendDOM = document.querySelector('.legend rect'),
-        legendWidth = parseInt(legendDOM.getAttribute('width'));
+      var legend = document.createElement('div');
+      $(legend).addClass('legend');
 
-      var x = -(svgDOM.getAttribute('width') / 2);
-      var y = 0;
 
-      legend.select('g')
-        .attr('transform', 'translate(' + x + ', ' + y + ')');
+      // var legend = svg.append('g')
+      //           .attr('class', 'legend')
+      //           .call(GraphHelper.createLegend);
+
+      // // Positioning the legend
+      // var svgDOM = document.querySelector('svg'),
+      //   legendDOM = document.querySelector('.legend rect'),
+      //   legendWidth = parseInt(legendDOM.getAttribute('width'));
+
+      // var x = -(svgDOM.getAttribute('width') / 2);
+      // var y = 0;
+
+      // legend.select('g')
+      //   .attr('transform', 'translate(' + x + ', ' + y + ')');
     },
 
     _drawPieChart: function() {
@@ -58,8 +60,8 @@ define([
       ];
 
 
-      var width = 195,
-        height = 195,
+      var width = 250,
+        height = 250,
         radius = Math.min(width, height) / 2,
         arrayColor = ['#0098cf', '#b6b6ba'];
 
@@ -67,13 +69,13 @@ define([
         .range(arrayColor);
 
       var arc = d3.svg.arc()
-        .outerRadius(radius - 20)
-        .innerRadius(radius - 70);
+        .outerRadius(radius)
+        .innerRadius(radius - 65);
 
       var pie = d3.layout.pie()
-        // .padAngle('0.01')
+        // .padAngle('.01')
         .sort(null)
-        .value(function(d) { return d.value});
+        .value(function(d) { return d.value})
 
       var svg = d3.select('.piechart-container').append('svg')
           .attr('width', width)
@@ -102,14 +104,17 @@ define([
         .style('text-anchor', 'middle')
         .text(function(d) { return d.data.value + '%'; });
 
-      this._addLegend(svg)
-
+      // this._addLegend(svg)
     },
 
     render: function() {
-      this.$el.append(this.template);
 
-      this._drawPieChart();
+      console.log(this.$el);
+      var self = this;
+      this.$el.append(this.template);
+      setTimeout(function() {
+        self._drawPieChart();
+      }, 100);
 
       return this;
     }

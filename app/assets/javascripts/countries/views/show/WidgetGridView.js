@@ -34,7 +34,7 @@ define([
       this._setCurrentTab();
       this._toggleWarnings();
 
-      this.render();  
+      this.render();
     },
 
     _setListeners: function() {

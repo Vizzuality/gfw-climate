@@ -18,14 +18,32 @@ define([
     render: function() {
       var enabledWidgets = this.model.attributes.widgets;
 
+
       this.$el.html(this.template);
 
+      var promises = [],
+        widgets = [];
+
       enabledWidgets.forEach(_.bind(function(widgetId) {
-        this.$el.append(new WidgetView({
-          el: this.el,
-          id: widgetId
-        }).el);
+        var deferred = $.Deferred();
+        var currentWidget = new WidgetView({wid: widgetId});
+
+        widgets.push(currentWidget);
+        currentWidget._loadMetaData(function(data) {
+          deferred.resolve(data);
+        });
+
+        promises.push(deferred);
       }, this));
+
+      var self = this;
+
+      $.when.apply(null, promises).then(function() {
+        widgets.forEach(function(widget) {
+          widget.render();
+          self.$el.append(widget.el);
+        });
+      });
 
       return this;
     }

@@ -202,9 +202,8 @@ define([
     },
 
     render: function() {
+      this.$el.html(this.template);
       this._drawGraph();
-
-      // console.log(this.$el.html());
 
       return this;
     }
