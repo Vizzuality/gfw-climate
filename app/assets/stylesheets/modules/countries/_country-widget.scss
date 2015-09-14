@@ -1,6 +1,6 @@
 .country-widget {
   float: left;
-  width: 50%;
+  width: 48%;
   min-height: 250px;
   .country-widget__header {
     overflow: hidden;
@@ -87,6 +87,9 @@
         }
       }
     }
+  }
+  &:nth-child(2n+1) {
+    margin-right: 2%;
   }
   select.selector {
     display: inline-block;
