@@ -4,8 +4,9 @@ define([
   'handlebars',
   'countries/views/show/IndicatorView',
   'countries/helpers/GraphHelper',
-  'text!countries/templates/indicators/pieChart.handlebars'
-], function(_, d3, Handleabars, IndicatorView, GraphHelper, tpl) {
+  'text!countries/templates/indicators/pieChart.handlebars',
+  'text!countries/templates/indicators/legend-example.handlebars'
+], function(_, d3, Handleabars, IndicatorView, GraphHelper, tpl, legendTemplate) {
 
   'use strict';
 
@@ -25,7 +26,12 @@ define([
 
 
       var legend = document.createElement('div');
-      $(legend).addClass('legend');
+
+
+      var legendHTML = Handlebars.compile(legendTemplate);
+
+
+      $('.piechart-container').append(legendHTML);
 
 
       // var legend = svg.append('g')
@@ -104,7 +110,7 @@ define([
         .style('text-anchor', 'middle')
         .text(function(d) { return d.data.value + '%'; });
 
-      // this._addLegend(svg)
+      this._addLegend(json)
     },
 
     render: function() {

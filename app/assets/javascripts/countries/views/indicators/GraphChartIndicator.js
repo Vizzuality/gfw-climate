@@ -62,7 +62,7 @@ define([
           });
 
       // SVG Canvas
-      var svg = d3.select('.graph-container')
+      var svg = d3.select('.graph-container > .content')
         .append('svg')
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom)
@@ -112,7 +112,6 @@ define([
       svg.append('path')
         .attr('class', 'line')
         .attr('d', valueline(data));
-
 
 
       // Add scatterplote
