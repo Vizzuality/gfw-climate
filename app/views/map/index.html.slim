@@ -1,0 +1,24 @@
+= content_for :header do
+  h1
+    a (href="/") Global Forest Watch
+
+  nav#nav-mobile
+    form.mobile-show action="/search"
+      svg.icon
+        use xlink:href="#shape-search"
+      input#search-input (type="text" name="query" placeholder="Search GFW website")
+
+  nav#layers-menu.layers-menu
+
+a.feedback-link (href="/getinvolved/provide-feedback")
+  span Feedback
+
+.layout-content = render 'shared/map'
+
+#sources.sources.notranslate.is-hidden = render 'shared/sources_map'
+
+
+#footerFixed.footer-fixed
+  .footer-fixed-container = render 'shared/footer'
+
+.mini-modal.download-modal
