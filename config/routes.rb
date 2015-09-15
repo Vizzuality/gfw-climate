@@ -22,14 +22,18 @@ Rails.application.routes.draw do
   # Static pages
   get  'terms', to: 'static#terms', as: :terms
   get  'about', to: 'static#about', as: :about
+  get  'blog', to: 'static#blog', as: :blog
+  get  'data-methods', to: 'static#data_methods', as: :data_methods
 
   with_options only: [:index, :show] do |list_show_only|
     list_show_only.resources :countries
     list_show_only.resources :posts, path: :blog
   end
 
+  # countries routes
   get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
-  
+  get 'compare-countries',   to: 'countries#compare', as: :compare_countries
+
   # API routes
   namespace :api, defaults: {format: 'json'} do
 
@@ -49,7 +53,7 @@ Rails.application.routes.draw do
   # End API routes
 
   root 'home#index'
-  
+
   # API Documentation
   mount Raddocs::App => "api/docs"
 

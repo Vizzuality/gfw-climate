@@ -12,6 +12,9 @@ class CountriesController < AccessController
     @jurisdictions = @country['subnat_bounds']
   end
 
+  def compare
+  end
+
   private
     def filter_params
       params.permit(:id, :thresh)
