@@ -6,8 +6,48 @@ $letterW: 20px;
       padding: 20px;
     }
 
+    header {
+      .submenu {
+        display: flex;
+        margin: 10px 0;
+        li {
+          display: flex;
+          width: 33.3333%;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          span {
+            margin-top: 5px;
+            font-size: 11px;
+            text-transform: uppercase;
+          }
+          &.is-selected {
+            border-radius: 7px;
+            background-color: $blue;
+            svg {
+              fill: $white;
+            }
+            span {
+              color: $white;
+            }
+          }
+        }
+      }
+    }
+
     // Select box
     .select-box{
+
+      .chosen-container-single {
+        margin-bottom: 5px;
+        &.chosen-disabled {
+          span {
+            color: rgba($dark, .3);
+          }
+        }
+      }
+
       .chzn-container-single{
         margin: 0 0 5px;
         &:last-child{
@@ -81,7 +121,9 @@ $letterW: 20px;
       .countries-layers{
         header{
           h2{
-            padding: 20px 0;
+            padding: 10px 0;
+            line-height: 1.2;
+            font-weight: 400;
           }
           h3{
             padding: 20px 0;

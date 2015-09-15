@@ -3,7 +3,7 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  font-size: 12px;
+  font-size: 14px;
   zoom: 1;
   *display: inline;
   .chosen-single {
@@ -19,7 +19,7 @@
     white-space: nowrap;
     line-height: 1;
     font-weight: 500;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     outline: none;
     .chosen-default {
       color: $white;
