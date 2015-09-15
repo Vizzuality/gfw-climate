@@ -115,7 +115,6 @@ define([
 
     render: function() {
 
-      console.log(this.$el);
       var self = this;
       this.$el.append(this.template);
       setTimeout(function() {
