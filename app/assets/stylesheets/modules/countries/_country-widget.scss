@@ -1,6 +1,6 @@
 .country-widget {
   float: left;
-  width: 50%;
+  width: 48%;
   min-height: 250px;
   .country-widget__header {
     overflow: hidden;
@@ -67,23 +67,29 @@
       display: flex;
       justify-content: space-around;
       .indicators-grid__item {
+        display: inline-flex;
         width: 100%;
         padding: 15px;
+        justify-content: center;
+        align-items: center;
         font-size: 12px;
         text-align: center;
         background-color: #f2f2f3;
         border: 1px solid #e5e5e5;
         border-right: 0;
         cursor: pointer;
-        &:first-child {
-          border-right: 0;
+        &:last-child {
+          border-right: 1px solid #e5e5e5;
         }
         &.is-selected {
           background: $white;
-          border-bottom: 0;
+          border-bottom: 1px solid transparent;
         }
       }
     }
+  }
+  &:nth-child(2n+1) {
+    margin-right: 2%;
   }
   select.selector {
     display: inline-block;

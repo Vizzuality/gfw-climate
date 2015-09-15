@@ -62,7 +62,7 @@ define([
           });
 
       // SVG Canvas
-      var svg = d3.select('.graph-container')
+      var svg = d3.select('.graph-container > .content')
         .append('svg')
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom)
@@ -114,7 +114,6 @@ define([
         .attr('d', valueline(data));
 
 
-
       // Add scatterplote
       svg.selectAll('circle.dot')
       .data(data)
@@ -148,39 +147,39 @@ define([
           tooltip.transition()
             .duration(500)
             .style('opacity', 0);
-        })
-        .on('mousemove', function() {
-          positioner.style("visibility", "visible");
-          var cx = d3.mouse(this)[0] + margin.left;
-
-
-          // var index = Math.round(x.invert(d3.mouse(this)[0]));
-
-            var x0 = x.invert(d3.mouse(this)[0] - margin.left),
-              index = bisecDate(data, x0, 1);
-
-            console.log(index);
-
-            console.log(data[index]);
-
-            console.log(cx);
-
-            // console.log(d3.mouse(this)[0] - margin.left);
-
-            // positioner
-            //   .attr('x1', xPos)
-            //   .attr('x2', xPos);
-
-            if (data[index]) {
-
-              tooltip.html('<span class="data">' + data[index].loss + '</span>'  + ' ha in ' + data[index].year.format('YYYY'))
-              tooltip.transition()
-                .duration(200)
-                .style('opacity', 1)
-                .style("top", "-20px")
-                .style("left", (cx - 162) + "px");
-            };
         });
+        // .on('mousemove', function() {
+        //   positioner.style("visibility", "visible");
+        //   var cx = d3.mouse(this)[0] + margin.left;
+
+
+        //   // var index = Math.round(x.invert(d3.mouse(this)[0]));
+
+        //     var x0 = x.invert(d3.mouse(this)[0] - margin.left),
+        //       index = bisecDate(data, x0, 1);
+
+        //     console.log(index);
+
+        //     console.log(data[index]);
+
+        //     console.log(cx);
+
+        //     // console.log(d3.mouse(this)[0] - margin.left);
+
+        //     // positioner
+        //     //   .attr('x1', xPos)
+        //     //   .attr('x2', xPos);
+
+        //     // if (data[index]) {
+
+        //     //   tooltip.html('<span class="data">' + data[index].loss + '</span>'  + ' ha in ' + data[index].year.format('YYYY'))
+        //     //   tooltip.transition()
+        //     //     .duration(200)
+        //     //     .style('opacity', 1)
+        //     //     .style("top", "-20px")
+        //     //     .style("left", (cx - 162) + "px");
+        //     // };
+        // });
 
 
 
@@ -202,8 +201,10 @@ define([
     },
 
     render: function() {
+      this.$el.html(this.template);
       this._drawGraph();
-      return this.$el.html();
+
+      return this;
     }
 
   });

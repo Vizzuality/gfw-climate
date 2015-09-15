@@ -21,7 +21,7 @@ define([
     model: new (Backbone.Model.extend({
       defaults:{
         display: 'national',
-        widgets: [1,2,3]
+        widgets: [1, 2]
       }
     })),
 
@@ -29,12 +29,34 @@ define([
       this.presenter = new WidgetGridPresenter(this);
 
       this._setListeners();
+      this._cacheVars();
+
       this._setCurrentTab();
+      this._toggleWarnings();
+
+      this.render();
     },
 
     _setListeners: function() {
       this.model.on('change:display', this.render, this);
       this.model.on('change:widgets', this.render, this);
+    },
+
+    _cacheVars: function() {
+      this.$noIndicatorsWarning = $('.no-indicators-warning');
+      this.$moreIndicatorsWarning = $('.more-indicators-warning');
+    },
+
+    _toggleWarnings: function() {
+      var widgetsOnGrid = this.model.attributes.widgets.length;
+
+      if (widgetsOnGrid > 0) {
+        this.$moreIndicatorsWarning.removeClass('is-hidden');
+        this.$noIndicatorsWarning.addClass('is-hidden');
+      } else {
+        this.$moreIndicatorsWarning.addClass('is-hidden');
+        this.$noIndicatorsWarning.removeClass('is-hidden');
+      }
     },
 
     _setCurrentTab: function(e) {
@@ -54,7 +76,7 @@ define([
 
     _setWidgets: function(widgets) {
       this.model.set({
-        'widgets': _.clone(widgets)
+        'widgets': widgets
       }, { silent: true });
 
       this._checkEnabledWidgets();
@@ -92,7 +114,7 @@ define([
         enabledWidgets = newIndicators;
       }
 
-      this.model.set({'widgets': enabledWidgets});
+      this.model.set({'widgets': _.clone(enabledWidgets)});
     },
 
     _removeDisabledWidgets: function(removeWidgets) {
@@ -109,9 +131,9 @@ define([
 
     render: function() {
 
-      var subview;
+      this._toggleWarnings();
 
-      console.log(this.model);
+      var subview;
 
       switch(this.model.attributes.display) {
 
@@ -126,7 +148,7 @@ define([
           break;
       }
 
-      this.$el.find('.reports-grid').html(subview.render());
+      this.$el.find('.reports-grid').append(subview.render().el);
     }
 
   });
