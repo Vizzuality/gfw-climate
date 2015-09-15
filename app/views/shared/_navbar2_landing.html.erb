@@ -43,7 +43,7 @@
       </ul> -->
     </li>
     <li>
-      <a <% if controller?("static") && action?("blog") %>class="current"<% end %> href="/blog">Blog</a>
+      <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="<%= posts_path %>">Blog</a>
       <!-- <ul class="submenu">
         <li><a href="/howto/view-data">Visualize data</a></li>
         <li><a href="/howto/view-statistics">View statistics</a></li>
