@@ -9,7 +9,13 @@ class StaticController < AccessController
     redirect_to root_path if terms_cookie
   end
 
+  def blog
+  end
+
+  def data_methods
+  end
+
   def about
   end
-    
+
 end
