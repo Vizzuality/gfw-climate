@@ -14,6 +14,8 @@ html,body {
 }
 
 body {
+  max-width: 1600px;
+  margin: 0 auto;
   font-family: "Fira Sans", Georgia, serif;
   background: #EEE;
   -webkit-font-smoothing: antialiased;
