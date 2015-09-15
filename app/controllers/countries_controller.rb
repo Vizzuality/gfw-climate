@@ -1,4 +1,4 @@
-class CountriesController < AccessController
+class CountriesController < ApplicationController
 
   before_action :set_country, only: :show
 
