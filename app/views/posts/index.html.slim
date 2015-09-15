@@ -4,5 +4,5 @@
       span #{link_to p, posts_path(page: p)} |
 
   - @posts.each do |post|
-    h3 = link_to post['title'], post_path(id: URI.parse(post['link']).path)
+    h3 = link_to post['title'], 'http://blog.globalforestwatch.org' + URI.parse(post['link']).path, target: '_blank'
     p  =raw post['description']

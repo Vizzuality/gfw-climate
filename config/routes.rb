@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   # Static pages
   get  'terms', to: 'static#terms', as: :terms
   get  'about', to: 'static#about', as: :about
-  get  'blog', to: 'static#blog', as: :blog
   get  'data-methods', to: 'static#data_methods', as: :data_methods
 
   with_options only: [:index, :show] do |list_show_only|
