@@ -12,7 +12,7 @@ class CountriesController < AccessController
     @jurisdictions = @country['subnat_bounds']
   end
 
-  def compare
+  def compare_countries
   end
 
   private

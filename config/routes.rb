@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 
   # countries routes
   get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
-  get 'compare-countries',   to: 'countries#compare', as: :compare_countries
+  get 'compare-countries',   to: 'countries#compare_countries', as: :compare_countries
 
   # API routes
   namespace :api, defaults: {format: 'json'} do
@@ -56,5 +56,6 @@ Rails.application.routes.draw do
 
   # API Documentation
   mount Raddocs::App => "api/docs"
+  get 'api', to: redirect('api/docs')
 
 end
