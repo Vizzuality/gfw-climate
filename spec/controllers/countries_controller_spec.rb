@@ -56,4 +56,17 @@ RSpec.describe CountriesController, type: :controller do
 
   end
 
+  context "Compare Countries" do
+    render_views
+
+    it "Get compare countries page", type: :feature do
+      set_cookie
+      get :compare_countries
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+      expect(response.body).to match 'Compare Countries page'
+    end
+
+  end
+
 end
