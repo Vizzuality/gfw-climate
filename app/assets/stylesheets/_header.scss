@@ -197,14 +197,14 @@
             }
 
             &:hover, &.current  {
-              &.shape-house { svg{ fill: $blue;} }
-              &.shape-world { svg{ fill: $blue;} }
-              &.shape-country { svg{ fill: $blue;} }
+              &.shape-house { svg{ fill: $gfw-green;} }
+              &.shape-world { svg{ fill: $gfw-green;} }
+              &.shape-country { svg{ fill: $gfw-green;} }
               &.shape-fire { svg{ fill: $red;} }
               &.shape-commodities { svg{ fill: $orange;} }
-              &.shape-blog { svg{ fill: $blue;} }
+              &.shape-blog { svg{ fill: $gfw-green;} }
               svg {
-                fill: $blue;
+                fill: $gfw-green;
               }
             }
           }
