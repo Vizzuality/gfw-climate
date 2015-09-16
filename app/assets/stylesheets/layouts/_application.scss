@@ -6,7 +6,7 @@
   position: relative;
   z-index: 3;
   @media (min-width: $br-mobile) {
-    margin-top: -60px;
+    top: -60px;
     min-height: 620px;
     padding-bottom: 37.5%;
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -96,7 +96,7 @@
             left: 15px;
             width: 35px;
             height: 35px;
-            background: $dark;
+            background: $border;
             border-radius: 50%;
             transform: translate(0,-50%);
             // &.map{ @include getting-started-sprite(map); }

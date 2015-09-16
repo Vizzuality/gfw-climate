@@ -1,4 +1,4 @@
-class MapController < ApplicationController
+class MapController < AccessController
 
   def index
   	@title = 'Interactive Map'

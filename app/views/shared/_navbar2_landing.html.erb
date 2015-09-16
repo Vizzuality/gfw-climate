@@ -30,7 +30,7 @@
 
     </li>
     <li>
-      <a <% if controller?("countries") && action?("compare_countries") %>class="current"<% end %> href="/compare-countries">Compare countries</a>
+      <a <% if controller?("countries") && action?("compare_countries") %>class="current"<% end %> href="#">Compare countries</a>
       <!-- <ul class="submenu">
         <li><a href="/getinvolved/develop-your-own-app">Develop your own app</a></li>
         <li><a href="/stories/new">Submit a story</a></li>
@@ -43,7 +43,8 @@
       </ul> -->
     </li>
     <li>
-      <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="<%= posts_path %>">Blog</a>
+      <!-- <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="<%= posts_path %>">Blog</a> -->
+      <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="#">Blog</a>
       <!-- <ul class="submenu">
         <li><a href="/howto/view-data">Visualize data</a></li>
         <li><a href="/howto/view-statistics">View statistics</a></li>
@@ -55,10 +56,10 @@
       </ul> -->
     </li>
     <li>
-      <a <% if controller?("static") && action?("data_methods") %>class="current"<% end %> href="/data-methods">Data & Methods</a>
+      <a <% if controller?("static") && action?("data_methods") %>class="current"<% end %> href="#">Data & Methods</a>
     </li>
     <li>
-      <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="/about">About</a>
+      <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="#">About</a>
       <!-- <ul class="submenu">
         <li><a href="/about/about-gfw">About GFW</a></li>
         <li><a href="/about/the-gfw-partnership">The GFW partnership</a></li>

@@ -1,4 +1,4 @@
-class StaticController < AccessController
+class StaticController < ApplicationController
 
   skip_before_action :check_terms, only: :accept_terms
 
