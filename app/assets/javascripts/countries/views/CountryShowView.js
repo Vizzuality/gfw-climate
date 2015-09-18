@@ -2,11 +2,13 @@ define([
   'backbone',
   'jquery',
   'countries/models/CountryModel',
+  'countries/views/show/RouterView',
   'countries/views/show/CountryShowHeaderView',
+  'countries/views/show/TabsView',
   'countries/views/show/WidgetGridView',
-  'countries/views/CountryModalView',
-], function(Backbone, $, CountryModel, CountryShowHeaderView,
-  WidgetGridView, CountryModalView) {
+  'countries/views/CountryModalView'
+], function(Backbone, $, CountryModel, RouterView, CountryShowHeaderView,
+  TabsView, WidgetGridView, CountryModalView) {
 
   var CountryShowView = Backbone.View.extend({
 
@@ -17,11 +19,23 @@ define([
       var complete = _.invoke([this.model], 'fetch');
 
       $.when.apply($, complete).done(_.bind(function() {
-        new CountryShowHeaderView();
-        new WidgetGridView();
-        new CountryModalView();
+        this.routerView = new RouterView();
+
+        this.headerView = new CountryShowHeaderView(this.model);
+        this.tabsView   = new TabsView(this.model);
+        this.gridView   = new WidgetGridView(this.model);
+        this.modalView  = new CountryModalView(this.model);
+
+        this.setListeners();
       }, this));
-    }
+    },
+
+    setListeners: function() {
+      this.listenTo(this.tabsView.model, 'change', this.update);
+      this.listenTo(this.gridView.model, 'change', this.update);
+    },
+
+    update: function() {}
 
   });
 

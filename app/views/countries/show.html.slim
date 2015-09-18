@@ -21,31 +21,21 @@
           .container-country__content
             .header-country__title-country
               h1 #{@name}
-            //.header-country__selector-area-country
-              / select#areaSelector.selector-area-country--white
-              /   option.dark value="default" Select jurisdiction
-              / .selector-remove
-              / .selector-arrow
             .header-country__preview-country
             .country-description Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque facilis laboriosam mollitia eos recusandae quibusdam,
               |dicta architecto eligendi itaque aperiam saepe nobis explicabo totam atque deserunt pariatur, ex, officiis illum.
-            button#customizeReports.btn.medium.blue.btn-customize-report customize report
-            //.header-country__display-options
-              / ul
-              /   li(data-display="all") list all
-              /   li(data-display="theme") by theme
-              /   li.is-selected (data-display="selector") selector
+            / button#customizeReports.btn.medium.blue.btn-customize-report customize report
+        .display-tabs
+          ul
+            li (data-display="national") National data
+            li (data-display="subnational") Subnational data
+            li (data-display="areas-interest") Areas of interest
         .header-country__options-country
 
       .container-country__content-country
 
           section#reports.reports-content
             .inner
-              .theme-tabs
-                .themes
-                  li (data-display="national") National data
-                  li (data-display="subnational") Subnational data
-                  li (data-display="areas-interest") Areas of interest
               .no-indicators-warning
                 h3 There are no indicators
                 button.addIndicators.btn.medium.blue add indicators
