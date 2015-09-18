@@ -17,7 +17,7 @@ define([
     })),
 
     initialize: function(params) {
-      this._setCurrentTab()
+      this._setCurrentTab(null, this.model.attributes.display);
     },
 
     /**
