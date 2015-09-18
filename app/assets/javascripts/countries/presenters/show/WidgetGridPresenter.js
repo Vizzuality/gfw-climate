@@ -18,6 +18,9 @@ define([
     }, {
       'CountryHeader/switchDisplay': function(display) {
         this.view._setDisplay(display);
+      },
+      'Tabs/setDisplay': function(display) {
+        this.view._setDisplay(display);
       }
     }],
 

@@ -14,8 +14,7 @@ define([
     el: '#reports',
 
     events: {
-      'click .addIndicators' : '_showModal',
-      'click .themes li': '_setCurrentTab'
+      'click .addIndicators' : '_showModal'
     },
 
     model: new (Backbone.Model.extend({
@@ -31,9 +30,7 @@ define([
       this._setListeners();
       this._cacheVars();
 
-      this._setCurrentTab();
       this._toggleWarnings();
-
       this.render();
     },
 
@@ -59,14 +56,6 @@ define([
       }
     },
 
-    _setCurrentTab: function(e) {
-      var $tab = e ? $(e.currentTarget) : this.$el.find('.themes > li:first-child');
-      this.$el.find('.themes > li').removeClass('is-selected');
-      $tab.toggleClass('is-selected');
-
-      var display = $tab ? $tab.data('display') : this.model.attributes.display;
-      this._setDisplay(display)
-    },
 
     _setDisplay: function(display) {
       this.model.set({
