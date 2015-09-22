@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get  'accept_terms', to: 'static#accept_terms',        as: :accept_terms
 
   # Map
-  get '/map' => 'map#index'
-  get '/map/*path' => 'map#index'
+  get '/map', to: 'map#index', as: :map
+  get '/map/*path', to: 'map#index'
   get '/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers/:sublayers)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
@@ -20,8 +20,8 @@ Rails.application.routes.draw do
 
 
   # Static pages
-  get  'terms', to: 'static#terms', as: :terms
-  get  'about', to: 'static#about', as: :about
+  get  'terms', to: 'static#terms',               as: :terms
+  get  'about', to: 'static#about',               as: :about
   get  'data-methods', to: 'static#data_methods', as: :data_methods
 
   with_options only: [:index, :show] do |list_show_only|
@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
   get 'compare-countries',   to: 'countries#compare_countries', as: :compare_countries
 
+  # indicators routes
+
+
   # API routes
   namespace :api, defaults: {format: 'json'} do
 
@@ -40,11 +43,13 @@ Rails.application.routes.draw do
     scope module: :v1, constraints: APIVersion.new(version: 1, current: true) do
 
       with_options only: [:index, :show] do |list_show_only|
+        list_show_only.resources :indicators
         list_show_only.resources :countries
         list_show_only.resources :widgets
       end
 
       get 'countries/:id/:id_1', to: 'countries#show_jurisdiction', as: :jurisdiction
+      get 'indicators/:id/:iso', to: 'indicators#show',             as: :country_indicator
 
     end
 

@@ -1,0 +1,57 @@
+{
+  "resource": "Indicators",
+  "http_method": "GET",
+  "route": "/api/indicators/:id/:iso",
+  "description": "Getting a specific indicator for country",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "id",
+      "description": "ID of indicator"
+    },
+    {
+      "name": "iso",
+      "description": "ISO of country (bra, chn...)"
+    },
+    {
+      "name": "thresh",
+      "description": "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/indicators/1/bra?thresh=25",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "thresh": "25"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"values\":[{\"indicator_id\":1,\"cartodb_id\":5331,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":0,\"value\":488013759.7},{\"indicator_id\":1,\"cartodb_id\":5332,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2001,\"value\":2761615.546},{\"indicator_id\":1,\"cartodb_id\":5333,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2002,\"value\":3524425.456},{\"indicator_id\":1,\"cartodb_id\":5334,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2003,\"value\":3266996.507},{\"indicator_id\":1,\"cartodb_id\":5335,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2004,\"value\":3871262.037},{\"indicator_id\":1,\"cartodb_id\":5336,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2005,\"value\":3500859.419},{\"indicator_id\":1,\"cartodb_id\":5337,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2006,\"value\":2891193.261},{\"indicator_id\":1,\"cartodb_id\":5338,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2007,\"value\":2637280.8},{\"indicator_id\":1,\"cartodb_id\":5339,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2008,\"value\":2459076.594},{\"indicator_id\":1,\"cartodb_id\":5340,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2009,\"value\":1829954.809},{\"indicator_id\":1,\"cartodb_id\":5341,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2010,\"value\":2705579.978},{\"indicator_id\":1,\"cartodb_id\":5342,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2011,\"value\":1937606.18},{\"indicator_id\":1,\"cartodb_id\":5343,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2012,\"value\":2949940.979},{\"indicator_id\":1,\"cartodb_id\":5344,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2013,\"value\":1977759.353},{\"indicator_id\":1,\"cartodb_id\":5345,\"iso\":\"BRA\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":2014,\"value\":2294995.094}]}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"f62cd5b83111e9389de1b70d8455f27d\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "c6995e99-70ad-44cb-aad5-73f4999880d9",
+        "X-Runtime": "0.498706",
+        "Content-Length": "1761"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/indicators/1/bra?thresh=25\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}

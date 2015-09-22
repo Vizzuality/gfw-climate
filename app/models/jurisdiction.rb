@@ -11,7 +11,7 @@ class Jurisdiction
     end
 
     def find_jurisdiction(filter_params)
-      country_id      = filter_params[:id]
+      country_id      = filter_params[:id].downcase
       jurisdiction_id = filter_params[:id_1].to_i
 
       url = "#{ base_path }/countries/#{ country_id }"
@@ -24,7 +24,7 @@ class Jurisdiction
     end
 
     def find_umd(filter_params)
-      country_id      = filter_params[:id]
+      country_id      = filter_params[:id].downcase
       jurisdiction_id = filter_params[:id_1].to_i
       thresh_value    = filter_params[:thresh] if filter_params[:thresh].present?
       umd             = 'UMD'

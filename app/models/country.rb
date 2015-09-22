@@ -20,7 +20,7 @@ class Country
     end
 
     def find_country(filter_params)
-      country_id   = filter_params[:id]
+      country_id   = filter_params[:id].downcase
       thresh_value = filter_params[:thresh] if filter_params[:thresh].present?
 
       params = if thresh_value.present?
