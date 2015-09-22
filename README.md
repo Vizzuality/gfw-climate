@@ -67,6 +67,14 @@ redis-cli flushall
 
     foreman start
 
+    or run script to flush redis and start foreman:
+
+    ./start
+
+    Flush redis: 
+
+    ./clean
+
 ## TEST ##
 
   Run rspec: 
