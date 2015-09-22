@@ -25,17 +25,13 @@ resource 'Indicators' do
     example_request "Getting a specific indicator", id: 1, thresh: 25 do
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
-      
-      expect(value['iso']).to eq('GHA')
+      expect(value['thresh']).to eq(25)
     end
 
     example_request "Getting a specific indicator with thresh 15", document: false do
       do_request(id: 2, thresh: 15)
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
-      
-      expect(value['iso']).to eq('GUY')
-      expect(value['country_name']).to eq('Guyana')
       expect(value['thresh']).to eq(15)
     end
 
@@ -43,9 +39,6 @@ resource 'Indicators' do
       do_request(id: 3)
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
-      
-      expect(value['iso']).to eq('CIV')
-      expect(value['country_name']).to eq("Cote d'Ivoire")
       expect(value['thresh']).to eq(10)
     end
   end

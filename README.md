@@ -27,6 +27,7 @@ REDISCLOUD_URL=redis://localhost:6379/0
 CODECLIMATE_REPO_TOKEN=c5c128fcb301371d4b89bec2df714028e0a75deb8d732f49f922626aa84c3524
 LAYER_SPEC=layerspec_nuclear_hazard
 FEEDBACK_MAIL=example@gfw-climate.com
+CDB_API_HOST=https://wri-01.cartodb.com/api/v2/sql
 ```
 
 ### REDIS ###
