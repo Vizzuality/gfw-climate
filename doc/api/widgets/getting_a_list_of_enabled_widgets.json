@@ -26,17 +26,17 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "{\"widgets\":[{\"id\":1,\"name\":\"Deforestation rate\"},{\"id\":2,\"name\":\"Test 2 rate\"}]}",
+      "response_body": "{\"widgets\":[{\"id\":1,\"name\":\"Deforestation rate\"},{\"id\":2,\"name\":\"Carbon emissions\"},{\"id\":3,\"name\":\"Forest area 2000\"},{\"id\":4,\"name\":\"Biomas s carbon stocks\"},{\"id\":5,\"name\":\"Aboveground biomass density\"},{\"id\":6,\"name\":\"Emerging hotspots\"}]}",
       "response_headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "application/json; charset=utf-8",
-        "ETag": "W/\"8220b466da3b1de59f6e4813ac4b4adf\"",
+        "ETag": "W/\"975ce2f91f6cc4977cdab0b902133123\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "275165f3-d56f-4f11-890e-c76cb2ca476b",
-        "X-Runtime": "0.038563",
-        "Content-Length": "80"
+        "X-Request-Id": "13af2df0-9e37-48c5-8c93-a51d7504f2b1",
+        "X-Runtime": "0.044713",
+        "Content-Length": "243"
       },
       "response_content_type": "application/json; charset=utf-8",
       "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""

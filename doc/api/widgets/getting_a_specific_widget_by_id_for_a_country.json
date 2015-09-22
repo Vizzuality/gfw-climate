@@ -38,17 +38,17 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "{\"widget\":{\"id\":1,\"name\":\"Deforestation rate\",\"type\":\"line\",\"indicators\":[{\"id\":1,\"name\":\"Hansen/Google/UMD\",\"data\":\"/api/countries/aus\"},{\"id\":2,\"name\":\"National Data\",\"data\":\"\"},{\"id\":3,\"name\":\"FAO\",\"data\":\"\"}]}}",
+      "response_body": "{\"widget\":{\"id\":1,\"name\":\"Deforestation rate\",\"type\":\"line\",\"indicators\":[{\"id\":1,\"name\":\"National Data\",\"data\":\"/api/indicators/1/aus\"},{\"id\":2,\"name\":\"FAO\",\"data\":\"/api/indicators/2/aus\"},{\"id\":3,\"name\":\"Hansen/Google/UMD\",\"data\":\"/api/countries/aus\"}]}}",
       "response_headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "application/json; charset=utf-8",
-        "ETag": "W/\"063ce4bd8db03f6bcdbf561fc2eb5c9e\"",
+        "ETag": "W/\"57cf783e6ad419d6ddedd7453361c47a\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "6373cf21-5ab8-4b71-b077-1a87c4497f94",
-        "X-Runtime": "0.018886",
-        "Content-Length": "214"
+        "X-Request-Id": "675727d4-1d2e-498a-89bf-db54e5d984d6",
+        "X-Runtime": "0.007572",
+        "Content-Length": "256"
       },
       "response_content_type": "application/json; charset=utf-8",
       "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets/1?iso=aus\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
