@@ -48,8 +48,10 @@ Rails.application.routes.draw do
         list_show_only.resources :widgets
       end
 
-      get 'countries/:id/:id_1', to: 'countries#show_jurisdiction', as: :jurisdiction
-      get 'indicators/:id/:iso', to: 'indicators#show',             as: :country_indicator
+      get 'countries/:id/:id_1',    to: 'countries#show_jurisdiction', as: :jurisdiction
+      get 'indicators/:id/:iso',    to: 'indicators#show',             as: :country_indicator
+      get 'widgets/:id/:iso',       to: 'widgets#show',                as: :country_widget
+      get 'widgets/:id/:iso/:id_1', to: 'widgets#show',                as: :juridiction_widget
 
     end
 

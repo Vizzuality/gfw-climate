@@ -10,7 +10,7 @@ resource 'Widgets' do
       expect(status).to eq(200)
       widgets = JSON.parse(response_body)['widgets']
 
-      expect(widgets.length).to eq(2)
+      expect(widgets.length).to eq(6)
     end
   end
 
@@ -22,22 +22,25 @@ resource 'Widgets' do
     example_request "Getting a specific widget by id for a country", id: 1, iso: 'aus' do
       expect(status).to eq(200)
       widget = JSON.parse(response_body)['widget']
-
-      expect(widget['indicators'][0]['data']).to eq('/api/countries/aus')
+      
+      expect(widget['indicators'][0]['data']).to eq('/api/indicators/1/aus')
+      expect(widget['indicators'][2]['data']).to eq('/api/countries/aus')
     end
 
     example_request "Getting a specific widget by id for a juridiction", id: 1, iso: 'aus', id_1: 1 do
       expect(status).to eq(200)
       widget = JSON.parse(response_body)['widget']
-
-      expect(widget['indicators'][0]['data']).to eq('/api/countries/aus/1')
+      
+      expect(widget['indicators'][0]['data']).to eq('/api/indicators/1/aus/1')
+      expect(widget['indicators'][2]['data']).to eq('/api/countries/aus/1')
     end
 
     example_request "Getting a specific widget by id for a juridiction and thresh", id: 1, iso: 'aus', id_1: 1, thresh: 25 do
       expect(status).to eq(200)
       widget = JSON.parse(response_body)['widget']
-
-      expect(widget['indicators'][0]['data']).to eq('/api/countries/aus/1?thresh=25')
+      
+      expect(widget['indicators'][0]['data']).to eq('/api/indicators/1/aus/1?thresh=25')
+      expect(widget['indicators'][2]['data']).to eq('/api/countries/aus/1?thresh=25')
     end
   end
 
