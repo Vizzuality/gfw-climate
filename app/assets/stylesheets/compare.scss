@@ -2,7 +2,6 @@
 
 // General
 @import "settings";
-@import "fonts";
 @import "mixins";
 @import "animations";
 @import "base";
@@ -11,7 +10,7 @@
 @import "header";
 @import "footer";
 @import "grid";
-@import "modules/notifications";
+// @import "modules/notifications";
 
 
 // Modules
@@ -20,18 +19,23 @@
 @import "modules/buttons";
 @import "modules/icons";
 @import "modules/slick";
-@import "modules/countries/header-profile";
-@import "modules/countries/list";
-@import "modules/countries/header-show";
-@import "modules/countries/indicators-modal";
-@import "modules/countries/show";
-@import "modules/countries/country-widget";
-@import 'modules/countries/tabs.scss';
+
+//Countries
+// @import "modules/countries/header-profile";
+// @import "modules/countries/list";
+// @import "modules/countries/header-show";
+// @import "modules/countries/indicators-modal";
+// @import "modules/countries/show";
+// @import "modules/countries/country-widget";
+// @import 'modules/countries/tabs.scss';
 
 // Grids
-@import "modules/countries/grid";
-@import "modules/countries/reports/subnational-grid";
-@import "modules/countries/reports/areas-grid";
+// @import "modules/countries/grid";
+// @import "modules/countries/reports/subnational-grid";
+// @import "modules/countries/reports/areas-grid";
+
+//Comapre
+@import "modules/compare/*";
 
 // Charts
 @import "modules/countries/charts/line-graph";
