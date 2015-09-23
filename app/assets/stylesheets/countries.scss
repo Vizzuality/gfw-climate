@@ -33,6 +33,9 @@
 @import "modules/countries/reports/subnational-grid";
 @import "modules/countries/reports/areas-grid";
 
+//Comapre
+@import "modules/compare/*";
+
 // Charts
 @import "modules/countries/charts/line-graph";
 @import "modules/countries/charts/pie-chart";
@@ -44,3 +47,4 @@
 
 // Layouts
 @import "layouts/countries";
+@import 'layouts/compare';
