@@ -31,7 +31,9 @@ Rails.application.routes.draw do
 
   # countries routes
   get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
-  get 'compare-countries',   to: 'countries#compare_countries', as: :compare_countries
+
+  #compare routes
+  get 'compare-countries',   to: 'compare#index', as: :compare_countries
 
   # API routes
   namespace :api, defaults: {format: 'json'} do
