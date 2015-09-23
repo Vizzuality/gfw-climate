@@ -3,20 +3,21 @@
     "id": 1,
     "name": "Deforestation rate",
     "type": "line",
+    "default_thresh": "25",
     "indicators": [
       {
         "id": 1,
-        "name": "National Data",
+        "name": "National Data (IPCC Approach 2/3)",
         "data_source": "NATDAT"
       },
       {
         "id": 2,
-        "name": "FAO",
+        "name": "FAO FRA 2015 (IPCC Approach 1)",
         "data_source": "FAO"
       },
       {
         "id": 3,
-        "name": "Hansen/Google/UMD",
+        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
         "data_source": "UMD"
       }
     ]
@@ -24,7 +25,8 @@
   {
     "id": 2,
     "name": "Carbon emissions",
-    "type": "pie",
+    "type": "line",
+    "default_thresh": "25",
     "indicators": [
       {
         "id": 12,
@@ -47,6 +49,7 @@
     "id": 3,
     "name": "Forest area 2000",
     "type": "pie",
+    "default_thresh": "25",
     "indicators": [
       {
         "id": 4,
@@ -59,6 +62,7 @@
     "id": 4,
     "name": "Biomas s carbon stocks",
     "type": "pie",
+    "default_thresh": "25",
     "indicators": [
       {
         "id": 4,
@@ -71,6 +75,7 @@
     "id": 5,
     "name": "Aboveground biomass density",
     "type": "pie",
+    "default_thresh": "25",
     "indicators": [
       {
         "id": 10,
@@ -88,6 +93,7 @@
     "id": 6,
     "name": "Emerging hotspots",
     "type": "pie",
+    "default_thresh": "25",
     "indicators": [
       {
         "id": 4,

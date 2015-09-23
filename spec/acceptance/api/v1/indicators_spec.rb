@@ -39,7 +39,7 @@ resource 'Indicators' do
       do_request(id: 3)
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
-      expect(value['thresh']).to eq(10)
+      expect(value['thresh']).to eq(25)
     end
   end
 
@@ -48,13 +48,13 @@ resource 'Indicators' do
     parameter :iso, "ISO of country (bra, chn...)"
     parameter :thresh, "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
 
-    example_request "Getting a specific indicator for country", id: 1, iso: 'bra', thresh: 25 do
+    example_request "Getting a specific indicator for country", id: 1, iso: 'bra', thresh: 10 do
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
       
       expect(value['iso']).to eq('BRA')
       expect(value['country_name']).to eq('Brazil')
-      expect(value['thresh']).to eq(25)
+      expect(value['thresh']).to eq(10)
     end
 
     example "Getting a specific indicator for country with thresh 30", document: false do
@@ -74,7 +74,7 @@ resource 'Indicators' do
       
       expect(value['iso']).to eq('CIV')
       expect(value['country_name']).to eq("Cote d'Ivoire")
-      expect(value['thresh']).to eq(10)
+      expect(value['thresh']).to eq(25)
     end
   end
 

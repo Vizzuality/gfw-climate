@@ -22,7 +22,7 @@ class Indicator
 
     def find_indicator(filter_params)
       indicator_id = filter_params[:id]
-      thresh_value = filter_params[:thresh].present? ? filter_params['thresh'] : '10'
+      thresh_value = filter_params[:thresh].present? ? filter_params['thresh'] : '25'
       iso          = filter_params[:iso].downcase if filter_params[:iso].present?
 
       # Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75
