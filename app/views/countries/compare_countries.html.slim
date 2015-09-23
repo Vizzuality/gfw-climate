@@ -1,2 +1,34 @@
-.layout-content
-  p Compare Countries page (on develop!)
+section.l-compare-countries
+  .l-header
+    .inner
+      .m-section-header
+        h1 Compare countries
+        p Get the figures you need, when you need them, all in one place.
+
+    .inner
+      #compareSelectorsView.l-compare
+        .l-compare-selectors
+          .m-compare-selector
+            select name="countryA"
+              option value="arg" argentina
+          .m-compare-selector
+            select name="countryB"
+              option value="arg" argentina
+          .m-compare-selector
+            select name="countryB"
+              option value="arg" argentina
+        button.btn-compare.btn.medium.white compare
+
+  .l-toolbar
+    .inner
+
+  .l-main-content
+    .inner
+      #compareResultsView
+
+  .l-aside-content
+    .inner
+      #compareCustomizeView.m-aside
+        h3 Customize your report
+        button class="btn-addIndicators btn medium white" data-source="indicators" Add indicators
+
