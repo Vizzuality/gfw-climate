@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   # countries routes
-  get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
+  get 'countries/:id/:id_1', to: 'countries#show',              as: :jurisdiction
   get 'compare-countries',   to: 'countries#compare_countries', as: :compare_countries
 
   # indicators routes

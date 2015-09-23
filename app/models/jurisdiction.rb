@@ -29,13 +29,10 @@ class Jurisdiction
       thresh_value    = filter_params[:thresh] if filter_params[:thresh].present?
       umd             = 'UMD'
 
-      params = if thresh_value.present?
-                 "?thresh=#{ thresh_value }"
-               end
-      
       #forest-change/umd-loss-gain/admin/AUS/2
       # Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75
-      url = "#{ base_path }/forest-change/umd-loss-gain/admin/#{ country_id }/#{ jurisdiction_id }#{params}"
+      url =  "#{ base_path }/forest-change/umd-loss-gain/admin/#{ country_id }/#{ jurisdiction_id }"
+      url += "?thresh=#{ thresh_value }" if thresh_value.present?
       
       timeouts do
         item_caching(country_id, jurisdiction_id, nil, thresh_value, umd) do
