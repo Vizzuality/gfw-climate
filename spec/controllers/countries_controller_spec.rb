@@ -64,7 +64,7 @@ RSpec.describe CountriesController, type: :controller do
       get :compare_countries
       expect(response).to be_success
       expect(response).to have_http_status(200)
-      expect(response.body).to match 'Compare Countries page'
+      expect(response.body).to match 'Compare countries'
     end
 
   end
