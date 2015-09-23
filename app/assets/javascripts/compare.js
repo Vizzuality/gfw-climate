@@ -7,7 +7,7 @@ require([
   'Class',
   'backbone',
   '_string',
-  'countries/router',
+  'compare/router',
 ], function($, _, Class, Backbone, _string, RouterView) {
 
   'use strict';
@@ -19,7 +19,6 @@ require([
     initialize: function() {
       this._initRouter();
       this._initApp();
-
     },
 
     /**
