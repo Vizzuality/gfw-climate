@@ -7,19 +7,18 @@ require([
   'Class',
   'backbone',
   '_string',
-  'countries/router',
+  'compare/router',
 ], function($, _, Class, Backbone, _string, RouterView) {
 
   'use strict';
 
-  var CountriesPage = Backbone.View.extend({
+  var ComparePage = Backbone.View.extend({
 
     el: document.body,
 
     initialize: function() {
       this._initRouter();
       this._initApp();
-
     },
 
     /**
@@ -37,6 +36,6 @@ require([
 
   });
 
-  new CountriesPage();
+  new ComparePage();
 
 });
