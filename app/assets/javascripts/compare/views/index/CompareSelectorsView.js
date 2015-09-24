@@ -1,9 +1,10 @@
 define([
   'backbone',
   'handlebars',
+  'compare/presenters/CompareSelectorsPresenter',
   'compare/collections/CountriesCollection',
   'text!compare/templates/compareSelectorTpl.handlebars'
-], function(Backbone, Handlebars, CountriesCollection, tpl) {
+], function(Backbone, Handlebars, CompareSelectorsPresenter, CountriesCollection, tpl) {
 
   var CompareSelectorsView = Backbone.View.extend({
 
@@ -14,6 +15,11 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize:function() {
+      this.presenter = new CompareSelectorsPresenter(this);
+
+      this._setListeners();
+      this._cacheVars();
+
       // Fetching data
       var complete = _.invoke([
         this.collection,
@@ -25,8 +31,14 @@ define([
 
     },
 
+    _setListeners: function() {
+    },
+
+    _cacheVars: function() {
+    },
+
     getActiveCountries: function() {
-      return _.where(this.collection.toJSON().countries, {'enabled' : true});
+      return _.where(this.collection.toJSON().countries, { 'enabled' : true });
     },
 
     render: function() {
