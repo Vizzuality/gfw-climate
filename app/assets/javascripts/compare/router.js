@@ -1,13 +1,13 @@
 define([
   'backbone',
-  'compare/views/compareTestView',
-  'compare/services/PlaceService'
-], function(Backbone, CompareTestView, PlaceService) {
+  'compare/services/PlaceService',
+  'compare/views/CompareIndexView'
+], function(Backbone, PlaceService, CompareIndexView) {
 
   var Router = Backbone.Router.extend({
 
     routes: {
-      'compare-countries/:country(:jurisdiction)/:country2(:jurisdiction2)/:country3(:jurisdiction3)' : '_initIndex'
+      'compare-countries(/:country)(:jurisdiction)(/:country2)(:jurisdiction2)(/:country3)(:jurisdiction3)' : '_initIndex'
     },
 
     initialize: function() {
@@ -15,9 +15,7 @@ define([
     },
 
     _initIndex: function() {
-      console.log('router compare')
       new CompareIndexView();
-      new CompareTestView();
     }
 
   });

@@ -1,7 +1,7 @@
 define([
   'backbone',
-  'countries/views/index/CountryListView'
-], function(Backbone, CountryListView) {
+  'compare/views/index/CompareSelectorsView'
+], function(Backbone, CompareSelectorsView) {
 
   var CompareIndexView = Backbone.View.extend({
 
