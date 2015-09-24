@@ -12,7 +12,7 @@ require([
 
   'use strict';
 
-  var CountriesPage = Backbone.View.extend({
+  var ComparePage = Backbone.View.extend({
 
     el: document.body,
 
@@ -37,6 +37,6 @@ require([
 
   });
 
-  new CountriesPage();
+  new ComparePage();
 
 });
