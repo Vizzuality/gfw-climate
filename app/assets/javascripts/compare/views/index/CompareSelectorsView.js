@@ -14,8 +14,13 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    events: {
+      'change select' : '_selectCountry'
+    },
+
     status: new (Backbone.Model.extend({
     })),
+
 
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
@@ -40,19 +45,24 @@ define([
     _cacheVars: function() {
     },
 
-    getActiveCountries: function() {
+    _getActiveCountries: function() {
       return _.where(this.collection.toJSON().countries, { 'enabled' : true });
     },
 
     render: function() {
-      var countries = this.getActiveCountries();
+      var countries = this._getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
 
-      this.stopSpinner();
+      this._stopSpinner();
     },
 
-    stopSpinner: function() {
+    _stopSpinner: function() {
       this.$el.removeClass('is-loading');
+    },
+
+    _selectCountry: function(e) {
+      var country = $(e.currentTarget).val();
+      console.log(country)
     }
 
   });

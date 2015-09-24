@@ -8,7 +8,6 @@ define([
   var CompareSelectorsPresenter = PresenterClass.extend({
 
     init: function(view) {
-      console.log('ComparePresenter')
       this._super();
       this.view = view;
       mps.publish('Place/register', [this]);
@@ -21,6 +20,8 @@ define([
       'Place/go': function(place) {
         this._onPlaceGo(place);
       }
+
+
     }],
 
     /**
@@ -28,9 +29,6 @@ define([
      * @param  {[string]} display
      * Add below events publication
      */
-
-
-
 
 
 

@@ -19,7 +19,6 @@ define([
     _initIndex: function() {
       this.name = 'compare-countries';
       this.initView.apply(this, arguments);
-      // new CompareIndexView();
     },
 
     initView: function(country1, country2, country3) {
