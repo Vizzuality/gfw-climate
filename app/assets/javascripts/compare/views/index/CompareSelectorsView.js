@@ -25,8 +25,12 @@ define([
 
     },
 
+    getActiveCountries: function() {
+      return _.where(this.collection.toJSON().countries, {'enabled' : true});
+    },
+
     render: function() {
-      var countries = _.where(this.collection.toJSON().countries, {'enabled' : true});
+      var countries = this.getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
     }
 
