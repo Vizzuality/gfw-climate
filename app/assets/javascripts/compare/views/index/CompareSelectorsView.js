@@ -1,11 +1,33 @@
 define([
-  'backbone'
-], function(Backbone) {
+  'backbone',
+  'handlebars',
+  'compare/collections/CountriesCollection',
+  'text!compare/templates/compareSelectorTpl.handlebars'
+], function(Backbone, Handlebars, CountriesCollection, tpl) {
 
   var CompareSelectorsView = Backbone.View.extend({
 
+    el: '#compareSelectorsView',
+
+    collection: CountriesCollection,
+
+    template: Handlebars.compile(tpl),
+
     initialize:function() {
-      console.log('hola seelctors');
+      // Fetching data
+      var complete = _.invoke([
+        this.collection,
+      ], 'fetch');
+
+      $.when.apply($, complete).done(function() {
+        this.render();
+      }.bind(this));
+
+    },
+
+    render: function() {
+      var countries = _.where(this.collection.toJSON().countries, {'enabled' : true});
+      this.$el.html(this.template({'countries': countries}))
     }
 
   });
