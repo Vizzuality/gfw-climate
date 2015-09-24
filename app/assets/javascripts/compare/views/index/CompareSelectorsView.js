@@ -61,9 +61,41 @@ define([
     },
 
     _selectCountry: function(e) {
-      var country = $(e.currentTarget).val();
-      console.log(country)
+      var selector = $(e.currentTarget).attr('id');
+      var selectedCountry = $(e.currentTarget).val();
+
+      this.countrySelected(selectedCountry, selector);
+    },
+
+    countrySelected: function(country, selector) {
+      this._updateStatus(country, selector);
+      this._disableSelectors(country, selector);
+      // this._updateUrl(country);
+    },
+
+    _updateStatus: function(country, selector) {
+      this.status.set(selector, country);
+    },
+
+    _disableSelectors: function(country, selector) {
+      var selectors = [country1, country2, country3];
+      var index = selectors.indexOf(selector);
+
+      selectors.splice(index, 1);
+
+      console.log()
+
+
+    },
+
+    _updateUrl: function(country) {
+      //Quien escucha esto? El presenter? Y se lo manda al PS?
+      var route = location + country
+      this.router.navigateTo(route, { silent: true });
+      mps.publish('Compare/countrySelected', [this]);
     }
+
+
 
   });
 
