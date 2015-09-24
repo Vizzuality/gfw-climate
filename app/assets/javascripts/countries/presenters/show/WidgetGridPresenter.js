@@ -1,32 +1,23 @@
 define([
   'mps',
-  'underscore',
   'countries/presenters/PresenterClass'
-], function(mps, _, PresenterClass) {
+], function(mps, PresenterClass) {
+
+  'use strict';
 
   var WidgetGridPresenter = PresenterClass.extend({
 
     init: function(view) {
-      this._super();
       this.view = view;
+      this._super();
+
+      mps.publish('Place/register', [this]);
     },
 
-    _subscriptions: [{
-      'Widgets/render': function(widgets) {
-        this.view._setWidgets(widgets);
-      }
-    }, {
-      'CountryHeader/switchDisplay': function(display) {
-        this.view._setDisplay(display);
-      },
-      'Tabs/setDisplay': function(display) {
-        this.view._setDisplay(display);
-      }
-    }],
-
-    _onOpenModal: function() {
-      mps.publish('ReportsPanel/open', []);
-    },
+    /**
+     * Application subscriptions.
+     */
+    _subscriptions: [{}]
 
   });
 

@@ -1,28 +1,42 @@
 define([
   'backbone',
+  'map/utils',
+  'services/PlaceService',
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView'
-], function(Backbone, CountryIndexView, CountryShowView) {
+], function(Backbone, utils, PlaceService, CountryIndexView, CountryShowView) {
+
+  'use strict';
 
   var Router = Backbone.Router.extend({
 
     routes: {
-      'countries'                          : '_initIndex',
-      'countries/overview'                 : '_initOverview',
-      'countries/:country(/:jurisdiction)' : '_initShow'
+      'countries'                           : '_initIndex',
+      'countries/overview'                  : '_initOverview',
+      'countries/:country(/:area)(?params)' : '_initShow'
+    },
+
+    initialize: function() {
+      this.placeService = new PlaceService(this);
+      this.name = 'countries';
     },
 
     _initIndex: function() {
       new CountryIndexView();
     },
 
-    _initShow: function(arguments) {
-      new CountryShowView({data: arguments});
+    _initShow: function(country, area, params) {
+
+      var params = {
+        country: country,
+        area: area,
+        options: _.parseUrl()
+      };
+
+      this.placeService.initPlace(this.name, params);
     },
 
-    _initOverview: function() {
-
-    }
+    _initOverview: function() {}
 
   });
 

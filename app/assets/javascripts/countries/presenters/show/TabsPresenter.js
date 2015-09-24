@@ -5,11 +5,11 @@ define([
 
   'use strict';
 
-  var CountryHeaderPresenter = PresenterClass.extend({
+  var TabsPresenter = PresenterClass.extend({
 
     init: function(view) {
+      this.view = view;
       this._super();
-      this.view = view
 
       mps.publish('Place/register', [this]);
     },
@@ -21,6 +21,6 @@ define([
 
   });
 
-  return CountryHeaderPresenter;
+  return TabsPresenter;
 
 });
