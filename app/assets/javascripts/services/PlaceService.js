@@ -59,7 +59,7 @@ define([
 
     _uriTemplate: {
       show: '{name}{/iso}{/area}{?display,widgets}',
-      compare: '{name}{/iso1}{&id_1}{/iso2}{&id_2}{/iso3}{&id_3}{?threshold,widgets}'
+      compare: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}'
     },
 
     /**
@@ -68,7 +68,6 @@ define([
      * @param  {Backbond.Router} router Instance of Backbone.Router
      */
     init: function(router) {
-      console.log('PS')
       this.router = router;
       this._presenters = [];
       this._name = null;
@@ -80,8 +79,6 @@ define([
      */
     _subscriptions: [{
       'Place/register': function(presenter) {
-        console.log(presenter);
-        console.log('register presenter');
         this._presenters = _.union(this._presenters, [presenter]);
       }
     }, {
@@ -123,12 +120,7 @@ define([
       var place = {};
 
       place.params = this._standardizeParams(params);
-      console.log('_newPlace');
-      console.log(place.params);
       mps.publish('Place/go', [place]);
-
-      // where = _.union(place.params.baselayers,
-      //   place.params.sublayers);
     },
 
     /**
@@ -138,7 +130,7 @@ define([
      * @return {string} The route URL
      */
     _getRoute: function(param) {
-      var url = new UriTemplate(this._uriTemplate.compare).fillFromObject(param);
+      var url = new UriTemplate(this._uriTemplate.this._name).fillFromObject(param);
       return decodeURIComponent(url);
     },
 
@@ -152,20 +144,9 @@ define([
       var p = _.extendNonNull({}, urlDefaultsParams, params);
       p.name = this._name;
 
-      // p.baselayers = _.map(p.baselayers.split(','), function(slug) {
-      //   return {slug: slug};
-      // });
-
-      // p.sublayers = p.sublayers ? _.map(p.sublayers.split(','), function(id) {
-      //   return {id: _.toNumber(id)};
-      // }) : [];
-
-      p.iso1 = p.iso1;
-      p.id_1 = p.id_1;
-      p.iso2 = p.iso2;
-      p.id_2 = p.id_2;
-      p.iso3 = p.iso3;
-      p.id_3 = p.id_3;
+      p.country1 = p.country1;
+      p.country2 = p.country2;
+      p.country3 = p.country3;
 
       return p;
     },
@@ -179,16 +160,12 @@ define([
      */
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
-      // var baselayers = _.pluck(p.baselayers, 'slug');
-      p.name = this._name;
-      // p.baselayers = (baselayers.length > 0) ? baselayers : 'none';
 
-      p.iso1 = p.iso1;
-      p.id_1 = p.id_1;
-      p.iso2 = p.iso2;
-      p.id_2 = p.id_2;
-      p.iso3 = p.iso3;
-      p.id_3 = p.id_3;
+      p.name = this._name;
+
+      p.country1 = p.country1;
+      p.country2 = p.country2;
+      p.country3 = p.country3;
 
       return p;
     },
