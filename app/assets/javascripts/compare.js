@@ -8,7 +8,8 @@ require([
   'backbone',
   '_string',
   'compare/router',
-], function($, _, Class, Backbone, _string, RouterView) {
+  'compare/views/CompareIndexView'
+], function($, _, Class, Backbone, _string, RouterView, CompareIndexView) {
 
   'use strict';
 
@@ -18,6 +19,7 @@ require([
 
     initialize: function() {
       this._initRouter();
+      this._initViews();
       this._initApp();
     },
 
@@ -32,6 +34,10 @@ require([
 
     _initRouter: function() {
       this.router = new RouterView();
+    },
+
+    _initViews: function() {
+      new CompareIndexView();
     }
 
   });

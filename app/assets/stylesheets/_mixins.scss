@@ -172,7 +172,7 @@
 }
 
 //Loader
-@mixin spinner ($size, $border-width, $color){
+@mixin spinner ($size, $border-width, $color) {
 
   &:before {
     content: '';

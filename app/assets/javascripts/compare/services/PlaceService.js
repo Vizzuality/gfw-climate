@@ -48,23 +48,19 @@ define([
   'underscore',
   'mps',
   'uri',
-  'map/presenters/PresenterClass',
+  'compare/presenters/PresenterClass',
 ], function (_, mps, UriTemplate, PresenterClass) {
 
   'use strict';
 
-  var urlDefaultsParams = {
-    baselayers: 'loss,forestgain',
-    zoom: 3,
-    lat: 15,
-    lng: 27,
-    maptype: 'grayscale',
-    iso: 'ALL'
-  };
+  var urlDefaultsParams = {};
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,wdpaid,begin,end,threshold,dont_analyze}',
+    _uriTemplate: {
+      show: '{name}{/iso}{/area}{?display,widgets}',
+      compare: '{name}{/iso1}{&id_1}{/iso2}{&id_2}{/iso3}{&id_3}{?threshold,widgets}'
+    },
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -72,7 +68,7 @@ define([
      * @param  {Backbond.Router} router Instance of Backbone.Router
      */
     init: function(router) {
-      console.log(router);
+      console.log('PS')
       this.router = router;
       this._presenters = [];
       this._name = null;
@@ -84,6 +80,8 @@ define([
      */
     _subscriptions: [{
       'Place/register': function(presenter) {
+        console.log(presenter);
+        console.log('register presenter');
         this._presenters = _.union(this._presenters, [presenter]);
       }
     }, {
@@ -113,7 +111,7 @@ define([
         this._getPresenterParams(this._presenters));
 
       route = this._getRoute(params);
-      this.router.navigateTo(route, {silent: true});
+      this.router.navigateTo(route, { silent: true });
     },
 
     /**
@@ -122,12 +120,15 @@ define([
      * @param  {Object}  params The place parameters
      */
     _newPlace: function(params) {
-      var where, place = {};
+      var place = {};
 
       place.params = this._standardizeParams(params);
+      console.log('_newPlace');
+      console.log(place.params);
+      mps.publish('Place/go', [place]);
 
-      where = _.union(place.params.baselayers,
-        place.params.sublayers);
+      // where = _.union(place.params.baselayers,
+      //   place.params.sublayers);
     },
 
     /**
@@ -137,7 +138,7 @@ define([
      * @return {string} The route URL
      */
     _getRoute: function(param) {
-      var url = new UriTemplate(this._uriTemplate).fillFromObject(param);
+      var url = new UriTemplate(this._uriTemplate.compare).fillFromObject(param);
       return decodeURIComponent(url);
     },
 
@@ -151,25 +152,21 @@ define([
       var p = _.extendNonNull({}, urlDefaultsParams, params);
       p.name = this._name;
 
-      p.baselayers = _.map(p.baselayers.split(','), function(slug) {
-        return {slug: slug};
-      });
+      // p.baselayers = _.map(p.baselayers.split(','), function(slug) {
+      //   return {slug: slug};
+      // });
 
-      p.sublayers = p.sublayers ? _.map(p.sublayers.split(','), function(id) {
-        return {id: _.toNumber(id)};
-      }) : [];
+      // p.sublayers = p.sublayers ? _.map(p.sublayers.split(','), function(id) {
+      //   return {id: _.toNumber(id)};
+      // }) : [];
 
-      p.zoom = _.toNumber(p.zoom);
-      p.lat = _.toNumber(p.lat);
-      p.lng = _.toNumber(p.lng);
-      p.iso = _.object(['country', 'region'], p.iso.split('-'));
-      p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
-      p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
-      p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
-      p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
-      p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
-      p.subscribe_alerts = (p.subscribe_alerts === 'subscribe') ? true : null;
-      p.referral = p.referral;
+      p.iso1 = p.iso1;
+      p.id_1 = p.id_1;
+      p.iso2 = p.iso2;
+      p.id_2 = p.id_2;
+      p.iso3 = p.iso3;
+      p.id_3 = p.id_3;
+
       return p;
     },
 
@@ -182,19 +179,17 @@ define([
      */
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
-      var baselayers = _.pluck(p.baselayers, 'slug');
+      // var baselayers = _.pluck(p.baselayers, 'slug');
       p.name = this._name;
-      p.baselayers = (baselayers.length > 0) ? baselayers : 'none';
-      p.sublayers = p.sublayers ? p.sublayers.join(',') : null;
-      p.zoom = String(p.zoom);
-      p.lat = p.lat.toFixed(2);
-      p.lng = p.lng.toFixed(2);
-      p.iso = _.compact(_.values(p.iso)).join('-') || 'ALL';
-      p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
-      p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
-      p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
-      p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
-      p.threshold = p.threshold ? String(p.threshold) : null;
+      // p.baselayers = (baselayers.length > 0) ? baselayers : 'none';
+
+      p.iso1 = p.iso1;
+      p.id_1 = p.id_1;
+      p.iso2 = p.iso2;
+      p.id_2 = p.id_2;
+      p.iso3 = p.iso3;
+      p.id_3 = p.id_3;
+
       return p;
     },
 

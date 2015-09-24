@@ -14,6 +14,9 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    status: new (Backbone.Model.extend({
+    })),
+
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
 
@@ -44,6 +47,12 @@ define([
     render: function() {
       var countries = this.getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
+
+      this.stopSpinner();
+    },
+
+    stopSpinner: function() {
+      this.$el.removeClass('is-loading');
     }
 
   });
