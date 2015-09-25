@@ -1,0 +1,32 @@
+$l-padding: 50px;
+
+.l-header {
+  padding: 70px 0 25px;
+  background-color: $dark-grey;
+}
+
+.l-toolbar {
+  padding: 10px 0;
+  background-color: $extra-light-grey;
+}
+
+.l-main-content {
+  padding: $l-padding 0;
+}
+
+.l-compare {
+  text-align: center;
+}
+
+.l-compare-selectors {
+  display: flex;
+  // flex: 1 1 32%;
+  justify-content: space-between;
+  margin: 40px 0;
+}
+
+.l-aside-content {
+  padding: $l-padding 0;
+  background-color: $color-1;
+  text-align: center;
+}

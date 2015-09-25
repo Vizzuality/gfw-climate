@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
-
   # Static pages
   get  'terms', to: 'static#terms',               as: :terms
   get  'about', to: 'static#about',               as: :about
@@ -29,12 +28,12 @@ Rails.application.routes.draw do
     list_show_only.resources :posts, path: :blog
   end
 
-  # countries routes
-  get 'countries/:id/:id_1', to: 'countries#show',              as: :jurisdiction
-  get 'compare-countries',   to: 'countries#compare_countries', as: :compare_countries
+  # Countries - jurisdiction routes
+  get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
 
-  # indicators routes
-
+  # Compare countries routes
+  # get 'compare-countries(/:iso_1)(:id_1)(/:iso_2)(:id_2)(/:iso_3)(:id_3)', to: 'compare#index', as: :compare_countries
+  get 'compare-countries(/*path)', to: 'compare#index', as: :compare_countries
 
   # API routes
   namespace :api, defaults: {format: 'json'} do

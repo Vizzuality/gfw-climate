@@ -1,0 +1,34 @@
+section.l-compare-countries
+  .l-header
+    .inner
+      .m-section-header
+        h1 Compare countries
+        p Get the figures you need, when you need them, all in one place.
+
+    .inner
+      #compareSelectorsView.l-compare.is-loading
+        .l-compare-selectors
+          .m-compare-selector
+            select name="country1"
+              option value="" select a country
+          .m-compare-selector
+            select name="country2"
+              option value="" select a country
+          .m-compare-selector
+            select name="country3"
+              option value="" select a country
+        button.btn-compare.btn.medium.white compare
+
+  .l-toolbar
+    .inner
+
+  .l-main-content
+    .inner
+      #compareResultsView
+
+  .l-aside-content
+    .inner
+      #compareCustomizeView.m-aside
+        h3 Customize your report
+        button class="btn-addIndicators btn medium white" data-source="indicators" Add indicators
+
