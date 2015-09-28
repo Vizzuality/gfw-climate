@@ -1,6 +1,11 @@
 .m-compare-selector {
   width: 32%;
 
+  padding: 20px;
+  border: 1px dashed $white;
+  border: 1px dashed rgba(255, 255, 255, .5);
+  border-radius: 10px;
+
   select {
     width: 100%;
   }

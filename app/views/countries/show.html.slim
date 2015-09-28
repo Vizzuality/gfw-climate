@@ -1,19 +1,20 @@
 .layout-content
-  .container-country__sup-header-country
-        .inner
-          ul.options
-            li.options_item
-              svg
-                use (xlink:href="#shape-share")
-              button#share-country share
-            li.options_item
-              svg
-                use (xlink:href="#shape-share")
-              button#print-country save/print report
-            li.options_item
-              svg
-                use (xlink:href="#shape-country")
-              a#analyze-country (href="#") analyze on map
+  .l-toolbar
+    .inner
+      .m-toolbar
+        ul.options
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#share-country share
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#print-country save/print report
+          li.options_item
+            svg
+              use (xlink:href="#shape-country")
+            a#analyze-country (href="#") analyze on map
   section#countryShowView (data-iso="#{@iso}")
     .container-country
       #headerCountry.container-country__header-country

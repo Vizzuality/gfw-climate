@@ -6,7 +6,8 @@ section.l-compare-countries
         p Get the figures you need, when you need them, all in one place.
 
     .inner
-      #compareSelectorsView.l-compare.is-loading
+      //- #compareSelectorsView.l-compare.is-loading
+      #compareSelectorsView.l-compare
         .l-compare-selectors
           .m-compare-selector
             select name="country1"
@@ -21,6 +22,20 @@ section.l-compare-countries
 
   .l-toolbar
     .inner
+      .m-toolbar
+        ul.options
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#share-country share
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#print-country save/print report
+          li.options_item
+            svg
+              use (xlink:href="#shape-country")
+            a#analyze-country (href="#") analyze on map
 
   .l-main-content
     .inner
