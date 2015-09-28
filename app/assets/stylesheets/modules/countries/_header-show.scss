@@ -39,6 +39,7 @@
         -moz-appearance: none;
         text-indent: 0.01px;
         text-overflow: '';
+
         &::-ms-expand {
           display: none;
         }
@@ -82,6 +83,7 @@
         position: absolute;
         cursor: pointer;
         display: none;
+
         &:hover {
           color: lighten(#73707D, 10);
         }
@@ -105,9 +107,11 @@
       position: absolute;
       right: 0;
       bottom: 0;
+
       ul {
         border: 1px solid #616161;
         border-radius: 12px;
+
         > li {
           display: inline-block;
           padding: 0 10px;
@@ -115,6 +119,7 @@
           color: rgba($white, .5);
           text-transform: uppercase;
           cursor: pointer;
+
           &.is-selected {
             background-color: #616161;
             color: $white;
@@ -130,11 +135,13 @@
   display: inline-block;
   width: 100%;
   background-color: #eee;
+
   .options {
     display: inline-flex;
     align-items: center;
     float: right;
     margin: 5px 0;
+
     .options_item {
       float: left;
       padding: 5px 20px;
@@ -154,6 +161,7 @@
         font-family: inherit;
         cursor: pointer;
       }
+
       a, button {
         margin-left: 5px;
         font-size: 14px;
