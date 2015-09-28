@@ -25,6 +25,19 @@ define([
       }
     }],
 
+    // Subscriptions at develop. Maybe we will need them in a while...
+    // _subscriptions: [{
+    //   'Widgets/render': function(widgets) {
+    //     this.view._setWidgets(widgets);
+    //   }
+    // }, {
+    //   'CountryHeader/switchDisplay': function(display) {
+    //     this.view._setDisplay(display);
+    //   },
+    //   'Tabs/setDisplay': function(display) {
+    //     this.view._setDisplay(display);
+    //   }
+    // }],
 
     /**
      * Trigger the selected display option
@@ -55,7 +68,11 @@ define([
         this.view.start(this.model);
 
       }.bind(this));
-    }
+    },
+
+    _onOpenModal: function() {
+      mps.publish('ReportsPanel/open', []);
+    },
 
   });
 
