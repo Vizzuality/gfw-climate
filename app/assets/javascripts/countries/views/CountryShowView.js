@@ -2,8 +2,7 @@ define([
   'backbone',
   'countries/views/show/CountryShowHeaderView',
   'countries/views/show/TabsView',
-  'countries/views/show/WidgetGridView',
-  'countries/views/CountryModalView'
+  'countries/views/show/WidgetGridView'
 ], function(Backbone, CountryShowHeaderView,
   TabsView, WidgetGridView, CountryModalView) {
 
@@ -15,7 +14,6 @@ define([
       new CountryShowHeaderView();
       new TabsView();
       new WidgetGridView();
-      new CountryModalView();
     }
 
   });

@@ -4,8 +4,9 @@ define([
   'underscore',
   'handlebars',
   'views/SourceWindowView',
+  'countries/presenters/ReportsPanelPresenter',
   'text!countries/templates/country-indicators-window.handlebars'
-], function($, Backbone, _,Handlebars, SourceWindowView, tpl) {
+], function($, Backbone, _, Handlebars, SourceWindowView, ReportsPanelPresenter, tpl) {
 
   'use strict';
 
@@ -24,6 +25,7 @@ define([
 
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
+      this.presenter = new ReportsPanelPresenter(this);
 
       this.enabledIndicators = [];
 

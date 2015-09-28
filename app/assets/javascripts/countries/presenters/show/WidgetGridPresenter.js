@@ -64,9 +64,7 @@ define([
       var complete = _.invoke([this.model], 'fetch');
 
       $.when($, complete).done(function() {
-
         this.view.start(this.model);
-
       }.bind(this));
     },
 
