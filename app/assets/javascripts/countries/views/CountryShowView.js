@@ -15,7 +15,7 @@ define([
       new CountryShowHeaderView();
       new TabsView();
       new WidgetGridView();
-      // new CountryModalView();
+      new CountryModalView();
     }
 
   });

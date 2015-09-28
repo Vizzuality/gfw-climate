@@ -42,11 +42,10 @@ define([
       */
     _onPlaceGo: function(place) {
       var iso = place.params.country;
-      console.log(iso);
-      this._getData(iso);
+      this._retrieveData(iso);
     },
 
-    _getData: function(iso) {
+    _retrieveData: function(iso) {
       this.model.setCountry(iso);
 
       var complete = _.invoke([this.model], 'fetch');
