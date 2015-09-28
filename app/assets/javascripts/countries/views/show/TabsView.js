@@ -21,7 +21,10 @@ define([
 
     initialize: function(params) {
       this.presenter = new TabsPresenter(this);
-      // this._setCurrentTab(null, this.model.attributes.display);
+    },
+
+    start: function(params) {
+      this._setCurrentTab(null, this.model.attributes.display);
     },
 
     /**

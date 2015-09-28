@@ -8,8 +8,9 @@ require([
   'backbone',
   '_string',
   'countries/router',
-  'countries/views/CountryShowView'
-], function($, _, Class, Backbone, _string, RouterView, CountryShowView) {
+  'countries/views/CountryShowView',
+  'countries/views/CountryIndexView'
+], function($, _, Class, Backbone, _string, RouterView, CountryShowView, CountryIndexView) {
 
   'use strict';
 
@@ -34,6 +35,7 @@ require([
 
     _initViews: function() {
       new CountryShowView();
+      new CountryIndexView();
     },
 
     _initRouter: function() {

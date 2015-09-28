@@ -22,7 +22,7 @@ define([
     },
 
     _initIndex: function() {
-      new CountryIndexView();
+      // new CountryIndexView();
     },
 
     _initShow: function(country, area, params) {
