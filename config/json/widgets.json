@@ -3,28 +3,97 @@
     "id": 1,
     "name": "Deforestation rate",
     "type": "line",
+    "default_thresh": "25",
     "indicators": [
       {
         "id": 1,
-        "name": "Hansen/Google/UMD",
-        "data_source": "UMD"
-      },
-      {
-        "id": 2,
-        "name": "National Data",
+        "name": "National Data (IPCC Approach 2/3)",
         "data_source": "NATDAT"
       },
       {
-        "id": 3,
-        "name": "FAO",
+        "id": 2,
+        "name": "FAO FRA 2015 (IPCC Approach 1)",
         "data_source": "FAO"
+      },
+      {
+        "id": 3,
+        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
+        "data_source": "UMD"
       }
     ]
   },
   {
     "id": 2,
-    "name": "Test 2 rate",
+    "name": "Carbon emissions",
+    "type": "line",
+    "default_thresh": "25",
+    "indicators": [
+      {
+        "id": 12,
+        "name": "Faostat (IPCC Tier 1)",
+        "data_source": "FAO"
+      },
+      {
+        "id": 13,
+        "name": "Baccini/WHRC/WRI",
+        "data_source": "BAC"
+      },
+      {
+        "id": 14,
+        "name": "National data",
+        "data_source": "NATDAT"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Forest area 2000",
     "type": "pie",
+    "default_thresh": "25",
+    "indicators": [
+      {
+        "id": 4,
+        "name": "Test",
+        "data_source": "TEST"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Biomas s carbon stocks",
+    "type": "pie",
+    "default_thresh": "25",
+    "indicators": [
+      {
+        "id": 4,
+        "name": "Test",
+        "data_source": "TEST"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Aboveground biomass density",
+    "type": "pie",
+    "default_thresh": "25",
+    "indicators": [
+      {
+        "id": 10,
+        "name": "Test",
+        "data_source": "TEST"
+      },
+      {
+        "id": 11,
+        "name": "Test",
+        "data_source": "TEST"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Emerging hotspots",
+    "type": "pie",
+    "default_thresh": "25",
     "indicators": [
       {
         "id": 4,
