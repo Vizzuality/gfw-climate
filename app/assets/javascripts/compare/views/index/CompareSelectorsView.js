@@ -9,8 +9,6 @@ define([
 
     el: '#compareSelectorsView',
 
-    // collection: CountriesCollection,
-
     template: Handlebars.compile(tpl),
 
     events: {
@@ -22,15 +20,6 @@ define([
 
       this._setListeners();
       this._cacheVars();
-
-      // // Fetching data
-      // var complete = _.invoke([
-      //   this.collection,
-      // ], 'fetch');
-
-      // $.when.apply($, complete).done(function() {
-      //   this.render();
-      // }.bind(this));
     },
 
     _setListeners: function() {
@@ -44,7 +33,6 @@ define([
     },
 
     render: function() {
-      console.log('render');
       var countries = this._getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
 
@@ -59,10 +47,17 @@ define([
       this.collection = data;
 
       $.when.apply($, this.render()).done(function() {
-        $('#country1').val(this.presenter.status.get('country1'));
-        $('#country2').val(this.presenter.status.get('country2'));
-        $('#country3').val(this.presenter.status.get('country3'));
+        this._setUrlValues();
       }.bind(this));
+    },
+
+    _setUrlValues: function() {
+      $('#country1').val(this.presenter.status.get('country1'));
+      $('#country2').val(this.presenter.status.get('country2'));
+      $('#country3').val(this.presenter.status.get('country3'));
+
+      //Now, disable selected values.
+      //this._disableOptions(country, selector);
     },
 
     _selectCountry: function(e) {
@@ -74,10 +69,10 @@ define([
 
     countrySelected: function(country, selector) {
       this._updateStatus(country, selector);
-      this._disableSelectors(country, selector);
+      this._disableOptions(country, selector);
     },
 
-    _disableSelectors: function(country, selector) {
+    _disableOptions: function(country, selector) {
       var selectors = ['country1', 'country2', 'country3'];
       var index = selectors.indexOf(selector);
 
@@ -93,6 +88,10 @@ define([
 
     _updateStatus: function(country, selector) {
       this.presenter.updateStatus(selector, country);
+    },
+
+    enableComparisonBtn: function() {
+      console.log('you');
     }
 
 

@@ -30,7 +30,7 @@ define([
         this._onPlaceGo(place);
       },
 
-      'compare/countriesSelected': function() {
+      'Compare/countriesSelected': function() {
         var data;
         // Fetching data
         var complete = _.invoke([
@@ -40,8 +40,12 @@ define([
         $.when.apply($, complete).done(function() {
           this.view.countriesFromUrl(data);
         }.bind(this));
+      },
 
-      }
+      'Place/update': function() {
+        this.view.enableComparisonBtn();
+      },
+
     }],
 
 
@@ -67,11 +71,12 @@ define([
     * @param  {Object} place PlaceService's place object
     */
     _onPlaceGo: function(place) {
-      // this.status.set('name', place.params.country1);
+      // Se puede hacer más simple? No uno a uno?
       this.status.set('country1', place.params.country1);
       this.status.set('country2', place.params.country2);
       this.status.set('country3', place.params.country3);
-      mps.publish('compare/countriesSelected');
+
+      mps.publish('Compare/countriesSelected');
     },
 
     updateStatus: function(selector, country) {
