@@ -1,12 +1,13 @@
 .m-toolbar {
   display: inline-block;
   width: 100%;
+
   .options {
     display: inline-flex;
     align-items: center;
     float: right;
+
     .options_item {
-      float: left;
       padding: 0 20px;
 
       svg {
