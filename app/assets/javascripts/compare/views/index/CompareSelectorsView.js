@@ -53,16 +53,10 @@ define([
     render: function() {
       var countries = this._getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
-
+      this._invokeChosen();
       this._stopSpinner();
 
-      $('#country1').chosen();
-      $('#country2').chosen();
-      $('#country3').chosen();
 
-      $('#country1').on('change', function(){
-        console.log($("#country1").chosen().val());
-      });
 
     },
 
@@ -94,8 +88,6 @@ define([
       selectors.splice(index, 1);
 
       console.log()
-
-
     },
 
     _updateUrl: function(country) {
@@ -103,6 +95,14 @@ define([
       var route = location + country
       this.router.navigateTo(route, { silent: true });
       mps.publish('Compare/countrySelected', [this]);
+    },
+
+
+    _invokeChosen: function() {
+      var countrySelectors = ['#country1', '#country2', '#country3'];
+      for(var i = 0; i < countrySelectors.length; i++) {
+        $(countrySelectors[i]).chosen();
+      }
     }
 
 
