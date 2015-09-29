@@ -70,6 +70,12 @@
     padding: 10px;
   }
 
+  &.is-disabled {
+    opacity: .5;
+    pointer: cursor;
+    pointer-events: none;
+  }
+
 
   // Colors
   &.dark {

@@ -30,4 +30,20 @@ RSpec.describe "API routing", type: :routing do
 
   end
 
+  describe "Indicators routing" do
+
+    it 'Current version to v1 for index' do
+      expect(get: "/api/indicators").to route_to(controller: "api/v1/indicators", action: "index", format: "json")
+    end
+
+    it 'Current version to v1 for show' do
+      expect(get: "/api/indicators/1").to route_to(controller: "api/v1/indicators", action: "show", format: "json", id: "1")
+    end
+
+    it 'Current version to v1 for show and country' do
+      expect(get: "/api/indicators/1/bra").to route_to(controller: "api/v1/indicators", action: "show", format: "json", id: "1", iso: 'bra')
+    end
+
+  end
+
 end

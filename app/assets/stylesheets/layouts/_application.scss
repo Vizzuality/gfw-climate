@@ -9,6 +9,7 @@
     top: -60px;
     min-height: 620px;
     padding-bottom: 37.5%;
+    margin: 0 0 -60px;
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
       margin-top: 0px;
     }
@@ -31,6 +32,7 @@
     left: 50%;
     z-index: 2;
     transform: translate(-50%,0);
+
     h2 {
       background: $white;
       font-weight: 300;
@@ -44,6 +46,7 @@
       @media (min-width: 1350px) {
         padding: 15px 80px 15px;
       }
+
       .box-button {
         display: inline-block;
         position: relative;
@@ -52,6 +55,7 @@
           backface-visibility: hidden;
           margin-left: 1px;
         }
+
         &.active {
          .tooltip-getstarted {
             opacity: 1;
@@ -525,6 +529,7 @@
 			}
 		}
 	}
+
   .hidden {
     display: block;
     position: absolute;
@@ -552,6 +557,7 @@
     z-index: 2;
   }
 }
+
 
 
 

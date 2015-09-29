@@ -41,6 +41,8 @@
 
 // Common
 @import "states";
+@import "modules/common/*";
 
 // Layouts
 @import "layouts/countries";
+@import 'layouts/compare';

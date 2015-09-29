@@ -11,7 +11,7 @@ class Jurisdiction
     end
 
     def find_jurisdiction(filter_params)
-      country_id      = filter_params[:id]
+      country_id      = filter_params[:id].downcase
       jurisdiction_id = filter_params[:id_1].to_i
 
       url = "#{ base_path }/countries/#{ country_id }"
@@ -24,18 +24,15 @@ class Jurisdiction
     end
 
     def find_umd(filter_params)
-      country_id      = filter_params[:id]
+      country_id      = filter_params[:id].downcase
       jurisdiction_id = filter_params[:id_1].to_i
-      thresh_value    = filter_params[:thresh] if filter_params[:thresh].present?
+      thresh_value    = filter_params[:thresh].present? ? filter_params['thresh'] : '25'
       umd             = 'UMD'
 
-      params = if thresh_value.present?
-                 "?thresh=#{ thresh_value }"
-               end
-      
       #forest-change/umd-loss-gain/admin/AUS/2
       # Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75
-      url = "#{ base_path }/forest-change/umd-loss-gain/admin/#{ country_id }/#{ jurisdiction_id }#{params}"
+      url =  "#{ base_path }/forest-change/umd-loss-gain/admin/#{ country_id }/#{ jurisdiction_id }"
+      url += "?thresh=#{ thresh_value }"
       
       timeouts do
         item_caching(country_id, jurisdiction_id, nil, thresh_value, umd) do
