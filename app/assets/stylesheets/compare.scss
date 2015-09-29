@@ -34,7 +34,7 @@
 // @import "modules/countries/reports/subnational-grid";
 // @import "modules/countries/reports/areas-grid";
 
-//Comapre
+//Compare
 @import "modules/compare/*";
 
 // Charts
@@ -45,7 +45,10 @@
 
 // Common
 @import "states";
+@import "modules/common/*";
 
 // Layouts
 @import "layouts/countries";
 @import 'layouts/compare';
+
+
