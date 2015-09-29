@@ -55,7 +55,7 @@ Teaspoon.configure do |config|
     # a `_boot.html.erb` in your fixtures path, and adjust the config to `"/boot"` for instance.
     #
     # Available: boot, boot_require_js
-    suite.boot_partial = "boot"
+    suite.boot_partial = "boot_require_js"
 
     # Partial to be rendered in the body tag of the runner. You can define your own to create a custom body structure.
     suite.body_partial = "body"
