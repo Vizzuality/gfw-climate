@@ -36,7 +36,11 @@ define([
       this.placeService.initPlace(this.name, params);
     },
 
-    _initOverview: function() {}
+    _initOverview: function() {},
+
+    // navigateTo: function(route, options) {
+    //   this.navigate(route, options);
+    // }
 
   });
 

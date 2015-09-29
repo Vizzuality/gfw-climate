@@ -3,15 +3,12 @@ define([
   'handlebars',
   'chosen',
   'compare/presenters/CompareSelectorsPresenter',
-  'compare/collections/CountriesCollection',
   'text!compare/templates/compareSelectorTpl.handlebars'
-], function(Backbone, Handlebars, chosen, CompareSelectorsPresenter, CountriesCollection, tpl) {
+], function(Backbone, Handlebars, chosen, CompareSelectorsPresenter, tpl) {
 
   var CompareSelectorsView = Backbone.View.extend({
 
     el: '#compareSelectorsView',
-
-    collection: CountriesCollection,
 
     template: Handlebars.compile(tpl),
 
@@ -19,25 +16,11 @@ define([
       'change select' : '_selectCountry'
     },
 
-    status: new (Backbone.Model.extend({
-    })),
-
-
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
 
       this._setListeners();
       this._cacheVars();
-
-      // Fetching data
-      var complete = _.invoke([
-        this.collection,
-      ], 'fetch');
-
-      $.when.apply($, complete).done(function() {
-        this.render();
-      }.bind(this));
-
     },
 
     _setListeners: function() {
@@ -53,50 +36,102 @@ define([
     render: function() {
       var countries = this._getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
-      this._invokeChosen();
+      // this._invokeChosen();
       this._stopSpinner();
-
-
-
     },
 
     _stopSpinner: function() {
       this.$el.removeClass('is-loading');
     },
 
+    /*
+     * Set selectors values with url arriving from url.
+     */
+    setValuesFromUrl: function(data) {
+      this.collection = data;
+
+      $.when.apply($, this.render()).done(function() {
+        this._setUrlValues();
+      }.bind(this));
+    },
+
+    _setUrlValues: function() {
+      var selectors = ['country1', 'country2', 'country3'];
+      var self = this;
+
+      $.each(selectors, function(index, value) {
+        var country = self.presenter.status.get(value);
+        var selector = '#' + value;
+
+        $(selector).val(country);
+      })
+
+      this._disableOptions();
+      this.enableComparisonBtn();
+    },
+
     _selectCountry: function(e) {
       var selector = $(e.currentTarget).attr('id');
       var selectedCountry = $(e.currentTarget).val();
 
-      this.countrySelected(selectedCountry, selector);
+      this._countrySelected(selectedCountry, selector);
     },
 
-    countrySelected: function(country, selector) {
+    _countrySelected: function(country, selector) {
       this._updateStatus(country, selector);
-      this._disableSelectors(country, selector);
-      // this._updateUrl(country);
+      this._disableOptions();
+      this.enableComparisonBtn();
+    },
+
+    _disableOptions: function() {
+      this.$el.find('option').removeClass('is-disabled');
+
+      var selectors = ['country1', 'country2', 'country3'];
+      var self = this;
+
+      $.each(selectors, function(index, value) {
+        var countries = ['country1', 'country2', 'country3'];
+        var index = countries.indexOf(value);
+
+        if (index > -1) {
+          countries.splice(index, 1);
+        }
+
+        var country = self.presenter.status.get(value);
+
+        if (country !== 'no_country') {
+          $.each(countries, function(index, value) {
+            $('#' + value).find('[value='+ country +']').addClass('is-disabled');
+          })
+        }
+      })
     },
 
     _updateStatus: function(country, selector) {
-      this.status.set(selector, country);
+      this.presenter.updateStatus(selector, country);
     },
 
-    _disableSelectors: function(country, selector) {
-      var selectors = [country1, country2, country3];
-      var index = selectors.indexOf(selector);
+    enableComparisonBtn: function() {
+      //Maybe easier way?
+      var selectors = ['country1', 'country2', 'country3'];
+      var values = [];
+      var self = this;
+      var $button = this.$el.find('.btn-compare');
 
-      selectors.splice(index, 1);
+      $.each(selectors, function(index, value) {
+        var country = self.presenter.status.get(value);
 
-      console.log()
+        if (country !== null && country !== 'no_country') {
+          values.push(country)
+        }
+      })
+
+      if (values.length > 1) {
+        $button.removeClass('is-disabled');
+      } else {
+        $button.addClass('is-disabled');
+      }
     },
-
-    _updateUrl: function(country) {
-      //Quien escucha esto? El presenter? Y se lo manda al PS?
-      var route = location + country
-      this.router.navigateTo(route, { silent: true });
-      mps.publish('Compare/countrySelected', [this]);
-    },
-
 
     _invokeChosen: function() {
       var countrySelectors = ['#country1', '#country2', '#country3'];
@@ -104,8 +139,6 @@ define([
         $(countrySelectors[i]).chosen();
       }
     }
-
-
 
   });
 

@@ -57,10 +57,12 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: {
-      show: '{name}{/iso}{/area}{?display,widgets}',
-      compare: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}'
-    },
+    // _uriTemplate: {
+    //   show: '{name}{/iso}{/area}{?display,widgets}',
+    //   compare: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}'
+    // },
+
+    _uriTemplate: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -108,7 +110,7 @@ define([
         this._getPresenterParams(this._presenters));
 
       route = this._getRoute(params);
-      this.router.navigateTo(route, { silent: true });
+      this.router.navigate(route, {silent: true});
     },
 
     /**
@@ -130,7 +132,7 @@ define([
      * @return {string} The route URL
      */
     _getRoute: function(param) {
-      var url = new UriTemplate(this._uriTemplate.this._name).fillFromObject(param);
+      var url = new UriTemplate(this._uriTemplate).fillFromObject(param);
       return decodeURIComponent(url);
     },
 
@@ -142,11 +144,9 @@ define([
      */
     _standardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
-      p.name = this._name;
-
       p.name = this._name ? this._name : null;
 
-      // We have to develop this with ours params
+      // We have to develop this with our params
       p.country1 = p.country1 ? p.country1.toString() : null;
       p.country2 = p.country2 ? p.country2.toString() : null;
       p.country3 = p.country3 ? p.country3.toString() : null;
@@ -163,11 +163,9 @@ define([
      */
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
-
       p.name = this._name ? this._name : null;
 
-
-      // We have to develop this with ours params
+      // We have to develop this with our params
       p.country1 = p.country1 ? p.country1.toString() : null;
       p.country2 = p.country2 ? p.country2.toString() : null;
       p.country3 = p.country3 ? p.country3.toString() : null;

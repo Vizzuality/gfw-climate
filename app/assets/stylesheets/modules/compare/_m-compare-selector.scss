@@ -11,6 +11,10 @@
     width: 100%;
   }
 
+  .is-disabled {
+    display: none;
+  }
+
   // styling of
   .chosen-container-single .chosen-single,
   .chosen-container-active.chosen-with-drop .chosen-single,
@@ -70,7 +74,6 @@
   .chosen-rtl .chosen-search input[type="text"]{
     background:none;
   }
-
 }
 
 
