@@ -55,9 +55,21 @@ define([
     },
 
     _setUrlValues: function() {
-      $('#country1').val(this.presenter.status.get('country1'));
-      $('#country2').val(this.presenter.status.get('country2'));
-      $('#country3').val(this.presenter.status.get('country3'));
+      var selectors = ['country1', 'country2', 'country3'];
+      var self = this;
+
+      // $('#country1').val(this.presenter.status.get('country1'));
+      // $('#country2').val(this.presenter.status.get('country2'));
+      // $('#country3').val(this.presenter.status.get('country3'));
+
+      $.each(selectors, function(index, value) {
+        var country = self.presenter.status.get(value);
+        var selector = '#' + value;
+
+        $(selector).val(country);
+
+        self._disableOptions(country, selector);
+      })
 
       //Now, disable selected values.
       //this._disableOptions(country, selector);
@@ -76,6 +88,7 @@ define([
     },
 
     _disableOptions: function(country, selector) {
+      console.log(country, selector)
       var selectors = ['country1', 'country2', 'country3'];
       var index = selectors.indexOf(selector);
 
@@ -84,7 +97,7 @@ define([
       }
 
       $.each(selectors, function(index, value) {
-        $('#' + value).find('option').removeClass('is-disabled');
+        // $('#' + value).find('option').removeClass('is-disabled');
         $('#' + value).find('[value='+ country +']').addClass('is-disabled');
       })
     },
