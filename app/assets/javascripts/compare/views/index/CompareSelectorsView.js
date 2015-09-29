@@ -43,7 +43,10 @@ define([
       this.$el.removeClass('is-loading');
     },
 
-    countriesFromUrl: function(data) {
+    /*
+     * Set selectors values with url arriving into url.
+     */
+    setValuesFromUrl: function(data) {
       this.collection = data;
 
       $.when.apply($, this.render()).done(function() {

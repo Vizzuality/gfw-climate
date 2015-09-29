@@ -30,17 +30,17 @@ define([
         this._onPlaceGo(place);
       },
 
-      'Compare/countriesSelected': function() {
-        var data;
-        // Fetching data
-        var complete = _.invoke([
-          data = this.collection,
-        ], 'fetch');
+      // 'Compare/countriesSelected': function() {
+      //   var data;
+      //   // Fetching data
+      //   var complete = _.invoke([
+      //     data = this.collection,
+      //   ], 'fetch');
 
-        $.when.apply($, complete).done(function() {
-          this.view.countriesFromUrl(data);
-        }.bind(this));
-      },
+      //   $.when.apply($, complete).done(function() {
+      //     this.view.countriesFromUrl(data);
+      //   }.bind(this));
+      // },
 
       'Place/update': function() {
         this.view.enableComparisonBtn();
@@ -76,7 +76,16 @@ define([
       this.status.set('country2', place.params.country2);
       this.status.set('country3', place.params.country3);
 
-      mps.publish('Compare/countriesSelected');
+      // mps.publish('Compare/countriesSelected');
+      var data;
+      // Fetching data
+      var complete = _.invoke([
+        data = this.collection,
+      ], 'fetch');
+
+      $.when.apply($, complete).done(function() {
+        this.view.setValuesFromUrl(data);
+      }.bind(this));
     },
 
     updateStatus: function(selector, country) {
