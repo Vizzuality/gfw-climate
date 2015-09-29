@@ -2,15 +2,14 @@ define([
   'backbone',
   'handlebars',
   'compare/presenters/CompareSelectorsPresenter',
-  'compare/collections/CountriesCollection',
   'text!compare/templates/compareSelectorTpl.handlebars'
-], function(Backbone, Handlebars, CompareSelectorsPresenter, CountriesCollection, tpl) {
+], function(Backbone, Handlebars, CompareSelectorsPresenter, tpl) {
 
   var CompareSelectorsView = Backbone.View.extend({
 
     el: '#compareSelectorsView',
 
-    collection: CountriesCollection,
+    // collection: CountriesCollection,
 
     template: Handlebars.compile(tpl),
 
@@ -24,15 +23,14 @@ define([
       this._setListeners();
       this._cacheVars();
 
-      // Fetching data
-      var complete = _.invoke([
-        this.collection,
-      ], 'fetch');
+      // // Fetching data
+      // var complete = _.invoke([
+      //   this.collection,
+      // ], 'fetch');
 
-      $.when.apply($, complete).done(function() {
-        this.render();
-      }.bind(this));
-
+      // $.when.apply($, complete).done(function() {
+      //   this.render();
+      // }.bind(this));
     },
 
     _setListeners: function() {
@@ -46,6 +44,7 @@ define([
     },
 
     render: function() {
+      console.log('render');
       var countries = this._getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
 
@@ -54,6 +53,16 @@ define([
 
     _stopSpinner: function() {
       this.$el.removeClass('is-loading');
+    },
+
+    countriesFromUrl: function(data) {
+      this.collection = data;
+
+      $.when.apply($, this.render()).done(function() {
+        $('#country1').val(this.presenter.status.get('country1'));
+        $('#country2').val(this.presenter.status.get('country2'));
+        $('#country3').val(this.presenter.status.get('country3'));
+      }.bind(this));
     },
 
     _selectCountry: function(e) {
@@ -83,7 +92,7 @@ define([
     },
 
     _updateStatus: function(country, selector) {
-      this.presenter.countrySelected(selector, country);
+      this.presenter.updateStatus(selector, country);
     }
 
 

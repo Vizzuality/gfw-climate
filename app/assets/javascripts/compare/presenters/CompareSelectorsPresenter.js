@@ -1,20 +1,24 @@
 define([
   'Backbone',
   'mps',
-  'compare/presenters/PresenterClass'
-], function(Backbone, mps, PresenterClass) {
+  'compare/presenters/PresenterClass',
+  'compare/collections/CountriesCollection'
+], function(Backbone, mps, PresenterClass, CountriesCollection) {
 
   'use strict';
 
   var CompareSelectorsPresenter = PresenterClass.extend({
 
     status: new (Backbone.Model.extend({
-      name: 'compare-countries'
+      defaults: {
+        name: 'compare-countries'
+      }
     })),
 
     init: function(view) {
       this._super();
       this.view = view;
+      this.collection = CountriesCollection;
       mps.publish('Place/register', [this]);
     },
 
@@ -24,9 +28,20 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this._onPlaceGo(place);
+      },
+
+      'compare/countriesSelected': function() {
+        var data;
+        // Fetching data
+        var complete = _.invoke([
+          data = this.collection,
+        ], 'fetch');
+
+        $.when.apply($, complete).done(function() {
+          this.view.countriesFromUrl(data);
+        }.bind(this));
+
       }
-
-
     }],
 
 
@@ -52,10 +67,14 @@ define([
     * @param  {Object} place PlaceService's place object
     */
     _onPlaceGo: function(place) {
-      console.log(place);
+      // this.status.set('name', place.params.country1);
+      this.status.set('country1', place.params.country1);
+      this.status.set('country2', place.params.country2);
+      this.status.set('country3', place.params.country3);
+      mps.publish('compare/countriesSelected');
     },
 
-    countrySelected: function(selector, country) {
+    updateStatus: function(selector, country) {
       this.status.set(selector, country);
       mps.publish('Place/update');
     }
