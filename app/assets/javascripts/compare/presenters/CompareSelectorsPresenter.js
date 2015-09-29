@@ -30,18 +30,6 @@ define([
         this._onPlaceGo(place);
       },
 
-      // 'Compare/countriesSelected': function() {
-      //   var data;
-      //   // Fetching data
-      //   var complete = _.invoke([
-      //     data = this.collection,
-      //   ], 'fetch');
-
-      //   $.when.apply($, complete).done(function() {
-      //     this.view.countriesFromUrl(data);
-      //   }.bind(this));
-      // },
-
       'Place/update': function() {
         this.view.enableComparisonBtn();
       },
@@ -62,21 +50,16 @@ define([
       return p;
     },
 
-
-
-
     /**
     * Triggered from 'Place/Go' events.
     *
     * @param  {Object} place PlaceService's place object
     */
     _onPlaceGo: function(place) {
-      // Se puede hacer más simple? No uno a uno?
       this.status.set('country1', place.params.country1);
       this.status.set('country2', place.params.country2);
       this.status.set('country3', place.params.country3);
 
-      // mps.publish('Compare/countriesSelected');
       var data;
       // Fetching data
       var complete = _.invoke([

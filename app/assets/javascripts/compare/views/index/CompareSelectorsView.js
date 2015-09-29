@@ -65,7 +65,7 @@ define([
 
         $(selector).val(country);
 
-        self._disableOptions(country, selector);
+        self._disableOptions();
       })
     },
 
@@ -78,21 +78,30 @@ define([
 
     countrySelected: function(country, selector) {
       this._updateStatus(country, selector);
-      this._disableOptions(country, selector);
+      this._disableOptions();
     },
 
-    _disableOptions: function(country, selector) {
-      console.log(country, selector)
-      var selectors = ['country1', 'country2', 'country3'];
-      var index = selectors.indexOf(selector);
+    _disableOptions: function() {
+      this.$el.find('option').removeClass('is-disabled');
 
-      if (index > -1) {
-        selectors.splice(index, 1);
-      }
+      var selectors = ['country1', 'country2', 'country3'];
+      var self = this;
 
       $.each(selectors, function(index, value) {
-        // $('#' + value).find('option').removeClass('is-disabled');
-        $('#' + value).find('[value='+ country +']').addClass('is-disabled');
+        var countries = ['country1', 'country2', 'country3'];
+        var index = countries.indexOf(value);
+
+        if (index > -1) {
+          countries.splice(index, 1);
+        }
+
+        var country = self.presenter.status.get(value);
+
+        if (country !== 'no_country') {
+          $.each(countries, function(index, value) {
+            $('#' + value).find('[value='+ country +']').addClass('is-disabled');
+          })
+        }
       })
     },
 
