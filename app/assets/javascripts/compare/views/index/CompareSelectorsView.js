@@ -38,9 +38,6 @@ define([
       this.$el.html(this.template({'countries': countries}))
       // this._invokeChosen();
       this._stopSpinner();
-
-
-
     },
 
     _stopSpinner: function() {
@@ -62,10 +59,6 @@ define([
       var selectors = ['country1', 'country2', 'country3'];
       var self = this;
 
-      // $('#country1').val(this.presenter.status.get('country1'));
-      // $('#country2').val(this.presenter.status.get('country2'));
-      // $('#country3').val(this.presenter.status.get('country3'));
-
       $.each(selectors, function(index, value) {
         var country = self.presenter.status.get(value);
         var selector = '#' + value;
@@ -74,9 +67,6 @@ define([
 
         self._disableOptions(country, selector);
       })
-
-      //Now, disable selected values.
-      //this._disableOptions(country, selector);
     },
 
     _selectCountry: function(e) {
