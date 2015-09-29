@@ -144,9 +144,12 @@ define([
       var p = _.extendNonNull({}, urlDefaultsParams, params);
       p.name = this._name;
 
-      p.country1 = p.country1.toString();
-      p.country2 = p.country2.toString();
-      p.country3 = p.country3.toString();
+      p.name = this._name ? this._name : null;
+
+      // We have to develop this with ours params
+      p.country1 = p.country1 ? p.country1.toString() : null;
+      p.country2 = p.country2 ? p.country2.toString() : null;
+      p.country3 = p.country3 ? p.country3.toString() : null;
 
       return p;
     },
@@ -161,11 +164,13 @@ define([
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
 
-      p.name = this._name;
+      p.name = this._name ? this._name : null;
 
-      p.country1 = p.country1.toString();
-      p.country2 = p.country2.toString();
-      p.country3 = p.country3.toString();
+
+      // We have to develop this with ours params
+      p.country1 = p.country1 ? p.country1.toString() : null;
+      p.country2 = p.country2 ? p.country2.toString() : null;
+      p.country3 = p.country3 ? p.country3.toString() : null;
 
       return p;
     },

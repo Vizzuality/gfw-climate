@@ -1,24 +1,16 @@
 define([
   'backbone',
-  'countries/models/CountryModel',
   'countries/presenters/show/CountryHeaderPresenter'
-], function(Backbone, CountryModel, CountryHeaderPresenter) {
+], function(Backbone, CountryHeaderPresenter) {
+
+  'use strict';
 
   var CountryShowHeaderView = Backbone.View.extend({
 
     el: '#headerCountry',
 
-    events: {
-      'click #customizeReports': '_openReportPanel'
-    },
-
-    initialize: function(arguments) {
-      this.model = CountryModel;
+    initialize: function() {
       this.presenter = new CountryHeaderPresenter(this);
-    },
-
-    _openReportPanel: function() {
-      this.presenter.onOpenReportsPanel();
     }
 
   });

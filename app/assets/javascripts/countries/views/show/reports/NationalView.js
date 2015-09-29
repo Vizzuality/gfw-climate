@@ -18,7 +18,6 @@ define([
     render: function() {
       var enabledWidgets = this.model.attributes.widgets;
 
-
       this.$el.html(this.template);
 
       var promises = [],

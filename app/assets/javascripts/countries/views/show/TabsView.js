@@ -1,6 +1,9 @@
 define([
-  'backbone'
-], function(Backbone) {
+  'backbone',
+  'countries/presenters/show/TabsPresenter'
+], function(Backbone, TabsPresenter) {
+
+  'use strict';
 
   var TabsView = Backbone.View.extend({
 
@@ -17,6 +20,10 @@ define([
     })),
 
     initialize: function(params) {
+      this.presenter = new TabsPresenter(this);
+    },
+
+    start: function(params) {
       this._setCurrentTab(null, this.model.attributes.display);
     },
 

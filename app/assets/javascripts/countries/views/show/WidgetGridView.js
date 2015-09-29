@@ -1,10 +1,11 @@
 define([
   'backbone',
+  'countries/models/CountryModel',
   'countries/presenters/show/WidgetGridPresenter',
   'countries/views/show/reports/NationalView',
   'countries/views/show/reports/SubNationalView',
   'countries/views/show/reports/AreasView',
-], function(Backbone, WidgetGridPresenter, NationalView,
+], function(Backbone, CountryModel, WidgetGridPresenter, NationalView,
     SubNationalView, AreasView) {
 
   'use strict';
@@ -31,6 +32,9 @@ define([
       this._cacheVars();
 
       this._toggleWarnings();
+    },
+
+    start: function(arg) {
       this.render();
     },
 
@@ -119,7 +123,6 @@ define([
     },
 
     render: function() {
-
       this._toggleWarnings();
 
       var subview;
