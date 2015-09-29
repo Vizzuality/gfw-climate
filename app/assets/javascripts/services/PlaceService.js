@@ -144,9 +144,9 @@ define([
       var p = _.extendNonNull({}, urlDefaultsParams, params);
       p.name = this._name;
 
-      p.country1 = p.country1.toString();
-      p.country2 = p.country2.toString();
-      p.country3 = p.country3.toString();
+      p.country1 = p.country1 = p.country1 ? p.country1.toString() : null;
+      p.country2 = p.country2 = p.country2 ? p.country1.toString() : null;
+      p.country3 = p.country3 = p.country3 ? p.country1.toString() : null;
 
       return p;
     },
@@ -163,9 +163,9 @@ define([
 
       p.name = this._name;
 
-      p.country1 = p.country1.toString();
-      p.country2 = p.country2.toString();
-      p.country3 = p.country3.toString();
+      p.country1 = p.country1 = p.country1 ? p.country1.toString() : null;
+      p.country2 = p.country2 = p.country2 ? p.country1.toString() : null;
+      p.country3 = p.country3 = p.country3 ? p.country1.toString() : null;
 
       return p;
     },

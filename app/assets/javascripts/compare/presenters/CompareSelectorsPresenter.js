@@ -39,7 +39,7 @@ define([
       * @param  {Object} place PlaceService's place object
       */
      _onPlaceGo: function(place) {
-        console.log(place);
+        // console.log(place);
      },
 
   });

@@ -78,14 +78,17 @@ define([
     },
 
     _disableSelectors: function(country, selector) {
-      var selectors = [country1, country2, country3];
+      var selectors = ['country1', 'country2', 'country3'];
       var index = selectors.indexOf(selector);
 
-      selectors.splice(index, 1);
+      if (index > -1) {
+        selectors.splice(index, 1);
+      }
 
-      console.log()
-
-
+      $.each(selectors, function(index, value) {
+        $('#' + value).find('option').removeClass('is-disabled');
+        $('#' + value).find('[value='+ country +']').addClass('is-disabled');
+      })
     },
 
     _updateUrl: function(country) {
