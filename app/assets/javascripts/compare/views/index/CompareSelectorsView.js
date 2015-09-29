@@ -36,7 +36,7 @@ define([
     render: function() {
       var countries = this._getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
-      // this._invokeChosen();
+      this._invokeChosen();
       this._stopSpinner();
     },
 
@@ -63,7 +63,7 @@ define([
         var country = self.presenter.status.get(value);
         var selector = '#' + value;
 
-        $(selector).val(country);
+        $(selector).val(country).trigger("chosen:updated");
 
         self._disableOptions(country, selector);
       })
