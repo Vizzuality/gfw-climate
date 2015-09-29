@@ -63,10 +63,16 @@ define([
         var country = self.presenter.status.get(value);
         var selector = '#' + value;
 
+        //Validate entry to avoid no_country options.
         if (country !== null)  {
           $(selector).val(country);
           $(selector).removeClass('is-disabled');
+
+          self._enableNextSelector(value);
+        } else {
+          self._disableNexSelector(value);
         }
+
       })
 
       this._disableOptions();
@@ -77,23 +83,31 @@ define([
       var selector = $(e.currentTarget).attr('id');
       var selectedCountry = $(e.currentTarget).val();
 
+      //If user selects valid option, go ahead.
       if (selectedCountry !== 'no_country') {
-        this._countrySelected(selectedCountry, selector);
+        this._updateStatus(selectedCountry, selector);
+        this._countrySelected(selector);
+      } else {
+        this._updateStatus(selectedCountry, selector);
+        this._disableNexSelector();
       }
     },
 
-    _countrySelected: function(country, selector) {
-      this._updateStatus(country, selector);
-      this._enableNextSelector(selector);
+    _countrySelected: function(selector) {
       this._disableOptions();
       this.enableComparisonBtn();
+      this._enableNextSelector(selector);
     },
 
     _enableNextSelector: function(selector) {
       if (selector !== 'country3') {
-        console.log($('#' + selector).parent());
-        $('#' + selector).parent().next().find('selector').removaClass('is-disabled');
+        //Improve this awful selection
+        $('#' + selector).parent().next().find('select').removeClass('is-disabled');
       }
+    },
+
+    _disableNexSelector: function(selector) {
+      console.log('disabling selectors')
     },
 
     _disableOptions: function() {

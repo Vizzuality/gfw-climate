@@ -72,7 +72,8 @@ define([
     },
 
     updateStatus: function(selector, country) {
-      this.status.set(selector, country);
+      var selectedCountry = country !== 'no_country' ? country : null;
+      this.status.set(selector, selectedCountry);
       mps.publish('Place/update');
     }
 
