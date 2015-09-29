@@ -45,7 +45,7 @@ define([
     },
 
     /*
-     * Set selectors values with url arriving into url.
+     * Set selectors values with url arriving from url.
      */
     setValuesFromUrl: function(data) {
       this.collection = data;
@@ -73,12 +73,13 @@ define([
       var selector = $(e.currentTarget).attr('id');
       var selectedCountry = $(e.currentTarget).val();
 
-      this.countrySelected(selectedCountry, selector);
+      this._countrySelected(selectedCountry, selector);
     },
 
-    countrySelected: function(country, selector) {
+    _countrySelected: function(country, selector) {
       this._updateStatus(country, selector);
       this._disableOptions();
+      this.enableComparisonBtn();
     },
 
     _disableOptions: function() {
@@ -110,7 +111,25 @@ define([
     },
 
     enableComparisonBtn: function() {
-      console.log('you');
+      //Maybe easier way?
+      var selectors = ['country1', 'country2', 'country3'];
+      var values = [];
+      var self = this;
+      var $button = this.$el.find('.btn-compare');
+
+      $.each(selectors, function(index, value) {
+        var country = self.presenter.status.get(value);
+
+        if (country !== null && country !== 'no_country') {
+          values.push(country)
+        }
+      })
+
+      if (values.length > 1) {
+        $button.removeClass('is-disabled');
+      } else {
+        $button.addClass('is-disabled');
+      }
     },
 
     _invokeChosen: function() {

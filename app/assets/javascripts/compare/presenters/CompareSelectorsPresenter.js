@@ -30,9 +30,9 @@ define([
         this._onPlaceGo(place);
       },
 
-      'Place/update': function() {
-        this.view.enableComparisonBtn();
-      },
+      // 'Place/update': function() {
+      //   this.view.enableComparisonBtn();
+      // },
 
     }],
 
@@ -73,7 +73,7 @@ define([
 
     updateStatus: function(selector, country) {
       this.status.set(selector, country);
-      mps.publish('Place/update');
+      // mps.publish('Place/update');
     }
 
   });
