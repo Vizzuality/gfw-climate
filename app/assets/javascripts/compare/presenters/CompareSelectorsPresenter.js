@@ -73,7 +73,7 @@ define([
 
     updateStatus: function(selector, country) {
       this.status.set(selector, country);
-      // mps.publish('Place/update');
+      mps.publish('Place/update');
     }
 
   });

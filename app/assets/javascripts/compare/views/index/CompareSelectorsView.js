@@ -64,9 +64,10 @@ define([
         var selector = '#' + value;
 
         $(selector).val(country);
-
-        self._disableOptions();
       })
+
+      this._disableOptions();
+      this.enableComparisonBtn();
     },
 
     _selectCountry: function(e) {
