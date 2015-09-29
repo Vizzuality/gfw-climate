@@ -58,8 +58,8 @@ resource 'Countries' do
       country = JSON.parse(response_body)['country']
       
       expect(country['iso']).to eq('AUS')
-      expect(country['thresh']).to eq(10)
-      expect(country['umd'][0]['thresh']).to eq(10)
+      expect(country['thresh']).to eq('25')
+      expect(country['umd'][0]['thresh']).to eq(25)
     end
   end
 
@@ -94,8 +94,8 @@ resource 'Countries' do
       jurisdiction = JSON.parse(response_body)['jurisdiction']
       
       expect(jurisdiction['iso']).to eq('BRA')
-      expect(jurisdiction['thresh']).to eq(10)
-      expect(jurisdiction['umd'][0]['thresh']).to eq(10)
+      expect(jurisdiction['thresh']).to eq('25')
+      expect(jurisdiction['umd'][0]['thresh']).to eq(25)
     end
   end
 
