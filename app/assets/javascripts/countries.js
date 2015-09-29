@@ -8,7 +8,11 @@ require([
   'backbone',
   '_string',
   'countries/router',
-], function($, _, Class, Backbone, _string, RouterView) {
+  'countries/views/CountryShowView',
+  'countries/views/CountryIndexView',
+  'countries/views/CountryModalView'
+], function($, _, Class, Backbone, _string, RouterView, CountryShowView, CountryIndexView,
+  CountryModalView) {
 
   'use strict';
 
@@ -18,8 +22,8 @@ require([
 
     initialize: function() {
       this._initRouter();
+      this._initViews();
       this._initApp();
-
     },
 
     /**
@@ -29,6 +33,12 @@ require([
       if (!Backbone.History.started) {
         Backbone.history.start({pushState: true});
       }
+    },
+
+    _initViews: function() {
+      new CountryShowView();
+      new CountryIndexView();
+      new CountryModalView();
     },
 
     _initRouter: function() {

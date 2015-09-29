@@ -3,10 +3,10 @@ define([
   'backbone',
   'underscore',
   'handlebars',
-  'countries/presenters/ReportsPanelPresenter',
   'views/SourceWindowView',
+  'countries/presenters/ReportsPanelPresenter',
   'text!countries/templates/country-indicators-window.handlebars'
-], function($, Backbone, _,Handlebars, ReportsPanelPresenter, SourceWindowView, tpl) {
+], function($, Backbone, _, Handlebars, SourceWindowView, ReportsPanelPresenter, tpl) {
 
   'use strict';
 
@@ -64,7 +64,6 @@ define([
 
     _submitWidgets: function() {
       this.hide();
-      this.presenter._onSubmitWidgets(this.enabledIndicators);
     },
 
     render: function() {

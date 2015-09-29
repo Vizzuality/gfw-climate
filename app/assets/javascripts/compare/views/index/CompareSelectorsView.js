@@ -18,10 +18,6 @@ define([
       'change select' : '_selectCountry'
     },
 
-    status: new (Backbone.Model.extend({
-    })),
-
-
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
 
@@ -70,11 +66,6 @@ define([
     countrySelected: function(country, selector) {
       this._updateStatus(country, selector);
       this._disableSelectors(country, selector);
-      // this._updateUrl(country);
-    },
-
-    _updateStatus: function(country, selector) {
-      this.status.set(selector, country);
     },
 
     _disableSelectors: function(country, selector) {
@@ -91,11 +82,8 @@ define([
       })
     },
 
-    _updateUrl: function(country) {
-      //Quien escucha esto? El presenter? Y se lo manda al PS?
-      var route = location + country
-      this.router.navigateTo(route, { silent: true });
-      mps.publish('Compare/countrySelected', [this]);
+    _updateStatus: function(country, selector) {
+      this.presenter.countrySelected(selector, country);
     }
 
 

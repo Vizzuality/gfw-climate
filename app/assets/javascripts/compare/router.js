@@ -30,6 +30,10 @@ define([
       this.placeService.initPlace(this.name, params);
     },
 
+    // navigateTo: function(route, options) {
+    //   this.navigate(route, options);
+    // }
+
   });
 
   return Router;

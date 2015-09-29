@@ -5,11 +5,11 @@ define([
 
   'use strict';
 
-  var CountryHeaderPresenter = PresenterClass.extend({
+  var TabsPresenter = PresenterClass.extend({
 
     init: function(view) {
+      this.view = view;
       this._super();
-      this.view = view
 
       mps.publish('Place/register', [this]);
     },
@@ -39,11 +39,11 @@ define([
       * @param  {Object} place PlaceService's place object
       */
      _onPlaceGo: function(place) {
-        // console.log(place);
+        this.view.start(place);
      },
 
   });
 
-  return CountryHeaderPresenter;
+  return TabsPresenter;
 
 });
