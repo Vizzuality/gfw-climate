@@ -63,7 +63,10 @@ define([
         var country = self.presenter.status.get(value);
         var selector = '#' + value;
 
-        $(selector).val(country);
+        if (country !== null)  {
+          $(selector).val(country);
+          $(selector).removeClass('is-disabled');
+        }
       })
 
       this._disableOptions();
@@ -74,13 +77,23 @@ define([
       var selector = $(e.currentTarget).attr('id');
       var selectedCountry = $(e.currentTarget).val();
 
-      this._countrySelected(selectedCountry, selector);
+      if (selectedCountry !== 'no_country') {
+        this._countrySelected(selectedCountry, selector);
+      }
     },
 
     _countrySelected: function(country, selector) {
       this._updateStatus(country, selector);
+      this._enableNextSelector(selector);
       this._disableOptions();
       this.enableComparisonBtn();
+    },
+
+    _enableNextSelector: function(selector) {
+      if (selector !== 'country3') {
+        console.log($('#' + selector).parent());
+        $('#' + selector).parent().next().find('selector').removaClass('is-disabled');
+      }
     },
 
     _disableOptions: function() {
