@@ -1,9 +1,10 @@
 define([
   'backbone',
   'handlebars',
+  'chosen',
   'compare/presenters/CompareSelectorsPresenter',
   'text!compare/templates/compareSelectorTpl.handlebars'
-], function(Backbone, Handlebars, CompareSelectorsPresenter, tpl) {
+], function(Backbone, Handlebars, chosen, CompareSelectorsPresenter, tpl) {
 
   var CompareSelectorsView = Backbone.View.extend({
 
@@ -35,8 +36,11 @@ define([
     render: function() {
       var countries = this._getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
-
+      // this._invokeChosen();
       this._stopSpinner();
+
+
+
     },
 
     _stopSpinner: function() {
@@ -108,9 +112,14 @@ define([
 
     enableComparisonBtn: function() {
       console.log('you');
+    },
+
+    _invokeChosen: function() {
+      var countrySelectors = ['#country1', '#country2', '#country3'];
+      for(var i = 0; i < countrySelectors.length; i++) {
+        $(countrySelectors[i]).chosen();
+      }
     }
-
-
 
   });
 
