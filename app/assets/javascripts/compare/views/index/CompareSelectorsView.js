@@ -50,12 +50,6 @@ define([
       return _.where(this.collection.toJSON().countries, { 'enabled' : true });
     },
 
-    applyChosen: function() {
-      // $('.m-compare-selector').chosen();
-      // var selector = $(e.currentTarget).attr('id');
-      $('.m-compare-selector').chosen();
-    },
-
     render: function() {
       var countries = this._getActiveCountries();
       this.$el.html(this.template({'countries': countries}))
@@ -66,14 +60,9 @@ define([
       $('#country2').chosen();
       $('#country3').chosen();
 
-      // var selectors = $('.m-compare-selector');
-      // for(var i = 0; i < selectors.length; i++) {
-      //   console.log('hey');
-      //   console.log(selectors[i]);
-      //   chosen();
-      // }
-
-
+      $('#country1').on('change', function(){
+        console.log($("#country1").chosen().val());
+      });
 
     },
 

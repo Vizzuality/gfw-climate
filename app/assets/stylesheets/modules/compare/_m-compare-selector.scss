@@ -1,6 +1,66 @@
 .m-compare-selector {
   width: 32%;
+  min-height: 280px;
+
+  padding: 20px;
+  border: 1px dashed $white;
+  border: 1px dashed rgba(255, 255, 255, .5);
+  border-radius: 10px;
+
   select {
     width: 100%;
   }
+
+  .chosen-container {
+    font-size: 21px;
+  }
+
+  .chosen-container-single .chosen-single,
+  .chosen-container-active.chosen-with-drop .chosen-single,
+  .chosen-container .chosen-drop {
+    border: none;
+    background-color: $dark-grey;
+    background-image: none;
+    box-shadow: none;
+  }
+
+  .chosen-container-single .chosen-search input[type=text] {
+    border-radius: 5px;
+    color: $white;
+  }
+
+  .chosen-container ul li {
+    color: $white;
+    line-height: 21px;
+  }
+
+  .chosen-container ul.chosen-results li.highlighted {
+    background-color: $color-1;
+    background-image: none;
+  }
+
+  .chosen-container ul.chosen-results li.no-results {
+    color: $white;
+    background-color: $dark-grey;
+    background-image: none;
+  }
+
+  .chosen-container .chosen-results {
+    max-height: 170px;
+  }
+
+  .chosen-container-single .chosen-single div b {
+    @include arrow(10px, $white, 2px, -135deg);
+  }
+
+  .chosen-container-single .chosen-single abbr,
+  .chosen-container-single .chosen-single div b,
+  .chosen-container-single .chosen-search input[type="text"],
+  .chosen-container-multi .chosen-choices li.search-choice .search-choice-close,
+  .chosen-rtl .chosen-search input[type="text"]{
+    background:none;
+  }
+
 }
+
+
