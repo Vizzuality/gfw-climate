@@ -63,8 +63,7 @@ define([
         var country = self.presenter.status.get(value);
         var selector = '#' + value;
 
-        $(selector).val(country);
-        $(selector).trigger("chosen:updated");
+        $(selector).val(country).trigger("chosen:updated");
 
         self._disableOptions(country, selector);
       })
