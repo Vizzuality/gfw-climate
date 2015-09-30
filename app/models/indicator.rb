@@ -45,7 +45,7 @@ class Indicator
     def show_query(indicator_id, iso, thresh_value)
       filter =  "indicator_id = '#{indicator_id}'"
       filter += "AND iso = UPPER('#{iso}')" if iso.present?
-      filter += "AND threshold_greater_than = '#{thresh_value}'"
+      filter += "AND threshold = '#{thresh_value}'"
       "SELECT *
        FROM indicators_values
        WHERE #{filter}
