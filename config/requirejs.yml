@@ -4,6 +4,7 @@ modules:
   - name: 'application'
   # - name: 'stories'
   - name: 'countries'
+  - name: 'compare'
 
 waitSeconds: 200
 
