@@ -2,8 +2,6 @@ modules:
   - name: 'application'
   - name: 'map'
   - name: 'countries'
-  - name: 'compare'
-priority: ['application']
 
 waitSeconds: 200
 
