@@ -2,8 +2,7 @@ modules:
   - name: 'application'
   - name: 'map'
   - name: 'countries'
-  - name: 'compare'
-priority: ['application']
+  # - name: 'compare'
 
 waitSeconds: 200
 
@@ -81,7 +80,6 @@ shim:
     exports: "UriTemplate"
   handlebars:
     exports: "Handlebars"
-
 
   geojson:
     exports: "geojson"
