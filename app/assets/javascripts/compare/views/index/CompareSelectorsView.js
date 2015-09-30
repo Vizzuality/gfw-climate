@@ -13,7 +13,8 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'change select' : '_selectCountry'
+      'change select' : '_selectCountry',
+      'click .btn-compare' : '_compareCountries'
     },
 
     initialize:function() {
@@ -69,10 +70,7 @@ define([
           $(selector).removeClass('is-disabled');
 
           self._enableNextSelector(value);
-        } else {
-          self._disableNexSelector(value);
         }
-
       })
 
       this._disableOptions();
@@ -89,7 +87,7 @@ define([
         this._countrySelected(selector);
       } else {
         this._updateStatus(selectedCountry, selector);
-        this._disableNexSelector();
+        this.enableComparisonBtn();
       }
     },
 
@@ -104,10 +102,6 @@ define([
         //Improve this awful selection
         $('#' + selector).parent().next().find('select').removeClass('is-disabled');
       }
-    },
-
-    _disableNexSelector: function(selector) {
-      console.log('disabling selectors')
     },
 
     _disableOptions: function() {
@@ -165,6 +159,10 @@ define([
       for(var i = 0; i < countrySelectors.length; i++) {
         $(countrySelectors[i]).chosen();
       }
+    },
+
+    _compareCountries: function() {
+      this.presenter.countriesSelected();
     }
 
   });
