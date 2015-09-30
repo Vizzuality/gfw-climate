@@ -4,12 +4,10 @@
 require([
   'jquery',
   'underscore',
-  'Class',
   'backbone',
-  '_string',
   'compare/router',
   'compare/views/CompareIndexView'
-], function($, _, Class, Backbone, _string, RouterView, CompareIndexView) {
+], function($, _, Backbone, RouterView, CompareIndexView) {
 
   'use strict';
 
