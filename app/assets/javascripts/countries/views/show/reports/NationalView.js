@@ -37,8 +37,6 @@ define([
 
       var self = this;
 
-      console.log(widgets);
-
       $.when.apply(null, promises).then(function() {
         widgets.forEach(function(widget) {
           widget.render();

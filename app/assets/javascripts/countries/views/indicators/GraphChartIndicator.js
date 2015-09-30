@@ -3,10 +3,10 @@ define([
   'moment',
   'underscore',
   'handlebars',
-  'countries/models/CountryModel',
+  'countries/models/IndicatorsModel',
   'countries/views/show/IndicatorView',
   'text!countries/templates/indicators/lineGraph.handlebars'
-], function(d3, moment, _, Handlebars, CountryModel, IndicatorView, tpl) {
+], function(d3, moment, _, Handlebars, IndicatorsModel, IndicatorView, tpl) {
 
   'use strict';
 
@@ -22,16 +22,15 @@ define([
 
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
-      this.model = CountryModel;
+      this.model = IndicatorsModel;
 
       // this._getData();
       // this.render();
     },
 
-    _getData: function() {
+    _getData: function(ind) {
       // API call
-      this.data = this.model.attributes.umd;
-      // this._drawGraph();
+      return this.model.getByParams(ind);
     },
 
     _drawGraph: function() {
@@ -200,15 +199,18 @@ define([
           .style('opacity', 0);
     },
 
-    render: function() {
+    render: function(ind) {
       this.$el.html(this.template);
-
       var self = this;
-      var complete = this._getData();
 
-      $.when($, complete).done(function() {
-        self._drawGraph();
+      //Here, we retrieve the data for the first option in tabs
+      var data = this._getData(ind);
+
+      $.when($, data).done(function() {
+        self._drawGraph(data);
       });
+
+      console.log(data.toJSON());
 
       return this;
     }

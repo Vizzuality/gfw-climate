@@ -65,17 +65,18 @@ define([
         indicators: this.data.indicators
       }));
 
-      console.log(this.data.indicators)
+      //Set default option of data set to draw graph in first instance
+      var firstDataSetLink = this.data.indicators[0].data;
 
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
       if (this.data.type === 'line') {
-        this.$el.find('.graph-container').append(new GraphChartIndicator().render().el);
+        this.$el.find('.graph-container').append(new GraphChartIndicator().render(firstDataSetLink).el);
       }
 
       if (this.data.type === 'pie') {
-        this.$el.find('.graph-container').append(new PieChartIndicator().render().el);
+        this.$el.find('.graph-container').append(new PieChartIndicator().render(firstDataSetLink).el);
       }
 
       return this;

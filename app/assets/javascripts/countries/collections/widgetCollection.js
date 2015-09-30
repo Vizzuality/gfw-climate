@@ -19,6 +19,7 @@ define([
 
     _loadData: function(widgetId, cb) {
       var url = this._setURL(widgetId),
+      //Ojo, truqui porque no llega la ISO.
         iso = CountryModel.attributes.iso || 'BRA';
 
       var options = {
