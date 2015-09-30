@@ -24,14 +24,13 @@ define([
       this.constructor.__super__.initialize.apply(this);
       this.model = CountryModel;
 
-      this._getData();
+      // this._getData();
       // this.render();
     },
 
     _getData: function() {
       // API call
       this.data = this.model.attributes.umd;
-
       // this._drawGraph();
     },
 
@@ -44,6 +43,7 @@ define([
         bottom: 30,
         left: 58
       },
+
       width = 525 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
 
@@ -202,7 +202,13 @@ define([
 
     render: function() {
       this.$el.html(this.template);
-      this._drawGraph();
+
+      var self = this;
+      var complete = this._getData();
+
+      $.when($, complete).done(function() {
+        self._drawGraph();
+      });
 
       return this;
     }

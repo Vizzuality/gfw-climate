@@ -19,7 +19,7 @@ define([
 
     _loadData: function(widgetId, cb) {
       var url = this._setURL(widgetId),
-        iso = CountryModel.attributes.iso;
+        iso = CountryModel.attributes.iso || 'BRA';
 
       var options = {
         url: url,

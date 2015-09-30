@@ -42,6 +42,7 @@ define([
       var widgetId = this.wid;
       this.collection._loadData(widgetId, _.bind(function() {
         this.data = this.collection.models[0].toJSON();
+        console.log(this.data);
         callback(this.data);
       }, this));
     },
@@ -63,6 +64,8 @@ define([
         type: this.data.type,
         indicators: this.data.indicators
       }));
+
+      console.log(this.data.indicators)
 
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
