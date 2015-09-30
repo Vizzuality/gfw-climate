@@ -2,12 +2,10 @@
  * Application entry point.
  */
 require([
-  'jquery',
-  'underscore',
   'backbone',
   'compare/router',
   'compare/views/CompareIndexView'
-], function($, _, Backbone, RouterView, CompareIndexView) {
+], function(Backbone, RouterView, CompareIndexView) {
 
   'use strict';
 
