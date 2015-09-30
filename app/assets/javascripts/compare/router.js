@@ -1,6 +1,7 @@
 define([
   'backbone',
   'underscore',
+  'map/utils',
   'services/PlaceService'
   ], function(Backbone, _, utils, PlaceService) {
 
