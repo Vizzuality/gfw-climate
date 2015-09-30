@@ -6,14 +6,12 @@ rvm:
 
 before_install:
   - 'npm install'
-
-services:
-  - redis-server
-
-before_script:
   - npm install -g bower
   - rm -rf .bower
   - bower install
+
+services:
+  - redis-server
 
 script: 'bundle exec rake'
 
