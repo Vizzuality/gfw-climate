@@ -76,7 +76,7 @@ define([
      * When some countries selected and compare button clicked...
      */
     countriesSelected: function() {
-      mps.publish('Compare/countriesSelected', this.getPlaceParams());
+      mps.publish('Compare/countriesSelected', [this.getPlaceParams()]);
     }
 
   });
