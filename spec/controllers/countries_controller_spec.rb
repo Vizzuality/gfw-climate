@@ -51,20 +51,7 @@ RSpec.describe CountriesController, type: :controller do
       # set_cookie
       get :show, id: 'bra'
       expect(response).to be_success
-      expect($redis.exists('country/item_bra')).to eq(true)
-    end
-
-  end
-
-  context "Compare Countries" do
-    render_views
-
-    it "Get compare countries page", type: :feature do
-      # set_cookie
-      get :compare_countries
-      expect(response).to be_success
-      expect(response).to have_http_status(200)
-      expect(response.body).to match 'Compare Countries page'
+      expect($redis.exists('country/item_bra25')).to eq(true)
     end
 
   end

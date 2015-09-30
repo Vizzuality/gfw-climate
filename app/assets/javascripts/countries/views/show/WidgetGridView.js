@@ -1,10 +1,11 @@
 define([
   'backbone',
+  'countries/models/CountryModel',
   'countries/presenters/show/WidgetGridPresenter',
   'countries/views/show/reports/NationalView',
   'countries/views/show/reports/SubNationalView',
   'countries/views/show/reports/AreasView',
-], function(Backbone, WidgetGridPresenter, NationalView,
+], function(Backbone, CountryModel, WidgetGridPresenter, NationalView,
     SubNationalView, AreasView) {
 
   'use strict';
@@ -14,8 +15,7 @@ define([
     el: '#reports',
 
     events: {
-      'click .addIndicators' : '_showModal',
-      'click .themes li': '_setCurrentTab'
+      'click .addIndicators' : '_showModal'
     },
 
     model: new (Backbone.Model.extend({
@@ -31,9 +31,10 @@ define([
       this._setListeners();
       this._cacheVars();
 
-      this._setCurrentTab();
       this._toggleWarnings();
+    },
 
+    start: function(arg) {
       this.render();
     },
 
@@ -59,14 +60,6 @@ define([
       }
     },
 
-    _setCurrentTab: function(e) {
-      var $tab = e ? $(e.currentTarget) : this.$el.find('.themes > li:first-child');
-      this.$el.find('.themes > li').removeClass('is-selected');
-      $tab.toggleClass('is-selected');
-
-      var display = $tab ? $tab.data('display') : this.model.attributes.display;
-      this._setDisplay(display)
-    },
 
     _setDisplay: function(display) {
       this.model.set({
@@ -130,7 +123,6 @@ define([
     },
 
     render: function() {
-
       this._toggleWarnings();
 
       var subview;

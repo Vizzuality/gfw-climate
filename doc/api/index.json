@@ -21,6 +21,31 @@
       ]
     },
     {
+      "name": "Indicators",
+      "examples": [
+        {
+          "description": "Getting a list of indicators",
+          "link": "indicators/getting_a_list_of_indicators.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific indicator",
+          "link": "indicators/getting_a_specific_indicator.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific indicator for country",
+          "link": "indicators/getting_a_specific_indicator_for_country.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific indicator with thresh 15",
+          "link": "indicators/getting_a_specific_indicator_with_thresh_15.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
       "name": "Widgets",
       "examples": [
         {

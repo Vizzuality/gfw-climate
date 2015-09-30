@@ -10,63 +10,34 @@
   <ul class="mobile-hide">
     <li>
       <a <% if controller?("map") && action?("index") %>class="current"<% end %> href="/map">Map</a>
-      <!-- <ul class="submenu">
-        <li><a href="/map">GFW Interactive Map</a></li>
-        <li><a href="/countries">Country Profiles & Rankings</a></li>
-        <li><a href="http://commodities.globalforestwatch.org/">Commodities</a></li>
-        <li><a href="http://fires.globalforestwatch.org/">Fires</a></li>
-        <li><a href="/explore/applications">All applications</a></li>
-        <li><a href="http://data.globalforestwatch.org/">Download data</a></li>
-      </ul> -->
     </li>
     <li>
       <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Country profiles</a>
-      <!-- <ul class="submenu">
-        <li><a href="http://blog.globalforestwatch.org/">Blog</a></li>
-        <li><a href="/stayinformed/crowdsourced-stories">Crowdsourced stories</a></li>
-        <li><a href="http://www.wri.org/global-forest-watch-stay-informed" target="_blank">Newsletter</a></li>
-        <li><a href="/stayinformed/publications">Publications</a></li>
-      </ul> -->
-
     </li>
     <li>
-      <a <% if controller?("countries") && action?("compare_countries") %>class="current"<% end %> href="/compare-countries">Compare countries</a>
-      <!-- <ul class="submenu">
-        <li><a href="/getinvolved/develop-your-own-app">Develop your own app</a></li>
-        <li><a href="/stories/new">Submit a story</a></li>
-        <li><a href="/getinvolved/share-data">Share data</a></li>
-        <li><a href="/getinvolved/help-improve-data">Help improve data</a></li>
-        <li><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">Join the discussion</a></li>
-        <li><a href="/getinvolved/apply-to-the-small-grants-fund">Apply to the Small Grants Fund</a></li>
-        <li><a href="/getinvolved/provide-feedback">Provide feedback</a></li>
-        <li><a href="/getinvolved/help-improve-translations">Help improve translations</a></li>
-      </ul> -->
+      <a <% if controller?("compare") && action?("index") %>class="current"<% end %> href="/compare-countries">Compare countries</a>
     </li>
     <li>
-      <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="<%= posts_path %>">Blog</a>
-      <!-- <ul class="submenu">
-        <li><a href="/howto/view-data">Visualize data</a></li>
-        <li><a href="/howto/view-statistics">View statistics</a></li>
-        <li><a href="/howto/analyze-forest-change">Analyze forest change</a></li>
-        <li><a href="/howto/subscribe-to-alerts-and-user-stories">Subscribe to alerts and user stories</a></li>
-        <li><a href="/howto/submit-a-story">Submit a story</a></li>
-        <li><a href="/howto/odp">Open Data Portal</a></li>
-        <li><a href="/howto/faqs">FAQs</a></li>
-      </ul> -->
+      <!-- <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="<%= posts_path %>">Blog</a> -->
+      <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="#">Blog</a>
     </li>
     <li>
-      <a <% if controller?("static") && action?("data_methods") %>class="current"<% end %> href="/data-methods">Data & Methods</a>
+      <a <% if controller?("static") && action?("data_methods") %>class="current"<% end %> href="#">Data & Methods</a>
+      <ul class="submenu">
+        <li><a href="http://data.globalforestwatch.org/">Open Data Portal</a></li>
+        <li><a href="#">Definitions page</a></li>
+        <li><a href="#">FAQs page</a></li>
+        <li><a href="#">Technical Notes and Publications</a></li>
+      </ul>
     </li>
     <li>
-      <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="/about">About</a>
-      <!-- <ul class="submenu">
-        <li><a href="/about/about-gfw">About GFW</a></li>
-        <li><a href="/about/the-gfw-partnership">The GFW partnership</a></li>
-        <li><a href="/about/videos">Videos</a></li>
-        <li><a href="/about/awards_and_testimonials">Awards & testimonials</a></li>
-        <li><a href="/about/data_policy">Data policy</a></li>
-        <li><a href="/about/contact-us">Contact us</a></li>
-      </ul> -->
+      <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="#">About</a>
+      <ul class="submenu">
+        <li><a href="#">About GFW Climate</a></li>
+        <li><a href="#">Data providers and partners</a></li>
+        <li><a href="#">Tutorials</a></li>
+        <li><a href="#">Stay informed</a></li>
+      </ul>
     </li>
   </ul>
 </nav>

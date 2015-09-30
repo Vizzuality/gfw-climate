@@ -6,9 +6,10 @@
   position: relative;
   z-index: 3;
   @media (min-width: $br-mobile) {
-    margin-top: -60px;
+    top: -60px;
     min-height: 620px;
     padding-bottom: 37.5%;
+    margin: 0 0 -60px;
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
       margin-top: 0px;
     }
@@ -31,6 +32,7 @@
     left: 50%;
     z-index: 2;
     transform: translate(-50%,0);
+
     h2 {
       background: $white;
       font-weight: 300;
@@ -44,6 +46,7 @@
       @media (min-width: 1350px) {
         padding: 15px 80px 15px;
       }
+
       .box-button {
         display: inline-block;
         position: relative;
@@ -52,6 +55,7 @@
           backface-visibility: hidden;
           margin-left: 1px;
         }
+
         &.active {
          .tooltip-getstarted {
             opacity: 1;
@@ -96,7 +100,7 @@
             left: 15px;
             width: 35px;
             height: 35px;
-            background: $dark;
+            background: $border;
             border-radius: 50%;
             transform: translate(0,-50%);
             // &.map{ @include getting-started-sprite(map); }
@@ -274,6 +278,9 @@
     display: none;
     @media (min-width: $br-mobile) {
       display: block;
+    }
+    a {
+      color: white;
     }
   }
 
@@ -522,6 +529,7 @@
 			}
 		}
 	}
+
   .hidden {
     display: block;
     position: absolute;
@@ -549,6 +557,7 @@
     z-index: 2;
   }
 }
+
 
 
 
