@@ -1,10 +1,9 @@
 modules:
-  - name: 'map'
-  # - name: 'static'
   - name: 'application'
-  # - name: 'stories'
+  - name: 'map'
   - name: 'countries'
   - name: 'compare'
+priority: ['application']
 
 waitSeconds: 200
 
