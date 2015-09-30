@@ -26,6 +26,8 @@ module Gfwc
       g.javascripts     false
       g.helper          false
     end
+
+    config.allow_concurrency = true
     
   end
 end
