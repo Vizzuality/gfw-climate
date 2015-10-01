@@ -104,6 +104,8 @@ LineChart.prototype._drawScatterplote = function() {
     .attr('class', 'tooltip')
     .style('opacity', 1);
 
+  var formatDate = d3.time.format("%Y")
+
   svg.selectAll('circle.dot')
   .data(this.data)
   .enter().append('circle')
@@ -116,7 +118,7 @@ LineChart.prototype._drawScatterplote = function() {
       tooltip.transition()
         .duration(200)
         .style('opacity', 1);
-      tooltip.html('<span class="data">' + y(d[yKey]) + '</span>'  + yKey + x(d[xKey]))
+      tooltip.html('<span class="data">' + formatDate(d.year) + '</span>'  + yKey + d.loss)
         .style('left', (d3.event.pageX) + 'px')
         .style('top', (d3.event.pageY) + 'px');
       })

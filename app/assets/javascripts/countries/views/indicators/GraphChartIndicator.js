@@ -49,7 +49,7 @@ define([
 
           data.push({
             year: parseDate(n),
-            loss: d.value.toFixed(0)
+            loss: d.value
           });
         }
       });
