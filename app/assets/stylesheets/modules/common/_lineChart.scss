@@ -1,8 +1,8 @@
 .lineChart {
-  .area,
-  .line {
-    clip-path: url(#clip);
-  }
+  // .area,
+  // .line {
+  //   clip-path: url(#clip);
+  // }
 
   .overlay {
     fill: none;
@@ -11,7 +11,7 @@
 
   .line {
     fill: none;
-    stroke: #333;
+    stroke: $color-1;
     stroke-width: 3px;
   }
 
@@ -20,7 +20,7 @@
   }
 
   .axis line {
-    stroke: #000;
+    stroke: #E5E5DF;
     shape-rendering: crispEdges;
   }
 
@@ -30,30 +30,39 @@
     font-size: 11px;
   }
 
-  .axis path,
+  .axis path {
+    stroke: #E5E5DF;
+    stroke-width: 3px;
+    fill: none;
+  }
+
+  .axis.y path {
+    visibility: hidden;
+  }
+
   .axis2 path {
     visibility: hidden;
   }
 
   .axis2 line {
     fill: none;
-    stroke: #6AC3D9;
+    stroke: #E5E5DF;
     shape-rendering: crispEdges;
   }
 
   .axis2 text {
-    fill: #B8E2EC;
+    fill: #333;
     font-size: 10px;
   }
 
+  //Horizontal lines
   .axis.y line {
     fill :none;
-    stroke: #7CCDE2;
+    stroke: none;
   }
 
   .axis.x .tick line {
-    fill: none;
-    stroke: #333;
+    visibility: hidden;
   }
 
   .brush .extent {
@@ -72,7 +81,7 @@
   }
 
   .hoverOverlay circle {
-    fill: #43B9D6;
+    fill: $color-1;
     stroke: white;
     stroke-width: 2px;
     pointer-events: none;

@@ -98,30 +98,30 @@ LineChart.prototype._drawLine = function(group) {
     .attr("d", line);
 };
 
-LineChart.prototype._drawContext = function(group) {
-  var contextGroup = svg.append("g").attr("class", "context")
+// LineChart.prototype._drawContext = function(group) {
+//   var contextGroup = svg.append("g").attr("class", "context")
 
-  var context = new LineChartContext({
-    el: this.options.el,
-    data: this.data,
-    group: contextGroup,
-    sizing: {
-      width: this.width,
-      height: this.parentHeight
-    },
-    keys: this.options.keys,
-    domain: {
-      x: x.domain(),
-      y: y.domain()
-    },
-    onBrush: function(newDomain) {
-      x.domain(newDomain);
-      group.select(".line").attr("d", line);
-      group.select(".x.axis").call(xAxis);
-    }
-  });
-  context.render();
-};
+//   var context = new LineChartContext({
+//     el: this.options.el,
+//     data: this.data,
+//     group: contextGroup,
+//     sizing: {
+//       width: this.width,
+//       height: this.parentHeight
+//     },
+//     keys: this.options.keys,
+//     domain: {
+//       x: x.domain(),
+//       y: y.domain()
+//     },
+//     onBrush: function(newDomain) {
+//       x.domain(newDomain);
+//       group.select(".line").attr("d", line);
+//       group.select(".x.axis").call(xAxis);
+//     }
+//   });
+//   context.render();
+// };
 
 LineChart.prototype._setupHandlers = function() {
   var eventInterceptor = svg.append("rect")
@@ -152,7 +152,7 @@ LineChart.prototype.render = function() {
   this._drawAxes(group);
   this._drawLine(group);
   this._setupHandlers();
-  this._drawContext(group);
+  // this._drawContext(group);
 };
 
 return LineChart;

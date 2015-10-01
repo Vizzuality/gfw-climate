@@ -1,0 +1,57 @@
+//GRAPH
+.graph-container {
+  // width: 1020px;
+  // height: 560px;
+  position: relative;
+
+  // svg {
+  //   background: red;
+  // }
+
+  .tooltip {
+    display: none;
+    z-index: 100;
+    position: absolute;
+    width: 125px;
+    height: 60px;
+    background: #fff;
+    pointer-events: none;
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.20);
+    border-radius: 3px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .tooltip h4 {
+    font-size: 16px;
+    color: #393F44;
+    line-height: 25px;
+    margin: 0;
+  }
+
+  .tooltip h5 {
+    margin: 0;
+    font-size: 11px;
+    color: #9AA2A9;
+    line-height: 13px;
+  }
+}
+
+.explore-detail--wide-visualization {
+//  background: url('../img/chart-line-hover.png') no-repeat center center;
+//  width: 1500px;
+//  height: 560px;
+//  margin: 0 auto;
+  margin-bottom: 50px;
+  left: 0;
+  width: 100%;
+
+//  &.pie {
+//    background: url('../img/chart-pie.png') no-repeat center center;
+//  }
+
+  label {
+    right: 0;
+  }
+}
+

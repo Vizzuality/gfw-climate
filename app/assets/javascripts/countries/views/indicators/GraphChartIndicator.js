@@ -32,7 +32,6 @@ define([
     },
 
     _drawGraph: function(values) {
-
       //Fixear keys. No magic numbers
       var keys = { x: 'year', y: 'loss' };
       var parseDate = d3.time.format("%Y").parse;
@@ -50,18 +49,27 @@ define([
 
           data.push({
             year: parseDate(n),
-            loss: d.value
+            loss: d.value.toFixed(0)
           });
         }
       });
 
       //TODO fix el element.
+      // console.log(this.el);
+
+      //Problema, cuando llego aquí, el otro ya ha setteado su valor y no es
+      //el id correcto.
+      var id = sessionStorage.getItem('currentWidgetId');
+      console.log(id);
+
+      var container = $('#' + id + '.country-widget .content')[0];
+      console.log($('#' + id + '.country-widget .content'))
 
       var lineChart = new LineChartIndicator({
         data: data,
         el: this.el,
-        sizing: {top: 35, right: 20, bottom: 30, left: 10},
-        innerPadding: { top: 25, right: 20, bottom: 0, left: 0 },
+        sizing: {top: 0, right: 0, bottom: 20, left: 0},
+        innerPadding: { top: 0, right: 15, bottom: 0, left: 30 },
         keys: keys
       });
 
