@@ -36,6 +36,7 @@
 
 //Compare
 @import "modules/compare/*";
+@import "modules/common/*";
 
 // Charts
 @import "modules/countries/charts/line-graph";
@@ -45,7 +46,6 @@
 
 // Common
 @import "states";
-@import "modules/common/*";
 
 // Layouts
 @import "layouts/countries";

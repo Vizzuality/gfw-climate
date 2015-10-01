@@ -99,61 +99,53 @@ LineChart.prototype._drawLine = function(group) {
 };
 
 LineChart.prototype._drawScatterplote = function() {
+  // Tooltip
+  var tooltip = d3.select(this.options.el).append('div')
+    .attr('class', 'tooltip')
+    .style('opacity', 1);
+
   svg.selectAll('circle.dot')
   .data(this.data)
   .enter().append('circle')
     .attr('class', 'dot')
-    .attr('r', 3)
+    .attr('r', 5)
     .attr('cx', function(d) { return x(d[xKey]);})
     .attr('cy', function(d) { return y(d[yKey]);})
+    .on('mouseover', function(d) {
+      console.log(d)
+      tooltip.transition()
+        .duration(200)
+        .style('opacity', 1);
+      tooltip.html('<span class="data">' + y(d[yKey]) + '</span>'  + yKey + x(d[xKey]))
+        .style('left', (d3.event.pageX) + 'px')
+        .style('top', (d3.event.pageY) + 'px');
+      })
+    .on('mouseout', function(d) {
+      tooltip.transition()
+        .duration(500)
+        .style('opacity', 1);
+    });
 };
 
+// LineChart.prototype._setupHandlers = function() {
+//   var eventInterceptor = svg.append("rect")
+//     .attr("class", "overlay")
+//     .attr("width", this.width)
+//     .attr("height", this.height)
+//     .attr("transform", "translate(" + this.sizing.left + "," + this.sizing.top + ")");
 
-
-// LineChart.prototype._drawContext = function(group) {
-//   var contextGroup = svg.append("g").attr("class", "context")
-
-//   var context = new LineChartContext({
-//     el: this.options.el,
+//   var handler = new LineChartInteractionHandler(svg, {
+//     width: this.width,
+//     height: this.height,
+//     sizing: this.sizing,
+//     innerPadding: this.innerPadding,
 //     data: this.data,
-//     group: contextGroup,
-//     sizing: {
-//       width: this.width,
-//       height: this.parentHeight
-//     },
 //     keys: this.options.keys,
-//     domain: {
-//       x: x.domain(),
-//       y: y.domain()
-//     },
-//     onBrush: function(newDomain) {
-//       x.domain(newDomain);
-//       group.select(".line").attr("d", line);
-//       group.select(".x.axis").call(xAxis);
-//     }
+//     interceptor: eventInterceptor,
+//     x: x,
+//     y: y
 //   });
-//   context.render();
 // };
-
-LineChart.prototype._setupHandlers = function() {
-  var eventInterceptor = svg.append("rect")
-    .attr("class", "overlay")
-    .attr("width", this.width)
-    .attr("height", this.height)
-    .attr("transform", "translate(" + this.sizing.left + "," + this.sizing.top + ")");
-
-  // var handler = new LineChartInteractionHandler(svg, {
-  //   width: this.width,
-  //   height: this.height,
-  //   sizing: this.sizing,
-  //   innerPadding: this.innerPadding,
-  //   data: this.data,
-  //   keys: this.options.keys,
-  //   interceptor: eventInterceptor,
-  //   x: x,
-  //   y: y
-  // });
-};
 
 LineChart.prototype.render = function() {
   var group = svg.append("g")
@@ -163,9 +155,8 @@ LineChart.prototype.render = function() {
 
   this._drawAxes(group);
   this._drawLine(group);
-  this._setupHandlers();
+  // this._setupHandlers();
   this._drawScatterplote();
-  // this._drawContext(group);
 };
 
 return LineChart;
