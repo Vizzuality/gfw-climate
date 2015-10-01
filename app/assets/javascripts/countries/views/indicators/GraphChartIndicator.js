@@ -36,8 +36,6 @@ define([
       // Data
       var data = [];
 
-      console.log(this.data);
-
       this.data.values.forEach(function(d) {
         if (Number(d.year !== 0)) {
           data.push({
@@ -47,9 +45,6 @@ define([
           });
         }
       });
-
-      console.log(data);
-      // return
 
       this.ticks = [];
 
@@ -97,15 +92,12 @@ define([
 
       // Axes
       var xAxis = d3.svg.axis().scale(x).orient('bottom').tickSize(1)
-        .ticks(data.length).tickSize(0).tickPadding(10).tickFormat(function(d) {
-          return String(moment(d).format('YYYY')).replace(',', '');
-        });
+        .ticks(data.length).tickSize(0).tickPadding(10);
 
       var yAxis = d3.svg.axis().scale(y).orient('left').ticks(data.length).tickSize(0).tickPadding(10);
 
       // Scale range of the data
       x.domain(d3.extent(data, function(d) { return d.year; }));
-
       y.domain([0, d3.max(data, function(d) { return d.loss; })]);
 
 
