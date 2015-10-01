@@ -56,6 +56,11 @@ define([
     _onPlaceGo: function(place) {
       var iso = place.params.country;
       this._retrieveData(iso);
+      this._keepIso(iso);
+    },
+
+    _keepIso: function() {
+      sessionStorage.setItem('countryIso', iso);
     },
 
     _retrieveData: function(iso) {

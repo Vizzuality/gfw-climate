@@ -207,10 +207,11 @@ define([
       var data = this._getData(ind);
 
       $.when($, data).done(function() {
-        self._drawGraph(data);
+        console.log(data);
+        console.log(data.responseJSON);
+        // self._drawGraph(data);
       });
 
-      console.log(data.toJSON());
 
       return this;
     }

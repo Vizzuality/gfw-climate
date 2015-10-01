@@ -5,7 +5,7 @@ define([
 
   var CountryModel = Backbone.Model.extend({
 
-    url: '/api/countries/',
+    url: '',
 
     getByParams: function(ind) {
       console.log(ind)
