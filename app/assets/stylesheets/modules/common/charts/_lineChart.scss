@@ -1,8 +1,4 @@
 .lineChart {
-  // .area,
-  // .line {
-  //   clip-path: url(#clip);
-  // }
 
   .overlay {
     fill: none;
@@ -91,5 +87,11 @@
     stroke: white;
     stroke-width: 1px;
     pointer-events: none;
+  }
+
+  .dot {
+    fill: #fff;
+    stroke: $color-1;
+    stroke-width: 3px;
   }
 }

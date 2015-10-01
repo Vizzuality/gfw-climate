@@ -98,6 +98,18 @@ LineChart.prototype._drawLine = function(group) {
     .attr("d", line);
 };
 
+LineChart.prototype._drawScatterplote = function() {
+  svg.selectAll('circle.dot')
+  .data(this.data)
+  .enter().append('circle')
+    .attr('class', 'dot')
+    .attr('r', 3)
+    .attr('cx', function(d) { return x(d[xKey]);})
+    .attr('cy', function(d) { return y(d[yKey]);})
+};
+
+
+
 // LineChart.prototype._drawContext = function(group) {
 //   var contextGroup = svg.append("g").attr("class", "context")
 
@@ -152,6 +164,7 @@ LineChart.prototype.render = function() {
   this._drawAxes(group);
   this._drawLine(group);
   this._setupHandlers();
+  this._drawScatterplote();
   // this._drawContext(group);
 };
 
