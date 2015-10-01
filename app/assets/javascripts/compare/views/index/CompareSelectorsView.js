@@ -13,7 +13,8 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'change select' : '_selectCountry'
+      'change select' : '_selectCountry',
+      'click .btn-compare' : '_compareCountries'
     },
 
     initialize:function() {
@@ -63,7 +64,13 @@ define([
         var country = self.presenter.status.get(value);
         var selector = '#' + value;
 
-        $(selector).val(country);
+        //Validate entry to avoid no_country options.
+        if (country !== null)  {
+          $(selector).val(country);
+          $(selector).removeClass('is-disabled');
+
+          self._enableNextSelector(value);
+        }
       })
 
       this._disableOptions();
@@ -74,13 +81,27 @@ define([
       var selector = $(e.currentTarget).attr('id');
       var selectedCountry = $(e.currentTarget).val();
 
-      this._countrySelected(selectedCountry, selector);
+      //If user selects valid option, go ahead.
+      if (selectedCountry !== 'no_country') {
+        this._updateStatus(selectedCountry, selector);
+        this._countrySelected(selector);
+      } else {
+        this._updateStatus(selectedCountry, selector);
+        this.enableComparisonBtn();
+      }
     },
 
-    _countrySelected: function(country, selector) {
-      this._updateStatus(country, selector);
+    _countrySelected: function(selector) {
       this._disableOptions();
       this.enableComparisonBtn();
+      this._enableNextSelector(selector);
+    },
+
+    _enableNextSelector: function(selector) {
+      if (selector !== 'country3') {
+        //Improve this awful selection
+        $('#' + selector).parent().next().find('select').removeClass('is-disabled');
+      }
     },
 
     _disableOptions: function() {
@@ -138,6 +159,10 @@ define([
       for(var i = 0; i < countrySelectors.length; i++) {
         $(countrySelectors[i]).chosen();
       }
+    },
+
+    _compareCountries: function() {
+      this.presenter.countriesSelected();
     }
 
   });

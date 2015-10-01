@@ -28,12 +28,7 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this._onPlaceGo(place);
-      },
-
-      // 'Place/update': function() {
-      //   this.view.enableComparisonBtn();
-      // },
-
+      }
     }],
 
 
@@ -72,8 +67,16 @@ define([
     },
 
     updateStatus: function(selector, country) {
-      this.status.set(selector, country);
+      var selectedCountry = country !== 'no_country' ? country : null;
+      this.status.set(selector, selectedCountry);
       mps.publish('Place/update');
+    },
+
+    /*
+     * When some countries selected and compare button clicked...
+     */
+    countriesSelected: function() {
+      mps.publish('Compare/countriesSelected', this.getPlaceParams());
     }
 
   });

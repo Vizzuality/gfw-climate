@@ -3709,11 +3709,16 @@ h1, h2 {
 .m-compare-selector select {
   width: 100%;
 }
-/* line 14, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
-.m-compare-selector .is-disabled {
+/* line 13, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+.m-compare-selector select.is-disabled {
+  opacity: .5;
+  pointer-events: none;
+}
+/* line 20, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+.m-compare-selector option.is-disabled {
   display: none;
 }
-/* line 19, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+/* line 27, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
 .m-compare-selector .chosen-container-single .chosen-single,
 .m-compare-selector .chosen-container-active.chosen-with-drop .chosen-single,
 .m-compare-selector .chosen-container .chosen-drop {
@@ -3722,36 +3727,36 @@ h1, h2 {
   background-image: none;
   box-shadow: none;
 }
-/* line 29, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+/* line 37, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
 .m-compare-selector .chosen-container {
   font-size: 21px;
 }
-/* line 32, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+/* line 40, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
 .m-compare-selector .chosen-container ul li {
   color: #FFF;
   line-height: 21px;
 }
-/* line 37, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+/* line 45, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
 .m-compare-selector .chosen-container .chosen-results {
   max-height: 170px;
 }
-/* line 43, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+/* line 51, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
 .m-compare-selector .chosen-container ul.chosen-results li.highlighted {
   background-color: #5B80A0;
   background-image: none;
 }
-/* line 48, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+/* line 56, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
 .m-compare-selector .chosen-container ul.chosen-results li.no-results {
   color: #FFF;
   background-color: #333;
   background-image: none;
 }
-/* line 58, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+/* line 66, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
 .m-compare-selector .chosen-container-single .chosen-search input[type=text] {
   border-radius: 5px;
   color: #FFF;
 }
-/* line 63, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+/* line 71, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
 .m-compare-selector .chosen-container-single .chosen-single div b {
   width: 10px;
   height: 10px;
@@ -3762,7 +3767,7 @@ h1, h2 {
           transform: rotate(-135deg);
   pointer-events: none;
 }
-/* line 70, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
+/* line 78, /Library/WebServer/Documents/prj/gfw-climate/app/assets/stylesheets/modules/compare/_m-compare-selector.scss */
 .m-compare-selector .chosen-container-single .chosen-single abbr,
 .m-compare-selector .chosen-container-single .chosen-single div b,
 .m-compare-selector .chosen-container-single .chosen-search input[type="text"],

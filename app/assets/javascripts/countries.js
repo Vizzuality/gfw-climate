@@ -4,14 +4,12 @@
 require([
   'jquery',
   'underscore',
-  'Class',
   'backbone',
-  '_string',
   'countries/router',
   'countries/views/CountryShowView',
   'countries/views/CountryIndexView',
   'countries/views/CountryModalView'
-], function($, _, Class, Backbone, _string, RouterView, CountryShowView, CountryIndexView,
+], function($, _, Backbone, RouterView, CountryShowView, CountryIndexView,
   CountryModalView) {
 
   'use strict';
