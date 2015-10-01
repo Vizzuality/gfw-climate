@@ -1,0 +1,86 @@
+.lineChart {
+  .area,
+  .line {
+    clip-path: url(#clip);
+  }
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .line {
+    fill: none;
+    stroke: #333;
+    stroke-width: 3px;
+  }
+
+  .area {
+    fill: #61BED4;
+  }
+
+  .axis line {
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .axis text {
+    fill: #333;
+    font-weight: bold;
+    font-size: 11px;
+  }
+
+  .axis path,
+  .axis2 path {
+    visibility: hidden;
+  }
+
+  .axis2 line {
+    fill: none;
+    stroke: #6AC3D9;
+    shape-rendering: crispEdges;
+  }
+
+  .axis2 text {
+    fill: #B8E2EC;
+    font-size: 10px;
+  }
+
+  .axis.y line {
+    fill :none;
+    stroke: #7CCDE2;
+  }
+
+  .axis.x .tick line {
+    fill: none;
+    stroke: #333;
+  }
+
+  .brush .extent {
+    fill: #333;
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+  }
+
+  .resize rect {
+    visibility: visible !important;
+    fill: #333;
+  }
+
+  .context .background {
+    fill: #3DAFCB;
+  }
+
+  .hoverOverlay circle {
+    fill: #43B9D6;
+    stroke: white;
+    stroke-width: 2px;
+    pointer-events: none;
+  }
+
+  .hoverOverlay line {
+    stroke: white;
+    stroke-width: 1px;
+    pointer-events: none;
+  }
+}

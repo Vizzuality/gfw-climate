@@ -10,7 +10,7 @@ define([
 var svg, x, y, xKey, yKey, xAxis, yAxis;
 
 var line = d3.svg.line()
-  .interpolate('monotone')
+  .interpolate('cardinal')
   .x(function(d) { return x(d[xKey]); })
   .y(function(d) { return y(d[yKey]); });
 
@@ -22,10 +22,11 @@ var LineChart = function(options) {
   this.innerPadding = options.innerPadding;
 
   this.parentWidth = $(this.options.el).outerWidth();
-  this.parentHeight = $(this.options.el).outerHeight();
+  //Fix here parent height. css issue...
+  // this.parentHeight = $(this.options.el).outerHeight();
+  this.parentHeight = 300;
   this.width = this.parentWidth - this.sizing.left - this.sizing.right,
   this.height = this.parentHeight - this.sizing.top - this.sizing.bottom;
-
   this._createEl();
   this._createDefs();
   this._createScales();
@@ -56,7 +57,9 @@ LineChart.prototype._createScales = function() {
   yKey = this.options.keys.y;
 
   x = d3.time.scale().range([this.options.innerPadding.left, this.width - this.options.innerPadding.right]);
-  x.domain(d3.extent(this.data.map(function(d) { return d[xKey]; })));
+  x.domain(d3.extent(this.data.map(function(d) {
+    return d[xKey];
+  })));
 
   y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom, 10 + this.options.innerPadding.top]);
   y.domain([0, d3.max(this.data.map(function(d) { return d[yKey]; }))]);
@@ -127,17 +130,17 @@ LineChart.prototype._setupHandlers = function() {
     .attr("height", this.height)
     .attr("transform", "translate(" + this.sizing.left + "," + this.sizing.top + ")");
 
-  var handler = new LineChartInteractionHandler(svg, {
-    width: this.width,
-    height: this.height,
-    sizing: this.sizing,
-    innerPadding: this.innerPadding,
-    data: this.data,
-    keys: this.options.keys,
-    interceptor: eventInterceptor,
-    x: x,
-    y: y
-  });
+  // var handler = new LineChartInteractionHandler(svg, {
+  //   width: this.width,
+  //   height: this.height,
+  //   sizing: this.sizing,
+  //   innerPadding: this.innerPadding,
+  //   data: this.data,
+  //   keys: this.options.keys,
+  //   interceptor: eventInterceptor,
+  //   x: x,
+  //   y: y
+  // });
 };
 
 LineChart.prototype.render = function() {

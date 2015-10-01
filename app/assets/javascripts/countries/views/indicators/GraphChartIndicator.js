@@ -31,29 +31,40 @@ define([
       return this.model.getByParams(ind);
     },
 
-    _drawGraph: function(data) {
-      this.data = data;
+    _drawGraph: function(values) {
 
-      var keys = { x: 'date', y: 'price' };
-      var parseDate = d3.time.format("%b %Y").parse;
+      console.log(values);
+      //Fixear keys. No magic numbers
+      var keys = { x: 'year', y: 'loss' };
+      var parseDate = d3.time.format("%Y").parse;
       var type = function(d) {
         d[keys.x] = parseDate(d[keys.x]);
         d[keys.y] = +d[keys.y];
         return d;
       }
+      var data = [];
 
-      d3.csv("scripts/explore/line_chart_test.csv", type, function(error, data) {
-        var lineChart = new LineChartIndicator({
-          data: data,
-          el: this.el,
-          sizing: {top: 10, right: 0, bottom: 100, left: 0},
-          innerPadding: { top: 25, right: 20, bottom: 0, left: 45 },
-          keys: keys
-        });
+      values.values.forEach(function(d) {
+        if (Number(d.year !== 0)) {
 
-        lineChart.render();
-      }.bind(this));
+          var n = d.year.toString();
 
+          data.push({
+            year: parseDate(n),
+            loss: d.value
+          });
+        }
+      });
+
+      var lineChart = new LineChartIndicator({
+        data: data,
+        el: this.el,
+        sizing: {top: 35, right: 20, bottom: 30, left: 10},
+        innerPadding: { top: 25, right: 20, bottom: 0, left: 0 },
+        keys: keys
+      });
+
+      lineChart.render();
     },
 
     render: function(ind) {
