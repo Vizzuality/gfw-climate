@@ -80,11 +80,8 @@ shim:
     exports: "UriTemplate"
   handlebars:
     exports: "Handlebars"
-
-
   geojson:
     exports: "geojson"
-
   jqueryujs:
     deps:
       - "jquery"

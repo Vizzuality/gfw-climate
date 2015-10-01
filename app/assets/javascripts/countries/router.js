@@ -1,6 +1,6 @@
 define([
   'backbone',
-  'map/utils',
+  'utils',
   'services/PlaceService',
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView'
@@ -26,7 +26,6 @@ define([
     },
 
     _initShow: function(country, area, params) {
-
       var params = {
         country: country,
         area: area,
