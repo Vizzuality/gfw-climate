@@ -9,11 +9,19 @@
 
   select {
     width: 100%;
+
+    &.is-disabled {
+      opacity: .5;
+      pointer-events: none;
+    }
   }
 
-  .is-disabled {
-    display: none;
+  option {
+    &.is-disabled {
+      display: none;
+    }
   }
+
 
   // styling of
   .chosen-container-single .chosen-single,
