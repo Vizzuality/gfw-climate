@@ -76,7 +76,7 @@ define([
       }
 
       if (this.data.type === 'pie') {
-        this.$el.find('.graph-container').append(new PieChartIndicator().render(firstDataSetLink).el);
+        this.$el.find('.graph-container .content').append(new PieChartIndicator().render(firstDataSetLink).el);
       }
 
       return this;

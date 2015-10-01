@@ -33,7 +33,6 @@ define([
 
     _drawGraph: function(values) {
 
-      console.log(values);
       //Fixear keys. No magic numbers
       var keys = { x: 'year', y: 'loss' };
       var parseDate = d3.time.format("%Y").parse;
@@ -55,6 +54,8 @@ define([
           });
         }
       });
+
+      //TODO fix el element.
 
       var lineChart = new LineChartIndicator({
         data: data,
