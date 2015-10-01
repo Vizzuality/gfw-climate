@@ -42,7 +42,6 @@ define([
       var widgetId = this.wid;
       this.collection._loadData(widgetId, _.bind(function() {
         this.data = this.collection.models[0].toJSON();
-        console.log(this.data);
         callback(this.data);
       }, this));
     },
@@ -66,6 +65,7 @@ define([
       }));
 
       //Set default option of data set to draw graph in first instance
+      //When tabs will be working, we will call Chart.render() with the current API link.
       var firstDataSetLink = this.data.indicators[0].data;
 
       // Mejorar

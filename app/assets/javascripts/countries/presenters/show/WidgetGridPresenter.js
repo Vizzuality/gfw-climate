@@ -55,11 +55,11 @@ define([
       */
     _onPlaceGo: function(place) {
       var iso = place.params.country;
-      this._retrieveData(iso);
       this._keepIso(iso);
+      this._retrieveData(iso);
     },
 
-    _keepIso: function() {
+    _keepIso: function(iso) {
       sessionStorage.setItem('countryIso', iso);
     },
 

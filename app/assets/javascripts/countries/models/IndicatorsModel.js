@@ -8,13 +8,12 @@ define([
     url: '',
 
     getByParams: function(ind) {
-      console.log(ind)
+      // console.log(ind)
       this.url = ind;
       return this.fetch();
     },
 
     parse: function(data) {
-      console.log(data)
       return data;
     }
 

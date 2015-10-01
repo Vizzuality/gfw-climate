@@ -23,9 +23,6 @@ define([
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
       this.model = IndicatorsModel;
-
-      // this._getData();
-      // this.render();
     },
 
     _getData: function(ind) {
@@ -33,7 +30,27 @@ define([
       return this.model.getByParams(ind);
     },
 
-    _drawGraph: function() {
+    _drawGraph: function(data) {
+      this.data = data;
+
+      // Data
+      var data = [];
+
+      console.log(this.data);
+
+      this.data.values.forEach(function(d) {
+        if (Number(d.year !== 0)) {
+          data.push({
+            // year: moment(d.year + '-01-01'),
+            year: d.year,
+            loss: d.value
+          });
+        }
+      });
+
+      console.log(data);
+      // return
+
       this.ticks = [];
 
       var margin = {
@@ -77,21 +94,6 @@ define([
           .attr('y2', height)
           .style('visibility', 'hidden')
           .style('stroke', '#aaa');
-
-      // Data
-      var data = [];
-
-      this.data.forEach(function(d) {
-
-        // if (Number(d.year % 2) === 0) {
-
-          data.push({
-            year: moment(d.year + '-01-01'),
-            loss: d.loss
-          });
-        // }
-
-      });
 
       // Axes
       var xAxis = d3.svg.axis().scale(x).orient('bottom').tickSize(1)
@@ -207,9 +209,7 @@ define([
       var data = this._getData(ind);
 
       $.when($, data).done(function() {
-        console.log(data);
-        console.log(data.responseJSON);
-        // self._drawGraph(data);
+        self._drawGraph(data.responseJSON);
       });
 
 
