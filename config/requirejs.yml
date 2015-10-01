@@ -2,7 +2,7 @@ modules:
   - name: 'application'
   - name: 'map'
   - name: 'countries'
-  # - name: 'compare'
+  - name: 'compare'
 
 waitSeconds: 200
 
