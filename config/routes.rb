@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   end
 
   # Countries - jurisdiction routes
+  get 'pantropical' => 'countries#pantropical'
   get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
 
   # Compare countries routes
