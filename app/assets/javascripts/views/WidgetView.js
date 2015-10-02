@@ -44,12 +44,6 @@ define([
         this.data = this.collection.models[0].toJSON();
         callback(this.data);
       }, this));
-
-      this._keepWidgetId(widgetId);
-    },
-
-    _keepWidgetId: function(widgetId) {
-      sessionStorage.setItem('currentWidgetId', widgetId)
     },
 
     _close: function(e) {

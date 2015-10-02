@@ -57,11 +57,6 @@ define([
       //TODO fix el element.
       // console.log(this.el);
 
-      //Problema, cuando llego aquí, el otro ya ha setteado su valor y no es
-      //el id correcto.
-      var id = sessionStorage.getItem('currentWidgetId');
-      console.log(id);
-
       var container = $('#' + id + '.country-widget .content')[0];
       console.log($('#' + id + '.country-widget .content'))
 
@@ -76,7 +71,10 @@ define([
       lineChart.render();
     },
 
+    //When we will implement tabs functionality, we can take the 'ind' value
+    //from the tab element and give it to this function.
     render: function(ind) {
+      //console.log(ind)
       this.$el.html(this.template);
       var self = this;
 
