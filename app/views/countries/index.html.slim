@@ -1,11 +1,11 @@
 .layout-content
   section#countryListView.section.country-profiles
     .inner
-      h2.title-section Country profiles
+      h2.title-section #{@title}
     .inner.countries-list-title
       h3
         |Select a country or go to the
-        a< (href="#") pantropical overview
+        a< (href="/pantropical") pantropical overview
     .inner
       .search-countries-box
         input#searchCountry(autofocus="true" type="text" placeholder="Type country name")

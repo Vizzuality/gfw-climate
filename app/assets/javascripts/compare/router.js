@@ -1,10 +1,9 @@
 define([
   'backbone',
   'underscore',
-  'map/utils',
-  'services/PlaceService',
-  'compare/views/CompareIndexView'
-], function(Backbone, _, utils, PlaceService) {
+  'utils',
+  'services/PlaceService'
+  ], function(Backbone, _, utils, PlaceService) {
 
   var Router = Backbone.Router.extend({
 
@@ -28,11 +27,7 @@ define([
         country3: country3
       }, _.parseUrl());
       this.placeService.initPlace(this.name, params);
-    },
-
-    // navigateTo: function(route, options) {
-    //   this.navigate(route, options);
-    // }
+    }
 
   });
 

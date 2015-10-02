@@ -1,6 +1,6 @@
 define([
   'backbone',
-  'map/utils',
+  'utils',
   'services/PlaceService',
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView'
@@ -12,7 +12,7 @@ define([
 
     routes: {
       'countries'                           : '_initIndex',
-      'countries/overview'                  : '_initOverview',
+      'pantropical'               : '_initPantropical',
       'countries/:country(/:area)(?params)' : '_initShow'
     },
 
@@ -26,7 +26,6 @@ define([
     },
 
     _initShow: function(country, area, params) {
-
       var params = {
         country: country,
         area: area,
@@ -36,7 +35,7 @@ define([
       this.placeService.initPlace(this.name, params);
     },
 
-    _initOverview: function() {},
+    _initPantropical: function() {},
 
     // navigateTo: function(route, options) {
     //   this.navigate(route, options);

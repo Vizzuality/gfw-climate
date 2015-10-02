@@ -12,6 +12,10 @@ class CountriesController < ApplicationController
     @jurisdictions = @country['subnat_bounds']
   end
 
+  def pantropical
+    @title = 'Carbon Emissions for Tropical Deforestation'
+  end
+
   private
     def filter_params
       params.permit(:id, :thresh)

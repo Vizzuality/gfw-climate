@@ -2,6 +2,7 @@ modules:
   - name: 'application'
   - name: 'map'
   - name: 'countries'
+  - name: 'compare'
 
 waitSeconds: 200
 
@@ -79,11 +80,8 @@ shim:
     exports: "UriTemplate"
   handlebars:
     exports: "Handlebars"
-
-
   geojson:
     exports: "geojson"
-
   jqueryujs:
     deps:
       - "jquery"
