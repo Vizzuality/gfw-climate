@@ -13,9 +13,7 @@ class CountriesController < ApplicationController
   end
 
   def pantropical
-    @title = 'Pantropical visualization'
-    @desc = 'Compare tree cover change across countries and climate domains and view global rankings.'
-    @keywords = 'GFW, list, forest data, visualization, data, national, country, analysis, statistic, tree cover loss, tree cover gain, climate domain, boreal, tropical, subtropical, temperate, deforestation, deforesters, overview, global'
+    @title = 'Carbon Emissions for Tropical Deforestation'
   end
 
   private
