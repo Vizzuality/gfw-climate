@@ -40,6 +40,8 @@ define([
       }
       var data = [];
 
+      //Repasar parseo de datos.
+      //Funcioan bien en iso = GUY
       values.values.forEach(function(d) {
         if (Number(d.year !== 0)) {
 
