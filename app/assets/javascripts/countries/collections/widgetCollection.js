@@ -19,7 +19,8 @@ define([
 
     _loadData: function(widgetId, cb) {
       var url = this._setURL(widgetId);
-      //Ojo, truqui porque no llega la ISO.
+      //I have to change this because when you arrive here,
+      //country model doesn't exist.
       // var iso = CountryModel.attributes.iso;
       var iso = sessionStorage.getItem('countryIso');
 

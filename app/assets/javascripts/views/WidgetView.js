@@ -3,11 +3,11 @@ define([
   'handlebars',
   'countries/models/CountryModel',
   'countries/collections/widgetCollection',
-  'countries/views/indicators/GraphChartIndicator',
+  'countries/views/indicators/LineChartIndicator',
   'countries/views/indicators/MapIndicator',
   'countries/views/indicators/PieChartIndicator',
   'text!countries/templates/country-widget.handlebars'
-], function(Backbone, Handlebars, CountryModel, widgetCollection, GraphChartIndicator,
+], function(Backbone, Handlebars, CountryModel, widgetCollection, LineChartIndicator,
   MapIndicator, PieChartIndicator, tpl) {
 
   'use strict';
@@ -56,7 +56,7 @@ define([
     _share: function() {},
 
     render: function() {
-
+      //Render widget frame template (tabs, and so on...)
       this.$el.html(this.template({
         id: this.data.id,
         name: this.data.name,
@@ -64,15 +64,23 @@ define([
         indicators: this.data.indicators
       }));
 
-      //Set default option of data set to draw graph in first instance
-      //When tabs will be working, we will call Chart.render() with the current API link.
+      //firstDataSetLink is something like : "/api/indicators/1/GUY.
+      //It should be the API endpoint where we retrieve data for the widget.
       var firstDataSetLink = this.data.indicators[0].data;
+      //graphicId is the current graphic id.
+      var graphicId = this.data.indicators[0].id;
+      // console.log(graphicId);
+
+      //I have talk we REE staff, and apparently it is better to work
+      //with ids in order to differenciate elements.
+      var widgetId = this.data.id;
+      var nextEl = '#' + widgetId + '.country-widget .graph-container';
 
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
       if (this.data.type === 'line') {
-        new GraphChartIndicator().render(firstDataSetLink);
+        new LineChartIndicator({el: nextEl}).render(firstDataSetLink, graphicId);
       }
 
       if (this.data.type === 'pie') {
