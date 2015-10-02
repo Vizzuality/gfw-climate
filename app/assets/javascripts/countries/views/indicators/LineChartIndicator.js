@@ -47,13 +47,10 @@ define([
 
           data.push({
             year: parseDate(n),
-            loss: parseInt(d.value)
+            loss: ~~d.value
           });
         }
       });
-
-      //Aqui los datos son diferentes.
-      console.log(data);
 
       var graphContainer = this.$el.find('#' + graphicId + '.content')[0];
 
