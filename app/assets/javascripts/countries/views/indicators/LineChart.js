@@ -23,9 +23,7 @@ var LineChart = function(options) {
   this.innerPadding = options.innerPadding;
 
   this.parentWidth = $(this.options.el).outerWidth();
-  //Fix here parent height. css issue...
-  // this.parentHeight = $(this.options.el).outerHeight();
-  this.parentHeight = 300;
+  this.parentHeight = $(this.options.el).outerHeight();
   this.width = this.parentWidth - this.sizing.left - this.sizing.right,
   this.height = this.parentHeight - this.sizing.top - this.sizing.bottom;
   this._createEl();
@@ -103,7 +101,7 @@ LineChart.prototype._drawScatterplote = function() {
   // Tooltip
   var tooltip = d3.select(this.options.el).append('div')
     .attr('class', 'tooltip')
-    .style('opacity', 1);
+    .style('opacity', 0);
 
   var formatDate = d3.time.format("%Y")
 
@@ -126,7 +124,7 @@ LineChart.prototype._drawScatterplote = function() {
     .on('mouseout', function(d) {
       tooltip.transition()
         .duration(500)
-        .style('opacity', 1);
+        .style('opacity', 0);
     });
 };
 
