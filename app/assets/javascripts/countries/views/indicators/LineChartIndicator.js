@@ -30,7 +30,6 @@ define([
     },
 
     _drawGraph: function(values, graphicId) {
-      console.log(values)
       //Fixear keys. No magic numbers
       var keys = { x: 'year', y: 'loss' };
       var parseDate = d3.time.format("%Y").parse;
@@ -48,10 +47,13 @@ define([
 
           data.push({
             year: parseDate(n),
-            loss: d.value
+            loss: parseInt(d.value)
           });
         }
       });
+
+      //Aqui los datos son diferentes.
+      console.log(data);
 
       var graphContainer = this.$el.find('#' + graphicId + '.content')[0];
 

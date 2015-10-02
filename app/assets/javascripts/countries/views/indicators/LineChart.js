@@ -128,25 +128,51 @@ LineChart.prototype._drawScatterplote = function() {
     });
 };
 
-// LineChart.prototype._setupHandlers = function() {
-//   var eventInterceptor = svg.append("rect")
-//     .attr("class", "overlay")
-//     .attr("width", this.width)
-//     .attr("height", this.height)
-//     .attr("transform", "translate(" + this.sizing.left + "," + this.sizing.top + ")");
+//From WRW
+// LineChart.prototype._drawContext = function(group) {
+//   var contextGroup = svg.append("g").attr("class", "context")
 
-//   var handler = new LineChartInteractionHandler(svg, {
-//     width: this.width,
-//     height: this.height,
-//     sizing: this.sizing,
-//     innerPadding: this.innerPadding,
+//   var context = new LineChartContext({
+//     el: this.options.el,
 //     data: this.data,
+//     group: contextGroup,
+//     sizing: {
+//       width: this.width,
+//       height: this.parentHeight
+//     },
 //     keys: this.options.keys,
-//     interceptor: eventInterceptor,
-//     x: x,
-//     y: y
+//     domain: {
+//       x: x.domain(),
+//       y: y.domain()
+//     },
+//     onBrush: function(newDomain) {
+//       x.domain(newDomain);
+//       group.select(".line").attr("d", line);
+//       group.select(".x.axis").call(xAxis);
+//     }
 //   });
+//   context.render();
 // };
+
+LineChart.prototype._setupHandlers = function() {
+  var eventInterceptor = svg.append("rect")
+    .attr("class", "overlay")
+    .attr("width", this.width)
+    .attr("height", this.height)
+    .attr("transform", "translate(" + this.sizing.left + "," + this.sizing.top + ")");
+
+  // var handler = new LineChartInteractionHandler(svg, {
+  //   width: this.width,
+  //   height: this.height,
+  //   sizing: this.sizing,
+  //   innerPadding: this.innerPadding,
+  //   data: this.data,
+  //   keys: this.options.keys,
+  //   interceptor: eventInterceptor,
+  //   x: x,
+  //   y: y
+  // });
+};
 
 LineChart.prototype.render = function() {
   var group = svg.append("g")
@@ -158,6 +184,7 @@ LineChart.prototype.render = function() {
   this._drawLine(group);
   // this._setupHandlers();
   this._drawScatterplote();
+  // this._drawContext(group);
 };
 
 return LineChart;
