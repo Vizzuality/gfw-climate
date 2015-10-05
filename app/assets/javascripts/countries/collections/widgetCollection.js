@@ -18,8 +18,11 @@ define([
     },
 
     _loadData: function(widgetId, cb) {
-      var url = this._setURL(widgetId),
-        iso = CountryModel.attributes.iso;
+      var url = this._setURL(widgetId);
+      //I have to change this because when you arrive here,
+      //country model doesn't exist.
+      // var iso = CountryModel.attributes.iso;
+      var iso = sessionStorage.getItem('countryIso');
 
       var options = {
         url: url,
