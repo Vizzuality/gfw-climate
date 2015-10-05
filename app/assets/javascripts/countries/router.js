@@ -3,8 +3,9 @@ define([
   'utils',
   'services/PlaceService',
   'countries/views/CountryIndexView',
-  'countries/views/CountryShowView'
-], function(Backbone, utils, PlaceService, CountryIndexView, CountryShowView) {
+  'countries/views/CountryShowView',
+  'countries/views/CountryPantropicalView'
+], function(Backbone, utils, PlaceService, CountryIndexView, CountryShowView,CountryPantropicalView) {
 
   'use strict';
 
@@ -12,7 +13,7 @@ define([
 
     routes: {
       'countries'                           : '_initIndex',
-      'countries/overview'                  : '_initOverview',
+      'pantropical'                         : '_initPantropical',
       'countries/:country(/:area)(?params)' : '_initShow'
     },
 
@@ -35,11 +36,9 @@ define([
       this.placeService.initPlace(this.name, params);
     },
 
-    _initOverview: function() {},
-
-    // navigateTo: function(route, options) {
-    //   this.navigate(route, options);
-    // }
+    _initPantropical: function() {
+      new CountryPantropicalView();
+    }
 
   });
 

@@ -27,6 +27,13 @@ RSpec.describe CountriesController, type: :controller do
       expect($redis.exists('countries_all_')).to eq(true)
     end
 
+    it "GET pantropical country page" do
+      get :pantropical
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+      expect(response.body).to match 'Carbon Emissions for Tropical Deforestation'
+    end
+
   end
 
   context "Country page" do
@@ -53,7 +60,6 @@ RSpec.describe CountriesController, type: :controller do
       expect(response).to be_success
       expect($redis.exists('country/item_bra25')).to eq(true)
     end
-
   end
 
 end
