@@ -1,0 +1,94 @@
+.m-compare-modal {
+  // Tabs header
+  header {
+    background: #f2f2f3;
+    ul{
+      margin: 0 100px;
+      padding: 30px 0 0;
+      display: flex;
+      justify-content: center;
+      li{
+        font-size: 32px;
+        padding: 10px 50px;
+        color: $dark;
+        cursor: pointer;
+        font-weight: 300;
+        &:hover {
+          background: darken($white,1%);
+        }
+        &.is-active {
+          background: $white;
+        }
+      }
+    }
+  }
+
+  // Content header
+  .m-modal--tabscontent {
+
+  }
+
+  .m-modal--tab {
+    padding: 40px;
+    display: none;
+    &.is-active {
+      display: block;
+    }
+  }
+
+  .m-field {
+    margin: 20px 0 0;
+    &:first-child{
+      margin: 0;
+    }
+    h3 {
+      font-weight: 500;
+      color: $font-color-3;
+      font-size: 19px;
+    }
+  }
+
+  .m-field-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 0 -0.5%;
+    li {
+      position: relative;
+      width: 32.333333333%;
+      margin: 0.5%;
+      padding: 16px;
+      padding-right: 32px;
+      font-size: 14px;
+      color: $dark;
+      border: 1px solid $border;
+      border-radius: 5px;
+      cursor: pointer;
+      &:before{
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translate(0,-50%);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 1px solid $border;
+
+      }
+      &.is-active {
+        color: $white;
+        background: $font-color-3;
+        &:before {
+          border: 1px solid $white;
+          box-shadow: 0 0 0 2px $font-color-3 inset, 0 0 0 12px $white inset;
+        }
+      }
+    }
+  }
+
+
+
+}
+

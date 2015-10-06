@@ -1,9 +1,9 @@
 define([
   'Backbone',
   'mps',
+  'compare/collections/CountriesCollection',
   'compare/presenters/PresenterClass',
-  'compare/collections/CountriesCollection'
-], function(Backbone, mps, PresenterClass, CountriesCollection) {
+], function(Backbone, mps, countries, PresenterClass) {
 
   'use strict';
 
@@ -18,7 +18,7 @@ define([
     init: function(view) {
       this._super();
       this.view = view;
-      this.collection = CountriesCollection;
+      this.countries = countries;
       mps.publish('Place/register', [this]);
     },
 
@@ -28,6 +28,9 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this._onPlaceGo(place);
+      },
+      'CompareModal/show': function() {
+        this.view.show();
       }
     }],
 
@@ -55,17 +58,14 @@ define([
 
       // Fetching data
       var complete = _.invoke([
-        this.collection,
+        this.countries
       ], 'fetch');
 
       $.when.apply($, complete).done(function() {
-        // this.view.setValuesFromUrl(data);
+        var countries = arguments[0].countries;
+        this.view.setFields(countries);
       }.bind(this));
     },
-
-    showModal: function() {
-      mps.publish('CompareModal/show');
-    }
 
   });
 

@@ -10,7 +10,7 @@
 @import "header";
 @import "footer";
 @import "grid";
-// @import "modules/notifications";
+@import "modules/notifications";
 
 
 // Modules
@@ -21,6 +21,7 @@
 @import "modules/slick";
 
 //Countries
+@import "modules/compare/m-compare-modal";
 // @import "modules/countries/header-profile";
 // @import "modules/countries/list";
 // @import "modules/countries/header-show";

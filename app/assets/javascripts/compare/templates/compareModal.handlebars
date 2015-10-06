@@ -1,0 +1,95 @@
+<a class="close" href="#"><svg><use xlink:href="#shape-close"></use></svg></a>
+
+<div class="content-wrapper">
+  <div class="m-compare-modal">
+    <header>
+      <ul>
+        <li class="m-modal--tablink is-active" data-tab="selectionA">Selection A</li>
+        <li class="m-modal--tablink" data-tab="selectionB">Selection B</li>
+      </ul>
+    </header>
+    <ul class="m-modal--tabscontent">
+      <li id="selectionA" class="m-modal--tab is-active">
+        <div class="m-field">
+          <h3>Country</h3>
+          <select id="compare-selectA" class="chosen-select default">
+            {{#each countries}}
+              <option value="{{this.iso}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="m-field">
+          <h3>Area of interest (optional)</h3>
+          <ul id="compare-areaA" class="m-field-list">
+            <li class="m-field-list-radio is-active">TREE PLANTATIONS</li>
+            <li class="m-field-list-radio">PROTECTED AREAS</li>
+            <li class="m-field-list-radio">PRIMARY FORESTS</li>
+            <li class="m-field-list-radio">MORATORIUM AREAS</li>
+            <li class="m-field-list-radio">MINING CONCESSIONS</li>
+            <li class="m-field-list-radio">LOGGING CONCESSIONS</li>
+            <li class="m-field-list-radio">PLANTATION CONCESSIONS</li>
+            <li class="m-field-list-radio">KEY BIODIVERSITY AREAS</li>
+          </ul>
+        </div>
+        <div class="m-field">
+          <h3>Juristiction (optional)</h3>
+          <ul id="compare-juristictionA" class="m-field-list">
+            <li class="m-field-list-radio">TREE PLANTATIONS</li>
+            <li class="m-field-list-radio">PROTECTED AREAS</li>
+            <li class="m-field-list-radio">PRIMARY FORESTS</li>
+            <li class="m-field-list-radio">MORATORIUM AREAS</li>
+            <li class="m-field-list-radio">MINING CONCESSIONS</li>
+            <li class="m-field-list-radio">LOGGING CONCESSIONS</li>
+            <li class="m-field-list-radio">PLANTATION CONCESSIONS</li>
+            <li class="m-field-list-radio">KEY BIODIVERSITY AREAS</li>
+          </ul>
+
+        </div>
+      </li>
+      <li id="selectionB" class="m-modal--tab">
+
+      </li>
+    </ul>
+  </div>
+</div>
+{{!-- <div id="sources">
+  <div id="indicators" class="source-item">
+    <div class="source_header">
+      <strong class="source_title">Select indicators</strong>
+    </div>
+    <div class="source_body">
+
+    <div class="indicator-list">
+
+      <div class="indicators-group">
+        <h3>Forest and Carbon Data</h3>
+        <ul>
+          <li id="1" class="indicator"><span class="indicator__name">annual deforestation rate</span></li>
+          <li id="2" class="indicator"><span class="indicator__name">carbon emissions from deforestation<svg class="icon-selector-piechart"><use xlink:href="#icon-selector-piechart"></use></svg></span></li>
+          <li id="3" class="indicator"><span class="indicator__name">forest area 2000<svg class="icon-selector-piechart"><use xlink:href="#icon-selector-piechart"></use></svg></span></li>
+          <li id="4" class="indicator"><span class="indicator__name">biomass carbon stock</span></li>
+          <li id="5" class="indicator"><span class="indicator__name">aboveground biomass density<svg class="icon-selector-piechart"><use xlink:href="#icon-selector-piechart"></use></svg></span></li>
+          <li id="6" class="indicator"><span class="indicator__name">emerging hotspots</span></li>
+          <li id="7" class="indicator"><span class="indicator__name">soil carbon stocks</span></li>
+          <li id="8" class="indicator"><span class="indicator__name">soil carbon density</span></li>
+        </ul>
+      </div>
+
+      <div class="indicators-group">
+        <h3>Policy and Drivers</h3>
+        <ul>
+          <li id="9" class="indicator"><span class="indicator__name">top 5 crops expanding in area</span></li>
+          <li id="10" class="indicator"><span class="indicator__name">c stocks vs. crop yields</span></li>
+          <li id="11" class="indicator"><span class="indicator__name">deforestation drivers</span></li>
+          <li id="12" class="indicator"><span class="indicator__name">deforestation emissions as a % of national ghg emissions</span></li>
+          <li id="13" class="indicator"><span class="indicator__name">climate change initiatives singed</span></li>
+          <li id="14" class="indicator"><span class="indicator__name">human population trends</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <button id="btn-done" class="btn medium blue">Done</button>
+    </div>
+  </div>
+</div>
+ --}}

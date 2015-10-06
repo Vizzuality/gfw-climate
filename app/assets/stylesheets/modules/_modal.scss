@@ -19,7 +19,7 @@ $height: auto;
     width: $width;
     height: $height;
     display: block;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%,-60%);
   }
 
   // GRADIENTS
@@ -46,12 +46,22 @@ $height: auto;
     display: block;
     opacity: 1;
     visibility: visible;
-    transition: all 0.25s $easeInOutSine;
+    transition: all 0.125s $easeInOutSine;
+    transform: translate(-50%,-50%);
   }
 
   &.iframe{
     width: auto;
     .content-wrapper{
+      max-height: none;
+    }
+  }
+
+  &.is-huge {
+    width: 820px;
+    height: 80%;
+    .content-wrapper{
+      padding: 0;
       max-height: none;
     }
   }

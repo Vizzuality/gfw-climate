@@ -57,9 +57,9 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate:'{name}{/country1}{/country2}{/country3}{?threshold,widgets}',
+    _uriTemplate:'{name}{/compare1}{/compare2}{?options}',
 
-    // _uriTemplate: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}',
+    // _uriTemplate: '{name}{/compare1}{/compare2}{/country3}{?threshold,widgets}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -144,9 +144,8 @@ define([
       p.name = this._name ? this._name : null;
 
       // We have to develop this with our params
-      p.country1 = p.country1 ? p.country1.toString() : null;
-      p.country2 = p.country2 ? p.country2.toString() : null;
-      p.country3 = p.country3 ? p.country3.toString() : null;
+      p.compare1 = p.compare1 ? p.compare1.toString() : null;
+      p.compare2 = p.compare2 ? p.compare2.toString() : null;
 
       return p;
     },
@@ -163,9 +162,8 @@ define([
       p.name = this._name ? this._name : null;
 
       // We have to develop this with our params
-      p.country1 = p.country1 ? p.country1.toString() : null;
-      p.country2 = p.country2 ? p.country2.toString() : null;
-      p.country3 = p.country3 ? p.country3.toString() : null;
+      p.compare1 = p.compare1 ? p.compare1.toString() : null;
+      p.compare2 = p.compare2 ? p.compare2.toString() : null;
 
       return p;
     },
