@@ -147,7 +147,7 @@ function addCommas(nStr) {
       this.circles = null;
       this.fill_color = d3.scale.ordinal().domain(["America", "Africa", "Asia"]).range(["#d84b2a", "#beccae", "#7aa25c"]);
       max_amount = d3.max(this.data, function(d) {
-        return parseInt(d.total_amount || 0);
+        return d.Average;
       });
       this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, max_amount]).range([2, 85]);
       this.create_nodes();
@@ -158,11 +158,10 @@ function addCommas(nStr) {
       this.data.forEach((function(_this) {
         return function(d) {
           var node;
-          d.total_amount = parseFloat(d.y2001)+parseFloat(d.y2002)+parseFloat(d.y2003)+parseFloat(d.y2004)+parseFloat(d.y2005)+parseFloat(d.y2006)+parseFloat(d.y2007)+parseFloat(d.y2008)+parseFloat(d.y2009)+parseFloat(d.y2010)+parseFloat(d.y2011)+parseFloat(d.y2012)+parseFloat(d.y2013);
           node = {
             id: d.id,
-            radius: _this.radius_scale(d.total_amount) * 5,
-            value: d.total_amount,
+            radius: _this.radius_scale(d.Average),
+            value: d.Average,
             name: d.Country,
             org: d.organization,
             group: d.Continent,
