@@ -105,6 +105,8 @@ define([
       params = this._destandardizeParams(
         this._getPresenterParams(this._presenters));
 
+      console.log(params);
+
       route = this._getRoute(params);
       this.router.navigate(route, {silent: true});
     },
@@ -165,9 +167,11 @@ define([
 
       var localOptions = {
         view : p.view ? p.view : null,
-        widgets: p.widgets ? p.widgets : null,
+        widgets: p.widgetStatus ? p.widgetStatus : null,
         treshold: p.treshold ? p.treshold : null
       };
+
+      console.log(localOptions);
 
       p.options = btoa(JSON.stringify(localOptions));
 

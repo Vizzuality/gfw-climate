@@ -2,12 +2,13 @@ define([
   'backbone',
   'handlebars',
   'countries/models/CountryModel',
+  'countries/presenters/show/WidgetPresenter',
   'countries/collections/widgetCollection',
   'countries/views/indicators/LineChartIndicator',
   'countries/views/indicators/MapIndicator',
   'countries/views/indicators/PieChartIndicator',
   'text!countries/templates/country-widget.handlebars'
-], function(Backbone, Handlebars, CountryModel, widgetCollection, LineChartIndicator,
+], function(Backbone, Handlebars, CountryModel, WidgetPresenter, widgetCollection, LineChartIndicator,
   MapIndicator, PieChartIndicator, tpl) {
 
   'use strict';
@@ -22,12 +23,23 @@ define([
       'click .close' : '_close',
       'click #info'   : '_info',
       'click #share'  : '_share',
-      'click .indicators-grid__item': '_setCurrentIndicator'
+      'click .indicators-grid__item': '_setCurrentIndicator',
+      'change .selector': 'updateTreshold'
     },
 
     initialize: function(data) {
-      this.model = CountryModel;
       this.wid = data.wid;
+      this.presenter = new WidgetPresenter(this);
+
+
+      this.model = CountryModel;
+    },
+
+    updateTreshold: function(e) {
+      var treshold = e.currentTarget.value;
+      this.presenter.updateStatus({
+        treshold: treshold
+      });
     },
 
     _setCurrentIndicator: function(e) {

@@ -5,17 +5,24 @@ define([
 
   'use strict';
 
-  var TabsPresenter = PresenterClass.extend({
+  var globalWidgetStatus = {};
+
+  var WidgetPresenter = PresenterClass.extend({
 
     status: new (Backbone.Model.extend({
       defaults: {
-        data: 'national'
+        average: null,
+        id: null,
+        indicator: 1,
+        treshold: 30
       }
     })),
 
     init: function(view) {
       this.view = view;
       this._super();
+
+      this.status.set('id', view.wid);
 
       mps.publish('Place/register', [this]);
     },
@@ -36,10 +43,18 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
-      p.view = this.status.get('data');
+
+      p.widgetStatus = {
+        average: this.status.attributes.average,
+        id: this.status.attributes.id,
+        indicator: this.status.attributes.indicator,
+        treshold: this.status.attributes.treshold
+      };
+
+      console.log(p);
+
       return p;
     },
-
 
     /**
      * Triggered from 'Place/Go' events.
@@ -50,17 +65,17 @@ define([
       this.view.start(place);
     },
 
-    onUpdateTab: function(tab) {
-      this.status.set('data', tab);
+    onUpdateIndicator: function(status) {
+      this.status.set(status);
     },
 
-    updateStatus: function(tab) {
-      this.onUpdateTab(tab);
+    updateStatus: function(status) {
+      this.onUpdateIndicator(status);
       mps.publish('Place/update');
     }
 
   });
 
-  return TabsPresenter;
+  return WidgetPresenter;
 
 });

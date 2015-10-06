@@ -10,8 +10,8 @@ define([
 
     init: function(view) {
       this.view = view;
-      this._super();
       this.model = model;
+      this._super();
 
       mps.publish('Place/register', [this]);
     },
@@ -52,14 +52,6 @@ define([
     //     this.view._setDisplay(display);
     //   }
     // }],
-
-    /**
-     * Trigger the selected display option
-     * @param  {[string]} display
-     * Add below events publication
-     */
-
-
 
 
      /**
