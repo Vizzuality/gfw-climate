@@ -7,9 +7,9 @@ define([
 
   var TabsPresenter = PresenterClass.extend({
 
-    status: (new Backbone.Model({
+    status: new (Backbone.Model.extend({
       defaults: {
-        tab: 'national'
+        data: 'national'
       }
     })),
 
@@ -36,7 +36,7 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
-      p.view = this.status.get('tab');
+      p.view = this.status.get('data');
       return p;
     },
 
@@ -59,8 +59,8 @@ define([
      },
 
      _updateTab: function(tab) {
-      this.status.set('tab', tab);
-      mps.publish('Place/update');
+      this.status.set('data', tab);
+      // mps.publish('Place/update');
      }
 
   });

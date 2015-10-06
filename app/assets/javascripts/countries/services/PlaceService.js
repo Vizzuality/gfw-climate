@@ -70,6 +70,7 @@ define([
       this.router = router;
       this._presenters = [];
       this._name = null;
+      this.params = {};
       this._super();
     },
 
@@ -118,8 +119,8 @@ define([
     _newPlace: function(params) {
       var place = {};
 
-      place.params = this._standardizeParams(params);
-      mps.publish('Place/go', [place]);
+      this.params = this._standardizeParams(params);
+      mps.publish('Place/go', [this.params]);
     },
 
     /**
@@ -140,15 +141,15 @@ define([
      * @return {Object} The standardized params.
      */
     _standardizeParams: function(params) {
-      var p = _.extendNonNull({}, urlDefaultsParams, params);
+      var p = _.extendNonNull({}, this.params, params);
       p.name = this._name ? this._name : null;
 
 
       // We have to develop this with our params
       p.country = p.country ? p.country : null;
+      p.area = p.area ? p.area : null;
       // p.country2 = p.country2 ? p.country2.toString() : null;
       // p.country3 = p.country3 ? p.country3.toString() : null;
-      console.log(p);
 
       return p;
     },
@@ -161,14 +162,15 @@ define([
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
-      var p = _.extendNonNull({}, urlDefaultsParams, params);
+      var p = _.extendNonNull({}, this.params, params);
       p.name = this._name ? this._name : null;
 
-
       // We have to develop this with our params
-      p.country = p.country ? p.country.toString() : null;
+      p.country = p.country ? p.country : null;
+      p.area = p.area ? p.area : null;
       // p.country2 = p.country2 ? p.country2.toString() : null;
       // p.country3 = p.country3 ? p.country3.toString() : null;
+      //
 
       return p;
     },

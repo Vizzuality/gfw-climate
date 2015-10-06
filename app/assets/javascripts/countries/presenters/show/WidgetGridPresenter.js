@@ -68,7 +68,7 @@ define([
       * @param  {Object} place PlaceService's place object
       */
     _onPlaceGo: function(place) {
-      var iso = place.params.country;
+      var iso = place.country;
       this._keepIso(iso);
       this._retrieveData(iso);
     },

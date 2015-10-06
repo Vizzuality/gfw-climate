@@ -49,9 +49,8 @@ define([
      * @param  {Object} place PlaceService's place object
      */
     _onPlaceGo: function(place) {
-      var p = place.params;
-      this.status.set('country', p.country);
-      this.status.set('area', p.area);
+      this.status.set('country', place.country);
+      this.status.set('area', place.area);
     },
 
   });

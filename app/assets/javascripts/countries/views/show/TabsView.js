@@ -18,7 +18,7 @@ define([
     },
 
     start: function(params) {
-      this._setCurrentTab(null, this.presenter.status.view);
+      this._setCurrentTab(null, this.presenter.status.attributes.data);
     },
 
     /**
