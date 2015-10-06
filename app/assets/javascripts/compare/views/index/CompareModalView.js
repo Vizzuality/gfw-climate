@@ -20,6 +20,7 @@ define([
     events: function() {
       return _.extend({}, SourceWindowView.prototype.events, {
         'click .m-field-list-radio' : 'setSublevel',
+        'click .m-modal--tablink' : 'setTab',
       });
     },
 
@@ -40,6 +41,8 @@ define([
     cacheVars: function() {
       this.$selects = $('.chosen-select');
       this.$radios = $('.m-field-list-radio');
+      this.$tablinks = $('.m-modal--tablink');
+      this.$tabs = $('.m-modal--tab');
     },
 
     inits: function() {
@@ -57,6 +60,18 @@ define([
     },
 
     // Events
+
+    setTab: function(e) {
+      // Tablinks
+      this.$tablinks.removeClass('is-active');
+      $(e.currentTarget).addClass('is-active');
+
+      //Tabs
+      var tab = $(e.currentTarget).data('tab');
+      this.$tabs.removeClass('is-active');
+      $(tab).addClass('is-active');
+    },
+
     setSublevel: function(e) {
       if (!$(e.currentTarget).hasClass('is-active')) {
         this.$radios.removeClass('is-active');
