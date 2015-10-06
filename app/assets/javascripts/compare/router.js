@@ -2,7 +2,7 @@ define([
   'backbone',
   'underscore',
   'utils',
-  'services/PlaceService'
+  'compare/services/PlaceService'
   ], function(Backbone, _, utils, PlaceService) {
 
   var Router = Backbone.Router.extend({

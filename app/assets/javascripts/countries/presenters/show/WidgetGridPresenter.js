@@ -25,6 +25,20 @@ define([
       }
     }],
 
+    /**
+     * Used by PlaceService to get the current iso/area params.
+     *
+     * @return {object} iso/area params
+     */
+    getPlaceParams: function() {
+      var p = {};
+
+      // Fill with incoming params
+
+
+      return p;
+    },
+
     // Subscriptions at develop. Maybe we will need them in a while...
     // _subscriptions: [{
     //   'Widgets/render': function(widgets) {

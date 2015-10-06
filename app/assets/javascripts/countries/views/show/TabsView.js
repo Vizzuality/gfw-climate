@@ -13,18 +13,12 @@ define([
       'click li' : '_setCurrentTab'
     },
 
-    model: new (Backbone.Model.extend({
-      defaults: {
-        display: 'national'
-      }
-    })),
-
     initialize: function(params) {
       this.presenter = new TabsPresenter(this);
     },
 
     start: function(params) {
-      this._setCurrentTab(null, this.model.attributes.display);
+      this._setCurrentTab(null, this.presenter.status.view);
     },
 
     /**
@@ -32,9 +26,7 @@ define([
      * @param {[string]} display
      */
     _setDisplay: function(display) {
-      this.model.set({
-        'display': display
-      });
+      this.presenter._updateTab(display);
     },
 
     /**

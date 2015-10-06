@@ -7,6 +7,12 @@ define([
 
   var TabsPresenter = PresenterClass.extend({
 
+    status: (new Backbone.Model({
+      defaults: {
+        tab: 'national'
+      }
+    })),
+
     init: function(view) {
       this.view = view;
       this._super();
@@ -23,13 +29,23 @@ define([
       }
     }],
 
+    /**
+     * Used by PlaceService to get the current iso/area params.
+     *
+     * @return {object} iso/area params
+     */
+    getPlaceParams: function() {
+      var p = {};
+      p.view = this.status.get('tab');
+      return p;
+    },
+
 
     /**
      * Trigger the selected display option
      * @param  {[string]} display
      * Add below events publication
      */
-
 
 
 
@@ -41,6 +57,11 @@ define([
      _onPlaceGo: function(place) {
         this.view.start(place);
      },
+
+     _updateTab: function(tab) {
+      this.status.set('tab', tab);
+      mps.publish('Place/update');
+     }
 
   });
 
