@@ -17,7 +17,6 @@ var line = d3.svg.line()
 var LineChart = function(options) {
   this.options = options;
   this.data = options.data;
-  console.log(this.options)
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
