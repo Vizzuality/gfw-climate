@@ -12,7 +12,7 @@ function CustomTooltip(tooltipId, width) {
       $("#"+tooltipId).html(content);
       $("#"+tooltipId).show();
 
-      updatePosition(event);
+      //updatePosition(event);
   }
 
   function hideTooltip(){
@@ -21,8 +21,8 @@ function CustomTooltip(tooltipId, width) {
 
   function updatePosition(event){
       var ttid = "#"+tooltipId;
-      var xOffset = 20;
-      var yOffset = 10;
+      var xOffset = -120;
+      var yOffset = -70;
 
        var ttw = $(ttid).width();
        var tth = $(ttid).height();
@@ -80,7 +80,7 @@ function addCommas(nStr) {
       this.data = data;
       this.width = 640;
       this.height = 480;
-      this.tooltip = CustomTooltip("gates_tooltip", 240);
+      this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
         x: this.width / 2,
         y: this.height / 2
@@ -161,7 +161,7 @@ function addCommas(nStr) {
           var node;
           node = {
             id: d.id,
-            radius: _this.radius_scale(d.Average),
+            radius: _this.radius_scale(d.Average * 1.2),
             value: d.Average,
             name: d.Country,
             org: d.organization,
@@ -217,6 +217,10 @@ function addCommas(nStr) {
       })(this)).attr("id", function(d) {
         return "bubble_" + d.id;
       }).on("mouseover", function(d, i) {
+        var el = d3.select(this);
+        var xpos = Number(el.attr('cx')) - 25;
+        var ypos = (el.attr('cy') - d.radius - 10) + 195;
+        d3.select("#pantropical_tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
         return that.show_details(d, i, this);
       }).on("mouseout", function(d, i) {
         return that.hide_details(d, i, this);
@@ -315,8 +319,8 @@ function addCommas(nStr) {
     BubbleChart.prototype.show_details = function(data, i, element) {
       var content;
       d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
-      content = "<span class=\"name\">Title:</span><span class=\"value\"> " + data.name + "</span><br/>";
-      content += "<span class=\"name\">Amount:</span><span class=\"value\"> $" + (addCommas(data.value)) + "</span><br/>";
+      content = "<span class=\"value\"> " + data.name + "</span><br/>";
+      content += "<span class=\"name\">Amount:</span><span class=\"value\">" + (addCommas(data.value)) + "</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 
