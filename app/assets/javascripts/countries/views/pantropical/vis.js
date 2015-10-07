@@ -145,7 +145,7 @@ function addCommas(nStr) {
       this.nodes = [];
       this.force = null;
       this.circles = null;
-      this.fill_color = d3.scale.ordinal().domain(["America", "Africa", "Asia"]).range(["#d84b2a", "#beccae", "#7aa25c"]);
+      this.fill_color = d3.scale.ordinal().domain(["America", "Africa", "Asia"]).range(["rgb(112,178,195)", "rgb(162,206,219)", "rgb(235,179,160)"]);
       max_amount = d3.max(this.data, function(d) {
         return d.Average;
       });
@@ -157,6 +157,7 @@ function addCommas(nStr) {
     BubbleChart.prototype.create_nodes = function() {
       this.data.forEach((function(_this) {
         return function(d) {
+          if (d.Average == 0) return;
           var node;
           node = {
             id: d.id,
@@ -313,10 +314,9 @@ function addCommas(nStr) {
 
     BubbleChart.prototype.show_details = function(data, i, element) {
       var content;
-      d3.select(element).attr("stroke", "black");
+      d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
       content = "<span class=\"name\">Title:</span><span class=\"value\"> " + data.name + "</span><br/>";
       content += "<span class=\"name\">Amount:</span><span class=\"value\"> $" + (addCommas(data.value)) + "</span><br/>";
-      content += "<span class=\"name\">Year:</span><span class=\"value\"> " + data.year + "</span>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 
