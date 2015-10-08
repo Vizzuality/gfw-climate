@@ -1,6 +1,6 @@
 function CustomTooltip(tooltipId, width) {
   var tooltipId = tooltipId;
-  $("body").append("<div class='tooltip' id='"+tooltipId+"'></div>");
+  $("#vis").append("<div class='tooltip' id='"+tooltipId+"'></div>");
 
   if(width){
       $("#"+tooltipId).css("width", width);
@@ -218,8 +218,8 @@ function addCommas(nStr) {
         return "bubble_" + d.id;
       }).on("mouseover", function(d, i) {
         var el = d3.select(this);
-        var xpos = Number(el.attr('cx')) - 17;
-        var ypos = (el.attr('cy') - d.radius - 10) + 223;
+        var xpos = ~~el.attr('cx') - 122;
+        var ypos = (el.attr('cy') - d.radius - 30);
         d3.select("#pantropical_tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
         return that.show_details(d, i, this);
       }).on("mouseout", function(d, i) {
