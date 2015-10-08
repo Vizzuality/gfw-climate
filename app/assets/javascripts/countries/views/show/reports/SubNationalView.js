@@ -12,6 +12,7 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(options) {
+      console.log(options)
       this.widgets = options.widgets;
       this.CountryModel = options.model;
     },
@@ -35,8 +36,8 @@ define([
 
       this._populateJurisdictions();
 
-      this.widgets.forEach(_.bind(function(widget, i) {
-        this.$el.find('.subnational-grid').append(new WidgetView({id: widget}).render());
+      this.widgets.forEach(_.bind(function(id) {
+        this.$el.find('.subnational-grid').append(new WidgetView({id: id}).start());
       }, this));
 
       this.$el.html();

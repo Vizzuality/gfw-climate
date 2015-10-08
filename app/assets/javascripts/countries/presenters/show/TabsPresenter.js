@@ -8,15 +8,15 @@ define([
 
   var TabsPresenter = PresenterClass.extend({
 
-    status: new (Backbone.Model.extend({
-      defaults: {
-        data: 'national'
-      }
-    })),
-
     init: function(view) {
       this.view = view;
       this._super();
+
+      this.status = new (Backbone.Model.extend({
+        defaults: {
+          data: 'national'
+        }
+      }));
 
       mps.publish('Place/register', [this]);
     },

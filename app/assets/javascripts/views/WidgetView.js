@@ -3,12 +3,12 @@ define([
   'handlebars',
   'countries/models/CountryModel',
   'countries/presenters/show/WidgetPresenter',
-  'countries/collections/widgetCollection',
+  'countries/models/WidgetModel',
   'countries/views/indicators/LineChartIndicator',
   'countries/views/indicators/MapIndicator',
   'countries/views/indicators/PieChartIndicator',
   'text!countries/templates/country-widget.handlebars'
-], function(Backbone, Handlebars, CountryModel, WidgetPresenter, widgetCollection, LineChartIndicator,
+], function(Backbone, Handlebars, CountryModel, WidgetPresenter, widgetModel, LineChartIndicator,
   MapIndicator, PieChartIndicator, tpl) {
 
   'use strict';
@@ -17,7 +17,7 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    collection: new widgetCollection(),
+    // collection: new widgetCollection(),
 
     events: {
       'click .close' : '_close',
@@ -27,16 +27,16 @@ define([
       'change .selector': 'updateTreshold'
     },
 
-    initialize: function(data) {
-      this.wid = data.wid;
+    initialize: function(options) {
       this.presenter = new WidgetPresenter(this);
 
-
-      this.model = CountryModel;
+      this.wid = options.id;
+      this.widgetModel = new widgetModel();
+      this.CountryModel = CountryModel;
     },
 
     start: function(p) {
-      console.log(p);
+      this._loadMetaData((this.render).bind(this));
     },
 
     updateTreshold: function(e) {
@@ -56,10 +56,8 @@ define([
 
     _loadMetaData: function(callback) {
       var widgetId = this.wid;
-      this.collection._loadData(widgetId, _.bind(function() {
-        this.data = this.collection.models[0].toJSON();
-        callback(this.data);
-      }, this));
+
+      this.widgetModel.getData(widgetId, callback);
     },
 
     _close: function(e) {
@@ -72,36 +70,36 @@ define([
     _share: function() {},
 
     render: function() {
-      //Render widget frame template (tabs, and so on...)
+
       this.$el.html(this.template({
-        id: this.data.id,
-        name: this.data.name,
-        type: this.data.type,
-        indicators: this.data.indicators
+        id: this.widgetModel.attributes.id,
+        indicators: this.widgetModel.attributes.indicators,
+        name: this.widgetModel.attributes.name,
+        type: this.widgetModel.attributes.type
       }));
 
       //firstDataSetLink is something like : "/api/indicators/1/GUY.
       //It should be the API endpoint where we retrieve data for the widget.
-      var firstDataSetLink = this.data.indicators[0].data;
+      var firstDataSetLink = this.widgetModel.attributes.indicators[0].data;
       //graphicId is the current graphic id.
-      var graphicId = this.data.indicators[0].id;
+      var graphicId = this.widgetModel.attributes.indicators[0].id;
       // console.log(graphicId);
 
       //I have talk we REE staff, and apparently it is better to work
       //with ids in order to differenciate elements.
-      var widgetId = this.data.id;
+      var widgetId = this.widgetModel.attributes.id;
       var nextEl = '#' + widgetId + '.country-widget .graph-container';
 
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
-      if (this.data.type === 'line') {
+      if (this.widgetModel.attributes.type === 'line') {
         new LineChartIndicator({el: nextEl}).render(firstDataSetLink, graphicId);
       }
 
-      if (this.data.type === 'pie') {
-        this.$el.find('.graph-container .content').append(new PieChartIndicator().render(firstDataSetLink).el);
-      }
+      // if (this.data.type === 'pie') {
+      //   this.$el.find('.graph-container .content').append(new PieChartIndicator().render(firstDataSetLink).el);
+      // }
 
       return this;
     }

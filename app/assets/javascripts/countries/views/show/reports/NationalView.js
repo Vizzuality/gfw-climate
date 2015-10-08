@@ -11,8 +11,10 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    initialize: function(widgets) {
-      this.widgets = widgets;
+    initialize: function(options) {
+      console.log(options);
+      this.widgets = options.widgets;
+      this.countryModel = options.model;
     },
 
     render: function() {
@@ -21,9 +23,11 @@ define([
       var promises = [],
         widgets = [];
 
-      this.widgets.forEach(_.bind(function(widgetId) {
+      console.log(this.widgets);
+
+      this.widgets.forEach(_.bind(function(id) {
         var deferred = $.Deferred();
-        var currentWidget = new WidgetView({wid: widgetId});
+        var currentWidget = new WidgetView({id: id});
 
         widgets.push(currentWidget);
         currentWidget._loadMetaData(function(data) {

@@ -1,7 +1,8 @@
 define([
   'mps',
+  'backbone',
   'countries/presenters/PresenterClass'
-], function(mps, PresenterClass) {
+], function(mps, Backbone, PresenterClass) {
 
   'use strict';
 
@@ -10,6 +11,9 @@ define([
     init: function(view) {
       this.view = view;
       this._super();
+
+      console.log('init');
+
 
       this.status = new (Backbone.Model.extend({
         defaults: {
@@ -28,6 +32,7 @@ define([
      */
     _subscriptions: [{
       'Place/go': function(place) {
+        debugger;
         this._onPlaceGo(place);
       }
     }],
@@ -41,6 +46,7 @@ define([
       var p = {};
 
       console.log(this.status);
+      debugger;
 
       p.widgetStatus = {
         average: this.status.attributes.average,
@@ -60,7 +66,6 @@ define([
      * @param  {Object} place PlaceService's place object
      */
     _onPlaceGo: function(place) {
-      debugger;
       this.view.start(place);
     },
 
