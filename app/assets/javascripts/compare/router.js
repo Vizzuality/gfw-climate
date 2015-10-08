@@ -8,25 +8,21 @@ define([
   var Router = Backbone.Router.extend({
 
     routes: {
-      'compare-countries(/:compare1)(/:compare2)' : '_initIndex'
+      'compare-countries(/)(:compare1)(/)(:compare2)' : '_initIndex'
     },
 
     initialize: function() {
       this.placeService = new PlaceService(this);
     },
 
-    _initIndex: function() {
+    _initIndex: function(compare1, compare2) {
       this.name = 'compare-countries';
-      this.initView.apply(this, arguments);
-    },
-
-    initView: function(compare1, compare2) {
       var params = _.extend({
         compare1: compare1,
         compare2: compare2,
       }, _.parseUrl());
       this.placeService.initPlace(this.name, params);
-    }
+    },
 
   });
 

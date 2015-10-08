@@ -18,7 +18,6 @@ define([
     init: function(view) {
       this._super();
       this.view = view;
-      this.collection = CountriesCollection;
       mps.publish('Place/register', [this]);
     },
 
@@ -38,10 +37,10 @@ define([
      * @return {object} iso/area params
      */
     getPlaceParams: function() {
-      var p = {};
-      p.compare1 = this.status.get('compare1');
-      p.compare2 = this.status.get('compare2');
-      return p;
+      // var p = {};
+      // p.compare1 = this.status.get('compare1');
+      // p.compare2 = this.status.get('compare2');
+      // return p;
     },
 
     /**
@@ -49,18 +48,8 @@ define([
     *
     * @param  {Object} place PlaceService's place object
     */
-    _onPlaceGo: function(place) {
-      this.status.set('compare1', place.params.compare1);
-      this.status.set('compare2', place.params.compare2);
-
-      // Fetching data
-      var complete = _.invoke([
-        this.collection,
-      ], 'fetch');
-
-      $.when.apply($, complete).done(function() {
-        // this.view.setValuesFromUrl(data);
-      }.bind(this));
+    _onPlaceGo: function(params) {
+      // console.log(params);
     },
 
     showModal: function() {

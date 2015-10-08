@@ -41,6 +41,9 @@
     &:first-child{
       margin: 0;
     }
+    &.m-select {
+      width: 32.7%
+    }
     h3 {
       font-weight: 500;
       color: $font-color-3;
@@ -64,6 +67,7 @@
       border: 1px solid $border;
       border-radius: 5px;
       cursor: pointer;
+      text-transform: uppercase;
       &:before{
         content: "";
         display: block;

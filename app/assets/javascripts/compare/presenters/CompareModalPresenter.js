@@ -2,8 +2,9 @@ define([
   'Backbone',
   'mps',
   'compare/collections/CountriesCollection',
+  'compare/models/CountryModel',
   'compare/presenters/PresenterClass',
-], function(Backbone, mps, countries, PresenterClass) {
+], function(Backbone, mps, CountriesCollection, CountryModel, PresenterClass) {
 
   'use strict';
 
@@ -11,23 +12,28 @@ define([
 
     status: new (Backbone.Model.extend({
       defaults: {
-        name: 'compare-countries'
+        name: 'compare-countries',
+        tab: '#selection1'
       }
     })),
 
     init: function(view) {
       this._super();
       this.view = view;
-      this.countries = countries;
+      this.setListeners();
       mps.publish('Place/register', [this]);
+    },
+
+    setListeners: function() {
+      this.status.on('change:compare1 change:compare2', this.changeCompare, this);
     },
 
     /**
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Place/go': function(place) {
-        this._onPlaceGo(place);
+      'Place/go': function(params) {
+        this._onPlaceGo(params);
       },
       'CompareModal/show': function() {
         this.view.show();
@@ -44,28 +50,77 @@ define([
       var p = {};
       p.compare1 = this.status.get('compare1');
       p.compare2 = this.status.get('compare2');
+      console.log(p);
       return p;
     },
 
     /**
     * Triggered from 'Place/Go' events.
     *
-    * @param  {Object} place PlaceService's place object
+    * @param  {Object} params PlaceService's params object
     */
-    _onPlaceGo: function(place) {
-      this.status.set('compare1', place.params.compare1);
-      this.status.set('compare2', place.params.compare2);
+    _onPlaceGo: function(params) {
+      if (!!params.compare1 && !!params.compare2) {
+        // Fetching data
+        var complete = _.invoke([
+          new CountriesCollection(),
+          new CountryModel({ id: params.compare1.iso }),
+          new CountryModel({ id: params.compare2.iso }),
+        ], 'fetch');
 
-      // Fetching data
-      var complete = _.invoke([
-        this.countries
-      ], 'fetch');
+        $.when.apply($, complete).done(function() {
+          // Set model for render
+          this.status.set('countries', arguments[0][0].countries);
+          this.status.set('country1', arguments[1][0].country);
+          this.status.set('country2', arguments[2][0].country);
+          this.view.render();
+          // Set model for compare selects
+          this.status.set('compare1', params.compare1);
+          this.status.set('compare2', params.compare2);
+        }.bind(this));
+      } else {
+        // Fetching data
+        var complete = _.invoke([
+          new CountriesCollection(),
+        ], 'fetch');
 
-      $.when.apply($, complete).done(function() {
-        var countries = arguments[0].countries;
-        this.view.setFields(countries);
-      }.bind(this));
+        $.when.apply($, complete).done(function() {
+          // Set model for render
+          this.status.set('countries', arguments[0].countries);
+          this.view.render();
+        }.bind(this));
+      }
     },
+
+    changeIso: function(val, select) {
+        if (!!val) {
+          // Fetching data
+          var complete = _.invoke([
+            new CountryModel({ id: val }),
+          ], 'fetch');
+
+          $.when.apply($, complete).done(function() {
+            // Set model for render
+            this.status.set('country'+select, arguments[0].country);
+            this.view.render();
+            // Set model for compare selects
+            this.status.set('compare'+select, { iso: val, area: 0, jurisdiction: 0});
+          }.bind(this));
+        } else {
+          this.status.set('country'+select, null);
+          this.view.render();
+          this.status.set('compare'+select, null);
+        }
+    },
+
+    changeTab: function(tab) {
+      this.status.set('tab', tab);
+    },
+
+    changeCompare: function() {
+      mps.publish('Place/update');
+    },
+
 
   });
 

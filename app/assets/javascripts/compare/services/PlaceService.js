@@ -53,13 +53,14 @@ define([
 
   'use strict';
 
-  var urlDefaultsParams = {};
+  var urlDefaultsParams = {
+    compare1: null,
+    compare2: null,
+  };
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate:'{name}{/compare1}{/compare2}{?options}',
-
-    // _uriTemplate: '{name}{/compare1}{/compare2}{/country3}{?threshold,widgets}',
+    _uriTemplate:'{name}{/compare1}{/compare2}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -116,10 +117,8 @@ define([
      * @param  {Object}  params The place parameters
      */
     _newPlace: function(params) {
-      var place = {};
-
-      place.params = this._standardizeParams(params);
-      mps.publish('Place/go', [place]);
+      params = this._standardizeParams(params);
+      mps.publish('Place/go', [params]);
     },
 
     /**
@@ -144,9 +143,22 @@ define([
       p.name = this._name ? this._name : null;
 
       // We have to develop this with our params
-      p.compare1 = p.compare1 ? p.compare1.toString() : null;
-      p.compare2 = p.compare2 ? p.compare2.toString() : null;
-
+      if (p.compare1) {
+        var splitCompare1 = p.compare1.split('+');
+        p.compare1 = {
+          iso: splitCompare1[0],
+          jurisdiction: splitCompare1[1],
+          area: splitCompare1[2],
+        }
+      }
+      if (p.compare2) {
+        var splitCompare2 = p.compare2.split('+');
+        p.compare2 = {
+          iso: splitCompare2[0],
+          jurisdiction: splitCompare2[1],
+          area: splitCompare2[2],
+        }
+      }
       return p;
     },
 
@@ -162,8 +174,13 @@ define([
       p.name = this._name ? this._name : null;
 
       // We have to develop this with our params
-      p.compare1 = p.compare1 ? p.compare1.toString() : null;
-      p.compare2 = p.compare2 ? p.compare2.toString() : null;
+      if (p.compare1) {
+        console.log(p.compare1);
+        p.compare1 = p.compare1.iso + '+' + p.compare1.jurisdiction + '+' + p.compare1.area;
+      }
+      if (p.compare2) {
+        p.compare2 = p.compare2.iso + '+' + p.compare2.jurisdiction + '+' + p.compare2.area;
+      }
 
       return p;
     },

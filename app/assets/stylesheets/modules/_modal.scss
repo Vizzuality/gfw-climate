@@ -3,6 +3,8 @@ $height: auto;
 
 .source_window {
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1101;
   background: $white;
   border: none;
@@ -20,6 +22,14 @@ $height: auto;
     height: $height;
     display: block;
     transform: translate(-50%,-60%);
+    &.is-huge {
+      width: 820px;
+      height: 80%;
+      .content-wrapper{
+        padding: 0;
+        max-height: none;
+      }
+    }
   }
 
   // GRADIENTS
@@ -47,7 +57,9 @@ $height: auto;
     opacity: 1;
     visibility: visible;
     transition: all 0.125s $easeInOutSine;
-    transform: translate(-50%,-50%);
+    @media (min-width: $br-mobile){
+      transform: translate(-50%,-50%);
+    }
   }
 
   &.iframe{
@@ -57,14 +69,6 @@ $height: auto;
     }
   }
 
-  &.is-huge {
-    width: 820px;
-    height: 80%;
-    .content-wrapper{
-      padding: 0;
-      max-height: none;
-    }
-  }
 
   // CLOSE BUTTON
   .close {
