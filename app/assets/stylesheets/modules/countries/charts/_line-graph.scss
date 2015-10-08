@@ -94,6 +94,29 @@
   border:1px solid rgba(200,200,200,0.85);
   text-align:center;
   &:after {
-    display: none;
+    @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
+    right: inherit;
+    bottom: -7px;
+    top: 110%;
+  }
+}
+.pantropical-vis {
+  .btn-group {
+    background-color: #eee;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .btn {
+    background-color: transparent;
+    height: 100%;
+    border-radius: 0;
+    font-weight: 400;
+    color: #333;
+    font-size: 14px;
+    &.active {
+      background-color: white;
+    }
   }
 }
