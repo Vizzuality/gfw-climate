@@ -13,7 +13,7 @@ define([
     status: new (Backbone.Model.extend({
       defaults: {
         name: 'compare-countries',
-        tab: '#selection1'
+        tab: '1'
       }
     })),
 
@@ -35,7 +35,8 @@ define([
       'Place/go': function(params) {
         this._onPlaceGo(params);
       },
-      'CompareModal/show': function() {
+      'CompareModal/show': function(tab) {
+        this.changeTab(tab);
         this.view.show();
       }
     }],
@@ -92,25 +93,38 @@ define([
       }
     },
 
-    changeIso: function(val, select) {
-        if (!!val) {
-          // Fetching data
-          var complete = _.invoke([
-            new CountryModel({ id: val }),
-          ], 'fetch');
+    changeIso: function(val) {
+      var select = this.status.get('tab');
+      if (!!val) {
+        // Fetching data
+        var complete = _.invoke([
+          new CountryModel({ id: val }),
+        ], 'fetch');
 
-          $.when.apply($, complete).done(function() {
-            // Set model for render
-            this.status.set('country'+select, arguments[0].country);
-            this.view.render();
-            // Set model for compare selects
-            this.status.set('compare'+select, { iso: val, area: 0, jurisdiction: 0});
-          }.bind(this));
-        } else {
-          this.status.set('country'+select, null);
+        $.when.apply($, complete).done(function() {
+          // Set model for render
+          this.status.set('country'+select, arguments[0].country);
           this.view.render();
-          this.status.set('compare'+select, null);
-        }
+          // Set model for compare selects
+          this.status.set('compare'+select, { iso: val, area: 0, jurisdiction: 0});
+        }.bind(this));
+      } else {
+        this.status.set('country'+select, null);
+        this.view.render();
+        this.status.set('compare'+select, null);
+      }
+    },
+
+    changeJurisdiction: function(val) {
+      var select = this.status.get('tab');
+      var compare = this.status.get('compare'+select);
+      this.status.set('compare'+select, { iso: compare.iso, area: 0, jurisdiction: val});
+    },
+
+    changeArea: function(val) {
+      var select = this.status.get('tab');
+      var compare = this.status.get('compare'+select);
+      this.status.set('compare'+select, { iso: compare.iso, area: val, jurisdiction: 0});
     },
 
     changeTab: function(tab) {

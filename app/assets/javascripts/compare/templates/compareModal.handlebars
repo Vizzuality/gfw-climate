@@ -4,15 +4,15 @@
   <div class="m-compare-modal">
     <header>
       <ul>
-        <li class="m-modal--tablink is-active" data-tab="#selection1">Selection A</li>
-        <li class="m-modal--tablink" data-tab="#selection2">Selection B</li>
+        <li class="m-modal--tablink is-active" data-tab="1">Selection A</li>
+        <li class="m-modal--tablink" data-tab="2">Selection B</li>
       </ul>
     </header>
     <ul class="m-modal--tabscontent">
       <li id="selection1" class="m-modal--tab is-active">
         <div class="m-field m-select">
           <h3>Country</h3>
-          <select id="compare-select1" class="chosen-select default" data-compare="1">
+          <select id="compare-select1" class="chosen-select default">
             <option value="">Select a country</option>
             {{#each countries}}
               <option value="{{this.iso}}">{{this.name}}</option>
@@ -24,7 +24,7 @@
             <h3>Area of interest (optional)</h3>
             <ul class="m-field-list compare-area">
               {{#each country1.areas}}
-                <li class="m-field-list-radio is-area" data-id="{{id}}">{{this.name}}</li>
+                <li class="m-field-list-radio m-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
               {{/each}}
             </ul>
           </div>
@@ -32,7 +32,7 @@
             <h3>Juristiction (optional)</h3>
             <ul class="m-field-list compare-jurisdiction">
               {{#each country1.jurisdictions}}
-                <li class="m-field-list-radio is-jurisdiction" data-id="{{id}}">{{this.name}}</li>
+                <li class="m-field-list-radio m-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
               {{/each}}
             </ul>
           </div>
@@ -43,7 +43,7 @@
       <li id="selection2" class="m-modal--tab">
         <div class="m-field m-select">
           <h3>Country</h3>
-          <select id="compare-select2" class="chosen-select default" data-compare="2">
+          <select id="compare-select2" class="chosen-select default">
             <option value="">Select a country</option>
             {{#each countries}}
               <option value="{{this.iso}}">{{this.name}}</option>
@@ -55,7 +55,7 @@
             <h3>Area of interest (optional)</h3>
             <ul class="m-field-list compare-area">
               {{#each country2.areas}}
-                <li class="m-field-list-radio" data-id="{{id}}">{{this.name}}</li>
+                <li class="m-field-list-radio m-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
               {{/each}}
             </ul>
           </div>
@@ -63,7 +63,7 @@
             <h3>Juristiction (optional)</h3>
             <ul class="m-field-list compare-jurisdiction">
               {{#each country2.jurisdictions}}
-                <li class="m-field-list-radio" data-id="{{id}}">{{this.name}}</li>
+                <li class="m-field-list-radio m-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
               {{/each}}
             </ul>
           </div>

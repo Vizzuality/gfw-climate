@@ -52,8 +52,8 @@ define([
       // console.log(params);
     },
 
-    showModal: function() {
-      mps.publish('CompareModal/show');
+    showModal: function(tab) {
+      mps.publish('CompareModal/show', [tab]);
     }
 
   });

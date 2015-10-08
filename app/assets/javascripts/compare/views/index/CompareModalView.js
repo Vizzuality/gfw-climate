@@ -19,9 +19,10 @@ define([
 
     events: function() {
       return _.extend({}, SourceWindowView.prototype.events, {
-        'click .m-field-list-radio' : 'setSublevel',
         'click .m-modal--tablink' : 'changeTab',
-        'change .chosen-select' : 'changeIso'
+        'change .chosen-select' : 'changeIso',
+        'click .m-field-list-radio-jurisdiction' : 'setJurisdiction',
+        'click .m-field-list-radio-area' : 'setArea',
       });
     },
 
@@ -96,7 +97,7 @@ define([
     },
 
     changeIso: function(e) {
-      this.presenter.changeIso($(e.currentTarget).val(),$(e.currentTarget).data('compare'));
+      this.presenter.changeIso($(e.currentTarget).val());
     },
 
     // Set selected values by params
@@ -104,18 +105,18 @@ define([
       if (compare) {
         var $select = $('#selection'+who).find('select'),
             $areas = $('#selection'+who).find('.compare-area'),
-            $jurisdictions = $('#selection'+who).find('.compare-jurisdiction');
+            $jurisdictions = $('#selection'+who).find('.compare-jurisdiction'),
+            $radios = $('#selection'+who).find('.m-field-list-radio');
 
         // Set selects
         $select.val(compare.iso);
         $select.trigger('chosen:updated');
 
-        // Set areas
+        // Set areas and jurisdiction
+        $radios.removeClass('is-active');
         if (!!compare.area) {
           $areas.find('li[data-id='+compare.area+']').addClass('is-active');
         }
-
-        // Set jurisdiction
         if (!!compare.jurisdiction) {
           $jurisdictions.find('li[data-id='+compare.jurisdiction+']').addClass('is-active');
         }
@@ -131,14 +132,17 @@ define([
 
       //Tabs
       this.$tabs.removeClass('is-active');
-      $(tab).addClass('is-active');
+      $('#selection'+tab).addClass('is-active');
     },
 
-    setSublevel: function(e) {
-      this.$radios.removeClass('is-active');
-      if (!$(e.currentTarget).hasClass('is-active')) {
-        $(e.currentTarget).addClass('is-active');
-      }
+    setJurisdiction: function(e) {
+      var jurisdiction = ($(e.currentTarget).hasClass('is-active')) ? 0 : $(e.currentTarget).data('id');
+      this.presenter.changeJurisdiction(jurisdiction);
+    },
+
+    setArea: function(e) {
+      var area = ($(e.currentTarget).hasClass('is-active')) ? 0 : $(e.currentTarget).data('id');
+      this.presenter.changeArea(area);
     },
 
 

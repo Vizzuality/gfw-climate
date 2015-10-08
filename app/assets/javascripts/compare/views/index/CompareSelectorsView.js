@@ -30,8 +30,8 @@ define([
 
     },
 
-    showModal: function() {
-      this.presenter.showModal();
+    showModal: function(e) {
+      this.presenter.showModal($(e.currentTarget).data('tab'));
     }
 
   });

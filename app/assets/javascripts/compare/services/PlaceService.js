@@ -175,7 +175,6 @@ define([
 
       // We have to develop this with our params
       if (p.compare1) {
-        console.log(p.compare1);
         p.compare1 = p.compare1.iso + '+' + p.compare1.jurisdiction + '+' + p.compare1.area;
       }
       if (p.compare2) {
