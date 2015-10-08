@@ -5,24 +5,20 @@ define([
 
   'use strict';
 
-  var globalWidgetStatus = {};
-
   var WidgetPresenter = PresenterClass.extend({
-
-    status: new (Backbone.Model.extend({
-      defaults: {
-        average: null,
-        id: null,
-        indicator: 1,
-        treshold: 30
-      }
-    })),
 
     init: function(view) {
       this.view = view;
       this._super();
 
-      this.status.set('id', view.wid);
+      this.status = new (Backbone.Model.extend({
+        defaults: {
+          average: null,
+          id: view.wid,
+          indicator: 1,
+          treshold: 30
+        }
+      }));
 
       mps.publish('Place/register', [this]);
     },
@@ -44,6 +40,8 @@ define([
     getPlaceParams: function() {
       var p = {};
 
+      console.log(this.status);
+
       p.widgetStatus = {
         average: this.status.attributes.average,
         id: this.status.attributes.id,
@@ -62,6 +60,7 @@ define([
      * @param  {Object} place PlaceService's place object
      */
     _onPlaceGo: function(place) {
+      debugger;
       this.view.start(place);
     },
 

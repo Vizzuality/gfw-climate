@@ -54,8 +54,10 @@ define([
   'use strict';
 
   var urlDefaultsParams = {
-    treshold: 30
+    // treshold: 30
   };
+
+  var widgetStatus = {};
 
   var PlaceService = PresenterClass.extend({
 
@@ -104,8 +106,6 @@ define([
       var route, params;
       params = this._destandardizeParams(
         this._getPresenterParams(this._presenters));
-
-      console.log(params);
 
       route = this._getRoute(params);
       this.router.navigate(route, {silent: true});
@@ -171,8 +171,6 @@ define([
         treshold: p.treshold ? p.treshold : null
       };
 
-      console.log(localOptions);
-
       p.options = btoa(JSON.stringify(localOptions));
 
       console.log(p);
@@ -192,7 +190,12 @@ define([
 
       _.each(presenters, function(presenter) {
         _.extend(p, presenter.getPlaceParams());
+        if (p.hasOwnProperty('widgetStatus')) {
+          widgetStatus[p.widgetStatus.id] = p.widgetStatus;
+        }
       }, this);
+
+      p.widgetStatus = widgetStatus;
 
       return p;
     }

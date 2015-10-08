@@ -1,7 +1,8 @@
 define([
   'mps',
+  'backbone',
   'countries/presenters/PresenterClass'
-], function(mps, PresenterClass) {
+], function(mps, Backbone, PresenterClass) {
 
   'use strict';
 

@@ -1,10 +1,9 @@
 define([
   'backbone',
   'handlebars',
-  'countries/models/CountryModel',
   'views/WidgetView',
   'text!countries/templates/country-subnational-grid.handlebars'
-], function(Bakcbone, Handlebars, CountryModel, WidgetView, tpl) {
+], function(Backbone, Handlebars, WidgetView, tpl) {
 
   var SubNationalView = Backbone.View.extend({
 
@@ -12,15 +11,15 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    initialize: function(model) {
-      this.model = model;
-      this.countryModel = CountryModel;
+    initialize: function(options) {
+      this.widgets = options.widgets;
+      this.CountryModel = options.model;
     },
 
     _populateJurisdictions: function() {
-      var jurisdictions = this.countryModel.get('jurisdictions');
-      var options = '<option value="default">select jurisdiction</option>';
+      var jurisdictions = this.CountryModel.attributes.jurisdictions;
       var $select = $('#jurisdictionSelector');
+      var options = '<option value="default">select jurisdiction</option>';
 
       jurisdictions.forEach(function(jurisdiction) {
         options += '<option value="' + jurisdiction.id + '">' + jurisdiction.name + '</option>';
@@ -31,13 +30,12 @@ define([
 
 
     render: function() {
-      var enabledWidgets = this.model.attributes.widgets;
 
       this.$el.html(this.template);
 
       this._populateJurisdictions();
 
-      enabledWidgets.forEach(_.bind(function(widget, i) {
+      this.widgets.forEach(_.bind(function(widget, i) {
         this.$el.find('.subnational-grid').append(new WidgetView({id: widget}).render());
       }, this));
 

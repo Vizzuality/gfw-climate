@@ -1,11 +1,10 @@
 define([
   'backbone',
-  'countries/models/CountryModel',
   'countries/presenters/show/WidgetGridPresenter',
   'countries/views/show/reports/NationalView',
   'countries/views/show/reports/SubNationalView',
   'countries/views/show/reports/AreasView',
-], function(Backbone, CountryModel, WidgetGridPresenter, NationalView,
+], function(Backbone, WidgetGridPresenter, NationalView,
     SubNationalView, AreasView) {
 
   'use strict';
@@ -18,13 +17,6 @@ define([
       'click .addIndicators' : '_showModal'
     },
 
-    model: new (Backbone.Model.extend({
-      defaults:{
-        display: 'national',
-        widgets: [1, 2]
-      }
-    })),
-
     initialize: function() {
       this.presenter = new WidgetGridPresenter(this);
 
@@ -34,13 +26,14 @@ define([
       this._toggleWarnings();
     },
 
-    start: function(arg) {
+    start: function(countryModel) {
+      this.CountryModel = countryModel;
       this.render();
     },
 
     _setListeners: function() {
-      this.model.on('change:display', this.render, this);
-      this.model.on('change:widgets', this.render, this);
+      // this.presenter.status.on('change:display', this.render, this);
+      // this.presenter.status.on('change:widgets', this.render, this);
     },
 
     _cacheVars: function() {
@@ -49,7 +42,7 @@ define([
     },
 
     _toggleWarnings: function() {
-      var widgetsOnGrid = this.model.attributes.widgets.length;
+      var widgetsOnGrid = this.presenter.status.attributes.widgets.length;
 
       if (widgetsOnGrid > 0) {
         this.$moreIndicatorsWarning.removeClass('is-hidden');
@@ -62,13 +55,13 @@ define([
 
 
     _setDisplay: function(display) {
-      this.model.set({
+      this.presenter.status.set({
         'display': display
       });
     },
 
     _setWidgets: function(widgets) {
-      this.model.set({
+      this.presenter.status.set({
         'widgets': widgets
       }, { silent: true });
 
@@ -81,7 +74,7 @@ define([
     },
 
     _checkEnabledWidgets: function() {
-      var newIndicators = this.model.attributes.widgets;
+      var newIndicators = this.presenter.status.attributes.widgets;
       var currentWidgets = $('.country-widget'),
         enabledWidgets = [];
 
@@ -107,7 +100,7 @@ define([
         enabledWidgets = newIndicators;
       }
 
-      this.model.set({'widgets': _.clone(enabledWidgets)});
+      this.presenter.status.set({'widgets': _.clone(enabledWidgets)});
     },
 
     _removeDisabledWidgets: function(removeWidgets) {
@@ -123,20 +116,27 @@ define([
     },
 
     render: function() {
+      var subview;
+      var view = this.presenter.status.attributes.view,
+        enabledWidgets = this.presenter.status.attributes.widgets;
+      var options = {
+        widgets: enabledWidgets,
+        model: this.CountryModel
+      };
+
+
       this._toggleWarnings();
 
-      var subview;
-
-      switch(this.model.attributes.display) {
+      switch(view) {
 
         case 'national':
-          subview = new NationalView(this.model);
+          subview = new NationalView(options);
           break;
         case 'subnational':
-          subview = new SubNationalView(this.model);
+          subview = new SubNationalView(options);
           break;
         case 'areas-interest':
-          subview = new AreasView(this.model);
+          subview = new AreasView(options);
           break;
       }
 

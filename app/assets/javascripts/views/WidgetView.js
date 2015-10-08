@@ -35,6 +35,10 @@ define([
       this.model = CountryModel;
     },
 
+    start: function(p) {
+      console.log(p);
+    },
+
     updateTreshold: function(e) {
       var treshold = e.currentTarget.value;
       this.presenter.updateStatus({

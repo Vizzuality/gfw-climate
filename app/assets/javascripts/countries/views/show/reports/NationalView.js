@@ -11,19 +11,17 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    initialize: function(model) {
-      this.model = model;
+    initialize: function(widgets) {
+      this.widgets = widgets;
     },
 
     render: function() {
-      var enabledWidgets = this.model.attributes.widgets;
-
       this.$el.html(this.template);
 
       var promises = [],
         widgets = [];
 
-      enabledWidgets.forEach(_.bind(function(widgetId) {
+      this.widgets.forEach(_.bind(function(widgetId) {
         var deferred = $.Deferred();
         var currentWidget = new WidgetView({wid: widgetId});
 
