@@ -106,13 +106,31 @@
       .chosen-single{
         color: $dark;
         background-color: $white;
-        padding: 10px;
         border: 1px solid $border;
         .chosen-default {
           color: $dark;
         }
         abbr{
           display: block;
+        }
+      }
+    }
+    &.with-selection {
+      .chosen-single{
+        color: $white;
+        background-color: $font-color-3;
+        border: 1px solid $font-color-3;
+        .chosen-default {
+          color: $dark;
+        }
+        abbr{
+          display: block;
+        }
+        div {
+          b {
+            background: image-url('svg/arrow-down-white.svg') center no-repeat;
+            background-size: contain;
+          }
         }
       }
     }

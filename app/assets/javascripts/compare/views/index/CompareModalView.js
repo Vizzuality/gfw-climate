@@ -81,7 +81,8 @@ define([
 
     inits: function() {
       this.$selects.chosen({
-        width: '100%'
+        width: '100%',
+        inherit_select_classes: true,
       });
       this.setTab();
     },
@@ -100,29 +101,7 @@ define([
       this.presenter.changeIso($(e.currentTarget).val());
     },
 
-    // Set selected values by params
-    setCompare: function(who,compare) {
-      if (compare) {
-        var $select = $('#selection'+who).find('select'),
-            $areas = $('#selection'+who).find('.compare-area'),
-            $jurisdictions = $('#selection'+who).find('.compare-jurisdiction'),
-            $radios = $('#selection'+who).find('.m-field-list-radio');
-
-        // Set selects
-        $select.val(compare.iso);
-        $select.trigger('chosen:updated');
-
-        // Set areas and jurisdiction
-        $radios.removeClass('is-active');
-        if (!!compare.area) {
-          $areas.find('li[data-id='+compare.area+']').addClass('is-active');
-        }
-        if (!!compare.jurisdiction) {
-          $jurisdictions.find('li[data-id='+compare.jurisdiction+']').addClass('is-active');
-        }
-      }
-    },
-
+    // SETTERS: Set selected values by params
     setTab: function() {
       var tab = this.status.get('tab');
 
@@ -133,6 +112,32 @@ define([
       //Tabs
       this.$tabs.removeClass('is-active');
       $('#selection'+tab).addClass('is-active');
+    },
+
+    setCompare: function(who,compare) {
+      if (compare) {
+        var $select = $('#selection'+who).find('select'),
+            $selectChosen = $('#selection'+who).find('.chosen-container'),
+            $areas = $('#selection'+who).find('.compare-area'),
+            $jurisdictions = $('#selection'+who).find('.compare-jurisdiction'),
+            $radios = $('#selection'+who).find('.m-field-list-radio');
+
+        // Set selects
+        $select.toggleClass('with-selection',!!compare.iso);
+        $selectChosen.toggleClass('with-selection',!!compare.iso);
+        $select.val(compare.iso);
+        $select.trigger('chosen:updated');
+
+
+        // Set areas and jurisdiction
+        $radios.removeClass('is-active');
+        if (!!compare.area) {
+          $areas.find('li[data-id='+compare.area+']').addClass('is-active');
+        }
+        if (!!compare.jurisdiction) {
+          $jurisdictions.find('li[data-id='+compare.jurisdiction+']').addClass('is-active');
+        }
+      }
     },
 
     setJurisdiction: function(e) {
