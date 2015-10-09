@@ -51,7 +51,6 @@ define([
       var p = {};
       p.compare1 = this.status.get('compare1');
       p.compare2 = this.status.get('compare2');
-      console.log(p);
       return p;
     },
 
@@ -93,6 +92,14 @@ define([
       }
     },
 
+    /*
+      CHANGERS: Change values events
+      - changeTab
+      - changeIso
+      - changeJurisdiction
+      - changeArea
+      - changeSelection
+    */
     changeIso: function(val) {
       var select = this.status.get('tab');
       if (!!val) {
@@ -134,6 +141,12 @@ define([
     changeCompare: function() {
       mps.publish('Place/update');
     },
+
+    changeSelection: function() {
+      mps.publish('Compare/selection');
+    }
+
+
 
 
   });

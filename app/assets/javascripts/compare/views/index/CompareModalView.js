@@ -20,9 +20,10 @@ define([
     events: function() {
       return _.extend({}, SourceWindowView.prototype.events, {
         'click .m-modal--tablink' : 'changeTab',
+        'click .m-field-list-radio-jurisdiction' : 'changeJurisdiction',
+        'click .m-field-list-radio-area' : 'changeArea',
+        'click #btnModalContinue' : 'continue',
         'change .chosen-select' : 'changeIso',
-        'click .m-field-list-radio-jurisdiction' : 'setJurisdiction',
-        'click .m-field-list-radio-area' : 'setArea',
       });
     },
 
@@ -73,6 +74,7 @@ define([
     },
 
     cacheVars: function() {
+      this.$wrapper = $('.content-wrapper');
       this.$selects = $('.chosen-select');
       this.$radios = $('.m-field-list-radio');
       this.$tablinks = $('.m-modal--tablink');
@@ -86,13 +88,43 @@ define([
       });
       this.setTab();
     },
-
+    /*
+      MODAL: Modal events (extends from 'SourceWindow Class')
+      - show
+      - hide
+    */
     show: function(e) {
       e && e.preventDefault() && e.stopPropagation();
       this.model.set('hidden', false);
+      this.$htmlbody.addClass('active');
     },
 
-    // Events
+    hide: function(e) {
+      e && e.preventDefault();
+      this.model.set('hidden', true);
+      this.$htmlbody.removeClass('active');
+      if(!!this.status.get('compare1') && !!this.status.get('compare2')) {
+        this.presenter.changeSelection();
+      }
+
+    },
+
+    continue: function(e) {
+      e && e.preventDefault();
+      (!!!this.status.get('compare1')) ? this.presenter.changeTab(1) : null;
+      (!!!this.status.get('compare2')) ? this.presenter.changeTab(2) : null;
+      if(!!this.status.get('compare1') && !!this.status.get('compare2')) {
+        this.hide();
+      }
+    },
+
+    /*
+      CHANGERS: Change values events
+      - changeTab
+      - changeIso
+      - changeJurisdiction
+      - changeArea
+    */
     changeTab: function(e) {
       this.presenter.changeTab($(e.currentTarget).data('tab'));
     },
@@ -101,7 +133,21 @@ define([
       this.presenter.changeIso($(e.currentTarget).val());
     },
 
-    // SETTERS: Set selected values by params
+    changeJurisdiction: function(e) {
+      var jurisdiction = ($(e.currentTarget).hasClass('is-active')) ? 0 : $(e.currentTarget).data('id');
+      this.presenter.changeJurisdiction(jurisdiction);
+    },
+
+    changeArea: function(e) {
+      var area = ($(e.currentTarget).hasClass('is-active')) ? 0 : $(e.currentTarget).data('id');
+      this.presenter.changeArea(area);
+    },
+
+    /*
+      SETTERS: Set selected values by params
+      - setTab
+      - setCompare
+    */
     setTab: function() {
       var tab = this.status.get('tab');
 
@@ -109,9 +155,12 @@ define([
       this.$tablinks.removeClass('is-active');
       this.$el.find('.m-modal--tablink[data-tab='+tab+']').addClass('is-active');
 
-      //Tabs
+      // Tabs
       this.$tabs.removeClass('is-active');
       $('#selection'+tab).addClass('is-active');
+
+      // Scroll
+      this.$wrapper.scrollTop(0);
     },
 
     setCompare: function(who,compare) {
@@ -139,19 +188,6 @@ define([
         }
       }
     },
-
-    setJurisdiction: function(e) {
-      var jurisdiction = ($(e.currentTarget).hasClass('is-active')) ? 0 : $(e.currentTarget).data('id');
-      this.presenter.changeJurisdiction(jurisdiction);
-    },
-
-    setArea: function(e) {
-      var area = ($(e.currentTarget).hasClass('is-active')) ? 0 : $(e.currentTarget).data('id');
-      this.presenter.changeArea(area);
-    },
-
-
-
 
   });
 
