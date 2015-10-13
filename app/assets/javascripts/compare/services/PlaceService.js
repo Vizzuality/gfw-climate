@@ -183,7 +183,7 @@ define([
         var splitCompare1 = p.compare1.split('+');
         p.compare1 = {
           iso: splitCompare1[0],
-          jurisdiction: ~splitCompare1[1],
+          jurisdiction: ~~splitCompare1[1],
           area: splitCompare1[2],
         }
       }
@@ -191,7 +191,7 @@ define([
         var splitCompare2 = p.compare2.split('+');
         p.compare2 = {
           iso: splitCompare2[0],
-          jurisdiction: ~splitCompare2[1],
+          jurisdiction: ~~splitCompare2[1],
           area: splitCompare2[2],
         }
       }

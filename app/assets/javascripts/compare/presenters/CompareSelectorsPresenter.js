@@ -65,11 +65,12 @@ define([
           country1  = new CountryModel({ id: params.compare1.iso }),
           country2  = new CountryModel({ id: params.compare2.iso }),
         ], 'fetch');
+
+        $.when.apply($, complete).done(function() {
+          this.view.render(country1, country2);
+        }.bind(this));
       }
 
-      $.when.apply($, complete).done(function() {
-        this.view.render(country1, country2);
-      }.bind(this));
 
     },
 
