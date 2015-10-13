@@ -40,24 +40,27 @@ define([
 
     render: function(country1, country2) {
       var selection = [];
-
       var country1 = country1.toJSON();
       var country2 = country2.toJSON();
+
+      console.log(!!!this.status.get('compare1').jurisdiction);
+      console.log(!!this.status.get('compare1').jurisdiction);
+      console.log(this.status.get('compare1').jurisdiction);
 
       var select1 = {
         tab: '1',
         iso: country1.iso || null,
         name: country1.name || null,
-        jurisdiction: this.status.get('compare1').jurisdiction !==0 ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
-        // area: this.status.get('compare1').area ? country1.forests[~~this.status.get('compare1').area].type : null
+        jurisdiction: !!this.status.get('compare1').jurisdiction ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
+        area: this.status.get('compare1').area ? country1.forests[~~this.status.get('compare1').area].type : null
       };
 
       var select2 = {
         tab: '2',
         iso: country2.iso || null,
         name: country2.name || null,
-        jurisdiction: this.status.get('compare2').jurisdiction !==0 ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
-        // area: ~~this.status.get('compare2').area ? country2.forests[~~this.status.get('compare2').area].type : null
+        jurisdiction: !!this.status.get('compare2').jurisdiction ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
+        area: this.status.get('compare2').area ? country2.forests[~~this.status.get('compare2').area].type : null
       };
 
       selection.push(select1);
@@ -70,6 +73,10 @@ define([
       $.each(selection, function() {
         that._drawCountries(this.iso, this.tab);
       })
+    },
+
+    _parseData: function(country1, country2) {
+
     },
 
     _drawCountries: function(iso, tab) {

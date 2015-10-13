@@ -141,6 +141,8 @@ define([
     setTab: function() {
       var tab = this.status.get('tab');
 
+      console.log(this.$tablinks)
+
       // Tablinks
       this.$tablinks.removeClass('is-active');
       this.$el.find('.m-modal--tablink[data-tab='+tab+']').addClass('is-active');

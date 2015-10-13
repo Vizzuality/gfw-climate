@@ -53,11 +53,11 @@ define([
     * @param  {Object} place PlaceService's place object
     */
     _onPlaceGo: function(params) {
-      // console.log(params);
       var country1;
       var country2;
 
       if (!!params.compare1 && !!params.compare2) {
+        console.log('hola');
         this.status.set('compare1', params.compare1);
         this.status.set('compare2', params.compare2);
 
@@ -65,12 +65,11 @@ define([
           country1  = new CountryModel({ id: params.compare1.iso }),
           country2  = new CountryModel({ id: params.compare2.iso }),
         ], 'fetch');
+
+        $.when.apply($, complete).done(function() {
+          this.view.render(country1, country2);
+        }.bind(this));
       }
-
-      $.when.apply($, complete).done(function() {
-        this.view.render(country1, country2);
-      }.bind(this));
-
     },
 
     showModal: function(tab) {
