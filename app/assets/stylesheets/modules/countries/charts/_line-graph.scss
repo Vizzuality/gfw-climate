@@ -136,10 +136,33 @@
       h4 {
         font-size: 18px;
       }
-      p {
+      p,li {
         font-size: 14px;
         line-height: 21px;
         margin: 21px 0;
+      }
+      li {
+        margin: 4px 0;
+        &:before {
+          content: ' ';
+          height: 15px;
+          width: 15px;
+          border-radius: 100%;
+          background-color: grey;
+          display: inline-block;
+          top: 2px;
+          position: relative;
+          margin: 0 3px 0 0;
+        }
+        &.latam:before {
+          background-color: #3593c5;
+        }
+        &.africa:before {
+          background-color: #a0cddb;
+        }
+        &.asia:before {
+          background-color: #fb8f5e;
+        }
       }
     }
   }
