@@ -77,6 +77,8 @@ define([
           // Set model for compare selects
           this.status.set('compare1', params.compare1);
           this.status.set('compare2', params.compare2);
+
+          // console.log(this.status.get('country1'));
         }.bind(this));
       } else {
         // Fetching data
@@ -143,7 +145,17 @@ define([
     },
 
     changeSelection: function() {
-      mps.publish('Compare/selection');
+      var place = {};
+
+      place.compare1 = this.status.get('compare1');
+      place.compare2 = this.status.get('compare2');
+      place.name = this.status.get('name');
+
+      mps.publish('Compare/selection', [place]);
+      //This event, thrown when two countries selected,
+      //has to be listen by:
+      //mainView, to draw graphics and
+      //selectorsView to draw countries figures
     }
 
 

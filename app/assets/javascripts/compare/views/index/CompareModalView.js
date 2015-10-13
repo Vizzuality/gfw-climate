@@ -88,6 +88,7 @@ define([
       });
       this.setTab();
     },
+
     /*
       MODAL: Modal events (extends from 'SourceWindow Class')
       - show
@@ -176,7 +177,6 @@ define([
         $selectChosen.toggleClass('with-selection',!!compare.iso);
         $select.val(compare.iso);
         $select.trigger('chosen:updated');
-
 
         // Set areas and jurisdiction
         $radios.removeClass('is-active');

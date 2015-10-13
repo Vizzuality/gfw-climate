@@ -1,9 +1,10 @@
 define([
   'Backbone',
   'mps',
+  'compare/models/CountryModel',
   'compare/presenters/PresenterClass',
   'compare/collections/CountriesCollection'
-], function(Backbone, mps, PresenterClass, CountriesCollection) {
+], function(Backbone, mps, CountryModel, PresenterClass, CountriesCollection) {
 
   'use strict';
 
@@ -26,6 +27,9 @@ define([
      */
     _subscriptions: [{
       'Place/go': function(place) {
+        this._onPlaceGo(place);
+      },
+      'Compare/selection': function(place) {
         this._onPlaceGo(place);
       }
     }],
@@ -50,6 +54,23 @@ define([
     */
     _onPlaceGo: function(params) {
       // console.log(params);
+      var country1;
+      var country2;
+
+      if (!!params.compare1 && !!params.compare2) {
+        this.status.set('compare1', params.compare1);
+        this.status.set('compare2', params.compare2);
+
+        var complete = _.invoke([
+          country1  = new CountryModel({ id: params.compare1.iso }),
+          country2  = new CountryModel({ id: params.compare2.iso }),
+        ], 'fetch');
+      }
+
+      $.when.apply($, complete).done(function() {
+        this.view.render(country1, country2);
+      }.bind(this));
+
     },
 
     showModal: function(tab) {

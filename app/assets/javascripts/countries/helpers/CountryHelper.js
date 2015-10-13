@@ -8,10 +8,14 @@ define([
 
     draw: function(topology, c, iso, options) {
       var country = topojson.feature(topology, topology.objects[c]);
-
       var width = 300,
           height = 300,
           el = "#"+iso;
+
+      if ($('body').hasClass('is-compare-page')) {
+        var width = 150,
+            height = 150;
+      };
 
       if (!options.alerts) {
         width = 150;

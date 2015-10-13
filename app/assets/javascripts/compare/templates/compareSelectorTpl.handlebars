@@ -1,12 +1,18 @@
 <div class="l-compare-selectors">
-  <div class="m-compare-selector" data-tab="1">
-    <div class="m-compare-selector-empty">
-      <p>Click to select</p>
+  {{#each selection}}
+    <div class="m-compare-selector" data-tab="{{this.tab}}">
+        {{!-- {{#if this.area}}
+          <div class="selection-name">{{this.area}} in {{this.name}}</div>
+        {{else}}
+        {{#if this.jurisdiction}}
+          <div class="selection-name">{{this.jurisdiction}} in {{this.name}}</div>
+        {{else}} --}}
+          <div class="selection-name">{{this.name}}</div>
+        {{!-- {{/if}} {{/if}} --}}
+        <div class="country-figure" id="{{this.iso}}"></div>
+        <div class="m-compare-selector-not-empty">
+          <p>Click to change selection</p>
+        </div>
     </div>
-  </div>
-  <div class="m-compare-selector" data-tab="2">
-    <div class="m-compare-selector-empty">
-      <p>Click to select</p>
-    </div>
-  </div>
+  {{/each}}
 </div>

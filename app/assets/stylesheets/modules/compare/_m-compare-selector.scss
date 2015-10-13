@@ -22,6 +22,36 @@
     color: $white;
     font-size: 32px;
   }
+
+  .m-compare-selector-not-empty {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+    color: $white;
+    font-size: 14px;
+    opacity: .5;
+  }
+
+  .selection-name {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%);
+    color: $white;
+    font-size: 32px;
+  }
+
+  .country-figure {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    svg {
+      fill: $white;
+    }
+  }
 }
 
 
