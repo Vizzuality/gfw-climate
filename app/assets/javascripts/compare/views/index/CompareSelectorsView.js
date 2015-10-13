@@ -18,6 +18,17 @@ define([
       'click .m-compare-selector' : 'showModal'
     },
 
+    areasOfInterest: [
+      { name: 'TREE PLANTATIONS',id: 1,},
+      { name: 'PROTECTED AREAS',id: 2,},
+      { name: 'PRIMARY FORESTS',id: 3,},
+      { name: 'MORATORIUM AREAS',id: 4,},
+      { name: 'MINING CONCESSIONS',id: 5,},
+      { name: 'LOGGING CONCESSIONS',id: 6,},
+      { name: 'PLANTATION CONCESSIONS',id: 7,},
+      { name: 'KEY BIODIVERSITY AREAS',id: 8,}
+    ],
+
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
       this.status = this.presenter.status;
@@ -39,33 +50,7 @@ define([
     },
 
     render: function(country1, country2) {
-      var selection = [];
-      var country1 = country1.toJSON();
-      var country2 = country2.toJSON();
-
-      console.log(this.status.get('compare1').jurisdiction);
-      console.log(!this.status.get('compare1').jurisdiction);
-      console.log(!!this.status.get('compare1').jurisdiction);
-      console.log(!!!this.status.get('compare1').jurisdiction);
-
-      var select1 = {
-        tab: '1',
-        iso: country1.iso || null,
-        name: country1.name || null,
-        jurisdiction: !!this.status.get('compare1').jurisdiction ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
-        area: this.status.get('compare1').area ? country1.forests[~~this.status.get('compare1').area].type : null
-      };
-
-      var select2 = {
-        tab: '2',
-        iso: country2.iso || null,
-        name: country2.name || null,
-        jurisdiction: !!this.status.get('compare2').jurisdiction ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
-        area: this.status.get('compare2').area ? country2.forests[~~this.status.get('compare1').area].type : null
-      };
-
-      selection.push(select1);
-      selection.push(select2);
+      var selection = this._parseData(country1, country2);
 
       this.$el.html(this.template({'selection': selection}));
 
@@ -77,7 +62,30 @@ define([
     },
 
     _parseData: function(country1, country2) {
+      var selection = [];
+      var country1 = country1.toJSON();
+      var country2 = country2.toJSON();
 
+      var select1 = {
+        tab: '1',
+        iso: country1.iso || null,
+        name: country1.name || null,
+        jurisdiction: this.status.get('compare1').jurisdiction && this.status.get('compare1').jurisdiction != 0 ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
+        area: this.status.get('compare1').area && this.status.get('compare1').area != 0 ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare1').area }).name : null
+      };
+
+      var select2 = {
+        tab: '2',
+        iso: country2.iso || null,
+        name: country2.name || null,
+        jurisdiction: this.status.get('compare2').jurisdiction && this.status.get('compare2').jurisdiction != 0 ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
+        area: this.status.get('compare2').area && this.status.get('compare2').area != 0 ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare2').area }).name : null
+      };
+
+      selection.push(select1);
+      selection.push(select2);
+
+      return selection;
     },
 
     _drawCountries: function(iso, tab) {

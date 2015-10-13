@@ -50,7 +50,6 @@ define([
         this._onPlaceGo(params);
       },
       'CompareModal/show': function(tab) {
-        console.log(tab);
         this.changeTab(tab);
         this.view.show();
       }

@@ -1,11 +1,11 @@
 <div class="l-compare-selectors">
   {{#each selection}}
     <div class="m-compare-selector" data-tab="{{this.tab}}">
-        {{#if this.area}}
-          <div class="selection-name">{{this.area}} in {{this.name}}</div>
-        {{else}}
         {{#if this.jurisdiction}}
           <div class="selection-name">{{this.jurisdiction}} in {{this.name}}</div>
+        {{else}}
+        {{#if this.area}}
+          <div class="selection-name">{{this.area}} in {{this.name}}</div>
         {{else}}
           <div class="selection-name">{{this.name}}</div>
         {{/if}} {{/if}}
