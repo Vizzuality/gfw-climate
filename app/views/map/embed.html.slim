@@ -1,0 +1,24 @@
+/ == render 'layouts/svg_icons'
+== render 'shared/svg_icons_map'
+
+
+header.embed-header
+  h1
+    a(href='http://www.globalforestwatch.org/' target='_blank') Global Forest Watch
+
+/ <header class="embed-header">
+/   <h1><a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></h1>
+/ </header>
+
+.layout-content = render 'shared/map'
+/ <div class="layout-content">
+/   <%= render 'shared/map' %>
+/ </div>
+
+#sources.sources.notranslate.is-hidden = render 'shared/sources_map'
+/ <div id="sources" class='sources notranslate is-hidden'>
+/   <%= render 'shared/sources_map' %>
+/ </div>
+
+== render 'shared/js_footer'
+

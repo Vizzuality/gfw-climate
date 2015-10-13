@@ -1,0 +1,43 @@
+section.l-compare-countries
+  .l-header
+    .inner
+      .m-section-header
+        h1 Compare countries
+        p Select two countries, juristictions and/or Areas of Interest to get a comparison report.
+
+    .inner
+      #compareSelectorsView.l-compare
+        .l-compare-selectors
+          .m-compare-selector(data-tab="1")
+            .m-compare-selector-empty
+              p Click to select
+          .m-compare-selector(data-tab="2")
+            .m-compare-selector-empty
+              p Click to select
+
+  .l-toolbar
+    .inner
+      .m-toolbar
+        ul.options
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#share-country share
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#print-country save/print report
+          li.options_item
+            svg
+              use (xlink:href="#shape-country")
+            a#analyze-country (href="#") analyze on map
+
+  .l-main-content
+    .inner
+      #compareResultsView
+
+  .l-aside-content
+    .inner
+      #compareCustomizeView.m-aside
+        h3 Customize your report
+        button class="btn-addIndicators btn medium white" data-source="indicators" Add indicators

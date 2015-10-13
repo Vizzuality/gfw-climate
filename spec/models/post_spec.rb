@@ -19,7 +19,7 @@ RSpec.describe Post, type: :model do
   context "Get certain post" do
 
     it "Find post by link" do
-      post = Post.find_post('2015/07/gfw-user-profile-andrew-heald')
+      post = Post.find_post(link: '2015/07/gfw-user-profile-andrew-heald')
       expect(post).not_to be_nil
     end
 
