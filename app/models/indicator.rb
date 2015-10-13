@@ -37,9 +37,9 @@ class Indicator
     end
 
     def index_query
-      'SELECT indicator_group, description, indicator_id, value_units
+      'SELECT indicator_group, chart_type, description, indicator_id, value_units
        FROM indicators
-       GROUP BY indicator_id, indicator_group, description, value_units'
+       GROUP BY indicator_id, indicator_group, description, value_units, chart_type'
     end
 
     def show_query(indicator_id, iso, thresh_value)

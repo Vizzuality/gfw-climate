@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   # Static pages
-  get  'terms', to: 'static#terms',               as: :terms
-  get  'about', to: 'static#about',               as: :about
+  get  'terms',        to: 'static#terms',        as: :terms
+  get  'about',        to: 'static#about',        as: :about
   get  'data-methods', to: 'static#data_methods', as: :data_methods
 
   with_options only: [:index, :show] do |list_show_only|
@@ -29,8 +29,8 @@ Rails.application.routes.draw do
   end
 
   # Countries - jurisdiction routes
-  get 'pantropical' => 'countries#pantropical'
-  get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
+  get 'pantropical',         to: 'countries#pantropical', as: :pantropical
+  get 'countries/:id/:id_1', to: 'countries#show',        as: :jurisdiction
 
   # Compare countries routes
   # get 'compare-countries(/:iso_1)(:id_1)(/:iso_2)(:id_2)(/:iso_3)(:id_3)', to: 'compare#index', as: :compare_countries

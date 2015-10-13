@@ -10,11 +10,11 @@ resource 'Indicators' do
       expect(status).to eq(200)
       indicators = JSON.parse(response_body)['indicators']
 
-      expect(indicators.length).to eq(30)
+      expect(indicators.length).to eq(37)
       expect(indicators[0]['indicator_id']).to eq(1)
       expect(indicators[0]['indicator_group']).to eq('Deforestation')
       expect(indicators[0]['description']).to eq('Tree cover loss per year ({{years}}) at {{threshold}} threshold in units of hectares')
-      expect(indicators[0]['value_units']).to eq('hectares')
+      expect(indicators[0]['unit']).to eq('hectares')
     end
   end
 

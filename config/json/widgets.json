@@ -7,18 +7,39 @@
     "indicators": [
       {
         "id": 1,
-        "name": "National Data (IPCC Approach 2/3)",
-        "data_source": "NATDAT"
+        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
+        "type": "line",
+        "unit": "hectares"
       },
       {
         "id": 2,
-        "name": "FAO FRA 2015 (IPCC Approach 1)",
-        "data_source": "FAO"
+        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
+        "type": "line",
+        "unit": "percentage"
       },
       {
-        "id": 3,
-        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
-        "data_source": "UMD"
+        "id": 15,
+        "name": "FAO FRA 2015 (IPCC Approach 1)",
+        "type": "line",
+        "unit": "hectares"
+      },
+      {
+        "id": 16,
+        "name": "FAO FRA 2015 (IPCC Approach 1)",
+        "type": "line",
+        "unit": "percentage"
+      },
+      {
+        "id": 31,
+        "name": "National Data (IPCC Approach 2/3)",
+        "type": "line",
+        "unit": "hectares"
+      },
+      {
+        "id": 32,
+        "name": "National Data (IPCC Approach 2/3)",
+        "type": "line",
+        "unit": "percentage"
       }
     ]
   },
@@ -29,19 +50,40 @@
     "default_thresh": "25",
     "indicators": [
       {
-        "id": 12,
+        "id": 29,
         "name": "Faostat (IPCC Tier 1)",
-        "data_source": "FAO"
+        "type": "line",
+        "unit": "Tg C"
+      },
+      {
+        "id": 30,
+        "name": "Faostat (IPCC Tier 1)",
+        "type": "line",
+        "unit": "Mt CO2"
+      },
+      {
+        "id": 34,
+        "name": "Baccini",
+        "type": "line",
+        "unit": "Tg CO2"
+      },
+      {
+        "id": 35,
+        "name": "Baccini",
+        "type": "line",
+        "unit": "Mt CO2"
       },
       {
         "id": 13,
-        "name": "Baccini/WHRC/WRI",
-        "data_source": "BAC"
+        "name": "National Data",
+        "type": "line",
+        "unit": "Tg C"
       },
       {
         "id": 14,
-        "name": "National data",
-        "data_source": "NATDAT"
+        "name": "National Data",
+        "type": "line",
+        "unit": "Mt CO2"
       }
     ]
   },
@@ -52,9 +94,16 @@
     "default_thresh": "25",
     "indicators": [
       {
-        "id": 4,
-        "name": "Test",
-        "data_source": "TEST"
+        "id": 3,
+        "name": "Hansen / UMD / Google",
+        "type": "number",
+        "unit": "hectares"
+      },
+      {
+        "id": 17,
+        "name": "FAO",
+        "type": "number",
+        "unit": "hectares"
       }
     ]
   },
@@ -66,8 +115,57 @@
     "indicators": [
       {
         "id": 4,
-        "name": "Test",
-        "data_source": "TEST"
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
+      },
+      {
+        "id": 5,
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
+      },
+      {
+        "id": 6,
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
+      },
+      {
+        "id": 7,
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
+      },
+      {
+        "id": 8,
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
+      },
+      {
+        "id": 9,
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
+      },
+      {
+        "id": 18,
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
+      },
+      {
+        "id": 19,
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
+      },
+      {
+        "id": 23,
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
       }
     ]
   },
@@ -79,26 +177,29 @@
     "indicators": [
       {
         "id": 10,
-        "name": "Test",
-        "data_source": "TEST"
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
       },
       {
         "id": 11,
-        "name": "Test",
-        "data_source": "TEST"
+        "name": "Woods",
+        "type": "percentage",
+        "unit": "pie"
       }
     ]
   },
   {
     "id": 6,
     "name": "Emerging hotspots",
-    "type": "pie",
+    "type": "map",
     "default_thresh": "25",
     "indicators": [
       {
         "id": 4,
         "name": "Test",
-        "data_source": "TEST"
+        "type": "map",
+        "unit": "number"
       }
     ]
   }
