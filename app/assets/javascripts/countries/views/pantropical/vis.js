@@ -161,7 +161,7 @@ function addCommas(nStr) {
           var node;
           node = {
             id: d.id,
-            radius: _this.radius_scale(d.Average * 1.2),
+            radius: _this.radius_scale(d.Average * 1.6),
             value: d.Average,
             name: d.Country,
             org: d.organization,
@@ -255,7 +255,7 @@ function addCommas(nStr) {
     BubbleChart.prototype.move_towards_center = function(alpha) {
       return (function(_this) {
         return function(d) {
-          d.x = d.x + (_this.center.x - d.x) * (_this.damper + 0.02) * alpha;
+          d.x = d.x + (_this.center.x - d.x + 150) * (_this.damper + 0.02) * alpha;
           return d.y = d.y + (_this.center.y - d.y) * (_this.damper + 0.02) * alpha;
         };
       })(this);
