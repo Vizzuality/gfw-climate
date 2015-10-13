@@ -49,8 +49,8 @@ define([
       this.presenter.showModal($(e.currentTarget).data('tab'));
     },
 
-    render: function(country1, country2) {
-      var selection = this._parseData(country1, country2);
+    render: function() {
+      var selection = this._parseData();
 
       this.$el.html(this.template({'selection': selection}));
 
@@ -61,10 +61,10 @@ define([
       })
     },
 
-    _parseData: function(country1, country2) {
+    _parseData: function() {
       var selection = [];
-      var country1 = country1.toJSON();
-      var country2 = country2.toJSON();
+      var country1 = this.status.get('country1').toJSON();
+      var country2 = this.status.get('country2').toJSON();
 
       var select1 = {
         tab: '1',

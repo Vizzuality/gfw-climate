@@ -57,8 +57,6 @@ define([
       var country2;
 
       if (!!params.compare1 && !!params.compare2) {
-        this.status.set('compare1', params.compare1);
-        this.status.set('compare2', params.compare2);
 
         var complete = _.invoke([
           country1  = new CountryModel({ id: params.compare1.iso }),
@@ -66,7 +64,13 @@ define([
         ], 'fetch');
 
         $.when.apply($, complete).done(function() {
-          this.view.render(country1, country2);
+          this.status.set('compare1', params.compare1);
+          this.status.set('compare2', params.compare2);
+
+          this.status.set('country1', country1);
+          this.status.set('country2', country2);
+
+          this.view.render();
         }.bind(this));
       }
     },
