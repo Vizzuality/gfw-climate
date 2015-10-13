@@ -60,7 +60,7 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate:'{name}{/compare1}{/compare2}',
+    _uriTemplate:'{name}{/compare1}{/compare2}{?options}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
