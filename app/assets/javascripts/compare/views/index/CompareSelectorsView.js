@@ -48,7 +48,7 @@ define([
         tab: '1',
         iso: country1.iso || null,
         name: country1.name || null,
-        jurisdiction: ~~this.status.get('compare1').jurisdiction !==0 ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
+        jurisdiction: this.status.get('compare1').jurisdiction !==0 ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
         // area: this.status.get('compare1').area ? country1.forests[~~this.status.get('compare1').area].type : null
       };
 
@@ -56,7 +56,7 @@ define([
         tab: '2',
         iso: country2.iso || null,
         name: country2.name || null,
-        jurisdiction: ~~this.status.get('compare2').jurisdiction !==0 ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
+        jurisdiction: this.status.get('compare2').jurisdiction !==0 ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
         // area: ~~this.status.get('compare2').area ? country2.forests[~~this.status.get('compare2').area].type : null
       };
 

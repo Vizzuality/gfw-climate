@@ -18,15 +18,15 @@ define([
     },
 
     start: function(params) {
-      this._setCurrentTab(null, this.presenter.status.attributes.data);
+      var display = params.options ?
+        params.options.view : this.presenter.status.attributes.data;
+
+      this.hasStarted = true;
+      this._setCurrentTab(null, display);
     },
 
-    /**
-     * Set the new display value
-     * @param {[string]} display
-     */
     _setDisplay: function(display) {
-      this.presenter._updateTab(display);
+      this.presenter.onUpdateTab(display);
     },
 
     /**
@@ -40,7 +40,7 @@ define([
 
       if (e) {
         $currentTab = $(e.currentTarget);
-        newDisplay = $currentTab.data('display')
+        newDisplay = $currentTab.data('display');
       } else {
         $currentTab = this.$el.find('li[data-display="' + display + '"]');
         newDisplay = display;
@@ -49,7 +49,12 @@ define([
       this.$el.find('li').removeClass('is-selected');
       $currentTab.addClass('is-selected');
 
-      this._setDisplay(newDisplay);
+      if (!this.hasStarted) {
+        this.presenter.updateStatus(newDisplay);
+      } else {
+        this.hasStarted = false;
+        this.presenter.onUpdateTab(newDisplay);
+      }
     }
 
   });

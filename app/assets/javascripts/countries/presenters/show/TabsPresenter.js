@@ -41,27 +41,23 @@ define([
     },
 
 
-    /**
-     * Trigger the selected display option
-     * @param  {[string]} display
-     * Add below events publication
-     */
-
-
-
      /**
       * Triggered from 'Place/Go' events.
       *
       * @param  {Object} place PlaceService's place object
       */
-     _onPlaceGo: function(place) {
-        this.view.start(place);
-     },
+    _onPlaceGo: function(place) {
+      this.view.start(place);
+    },
 
-     _updateTab: function(tab) {
+    onUpdateTab: function(tab) {
       this.status.set('data', tab);
-      // mps.publish('Place/update');
-     }
+    },
+
+    updateStatus: function(tab) {
+      this.onUpdateTab(tab);
+      mps.publish('Place/update');
+    }
 
   });
 

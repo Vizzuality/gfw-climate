@@ -1,6 +1,6 @@
 function CustomTooltip(tooltipId, width) {
   var tooltipId = tooltipId;
-  $("body").append("<div class='tooltip' id='"+tooltipId+"'></div>");
+  $("#vis").append("<div class='tooltip' id='"+tooltipId+"'></div>");
 
   if(width){
       $("#"+tooltipId).css("width", width);
@@ -12,7 +12,7 @@ function CustomTooltip(tooltipId, width) {
       $("#"+tooltipId).html(content);
       $("#"+tooltipId).show();
 
-      updatePosition(event);
+      //updatePosition(event);
   }
 
   function hideTooltip(){
@@ -21,8 +21,8 @@ function CustomTooltip(tooltipId, width) {
 
   function updatePosition(event){
       var ttid = "#"+tooltipId;
-      var xOffset = 20;
-      var yOffset = 10;
+      var xOffset = -120;
+      var yOffset = -70;
 
        var ttw = $(ttid).width();
        var tth = $(ttid).height();
@@ -78,9 +78,9 @@ function addCommas(nStr) {
       this.create_nodes = __bind(this.create_nodes, this);
       var max_amount;
       this.data = data;
-      this.width = 640;
+      this.width = 960;
       this.height = 480;
-      this.tooltip = CustomTooltip("gates_tooltip", 240);
+      this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
         x: this.width / 2,
         y: this.height / 2
@@ -145,9 +145,9 @@ function addCommas(nStr) {
       this.nodes = [];
       this.force = null;
       this.circles = null;
-      this.fill_color = d3.scale.ordinal().domain(["America", "Africa", "Asia"]).range(["#d84b2a", "#beccae", "#7aa25c"]);
+      this.fill_color = d3.scale.ordinal().domain(["America", "Africa", "Asia"]).range(["rgb(112,178,195)", "rgb(162,206,219)", "rgb(235,179,160)"]);
       max_amount = d3.max(this.data, function(d) {
-        return parseInt(d.total_amount || 0);
+        return d.Average;
       });
       this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, max_amount]).range([2, 85]);
       this.create_nodes();
@@ -157,12 +157,12 @@ function addCommas(nStr) {
     BubbleChart.prototype.create_nodes = function() {
       this.data.forEach((function(_this) {
         return function(d) {
+          if (d.Average == 0) return;
           var node;
-          d.total_amount = parseFloat(d.y2001)+parseFloat(d.y2002)+parseFloat(d.y2003)+parseFloat(d.y2004)+parseFloat(d.y2005)+parseFloat(d.y2006)+parseFloat(d.y2007)+parseFloat(d.y2008)+parseFloat(d.y2009)+parseFloat(d.y2010)+parseFloat(d.y2011)+parseFloat(d.y2012)+parseFloat(d.y2013);
           node = {
             id: d.id,
-            radius: _this.radius_scale(d.total_amount) * 5,
-            value: d.total_amount,
+            radius: _this.radius_scale(d.Average * 1.6),
+            value: d.Average,
             name: d.Country,
             org: d.organization,
             group: d.Continent,
@@ -217,6 +217,10 @@ function addCommas(nStr) {
       })(this)).attr("id", function(d) {
         return "bubble_" + d.id;
       }).on("mouseover", function(d, i) {
+        var el = d3.select(this);
+        var xpos = ~~el.attr('cx') - 122;
+        var ypos = (el.attr('cy') - d.radius - 30);
+        d3.select("#pantropical_tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
         return that.show_details(d, i, this);
       }).on("mouseout", function(d, i) {
         return that.hide_details(d, i, this);
@@ -251,7 +255,7 @@ function addCommas(nStr) {
     BubbleChart.prototype.move_towards_center = function(alpha) {
       return (function(_this) {
         return function(d) {
-          d.x = d.x + (_this.center.x - d.x) * (_this.damper + 0.02) * alpha;
+          d.x = d.x + (_this.center.x - d.x + 150) * (_this.damper + 0.02) * alpha;
           return d.y = d.y + (_this.center.y - d.y) * (_this.damper + 0.02) * alpha;
         };
       })(this);
@@ -314,10 +318,9 @@ function addCommas(nStr) {
 
     BubbleChart.prototype.show_details = function(data, i, element) {
       var content;
-      d3.select(element).attr("stroke", "black");
-      content = "<span class=\"name\">Title:</span><span class=\"value\"> " + data.name + "</span><br/>";
-      content += "<span class=\"name\">Amount:</span><span class=\"value\"> $" + (addCommas(data.value)) + "</span><br/>";
-      content += "<span class=\"name\">Year:</span><span class=\"value\"> " + data.year + "</span>";
+      d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
+      content = "<span class=\"value\"> " + data.name + "</span><br/>";
+      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (addCommas(data.value)) + "</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 
