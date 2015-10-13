@@ -122,6 +122,8 @@ define([
         this.view.render();
         this.status.set('compare'+select, null);
       }
+
+      this.view.$('.content-wrapper').removeClass('is-loading');
     },
 
     changeJurisdiction: function(val) {

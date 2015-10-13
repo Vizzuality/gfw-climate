@@ -10,4 +10,5 @@
 
 .is-loading {
   @include spinner (40px, 5px, $color-1);
+  pointer-events: none;
 }

@@ -132,6 +132,7 @@ define([
 
     changeIso: function(e) {
       this.presenter.changeIso($(e.currentTarget).val());
+      this.$('.content-wrapper').addClass('is-loading');
     },
 
     changeJurisdiction: function(e) {
