@@ -12,7 +12,6 @@ define([
       this.view = view;
       this._super();
 
-
       this.status = new (Backbone.Model.extend({
         defaults: {
           average: null,
@@ -30,7 +29,6 @@ define([
      */
     _subscriptions: [{
       'Place/go': function(place) {
-        debugger;
         this._onPlaceGo(place);
       }
     }],

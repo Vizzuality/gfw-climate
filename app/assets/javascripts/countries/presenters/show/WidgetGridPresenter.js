@@ -42,23 +42,14 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
+
+      p.widgetGridStatus = {
+        view: this.status.attributes.view,
+        wiggets: this.status.attributes.widgets
+      };
+
       return p;
     },
-
-    // Subscriptions at develop. Maybe we will need them in a while...
-    // _subscriptions: [{
-    //   'Widgets/render': function(widgets) {
-    //     this.view._setWidgets(widgets);
-    //   }
-    // }, {
-    //   'CountryHeader/switchDisplay': function(display) {
-    //     this.view._setDisplay(display);
-    //   },
-    //   'Tabs/setDisplay': function(display) {
-    //     this.view._setDisplay(display);
-    //   }
-    // }],
-
 
     /**
      * Triggered from 'Place/Go' events.
@@ -75,6 +66,7 @@ define([
      * @return {[array]} array with widget's id will be displayed
      */
     _getWidgetsIds: function(widgets) {
+      console.log(widgets);
       return _.keys(widgets);
     },
 
@@ -91,6 +83,8 @@ define([
         view: options && options.view ? options.view : this.status.attributes.view,
         widgets: options && options.widgets ? this._getWidgetsIds(options.widgets) : this.status.attributes.widgets
       });
+
+      console.log(this.status.toJSON())
     },
 
     _onOpenModal: function() {

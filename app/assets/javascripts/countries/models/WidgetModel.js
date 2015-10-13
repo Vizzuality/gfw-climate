@@ -12,7 +12,6 @@ define([
 
     getData: function(id, cb) {
       this.setUrl(id);
-
       $.ajax({
         url: this.url,
         success: function(data) {

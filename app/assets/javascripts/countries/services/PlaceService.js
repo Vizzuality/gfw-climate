@@ -163,6 +163,8 @@ define([
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, this.params, params);
 
+      console.log(p);
+
       p.country = p.country ? p.country : null;
       p.area = p.area ? p.area : null;
 
@@ -198,6 +200,8 @@ define([
       }, this);
 
       p.widgetStatus = widgetStatus;
+
+      console.log(p);
 
       return p;
     }

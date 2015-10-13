@@ -84,8 +84,8 @@ define([
       var graphicId = this.widgetModel.attributes.id;
       //graphicId is the current graphic id.
       var data = {
-        url: this.widgetModel.attributes.indicators[0].data,
-        country: this.CountryModel.get('iso')
+        country: this.CountryModel.get('iso'),
+        url: this.widgetModel.attributes.indicators[0].data
       };
 
       //I have talk we REE staff, and apparently it is better to work
