@@ -57,7 +57,7 @@ define([
       var that = this;
 
       $.each(selection, function() {
-        that._drawCountries(this.iso, this.tab);
+        that._drawCountries(this.iso, this.containerId);
       })
     },
 
@@ -71,7 +71,8 @@ define([
         iso: country1.iso || null,
         name: country1.name || null,
         jurisdiction: this.status.get('compare1').jurisdiction && this.status.get('compare1').jurisdiction != 0 ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
-        area: this.status.get('compare1').area && this.status.get('compare1').area != 0 ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare1').area }).name : null
+        area: this.status.get('compare1').area && this.status.get('compare1').area != 0 ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare1').area }).name : null,
+        containerId: country1.iso + this.status.get('compare1').jurisdiction + this.status.get('compare1').area
       };
 
       var select2 = {
@@ -79,16 +80,19 @@ define([
         iso: country2.iso || null,
         name: country2.name || null,
         jurisdiction: this.status.get('compare2').jurisdiction && this.status.get('compare2').jurisdiction != 0 ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
-        area: this.status.get('compare2').area && this.status.get('compare2').area != 0 ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare2').area }).name : null
+        area: this.status.get('compare2').area && this.status.get('compare2').area != 0 ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare2').area }).name : null,
+        containerId: country2.iso + this.status.get('compare2').jurisdiction + this.status.get('compare2').area
       };
 
       selection.push(select1);
       selection.push(select2);
 
+      console.log(selection)
+
       return selection;
     },
 
-    _drawCountries: function(iso, tab) {
+    _drawCountries: function(iso, containerId) {
       var that = this;
 
       var sql = ['SELECT c.iso, c.enabled, m.the_geom',
@@ -97,7 +101,7 @@ define([
                  "AND c.iso = '"+iso+"'&format=topojson"].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
-        this.helper.draw(topology, 0, iso, { alerts: true });
+        this.helper.draw(topology, 0, containerId, { alerts: true });
       }, this ));
 
     }

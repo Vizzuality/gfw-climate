@@ -12,6 +12,8 @@ define([
           height = 300,
           el = "#"+iso;
 
+      console.log(iso)
+
       if ($('body').hasClass('is-compare-page')) {
         var width = 150,
             height = 150;
