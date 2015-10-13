@@ -35,22 +35,10 @@ define([
       this.presenter = new CompareModalPresenter(this);
       this.status = this.presenter.status;
       // Listeners
-      this.setListeners();
+      // this.setListeners();
     },
 
     setListeners: function() {
-      // Compare
-      this.status.on('change:compare1', function(model,compare){
-        this.setCompare(1,compare);
-        (!!model.get('compare2')) ? this.setCompare(2,model.get('compare2')) : null;
-      }, this);
-      this.status.on('change:compare2', function(model,compare){
-        (!!model.get('compare1')) ? this.setCompare(1,model.get('compare1')) : null;
-        this.setCompare(2,compare);
-      }, this);
-
-      // Tab
-      this.status.on('change:tab', this.setTab, this);
     },
 
     render: function() {
