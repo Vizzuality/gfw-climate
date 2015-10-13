@@ -26,6 +26,20 @@ define([
 
     setListeners: function() {
       this.status.on('change:compare1 change:compare2', this.changeCompare, this);
+
+      this.status.on('change:compare1', function(model,compare){
+        this.view.setCompare(1,compare);
+        (!!model.get('compare2')) ? this.view.setCompare(2,model.get('compare2')) : null;
+      }, this);
+      this.status.on('change:compare2', function(model,compare){
+        (!!model.get('compare1')) ? this.view.setCompare(1,model.get('compare1')) : null;
+        this.view.setCompare(2,compare);
+      }, this);
+
+       // Tab
+      this.status.on('change:tab', function(model, tab){
+        this.view.setTab();
+      }, this);
     },
 
     /**
@@ -36,6 +50,7 @@ define([
         this._onPlaceGo(params);
       },
       'CompareModal/show': function(tab) {
+        console.log(tab);
         this.changeTab(tab);
         this.view.show();
       }

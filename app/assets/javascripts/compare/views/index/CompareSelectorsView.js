@@ -40,7 +40,6 @@ define([
 
     render: function(country1, country2) {
       var selection = [];
-
       var country1 = country1.toJSON();
       var country2 = country2.toJSON();
 
@@ -75,6 +74,10 @@ define([
       $.each(selection, function() {
         that._drawCountries(this.iso, this.tab);
       })
+    },
+
+    _parseData: function(country1, country2) {
+
     },
 
     _drawCountries: function(iso, tab) {

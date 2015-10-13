@@ -53,7 +53,6 @@ define([
     * @param  {Object} place PlaceService's place object
     */
     _onPlaceGo: function(params) {
-      // console.log(params);
       var country1;
       var country2;
 
@@ -70,8 +69,6 @@ define([
           this.view.render(country1, country2);
         }.bind(this));
       }
-
-
     },
 
     showModal: function(tab) {
