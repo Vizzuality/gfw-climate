@@ -81,9 +81,12 @@ define([
       //firstDataSetLink is something like : "/api/indicators/1/GUY.
       //It should be the API endpoint where we retrieve data for the widget.
       var firstDataSetLink = this.widgetModel.attributes.indicators[0].data;
+      var graphicId = this.widgetModel.attributes.id;
       //graphicId is the current graphic id.
-      var graphicId = this.widgetModel.attributes.indicators[0].id;
-      // console.log(graphicId);
+      var data = {
+        url: this.widgetModel.attributes.indicators[0].data,
+        country: this.CountryModel.get('iso')
+      };
 
       //I have talk we REE staff, and apparently it is better to work
       //with ids in order to differenciate elements.
@@ -94,7 +97,7 @@ define([
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
       if (this.widgetModel.attributes.type === 'line') {
-        new LineChartIndicator({el: nextEl}).render(firstDataSetLink, graphicId);
+        new LineChartIndicator({el: nextEl}).render(data, graphicId);
       }
 
       // if (this.data.type === 'pie') {

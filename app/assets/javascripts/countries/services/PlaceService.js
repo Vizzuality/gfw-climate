@@ -120,7 +120,6 @@ define([
       var place = {};
 
       this.params = this._standardizeParams(params);
-      console.log('go!')
       mps.publish('Place/go', [this.params]);
     },
 
@@ -148,6 +147,7 @@ define([
       p.area = p.area ? p.area : null;
       p.options = p.options ? JSON.parse(atob(p.options)) : null;
 
+      console.log('from URL');
       console.log(p);
 
       return p;
@@ -174,7 +174,8 @@ define([
 
       p.options = btoa(JSON.stringify(localOptions));
 
-      // console.log(p);
+      console.log('to URL');
+      console.log(p);
 
       return p;
     },

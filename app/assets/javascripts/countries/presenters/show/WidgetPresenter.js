@@ -12,8 +12,6 @@ define([
       this.view = view;
       this._super();
 
-      console.log('init');
-
 
       this.status = new (Backbone.Model.extend({
         defaults: {
@@ -45,17 +43,13 @@ define([
     getPlaceParams: function() {
       var p = {};
 
-      console.log(this.status);
-      debugger;
-
       p.widgetStatus = {
         average: this.status.attributes.average,
         id: this.status.attributes.id,
         indicator: this.status.attributes.indicator,
-        treshold: this.status.attributes.treshold
+        treshold: this.status.attributes.treshold,
+        unit: this.status.attributes.unit
       };
-
-      console.log(p);
 
       return p;
     },

@@ -12,7 +12,6 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(options) {
-      console.log(options);
       this.widgets = options.widgets;
       this.countryModel = options.model;
     },
@@ -22,8 +21,6 @@ define([
 
       var promises = [],
         widgets = [];
-
-      console.log(this.widgets);
 
       this.widgets.forEach(_.bind(function(id) {
         var deferred = $.Deferred();
