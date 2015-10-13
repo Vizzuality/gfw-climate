@@ -19,14 +19,14 @@ define([
     },
 
     areasOfInterest: [
-      { name: 'TREE PLANTATIONS',id: 1,},
-      { name: 'PROTECTED AREAS',id: 2,},
-      { name: 'PRIMARY FORESTS',id: 3,},
-      { name: 'MORATORIUM AREAS',id: 4,},
-      { name: 'MINING CONCESSIONS',id: 5,},
-      { name: 'LOGGING CONCESSIONS',id: 6,},
-      { name: 'PLANTATION CONCESSIONS',id: 7,},
-      { name: 'KEY BIODIVERSITY AREAS',id: 8,}
+      { name: 'tree plantations',id: 1,},
+      { name: 'protected areas',id: 2,},
+      { name: 'primary forests',id: 3,},
+      { name: 'moratorium areas',id: 4,},
+      { name: 'mining concessions',id: 5,},
+      { name: 'logging concessions',id: 6,},
+      { name: 'plantation concessions',id: 7,},
+      { name: 'key biodiversity areas',id: 8,}
     ],
 
     initialize:function() {
@@ -86,8 +86,6 @@ define([
 
       selection.push(select1);
       selection.push(select2);
-
-      console.log(selection)
 
       return selection;
     },

@@ -10,6 +10,10 @@
 
   cursor: pointer;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   &:hover {
     background-color: lighten($dark-grey, 5%);
   }
@@ -24,30 +28,29 @@
   }
 
   .m-compare-selector-not-empty {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translate(-50%);
+    // position: absolute;
+    // bottom: 20px;
+    // left: 50%;
+    // transform: translate(-50%);
     color: $white;
     font-size: 14px;
     opacity: .5;
   }
 
   .selection-name {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
+    // position: absolute;
+    // top: 20px;
+    // left: 20px;
+    // right: 20px;
     color: $white;
     font-size: 32px;
-    text-transform: lowercase;
   }
 
   .country-figure {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%,-50%);
 
     svg {
       fill: $white;
