@@ -53,13 +53,13 @@ define([
 
   'use strict';
 
-  var urlDefaultsParams = {};
+  var urlDefaultsParams = {
+    treshold: 30
+  };
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/country}{/area}{?display,widgets}',
-
-    // _uriTemplate: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}',
+    _uriTemplate: 'countries{/country}{/area}{?options}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -69,7 +69,6 @@ define([
     init: function(router) {
       this.router = router;
       this._presenters = [];
-      this._name = null;
       this.params = {};
       this._super();
     },
@@ -94,8 +93,7 @@ define([
      * @param  {String} name   Place name
      * @param  {Object} params Url params
      */
-    initPlace: function(name, params) {
-      this._name = name;
+    initPlace: function(params) {
       this._newPlace(params);
     },
 
@@ -141,15 +139,13 @@ define([
      * @return {Object} The standardized params.
      */
     _standardizeParams: function(params) {
-      var p = _.extendNonNull({}, this.params, params);
-      p.name = this._name ? this._name : null;
+      var p = _.extendNonNull({}, urlDefaultsParams, params);
 
-
-      // We have to develop this with our params
       p.country = p.country ? p.country : null;
       p.area = p.area ? p.area : null;
-      // p.country2 = p.country2 ? p.country2.toString() : null;
-      // p.country3 = p.country3 ? p.country3.toString() : null;
+      p.options = p.options ? JSON.parse(atob(p.options)) : null;
+
+      console.log(p);
 
       return p;
     },
@@ -163,14 +159,19 @@ define([
      */
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, this.params, params);
-      p.name = this._name ? this._name : null;
 
-      // We have to develop this with our params
       p.country = p.country ? p.country : null;
       p.area = p.area ? p.area : null;
-      // p.country2 = p.country2 ? p.country2.toString() : null;
-      // p.country3 = p.country3 ? p.country3.toString() : null;
-      //
+
+      var localOptions = {
+        view : p.view ? p.view : null,
+        widgets: p.widgets ? p.widgets : null,
+        treshold: p.treshold ? p.treshold : null
+      };
+
+      p.options = btoa(JSON.stringify(localOptions));
+
+      console.log(p);
 
       return p;
     },

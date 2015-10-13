@@ -19,22 +19,20 @@ define([
 
     initialize: function() {
       this.placeService = new PlaceService(this);
-      this.name = 'countries';
     },
 
     _initIndex: function() {
       // new CountryIndexView();
     },
 
-    _initShow: function(country, area, params) {
+    _initShow: function(country, area) {
 
-      var params = {
+      var params = _.extend({
         country: country,
-        area: area,
-        options: _.parseUrl()
-      };
+        area: area
+      }, _.parseUrl());
 
-      this.placeService.initPlace(this.name, params);
+      this.placeService.initPlace(params);
     },
 
     _initPantropical: function() {
