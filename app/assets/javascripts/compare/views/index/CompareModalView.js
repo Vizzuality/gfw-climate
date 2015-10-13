@@ -138,10 +138,8 @@ define([
       - setTab
       - setCompare
     */
-    setTab: function() {
-      var tab = this.status.get('tab');
-
-      console.log(this.$tablinks)
+    setTab: function(tab) {
+      var tab = this.presenter.status.get('tab');
 
       // Tablinks
       this.$tablinks.removeClass('is-active');

@@ -37,7 +37,9 @@ define([
       }, this);
 
        // Tab
-      this.status.on('change:tab', this.view.setTab, this);
+      this.status.on('change:tab', function(model, tab){
+        this.view.setTab();
+      }, this);
     },
 
     /**
@@ -48,6 +50,7 @@ define([
         this._onPlaceGo(params);
       },
       'CompareModal/show': function(tab) {
+        console.log(tab);
         this.changeTab(tab);
         this.view.show();
       }
