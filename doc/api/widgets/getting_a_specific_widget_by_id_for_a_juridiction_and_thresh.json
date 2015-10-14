@@ -24,7 +24,7 @@
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/api/widgets/1?iso=aus&id_1=1&thresh=25",
+      "request_path": "/api/widgets/1?iso=aus&id_1=1&thresh=15",
       "request_body": null,
       "request_headers": {
         "Accept": "application/json; application/gfwc-v1+json",
@@ -35,25 +35,25 @@
       "request_query_parameters": {
         "iso": "aus",
         "id_1": "1",
-        "thresh": "25"
+        "thresh": "15"
       },
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "{\"widget\":{\"id\":1,\"name\":\"Deforestation rate\",\"type\":\"line\",\"indicators\":[{\"id\":1,\"name\":\"National Data\",\"data\":\"/api/indicators/1/aus/1?thresh=25\"},{\"id\":2,\"name\":\"FAO\",\"data\":\"/api/indicators/2/aus/1?thresh=25\"},{\"id\":3,\"name\":\"Hansen/Google/UMD\",\"data\":\"/api/countries/aus/1?thresh=25\"}]}}",
+      "response_body": "{\"widget\":{\"id\":1,\"name\":\"Deforestation rate\",\"type\":\"line\",\"indicators\":[{\"id\":1,\"name\":\"Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)\",\"type\":\"line\",\"unit\":\"hectares\",\"data\":\"/api/indicators/1/aus/1?thresh=15\"},{\"id\":2,\"name\":\"Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)\",\"type\":\"line\",\"unit\":\"percentage\",\"data\":\"/api/indicators/2/aus/1?thresh=15\"},{\"id\":15,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"unit\":\"hectares\",\"data\":\"/api/indicators/15/aus/1?thresh=15\"},{\"id\":16,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"unit\":\"percentage\",\"data\":\"/api/indicators/16/aus/1?thresh=15\"},{\"id\":31,\"name\":\"National Data (IPCC Approach 2/3)\",\"type\":\"line\",\"unit\":\"hectares\",\"data\":\"/api/indicators/31/aus/1?thresh=15\"},{\"id\":32,\"name\":\"National Data (IPCC Approach 2/3)\",\"type\":\"line\",\"unit\":\"percentage\",\"data\":\"/api/indicators/32/aus/1?thresh=15\"}]}}",
       "response_headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "application/json; charset=utf-8",
-        "ETag": "W/\"134e22371f37b322398d58df8762a344\"",
+        "ETag": "W/\"e151ee3a7eefa2c21a05968141677816\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "4a8e0c2e-1102-48bb-8efa-ec690501a34f",
-        "X-Runtime": "0.002666",
-        "Content-Length": "292"
+        "X-Request-Id": "ad248ecf-7447-498e-a5a6-01a601af529b",
+        "X-Runtime": "0.003698",
+        "Content-Length": "886"
       },
       "response_content_type": "application/json; charset=utf-8",
-      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets/1?iso=aus&id_1=1&thresh=25\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets/1?iso=aus&id_1=1&thresh=15\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
     }
   ]
 }

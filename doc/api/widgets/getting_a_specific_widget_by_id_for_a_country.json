@@ -38,17 +38,17 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "{\"widget\":{\"id\":1,\"name\":\"Deforestation rate\",\"type\":\"line\",\"indicators\":[{\"id\":1,\"name\":\"National Data\",\"data\":\"/api/indicators/1/aus\"},{\"id\":2,\"name\":\"FAO\",\"data\":\"/api/indicators/2/aus\"},{\"id\":3,\"name\":\"Hansen/Google/UMD\",\"data\":\"/api/countries/aus\"}]}}",
+      "response_body": "{\"widget\":{\"id\":1,\"name\":\"Deforestation rate\",\"type\":\"line\",\"indicators\":[{\"id\":1,\"name\":\"Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)\",\"type\":\"line\",\"unit\":\"hectares\",\"data\":\"/api/indicators/1/aus\"},{\"id\":2,\"name\":\"Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)\",\"type\":\"line\",\"unit\":\"percentage\",\"data\":\"/api/indicators/2/aus\"},{\"id\":15,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"unit\":\"hectares\",\"data\":\"/api/indicators/15/aus\"},{\"id\":16,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"unit\":\"percentage\",\"data\":\"/api/indicators/16/aus\"},{\"id\":31,\"name\":\"National Data (IPCC Approach 2/3)\",\"type\":\"line\",\"unit\":\"hectares\",\"data\":\"/api/indicators/31/aus\"},{\"id\":32,\"name\":\"National Data (IPCC Approach 2/3)\",\"type\":\"line\",\"unit\":\"percentage\",\"data\":\"/api/indicators/32/aus\"}]}}",
       "response_headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "application/json; charset=utf-8",
-        "ETag": "W/\"57cf783e6ad419d6ddedd7453361c47a\"",
+        "ETag": "W/\"caef4e704985ad7c4df0530e16844150\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "675727d4-1d2e-498a-89bf-db54e5d984d6",
-        "X-Runtime": "0.007572",
-        "Content-Length": "256"
+        "X-Request-Id": "e9fc7587-d1c9-4d99-8540-1bd0d9e1bf7d",
+        "X-Runtime": "0.004842",
+        "Content-Length": "814"
       },
       "response_content_type": "application/json; charset=utf-8",
       "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets/1?iso=aus\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""

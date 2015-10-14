@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   get 'countries/:id/:id_1', to: 'countries#show',        as: :jurisdiction
 
   # Compare countries routes
-  # get 'compare-countries(/:iso_1)(:id_1)(/:iso_2)(:id_2)(/:iso_3)(:id_3)', to: 'compare#index', as: :compare_countries
+  # GET 'compare-countries/bra+1+0/aus+1+0/aut+0+3'
   get 'compare-countries(/*path)', to: 'compare#index', as: :compare_countries
 
   # API routes
@@ -52,7 +52,10 @@ Rails.application.routes.draw do
       get 'indicators/:id/:iso',    to: 'indicators#show',             as: :country_indicator
       get 'widgets/:id/:iso',       to: 'widgets#show',                as: :country_widget
       get 'widgets/:id/:iso/:id_1', to: 'widgets#show',                as: :juridiction_widget
-
+      
+      # Compare countries API routes
+      # GET 'compare-countries/bra+1+0/aus+1+0/aut+0+3/etc...'
+      get 'compare-countries(/*path)', to: 'compare_countries#index', as: :compare_countries
     end
 
   end

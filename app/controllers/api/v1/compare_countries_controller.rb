@@ -1,0 +1,15 @@
+module Api::V1
+  class CompareCountriesController < BaseControllerV1
+
+    def index
+      @objects = ForCompare.find_countries_or_jurisdictions(filter_params)
+      respond_with @objects
+    end
+
+    private
+      def filter_params
+        params.permit(:path, :thresh)
+      end
+
+  end
+end

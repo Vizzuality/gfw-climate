@@ -1,6 +1,16 @@
 {
   "resources": [
     {
+      "name": "Compare countries",
+      "examples": [
+        {
+          "description": "Getting a list of countries and jurisdictions for compare",
+          "link": "compare_countries/getting_a_list_of_countries_and_jurisdictions_for_compare.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
       "name": "Countries",
       "examples": [
         {
