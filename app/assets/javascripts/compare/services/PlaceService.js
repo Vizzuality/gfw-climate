@@ -53,13 +53,50 @@ define([
 
   'use strict';
 
-  var urlDefaultsParams = {};
+  var urlDefaultsParams = {
+    compare1: null,
+    compare2: null,
+    options: 'eyIxIjp7ImRhdGVfc3RhcnQiOiIyNi8wNy8yMDAwIiwiZGF0ZV9lbmQiOiIyNi8wNy8yMDEyIiwiaWQiOjEsImluZGljYXRvciI6MSwidHJlc2hvbGQiOjI1LCJ1bml0IjoiaGEifSwiMiI6eyJkYXRlX3N0YXJ0IjoiMjYvMDcvMjAwMCIsImRhdGVfZW5kIjoiMjYvMDcvMjAxMiIsImlkIjoyLCJpbmRpY2F0b3IiOjIsInRyZXNob2xkIjoyNSwidW5pdCI6ImhhIn0sIjMiOnsiZGF0ZV9zdGFydCI6IjI2LzA3LzIwMDAiLCJkYXRlX2VuZCI6IjI2LzA3LzIwMTIiLCJpZCI6MywiaW5kaWNhdG9yIjozLCJ0cmVzaG9sZCI6MjUsInVuaXQiOiJoYSJ9LCI0Ijp7ImRhdGVfc3RhcnQiOiIyNi8wNy8yMDAwIiwiZGF0ZV9lbmQiOiIyNi8wNy8yMDEyIiwiaWQiOjQsImluZGljYXRvciI6NCwidHJlc2hvbGQiOjI1LCJ1bml0IjoiaGEifX0='
+    // options: {
+    //   "1" : {
+    //     date_start: "26/07/2000",
+    //     date_end: "26/07/2012",
+    //     id: 1,
+    //     indicator: 1,
+    //     treshold: 25,
+    //     unit: "ha"
+    //   },
+    //   "2" : {
+    //     date_start: "26/07/2000",
+    //     date_end: "26/07/2012",
+    //     id: 2,
+    //     indicator: 2,
+    //     treshold: 25,
+    //     unit: "ha"
+    //   },
+    //   "3" : {
+    //     date_start: "26/07/2000",
+    //     date_end: "26/07/2012",
+    //     id: 3,
+    //     indicator: 3,
+    //     treshold: 25,
+    //     unit: "ha"
+    //   },
+    //   "4" : {
+    //     date_start: "26/07/2000",
+    //     date_end: "26/07/2012",
+    //     id: 4,
+    //     indicator: 4,
+    //     treshold: 25,
+    //     unit: "ha"
+    //   }
+    // }
+
+  };
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate:'{name}{/country1}{/country2}{/country3}{?threshold,widgets}',
-
-    // _uriTemplate: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}',
+    _uriTemplate:'{name}{/compare1}{/compare2}{?options}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -116,10 +153,8 @@ define([
      * @param  {Object}  params The place parameters
      */
     _newPlace: function(params) {
-      var place = {};
-
-      place.params = this._standardizeParams(params);
-      mps.publish('Place/go', [place]);
+      this.params = this._standardizeParams(params);
+      mps.publish('Place/go', [this.params]);
     },
 
     /**
@@ -144,10 +179,24 @@ define([
       p.name = this._name ? this._name : null;
 
       // We have to develop this with our params
-      p.country1 = p.country1 ? p.country1.toString() : null;
-      p.country2 = p.country2 ? p.country2.toString() : null;
-      p.country3 = p.country3 ? p.country3.toString() : null;
+      if (p.compare1) {
+        var splitCompare1 = p.compare1.split('+');
+        p.compare1 = {
+          iso: splitCompare1[0],
+          jurisdiction: ~~splitCompare1[1],
+          area: splitCompare1[2],
+        }
+      }
+      if (p.compare2) {
+        var splitCompare2 = p.compare2.split('+');
+        p.compare2 = {
+          iso: splitCompare2[0],
+          jurisdiction: ~~splitCompare2[1],
+          area: splitCompare2[2],
+        }
+      }
 
+      p.options = (p.options) ? JSON.parse(atob(p.options)) : null;
       return p;
     },
 
@@ -159,13 +208,16 @@ define([
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
-      var p = _.extendNonNull({}, urlDefaultsParams, params);
+      var p = _.extendNonNull({}, urlDefaultsParams, this.params, params);
       p.name = this._name ? this._name : null;
 
       // We have to develop this with our params
-      p.country1 = p.country1 ? p.country1.toString() : null;
-      p.country2 = p.country2 ? p.country2.toString() : null;
-      p.country3 = p.country3 ? p.country3.toString() : null;
+      p.compare1 = (p.compare1) ? p.compare1.iso + '+' + p.compare1.jurisdiction + '+' + p.compare1.area : null;
+      p.compare2 = (p.compare2) ? p.compare2.iso + '+' + p.compare2.jurisdiction + '+' + p.compare2.area : null;
+
+      if (p.options) {
+        p.options = btoa(JSON.stringify(p.options));
+      }
 
       return p;
     },

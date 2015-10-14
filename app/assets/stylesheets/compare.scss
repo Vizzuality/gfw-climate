@@ -10,7 +10,7 @@
 @import "header";
 @import "footer";
 @import "grid";
-// @import "modules/notifications";
+@import "modules/notifications";
 
 
 // Modules
@@ -19,8 +19,11 @@
 @import "modules/buttons";
 @import "modules/icons";
 @import "modules/slick";
+@import "modules/select";
 
 //Countries
+@import "modules/compare/m-compare-modal";
+
 // @import "modules/countries/header-profile";
 // @import "modules/countries/list";
 // @import "modules/countries/header-show";
@@ -36,7 +39,7 @@
 
 //Compare
 @import "modules/compare/*";
-@import "modules/common/*";
+@import "modules/common/m-toolbar";
 
 // Charts
 @import "modules/countries/charts/line-graph";

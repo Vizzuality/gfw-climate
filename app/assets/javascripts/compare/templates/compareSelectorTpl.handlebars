@@ -1,29 +1,18 @@
 <div class="l-compare-selectors">
-
-  <div class="m-compare-selector">
-     <select name="country1" id="country1">
-      <option value="no_country">Select a country</option>
-      {{#each countries}}
-        <option value="{{this.iso}}">{{this.name}}</option>
-      {{/each}}
-     </select>
-  </div>
-  <div class="m-compare-selector">
-    <select name="country2" id="country2" class='is-disabled'>
-      <option value="no_country">Select a country</option>
-      {{#each countries}}
-        <option value="{{this.iso}}">{{this.name}}</option>
-      {{/each}}
-    </select>
-  </div>
-  <div class="m-compare-selector">
-    <select name="country3" id="country3" class='is-disabled'>
-      <option value="no_country">Select a country</option>
-      {{#each countries}}
-        <option value="{{this.iso}}">{{this.name}}</option>
-      {{/each}}
-    </select>
-  </div>
-
+  {{#each selection}}
+    <div class="m-compare-selector" data-tab="{{this.tab}}">
+        {{#if this.jurisdiction}}
+          <div class="selection-name">{{this.jurisdiction}} in {{this.name}}</div>
+        {{else}}
+        {{#if this.area}}
+          <div class="selection-name">{{this.area}} in {{this.name}}</div>
+        {{else}}
+          <div class="selection-name">{{this.name}}</div>
+        {{/if}} {{/if}}
+        <div class="country-figure" id="compare-figure{{this.tab}}"></div>
+        <div class="m-compare-selector-not-empty">
+          <p>Click to change selection</p>
+        </div>
+    </div>
+  {{/each}}
 </div>
-<button class="btn-compare btn medium white is-disabled">compare</button>

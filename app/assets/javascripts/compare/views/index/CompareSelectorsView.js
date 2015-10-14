@@ -1,10 +1,12 @@
 define([
   'backbone',
   'handlebars',
+  'underscore',
   'chosen',
   'compare/presenters/CompareSelectorsPresenter',
+  'countries/helpers/CountryHelper',
   'text!compare/templates/compareSelectorTpl.handlebars'
-], function(Backbone, Handlebars, chosen, CompareSelectorsPresenter, tpl) {
+], function(Backbone, Handlebars, _, chosen, CompareSelectorsPresenter, CountryHelper, tpl) {
 
   var CompareSelectorsView = Backbone.View.extend({
 
@@ -13,15 +15,20 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'change select' : '_selectCountry',
-      'click .btn-compare' : '_compareCountries'
+      'click .m-compare-selector' : 'showModal'
     },
+
+    areasOfInterest: [{ name: 'Tree plantations',id: 1,},{ name: 'Protected areas',id: 2,},{ name: 'Primary forests',id: 3,},{ name: 'Moratorium areas',id: 4,},{ name: 'Mining concessions',id: 5,},{ name: 'Logging concessions',id: 6,},{ name: 'Plantation concessions',id: 7,},{ name: 'Key biodiversity areas',id: 8,}],
+
 
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
+      this.status = this.presenter.status;
 
       this._setListeners();
       this._cacheVars();
+
+      this.helper = CountryHelper;
     },
 
     _setListeners: function() {
@@ -30,139 +37,59 @@ define([
     _cacheVars: function() {
     },
 
-    _getActiveCountries: function() {
-      return _.where(this.collection.toJSON().countries, { 'enabled' : true });
+    showModal: function(e) {
+      this.presenter.showModal($(e.currentTarget).data('tab'));
     },
 
     render: function() {
-      var countries = this._getActiveCountries();
-      this.$el.html(this.template({'countries': countries}))
-      // this._invokeChosen();
-      this._stopSpinner();
+      this.$el.html(this.template(this._parseData()));
+      (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
+      (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
     },
 
-    _stopSpinner: function() {
-      this.$el.removeClass('is-loading');
+    _parseData: function() {
+      var selection = [];
+      var country1 = this.status.get('country1').toJSON();
+      var country2 = this.status.get('country2').toJSON();
+
+      var select1 = {
+        tab: '1',
+        iso: country1.iso || null,
+        name: country1.name || null,
+        jurisdiction: (!!~~this.status.get('compare1').jurisdiction) ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
+        area: (!!~~this.status.get('compare1').area) ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare1').area }).name : null,
+      };
+
+      var select2 = {
+        tab: '2',
+        iso: country2.iso || null,
+        name: country2.name || null,
+        jurisdiction: (!!~~this.status.get('compare2').jurisdiction) ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
+        area: (!!~~this.status.get('compare2').area) ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare2').area }).name : null,
+      };
+
+      selection.push(select1);
+      selection.push(select2);
+
+      return { selection: selection };
     },
 
-    /*
-     * Set selectors values with url arriving from url.
-     */
-    setValuesFromUrl: function(data) {
-      this.collection = data;
-
-      $.when.apply($, this.render()).done(function() {
-        this._setUrlValues();
-      }.bind(this));
-    },
-
-    _setUrlValues: function() {
-      var selectors = ['country1', 'country2', 'country3'];
-      var self = this;
-
-      $.each(selectors, function(index, value) {
-        var country = self.presenter.status.get(value);
-        var selector = '#' + value;
-
-        //Validate entry to avoid no_country options.
-        if (country !== null)  {
-          $(selector).val(country);
-          $(selector).removeClass('is-disabled');
-
-          self._enableNextSelector(value);
-        }
-      })
-
-      this._disableOptions();
-      this.enableComparisonBtn();
-    },
-
-    _selectCountry: function(e) {
-      var selector = $(e.currentTarget).attr('id');
-      var selectedCountry = $(e.currentTarget).val();
-
-      //If user selects valid option, go ahead.
-      if (selectedCountry !== 'no_country') {
-        this._updateStatus(selectedCountry, selector);
-        this._countrySelected(selector);
+    _drawCountries: function(tab) {
+      var compare = this.status.get('compare'+tab);
+      if (!!compare.iso && !!compare.jurisdiction) {
+        var sql = ["SELECT m.the_geom",
+                   "FROM gadm_1_all m",
+                   "WHERE m.iso = '"+compare.iso+"'",
+                   "AND m.id_1 = '"+compare.jurisdiction+"'&format=topojson"].join(' ');
       } else {
-        this._updateStatus(selectedCountry, selector);
-        this.enableComparisonBtn();
+        var sql = ["SELECT m.the_geom",
+                   "FROM ne_50m_admin_0_countries m",
+                   "WHERE m.adm0_a3 = '"+compare.iso+"'&format=topojson"].join(' ');
       }
-    },
 
-    _countrySelected: function(selector) {
-      this._disableOptions();
-      this.enableComparisonBtn();
-      this._enableNextSelector(selector);
-    },
-
-    _enableNextSelector: function(selector) {
-      if (selector !== 'country3') {
-        //Improve this awful selection
-        $('#' + selector).parent().next().find('select').removeClass('is-disabled');
-      }
-    },
-
-    _disableOptions: function() {
-      this.$el.find('option').removeClass('is-disabled');
-
-      var selectors = ['country1', 'country2', 'country3'];
-      var self = this;
-
-      $.each(selectors, function(index, value) {
-        var countries = ['country1', 'country2', 'country3'];
-        var index = countries.indexOf(value);
-
-        if (index > -1) {
-          countries.splice(index, 1);
-        }
-
-        var country = self.presenter.status.get(value);
-
-        if (country !== 'no_country') {
-          $.each(countries, function(index, value) {
-            $('#' + value).find('[value='+ country +']').addClass('is-disabled');
-          })
-        }
-      })
-    },
-
-    _updateStatus: function(country, selector) {
-      this.presenter.updateStatus(selector, country);
-    },
-
-    enableComparisonBtn: function() {
-      //Maybe easier way?
-      var selectors = ['country1', 'country2', 'country3'];
-      var values = [];
-      var self = this;
-      var $button = this.$el.find('.btn-compare');
-
-      $.each(selectors, function(index, value) {
-        var country = self.presenter.status.get(value);
-
-        if (country !== null && country !== 'no_country') {
-          values.push(country)
-        }
-      })
-
-      if (values.length > 1) {
-        $button.removeClass('is-disabled');
-      } else {
-        $button.addClass('is-disabled');
-      }
-    },
-
-    _invokeChosen: function() {
-      var countrySelectors = ['#country1', '#country2', '#country3'];
-      for(var i = 0; i < countrySelectors.length; i++) {
-        $(countrySelectors[i]).chosen();
-      }
-    },
-
-    _compareCountries: function() {
-      this.presenter.countriesSelected();
+      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
+        this.helper.draw(topology, 0, 'compare-figure'+tab, { alerts: true });
+      }, this ));
     }
 
   });
