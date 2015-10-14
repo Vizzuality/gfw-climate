@@ -26,11 +26,11 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Place/go': function(place) {
-        this._onPlaceGo(place);
+      'Place/go': function(params) {
+        this._onPlaceGo(params);
       },
-      'Compare/selection': function(place) {
-        this._onPlaceGo(place);
+      'Compare/selection': function(params) {
+        this._onPlaceGo(params);
       }
     }],
 
@@ -59,8 +59,8 @@ define([
       if (!!params.compare1 && !!params.compare2) {
 
         var complete = _.invoke([
-          country1  = new CountryModel({ id: params.compare1.iso }),
-          country2  = new CountryModel({ id: params.compare2.iso }),
+          country1 = new CountryModel({ id: params.compare1.iso }),
+          country2 = new CountryModel({ id: params.compare2.iso }),
         ], 'fetch');
 
         $.when.apply($, complete).done(function() {

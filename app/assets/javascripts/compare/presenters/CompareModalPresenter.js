@@ -26,7 +26,6 @@ define([
 
     setListeners: function() {
       this.status.on('change:compare1 change:compare2', this.changeCompare, this);
-
       this.status.on('change:compare1', function(model,compare){
         this.view.setCompare(1,compare);
         (!!model.get('compare2')) ? this.view.setCompare(2,model.get('compare2')) : null;
@@ -134,10 +133,8 @@ define([
       } else {
         this.status.set('country'+select, null);
         this.view.render();
-        this.status.set('compare'+select, null);
+        this.status.set('compare'+select, false);
       }
-
-      this.view.$('.content-wrapper').removeClass('is-loading');
     },
 
     changeJurisdiction: function(val) {

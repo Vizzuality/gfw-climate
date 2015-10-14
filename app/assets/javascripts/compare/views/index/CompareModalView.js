@@ -17,6 +17,8 @@ define([
 
     el: '.source_window',
 
+    areas : [{ name: 'Tree plantations',id: 1,},{ name: 'Protected areas',id: 2,},{ name: 'Primary forests',id: 3,},{ name: 'Moratorium areas',id: 4,},{ name: 'Mining concessions',id: 5,},{ name: 'Logging concessions',id: 6,},{ name: 'Plantation concessions',id: 7,},{ name: 'Key biodiversity areas',id: 8,}],
+
     events: function() {
       return _.extend({}, SourceWindowView.prototype.events, {
         'click .m-modal--tablink' : 'changeTab',
@@ -49,13 +51,13 @@ define([
 
     parseData: function() {
       // Ooops!!! This should be served by the API //
-      var country1  = this.presenter.status.get('country1');
-      var country2  = this.presenter.status.get('country2');
-      (country1) ? country1.areas = [{ name: 'TREE PLANTATIONS',id: 1,},{ name: 'PROTECTED AREAS',id: 2,},{ name: 'PRIMARY FORESTS',id: 3,},{ name: 'MORATORIUM AREAS',id: 4,},{ name: 'MINING CONCESSIONS',id: 5,},{ name: 'LOGGING CONCESSIONS',id: 6,},{ name: 'PLANTATION CONCESSIONS',id: 7,},{ name: 'KEY BIODIVERSITY AREAS',id: 8,}] : null;
-      (country2) ? country2.areas = [{ name: 'TREE PLANTATIONS',id: 1,},{ name: 'PROTECTED AREAS',id: 2,},{ name: 'PRIMARY FORESTS',id: 3,},{ name: 'MORATORIUM AREAS',id: 4,},{ name: 'MINING CONCESSIONS',id: 5,},{ name: 'LOGGING CONCESSIONS',id: 6,},{ name: 'PLANTATION CONCESSIONS',id: 7,},{ name: 'KEY BIODIVERSITY AREAS',id: 8,}] : null;
+      var country1  = this.status.get('country1');
+      var country2  = this.status.get('country2');
+      (country1) ? country1.areas = this.areas : null;
+      (country2) ? country2.areas = this.areas : null;
       // ***** //
       return {
-        countries: this.presenter.status.get('countries'),
+        countries: this.status.get('countries'),
         country1: country1,
         country2: country2,
       };
@@ -72,7 +74,7 @@ define([
     inits: function() {
       this.$selects.chosen({
         width: '100%',
-        inherit_select_classes: true,
+        // inherit_select_classes: true,
       });
       this.setTab();
     },
@@ -120,7 +122,7 @@ define([
 
     changeIso: function(e) {
       this.presenter.changeIso($(e.currentTarget).val());
-      this.$('.content-wrapper').addClass('is-loading');
+      (!!$(e.currentTarget).val()) ? this.$wrapper.addClass('is-loading') : null;
     },
 
     changeJurisdiction: function(e) {
@@ -139,7 +141,7 @@ define([
       - setCompare
     */
     setTab: function(tab) {
-      var tab = this.presenter.status.get('tab');
+      var tab = this.status.get('tab');
 
       // Tablinks
       this.$tablinks.removeClass('is-active');
@@ -154,6 +156,7 @@ define([
     },
 
     setCompare: function(who,compare) {
+      this.$wrapper.removeClass('is-loading');
       if (compare) {
         var $select = $('#selection'+who).find('select'),
             $selectChosen = $('#selection'+who).find('.chosen-container'),

@@ -18,16 +18,8 @@ define([
       'click .m-compare-selector' : 'showModal'
     },
 
-    areasOfInterest: [
-      { name: 'tree plantations',id: 1,},
-      { name: 'protected areas',id: 2,},
-      { name: 'primary forests',id: 3,},
-      { name: 'moratorium areas',id: 4,},
-      { name: 'mining concessions',id: 5,},
-      { name: 'logging concessions',id: 6,},
-      { name: 'plantation concessions',id: 7,},
-      { name: 'key biodiversity areas',id: 8,}
-    ],
+    areasOfInterest: [{ name: 'Tree plantations',id: 1,},{ name: 'Protected areas',id: 2,},{ name: 'Primary forests',id: 3,},{ name: 'Moratorium areas',id: 4,},{ name: 'Mining concessions',id: 5,},{ name: 'Logging concessions',id: 6,},{ name: 'Plantation concessions',id: 7,},{ name: 'Key biodiversity areas',id: 8,}],
+
 
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
@@ -50,15 +42,9 @@ define([
     },
 
     render: function() {
-      var selection = this._parseData();
-
-      this.$el.html(this.template({'selection': selection}));
-
-      var that = this;
-
-      $.each(selection, function() {
-        that._drawCountries(this.iso, this.containerId);
-      })
+      this.$el.html(this.template(this._parseData()));
+      (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
+      (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
     },
 
     _parseData: function() {
@@ -70,38 +56,40 @@ define([
         tab: '1',
         iso: country1.iso || null,
         name: country1.name || null,
-        jurisdiction: this.status.get('compare1').jurisdiction && this.status.get('compare1').jurisdiction != 0 ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
-        area: this.status.get('compare1').area && this.status.get('compare1').area != 0 ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare1').area }).name : null,
-        containerId: country1.iso + this.status.get('compare1').jurisdiction + this.status.get('compare1').area
+        jurisdiction: (!!~~this.status.get('compare1').jurisdiction) ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
+        area: (!!~~this.status.get('compare1').area) ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare1').area }).name : null,
       };
 
       var select2 = {
         tab: '2',
         iso: country2.iso || null,
         name: country2.name || null,
-        jurisdiction: this.status.get('compare2').jurisdiction && this.status.get('compare2').jurisdiction != 0 ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
-        area: this.status.get('compare2').area && this.status.get('compare2').area != 0 ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare2').area }).name : null,
-        containerId: country2.iso + this.status.get('compare2').jurisdiction + this.status.get('compare2').area
+        jurisdiction: (!!~~this.status.get('compare2').jurisdiction) ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
+        area: (!!~~this.status.get('compare2').area) ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare2').area }).name : null,
       };
 
       selection.push(select1);
       selection.push(select2);
 
-      return selection;
+      return { selection: selection };
     },
 
-    _drawCountries: function(iso, containerId) {
-      var that = this;
-
-      var sql = ['SELECT c.iso, c.enabled, m.the_geom',
-                 'FROM ne_50m_admin_0_countries m, gfw2_countries c',
-                 'WHERE c.iso = m.adm0_a3 AND c.enabled',
-                 "AND c.iso = '"+iso+"'&format=topojson"].join(' ');
+    _drawCountries: function(tab) {
+      var compare = this.status.get('compare'+tab);
+      if (!!compare.iso && !!compare.jurisdiction) {
+        var sql = ["SELECT m.the_geom",
+                   "FROM gadm_1_all m",
+                   "WHERE m.iso = '"+compare.iso+"'",
+                   "AND m.id_1 = '"+compare.jurisdiction+"'&format=topojson"].join(' ');
+      } else {
+        var sql = ["SELECT m.the_geom",
+                   "FROM ne_50m_admin_0_countries m",
+                   "WHERE m.adm0_a3 = '"+compare.iso+"'&format=topojson"].join(' ');
+      }
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
-        this.helper.draw(topology, 0, containerId, { alerts: true });
+        this.helper.draw(topology, 0, 'compare-figure'+tab, { alerts: true });
       }, this ));
-
     }
 
   });

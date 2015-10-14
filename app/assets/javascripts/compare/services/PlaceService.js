@@ -212,12 +212,8 @@ define([
       p.name = this._name ? this._name : null;
 
       // We have to develop this with our params
-      if (p.compare1) {
-        p.compare1 = p.compare1.iso + '+' + p.compare1.jurisdiction + '+' + p.compare1.area;
-      }
-      if (p.compare2) {
-        p.compare2 = p.compare2.iso + '+' + p.compare2.jurisdiction + '+' + p.compare2.area;
-      }
+      p.compare1 = (p.compare1) ? p.compare1.iso + '+' + p.compare1.jurisdiction + '+' + p.compare1.area : null;
+      p.compare2 = (p.compare2) ? p.compare2.iso + '+' + p.compare2.jurisdiction + '+' + p.compare2.area : null;
 
       if (p.options) {
         p.options = btoa(JSON.stringify(p.options));
