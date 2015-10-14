@@ -1,9 +1,10 @@
 define([
   'backbone',
   'handlebars',
+  'underscore',
   'views/WidgetView',
   'text!countries/templates/country-national-grid.handlebars'
-], function(Backbone, Handlebars, WidgetView, tpl) {
+], function(Backbone, Handlebars, _, WidgetView, tpl) {
 
   var NationalView = Backbone.View.extend({
 
@@ -16,22 +17,36 @@ define([
       this.countryModel = options.model;
     },
 
+    _getWidgetsId: function() {
+      return _.keys(this.widgets);
+    },
+
     render: function() {
+      var widgets = [],
+        promises = [],
+        widgetsId = this._getWidgetsId();
+
       this.$el.html(this.template);
 
-      var promises = [],
-        widgets = [];
+      widgetsId.forEach(_.bind(function(id) {
 
-      this.widgets.forEach(_.bind(function(id) {
-        var deferred = $.Deferred();
-        var currentWidget = new WidgetView({id: id});
+        if (_.has(this.widgets, id)) {
 
-        widgets.push(currentWidget);
-        currentWidget._loadMetaData(function(data) {
-          deferred.resolve(data);
-        });
+          var deferred = $.Deferred();
+          var currentWidget = new WidgetView({
+            id: id,
+            options: this.widgets[id]
+          });
 
-        promises.push(deferred);
+          widgets.push(currentWidget);
+
+          currentWidget._loadMetaData(function(data) {
+            deferred.resolve(data);
+          });
+
+          promises.push(deferred);
+        }
+
       }, this));
 
       var self = this;

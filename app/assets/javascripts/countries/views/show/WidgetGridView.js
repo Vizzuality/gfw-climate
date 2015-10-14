@@ -22,12 +22,11 @@ define([
 
       this._setListeners();
       this._cacheVars();
-
-      this._toggleWarnings();
     },
 
     start: function(countryModel) {
       this.CountryModel = countryModel;
+      this._toggleWarnings();
       this.render();
     },
 
@@ -42,7 +41,7 @@ define([
     },
 
     _toggleWarnings: function() {
-      var widgetsOnGrid = this.presenter.status.attributes.widgets.length;
+      var widgetsOnGrid = Object.keys(this.presenter.status.get('widgets')).length;
 
       if (widgetsOnGrid > 0) {
         this.$moreIndicatorsWarning.removeClass('is-hidden');
@@ -52,7 +51,6 @@ define([
         this.$noIndicatorsWarning.removeClass('is-hidden');
       }
     },
-
 
     _setDisplay: function(display) {
       this.presenter.status.set({
@@ -116,16 +114,12 @@ define([
     },
 
     render: function() {
-      var subview;
-      var view = this.presenter.status.attributes.view,
-        enabledWidgets = this.presenter.status.attributes.widgets;
+      var subview,
+        view = this.presenter.status.get('view');
       var options = {
-        widgets: enabledWidgets,
+        widgets: this.presenter.status.get('widgets'),
         model: this.CountryModel
       };
-
-
-      this._toggleWarnings();
 
       switch(view) {
 
