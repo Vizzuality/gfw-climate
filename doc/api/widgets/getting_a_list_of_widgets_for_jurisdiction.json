@@ -1,0 +1,59 @@
+{
+  "resource": "Widgets",
+  "http_method": "GET",
+  "route": "/api/widgets",
+  "description": "Getting a list of widgets for jurisdiction",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "iso",
+      "description": "Country iso"
+    },
+    {
+      "name": "id_1",
+      "description": "Jurisdiction id"
+    },
+    {
+      "name": "thresh",
+      "description": "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/widgets?iso=aus&id_1=5&thresh=50",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "iso": "aus",
+        "id_1": "5",
+        "thresh": "50"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"widgets\":[{\"id\":1,\"name\":\"Deforestation rate\",\"data\":\"/api/widgets/1/aus/5?thresh=50\"},{\"id\":2,\"name\":\"Carbon emissions\",\"data\":\"/api/widgets/2/aus/5?thresh=50\"},{\"id\":3,\"name\":\"Forest area 2000\",\"data\":\"/api/widgets/3/aus/5?thresh=50\"},{\"id\":4,\"name\":\"Biomas s carbon stocks\",\"data\":\"/api/widgets/4/aus/5?thresh=50\"},{\"id\":5,\"name\":\"Aboveground biomass density\",\"data\":\"/api/widgets/5/aus/5?thresh=50\"},{\"id\":6,\"name\":\"Emerging hotspots\",\"data\":\"/api/widgets/6/aus/5?thresh=50\"}]}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"53c0b3689256ec22c0a5b4f6d085c8e0\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "83841e44-9822-4da6-8e87-bc72fe117a72",
+        "X-Runtime": "0.007173",
+        "Content-Length": "483"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets?iso=aus&id_1=5&thresh=50\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}

@@ -53,13 +53,37 @@ define([
 
   'use strict';
 
-  var urlDefaultsParams = {};
+  // Default Options
+  // {
+  //   "gridStatus" : {
+  //     "view": "national",
+  //     "treshold": 30,
+  //     "widgets":{
+  //       "1": {
+  //         "average": null,
+  //         "indicator": 1,
+  //         "treshold": 30,
+  //         "unit": null
+  //       },
+  //       "2":{
+  //         "average": null,
+  //         "indicator": 1,
+  //         "treshold":30,
+  //         "unit": null
+  //       }
+  //     }
+  //   }
+  // }
+
+  var urlDefaultsParams = {
+    options: 'ICB7DQogICJncmlkU3RhdHVzIiA6IHsNCiAgICAgInZpZXciOiAibmF0aW9uYWwiLA0KICAgICAidHJlc2hvbGQiOiAzMCwNCiAgICAgIndpZGdldHMiOnsNCiAgICAgIjEiOiB7DQogICAgICAgImF2ZXJhZ2UiOiBudWxsLA0KICAgICAgICJpbmRpY2F0b3IiOiAxLA0KICAgICAgICJ0cmVzaG9sZCI6IDMwLA0KICAgICAgICJ1bml0IjogbnVsbA0KICAgICB9LA0KICAgICAiMiI6ew0KICAgICAgImF2ZXJhZ2UiOiBudWxsLA0KICAgICAgImluZGljYXRvciI6IDEsDQogICAgICAidHJlc2hvbGQiOjMwLA0KICAgICAgInVuaXQiOiBudWxsDQogICAgIH0NCiAgIH0NCiB9DQp9'
+  };
+
+  var widgetStatus = {};
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/country}{/area}{?display,widgets}',
-
-    // _uriTemplate: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}',
+    _uriTemplate: 'countries{/country}{/area}{?options}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -69,7 +93,6 @@ define([
     init: function(router) {
       this.router = router;
       this._presenters = [];
-      this._name = null;
       this.params = {};
       this._super();
     },
@@ -94,8 +117,7 @@ define([
      * @param  {String} name   Place name
      * @param  {Object} params Url params
      */
-    initPlace: function(name, params) {
-      this._name = name;
+    initPlace: function(params) {
       this._newPlace(params);
     },
 
@@ -141,15 +163,11 @@ define([
      * @return {Object} The standardized params.
      */
     _standardizeParams: function(params) {
-      var p = _.extendNonNull({}, this.params, params);
-      p.name = this._name ? this._name : null;
+      var p = _.extendNonNull({}, urlDefaultsParams, params);
 
-
-      // We have to develop this with our params
       p.country = p.country ? p.country : null;
       p.area = p.area ? p.area : null;
-      // p.country2 = p.country2 ? p.country2.toString() : null;
-      // p.country3 = p.country3 ? p.country3.toString() : null;
+      p.options = p.options ? JSON.parse(atob(p.options)) : null;
 
       return p;
     },
@@ -163,14 +181,17 @@ define([
      */
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, this.params, params);
-      p.name = this._name ? this._name : null;
 
-      // We have to develop this with our params
       p.country = p.country ? p.country : null;
       p.area = p.area ? p.area : null;
-      // p.country2 = p.country2 ? p.country2.toString() : null;
-      // p.country3 = p.country3 ? p.country3.toString() : null;
-      //
+
+      var localOptions = {
+        view : p.view ? p.view : null,
+        widgets: p.widgetStatus ? p.widgetStatus : null,
+        treshold: p.treshold ? p.treshold : null
+      };
+
+      p.options = btoa(JSON.stringify(localOptions));
 
       return p;
     },
@@ -187,7 +208,12 @@ define([
 
       _.each(presenters, function(presenter) {
         _.extend(p, presenter.getPlaceParams());
+        if (p.hasOwnProperty('widgetStatus')) {
+          widgetStatus[p.widgetStatus.id] = p.widgetStatus;
+        }
       }, this);
+
+      p.widgetStatus = widgetStatus;
 
       return p;
     }

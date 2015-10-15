@@ -1,0 +1,61 @@
+{
+  "resource": "Indicators",
+  "http_method": "GET",
+  "route": "/api/indicators/:id/:iso/:id_1",
+  "description": "Getting a specific indicator for jurisdiction",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "id",
+      "description": "ID of indicator"
+    },
+    {
+      "name": "iso",
+      "description": "ISO of country (bra, chn...)"
+    },
+    {
+      "name": "id_1",
+      "description": "ID of jurisdiction"
+    },
+    {
+      "name": "thresh",
+      "description": "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/indicators/1/bra/1?thresh=10",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "thresh": "10"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"values\":[{\"indicator_id\":1,\"cartodb_id\":51188,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":0,\"value\":506764317.8},{\"indicator_id\":1,\"cartodb_id\":51189,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2001,\"value\":2795109.639},{\"indicator_id\":1,\"cartodb_id\":51190,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2002,\"value\":3561102.272},{\"indicator_id\":1,\"cartodb_id\":51191,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2003,\"value\":3304193.859},{\"indicator_id\":1,\"cartodb_id\":51192,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2004,\"value\":3914041.361},{\"indicator_id\":1,\"cartodb_id\":51193,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2005,\"value\":3523016.092},{\"indicator_id\":1,\"cartodb_id\":51194,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2006,\"value\":2922774.364},{\"indicator_id\":1,\"cartodb_id\":51195,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2007,\"value\":2668217.715},{\"indicator_id\":1,\"cartodb_id\":51196,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2008,\"value\":2490893.866},{\"indicator_id\":1,\"cartodb_id\":51197,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2009,\"value\":1853576.677},{\"indicator_id\":1,\"cartodb_id\":51198,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2010,\"value\":2742235.265},{\"indicator_id\":1,\"cartodb_id\":51199,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2011,\"value\":1958751.495},{\"indicator_id\":1,\"cartodb_id\":51200,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2012,\"value\":2997139.153},{\"indicator_id\":1,\"cartodb_id\":51201,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2013,\"value\":2030638.748},{\"indicator_id\":1,\"cartodb_id\":51202,\"iso\":\"BRA\",\"thresh\":10,\"country_name\":\"Brazil\",\"year\":2014,\"value\":2351707.677}]}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"cc50dc01588b098bdd379298344ddd9e\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "5c016fa5-7bfd-4408-b7e5-420e0751ba1c",
+        "X-Runtime": "0.460811",
+        "Content-Length": "1779"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/indicators/1/bra/1?thresh=10\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}

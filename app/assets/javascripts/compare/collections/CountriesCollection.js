@@ -13,6 +13,6 @@ define([
 
   });
 
-  return new CountriesCollection();
+  return CountriesCollection;
 
 });

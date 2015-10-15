@@ -1,8 +1,8 @@
 define([
   'mps',
-  'countries/models/CountryModel',
+  'underscore',
   'countries/presenters/PresenterClass'
-], function(mps, model, PresenterClass) {
+], function(mps,underscore, PresenterClass) {
 
   'use strict';
 
@@ -11,7 +11,8 @@ define([
     init: function(view) {
       this.view = view;
       this._super();
-      this.model = model;
+
+      this.status = new (Backbone.Model.extend());
 
       mps.publish('Place/register', [this]);
     },
@@ -23,6 +24,10 @@ define([
       'Place/go': function(place) {
         this._onPlaceGo(place);
       }
+    }, {
+      'CountryModel/Fetch': function(countryModel) {
+        this.view.start(countryModel);
+      }
     }],
 
     /**
@@ -33,58 +38,46 @@ define([
     getPlaceParams: function() {
       var p = {};
 
-      // Fill with incoming params
-
+      p.widgetGridStatus = {
+        view: this.status.get('view'),
+        widgets: this.status.get('widgets')
+      };
 
       return p;
     },
 
-    // Subscriptions at develop. Maybe we will need them in a while...
-    // _subscriptions: [{
-    //   'Widgets/render': function(widgets) {
-    //     this.view._setWidgets(widgets);
-    //   }
-    // }, {
-    //   'CountryHeader/switchDisplay': function(display) {
-    //     this.view._setDisplay(display);
-    //   },
-    //   'Tabs/setDisplay': function(display) {
-    //     this.view._setDisplay(display);
-    //   }
-    // }],
+    /**
+     * Triggered from 'Place/Go' events.
+     *
+     * @param  {Object} place PlaceService's place object
+     */
+    _onPlaceGo: function(place) {
+      this._setupView(place);
+    },
 
     /**
-     * Trigger the selected display option
-     * @param  {[string]} display
-     * Add below events publication
+     * Get the keys (widget's id) from an object
+     * @param  {[object]} widgets
+     * @return {[array]} array with widget's id will be displayed
      */
-
-
-
-
-     /**
-      * Triggered from 'Place/Go' events.
-      *
-      * @param  {Object} place PlaceService's place object
-      */
-    _onPlaceGo: function(place) {
-      var iso = place.country;
-      this._keepIso(iso);
-      this._retrieveData(iso);
+    _getWidgetsIds: function(widgets) {
+      return _.keys(widgets);
     },
 
-    _keepIso: function(iso) {
-      sessionStorage.setItem('countryIso', iso);
-    },
+    /**
+     * Setup the view with the params coming from PlaceService.
+     * If there is no params from PlaceSerice, it will be setup
+     * with the default ones.
+     * @param  {[object]} params
+     */
+    _setupView: function(params) {
+      var gridStatus = params.options.gridStatus ? params.options.gridStatus : null,
+        widgetStatus = gridStatus ? gridStatus.widgets : null;
 
-    _retrieveData: function(iso) {
-      this.model.setCountry(iso);
-
-      var complete = _.invoke([this.model], 'fetch');
-
-      $.when($, complete).done(function() {
-        this.view.start(this.model);
-      }.bind(this));
+      this.status.set({
+        view: gridStatus ? gridStatus.view : null,
+        widgets: widgetStatus ? widgetStatus : null
+      });
     },
 
     _onOpenModal: function() {

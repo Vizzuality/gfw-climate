@@ -28,7 +28,6 @@ node :country do
                    },
     tenure:        @country['tenure'][0],
     forests:       @country['forests'],
-    umd:           @country['umd'],
     jurisdictions: @country['subnat_bounds'].map do |territory| 
                      {
                        name:       territory['name_1'],

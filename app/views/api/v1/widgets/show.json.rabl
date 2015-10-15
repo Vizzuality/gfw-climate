@@ -2,37 +2,47 @@ object false
 
 node :widget do
   {
-    id:   @widget.id,
-    name: @widget.name,
-    type: @widget.type,
-    indicators: @widget.indicators.map do |indicator|
-                  {  
-                    id:   indicator['id'],
-                    name: indicator['name'],
-                    data: data_url(indicator['id'], indicator['data_source'])
-                  }
-                end
+    id:         @widget.id,
+    name:       @widget.name,
+    tabs:       tabs,
+    indicators: indicators
   }
 end
 
-def data_url(id, source) 
+def tabs
+  @widget.tabs.map do |tab|
+    {  
+      position:  tab['position'],
+      name:      tab['name'],
+      type:      tab['type']
+    }
+  end rescue nil
+end
+
+def indicators
+  @widget.indicators.map do |indicator|
+    {  
+      id:        indicator['id'],
+      name:      indicator['name'],
+      type:      indicator['type'],
+      unit:      indicator['unit'],
+      tab:       indicator['tab'],
+      section:   indicator['section'],
+      direction: indicator['direction'],
+      data:      data_url(indicator['id'])
+    }
+  end rescue nil
+end
+
+def data_url(id) 
   country = params[:iso]
   region  = params[:id_1]
   thresh  = params[:thresh]
 
-  url = case source
-        when 'UMD'
-          path =  "/api/countries/#{ country }" if country.present?
-          path += "/#{ region }"                if region.present?
-          path += "?thresh=#{ thresh }"         if thresh.present?
-          path
-        else
-          path =  "/api/indicators/#{ id }"
-          path += "/#{ country }"       if country.present?
-          path += "/#{ region }"        if region.present?
-          path += "?thresh=#{ thresh }" if thresh.present?
-          path
-        end
+  url =  "/api/indicators/#{ id }"
+  url += "/#{ country }"       if country.present?
+  url += "/#{ region }"        if region.present?
+  url += "?thresh=#{ thresh }" if thresh.present?
 
   url.to_s
 end

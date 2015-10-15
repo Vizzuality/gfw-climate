@@ -10,46 +10,34 @@ define([
     el: '.display-tabs',
 
     events: {
-      'click li' : '_setCurrentTab'
+      'click li' : '_onClick'
     },
 
     initialize: function(params) {
       this.presenter = new TabsPresenter(this);
     },
 
-    start: function(params) {
-      this._setCurrentTab(null, this.presenter.status.attributes.data);
+    start: function() {
+      this._setCurrentTab();
     },
 
     /**
-     * Set the new display value
-     * @param {[string]} display
+     * Get the value give by the tab data
+     * and inform the presenter about it.
      */
-    _setDisplay: function(display) {
-      this.presenter._updateTab(display);
+    _onClick: function(e) {
+      var display = $(e.currentTarget).data('display');
+      this.presenter.setDisplay(display);
     },
 
     /**
      * Add 'is-selected' class to current tab.
-     * Sends the new display value.
-     * @param click event
      */
-    _setCurrentTab: function(e, display) {
-      var $currentTab;
-      var newDisplay;
-
-      if (e) {
-        $currentTab = $(e.currentTarget);
-        newDisplay = $currentTab.data('display')
-      } else {
-        $currentTab = this.$el.find('li[data-display="' + display + '"]');
-        newDisplay = display;
-      }
+    _setCurrentTab: function() {
+      var $currentTab = this.$el.find('li[data-display="' + this.presenter.status.get('view') + '"]');
 
       this.$el.find('li').removeClass('is-selected');
       $currentTab.addClass('is-selected');
-
-      this._setDisplay(newDisplay);
     }
 
   });
