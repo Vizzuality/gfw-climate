@@ -1,8 +1,8 @@
 {
   "resource": "Indicators",
   "http_method": "GET",
-  "route": "/api/indicators/:id/:iso",
-  "description": "Getting a specific indicator for country",
+  "route": "/api/indicators/:id/:iso/:id_1",
+  "description": "Getting a specific indicator for jurisdiction",
   "explanation": null,
   "parameters": [
     {
@@ -12,6 +12,10 @@
     {
       "name": "iso",
       "description": "ISO of country (bra, chn...)"
+    },
+    {
+      "name": "id_1",
+      "description": "ID of jurisdiction"
     },
     {
       "name": "thresh",
@@ -24,7 +28,7 @@
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/api/indicators/1/bra?thresh=10",
+      "request_path": "/api/indicators/1/bra/1?thresh=10",
       "request_body": null,
       "request_headers": {
         "Accept": "application/json; application/gfwc-v1+json",
@@ -46,12 +50,12 @@
         "Content-Type": "application/json; charset=utf-8",
         "ETag": "W/\"cc50dc01588b098bdd379298344ddd9e\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "eccf5214-abe5-4760-b868-8188871e7509",
-        "X-Runtime": "0.474420",
+        "X-Request-Id": "5c016fa5-7bfd-4408-b7e5-420e0751ba1c",
+        "X-Runtime": "0.460811",
         "Content-Length": "1779"
       },
       "response_content_type": "application/json; charset=utf-8",
-      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/indicators/1/bra?thresh=10\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/indicators/1/bra/1?thresh=10\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
     }
   ]
 }

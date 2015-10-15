@@ -39,17 +39,17 @@
       "request_content_type": "application/json",
       "response_status": 200,
       "response_status_text": "OK",
-      "response_body": "{\"widget\":{\"id\":1,\"name\":\"Deforestation rate\",\"type\":\"line\",\"indicators\":[{\"id\":1,\"name\":\"Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)\",\"type\":\"line\",\"unit\":\"hectares\",\"data\":\"/api/indicators/1/aus/1\"},{\"id\":2,\"name\":\"Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)\",\"type\":\"line\",\"unit\":\"percentage\",\"data\":\"/api/indicators/2/aus/1\"},{\"id\":15,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"unit\":\"hectares\",\"data\":\"/api/indicators/15/aus/1\"},{\"id\":16,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"unit\":\"percentage\",\"data\":\"/api/indicators/16/aus/1\"},{\"id\":31,\"name\":\"National Data (IPCC Approach 2/3)\",\"type\":\"line\",\"unit\":\"hectares\",\"data\":\"/api/indicators/31/aus/1\"},{\"id\":32,\"name\":\"National Data (IPCC Approach 2/3)\",\"type\":\"line\",\"unit\":\"percentage\",\"data\":\"/api/indicators/32/aus/1\"}]}}",
+      "response_body": "{\"widget\":{\"id\":1,\"name\":\"Deforestation rate\",\"tabs\":[{\"position\":1,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\"},{\"position\":2,\"name\":\"Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)\",\"type\":\"line\"},{\"position\":3,\"name\":\"National Data (IPCC Approach 2/3)\",\"type\":\"line\"}],\"indicators\":[{\"id\":1,\"name\":\"Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)\",\"type\":\"line\",\"unit\":\"hectares\",\"tab\":2,\"section\":null,\"direction\":null,\"data\":\"/api/indicators/1/aus/1\"},{\"id\":2,\"name\":\"Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)\",\"type\":\"line\",\"unit\":\"percentage\",\"tab\":2,\"section\":null,\"direction\":null,\"data\":\"/api/indicators/2/aus/1\"},{\"id\":15,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"unit\":\"hectares\",\"tab\":1,\"section\":null,\"direction\":null,\"data\":\"/api/indicators/15/aus/1\"},{\"id\":16,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"unit\":\"percentage\",\"tab\":1,\"section\":null,\"direction\":null,\"data\":\"/api/indicators/16/aus/1\"},{\"id\":31,\"name\":\"National Data (IPCC Approach 2/3)\",\"type\":\"line\",\"unit\":\"hectares\",\"tab\":3,\"section\":null,\"direction\":null,\"data\":\"/api/indicators/31/aus/1\"},{\"id\":32,\"name\":\"National Data (IPCC Approach 2/3)\",\"type\":\"line\",\"unit\":\"percentage\",\"tab\":3,\"section\":null,\"direction\":null,\"data\":\"/api/indicators/32/aus/1\"}]}}",
       "response_headers": {
         "X-Frame-Options": "SAMEORIGIN",
         "X-XSS-Protection": "1; mode=block",
         "X-Content-Type-Options": "nosniff",
         "Content-Type": "application/json; charset=utf-8",
-        "ETag": "W/\"46ae2bc8ff9c258820deef355e368d42\"",
+        "ETag": "W/\"2ea03f437aa3b9e8ad1adfa87d4d02f2\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "227467be-b9c0-495d-8e37-d6acc4d367d6",
-        "X-Runtime": "0.003498",
-        "Content-Length": "826"
+        "X-Request-Id": "aa4509e5-d412-4e98-983d-03e17775a62e",
+        "X-Runtime": "0.002956",
+        "Content-Length": "1294"
       },
       "response_content_type": "application/json; charset=utf-8",
       "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets/1?iso=aus&id_1=1\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""

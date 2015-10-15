@@ -49,6 +49,11 @@
           "groups": "all"
         },
         {
+          "description": "Getting a specific indicator for jurisdiction",
+          "link": "indicators/getting_a_specific_indicator_for_jurisdiction.json",
+          "groups": "all"
+        },
+        {
           "description": "Getting a specific indicator with thresh 15",
           "link": "indicators/getting_a_specific_indicator_with_thresh_15.json",
           "groups": "all"
@@ -59,8 +64,18 @@
       "name": "Widgets",
       "examples": [
         {
-          "description": "Getting a list of enabled widgets",
-          "link": "widgets/getting_a_list_of_enabled_widgets.json",
+          "description": "Getting a list of widgets",
+          "link": "widgets/getting_a_list_of_widgets.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a list of widgets for country",
+          "link": "widgets/getting_a_list_of_widgets_for_country.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a list of widgets for jurisdiction",
+          "link": "widgets/getting_a_list_of_widgets_for_jurisdiction.json",
           "groups": "all"
         },
         {
