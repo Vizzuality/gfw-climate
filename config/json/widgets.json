@@ -8,7 +8,8 @@
       {
         "position": 1,
         "name": "FAO FRA 2015 (IPCC Approach 1)",
-        "type": "line"
+        "type": "line",
+        "default": true
       },
       {
         "position": 2,
@@ -27,7 +28,8 @@
         "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
         "type": "line",
         "unit": "hectares",
-        "tab": 2
+        "tab": 2,
+        "default": true
       },
       {
         "id": 2,
@@ -75,7 +77,8 @@
       {
         "position": 1,
         "name": "Faostat (IPCC Tier 1)",
-        "type": "line"
+        "type": "line",
+        "default": true
       },
       {
         "position": 2,
@@ -94,7 +97,8 @@
         "name": "Faostat (IPCC Tier 1)",
         "type": "line",
         "unit": "Tg C",
-        "tab": 1
+        "tab": 1,
+        "default": true
       },
       {
         "id": 30,
@@ -142,7 +146,8 @@
       {
         "position": 1,
         "name": "Hansen/Google/UMD",
-        "type": "number"
+        "type": "number",
+        "default": true
       },
       {
         "position": 2,
@@ -161,7 +166,8 @@
         "name": "Hansen/Google/UMD",
         "type": "number",
         "unit": "hectares",
-        "tab": 1
+        "tab": 1,
+        "default": true
       },
       {
         "id": 17,
@@ -195,7 +201,8 @@
       {
         "position": 1,
         "name": "Woods Hole/Baccini",
-        "type": "pie"
+        "type": "pie",
+        "default": true,
       },
       {
         "position": 2,
@@ -216,7 +223,8 @@
         "unit": "percentage",
         "tab": 1,
         "section": "biomass",
-        "direction": "aboveground"
+        "direction": "aboveground",
+        "default": true,
       },
       {
         "id": 5,
@@ -234,7 +242,8 @@
         "unit": "percentage",
         "tab": 1,
         "section": "biomass",
-        "direction": "belowground"
+        "direction": "belowground",
+        "default": true,
       },
       {
         "id": 7,
@@ -251,7 +260,8 @@
         "type": "total",
         "unit": "number",
         "tab": 1,
-        "section": "biomass"
+        "section": "biomass",
+        "default": true,
       },
       {
         "id": 9,
@@ -428,7 +438,8 @@
       {
         "position": 1,
         "name": "Woods Hole/Baccini",
-        "type": "pie"
+        "type": "pie",
+        "default": true,
       },
       {
         "position": 2,
@@ -449,7 +460,8 @@
         "unit": "percentage",
         "tab": 1,
         "section": "biomass",
-        "direction": "aboveground"
+        "direction": "aboveground",
+        "default": true,
       },
       {
         "id": 5,
@@ -467,7 +479,8 @@
         "unit": "percentage",
         "tab": 1,
         "section": "biomass",
-        "direction": "belowground"
+        "direction": "belowground",
+        "default": true,
       },
       {
         "id": 7,
@@ -484,7 +497,8 @@
         "type": "total",
         "unit": "number",
         "tab": 1,
-        "section": "biomass"
+        "section": "biomass",
+        "default": true,
       },
       {
         "id": 9,
@@ -663,6 +677,7 @@
         "name": "Emerging hotspots",
         "type": "map",
         "unit": "number"
+        "default": true,
       }
     ]
   }
