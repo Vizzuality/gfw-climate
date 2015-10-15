@@ -20,6 +20,10 @@ resource 'Compare countries' do
       expect(countries[1]['iso']).to eq('AUS')
       expect(countries[2]['name']).to eq('Oberösterreich')
       expect(countries[2]['iso']).to eq('AUT')
+
+      # Widgets url's
+      expect(countries[0]['widgets'].count).to eq(6)
+      expect(countries[0]['widgets'][0]['data']).to eq('/api/widgets/1/BRA')
     end
 
     example "Getting a list of one country and two jurisdictions for compare", document: false do

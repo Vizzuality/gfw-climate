@@ -2,19 +2,36 @@ object false
 
 node :widget do
   {
-    id:   @widget.id,
-    name: @widget.name,
-    type: @widget.type,
-    indicators: @widget.indicators.map do |indicator|
-                  {  
-                    id:   indicator['id'],
-                    name: indicator['name'],
-                    type: indicator['type'],
-                    unit: indicator['unit'],
-                    data: data_url(indicator['id'])
-                  }
-                end
+    id:         @widget.id,
+    name:       @widget.name,
+    tabs:       tabs,
+    indicators: indicators
   }
+end
+
+def tabs
+  @widget.tabs.map do |tab|
+    {  
+      position:  tab['position'],
+      name:      tab['name'],
+      type:      tab['type']
+    }
+  end rescue nil
+end
+
+def indicators
+  @widget.indicators.map do |indicator|
+    {  
+      id:        indicator['id'],
+      name:      indicator['name'],
+      type:      indicator['type'],
+      unit:      indicator['unit'],
+      tab:       indicator['tab'],
+      section:   indicator['section'],
+      direction: indicator['direction'],
+      data:      data_url(indicator['id'])
+    }
+  end rescue nil
 end
 
 def data_url(id) 

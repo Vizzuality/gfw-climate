@@ -6,11 +6,32 @@ resource 'Widgets' do
   header 'Host', 'gfwc-staging.herokuapp.com'
 
   get "/api/widgets" do
-    example_request "Getting a list of enabled widgets" do
+    parameter :iso, "Country iso"
+    parameter :id_1, "Jurisdiction id"
+    parameter :thresh, "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+
+    example_request "Getting a list of widgets" do
       expect(status).to eq(200)
       widgets = JSON.parse(response_body)['widgets']
 
       expect(widgets.length).to eq(6)
+    end
+
+    example "Getting a list of widgets for country" do
+      do_request(iso: 'aus')
+      expect(status).to eq(200)
+      widgets = JSON.parse(response_body)['widgets']
+
+      expect(widgets.length).to eq(6)
+    end
+
+    example "Getting a list of widgets for jurisdiction" do
+      do_request(iso: 'aus', id_1: 5, thresh: 50)
+      expect(status).to eq(200)
+      widgets = JSON.parse(response_body)['widgets']
+
+      expect(widgets.length).to eq(6)
+      expect(widgets[0]['data']).to eq('/api/widgets/1/aus/5?thresh=50')
     end
   end
 
@@ -23,8 +44,10 @@ resource 'Widgets' do
       expect(status).to eq(200)
       widget = JSON.parse(response_body)['widget']
       
+      expect(widget['tabs'][0]['position']).to eq(1)
       expect(widget['indicators'][0]['data']).to eq('/api/indicators/1/aus')
       expect(widget['indicators'][2]['data']).to eq('/api/indicators/15/aus')
+      expect(widget['indicators'][0]['tab']).to eq(2)
     end
 
     example_request "Getting a specific widget by id for a juridiction", id: 1, iso: 'aus', id_1: 1 do
@@ -39,6 +62,7 @@ resource 'Widgets' do
       expect(status).to eq(200)
       widget = JSON.parse(response_body)['widget']
       
+      expect(widget['tabs'][2]['position']).to eq(3)
       expect(widget['indicators'][0]['data']).to eq('/api/indicators/1/aus/1?thresh=15')
       expect(widget['indicators'][2]['data']).to eq('/api/indicators/15/aus/1?thresh=15')
     end
