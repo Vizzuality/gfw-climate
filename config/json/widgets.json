@@ -4,6 +4,24 @@
     "name": "Deforestation rate",
     "type": "line",
     "default_thresh": "25",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "FAO FRA 2015 (IPCC Approach 1)",
+        "type": "line"
+      },
+      {
+        "position": 2,
+        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
+        "type": "line"
+      },
+      {
+        "position": 3,
+        "name": "National Data (IPCC Approach 2/3)",
+        "type": "line"
+      }
+    ],
     "indicators": [
       {
         "id": 1,
@@ -27,6 +45,24 @@
     "name": "Carbon emissions",
     "type": "line",
     "default_thresh": "25",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Faostat (IPCC Tier 1)",
+        "type": "line"
+      },
+      {
+        "position": 2,
+        "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
+        "type": "line"
+      },
+      {
+        "position": 3,
+        "name": "National Data (IPCC Tier 2)",
+        "type": "line"
+      }
+    ],
     "indicators": [
       {
         "id": 12,
@@ -50,6 +86,24 @@
     "name": "Forest area 2000",
     "type": "pie",
     "default_thresh": "25",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Hansen/Google/UMD",
+        "type": "number"
+      },
+      {
+        "position": 2,
+        "name": "FAO",
+        "type": "number"
+      },
+      {
+        "position": 3,
+        "name": "Compare All",
+        "type": "number"
+      }
+    ],
     "indicators": [
       {
         "id": 4,
@@ -63,6 +117,24 @@
     "name": "Biomas s carbon stocks",
     "type": "pie",
     "default_thresh": "25",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Woods Hole/Baccini",
+        "type": "pie"
+      },
+      {
+        "position": 2,
+        "name": "FAO",
+        "type": "pie"
+      },
+      {
+        "position": 3,
+        "name": "Compare All",
+        "type": "pie"
+      }
+    ],
     "indicators": [
       {
         "id": 4,
@@ -76,6 +148,24 @@
     "name": "Aboveground biomass density",
     "type": "pie",
     "default_thresh": "25",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Woods Hole/Baccini",
+        "type": "pie"
+      },
+      {
+        "position": 2,
+        "name": "FAO",
+        "type": "pie"
+      },
+      {
+        "position": 3,
+        "name": "Compare All",
+        "type": "pie"
+      }
+    ],
     "indicators": [
       {
         "id": 10,
@@ -94,6 +184,7 @@
     "name": "Emerging hotspots",
     "type": "pie",
     "default_thresh": "25",
+    "default": true,
     "indicators": [
       {
         "id": 4,
