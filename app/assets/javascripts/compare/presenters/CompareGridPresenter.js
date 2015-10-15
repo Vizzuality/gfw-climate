@@ -1,5 +1,5 @@
 define([
-  'Backbone',
+  'backbone',
   'mps',
   'compare/presenters/PresenterClass',
   'compare/services/CompareService'

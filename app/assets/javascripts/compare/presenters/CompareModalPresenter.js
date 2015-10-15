@@ -1,5 +1,5 @@
 define([
-  'Backbone',
+  'backbone',
   'mps',
   'compare/collections/CountriesCollection',
   'compare/models/CountryModel',
