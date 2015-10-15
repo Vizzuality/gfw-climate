@@ -2,7 +2,7 @@
  * Application entry point.
  */
 require([
-  'jquery'
+  'jquery',
   'backbone',
   'compare/router',
   'compare/views/CompareIndexView'
