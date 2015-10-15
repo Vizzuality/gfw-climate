@@ -9,7 +9,7 @@ module Api::V1
 
     private
       def filter_params
-        params.permit(:path, :thresh)
+        params.permit(:path, :thresh, :format)
       end
 
   end

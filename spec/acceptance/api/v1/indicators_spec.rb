@@ -78,4 +78,20 @@ resource 'Indicators' do
     end
   end
 
+  get "/api/indicators/:id/:iso/:id_1" do
+    parameter :id, "ID of indicator"
+    parameter :iso, "ISO of country (bra, chn...)"
+    parameter :id_1, "ID of jurisdiction"
+    parameter :thresh, "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+
+    example_request "Getting a specific indicator for jurisdiction", id: 1, iso: 'bra', id_1: 1, thresh: 10 do
+      expect(status).to eq(200)
+      value = JSON.parse(response_body)['values'][0]
+      
+      expect(value['iso']).to eq('BRA')
+      expect(value['country_name']).to eq('Brazil')
+      expect(value['thresh']).to eq(10)
+    end
+  end
+
 end
