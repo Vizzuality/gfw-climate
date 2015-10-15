@@ -54,8 +54,10 @@ define([
   'use strict';
 
   var urlDefaultsParams = {
-    treshold: 30
+    // treshold: 30
   };
+
+  var widgetStatus = {};
 
   var PlaceService = PresenterClass.extend({
 
@@ -145,8 +147,6 @@ define([
       p.area = p.area ? p.area : null;
       p.options = p.options ? JSON.parse(atob(p.options)) : null;
 
-      console.log(p);
-
       return p;
     },
 
@@ -165,13 +165,11 @@ define([
 
       var localOptions = {
         view : p.view ? p.view : null,
-        widgets: p.widgets ? p.widgets : null,
+        widgets: p.widgetStatus ? p.widgetStatus : null,
         treshold: p.treshold ? p.treshold : null
       };
 
       p.options = btoa(JSON.stringify(localOptions));
-
-      console.log(p);
 
       return p;
     },
@@ -188,7 +186,12 @@ define([
 
       _.each(presenters, function(presenter) {
         _.extend(p, presenter.getPlaceParams());
+        if (p.hasOwnProperty('widgetStatus')) {
+          widgetStatus[p.widgetStatus.id] = p.widgetStatus;
+        }
       }, this);
+
+      p.widgetStatus = widgetStatus;
 
       return p;
     }
