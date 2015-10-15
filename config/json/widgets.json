@@ -3,6 +3,7 @@
     "id": 1,
     "name": "Deforestation rate",
     "default_thresh": "25",
+    "default": true,
     "tabs": [
       {
         "position": 1,
@@ -69,6 +70,7 @@
     "id": 2,
     "name": "Carbon emissions",
     "default_thresh": "25",
+    "default": true,
     "tabs": [
       {
         "position": 1,
@@ -135,6 +137,7 @@
     "id": 3,
     "name": "Forest area 2000",
     "default_thresh": "25",
+    "default": true,
     "tabs": [
       {
         "position": 1,
@@ -187,6 +190,7 @@
     "id": 4,
     "name": "Biomas s carbon stocks",
     "default_thresh": "25",
+    "default": true,
     "tabs": [
       {
         "position": 1,
@@ -419,6 +423,7 @@
     "id": 5,
     "name": "Aboveground biomass density",
     "default_thresh": "25",
+    "default": true,
     "tabs": [
       {
         "position": 1,
@@ -651,6 +656,7 @@
     "id": 6,
     "name": "Emerging hotspots",
     "default_thresh": "25",
+    "default": true,
     "indicators": [
       {
         "id": 4,
