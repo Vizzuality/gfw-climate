@@ -2,8 +2,8 @@ define([
   'Backbone',
   'mps',
   'compare/presenters/PresenterClass',
-  'compare/collections/CountriesCollection'
-], function(Backbone, mps, PresenterClass, CountriesCollection) {
+  'compare/services/CompareService'
+], function(Backbone, mps, PresenterClass, CompareService) {
 
   'use strict';
 
@@ -17,6 +17,7 @@ define([
 
     init: function(view) {
       this._super();
+      this.service = CompareService;
       this.view = view;
     },
 
@@ -29,14 +30,14 @@ define([
       },
 
       'Compare/selection': function(params) {
-        this._onPlaceUpdate(params)
+        this._onSelectionUpdate(params)
       },
 
     }],
 
 
     _onPlaceGo: function(params) {
-      if (!!params.compare1 && !!params.compare2 && !!params.widgets) {
+      if (!!params.compare1 && !!params.compare2) {
 
       //   // Fetching data
       //   var complete = _.invoke([
@@ -70,8 +71,9 @@ define([
     },
 
 
-    _onPlaceUpdate: function(params) {
-
+    _onSelectionUpdate: function(params) {
+      console.log(params);
+      if (!!params.compare1 && !!params.compare2) {}
     },
 
   });
