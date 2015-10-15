@@ -202,7 +202,7 @@
         "position": 1,
         "name": "Woods Hole/Baccini",
         "type": "pie",
-        "default": true,
+        "default": true
       },
       {
         "position": 2,
@@ -224,7 +224,7 @@
         "tab": 1,
         "section": "biomass",
         "direction": "aboveground",
-        "default": true,
+        "default": true
       },
       {
         "id": 5,
@@ -243,7 +243,7 @@
         "tab": 1,
         "section": "biomass",
         "direction": "belowground",
-        "default": true,
+        "default": true
       },
       {
         "id": 7,
@@ -261,7 +261,7 @@
         "unit": "number",
         "tab": 1,
         "section": "biomass",
-        "default": true,
+        "default": true
       },
       {
         "id": 9,
@@ -439,7 +439,7 @@
         "position": 1,
         "name": "Woods Hole/Baccini",
         "type": "pie",
-        "default": true,
+        "default": true
       },
       {
         "position": 2,
@@ -461,7 +461,7 @@
         "tab": 1,
         "section": "biomass",
         "direction": "aboveground",
-        "default": true,
+        "default": true
       },
       {
         "id": 5,
@@ -480,7 +480,7 @@
         "tab": 1,
         "section": "biomass",
         "direction": "belowground",
-        "default": true,
+        "default": true
       },
       {
         "id": 7,
@@ -498,7 +498,7 @@
         "unit": "number",
         "tab": 1,
         "section": "biomass",
-        "default": true,
+        "default": true
       },
       {
         "id": 9,
@@ -676,8 +676,8 @@
         "id": 4,
         "name": "Emerging hotspots",
         "type": "map",
-        "unit": "number"
-        "default": true,
+        "unit": "number",
+        "default": true
       }
     ]
   }
