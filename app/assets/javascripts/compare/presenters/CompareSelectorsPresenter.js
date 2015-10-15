@@ -1,9 +1,10 @@
 define([
   'Backbone',
   'mps',
+  'compare/models/CountryModel',
   'compare/presenters/PresenterClass',
   'compare/collections/CountriesCollection'
-], function(Backbone, mps, PresenterClass, CountriesCollection) {
+], function(Backbone, mps, CountryModel, PresenterClass, CountriesCollection) {
 
   'use strict';
 
@@ -18,7 +19,6 @@ define([
     init: function(view) {
       this._super();
       this.view = view;
-      this.collection = CountriesCollection;
       mps.publish('Place/register', [this]);
     },
 
@@ -26,8 +26,11 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Place/go': function(place) {
-        this._onPlaceGo(place);
+      'Place/go': function(params) {
+        this._onPlaceGo(params);
+      },
+      'Compare/selection': function(params) {
+        this._onPlaceGo(params);
       }
     }],
 
@@ -38,11 +41,10 @@ define([
      * @return {object} iso/area params
      */
     getPlaceParams: function() {
-      var p = {};
-      p.country1 = this.status.get('country1');
-      p.country2 = this.status.get('country2');
-      p.country3 = this.status.get('country3');
-      return p;
+      // var p = {};
+      // p.compare1 = this.status.get('compare1');
+      // p.compare2 = this.status.get('compare2');
+      // return p;
     },
 
     /**
@@ -50,33 +52,31 @@ define([
     *
     * @param  {Object} place PlaceService's place object
     */
-    _onPlaceGo: function(place) {
-      this.status.set('country1', place.params.country1);
-      this.status.set('country2', place.params.country2);
-      this.status.set('country3', place.params.country3);
+    _onPlaceGo: function(params) {
+      var country1;
+      var country2;
 
-      var data;
-      // Fetching data
-      var complete = _.invoke([
-        data = this.collection,
-      ], 'fetch');
+      if (!!params.compare1 && !!params.compare2) {
 
-      $.when.apply($, complete).done(function() {
-        this.view.setValuesFromUrl(data);
-      }.bind(this));
+        var complete = _.invoke([
+          country1 = new CountryModel({ id: params.compare1.iso }),
+          country2 = new CountryModel({ id: params.compare2.iso }),
+        ], 'fetch');
+
+        $.when.apply($, complete).done(function() {
+          this.status.set('compare1', params.compare1);
+          this.status.set('compare2', params.compare2);
+
+          this.status.set('country1', country1);
+          this.status.set('country2', country2);
+
+          this.view.render();
+        }.bind(this));
+      }
     },
 
-    updateStatus: function(selector, country) {
-      var selectedCountry = country !== 'no_country' ? country : null;
-      this.status.set(selector, selectedCountry);
-      mps.publish('Place/update');
-    },
-
-    /*
-     * When some countries selected and compare button clicked...
-     */
-    countriesSelected: function() {
-      mps.publish('Compare/countriesSelected', [this.getPlaceParams()]);
+    showModal: function(tab) {
+      mps.publish('CompareModal/show', [tab]);
     }
 
   });

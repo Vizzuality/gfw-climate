@@ -1,7 +1,8 @@
 define([
   'mps',
+  'backbone',
   'countries/presenters/PresenterClass'
-], function(mps, PresenterClass) {
+], function(mps, Backbone, PresenterClass) {
 
   'use strict';
 
@@ -10,6 +11,10 @@ define([
     init: function(view) {
       this.view = view;
       this._super();
+
+      this.status = new (Backbone.Model.extend());
+
+      this._setListeners();
 
       mps.publish('Place/register', [this]);
     },
@@ -23,24 +28,48 @@ define([
       }
     }],
 
+    _setListeners:function() {
+      this.status.on('change:view', this.onUpdateTab, this);
+    },
 
     /**
-     * Trigger the selected display option
-     * @param  {[string]} display
-     * Add below events publication
+     * Used by PlaceService to get the current iso/area params.
+     *
+     * @return {object} iso/area params
      */
+    getPlaceParams: function() {
+      var p = {};
+      p.view = this.status.get('view');
+      return p;
+    },
 
 
+    /**
+     * Triggered from 'Place/Go' events.
+     *
+     * @param  {Object} place PlaceService's place object
+     */
+    _onPlaceGo: function(place) {
+      this._setupView(place);
+      this.view.start();
+    },
 
+    _setupView: function(params) {
+      var currentView = params.options.gridStatus ? params.options.gridStatus.view : null;
 
-     /**
-      * Triggered from 'Place/Go' events.
-      *
-      * @param  {Object} place PlaceService's place object
-      */
-     _onPlaceGo: function(place) {
-        this.view.start(place);
-     },
+      this.setDisplay(currentView);
+    },
+
+    setDisplay: function(display) {
+      this.status.set({
+        view: display
+      });
+    },
+
+    onUpdateTab: function() {
+      this.view._setCurrentTab();
+      // mps.publish('Place/update');
+    },
 
   });
 

@@ -24,9 +24,9 @@ define([
       this.model = IndicatorsModel;
     },
 
-    _getData: function(ind) {
+    _getData: function(data) {
       // API call
-      return this.model.getByParams(ind);
+      return this.model.getByParams(data);
     },
 
     _drawGraph: function(values, graphicId) {
@@ -70,12 +70,12 @@ define([
 
     //When we will implement tabs functionality, we can take the 'ind' value
     //from the tab element and give it to this function.
-    render: function(ind, graphicId) {
+    render: function(data, graphicId) {
       this.$el.html(this.template({ 'graphicId' : graphicId }));
       var self = this;
 
       //Here, we retrieve the data for the first option in tabs
-      var data = this._getData(ind);
+      var data = this._getData(data);
 
       $.when($, data).done(function() {
         self._drawGraph(data.responseJSON, graphicId);

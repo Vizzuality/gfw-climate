@@ -1,7 +1,7 @@
 define([
   'backbone',
   'utils',
-  'services/PlaceService',
+  'countries/services/PlaceService',
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView',
   'countries/views/CountryPantropicalView'
@@ -19,21 +19,20 @@ define([
 
     initialize: function() {
       this.placeService = new PlaceService(this);
-      this.name = 'countries';
     },
 
     _initIndex: function() {
       // new CountryIndexView();
     },
 
-    _initShow: function(country, area, params) {
-      var params = {
-        country: country,
-        area: area,
-        options: _.parseUrl()
-      };
+    _initShow: function(country, area) {
 
-      this.placeService.initPlace(this.name, params);
+      var params = _.extend({
+        country: country,
+        area: area
+      }, _.parseUrl());
+
+      this.placeService.initPlace(params);
     },
 
     _initPantropical: function() {

@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   # Static pages
-  get  'terms', to: 'static#terms',               as: :terms
-  get  'about', to: 'static#about',               as: :about
+  get  'terms',        to: 'static#terms',        as: :terms
+  get  'about',        to: 'static#about',        as: :about
   get  'data-methods', to: 'static#data_methods', as: :data_methods
 
   with_options only: [:index, :show] do |list_show_only|
@@ -29,11 +29,11 @@ Rails.application.routes.draw do
   end
 
   # Countries - jurisdiction routes
-  get 'pantropical' => 'countries#pantropical'
-  get 'countries/:id/:id_1', to: 'countries#show', as: :jurisdiction
+  get 'pantropical',         to: 'countries#pantropical', as: :pantropical
+  get 'countries/:id/:id_1', to: 'countries#show',        as: :jurisdiction
 
   # Compare countries routes
-  # get 'compare-countries(/:iso_1)(:id_1)(/:iso_2)(:id_2)(/:iso_3)(:id_3)', to: 'compare#index', as: :compare_countries
+  # GET 'compare-countries/bra+1+0/aus+1+0/aut+0+3'
   get 'compare-countries(/*path)', to: 'compare#index', as: :compare_countries
 
   # API routes
@@ -48,11 +48,15 @@ Rails.application.routes.draw do
         list_show_only.resources :widgets
       end
 
-      get 'countries/:id/:id_1',    to: 'countries#show_jurisdiction', as: :jurisdiction
-      get 'indicators/:id/:iso',    to: 'indicators#show',             as: :country_indicator
-      get 'widgets/:id/:iso',       to: 'widgets#show',                as: :country_widget
-      get 'widgets/:id/:iso/:id_1', to: 'widgets#show',                as: :juridiction_widget
-
+      get 'countries/:id/:id_1',       to: 'countries#show_jurisdiction', as: :jurisdiction
+      get 'indicators/:id/:iso',       to: 'indicators#show',             as: :country_indicator
+      get 'indicators/:id/:iso/:id_1', to: 'indicators#show',             as: :jurisdiction_indicator
+      get 'widgets/:id/:iso',          to: 'widgets#show',                as: :country_widget
+      get 'widgets/:id/:iso/:id_1',    to: 'widgets#show',                as: :jurisdiction_widget
+      
+      # Compare countries API routes
+      # GET 'compare-countries/bra+1+0/aus+1+0/aut+0+3/etc...'
+      get 'compare-countries(/*path)', to: 'compare_countries#index', as: :compare_countries
     end
 
   end
