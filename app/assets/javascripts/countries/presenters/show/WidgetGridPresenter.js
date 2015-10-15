@@ -78,7 +78,6 @@ define([
         view: gridStatus ? gridStatus.view : null,
         widgets: widgetStatus ? widgetStatus : null
       });
-
     },
 
     _onOpenModal: function() {

@@ -6,14 +6,7 @@ RSpec.describe CountriesController, type: :controller do
 
     render_views
 
-    # it "GET index returns http redirect to accept_terms_path" do
-    #   get :index
-    #   expect(response).to redirect_to accept_terms_path
-    #   expect(response).to have_http_status(302)
-    # end
-
     it "GET index returns http success after accepting cookie" do
-      # set_cookie
       get :index
       expect(response).to be_success
       expect(response).to have_http_status(200)
@@ -21,7 +14,6 @@ RSpec.describe CountriesController, type: :controller do
     end
 
     it "GET cached countries page", type: :feature do
-      # set_cookie
       get :index
       expect(response).to be_success
       expect($redis.exists('countries_all_')).to eq(true)
@@ -40,14 +32,7 @@ RSpec.describe CountriesController, type: :controller do
 
     render_views
 
-    # it "GET show returns http redirect to accept_terms_path" do
-    #   get :show, id: 'bra'
-    #   expect(response).to redirect_to accept_terms_path
-    #   expect(response).to have_http_status(302)
-    # end
-
     it "GET show returns http success after accepting cookie" do
-      # set_cookie
       get :show, id: 'bra'
       expect(response).to be_success
       expect(response).to have_http_status(200)
@@ -55,7 +40,6 @@ RSpec.describe CountriesController, type: :controller do
     end
 
     it "GET cached certain country page", type: :feature do
-      # set_cookie
       get :show, id: 'bra'
       expect(response).to be_success
       expect($redis.exists('country/item_bra25')).to eq(true)

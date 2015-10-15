@@ -169,9 +169,6 @@ define([
       p.area = p.area ? p.area : null;
       p.options = p.options ? JSON.parse(atob(p.options)) : null;
 
-      console.log('from URL');
-      console.log(p);
-
       return p;
     },
 
@@ -196,9 +193,6 @@ define([
 
       p.options = btoa(JSON.stringify(localOptions));
 
-      console.log('to URL');
-      console.log(p);
-
       return p;
     },
 
@@ -220,8 +214,6 @@ define([
       }, this);
 
       p.widgetStatus = widgetStatus;
-
-      console.log(p);
 
       return p;
     }

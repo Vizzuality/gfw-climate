@@ -7,7 +7,19 @@ define([
 
     initialize:function() {
       this.presenter = new CompareMainPresenter(this);
-    }
+      this.status = this.presenter.status;
+      this.setListeners();
+    },
+
+    setListeners: function() {
+
+    },
+
+    render: function() {
+
+    },
+
+
 
   });
 

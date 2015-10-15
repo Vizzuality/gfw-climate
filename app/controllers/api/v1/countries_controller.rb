@@ -3,7 +3,6 @@ module Api::V1
 
     before_action :set_country, only: [:show, :show_jurisdiction]
     before_action :set_jurisdiction, only: :show_jurisdiction
-    before_action :set_jurisdiction_umd, only: :show_jurisdiction
 
     def index
       @countries = Country.find_all
@@ -29,10 +28,6 @@ module Api::V1
 
       def set_jurisdiction
         @jurisdiction = Jurisdiction.find_jurisdiction(filter_params)
-      end
-
-      def set_jurisdiction_umd
-        @umd = Jurisdiction.find_umd(filter_params)
       end
 
   end
