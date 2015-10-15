@@ -12,14 +12,7 @@ define([
       this.view = view;
       this._super();
 
-      this.status = new (Backbone.Model.extend({
-        defaults: {
-          average: null,
-          id: view.wid,
-          indicator: 1,
-          treshold: 30
-        }
-      }));
+      this.status = new (Backbone.Model.extend());
 
       mps.publish('Place/register', [this]);
     },
@@ -27,11 +20,11 @@ define([
     /**
      * Application subscriptions.
      */
-    _subscriptions: [{
-      'Place/go': function(place) {
-        this._onPlaceGo(place);
-      }
-    }],
+    // _subscriptions: [{
+    //   'Place/go': function(place) {
+    //     this._onPlaceGo(place);
+    //   }
+    // }],
 
     /**
      * Used by PlaceService to get the current iso/area params.
@@ -41,12 +34,14 @@ define([
     getPlaceParams: function() {
       var p = {};
 
+      debugger;
+
       p.widgetStatus = {
-        average: this.status.attributes.average,
-        id: this.status.attributes.id,
-        indicator: this.status.attributes.indicator,
-        treshold: this.status.attributes.treshold,
-        unit: this.status.attributes.unit
+        average: this.status.get('average'),
+        id: this.status.get('id'),
+        indicator: this.status.get('indicator'),
+        treshold: this.status.get('treshold'),
+        unit: this.status.get('unit')
       };
 
       return p;
@@ -57,9 +52,9 @@ define([
      *
      * @param  {Object} place PlaceService's place object
      */
-    _onPlaceGo: function(place) {
-      this.view.start(place);
-    },
+    // _onPlaceGo: function(place) {
+    //   this.view.start(place);
+    // },
 
     onUpdateIndicator: function(status) {
       this.status.set(status);

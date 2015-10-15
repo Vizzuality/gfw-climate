@@ -12,12 +12,7 @@ define([
       this.view = view;
       this._super();
 
-      this.status = new (Backbone.Model.extend({
-        defaults: {
-          view: 'national',
-          widgets: [1, 2]
-        }
-      }));
+      this.status = new (Backbone.Model.extend());
 
       mps.publish('Place/register', [this]);
     },
@@ -44,8 +39,8 @@ define([
       var p = {};
 
       p.widgetGridStatus = {
-        view: this.status.attributes.view,
-        wiggets: this.status.attributes.widgets
+        view: this.status.get('view'),
+        widgets: this.status.get('widgets')
       };
 
       return p;
@@ -76,11 +71,12 @@ define([
      * @param  {[object]} params
      */
     _setupView: function(params) {
-      var options = params.options;
+      var gridStatus = params.options.gridStatus ? params.options.gridStatus : null,
+        widgetStatus = gridStatus ? gridStatus.widgets : null;
 
       this.status.set({
-        view: options && options.view ? options.view : this.status.attributes.view,
-        widgets: options && options.widgets ? this._getWidgetsIds(options.widgets) : this.status.attributes.widgets
+        view: gridStatus ? gridStatus.view : null,
+        widgets: widgetStatus ? widgetStatus : null
       });
     },
 

@@ -30,7 +30,8 @@ define([
     initialize: function(options) {
       this.presenter = new WidgetPresenter(this);
 
-      this.wid = options.id;
+      this.presenter.status.set(options);
+
       this.widgetModel = new widgetModel();
       this.CountryModel = CountryModel;
     },
@@ -55,7 +56,7 @@ define([
     },
 
     _loadMetaData: function(callback) {
-      var widgetId = this.wid;
+      var widgetId = this.presenter.status.get('id');
 
       this.widgetModel.getData(widgetId, callback);
     },
@@ -72,32 +73,31 @@ define([
     render: function() {
 
       this.$el.html(this.template({
-        id: this.widgetModel.attributes.id,
-        indicators: this.widgetModel.attributes.indicators,
-        name: this.widgetModel.attributes.name,
-        type: this.widgetModel.attributes.type
+        id: this.widgetModel.get('id'),
+        tabs: this.widgetModel.get('tabs'),
+        indicators: this.widgetModel.get('indicators'),
+        name: this.widgetModel.get('name'),
+        type: this.widgetModel.get('type')
       }));
 
-      //firstDataSetLink is something like : "/api/indicators/1/GUY.
-      //It should be the API endpoint where we retrieve data for the widget.
-      var firstDataSetLink = this.widgetModel.attributes.indicators[0].data;
-      var graphicId = this.widgetModel.attributes.id;
-      //graphicId is the current graphic id.
+      var indicatorActived = this.presenter.status.get('options').indicator - 1;
+
+      var currentDataSetLink = this.widgetModel.attributes.indicators[indicatorActived].data;
+      var currentTab = this.widgetModel.get('tabs')[indicatorActived];
+
+      var widgetId = this.widgetModel.get('id');
+      var nextEl = '#' + widgetId + '.country-widget .graph-container';
+
       var data = {
         country: this.CountryModel.get('iso'),
-        url: this.widgetModel.attributes.indicators[0].data
+        url: currentDataSetLink
       };
-
-      //I have talk we REE staff, and apparently it is better to work
-      //with ids in order to differenciate elements.
-      var widgetId = this.widgetModel.attributes.id;
-      var nextEl = '#' + widgetId + '.country-widget .graph-container';
 
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
-      if (this.widgetModel.attributes.type === 'line') {
-        new LineChartIndicator({el: nextEl}).render(data, graphicId);
+      if (currentTab.type === 'line') {
+        new LineChartIndicator({el: nextEl}).render(data, widgetId);
       }
 
       // if (this.data.type === 'pie') {
