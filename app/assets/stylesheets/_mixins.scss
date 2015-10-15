@@ -1,0 +1,242 @@
+// Grid
+@mixin row($content:space-between,$items:stretch) {
+    display: flex;
+    justify-content: $content;
+    align-items: $items;
+}
+@mixin col ($per) {
+    width: percentage($per/100);
+    min-height: 1px;
+}
+
+
+// Clearfix
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+
+// Retina
+@mixin retina-image($file-1x, $file-2x) {
+  background-image: image-url($file-1x);
+  background-size: contain;
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (   min--moz-device-pixel-ratio: 1.5),
+  only screen and (     -o-min-device-pixel-ratio: 1.5),
+  only screen and (        min-device-pixel-ratio: 1.5),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    background-image: image-url($file-2x);
+  }
+}
+
+// Animation
+@mixin animation($name,$duration,$count: 1,$function: linear,$direction: normal,$fill : none,$delay : 0s, $play: running){
+  -webkit-animation-name: $name;
+  -webkit-animation-duration: $duration;
+  -webkit-animation-iteration-count: $count;
+  -webkit-animation-timing-function: $function;
+  -webkit-animation-direction: $direction;
+  -webkit-animation-fill-mode:$fill;
+  -webkit-animation-delay:$delay;
+  -webkit-animation-play-state: $play;
+  -moz-animation-name: $name;
+  -moz-animation-duration: $duration;
+  -moz-animation-iteration-count: $count;
+  -moz-animation-timing-function: $function;
+  -moz-animation-direction: $direction;
+  -moz-animation-fill-mode:$fill;
+  -moz-animation-delay:$delay;
+  -moz-animation-play-state: $play;
+  -ms-animation-name: $name;
+  -ms-animation-duration: $duration;
+  -ms-animation-iteration-count: $count;
+  -ms-animation-timing-function: $function;
+  -ms-animation-direction: $direction;
+  -ms-animation-fill-mode:$fill;
+  -ms-animation-delay:$delay;
+  -ms-animation-play-state: $play;
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-iteration-count: $count;
+  animation-timing-function: $function;
+  animation-direction: $direction;
+  animation-fill-mode:$fill;
+  animation-delay:$delay;
+  animation-play-state: $play;
+}
+
+
+// Degradado
+@mixin gradient($origin: left, $start: #ffffff, $stop: #000000) {
+    // background-color: $start;
+    background-image: -webkit-linear-gradient($origin, $start, $stop);
+    background-image: -moz-linear-gradient($origin, $start, $stop);
+    background-image: -o-linear-gradient($origin, $start, $stop);
+    background-image: -ms-linear-gradient($origin, $start, $stop);
+    background-image: linear-gradient($origin, $start, $stop);
+}
+
+@mixin user-select($select){
+  -webkit-user-select: $select;  /* Chrome all / Safari all */
+  -moz-user-select: $select;     /* Firefox all */
+  -ms-user-select: $select;      /* IE 10+ */
+  user-select: $select;          /* Likely future */
+}
+
+// Triangle
+@mixin equi-triangle ($width, $color, $direction) {
+  width: 0;
+  height: 0;
+  @if $direction == 'top' {
+    border-left: $width solid transparent;
+    border-right: $width solid transparent;
+    border-bottom: $width solid $color;
+  } @else if $direction == 'bottom' {
+    border-left: $width solid transparent;
+    border-right: $width solid transparent;
+    border-top: $width solid $color;
+  } @else if $direction == 'left' {
+    border-top: $width solid transparent;
+    border-bottom: $width solid transparent;
+    border-right: $width solid $color;
+  } @if $direction == 'right' {
+    border-top: $width solid transparent;
+    border-bottom: $width solid transparent;
+    border-left: $width solid $color;
+  }
+}
+
+%center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+%centerx {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+%centery {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+%clean-button-or-input {
+  appearance: none;
+  box-shadow: none;
+  background: none;
+  border: 0;
+  text-decoration: none;
+  outline: none;
+
+  &:hover {
+    appearance: none;
+    -webkit-user-select: none;
+  }
+
+  //To avoid number input spin buttons
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  // &:focus {
+  //   border: 0;
+  //   outline: 0;
+  // }
+}
+
+@mixin arrow ($width, $color, $border-width, $deg) {
+  width: $width;
+  height: $width;
+  border-top: $border-width solid $color;
+  border-left: $border-width solid $color;
+  transform: rotate($deg);
+  pointer-events: none;
+}
+
+//Loader
+@mixin spinner ($size, $border-width, $color) {
+
+  &:before {
+    content: '';
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: .6;
+  }
+
+  &:after {
+    z-index: 2;
+    content: '';
+    height: $size;
+    width: $size;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: (-$size/2) 0 0 (-$size/2);
+    transition: all .75s ease 0s;
+    border-radius: 100%;
+    border-top: $border-width solid $color;
+    border-right: $border-width solid #eee;
+    border-bottom: $border-width solid #eee;
+    border-left: $border-width solid #eee;
+    animation: standard .75s infinite linear;
+    -webkit-animation: standard .75s infinite linear;
+    transform-origin: center;
+  }
+}
+
+@-webkit-keyframes standard {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes standard {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+//Forms mixins
+@mixin placeholder() {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder {@content}
+  &::-moz-placeholder {@content}
+  &:-ms-input-placeholder {@content}
+}
+
+
+

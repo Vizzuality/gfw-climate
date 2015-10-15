@@ -1,4 +1,4 @@
-class StaticController < AccessController
+class StaticController < ApplicationController
 
   skip_before_action :check_terms, only: :accept_terms
 
@@ -9,7 +9,10 @@ class StaticController < AccessController
     redirect_to root_path if terms_cookie
   end
 
+  def data_methods
+  end
+
   def about
   end
-    
+
 end

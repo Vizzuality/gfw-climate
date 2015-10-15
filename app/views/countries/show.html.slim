@@ -1,14 +1,47 @@
-h1= @name
+.layout-content
+  .l-toolbar
+    .inner
+      .m-toolbar
+        ul.options
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#share-country share
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#print-country save/print report
+          li.options_item
+            svg
+              use (xlink:href="#shape-country")
+            a#analyze-country (href="#") analyze on map
+  section#countryShowView (data-iso="#{@iso}")
+    .container-country
+      #headerCountry.container-country__header-country
+        .inner
+          .container-country__content
+            .header-country__title-country
+              h1 #{@name}
+            .header-country__preview-country
+            .country-description Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque facilis laboriosam mollitia eos recusandae quibusdam,
+              |dicta architecto eligendi itaque aperiam saepe nobis explicabo totam atque deserunt pariatur, ex, officiis illum.
+            / button#customizeReports.btn.medium.blue.btn-customize-report customize report
+        .display-tabs
+          ul
+            li (data-display="national") National data
+            li (data-display="subnational") Subnational data
+            li (data-display="areas-interest") Areas of interest
+        .header-country__options-country
 
-p = render 'shared/navigation'
+      .container-country__content-country
 
-h2 Info
-
-p Name: #{@name}
-p ISO:  #{@iso}
-
-- if @links.present?
-  p 
-    | External links: 
-    - @get_links.each do |link|
-      =raw "#{link_to link['title'], link['url'], target: '_blank'} | "
+          section#reports.reports-content
+            .inner
+              .no-indicators-warning
+                h3 There are no indicators
+                button.addIndicators.btn.medium.blue add indicators
+              .reports-grid
+            section#reportIndicators.more-indicators-warning.is-hidden
+              .inner
+                h3 Customize your report
+                button.addIndicators.btn.medium.white(data-source="indicators") Add indicators

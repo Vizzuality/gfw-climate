@@ -80,4 +80,11 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   # config.active_record.dump_schema_after_migration = false
+  # Heroku Asset Pippeline
+
+  config.requirejs.logical_path_patterns += [/\.handlebars$/]
+  config.requirejs.logical_path_patterns += [/\.pgsql$/]
+  config.requirejs.logical_path_patterns += [/\.json$/]
+  config.requirejs.logical_path_patterns += [/\.cartocss$/]
+
 end

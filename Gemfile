@@ -4,17 +4,27 @@ ruby '2.2.2'
 
 gem 'rails', '4.2.3'
 
+gem 'active_hash'
+
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
+gem 'autoprefixer-rails'
 
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'requirejs-rails'
+
 gem 'slim-rails'
 
 gem 'httparty'
+gem 'rabl'
+gem 'oj'
+gem 'responders', '~> 2.0'
+
+gem 'raddocs'
 
 group :development do
   gem 'foreman'
@@ -28,6 +38,7 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'teaspoon-mocha'
+  gem 'rspec_api_documentation'
 end
 
 group :test do
