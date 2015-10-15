@@ -1,1 +1,0 @@
-require(["jquery","underscore","Class","backbone","_string","home/views/sliderView"],function(i,t,e,n,s,r){"use strict";var o=e.extend({$el:i("body"),init:function(){this._initViews()},_initApp:function(){n.History.started||n.history.start({pushState:!0})},_initViews:function(){new r}});new o});
