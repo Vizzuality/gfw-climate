@@ -19,6 +19,11 @@ define([
       this._super();
       this.service = CompareService;
       this.view = view;
+      this.setListeners();
+    },
+
+    setListeners: function() {
+      this.status.on('change:compare1 change:compare2', this.changeCompare, this);
     },
 
     /**
@@ -29,8 +34,8 @@ define([
         this._onPlaceGo(params);
       },
 
-      'Compare/selection': function(params) {
-        this._onSelectionUpdate(params)
+      'Compare/update': function(params) {
+        this._onCompareUpdate(params)
       },
 
     }],
@@ -38,43 +43,46 @@ define([
 
     _onPlaceGo: function(params) {
       if (!!params.compare1 && !!params.compare2) {
-
-      //   // Fetching data
-      //   var complete = _.invoke([
-      //     new CountriesCollection(),
-      //     new CountryModel({ id: params.compare1.iso }),
-      //     new CountryModel({ id: params.compare2.iso }),
-      //   ], 'fetch');
-
-      //   $.when.apply($, complete).done(function() {
-      //     // Set model for render
-      //     this.status.set('countries', arguments[0][0].countries);
-      //     this.status.set('country1', arguments[1][0].country);
-      //     this.status.set('country2', arguments[2][0].country);
-      //     this.view.render();
-      //     // Set model for compare selects
-      //     this.status.set('compare1', params.compare1);
-      //     this.status.set('compare2', params.compare2);
-      //   }.bind(this));
-      // } else {
-      //   // Fetching data
-      //   var complete = _.invoke([
-      //     new CountriesCollection(),
-      //   ], 'fetch');
-
-      //   $.when.apply($, complete).done(function() {
-      //     // Set model for render
-      //     this.status.set('countries', arguments[0].countries);
-      //     this.view.render();
-      //   }.bind(this));
+        this.status.set('compare1', params.compare1);
+        this.status.set('compare2', params.compare2);
       }
     },
 
-
-    _onSelectionUpdate: function(params) {
-      console.log(params);
-      if (!!params.compare1 && !!params.compare2) {}
+    _onCompareUpdate: function(params) {
+      if (!!params.compare1 && !!params.compare2) {
+        this.status.set('compare1', params.compare1);
+        this.status.set('compare2', params.compare2);
+      }
     },
+
+    // COMPARE EVENTS
+    changeCompare: function() {
+      var compare1 = this.objToUrl(this.status.get('compare1'));
+      var compare2 = this.objToUrl(this.status.get('compare2'));
+      if (!!compare1 && !!compare2) {
+        this.service.execute(compare1,compare2,_.bind(this.successCompare, this),_.bind(this.errorCompare, this));
+      }
+    },
+
+    successCompare: function(data) {
+      console.log(data);
+    },
+
+    errorCompare: function() {
+      console.log(arguments);
+    },
+
+    // HELPER
+    objToUrl: function(obj) {
+      var arr_temp = [];
+      for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          arr_temp.push(obj[p]);
+        }
+      }
+      return arr_temp.join('+');
+    }
+
 
   });
 

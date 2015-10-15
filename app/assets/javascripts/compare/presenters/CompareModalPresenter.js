@@ -164,7 +164,7 @@ define([
       place.compare2 = this.status.get('compare2');
       place.name = this.status.get('name');
 
-      mps.publish('Compare/selection', [place]);
+      mps.publish('Compare/update', [place]);
       //This event, thrown when two countries selected,
       //has to be listen by:
       //mainView, to draw graphics and

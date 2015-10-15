@@ -29,7 +29,7 @@ define([
       'Place/go': function(params) {
         this._onPlaceGo(params);
       },
-      'Compare/selection': function(params) {
+      'Compare/update': function(params) {
         this._onPlaceGo(params);
       }
     }],
