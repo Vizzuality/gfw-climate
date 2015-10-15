@@ -211,3 +211,13 @@
     background: $blue;
   }
 }
+
+
+.m-btncontainer {
+  display: flex;
+  align-items: center;
+  &.is-center {
+    justify-content: center;
+  }
+}
+

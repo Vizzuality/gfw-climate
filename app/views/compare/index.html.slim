@@ -3,21 +3,17 @@ section.l-compare-countries
     .inner
       .m-section-header
         h1 Compare countries
-        p Get the figures you need, when you need them, all in one place.
+        p Select two countries, juristictions and/or Areas of Interest to get a comparison report.
 
     .inner
-      #compareSelectorsView.l-compare.is-loading
+      #compareSelectorsView.l-compare
         .l-compare-selectors
-          .m-compare-selector
-            select name="country1"
-              option value="" Select a country
-          .m-compare-selector
-            select name="country2"
-              option value="" Select a country
-          .m-compare-selector
-            select name="country3"
-              option value="" Select a country
-        button.btn-compare.btn.medium.white compare
+          .m-compare-selector(data-tab="1")
+            .m-compare-selector-empty
+              p Click to select
+          .m-compare-selector(data-tab="2")
+            .m-compare-selector-empty
+              p Click to select
 
   .l-toolbar
     .inner
@@ -45,4 +41,3 @@ section.l-compare-countries
       #compareCustomizeView.m-aside
         h3 Customize your report
         button class="btn-addIndicators btn medium white" data-source="indicators" Add indicators
-

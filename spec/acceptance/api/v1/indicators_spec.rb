@@ -93,5 +93,4 @@ resource 'Indicators' do
       expect(value['thresh']).to eq(10)
     end
   end
-
 end
