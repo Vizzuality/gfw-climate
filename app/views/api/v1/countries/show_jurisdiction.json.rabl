@@ -11,19 +11,6 @@ node :jurisdiction do
     bounds:       {
                     coordinates: @jurisdiction['bounds']['coordinates'][0],
                     type:        @jurisdiction['bounds']['type']
-                  },
-    umd:          @umd.map do |umd| 
-                    {
-                      year:        umd['year'],
-                      extent:      umd['extent'],
-                      extent_perc: umd['extent_perc'],
-                      gain:        umd['gain'],
-                      gain_perc:   umd['gain_perc'],
-                      loss:        umd['loss'],
-                      loss_perc:   umd['loss_perc'],
-                      total_gain:  umd['total_gain'],
-                      thresh:      umd['thresh']
-                    }
-                  end
+                  }
   }
 end

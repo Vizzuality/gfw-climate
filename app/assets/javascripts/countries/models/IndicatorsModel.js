@@ -5,10 +5,14 @@ define([
 
   var CountryModel = Backbone.Model.extend({
 
-    url: '',
+    url: '/api/indicators/',
 
-    getByParams: function(ind) {
-      this.url = ind;
+    getByParams: function(params) {
+      var country = params.country,
+        url = params.url;
+
+      this.url = url + '/' + country;
+
       return this.fetch();
     },
 

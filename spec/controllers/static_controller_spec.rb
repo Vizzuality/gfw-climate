@@ -4,14 +4,7 @@ RSpec.describe StaticController, type: :controller do
 
   context "Terms page" do
 
-    # it "GET terms returns http redirect to accept_terms_path" do
-    #   get :terms
-    #   expect(response).to redirect_to accept_terms_path
-    #   expect(response).to have_http_status(302)
-    # end
-
     it "GET terms returns http success after accepting cookie" do
-      # set_cookie
       get :terms
       expect(response).to be_success
       expect(response).to have_http_status(200)
@@ -21,14 +14,7 @@ RSpec.describe StaticController, type: :controller do
 
   context "About page" do
 
-    # it "GET about returns http redirect to accept_terms_path" do
-    #   get :about
-    #   expect(response).to redirect_to accept_terms_path
-    #   expect(response).to have_http_status(302)
-    # end
-
     it "GET about returns http success after accepting cookie" do
-      # set_cookie
       get :about
       expect(response).to be_success
       expect(response).to have_http_status(200)

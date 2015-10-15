@@ -37,8 +37,6 @@ resource 'Countries' do
       expect(country['bounds']['type']).to eq('Polygon')
       expect(country['tenure'].count).to eq(5)
       expect(country['forests'].count).to eq(3)
-      expect(country['umd']).not_to be_nil
-      expect(country['umd'][0]['thresh']).to eq(50)
       expect(country['jurisdictions']).not_to be_nil
     end
 
@@ -49,7 +47,6 @@ resource 'Countries' do
       
       expect(country['iso']).to eq('AUS')
       expect(country['thresh']).to eq('75')
-      expect(country['umd'][0]['thresh']).to eq(75)
     end
 
     example "Getting a specific country without thresh", document: false do
@@ -59,7 +56,6 @@ resource 'Countries' do
       
       expect(country['iso']).to eq('AUS')
       expect(country['thresh']).to eq('25')
-      expect(country['umd'][0]['thresh']).to eq(25)
     end
   end
 
@@ -75,7 +71,6 @@ resource 'Countries' do
       expect(jurisdiction['name']).to eq('Acre')
       expect(jurisdiction['id']).to eq(1)
       expect(jurisdiction['bounds']).not_to be_nil
-      expect(jurisdiction['umd']).not_to be_nil
     end
 
     example "Getting a specific jurisdiction with thresh 75", document: false do
@@ -85,7 +80,6 @@ resource 'Countries' do
       
       expect(jurisdiction['iso']).to eq('BRA')
       expect(jurisdiction['thresh']).to eq('75')
-      expect(jurisdiction['umd'][0]['thresh']).to eq(75)
     end
 
     example "Getting a specific jurisdiction without thresh", document: false do
@@ -95,7 +89,6 @@ resource 'Countries' do
       
       expect(jurisdiction['iso']).to eq('BRA')
       expect(jurisdiction['thresh']).to eq('25')
-      expect(jurisdiction['umd'][0]['thresh']).to eq(25)
     end
   end
 

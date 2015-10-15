@@ -1,9 +1,10 @@
 define([
   'backbone',
+  'countries/presenters/CountryShowPresenter',
   'countries/views/show/CountryShowHeaderView',
   'countries/views/show/TabsView',
   'countries/views/show/WidgetGridView'
-], function(Backbone, CountryShowHeaderView,
+], function(Backbone, CountryShowPresenter, CountryShowHeaderView,
   TabsView, WidgetGridView, CountryModalView) {
 
   'use strict';
@@ -11,6 +12,10 @@ define([
   var CountryShowView = Backbone.View.extend({
 
     initialize: function() {
+      // Status
+      new CountryShowPresenter(this);
+
+      // Children Views
       new CountryShowHeaderView();
       new TabsView();
       new WidgetGridView();
