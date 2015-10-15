@@ -22,10 +22,10 @@
   </div>
   <div class="country-widget__content" data-type="{{type}}">
 
-    {{#if indicators}}
+    {{#if tabs}}
       <div class="indicators-grid">
-      {{#each indicators}}
-        <div class="indicators-grid__item" data-api="{{data}}" graphicId="{{id}}">{{name}}</div>
+      {{#each tabs}}
+        <div class="indicators-grid__item" data-position="{{position}}" data-type="{{type}}">{{name}}</div>
       {{/each}}
       </div>
       <div class="indicators__content">

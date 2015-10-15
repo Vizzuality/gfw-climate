@@ -74,16 +74,17 @@ define([
 
       this.$el.html(this.template({
         id: this.widgetModel.get('id'),
+        tabs: this.widgetModel.get('tabs'),
         indicators: this.widgetModel.get('indicators'),
         name: this.widgetModel.get('name'),
         type: this.widgetModel.get('type')
       }));
 
-      // Set the current that should be activated.
-      // Substract 1 because the zero position.
       var indicatorActived = this.presenter.status.get('options').indicator - 1;
 
       var currentDataSetLink = this.widgetModel.attributes.indicators[indicatorActived].data;
+      var currentTab = this.widgetModel.get('tabs')[indicatorActived];
+
       var widgetId = this.widgetModel.get('id');
       var nextEl = '#' + widgetId + '.country-widget .graph-container';
 
@@ -95,7 +96,7 @@ define([
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
-      if (this.widgetModel.get('type') === 'line') {
+      if (currentTab.type === 'line') {
         new LineChartIndicator({el: nextEl}).render(data, widgetId);
       }
 
