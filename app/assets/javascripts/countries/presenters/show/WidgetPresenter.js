@@ -14,6 +14,8 @@ define([
 
       this.status = new (Backbone.Model.extend());
 
+      this._setListeners();
+
       mps.publish('Place/register', [this]);
     },
 
@@ -26,6 +28,11 @@ define([
     //   }
     // }],
 
+
+    _setListeners: function() {
+      this.status.on('change:tab', this.onChangeTab, this);
+    },
+
     /**
      * Used by PlaceService to get the current iso/area params.
      *
@@ -37,11 +44,14 @@ define([
       debugger;
 
       p.widgetStatus = {
-        average: this.status.get('average'),
         id: this.status.get('id'),
-        indicator: this.status.get('indicator'),
-        treshold: this.status.get('treshold'),
-        unit: this.status.get('unit')
+        tab: this.status.get('tab'),
+        options: {
+          average: this.status.get('average'),
+          indicator: this.status.get('indicator'),
+          treshold: this.status.get('treshold'),
+          unit: this.status.get('unit')
+        }
       };
 
       return p;
@@ -56,8 +66,13 @@ define([
     //   this.view.start(place);
     // },
 
-    onUpdateIndicator: function(status) {
+    onUpdateWidget: function(status) {
       this.status.set(status);
+    },
+
+    onChangeTab: function() {
+      console.log('onchange')
+      this.view._setTab();
     },
 
     updateStatus: function(status) {

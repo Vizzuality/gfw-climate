@@ -20,39 +20,52 @@ define([
     // collection: new widgetCollection(),
 
     events: {
-      'click .close' : '_close',
-      'click #info'   : '_info',
-      'click #share'  : '_share',
-      'click .indicators-grid__item': '_setCurrentIndicator',
-      'change .selector': 'updateTreshold'
+      'click .close'                : '_close',
+      'click #info'                 : '_info',
+      'click #share'                : '_share',
+      'click .indicators-grid__item': '_onClick'
+      // 'change .selector'            : 'updateTreshold'
     },
 
     initialize: function(options) {
       this.presenter = new WidgetPresenter(this);
 
       this.presenter.status.set(options);
-
       this.widgetModel = new widgetModel();
       this.CountryModel = CountryModel;
     },
 
-    start: function(p) {
-      this._loadMetaData((this.render).bind(this));
+    start: function() {
+      this._loadMetaData((this.render.bind(this)));
     },
 
-    updateTreshold: function(e) {
-      var treshold = e.currentTarget.value;
-      this.presenter.updateStatus({
-        treshold: treshold
-      });
+    // updateTreshold: function(e) {
+    //   var treshold = e.currentTarget.value;
+    //   this.presenter.updateStatus({
+    //     treshold: treshold
+    //   });
+    // },
+
+    /**
+     * Setup the current tab and update the status.
+     * @param  {click event} e
+     */
+    _onClick: function(e) {
+      var tab = $(e.currentTarget).data('position');
+      this.presenter.onUpdateWidget({tab: tab})
     },
 
-    _setCurrentIndicator: function(e) {
+    /**
+     * Set the class "is-selected" to the tab settted by
+     * the presenter status.
+     */
+    _setTab: function() {
       var indicatorTabs = document.querySelectorAll('.indicators-grid__item'),
-        currentIndicator = e.currentTarget;
+        currentTab = this.presenter.status.get('tab');
 
       $(indicatorTabs).removeClass('is-selected');
-      $(currentIndicator).addClass('is-selected');
+
+      this.$el.find('[data-position="' + currentTab + '"]').addClass('is-selected');
     },
 
     _loadMetaData: function(callback) {
@@ -80,9 +93,11 @@ define([
         type: this.widgetModel.get('type')
       }));
 
+      this._setTab();
+
       var indicatorActived = this.presenter.status.get('options').indicator - 1;
 
-      var currentDataSetLink = this.widgetModel.attributes.indicators[indicatorActived].data;
+      var currentDataSetLink = this.widgetModel.get('indicators')[indicatorActived].data;
       var currentTab = this.widgetModel.get('tabs')[indicatorActived];
 
       var widgetId = this.widgetModel.get('id');

@@ -114,6 +114,7 @@ define([
     },
 
     render: function() {
+      console.log(this.presenter.status.toJSON())
       var subview,
         view = this.presenter.status.get('view');
       var options = {
