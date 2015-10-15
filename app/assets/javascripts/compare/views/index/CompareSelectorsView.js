@@ -25,16 +25,7 @@ define([
       this.presenter = new CompareSelectorsPresenter(this);
       this.status = this.presenter.status;
 
-      this._setListeners();
-      this._cacheVars();
-
       this.helper = CountryHelper;
-    },
-
-    _setListeners: function() {
-    },
-
-    _cacheVars: function() {
     },
 
     showModal: function(e) {
@@ -48,30 +39,22 @@ define([
     },
 
     _parseData: function() {
-      var selection = [];
       var country1 = this.status.get('country1').toJSON();
       var country2 = this.status.get('country2').toJSON();
 
       var select1 = {
         tab: '1',
-        iso: country1.iso || null,
-        name: country1.name || null,
-        jurisdiction: (!!~~this.status.get('compare1').jurisdiction) ? (_.findWhere(country1.jurisdictions, {id: ~~this.status.get('compare1').jurisdiction}).name) : null,
-        area: (!!~~this.status.get('compare1').area) ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare1').area }).name : null,
+        name: this.setName(country1,1),
+        classname: this.setClass(1),
       };
 
       var select2 = {
         tab: '2',
-        iso: country2.iso || null,
-        name: country2.name || null,
-        jurisdiction: (!!~~this.status.get('compare2').jurisdiction) ? (_.findWhere(country2.jurisdictions, {id: ~~this.status.get('compare2').jurisdiction}).name) : null,
-        area: (!!~~this.status.get('compare2').area) ? _.findWhere(this.areasOfInterest, {id: ~~this.status.get('compare2').area }).name : null,
+        name: this.setName(country2,2),
+        classname: this.setClass(2),
       };
 
-      selection.push(select1);
-      selection.push(select2);
-
-      return { selection: selection };
+      return { selection: [select1, select2] };
     },
 
     _drawCountries: function(tab) {
@@ -90,7 +73,33 @@ define([
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
         this.helper.draw(topology, 0, 'compare-figure'+tab, { alerts: true });
       }, this ));
-    }
+    },
+
+    setName: function(country,tab) {
+      var jurisdiction = ~~this.status.get('compare'+tab).jurisdiction;
+      var area = ~~this.status.get('compare'+tab).area;
+      if (!!jurisdiction) {
+        return _.findWhere(country.jurisdictions, {id: jurisdiction}).name +' in ' + country.name;
+      } else if (!!area) {
+        return _.findWhere(this.areasOfInterest, {id: area }).name +' in ' + country.name;
+      } else {
+        return country.name;
+      }
+    },
+
+    setClass: function(tab) {
+      var jurisdiction = ~~this.status.get('compare'+tab).jurisdiction;
+      var area = ~~this.status.get('compare'+tab).area;
+      if (!!jurisdiction) {
+        return 'jurisdiction';
+      } else if (!!area) {
+        return 'areas';
+      } else {
+        return '';
+      }
+    },
+
+
 
   });
 
