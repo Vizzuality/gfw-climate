@@ -41,8 +41,8 @@ define([
     _onPlaceGo: function(params) {
       var country1;
       var country2;
-
-      if (!!params.compare1 && !!params.compare2) {
+      // Only render if compare params exists and they are different from the ones saved
+      if ((!!params.compare1 && !!params.compare2) && (this.status.get('compare1') != params.compare1 || this.status.get('compare2') != params.compare2)) {
 
         var complete = _.invoke([
           country1 = new CountryModel({ id: params.compare1.iso }),
