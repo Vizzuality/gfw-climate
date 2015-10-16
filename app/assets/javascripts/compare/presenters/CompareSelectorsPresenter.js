@@ -19,7 +19,6 @@ define([
     init: function(view) {
       this._super();
       this.view = view;
-      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -33,19 +32,6 @@ define([
         this._onPlaceGo(params);
       }
     }],
-
-
-    /**
-     * Used by PlaceService to get the current iso/area params.
-     *
-     * @return {object} iso/area params
-     */
-    getPlaceParams: function() {
-      // var p = {};
-      // p.compare1 = this.status.get('compare1');
-      // p.compare2 = this.status.get('compare2');
-      // return p;
-    },
 
     /**
     * Triggered from 'Place/Go' events.

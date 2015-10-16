@@ -81,11 +81,12 @@ define([
           new CountryModel({ id: params.compare2.iso }),
         ], 'fetch');
 
-        $.when.apply($, complete).done(function() {
+        $.when.apply($, complete).done(function(_countries,_country1,_country2) {
+          console.log(_countries);
           // Set model for render
-          this.status.set('countries', arguments[0][0].countries);
-          this.status.set('country1', arguments[1][0].country);
-          this.status.set('country2', arguments[2][0].country);
+          this.status.set('countries', _countries[0].countries);
+          this.status.set('country1', _country1[0].country);
+          this.status.set('country2', _country2[0].country);
           this.view.render();
           // Set model for compare selects
           this.status.set('compare1', params.compare1);
@@ -99,9 +100,9 @@ define([
           new CountriesCollection(),
         ], 'fetch');
 
-        $.when.apply($, complete).done(function() {
+        $.when.apply($, complete).done(function(_countries) {
           // Set model for render
-          this.status.set('countries', arguments[0].countries);
+          this.status.set('countries', _countries.countries);
           this.view.render();
         }.bind(this));
       }
@@ -123,9 +124,9 @@ define([
           new CountryModel({ id: val }),
         ], 'fetch');
 
-        $.when.apply($, complete).done(function() {
+        $.when.apply($, complete).done(function(_country) {
           // Set model for render
-          this.status.set('country'+select, arguments[0].country);
+          this.status.set('country'+select, _country.country);
           this.view.render();
           // Set model for compare selects
           this.status.set('compare'+select, { iso: val, area: 0, jurisdiction: 0});
