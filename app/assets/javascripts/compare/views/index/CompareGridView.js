@@ -1,11 +1,14 @@
 define([
   'backbone',
   'compare/presenters/CompareGridPresenter',
-], function(Backbone, CompareMainPresenter) {
+  'text!compare/templates/compareGrid.handlebars',
+], function(Backbone, CompareMainPresenter, tpl) {
 
   var CompareMainView = Backbone.View.extend({
 
-    el: '#compareResultsView',
+    el: '#compareGridView',
+
+    template: Handlebars.compile(tpl),
 
     initialize:function() {
       this.presenter = new CompareMainPresenter(this);
@@ -17,7 +20,8 @@ define([
     },
 
     render: function() {
-      console.log('render Widgets GRID');
+      console.log(this.parseData());
+      this.$el.html(this.template(this.parseData()));
       // var widgets = [],
       //   promises = [],
       //   widgetsId = this._getWidgetsId();
@@ -57,6 +61,10 @@ define([
       // return this;
 
     },
+
+    parseData: function() {
+      return this.status.get('data');
+    }
 
 
 

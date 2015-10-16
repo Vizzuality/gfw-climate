@@ -82,7 +82,6 @@ define([
         ], 'fetch');
 
         $.when.apply($, complete).done(function(_countries,_country1,_country2) {
-          console.log(_countries);
           // Set model for render
           this.status.set('countries', _countries[0].countries);
           this.status.set('country1', _country1[0].country);

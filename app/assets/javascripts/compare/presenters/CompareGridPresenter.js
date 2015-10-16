@@ -25,7 +25,7 @@ define([
 
     setListeners: function() {
       this.status.on('change:compare1 change:compare2', this.changeCompare, this);
-      this.status.on('change:widgets', this.changeWidgets, this);
+      this.status.on('change:data', this.changeData, this);
 
     },
 
@@ -76,10 +76,11 @@ define([
       this.status.set('compare1', params.compare1);
       this.status.set('compare2', params.compare2);
       this.status.set('options', params.options);
+      this.status.set('widgets', this.getWidgets());
     },
 
     // COMPARE EVENTS
-    changeWidgets: function() {
+    changeData: function() {
       this.view.render();
     },
 
@@ -98,7 +99,6 @@ define([
 
     successCompare: function(data) {
       this.status.set('data', data);
-      this.status.set('widgets', this.getWidgets());
     },
 
     errorCompare: function() {
