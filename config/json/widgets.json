@@ -28,8 +28,7 @@
         "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
         "type": "line",
         "unit": "hectares",
-        "tab": 2,
-        "default": true
+        "tab": 2
       },
       {
         "id": 2,
@@ -43,7 +42,8 @@
         "name": "FAO FRA 2015 (IPCC Approach 1)",
         "type": "line",
         "unit": "hectares",
-        "tab": 1
+        "tab": 1,
+        "default": true
       },
       {
         "id": 16,
@@ -677,6 +677,21 @@
         "name": "Emerging hotspots",
         "type": "map",
         "unit": "number",
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Test widget",
+    "default_thresh": "25",
+    "default": false,
+    "indicators": [
+      {
+        "id": 14,
+        "name": "Test indicator",
+        "type": "line",
+        "unit": "percentage",
         "default": true
       }
     ]
