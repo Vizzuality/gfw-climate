@@ -22,11 +22,27 @@ define([
     render: function() {
       console.log(this.parseData());
       this.$el.html(this.template(this.parseData()));
+
+
+
+      _.map(this.status.get('data'), _.bind(function(c){
+        var $el = $('#compare-grid-'+c.iso);
+
+        _.each(c.widgets, function(w) {
+          console.log(w);
+          var deferred = $.Deferred();
+          // var currentWidget = new WidgetView({
+          //   id: w.id,
+          //   options: this.widgets[id]
+          // });
+
+        })
+
+        console.log(c);
+      }, this ))
       // var widgets = [],
       //   promises = [],
       //   widgetsId = this._getWidgetsId();
-
-      // this.$el.html(this.template());
 
       // widgetsId.forEach(_.bind(function(id) {
 
@@ -63,7 +79,7 @@ define([
     },
 
     parseData: function() {
-      return this.status.get('data');
+      return { countries: this.status.get('data') };
     }
 
 

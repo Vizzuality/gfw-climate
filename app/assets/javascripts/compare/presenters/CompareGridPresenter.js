@@ -52,7 +52,7 @@ define([
         new WidgetsCollection()
           .fetch({data: {default: true}})
           .done(_.bind(function(_options){
-            params.options = _options.widgets;
+            params.options = _options;
             this.setModels(params);
           }, this ));
 
@@ -73,10 +73,10 @@ define([
 
     // SETTER
     setModels: function(params) {
+      this.status.set('options', this.getOptions(params.options));
+      this.status.set('widgets', this.getWidgets());
       this.status.set('compare1', params.compare1);
       this.status.set('compare2', params.compare2);
-      this.status.set('options', params.options);
-      this.status.set('widgets', this.getWidgets());
     },
 
     // COMPARE EVENTS
@@ -98,6 +98,14 @@ define([
     },
 
     successCompare: function(data) {
+      // var activeWidgets = this.status.get('widgets');
+      var activeWidgets = [1,2];
+      var data = _.map(data.countries, function(c){
+        c.widgets = _.compact(_.map(c.widgets, function(w){
+          return (_.contains(activeWidgets, w.id)) ? w : null;
+        }));
+        return c;
+      });
       this.status.set('data', data);
     },
 
@@ -113,6 +121,14 @@ define([
       return _.map(widgets,function(w){
         return w.id;
       });
+    },
+
+    getOptions: function(options) {
+      if (!!options) {
+        return _.map(options.widgets,function(w){
+          return { id: w.id, indicators: w.indicators, tabs: w.tabs };
+        });
+      }
     },
 
     objToUrl: function(obj) {
