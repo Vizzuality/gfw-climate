@@ -33,6 +33,19 @@ define([
       this.status.on('change:tab', this.onChangeTab, this);
     },
 
+    setParams: function(options) {
+
+      this.status.set({
+        id: options.id,
+        name: options.name,
+        data: options.data,
+        indicator: options.indicator
+      });
+
+      console.log(this.status.toJSON());
+
+    },
+
     /**
      * Used by PlaceService to get the current iso/area params.
      *
@@ -40,8 +53,6 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
-
-      debugger;
 
       p.widgetStatus = {
         id: this.status.get('id'),
@@ -71,7 +82,6 @@ define([
     },
 
     onChangeTab: function() {
-      console.log('onchange')
       this.view._setTab();
     },
 

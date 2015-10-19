@@ -1,18 +1,27 @@
 define([
   'mps',
   'underscore',
-  'countries/presenters/PresenterClass'
-], function(mps,underscore, PresenterClass) {
+  'countries/presenters/PresenterClass',
+  'countries/collections/WidgetCollection'
+], function(mps,underscore, PresenterClass, WidgetCollection) {
 
   'use strict';
 
   var WidgetGridPresenter = PresenterClass.extend({
 
+
+
     init: function(view) {
       this.view = view;
       this._super();
 
-      this.status = new (Backbone.Model.extend());
+      this.widgetCollection = new WidgetCollection()
+
+      this.status = new (Backbone.Model.extend({
+        defaults: {
+          view: 'national'
+        }
+      }));
 
       mps.publish('Place/register', [this]);
     },
@@ -66,18 +75,31 @@ define([
 
     /**
      * Setup the view with the params coming from PlaceService.
-     * If there is no params from PlaceSerice, it will be setup
+     * If there is no params from PlaceService, it will be setup
      * with the default ones.
      * @param  {[object]} params
      */
     _setupView: function(params) {
-      var gridStatus = params.options.gridStatus ? params.options.gridStatus : null,
+      var gridStatus = params.options ? params.options.gridStatus : null,
         widgetStatus = gridStatus ? gridStatus.widgets : null;
 
-      this.status.set({
-        view: gridStatus ? gridStatus.view : null,
-        widgets: widgetStatus ? widgetStatus : null
-      });
+        if (!widgetStatus) {
+
+          var callback = function() {
+            this.status.set({
+              view: gridStatus ? gridStatus.view : this.status.get('view'),
+              widgets: _.where(this.widgetCollection.toJSON(), {default: true})
+            });
+          };
+
+          this.widgetCollection.fetch().done(callback.bind(this));
+
+        } else {
+          this.status.set({
+            view: gridStatus ? gridStatus.view : this.status.get('view'),
+            widgets: widgetStatus
+          });
+        }
     },
 
     _onOpenModal: function() {

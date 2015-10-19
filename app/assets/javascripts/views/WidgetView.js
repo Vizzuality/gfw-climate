@@ -27,12 +27,17 @@ define([
       // 'change .selector'            : 'updateTreshold'
     },
 
-    initialize: function(options) {
+    initialize: function() {
       this.presenter = new WidgetPresenter(this);
 
-      this.presenter.status.set(options);
+      // this.presenter.setParams();
+      // console.log(this.presenter.status.toJSON());
       this.widgetModel = new widgetModel();
       this.CountryModel = CountryModel;
+    },
+
+    setupView: function(options) {
+      this.presenter.setParams(options);
     },
 
     start: function() {
@@ -68,8 +73,8 @@ define([
       this.$el.find('[data-position="' + currentTab + '"]').addClass('is-selected');
     },
 
-    _loadMetaData: function(callback) {
-      var widgetId = this.presenter.status.get('id');
+    _loadMetaData: function(widgetId, callback) {
+      // var widgetId = this.presenter.status.get('id');
 
       this.widgetModel.getData(widgetId, callback);
     },
@@ -85,22 +90,20 @@ define([
 
     render: function() {
 
+      // console.log(this.presenter.status.toJSON());
+      // console.log(this.widgetModel.toJSON());
+
       this.$el.html(this.template({
         id: this.widgetModel.get('id'),
         tabs: this.widgetModel.get('tabs'),
-        indicators: this.widgetModel.get('indicators'),
-        name: this.widgetModel.get('name'),
-        type: this.widgetModel.get('type')
+        name: this.widgetModel.get('name')
       }));
 
       this._setTab();
 
-      var indicatorActived = this.presenter.status.get('options').indicator - 1;
-
+      var indicatorActived = this.presenter.status.get('indicatorActived');
+      var widgetId = this.presenter.status.get('id');
       var currentDataSetLink = this.widgetModel.get('indicators')[indicatorActived].data;
-      var currentTab = this.widgetModel.get('tabs')[indicatorActived];
-
-      var widgetId = this.widgetModel.get('id');
       var nextEl = '#' + widgetId + '.country-widget .graph-container';
 
       var data = {
@@ -111,7 +114,7 @@ define([
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
-      if (currentTab.type === 'line') {
+      if (this.widgetModel.get('type') === 'line') {
         new LineChartIndicator({el: nextEl}).render(data, widgetId);
       }
 

@@ -41,7 +41,12 @@ define([
     },
 
     _toggleWarnings: function() {
-      var widgetsOnGrid = Object.keys(this.presenter.status.get('widgets')).length;
+
+      var widgetsOnGrid = 0;
+
+      if (this.presenter.status.get('widgets')) {
+        widgetsOnGrid = Object.keys(this.presenter.status.get('widgets')).length;
+      }
 
       if (widgetsOnGrid > 0) {
         this.$moreIndicatorsWarning.removeClass('is-hidden');
@@ -114,7 +119,6 @@ define([
     },
 
     render: function() {
-      console.log(this.presenter.status.toJSON())
       var subview,
         view = this.presenter.status.get('view');
       var options = {

@@ -13,13 +13,16 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(options) {
-      console.log(options)
       this.widgets = options.widgets;
       this.countryModel = options.model;
     },
 
     _getWidgetsId: function() {
-      return _.keys(this.widgets);
+      var ids = [];
+      _.map(this.widgets, function(w) {
+        ids.push(w.id);
+      });
+      return ids;
     },
 
     render: function() {
@@ -34,14 +37,18 @@ define([
         if (_.has(this.widgets, id)) {
 
           var deferred = $.Deferred();
-          var currentWidget = new WidgetView({
-            id: id,
-            options: this.widgets[id]
-          });
+          var options =  _.where(this.widgets, {id: id})[0];
+          var currentWidget = new WidgetView(options);
 
           widgets.push(currentWidget);
 
-          currentWidget._loadMetaData(function(data) {
+          currentWidget._loadMetaData(id, function(data) {
+            var totalIndicators = currentWidget.widgetModel.get('indicators');
+            var currentIndicator = _.where(totalIndicators, {id: id});
+            options.indicator = currentIndicator;
+
+            currentWidget.setupView(options);
+
             deferred.resolve(data);
           });
 
