@@ -2,12 +2,12 @@ define([
   'backbone',
   'handlebars',
   'countries/models/CountryModel',
-  'countries/presenters/show/WidgetPresenter',
-  'countries/models/WidgetModel',
-  'countries/views/indicators/LineChartIndicator',
-  'countries/views/indicators/MapIndicator',
-  'countries/views/indicators/PieChartIndicator',
-  'text!countries/templates/country-widget.handlebars'
+  'widgets/presenters/WidgetPresenter',
+  'widgets/models/WidgetModel',
+  'widgets/indicators/line/LineChartIndicator',
+  'widgets/indicators/map/MapIndicator',
+  'widgets/indicators/pie/PieChartIndicator',
+  'text!widgets/templates/widget.handlebars'
 ], function(Backbone, Handlebars, CountryModel, WidgetPresenter, widgetModel, LineChartIndicator,
   MapIndicator, PieChartIndicator, tpl) {
 
@@ -16,8 +16,6 @@ define([
   var WidgetView = Backbone.View.extend({
 
     template: Handlebars.compile(tpl),
-
-    // collection: new widgetCollection(),
 
     events: {
       'click .close'                : '_close',
@@ -100,7 +98,6 @@ define([
 
       this._setTab();
 
-      // var indicatorActived = this.presenter.status.get('indicatorActived');
       var widgetId = this.presenter.status.get('id');
       var currentDataSetLink = this.presenter.status.get('')
 

@@ -6,8 +6,6 @@ define([
 
     url: '/api/widgets',
 
-
-
     parse: function(d) {
       return d.widgets;
     }

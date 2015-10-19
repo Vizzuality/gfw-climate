@@ -2,7 +2,7 @@ define([
   'backbone',
   'handlebars',
   'underscore',
-  'views/WidgetView',
+  'widgets/views/WidgetView',
   'text!countries/templates/country-national-grid.handlebars'
 ], function(Backbone, Handlebars, _, WidgetView, tpl) {
 

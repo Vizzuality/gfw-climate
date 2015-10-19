@@ -3,7 +3,7 @@ define([
   'countries/presenters/CountryShowPresenter',
   'countries/views/show/CountryShowHeaderView',
   'countries/views/show/TabsView',
-  'countries/views/show/WidgetGridView'
+  'widgets/views/WidgetGridView'
 ], function(Backbone, CountryShowPresenter, CountryShowHeaderView,
   TabsView, WidgetGridView, CountryModalView) {
 

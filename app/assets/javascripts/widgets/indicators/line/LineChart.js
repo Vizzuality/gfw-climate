@@ -1,7 +1,7 @@
 define([
  'jquery', 'd3', 'underscore',
- 'countries/views/indicators/line_chart_context',
- 'countries/views/indicators/line_chart_interactionHandler'
+ 'widgets/indicators/line/line_chart_context',
+ 'widgets/indicators/line/line_chart_interactionHandler'
 ], function(
   $, d3, _,
   LineChartContext, LineChartInteractionHandler
