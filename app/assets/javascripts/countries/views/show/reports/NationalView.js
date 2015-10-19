@@ -18,7 +18,11 @@ define([
     },
 
     _getWidgetsId: function() {
-      return _.keys(this.widgets);
+      var ids = [];
+      _.map(this.widgets, function(w) {
+        ids.push(w.id);
+      });
+      return ids;
     },
 
     render: function() {
@@ -33,14 +37,21 @@ define([
         if (_.has(this.widgets, id)) {
 
           var deferred = $.Deferred();
-          var currentWidget = new WidgetView({
-            id: id,
-            options: this.widgets[id]
-          });
+          var options =  _.where(this.widgets, {id: id})[0];
+          var currentWidget = new WidgetView(options);
 
           widgets.push(currentWidget);
 
-          currentWidget._loadMetaData(function(data) {
+          currentWidget._loadMetaData(id, function(data) {
+
+            var currentIndicator = _.where(currentWidget.widgetModel.get('indicators'), {default: true}),
+              currentTab = _.where(currentWidget.widgetModel.get('tabs'), {default: true });
+
+            options.indicators = currentIndicator[0];
+            options.tab = currentTab[0];
+
+            currentWidget.setupView(options);
+
             deferred.resolve(data);
           });
 

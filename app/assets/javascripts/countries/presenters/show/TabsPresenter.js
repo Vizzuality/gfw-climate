@@ -12,7 +12,11 @@ define([
       this.view = view;
       this._super();
 
-      this.status = new (Backbone.Model.extend());
+      this.status = new (Backbone.Model.extend({
+        defaults: {
+          view: 'national'
+        }
+      }));
 
       this._setListeners();
 
@@ -55,7 +59,7 @@ define([
     },
 
     _setupView: function(params) {
-      var currentView = params.options.gridStatus ? params.options.gridStatus.view : null;
+      var currentView = params.options ? params.options.gridStatus.view : this.status.get('view');
 
       this.setDisplay(currentView);
     },

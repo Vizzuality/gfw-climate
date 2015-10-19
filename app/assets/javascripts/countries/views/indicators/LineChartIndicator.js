@@ -3,11 +3,12 @@ define([
   'moment',
   'underscore',
   'handlebars',
-  'countries/models/IndicatorsModel',
+  'countries/models/IndicatorModel',
+  'countries/models/CountryModel',
   'countries/views/show/IndicatorView',
   'countries/views/indicators/LineChart',
   'text!countries/templates/indicators/LineGraphIndicator.handlebars'
-], function(d3, moment, _, Handlebars, IndicatorsModel, IndicatorView, LineChart, tpl) {
+], function(d3, moment, _, Handlebars, IndicatorModel, CountryModel, IndicatorView, LineChart, tpl) {
 
   'use strict';
 
@@ -19,14 +20,19 @@ define([
       return _.extend({}, IndicatorView.prototype.events, {});
     },
 
-    initialize: function() {
+    initialize: function(options) {
       this.constructor.__super__.initialize.apply(this);
-      this.model = IndicatorsModel;
-    },
 
-    _getData: function(data) {
-      // API call
-      return this.model.getByParams(data);
+      this.countryModel = CountryModel;
+      this.model = new IndicatorModel({
+        country: this.countryModel.get('iso'),
+        id: options.indicator.id
+      });
+
+      this.model.fetch().done(function() {
+        this.render();
+        this._drawGraph(this.model.toJSON(), this.model.get('id'));
+      }.bind(this));
     },
 
     _drawGraph: function(values, graphicId) {
@@ -40,10 +46,8 @@ define([
       }
       var data = [];
 
-      //Repasar parseo de datos.
-      //Funcioan bien en iso = GUY
-      values.values.forEach(function(d) {
-        if (Number(d.year !== 0)) {
+      _.map(values, function(d) {
+        if (d.year && Number(d.year !== 0)) {
 
           var n = d.year.toString();
 
@@ -70,17 +74,8 @@ define([
 
     //When we will implement tabs functionality, we can take the 'ind' value
     //from the tab element and give it to this function.
-    render: function(data, graphicId) {
-      this.$el.html(this.template({ 'graphicId' : graphicId }));
-      var self = this;
-
-      //Here, we retrieve the data for the first option in tabs
-      var data = this._getData(data);
-
-      $.when($, data).done(function() {
-        self._drawGraph(data.responseJSON, graphicId);
-      });
-
+    render: function() {
+      this.$el.html(this.template({ graphicId : this.model.get('id') }));
       return this;
     }
 

@@ -20,43 +20,63 @@ define([
     // collection: new widgetCollection(),
 
     events: {
-      'click .close' : '_close',
-      'click #info'   : '_info',
-      'click #share'  : '_share',
-      'click .indicators-grid__item': '_setCurrentIndicator',
-      'change .selector': 'updateTreshold'
+      'click .close'                : '_close',
+      'click #info'                 : '_info',
+      'click #share'                : '_share',
+      'click .indicators-grid__item': '_onClick'
+      // 'change .selector'            : 'updateTreshold'
     },
 
-    initialize: function(options) {
+    initialize: function() {
       this.presenter = new WidgetPresenter(this);
-
-      this.presenter.status.set(options);
 
       this.widgetModel = new widgetModel();
       this.CountryModel = CountryModel;
     },
 
-    start: function(p) {
-      this._loadMetaData((this.render).bind(this));
+    setupView: function(options) {
+      this.presenter.setParams(options);
     },
 
-    updateTreshold: function(e) {
-      var treshold = e.currentTarget.value;
-      this.presenter.updateStatus({
-        treshold: treshold
-      });
+    start: function() {
+      this._loadMetaData((this.render.bind(this)));
     },
 
-    _setCurrentIndicator: function(e) {
-      var indicatorTabs = document.querySelectorAll('.indicators-grid__item'),
-        currentIndicator = e.currentTarget;
+    // updateTreshold: function(e) {
+    //   var treshold = e.currentTarget.value;
+    //   this.presenter.updateStatus({
+    //     treshold: treshold
+    //   });
+    // },
+
+    /**
+     * Setup the current tab and update the status.
+     * @param  {click event} e
+     */
+    _onClick: function(e) {
+      var tab = $(e.currentTarget).data('position');
+      this.presenter.onUpdateWidget({
+        tab: {
+          position: tab
+        }
+      })
+    },
+
+    /**
+     * Set the class "is-selected" to the tab settted by
+     * the presenter status.
+     */
+    _setTab: function() {
+      var indicatorTabs = this.$el.find('.indicators-grid__item'),
+        currentTab = this.presenter.status.get('tab');
 
       $(indicatorTabs).removeClass('is-selected');
-      $(currentIndicator).addClass('is-selected');
+
+      this.$el.find('[data-position="' + currentTab.position + '"]').addClass('is-selected');
     },
 
-    _loadMetaData: function(callback) {
-      var widgetId = this.presenter.status.get('id');
+    _loadMetaData: function(widgetId, callback) {
+      // var widgetId = this.presenter.status.get('id');
 
       this.widgetModel.getData(widgetId, callback);
     },
@@ -75,29 +95,31 @@ define([
       this.$el.html(this.template({
         id: this.widgetModel.get('id'),
         tabs: this.widgetModel.get('tabs'),
-        indicators: this.widgetModel.get('indicators'),
-        name: this.widgetModel.get('name'),
-        type: this.widgetModel.get('type')
+        name: this.widgetModel.get('name')
       }));
 
-      var indicatorActived = this.presenter.status.get('options').indicator - 1;
+      this._setTab();
 
-      var currentDataSetLink = this.widgetModel.attributes.indicators[indicatorActived].data;
-      var currentTab = this.widgetModel.get('tabs')[indicatorActived];
+      // var indicatorActived = this.presenter.status.get('indicatorActived');
+      var widgetId = this.presenter.status.get('id');
+      var currentDataSetLink = this.presenter.status.get('')
 
-      var widgetId = this.widgetModel.get('id');
-      var nextEl = '#' + widgetId + '.country-widget .graph-container';
 
       var data = {
         country: this.CountryModel.get('iso'),
-        url: currentDataSetLink
+        url: this.presenter.status.get('indicators').data
       };
 
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
-      if (currentTab.type === 'line') {
-        new LineChartIndicator({el: nextEl}).render(data, widgetId);
+      var $nextEl = $('#' + widgetId).find('.graph-container');
+
+      if (this.presenter.status.get('indicators').type === 'line') {
+        new LineChartIndicator({
+          el: $nextEl,
+          indicator: this.presenter.status.get('indicators')
+        });
       }
 
       // if (this.data.type === 'pie') {
