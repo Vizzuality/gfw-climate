@@ -6,12 +6,16 @@ define([
 
     url: '/api/widgets/',
 
-    setUrl: function(id) {
-      this.url += id;
+    initialize: function() {
+      // this.url += this.id + '/' + this.get('iso');
     },
 
-    getData: function(id, cb) {
-      this.setUrl(id);
+    // setUrl: function(id) {
+    //   this.url += id;
+    // },
+
+    getData: function(params, cb) {
+      this.url += params.id + '/' + params.iso;
       $.ajax({
         url: this.url,
         success: function(data) {

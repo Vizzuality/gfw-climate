@@ -24,18 +24,21 @@ define([
       this.constructor.__super__.initialize.apply(this);
 
       this.countryModel = CountryModel;
+
+      // Enable params when we have API data
       this.model = new IndicatorModel({
-        country: this.countryModel.get('iso'),
         id: options.indicator.id
+        // country: this.countryModel.get('iso'),
+        // url: options.indicator.data
       });
 
       this.model.fetch().done(function() {
         this.render();
-        this._drawGraph(this.model.toJSON(), this.model.get('id'));
+        this._drawGraph();
       }.bind(this));
     },
 
-    _drawGraph: function(values, graphicId) {
+    _drawGraph: function() {
       //Fixear keys. No magic numbers
       var keys = { x: 'year', y: 'loss' };
       var parseDate = d3.time.format("%Y").parse;
@@ -45,6 +48,8 @@ define([
         return d;
       }
       var data = [];
+
+      var values = this.model.toJSON();
 
       _.map(values, function(d) {
         if (d.year && Number(d.year !== 0)) {
@@ -58,6 +63,7 @@ define([
         }
       });
 
+      var graphicId = this.model.get('id');
       var graphContainer = this.$el.find('#' + graphicId + '.content')[0];
 
       var lineChart = new LineChart({
