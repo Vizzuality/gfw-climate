@@ -2,11 +2,9 @@ define([
   'underscore',
   'd3',
   'handlebars',
-  'countries/views/show/IndicatorView',
-  'countries/helpers/GraphHelper',
-  'text!countries/templates/indicators/pieChart.handlebars',
-  'text!countries/templates/indicators/legend-example.handlebars'
-], function(_, d3, Handleabars, IndicatorView, GraphHelper, tpl, legendTemplate) {
+  'widgets/views/IndicatorView',
+  'text!widgets/templates/indicators/pie/piechart.handlebars',
+], function(_, d3, Handleabars, IndicatorView, tpl) {
 
   'use strict';
 
@@ -28,10 +26,10 @@ define([
       var legend = document.createElement('div');
 
 
-      var legendHTML = Handlebars.compile(legendTemplate);
+      // var legendHTML = Handlebars.compile(legendTemplate);
 
 
-      $('.piechart-container').append(legendHTML);
+      // $('.piechart-container').append(legendHTML);
 
 
       // var legend = svg.append('g')

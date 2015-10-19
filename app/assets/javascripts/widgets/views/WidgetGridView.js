@@ -1,6 +1,6 @@
 define([
   'backbone',
-  'countries/presenters/show/WidgetGridPresenter',
+  'widgets/presenters/WidgetGridPresenter',
   'countries/views/show/reports/NationalView',
   'countries/views/show/reports/SubNationalView',
   'countries/views/show/reports/AreasView',
@@ -41,7 +41,12 @@ define([
     },
 
     _toggleWarnings: function() {
-      var widgetsOnGrid = Object.keys(this.presenter.status.get('widgets')).length;
+
+      var widgetsOnGrid = 0;
+
+      if (this.presenter.status.get('widgets')) {
+        widgetsOnGrid = Object.keys(this.presenter.status.get('widgets')).length;
+      }
 
       if (widgetsOnGrid > 0) {
         this.$moreIndicatorsWarning.removeClass('is-hidden');

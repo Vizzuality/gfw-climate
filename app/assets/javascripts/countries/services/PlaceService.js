@@ -53,31 +53,7 @@ define([
 
   'use strict';
 
-  // Default Options
-  // {
-  //   "gridStatus" : {
-  //     "view": "national",
-  //     "treshold": 30,
-  //     "widgets":{
-  //       "1": {
-  //         "average": null,
-  //         "indicator": 1,
-  //         "treshold": 30,
-  //         "unit": null
-  //       },
-  //       "2":{
-  //         "average": null,
-  //         "indicator": 1,
-  //         "treshold":30,
-  //         "unit": null
-  //       }
-  //     }
-  //   }
-  // }
-
-  var urlDefaultsParams = {
-    options: 'ICB7DQogICJncmlkU3RhdHVzIiA6IHsNCiAgICAgInZpZXciOiAibmF0aW9uYWwiLA0KICAgICAidHJlc2hvbGQiOiAzMCwNCiAgICAgIndpZGdldHMiOnsNCiAgICAgIjEiOiB7DQogICAgICAgImF2ZXJhZ2UiOiBudWxsLA0KICAgICAgICJpbmRpY2F0b3IiOiAxLA0KICAgICAgICJ0cmVzaG9sZCI6IDMwLA0KICAgICAgICJ1bml0IjogbnVsbA0KICAgICB9LA0KICAgICAiMiI6ew0KICAgICAgImF2ZXJhZ2UiOiBudWxsLA0KICAgICAgImluZGljYXRvciI6IDEsDQogICAgICAidHJlc2hvbGQiOjMwLA0KICAgICAgInVuaXQiOiBudWxsDQogICAgIH0NCiAgIH0NCiB9DQp9'
-  };
+  var urlDefaultsParams = {};
 
   var widgetStatus = {};
 

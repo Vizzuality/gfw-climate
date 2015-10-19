@@ -1,8 +1,8 @@
 define([
   'underscore',
   'handlebars',
-  'countries/views/show/IndicatorView',
-  'text!countries/templates/country-map-widget.handlebars'
+  'widgets/views/IndicatorView',
+  'text!widgets/templates/widget-map.handlebars'
 ], function(_, Handleabars, IndicatorView, TPL) {
 
   'use strict';

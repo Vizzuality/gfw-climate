@@ -1,5 +1,5 @@
 {{!-- Cambiar id numérico por widget-id --}}
-<section class="country-widget" id="{{id}}">
+<section class="country-widget">
   <div class="country-widget__header">
     <h2 class="country-widget__name">{{name}}</h2>
     <div class="options">
@@ -20,12 +20,12 @@
       </a>
     </div>
   </div>
-  <div class="country-widget__content" data-type="{{type}}">
+  <div class="country-widget__content">
 
     {{#if tabs}}
       <div class="indicators-grid">
       {{#each tabs}}
-        <div class="indicators-grid__item" data-position="{{position}}" data-type="{{type}}">{{name}}</div>
+        <div class="indicators-grid__item" data-position="{{position}}">{{name}}</div>
       {{/each}}
       </div>
       <div class="indicators__content">

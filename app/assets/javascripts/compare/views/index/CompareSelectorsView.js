@@ -4,7 +4,7 @@ define([
   'underscore',
   'chosen',
   'compare/presenters/CompareSelectorsPresenter',
-  'countries/helpers/CountryHelper',
+  'helpers/CountryHelper',
   'text!compare/templates/compareSelectorTpl.handlebars'
 ], function(Backbone, Handlebars, _, chosen, CompareSelectorsPresenter, CountryHelper, tpl) {
 
