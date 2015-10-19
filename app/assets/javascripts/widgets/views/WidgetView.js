@@ -28,8 +28,9 @@ define([
     initialize: function() {
       this.presenter = new WidgetPresenter(this);
 
-      this.widgetModel = new widgetModel();
-      this.CountryModel = CountryModel;
+      this.widgetModel = new widgetModel({
+        iso: CountryModel.get('iso')
+      });
     },
 
     setupView: function(options) {
@@ -37,7 +38,7 @@ define([
     },
 
     start: function() {
-      this._loadMetaData((this.render.bind(this)));
+      // this._loadMetaData((this.render.bind(this)));
     },
 
     // updateTreshold: function(e) {
@@ -73,10 +74,10 @@ define([
       this.$el.find('[data-position="' + currentTab.position + '"]').addClass('is-selected');
     },
 
-    _loadMetaData: function(widgetId, callback) {
+    _loadMetaData: function(params, callback) {
       // var widgetId = this.presenter.status.get('id');
 
-      this.widgetModel.getData(widgetId, callback);
+      this.widgetModel.getData(params, callback);
     },
 
     _close: function(e) {
@@ -98,30 +99,26 @@ define([
 
       this._setTab();
 
-      var widgetId = this.presenter.status.get('id');
-      var currentDataSetLink = this.presenter.status.get('')
-
-
-      var data = {
-        country: this.CountryModel.get('iso'),
-        url: this.presenter.status.get('indicators').data
-      };
-
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
+      var widgetId = this.presenter.status.get('id');
       var $nextEl = $('#' + widgetId).find('.graph-container');
+      var indicatorType = this.presenter.status.get('indicators').type;
 
-      if (this.presenter.status.get('indicators').type === 'line') {
-        new LineChartIndicator({
-          el: $nextEl,
-          indicator: this.presenter.status.get('indicators')
-        });
-      }
+      switch(indicatorType) {
+        case 'line':
+          new LineChartIndicator({
+            el: $nextEl,
+            indicator: this.presenter.status.get('indicators')
+          });
 
-      // if (this.data.type === 'pie') {
-      //   this.$el.find('.graph-container .content').append(new PieChartIndicator().render(firstDataSetLink).el);
-      // }
+          break;
+
+        case 'pie':
+          // Stuff
+          break;
+      };
 
       return this;
     }
