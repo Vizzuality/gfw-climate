@@ -53,28 +53,6 @@ define([
 
   'use strict';
 
-  // Default Options
-  // {
-  //   "gridStatus" : {
-  //     "view": "national",
-  //     "treshold": 30,
-  //     "widgets":{
-  //       "1": {
-  //         "average": null,
-  //         "indicator": 1,
-  //         "treshold": 30,
-  //         "unit": null
-  //       },
-  //       "2":{
-  //         "average": null,
-  //         "indicator": 1,
-  //         "treshold":30,
-  //         "unit": null
-  //       }
-  //     }
-  //   }
-  // }
-
   var urlDefaultsParams = {};
 
   var widgetStatus = {};

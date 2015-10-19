@@ -1,6 +1,6 @@
 define([
   'backbone',
-  'countries/presenters/show/WidgetGridPresenter',
+  'widgets/presenters/WidgetGridPresenter',
   'countries/views/show/reports/NationalView',
   'countries/views/show/reports/SubNationalView',
   'countries/views/show/reports/AreasView',

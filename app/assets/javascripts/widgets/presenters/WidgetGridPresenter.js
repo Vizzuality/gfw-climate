@@ -2,14 +2,12 @@ define([
   'mps',
   'underscore',
   'countries/presenters/PresenterClass',
-  'countries/collections/WidgetCollection'
+  'widgets/collections/WidgetCollection'
 ], function(mps,underscore, PresenterClass, WidgetCollection) {
 
   'use strict';
 
   var WidgetGridPresenter = PresenterClass.extend({
-
-
 
     init: function(view) {
       this.view = view;

@@ -3,11 +3,11 @@ define([
   'moment',
   'underscore',
   'handlebars',
-  'countries/models/IndicatorModel',
+  'widgets/models/IndicatorModel',
   'countries/models/CountryModel',
-  'countries/views/show/IndicatorView',
-  'countries/views/indicators/LineChart',
-  'text!countries/templates/indicators/LineGraphIndicator.handlebars'
+  'widgets/views/IndicatorView',
+  'widgets/indicators/line/LineChart',
+  'text!widgets/templates/indicators/line/linechart.handlebars'
 ], function(d3, moment, _, Handlebars, IndicatorModel, CountryModel, IndicatorView, LineChart, tpl) {
 
   'use strict';
