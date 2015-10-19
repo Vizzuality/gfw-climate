@@ -20,62 +20,38 @@ define([
     },
 
     render: function() {
-      console.log(this.parseData());
       this.$el.html(this.template(this.parseData()));
 
+      // var widgets = [],
+      //     promises = [];
 
 
       _.map(this.status.get('data'), _.bind(function(c){
         var $el = $('#compare-grid-'+c.iso);
-
-        _.each(c.widgets, function(w) {
-          console.log(w);
+        _.each(c.widgets, _.bind(function(w) {
           var deferred = $.Deferred();
+
           // var currentWidget = new WidgetView({
           //   id: w.id,
-          //   options: this.widgets[id]
+          //   options: this.status.get('options')[w.id]
           // });
 
-        })
+          // widgets.push(currentWidget);
 
-        console.log(c);
-      }, this ))
-      // var widgets = [],
-      //   promises = [],
-      //   widgetsId = this._getWidgetsId();
+          // currentWidget._loadMetaData(function(data) {
+          //   deferred.resolve(data);
+          // });
 
-      // widgetsId.forEach(_.bind(function(id) {
+          // promises.push(deferred);
+        }, this ));
 
-      //   if (_.has(this.widgets, id)) {
-
-      //     var deferred = $.Deferred();
-      //     var currentWidget = new WidgetView({
-      //       id: id,
-      //       options: this.widgets[id]
-      //     });
-
-      //     widgets.push(currentWidget);
-
-      //     currentWidget._loadMetaData(function(data) {
-      //       deferred.resolve(data);
-      //     });
-
-      //     promises.push(deferred);
-      //   }
-
-      // }, this));
-
-      // var self = this;
-
-      // $.when.apply(null, promises).then(function() {
-      //   widgets.forEach(function(widget) {
-      //     widget.render();
-      //     self.$el.append(widget.el);
-      //   });
-      // });
-
-      // return this;
-
+        // $.when.apply(null, promises).then(function() {
+        //   widgets.forEach(function(widget) {
+        //     widget.render();
+        //     $el.append(widget.el);
+        //   });
+        // });
+      }, this ));
     },
 
     parseData: function() {

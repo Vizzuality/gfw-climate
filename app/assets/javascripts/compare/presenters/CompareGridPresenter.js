@@ -52,20 +52,18 @@ define([
         new WidgetsCollection()
           .fetch({data: {default: true}})
           .done(_.bind(function(_options){
-            params.options = _options;
+            params.options = this.getOptions(_options);
             this.setModels(params);
           }, this ));
 
       } else {
         this.setModels(params);
       }
-      if (!!params.compare1 && !!params.compare2) {
-        this.setModels(params);
-      }
     },
 
 
     _onCompareUpdate: function(params) {
+      var params = _.extend({}, this.status.attributes, params);
       if (!!params.compare1 && !!params.compare2) {
         this.setModels(params);
       }
@@ -73,7 +71,7 @@ define([
 
     // SETTER
     setModels: function(params) {
-      this.status.set('options', this.getOptions(params.options));
+      this.status.set('options', params.options);
       this.status.set('widgets', this.getWidgets());
       this.status.set('compare1', params.compare1);
       this.status.set('compare2', params.compare2);
@@ -125,9 +123,13 @@ define([
 
     getOptions: function(options) {
       if (!!options) {
-        return _.map(options.widgets,function(w){
-          return { id: w.id, indicators: w.indicators, tabs: w.tabs };
-        });
+        return _.groupBy(_.map(options.widgets,function(w){
+          return {
+            id: w.id,
+            indicators: w.indicators,
+            tabs: (!!w.tabs) ? w.tabs[0].position : null
+          };
+        }), 'id');
       }
     },
 
