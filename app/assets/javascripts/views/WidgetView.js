@@ -30,8 +30,6 @@ define([
     initialize: function() {
       this.presenter = new WidgetPresenter(this);
 
-      // this.presenter.setParams();
-      // console.log(this.presenter.status.toJSON());
       this.widgetModel = new widgetModel();
       this.CountryModel = CountryModel;
     },
@@ -118,8 +116,10 @@ define([
       var $nextEl = $('#' + widgetId).find('.graph-container');
 
       if (this.presenter.status.get('indicators').type === 'line') {
-        console.log($nextEl);
-        new LineChartIndicator({el: $nextEl}).render(data, widgetId);
+        new LineChartIndicator({
+          el: $nextEl,
+          indicator: this.presenter.status.get('indicators')
+        });
       }
 
       // if (this.data.type === 'pie') {
