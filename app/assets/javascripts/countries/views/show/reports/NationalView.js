@@ -43,9 +43,12 @@ define([
           widgets.push(currentWidget);
 
           currentWidget._loadMetaData(id, function(data) {
-            var totalIndicators = currentWidget.widgetModel.get('indicators');
-            var currentIndicator = _.where(totalIndicators, {id: id});
-            options.indicator = currentIndicator;
+
+            var currentIndicator = _.where(currentWidget.widgetModel.get('indicators'), {default: true}),
+              currentTab = _.where(currentWidget.widgetModel.get('tabs'), {default: true });
+
+            options.indicators = currentIndicator[0];
+            options.tab = currentTab[0];
 
             currentWidget.setupView(options);
 

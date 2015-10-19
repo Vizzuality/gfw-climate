@@ -34,16 +34,13 @@ define([
     },
 
     setParams: function(options) {
-
       this.status.set({
         id: options.id,
         name: options.name,
         data: options.data,
-        indicator: options.indicator
+        tab: options.tab,
+        indicators: options.indicators
       });
-
-      console.log(this.status.toJSON());
-
     },
 
     /**
@@ -54,16 +51,16 @@ define([
     getPlaceParams: function() {
       var p = {};
 
-      p.widgetStatus = {
-        id: this.status.get('id'),
-        tab: this.status.get('tab'),
-        options: {
-          average: this.status.get('average'),
-          indicator: this.status.get('indicator'),
-          treshold: this.status.get('treshold'),
-          unit: this.status.get('unit')
-        }
-      };
+      // p.widgetStatus = {
+      //   id: this.status.get('id'),
+      //   tab: this.status.get('tab'),
+      //   options: {
+      //     average: this.status.get('average'),
+      //     indicator: this.status.get('indicator'),
+      //     treshold: this.status.get('treshold'),
+      //     unit: this.status.get('unit')
+      //   }
+      // };
 
       return p;
     },

@@ -57,7 +57,11 @@ define([
      */
     _onClick: function(e) {
       var tab = $(e.currentTarget).data('position');
-      this.presenter.onUpdateWidget({tab: tab})
+      this.presenter.onUpdateWidget({
+        tab: {
+          position: tab
+        }
+      })
     },
 
     /**
@@ -65,12 +69,12 @@ define([
      * the presenter status.
      */
     _setTab: function() {
-      var indicatorTabs = document.querySelectorAll('.indicators-grid__item'),
+      var indicatorTabs = this.$el.find('.indicators-grid__item'),
         currentTab = this.presenter.status.get('tab');
 
       $(indicatorTabs).removeClass('is-selected');
 
-      this.$el.find('[data-position="' + currentTab + '"]').addClass('is-selected');
+      this.$el.find('[data-position="' + currentTab.position + '"]').addClass('is-selected');
     },
 
     _loadMetaData: function(widgetId, callback) {
@@ -90,9 +94,6 @@ define([
 
     render: function() {
 
-      // console.log(this.presenter.status.toJSON());
-      // console.log(this.widgetModel.toJSON());
-
       this.$el.html(this.template({
         id: this.widgetModel.get('id'),
         tabs: this.widgetModel.get('tabs'),
@@ -101,21 +102,24 @@ define([
 
       this._setTab();
 
-      var indicatorActived = this.presenter.status.get('indicatorActived');
+      // var indicatorActived = this.presenter.status.get('indicatorActived');
       var widgetId = this.presenter.status.get('id');
-      var currentDataSetLink = this.widgetModel.get('indicators')[indicatorActived].data;
-      var nextEl = '#' + widgetId + '.country-widget .graph-container';
+      var currentDataSetLink = this.presenter.status.get('')
+
 
       var data = {
         country: this.CountryModel.get('iso'),
-        url: currentDataSetLink
+        url: this.presenter.status.get('indicators').data
       };
 
       // Mejorar
       $(document.querySelector('.reports-grid').firstChild).append(this.el);
 
-      if (this.widgetModel.get('type') === 'line') {
-        new LineChartIndicator({el: nextEl}).render(data, widgetId);
+      var $nextEl = $('#' + widgetId).find('.graph-container');
+
+      if (this.presenter.status.get('indicators').type === 'line') {
+        console.log($nextEl);
+        new LineChartIndicator({el: $nextEl}).render(data, widgetId);
       }
 
       // if (this.data.type === 'pie') {
