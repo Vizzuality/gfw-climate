@@ -12,10 +12,14 @@ end
 def tabs
   @widget.tabs.map do |tab|
     {
-      position:  tab['position'],
-      name:      tab['name'],
-      type:      tab['type'],
-      default:   tab['default']
+      position:      tab['position'],
+      name:          tab['name'],
+      type:          tab['type'],
+      range:         tab['range'],
+      rangetype:     tab['rangetype'],
+      switch:        tab['switch'],
+      thresh:        tab['thresh'],
+      default:       tab['default']
     }
   end rescue nil
 end

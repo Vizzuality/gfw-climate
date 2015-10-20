@@ -34,28 +34,19 @@ define([
     },
 
     _drawGraph: function() {
-      //Fixear keys. No magic numbers
-      var keys = { x: 'year', y: 'loss' };
+      var keys = { x: 'year', y: 'value' };
       var parseDate = d3.time.format("%Y").parse;
-      var type = function(d) {
-        d[keys.x] = parseDate(d[keys.x]);
-        d[keys.y] = +d[keys.y];
-        return d;
-      }
-
-      var values = this.model.toJSON();
-
-      var data = _.compact(_.map(values, function(d) {
+      var $graphContainer = this.$el.find('#' + this.model.get('id') + '.content')[0];
+      var data = _.compact(_.map(this.model.get('data'), function(d) {
         if (d && d.year && Number(d.year !== 0)) {
           return {
             year: parseDate(d.year.toString()),
-            loss: ~~d.value
+            value: ~~d.value
           };
         }
         return null;
       }));
 
-      var $graphContainer = this.$el.find('#' + this.model.get('id') + '.content')[0];
 
       if (!!data.length) {
         var lineChart = new LineChart({
@@ -75,7 +66,9 @@ define([
     //When we will implement tabs functionality, we can take the 'ind' value
     //from the tab element and give it to this function.
     render: function() {
-      this.$el.html(this.template({ graphicId : this.model.get('id') }));
+      this.$el.html(this.template({
+        graphicId : this.model.get('id')
+      }));
       return this;
     }
 

@@ -56,42 +56,6 @@ define([
   var urlDefaultsParams = {
     compare1: null,
     compare2: null,
-    // options: 'eyIxIjp7ImRhdGVfc3RhcnQiOiIyNi8wNy8yMDAwIiwiZGF0ZV9lbmQiOiIyNi8wNy8yMDEyIiwiaWQiOjEsImluZGljYXRvciI6MSwidHJlc2hvbGQiOjI1LCJ1bml0IjoiaGEifSwiMiI6eyJkYXRlX3N0YXJ0IjoiMjYvMDcvMjAwMCIsImRhdGVfZW5kIjoiMjYvMDcvMjAxMiIsImlkIjoyLCJpbmRpY2F0b3IiOjIsInRyZXNob2xkIjoyNSwidW5pdCI6ImhhIn0sIjMiOnsiZGF0ZV9zdGFydCI6IjI2LzA3LzIwMDAiLCJkYXRlX2VuZCI6IjI2LzA3LzIwMTIiLCJpZCI6MywiaW5kaWNhdG9yIjozLCJ0cmVzaG9sZCI6MjUsInVuaXQiOiJoYSJ9LCI0Ijp7ImRhdGVfc3RhcnQiOiIyNi8wNy8yMDAwIiwiZGF0ZV9lbmQiOiIyNi8wNy8yMDEyIiwiaWQiOjQsImluZGljYXRvciI6NCwidHJlc2hvbGQiOjI1LCJ1bml0IjoiaGEifX0='
-    // options: {
-    //   "1" : {
-    //     date_start: "26/07/2000",
-    //     date_end: "26/07/2012",
-    //     id: 1,
-    //     indicator: 1,
-    //     treshold: 25,
-    //     unit: "ha"
-    //   },
-    //   "2" : {
-    //     date_start: "26/07/2000",
-    //     date_end: "26/07/2012",
-    //     id: 2,
-    //     indicator: 2,
-    //     treshold: 25,
-    //     unit: "ha"
-    //   },
-    //   "3" : {
-    //     date_start: "26/07/2000",
-    //     date_end: "26/07/2012",
-    //     id: 3,
-    //     indicator: 3,
-    //     treshold: 25,
-    //     unit: "ha"
-    //   },
-    //   "4" : {
-    //     date_start: "26/07/2000",
-    //     date_end: "26/07/2012",
-    //     id: 4,
-    //     indicator: 4,
-    //     treshold: 25,
-    //     unit: "ha"
-    //   }
-    // }
-
   };
 
   var PlaceService = PresenterClass.extend({

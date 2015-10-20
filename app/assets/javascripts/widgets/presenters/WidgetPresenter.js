@@ -28,6 +28,7 @@ define([
     },
 
     onChangeTab: function() {
+      console.log(this.status);
       this.view.setTab();
     },
 

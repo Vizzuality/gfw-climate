@@ -23,14 +23,12 @@
   <div class="country-widget__content">
 
     {{#if tabs}}
-      <div class="indicators-tabgrid">
+      <ul class="tab-ul">
       {{#each tabs}}
-        <div class="indicators-tab" data-position="{{position}}">{{name}}</div>
+        <li class="tab-li" data-position="{{position}}">{{name}}</li>
       {{/each}}
-      </div>
-      <div class="indicators__content">
-        <div class="graph-container"></div>
-      </div>
+      </ul>
+      <div class="tab-content"></div>
     {{/if}}
   </div>
 </section>

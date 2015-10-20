@@ -14,7 +14,7 @@ define([
     },
 
     parse: function(d) {
-      return d.values;
+      return {data : d.values};
     }
 
   });

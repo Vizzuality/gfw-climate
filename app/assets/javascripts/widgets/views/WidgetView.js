@@ -2,12 +2,9 @@ define([
   'backbone',
   'handlebars',
   'widgets/presenters/WidgetPresenter',
-  'widgets/indicators/line/LineChartIndicator',
-  'widgets/indicators/map/MapIndicator',
-  'widgets/indicators/pie/PieChartIndicator',
-  'text!widgets/templates/widget.handlebars'
-], function(Backbone, Handlebars, WidgetPresenter, LineChartIndicator,
-  MapIndicator, PieChartIndicator, tpl) {
+  'widgets/views/TabView',
+  'text!widgets/templates/widget.handlebars',
+], function(Backbone, Handlebars, WidgetPresenter, TabView, tpl) {
 
   'use strict';
 
@@ -48,20 +45,15 @@ define([
 
       this.cacheVars();
 
-      this.initWidget();
+      this.setTab();
 
       return this;
     },
 
     cacheVars: function() {
-      this.$graphContainer = this.$el.find('.graph-container');
-      this.$tabgrid = this.$el.find('.indicators-tabgrid');
-      this.$tablink = this.$el.find('.indicators-tab');
-    },
-
-    initWidget: function() {
-      this.setTab();
-      this.setIndicator();
+      this.$tabgrid = this.$el.find('.tab-ul');
+      this.$tablink = this.$el.find('.tab-li');
+      this.$tabcontent = this.$el.find('.tab-content');
     },
 
     /**
@@ -70,25 +62,12 @@ define([
     setTab: function() {
       var tab = this.presenter.status.get('tabs');
       this.$tablink.removeClass('is-selected');
-      this.$tabgrid.find('.indicators-tab[data-position="' + tab + '"]').addClass('is-selected');
-    },
-
-    setIndicator: function() {
-      var indicatorType = this.presenter.status.get('indicators')[0].type;
-      switch(indicatorType) {
-        case 'line':
-          new LineChartIndicator({
-            el: this.$graphContainer,
-            id: this.presenter.status.get('indicators')[0].id,
-            iso: this.presenter.model.get('iso')
-          });
-          break;
-
-        case 'pie':
-          // Stuff
-          break;
-      };
-
+      this.$tabgrid.find('.tab-li[data-position="' + tab + '"]').addClass('is-selected');
+      new TabView({
+        el: this.$tabcontent,
+        iso: this.presenter.model.get('iso'),
+        status: this.presenter.status.toJSON()
+      });
     },
 
     /**

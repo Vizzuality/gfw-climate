@@ -123,11 +123,12 @@ define([
 
     getOptions: function(options) {
       if (!!options) {
+        console.log(options);
         return _.groupBy(_.map(options.widgets,function(w){
           return {
             id: w.id,
             indicators: w.indicators,
-            tabs: (!!w.tabs) ? w.tabs[0].position : null
+            tabs: (!!w.tabs) ? w.tabs : null
           };
         }), 'id');
       }
