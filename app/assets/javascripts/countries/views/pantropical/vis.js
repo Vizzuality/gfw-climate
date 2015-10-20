@@ -357,12 +357,27 @@ function addCommas(nStr) {
         return chart.display_by_year();
       };
     })(this);
+    root.display_change = (function(_this) {
+      return function() {
+        return chart.display_by_change();
+      };
+    })(this);
+    root.display_country = (function(_this) {
+      return function() {
+        return chart.display_by_country();
+      };
+    })(this);
     root.toggle_view = (function(_this) {
       return function(view_type) {
-        if (view_type === 'year') {
-          return root.display_year();
-        } else {
-          return root.display_all();
+        switch (view_type) {
+          case 'nydfs':
+            return root.display_year();
+          case 'all':
+            return root.display_all();
+          case 'change':
+            return root.display_change();
+          case 'country':
+            return root.display_country();
         }
       };
     })(this);
