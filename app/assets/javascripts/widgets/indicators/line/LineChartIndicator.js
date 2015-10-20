@@ -4,11 +4,10 @@ define([
   'underscore',
   'handlebars',
   'widgets/models/IndicatorModel',
-  'countries/models/CountryModel',
   'widgets/views/IndicatorView',
   'widgets/indicators/line/LineChart',
   'text!widgets/templates/indicators/line/linechart.handlebars'
-], function(d3, moment, _, Handlebars, IndicatorModel, CountryModel, IndicatorView, LineChart, tpl) {
+], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, LineChart, tpl) {
 
   'use strict';
 
@@ -22,14 +21,10 @@ define([
 
     initialize: function(options) {
       this.constructor.__super__.initialize.apply(this);
-
-      this.countryModel = CountryModel;
-
       // Enable params when we have API data
       this.model = new IndicatorModel({
-        id: options.indicator.id
-        // country: this.countryModel.get('iso'),
-        // url: options.indicator.data
+        id: options.id,
+        iso: options.iso
       });
 
       this.model.fetch().done(function() {
@@ -47,35 +42,34 @@ define([
         d[keys.y] = +d[keys.y];
         return d;
       }
-      var data = [];
 
       var values = this.model.toJSON();
 
-      _.map(values, function(d) {
-        if (d.year && Number(d.year !== 0)) {
-
-          var n = d.year.toString();
-
-          data.push({
-            year: parseDate(n),
+      var data = _.compact(_.map(values, function(d) {
+        if (d && d.year && Number(d.year !== 0)) {
+          return {
+            year: parseDate(d.year.toString()),
             loss: ~~d.value
-          });
+          };
         }
-      });
+        return null;
+      }));
 
-      var graphicId = this.model.get('id');
-      var graphContainer = this.$el.find('#' + graphicId + '.content')[0];
+      var $graphContainer = this.$el.find('#' + this.model.get('id') + '.content')[0];
 
-      var lineChart = new LineChart({
-        graphcId: graphicId,
-        data: data,
-        el: graphContainer,
-        sizing: {top: 0, right: 0, bottom: 20, left: 0},
-        innerPadding: { top: 0, right: 15, bottom: 0, left: 30 },
-        keys: keys
-      });
+      if (!!data.length) {
+        var lineChart = new LineChart({
+          graphcId: this.model.get('id'),
+          data: data,
+          el: $graphContainer,
+          sizing: {top: 0, right: 0, bottom: 20, left: 0},
+          innerPadding: { top: 0, right: 15, bottom: 0, left: 30 },
+          keys: keys
+        });
 
-      lineChart.render();
+        lineChart.render();
+      }
+
     },
 
     //When we will implement tabs functionality, we can take the 'ind' value

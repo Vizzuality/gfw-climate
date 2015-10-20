@@ -8,13 +8,13 @@
       {
         "position": 1,
         "name": "FAO FRA 2015 (IPCC Approach 1)",
-        "type": "line",
-        "default": true
+        "type": "line"
       },
       {
         "position": 2,
         "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
-        "type": "line"
+        "type": "line",
+        "default": true
       },
       {
         "position": 3,
@@ -28,7 +28,8 @@
         "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
         "type": "line",
         "unit": "hectares",
-        "tab": 2
+        "tab": 2,
+        "default": true
       },
       {
         "id": 2,
@@ -42,8 +43,7 @@
         "name": "FAO FRA 2015 (IPCC Approach 1)",
         "type": "line",
         "unit": "hectares",
-        "tab": 1,
-        "default": true
+        "tab": 1
       },
       {
         "id": 16,

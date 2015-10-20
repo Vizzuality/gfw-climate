@@ -1,6 +1,4 @@
 .country-widget {
-  float: left;
-  width: 48%;
   min-height: 250px;
   .country-widget__header {
     overflow: hidden;
@@ -63,10 +61,10 @@
 
   .country-widget__content {
     margin-top: 25px;
-    .indicators-grid {
+    .indicators-tabgrid {
       display: flex;
       justify-content: space-around;
-      .indicators-grid__item {
+      .indicators-tab {
         display: inline-flex;
         width: 100%;
         padding: 15px;
