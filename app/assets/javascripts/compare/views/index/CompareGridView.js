@@ -37,7 +37,7 @@ define([
           var currentWidget = new WidgetView({
             id: w.id,
             iso: c.iso,
-            options: this.status.get('options')[w.id]
+            options: this.status.get('options')[w.id][0]
           });
 
           currentWidget._loadMetaData(function(data) {

@@ -121,17 +121,33 @@ define([
       });
     },
 
+    // SET OPTIONS PARAMS
     getOptions: function(options) {
       if (!!options) {
-        console.log(options);
-        return _.groupBy(_.map(options.widgets,function(w){
+        return _.groupBy(_.map(options.widgets,_.bind(function(w){
           return {
             id: w.id,
-            indicators: w.indicators,
-            tabs: (!!w.tabs) ? w.tabs : null
+            tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null,
+            indicators: this.getIndicatorOptions(w.indicators),
           };
-        }), 'id');
+        }, this)), 'id');
       }
+    },
+    getTabsOptions: function(tabs) {
+      return _.map(tabs, function(t){
+        return {
+          position: t.position,
+          unit: (t.switch) ? t['switch'][0]['unit'] : null,
+          start_date: (t.range) ? t['range'][0] : null,
+          end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
+          thresh: (t.thresh) ? t['thresh'] : null
+        }
+      })[0];
+    },
+    getIndicatorOptions: function(indicators) {
+      return _.map(indicators,function(i){
+        return i.id;
+      });
     },
 
     objToUrl: function(obj) {

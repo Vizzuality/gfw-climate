@@ -13,10 +13,10 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .close'                : '_close',
-      'click #info'                 : '_info',
-      'click #share'                : '_share',
-      'click .indicators-tab'       : '_changeTab'
+      'click .close'   : '_close',
+      'click .info'    : '_info',
+      'click .share'   : '_share',
+      'click .tab-li'  : '_changeTab'
     },
 
     initialize: function(setup) {
@@ -60,12 +60,17 @@ define([
      * SETTERS
      */
     setTab: function() {
-      var tab = this.presenter.status.get('tabs');
+      var position = this.presenter.status.get('tabs').position;
+      // UI
       this.$tablink.removeClass('is-selected');
-      this.$tabgrid.find('.tab-li[data-position="' + tab + '"]').addClass('is-selected');
+      this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('is-selected');
+
+      //NEW TAB
       new TabView({
         el: this.$tabcontent,
         iso: this.presenter.model.get('iso'),
+        data: _.findWhere(this.presenter.model.get('tabs'), {position: position}),
+        indicators: _.where(this.presenter.model.get('indicators'), {tab: position}),
         status: this.presenter.status.toJSON()
       });
     },
@@ -75,7 +80,9 @@ define([
      * @param  {click event} e
      */
     _changeTab: function(e) {
-      this.presenter.status.set('tabs', $(e.currentTarget).data('position'));
+      var tabs = _.clone(this.presenter.status.get('tabs'));
+      tabs.position = $(e.currentTarget).data('position');
+      this.presenter.status.set('tabs',tabs);
     },
 
     _close: function(e) {

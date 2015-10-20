@@ -17,7 +17,7 @@ define([
         iso: setup.iso
       });
       this.status = new (Backbone.Model.extend({
-        defaults: setup.options[0]
+        defaults: setup.options
       }));
 
       this._setListeners();
@@ -28,7 +28,6 @@ define([
     },
 
     onChangeTab: function() {
-      console.log(this.status);
       this.view.setTab();
     },
 
