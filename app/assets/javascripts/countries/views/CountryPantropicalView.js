@@ -18,7 +18,8 @@ define([
     },
 
     switch_view: function(e) {
-      $('#view_selection').find('.btn').toggleClass('active');
+      $('#view_selection').find('.btn').removeClass('active');
+      $(e.target).addClass('active');
       toggle_view($(e.target).attr('id'));
     }
 
