@@ -282,11 +282,17 @@
         background-color: #fb8f5e;
       }
     }
+    sup,
+    sub {
+      font-size: 10px;
+      position: relative;
+      top: 2px;
+    }
+    sup {
+      top: -3px;
+    }
     &.all {
       display: block;
-    }
-    &.nydfs {
-
     }
   }
 }
