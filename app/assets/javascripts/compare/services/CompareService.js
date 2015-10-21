@@ -33,7 +33,8 @@ define([
      * Defines requests used by CompareService.
      */
     _defineRequests: function() {
-      var cache = this._cacheConfig;
+      // var cache = this._cacheConfig;
+      var cache = false;
       var config = {cache: cache, url: this._uriTemplate};
 
       ds.define(this.requestId, config);

@@ -14,7 +14,8 @@ define([
       this._super();
       this.model = new WidgetModel({
         id: setup.id,
-        iso: setup.iso
+        iso: setup.iso,
+        slug: setup.slug
       });
       this.status = new (Backbone.Model.extend({
         defaults: setup.options
@@ -29,6 +30,7 @@ define([
 
     onChangeTab: function() {
       this.view.setTab();
+      mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
     },
 
   });

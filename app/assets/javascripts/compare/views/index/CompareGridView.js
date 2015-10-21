@@ -13,7 +13,6 @@ define([
 
     initialize:function() {
       this.presenter = new CompareMainPresenter(this);
-      this.status = this.presenter.status;
     },
 
     setListeners: function() {
@@ -24,7 +23,7 @@ define([
       this.$el.html(this.template(this.parseData()));
 
       // Loop each country and get data and render its widgets
-      _.map(this.status.get('data'), _.bind(function(c){
+      _.map(this.presenter.status.get('data'), _.bind(function(c,i){
         // Create persistent variables
         var status = {
           el: null,
@@ -34,10 +33,12 @@ define([
 
         _.each(c.widgets, _.bind(function(w) {
           var deferred = $.Deferred();
+          var slug = this.presenter.objToSlug(this.presenter.status.get('compare'+(i+1)),'');
           var currentWidget = new WidgetView({
             id: w.id,
             iso: c.iso,
-            options: this.status.get('options')[w.id][0]
+            slug: slug,
+            options: this.presenter.status.get('options')[slug][w.id][0]
           });
 
           currentWidget._loadMetaData(function(data) {
@@ -45,7 +46,7 @@ define([
           });
 
           // Set persistent variables
-          status.el = $('#compare-grid-'+c.iso);
+          status.el = $('#compare-grid-'+slug);
           status.widgets.push(currentWidget);
           status.promises.push(deferred);
         }, this ));
@@ -61,7 +62,10 @@ define([
     },
 
     parseData: function() {
-      return { countries: this.status.get('data') };
+      return {
+        compare1slug: this.presenter.objToSlug(this.presenter.status.get('compare1'),''),
+        compare2slug: this.presenter.objToSlug(this.presenter.status.get('compare2'),'')
+      };
     }
 
 

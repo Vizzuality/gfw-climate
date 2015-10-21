@@ -21,12 +21,22 @@ define([
       this.view = view;
       this.service = CompareService;
       this.setListeners();
+      mps.publish('Place/register', [this]);
     },
 
     setListeners: function() {
-      this.status.on('change:compare1 change:compare2', this.changeCompare, this);
       this.status.on('change:data', this.changeData, this);
+    },
 
+    /**
+     * Used by PlaceService to get the current iso/area params.
+     *
+     * @return {object} iso/area params
+     */
+    getPlaceParams: function() {
+      var p = {};
+      p.options = this.status.get('options');
+      return p;
     },
 
     /**
@@ -41,40 +51,65 @@ define([
         this._onCompareUpdate(params)
       },
 
+      'Options/updated': function(id,slug,wstatus) {
+        this._onOptionsUpdate(id,slug,wstatus);
+      }
+
     }],
 
     /**
      *
     */
     _onPlaceGo: function(params) {
-      if (! !!params.options) {
-        // Fetching data
-        new WidgetsCollection()
-          .fetch({data: {default: true}})
-          .done(_.bind(function(_options){
-            params.options = this.getOptions(_options);
-            this.setModels(params);
-          }, this ));
-
-      } else {
-        this.setModels(params);
-      }
+      this.setParams(params);
     },
 
 
     _onCompareUpdate: function(params) {
       var params = _.extend({}, this.status.attributes, params);
+      this.setParams(params);
+    },
+
+
+    _onOptionsUpdate: function(id,slug,wstatus) {
+      var options = _.clone(this.status.get('options'));
+      options[slug][id][0] = wstatus;
+      // Set and publish
+      this.status.set('options', options);
+      mps.publish('Place/update');
+    },
+
+    setParams: function(params) {
       if (!!params.compare1 && !!params.compare2) {
-        this.setModels(params);
+        if (! !!params.options) {
+          // Fetching data
+          new WidgetsCollection()
+            .fetch({data: {default: true}})
+            .done(_.bind(function(_options){
+              params.options = this.getOptions(params, _options);
+              this.setModels(params);
+            }, this ));
+        } else {
+          if ((!!this.oldCompare1 && this.oldCompare1 != params.compare1) || (!!this.oldCompare2 && this.oldCompare2 != params.compare2)) {
+            params.options = this.moveOptions(params);
+            this.setModels(params);
+          } else {
+            this.setModels(params);
+          }
+        }
       }
     },
 
     // SETTER
     setModels: function(params) {
       this.status.set('options', params.options);
-      this.status.set('widgets', this.getWidgets());
+      // this.status.set('widgets', this.getWidgets());
       this.status.set('compare1', params.compare1);
       this.status.set('compare2', params.compare2);
+      this.oldCompare1 = params.compare1;
+      this.oldCompare2 = params.compare2;
+      mps.publish('Place/update');
+      this.changeCompare();
     },
 
     // COMPARE EVENTS
@@ -83,8 +118,8 @@ define([
     },
 
     changeCompare: function() {
-      var compare1 = this.objToUrl(this.status.get('compare1'));
-      var compare2 = this.objToUrl(this.status.get('compare2'));
+      var compare1 = this.objToSlug(this.status.get('compare1'),'+');
+      var compare2 = this.objToSlug(this.status.get('compare2'),'+');
       if (!!compare1 && !!compare2) {
         this.service.execute(
           compare1,
@@ -122,15 +157,25 @@ define([
     },
 
     // SET OPTIONS PARAMS
-    getOptions: function(options) {
+    getOptions: function(params, options) {
       if (!!options) {
-        return _.groupBy(_.map(options.widgets,_.bind(function(w){
-          return {
-            id: w.id,
-            tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null,
-            indicators: this.getIndicatorOptions(w.indicators),
-          };
-        }, this)), 'id');
+        // This should be removed to a dinamic var
+        var activeWidgets = [1,2];
+        var w = _.groupBy(_.compact(_.map(options.widgets,_.bind(function(w){
+          if (_.contains(activeWidgets, w.id)) {
+            return {
+              id: w.id,
+              tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null,
+              indicators: this.getIndicatorOptions(w.indicators),
+            };
+          }
+          return null;
+        }, this))), 'id');
+        // There is a better way to do this??
+        var r = {};
+        r[this.objToSlug(params.compare1,'')] = w;
+        r[this.objToSlug(params.compare2,'')] = w;
+        return r;
       }
     },
     getTabsOptions: function(tabs) {
@@ -149,15 +194,21 @@ define([
         return i.id;
       });
     },
+    moveOptions: function(params) {
+      var r = {};
+      r[this.objToSlug(params.compare1,'')] = params.options[this.objToSlug(this.oldCompare1,'')];
+      r[this.objToSlug(params.compare2,'')] = params.options[this.objToSlug(this.oldCompare2,'')];
+      return r;
+    },
 
-    objToUrl: function(obj) {
+    objToSlug: function(obj,join) {
       var arr_temp = [];
       for (var p in obj) {
         if (obj.hasOwnProperty(p)) {
           arr_temp.push(obj[p]);
         }
       }
-      return arr_temp.join('+');
+      return arr_temp.join(join);
     }
 
 
