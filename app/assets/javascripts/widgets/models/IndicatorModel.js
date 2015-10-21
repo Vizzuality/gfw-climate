@@ -10,11 +10,11 @@ define([
     // We use "1" because API hasn't got more data
     // Normally, you would use this.id
     initialize: function() {
-      this.url += '1/BRA';
+      this.url += this.get('id') + '/' + this.get('iso');
     },
 
     parse: function(d) {
-      return d.values;
+      return {data : d.values};
     }
 
   });

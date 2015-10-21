@@ -1,0 +1,36 @@
+<div class="sup-options">
+  <div class="unit-conversor"></div>
+  {{#if this.thresh}}
+    <div class="canopy-threshold">
+      <span>display loss with
+        <select class="selector blue threshold" name="threshold">
+          <option value="25">>25%</option>
+          <option value="55">>55%</option>
+          <option value="75">>75%</option>
+        </select>
+      canopy density</span>
+    </div>
+  {{/if}}
+</div>
+
+<div class="tab-graph"></div>
+
+<div class="sub-options">
+  {{#if this.range}}
+    <div class="average">
+      <span>Average:
+        <select class="selector blue start-date" name="start-date">
+          {{#each this.range}}
+            <option value="{{this}}">{{this}}</option>
+          {{/each}}
+        </select>
+        to
+        <select class="selector blue end-date" name="end-date">
+          {{#each this.range}}
+            <option value="{{this}}">{{this}}</option>
+          {{/each}}
+        </select>
+      </span>
+    </div>
+  {{/if}}
+</div>

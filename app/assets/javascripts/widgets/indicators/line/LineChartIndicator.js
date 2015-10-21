@@ -4,11 +4,10 @@ define([
   'underscore',
   'handlebars',
   'widgets/models/IndicatorModel',
-  'countries/models/CountryModel',
   'widgets/views/IndicatorView',
   'widgets/indicators/line/LineChart',
   'text!widgets/templates/indicators/line/linechart.handlebars'
-], function(d3, moment, _, Handlebars, IndicatorModel, CountryModel, IndicatorView, LineChart, tpl) {
+], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, LineChart, tpl) {
 
   'use strict';
 
@@ -22,14 +21,10 @@ define([
 
     initialize: function(options) {
       this.constructor.__super__.initialize.apply(this);
-
-      this.countryModel = CountryModel;
-
       // Enable params when we have API data
       this.model = new IndicatorModel({
-        id: options.indicator.id
-        // country: this.countryModel.get('iso'),
-        // url: options.indicator.data
+        id: options.id,
+        iso: options.iso
       });
 
       this.model.fetch().done(function() {
@@ -39,49 +34,38 @@ define([
     },
 
     _drawGraph: function() {
-      //Fixear keys. No magic numbers
-      var keys = { x: 'year', y: 'loss' };
+      var keys = { x: 'year', y: 'value' };
       var parseDate = d3.time.format("%Y").parse;
-      var type = function(d) {
-        d[keys.x] = parseDate(d[keys.x]);
-        d[keys.y] = +d[keys.y];
-        return d;
-      }
-      var data = [];
-
-      var values = this.model.toJSON();
-
-      _.map(values, function(d) {
-        if (d.year && Number(d.year !== 0)) {
-
-          var n = d.year.toString();
-
-          data.push({
-            year: parseDate(n),
-            loss: ~~d.value
-          });
+      var $graphContainer = this.$el.find('#graphic-' + this.model.get('id'))[0];
+      var data = _.compact(_.map(this.model.get('data'), function(d) {
+        if (d && d.year && Number(d.year !== 0)) {
+          return {
+            year: parseDate(d.year.toString()),
+            value: ~~d.value
+          };
         }
-      });
+        return null;
+      }));
 
-      var graphicId = this.model.get('id');
-      var graphContainer = this.$el.find('#' + graphicId + '.content')[0];
+      if (!!data.length) {
+        var lineChart = new LineChart({
+          graphicId: this.model.get('id'),
+          data: data,
+          el: $graphContainer,
+          sizing: {top: 0, right: 0, bottom: 20, left: 0},
+          innerPadding: { top: 0, right: 15, bottom: 0, left: 30 },
+          keys: keys
+        });
 
-      var lineChart = new LineChart({
-        graphcId: graphicId,
-        data: data,
-        el: graphContainer,
-        sizing: {top: 0, right: 0, bottom: 20, left: 0},
-        innerPadding: { top: 0, right: 15, bottom: 0, left: 30 },
-        keys: keys
-      });
+        lineChart.render();
+      }
 
-      lineChart.render();
     },
 
-    //When we will implement tabs functionality, we can take the 'ind' value
-    //from the tab element and give it to this function.
     render: function() {
-      this.$el.html(this.template({ graphicId : this.model.get('id') }));
+      this.$el.html(this.template({
+        graphicId: 'graphic-'+this.model.get('id')
+      }));
       return this;
     }
 

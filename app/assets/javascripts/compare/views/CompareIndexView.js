@@ -1,15 +1,15 @@
 define([
   'backbone',
   'compare/views/index/CompareSelectorsView',
-  'compare/views/index/CompareMainView',
+  'compare/views/index/CompareGridView',
   'compare/views/index/CompareModalView',
-], function(Backbone, CompareSelectorsView, CompareMainView, CompareModalView) {
+], function(Backbone, CompareSelectorsView, CompareGridView, CompareModalView) {
 
   var CompareIndexView = Backbone.View.extend({
 
     initialize:function() {
       new CompareSelectorsView();
-      new CompareMainView();
+      new CompareGridView();
       new CompareModalView();
     }
 

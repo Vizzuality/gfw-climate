@@ -9,17 +9,56 @@
         "position": 1,
         "name": "FAO FRA 2015 (IPCC Approach 1)",
         "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "thresh": 25,
         "default": true
       },
       {
         "position": 2,
         "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
-        "type": "line"
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "thresh": 25
       },
       {
         "position": 3,
         "name": "National Data (IPCC Approach 2/3)",
-        "type": "line"
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "thresh": 25
       }
     ],
     "indicators": [
@@ -78,17 +117,56 @@
         "position": 1,
         "name": "Faostat (IPCC Tier 1)",
         "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "thresh": 25,
         "default": true
       },
       {
         "position": 2,
         "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
-        "type": "line"
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "thresh": 25
       },
       {
         "position": 3,
         "name": "National Data (IPCC Tier 2)",
-        "type": "line"
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "thresh": 25
       }
     ],
     "indicators": [
