@@ -73,6 +73,7 @@ define([
         indicators: _.where(this.presenter.model.get('indicators'), {tab: position}),
         status: this.presenter.status.toJSON()
       });
+
     },
 
     /**
@@ -82,6 +83,7 @@ define([
     _changeTab: function(e) {
       var tabs = _.clone(this.presenter.status.get('tabs'));
       tabs.position = $(e.currentTarget).data('position');
+      this.presenter.status.set('indicators',[_.findWhere(this.presenter.model.get('indicators'), {tab: $(e.currentTarget).data('position')}).id])
       this.presenter.status.set('tabs',tabs);
     },
 
