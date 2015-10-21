@@ -112,7 +112,6 @@ LineChart.prototype._drawScatterplote = function() {
     .attr('cx', function(d) { return x(d[xKey]);})
     .attr('cy', function(d) { return y(d[yKey]);})
     .on('mouseover', function(d) {
-      console.log(d)
       tooltip.transition()
         .duration(200)
         .style('opacity', 1);

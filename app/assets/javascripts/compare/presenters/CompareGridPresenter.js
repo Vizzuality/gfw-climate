@@ -3,8 +3,8 @@ define([
   'mps',
   'compare/presenters/PresenterClass',
   'compare/services/CompareService',
-  'compare/collections/WidgetsCollection',
-], function(Backbone, mps, PresenterClass, CompareService, WidgetsCollection) {
+  'widgets/collections/WidgetCollection',
+], function(Backbone, mps, PresenterClass, CompareService, WidgetCollection) {
 
   'use strict';
 
@@ -83,10 +83,10 @@ define([
       if (!!params.compare1 && !!params.compare2) {
         if (! !!params.options) {
           // Fetching data
-          new WidgetsCollection()
+          new WidgetCollection()
             .fetch({data: {default: true}})
-            .done(_.bind(function(_options){
-              params.options = this.getOptions(params, _options);
+            .done(_.bind(function(widgets){
+              params.options = this.getOptions(params, widgets);
               this.setModels(params);
             }, this ));
         } else {
@@ -157,26 +157,24 @@ define([
     },
 
     // SET OPTIONS PARAMS
-    getOptions: function(params, options) {
-      if (!!options) {
-        // This should be removed to a dinamic var
-        var activeWidgets = [1,2];
-        var w = _.groupBy(_.compact(_.map(options.widgets,_.bind(function(w){
-          if (_.contains(activeWidgets, w.id)) {
-            return {
-              id: w.id,
-              tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null,
-              indicators: this.getIndicatorOptions(w.indicators),
-            };
-          }
-          return null;
-        }, this))), 'id');
-        // There is a better way to do this??
-        var r = {};
-        r[this.objToSlug(params.compare1,'')] = w;
-        r[this.objToSlug(params.compare2,'')] = w;
-        return r;
-      }
+    getOptions: function(params, widgets) {
+      // This should be removed to a dinamic var
+      var activeWidgets = [1,2];
+      var w = _.groupBy(_.compact(_.map(widgets.widgets,_.bind(function(w){
+        if (_.contains(activeWidgets, w.id)) {
+          return {
+            id: w.id,
+            tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null,
+            indicators: this.getIndicatorOptions(w.indicators),
+          };
+        }
+        return null;
+      }, this))), 'id');
+      // There is a better way to do this??
+      var r = {};
+      r[this.objToSlug(params.compare1,'')] = w;
+      r[this.objToSlug(params.compare2,'')] = w;
+      return r;
     },
     getTabsOptions: function(tabs) {
       return _.map(tabs, function(t){

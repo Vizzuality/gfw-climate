@@ -14,8 +14,13 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    events: {
+      'change .threshold' : 'changeThreshold'
+    },
+
     initialize: function(setup) {
       this.presenter = new TabPresenter(this, setup);
+      this.widget = setup.widget;
       this.render();
     },
 
@@ -24,17 +29,15 @@ define([
      */
     render: function() {
       this.$el.html(this.template(this.parseData()));
+      this.delegateEvents();
       this.cacheVars();
       this.setStatusValues();
       this.setIndicator();
+      return this;
     },
 
     parseData: function() {
-      return {
-        thresh: this.presenter.model.get('data').thresh,
-        range: this.presenter.model.get('data').range,
-        switch: this.presenter.model.get('data').switch
-      }
+      return this.presenter.model.get('data')
     },
 
     cacheVars: function() {
@@ -44,6 +47,12 @@ define([
       this.$graphContainer = this.$el.find('.tab-graph');
     },
 
+    // CHANGE EVENTS
+    changeThreshold: function(e) {
+      this.presenter.changeThreshold($(e.currentTarget).val());
+    },
+
+    // SETTERS
     setStatusValues: function() {
       this.$start_date.val(this.presenter.status.get('tabs').start_date);
       this.$end_date.val(this.presenter.status.get('tabs').end_date);
@@ -59,7 +68,10 @@ define([
           new LineChartIndicator({
             el: this.$graphContainer,
             id: indicator.id,
-            iso: this.presenter.model.get('iso')
+            iso: this.presenter.model.get('iso'),
+            data: {
+              thresh: this.presenter.status.get('tabs').thresh
+            }
           });
           break;
 

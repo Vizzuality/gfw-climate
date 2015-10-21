@@ -1,11 +1,19 @@
 <div class="sup-options">
-  <div class="unit-conversor"></div>
+  {{#if switch}}
+    <div class="unit-conversor">
+
+    </div>
+  {{/if}}
   {{#if this.thresh}}
     <div class="canopy-threshold">
       <span>display loss with
         <select class="selector blue threshold" name="threshold">
+          <option value="10">>10%</option>
+          <option value="15">>15%</option>
+          <option value="20">>20%</option>
           <option value="25">>25%</option>
-          <option value="55">>55%</option>
+          <option value="30">>30%</option>
+          <option value="50">>50%</option>
           <option value="75">>75%</option>
         </select>
       canopy density</span>

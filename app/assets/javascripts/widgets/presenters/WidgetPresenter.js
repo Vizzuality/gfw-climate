@@ -25,13 +25,28 @@ define([
     },
 
     _setListeners: function() {
-      this.status.on('change:tabs', this.onChangeTab, this);
+      this.status.on('change:tabs', this.setTab, this);
     },
 
-    onChangeTab: function() {
-      this.view.setTab();
-      mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
+    changeTab: function(position) {
+      var tabs = _.clone(this.status.get('tabs'));
+      tabs.position = position;
+      this.status.set('indicators',[_.findWhere(this.model.get('indicators'), {tab: position}).id]);
+      this.status.set('tabs',tabs);
     },
+
+    changeStatus: function(status) {
+      this.status.set(status);
+    },
+
+    setTab: function() {
+      this.view.setTab();
+      this.publish();
+    },
+
+    publish: function() {
+      mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
+    }
 
   });
 

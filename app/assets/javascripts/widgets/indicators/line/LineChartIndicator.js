@@ -6,29 +6,25 @@ define([
   'widgets/models/IndicatorModel',
   'widgets/views/IndicatorView',
   'widgets/indicators/line/LineChart',
-  'text!widgets/templates/indicators/line/linechart.handlebars'
-], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, LineChart, tpl) {
+], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, LineChart) {
 
   'use strict';
 
   var LineChartIndicator = IndicatorView.extend({
 
-    template: Handlebars.compile(tpl),
-
     events: function() {
       return _.extend({}, IndicatorView.prototype.events, {});
     },
 
-    initialize: function(options) {
+    initialize: function(setup) {
       this.constructor.__super__.initialize.apply(this);
       // Enable params when we have API data
       this.model = new IndicatorModel({
-        id: options.id,
-        iso: options.iso
+        id: setup.id,
+        iso: setup.iso
       });
 
-      this.model.fetch().done(function() {
-        this.render();
+      this.model.fetch({ data: setup.data}).done(function() {
         this._drawGraph();
       }.bind(this));
     },
@@ -36,7 +32,7 @@ define([
     _drawGraph: function() {
       var keys = { x: 'year', y: 'value' };
       var parseDate = d3.time.format("%Y").parse;
-      var $graphContainer = this.$el.find('#graphic-' + this.model.get('id'))[0];
+      var $graphContainer = this.$el[0];
       var data = _.compact(_.map(this.model.get('data'), function(d) {
         if (d && d.year && Number(d.year !== 0)) {
           return {
@@ -61,13 +57,6 @@ define([
       }
 
     },
-
-    render: function() {
-      this.$el.html(this.template({
-        graphicId: 'graphic-'+this.model.get('id')
-      }));
-      return this;
-    }
 
   });
 
