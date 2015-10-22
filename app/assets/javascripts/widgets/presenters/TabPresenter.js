@@ -29,14 +29,26 @@ define([
 
     // THRESHOLD
     changeThreshold: function(thresh) {
-      var tabs = _.clone(this.status.get('tabs'))
+      var tabs = _.clone(this.status.get('tabs'));
       tabs.thresh = (~~thresh);
       this.status.set('tabs', tabs);
     },
 
     changeUnit: function(unit) {
-      var tabs = _.clone(this.status.get('tabs'))
+      var tabs = _.clone(this.status.get('tabs'));
       tabs.unit = unit;
+      this.status.set('tabs', tabs);
+    },
+
+    changeStartDate: function(start_date) {
+      var tabs = _.clone(this.status.get('tabs'));
+      tabs.start_date = (~~start_date);
+      this.status.set('tabs', tabs);
+    },
+
+    changeEndDate: function(end_date) {
+      var tabs = _.clone(this.status.get('tabs'))
+      tabs.end_date = (~~end_date);
       this.status.set('tabs', tabs);
     },
 

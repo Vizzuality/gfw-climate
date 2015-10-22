@@ -31,13 +31,13 @@
   {{#if this.range}}
     <div class="average">
       <span>Average:
-        <select class="selector blue start-date" name="start-date">
+        <select class="selector date-selector blue start-date" data-direction="1" data-compare=".end-date" name="start-date">
           {{#each this.range}}
             <option value="{{this}}">{{this}}</option>
           {{/each}}
         </select>
         to
-        <select class="selector blue end-date" name="end-date">
+        <select class="selector date-selector blue end-date" data-direction="0" data-compare=".start-date" name="end-date">
           {{#each this.range}}
             <option value="{{this}}">{{this}}</option>
           {{/each}}
