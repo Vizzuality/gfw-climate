@@ -173,16 +173,18 @@ LineChart.prototype._setupHandlers = function() {
 };
 
 LineChart.prototype.render = function() {
-  var group = svg.append("g")
-    .attr("class", "focus")
-    .attr("transform",
-      "translate(" + this.sizing.left + "," + this.sizing.top + ")");
+  if (!!this.data.length) {
+    var group = svg.append("g")
+      .attr("class", "focus")
+      .attr("transform",
+        "translate(" + this.sizing.left + "," + this.sizing.top + ")");
 
-  this._drawAxes(group);
-  this._drawLine(group);
-  // this._setupHandlers();
-  this._drawScatterplote();
-  // this._drawContext(group);
+    this._drawAxes(group);
+    this._drawLine(group);
+    // this._setupHandlers();
+    this._drawScatterplote();
+    // this._drawContext(group);
+  }
 };
 
 return LineChart;

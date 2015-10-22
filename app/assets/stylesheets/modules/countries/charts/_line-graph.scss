@@ -56,6 +56,20 @@
 .tab-graph {
   position: relative;
   height: 300px;
+  .tab-graph--no-data {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h3 {
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+  }
 }
 
 .lineChart {

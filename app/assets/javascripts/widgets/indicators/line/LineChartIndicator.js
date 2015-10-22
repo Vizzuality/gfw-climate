@@ -6,11 +6,14 @@ define([
   'widgets/models/IndicatorModel',
   'widgets/views/IndicatorView',
   'widgets/indicators/line/LineChart',
-], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, LineChart) {
+  'text!widgets/templates/indicators/no-data.handlebars',
+], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, LineChart, noDataTpl) {
 
   'use strict';
 
   var LineChartIndicator = IndicatorView.extend({
+
+    template: Handlebars.compile(noDataTpl),
 
     events: function() {
       return _.extend({}, IndicatorView.prototype.events, {});
@@ -54,6 +57,8 @@ define([
         });
 
         lineChart.render();
+      } else {
+        this.$el.html(this.template());
       }
 
     },
