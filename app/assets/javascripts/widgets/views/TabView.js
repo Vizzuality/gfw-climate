@@ -6,7 +6,8 @@ define([
   'widgets/indicators/line/LineChartIndicator',
   'widgets/indicators/map/MapIndicator',
   'widgets/indicators/pie/PieChartIndicator',
-], function(Backbone, Handlebars, TabPresenter, tpl, LineChartIndicator, MapIndicator, PieChartIndicator) {
+  'widgets/indicators/number/NumberChartIndicator',
+], function(Backbone, Handlebars, TabPresenter, tpl, LineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator) {
 
   'use strict';
 
@@ -75,17 +76,29 @@ define([
             el: this.$graphContainer,
             model: {
               id: indicator.id,
-              iso: this.presenter.model.get('iso'),
               unit: this.presenter.status.get('tabs').unit
             },
             data: {
+              iso: this.presenter.model.get('iso'),
               thresh: this.presenter.status.get('tabs').thresh
             }
           });
           break;
 
-        case 'pie':
-          // Stuff
+        case 'number':
+          var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: this.presenter.status.get('tabs').position})
+          new NumberChartIndicator({
+            el: this.$graphContainer,
+            model: {
+              id: indicator.id,
+              // widgets json must save this parameter
+              template: 'umd'
+            },
+            data: {
+              iso: this.presenter.model.get('iso'),
+              thresh: this.presenter.status.get('tabs').thresh
+            }
+          });
           break;
       };
 

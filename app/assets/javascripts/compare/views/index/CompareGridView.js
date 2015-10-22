@@ -37,6 +37,7 @@ define([
           var slug = this.presenter.objToSlug(this.presenter.status.get('compare'+(i+1)),'');
           var currentWidget = new WidgetView({
             id: w.id,
+            className: 'gridgraphs--widget',
             iso: c.iso,
             slug: slug,
             options: this.presenter.status.get('options')[slug][w.id][0]

@@ -2,10 +2,9 @@
   overflow: hidden;
   margin: 25px 0 10px 0;
   font-size: 12px;
-  display: flex;
-  justify-content: space-between;
 
   .switcher {
+    float: left;
     .switcher-track {
       display: flex;
       align-items: center;
@@ -13,7 +12,7 @@
       border-radius: 11px;
       padding: 1px;
       li {
-        padding: 2px 8px 2px;
+        padding: 4px 8px 2px;
         font-size: 12px;
         border-radius: 11px;
         cursor: pointer;
@@ -25,8 +24,8 @@
     }
   }
 
-  .canopy-treshold {
-
+  .canopy-threshold {
+    float: right;
   }
 }
 
