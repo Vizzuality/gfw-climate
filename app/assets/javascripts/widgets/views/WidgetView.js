@@ -35,7 +35,8 @@ define([
      * RENDER
      */
     render: function() {
-      this.$el.html(this.template({
+
+      this.$el.addClass('gridgraphs--item').html(this.template({
         id: this.presenter.model.get('id'),
         tabs: this.presenter.model.get('tabs'),
         name: this.presenter.model.get('name')
@@ -62,6 +63,7 @@ define([
       // UI
       this.$tablink.removeClass('is-selected');
       this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('is-selected');
+
       //NEW TAB
       new TabView({
         el: this.$tabcontent,

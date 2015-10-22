@@ -25,8 +25,7 @@ define([
       this._cacheVars();
     },
 
-    start: function(countryModel) {
-      this.CountryModel = countryModel;
+    start: function() {
       this._toggleWarnings();
       this.setupWidgets();
     },
@@ -45,8 +44,12 @@ define([
 
       var widgetsOnGrid = 0;
 
-      if (this.presenter.status.get('widgets')) {
-        widgetsOnGrid = Object.keys(this.presenter.status.get('widgets')).length;
+      var widgets = this.presenter.status.get('options')[this.presenter.status.get('country')];
+
+
+
+      if (widgets) {
+        widgetsOnGrid = Object.keys(widgets).length;
       }
 
       if (widgetsOnGrid > 0) {
@@ -130,43 +133,30 @@ define([
     },
 
     setupWidgets: function() {
+      var promises = [],
+        widgetsArray = [],
+        iso = this.presenter.status.get('country'),
+        widgets = this.presenter.status.get('options')[iso];
 
-      var widgets = this.presenter.status.get('widgets'),
-        widgetsId = this._getWidgetsId(),
-        promises = [];
-
-      var widgetsArray = [];
-
-      widgetsId.forEach(_.bind(function(id) {
-
-        if (_.has(widgets, id)) {
-
+      _.map(widgets, function(widget, id) {
           var deferred = $.Deferred();
-          var options =  _.where(widgets, {id: id})[0];
-          var currentWidget = new WidgetView(options);
-
-          widgetsArray.push(currentWidget);
-
-          currentWidget._loadMetaData({
+          var widgetOptions =  widget[0];
+          var newWidget = new WidgetView({
             id: id,
-            iso: this.CountryModel.get('iso')
-          }, function(data) {
-
-            var currentIndicator = _.where(currentWidget.widgetModel.get('indicators'), {default: true}),
-              currentTab = _.where(currentWidget.widgetModel.get('tabs'), {default: true });
-
-            options.indicators = currentIndicator[0];
-            options.tab = currentTab[0];
-
-            currentWidget.setupView(options);
-
-            deferred.resolve(data);
+            slug: iso,
+            className: '',
+            iso: iso,
+            options: widgetOptions
           });
 
-          promises.push(deferred);
-        }
+          newWidget._loadMetaData(function() {
+            deferred.resolve();
+          });
 
-      }, this));
+          widgetsArray.push(newWidget);
+          promises.push(deferred);
+
+      }.bind(this));
 
       $.when.apply(null, promises).then(function() {
         this.render(widgetsArray);
@@ -192,6 +182,7 @@ define([
           subview = new AreasView(options);
           break;
       }
+
 
       this.$el.find('.reports-grid').append(subview.render().el);
     }

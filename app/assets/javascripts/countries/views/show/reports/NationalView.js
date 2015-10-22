@@ -1,26 +1,21 @@
 define([
-  'backbone',
-  'handlebars',
-  'underscore',
-  'text!countries/templates/country-national-grid.handlebars'
-], function(Backbone, Handlebars, _, tpl) {
+  'backbone'
+], function(Backbone) {
 
   var NationalView = Backbone.View.extend({
 
-    el: '.reports-grid',
-
-    template: Handlebars.compile(tpl),
+    el: '.gridgraphs--container',
 
     initialize: function(options) {
       this.widgets = options.widgets;
     },
 
     render: function() {
-      this.$el.html(this.template);
+      this.$el.html('');
 
       this.widgets.forEach(function(widget) {
         widget.render();
-        this.$el.find('.national-grid').append(widget.el);
+        this.$el.addClass('national-grid').append(widget.el);
       }.bind(this));
 
       return this;

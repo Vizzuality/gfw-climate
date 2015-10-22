@@ -16,9 +16,8 @@ define([
       'click #submitAreas': '_setAreas'
     },
 
-    initialize: function(model) {
-      this.model = model;
-
+    initialize: function(options) {
+      this.widgets = options.widgets;
     },
 
     _toggleAvailableAreas: function() {
@@ -35,7 +34,14 @@ define([
     },
 
     render: function() {
+      this.$el.html('');
+
       this.$el.html(this.template);
+
+      this.widgets.forEach(_.bind(function(widget) {
+        widget.render()
+        this.$el.addClass('.areas-grid').append(widget.el);
+      }, this));
 
       return this;
     }

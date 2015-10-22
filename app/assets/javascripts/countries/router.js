@@ -14,7 +14,7 @@ define([
     routes: {
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
-      'countries/:country(/:area)(?params)' : '_initShow'
+      'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
 
     initialize: function() {
@@ -25,11 +25,11 @@ define([
       // new CountryIndexView();
     },
 
-    _initShow: function(country, area) {
+    _initShow: function(country, view) {
 
       var params = _.extend({
         country: country,
-        area: area
+        view: view
       }, _.parseUrl());
 
       this.placeService.initPlace(params);
