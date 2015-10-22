@@ -28,9 +28,7 @@ define([
      * @param  {function} callback
      */
     _loadMetaData: function(callback) {
-      this.presenter.model.fetch().done(function(){
-        callback();
-      }.bind(this));
+      this.presenter.model.fetch().done(callback.bind(this));
     },
 
     /**
