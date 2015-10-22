@@ -4,5 +4,15 @@
   flex-wrap: wrap;
   .gridgraphs--item {
     width: 47.5%;
+    .gridgraphs--widget {
+      margin: 35px 0 0;
+      padding: 35px 0 0;
+      border-top: 1px solid $border;
+      &:first-child {
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+    }
   }
 }
