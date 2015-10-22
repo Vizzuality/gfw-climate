@@ -79,7 +79,7 @@ LineChart.prototype._createDefs = function() {
 
 LineChart.prototype._drawAxes = function(group) {
   var tickFormatY = (this.unit != 'percentage') ? "s" : ".0%";
-  xAxis = d3.svg.axis().scale(x).orient("bottom");
+  xAxis = d3.svg.axis().scale(x).ticks(d3.time.year, 1).tickSize(-this.width, 0).orient("bottom").tickFormat(d3.time.format("%Y"));;
   yAxis = d3.svg.axis().scale(y).tickSize(-this.width, 0).orient("left").tickFormat(d3.format(tickFormatY));
 
   group.append("g")

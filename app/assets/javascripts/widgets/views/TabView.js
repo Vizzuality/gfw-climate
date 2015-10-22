@@ -17,6 +17,8 @@ define([
 
     events: {
       'change .threshold' : 'changeThreshold',
+      'change .start-date' : 'changeStartDate',
+      'change .end-date' : 'changeEndDate',
       'click .switcher-item' : 'changeUnit'
     },
 
@@ -45,6 +47,7 @@ define([
     cacheVars: function() {
       this.$start_date = this.$el.find('.start-date');
       this.$end_date = this.$el.find('.end-date');
+      this.$date_selects = this.$el.find('.date-selector');
       this.$threshold = this.$el.find('.threshold');
       this.$switcher = this.$el.find('.switcher');
       this.$graphContainer = this.$el.find('.tab-graph');
@@ -59,12 +62,41 @@ define([
       this.presenter.changeUnit($(e.currentTarget).data('unit'));
     },
 
+    changeStartDate: function(e) {
+      this.presenter.changeStartDate($(e.currentTarget).val());
+    },
+
+    changeEndDate: function(e) {
+      this.presenter.changeEndDate($(e.currentTarget).val());
+    },
+
     // SETTERS
     setStatusValues: function() {
-      this.$start_date.val(this.presenter.status.get('tabs').start_date);
-      this.$end_date.val(this.presenter.status.get('tabs').end_date);
+      this.setDates();
       this.$threshold.val(this.presenter.status.get('tabs').thresh);
       this.$switcher.find('li[data-unit='+this.presenter.status.get('tabs').unit+ ']').addClass('is-active');
+    },
+
+    setDates: function() {
+      this.$start_date.val(this.presenter.status.get('tabs').start_date);
+      this.$end_date.val(this.presenter.status.get('tabs').end_date);
+      this.toggleDisabledDates();
+    },
+
+    toggleDisabledDates: function(){
+      _.each(this.$date_selects,_.bind(function(el){
+        var $options = $(el).find('option');
+        var compare = $(this.$el.find($(el).data('compare')))[0].selectedIndex;
+        var direction = Boolean(parseInt($(el).data('direction')));
+
+        _.each($options, function(opt,i){
+          if (direction) {
+            (compare <= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          }else{
+            (compare >= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          }
+        });
+      }, this ));
     },
 
     setIndicator: function() {
@@ -76,7 +108,9 @@ define([
             el: this.$graphContainer,
             model: {
               id: indicator.id,
-              unit: this.presenter.status.get('tabs').unit
+              unit: this.presenter.status.get('tabs').unit,
+              start_date: this.presenter.status.get('tabs').start_date,
+              end_date: this.presenter.status.get('tabs').end_date,
             },
             data: {
               iso: this.presenter.model.get('iso'),
