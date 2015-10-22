@@ -31,6 +31,7 @@ define([
           promises: []
         };
 
+
         _.each(c.widgets, _.bind(function(w) {
           var deferred = $.Deferred();
           var slug = this.presenter.objToSlug(this.presenter.status.get('compare'+(i+1)),'');

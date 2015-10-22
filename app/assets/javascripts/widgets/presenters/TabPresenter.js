@@ -13,11 +13,7 @@ define([
       this._super();
 
       this.model = new (Backbone.Model.extend({
-        defaults: {
-          iso: setup.iso,
-          data: setup.data,
-          indicators: setup.indicators
-        }
+        defaults: setup.model
       }));
 
       this.status = new (Backbone.Model.extend({
@@ -35,6 +31,12 @@ define([
     changeThreshold: function(thresh) {
       var tabs = _.clone(this.status.get('tabs'))
       tabs.thresh = (~~thresh);
+      this.status.set('tabs', tabs);
+    },
+
+    changeUnit: function(unit) {
+      var tabs = _.clone(this.status.get('tabs'))
+      tabs.unit = unit;
       this.status.set('tabs', tabs);
     },
 

@@ -22,13 +22,13 @@ define([
     initialize: function(setup) {
       this.constructor.__super__.initialize.apply(this);
       // Enable params when we have API data
-      this.model = new IndicatorModel({
-        id: setup.id,
-        iso: setup.iso
-      });
+      this.model = new IndicatorModel(setup.model);
 
+      // Fetch values
+      this.$el.addClass('is-loading');
       this.model.fetch({ data: setup.data}).done(function() {
         this._drawGraph();
+        this.$el.removeClass('is-loading');
       }.bind(this));
     },
 
@@ -40,7 +40,7 @@ define([
         if (d && d.year && Number(d.year !== 0)) {
           return {
             year: parseDate(d.year.toString()),
-            value: ~~d.value
+            value: d.value
           };
         }
         return null;
@@ -48,11 +48,11 @@ define([
 
       if (!!data.length) {
         var lineChart = new LineChart({
-          graphicId: this.model.get('id'),
-          data: data,
           el: $graphContainer,
-          sizing: {top: 0, right: 0, bottom: 20, left: 0},
-          innerPadding: { top: 0, right: 15, bottom: 0, left: 30 },
+          unit: this.model.get('unit'),
+          data: data,
+          sizing: {top: 0, right: 0, bottom: 25, left: 0},
+          innerPadding: { top: 10, right: 15, bottom: 0, left: 50 },
           keys: keys
         });
 

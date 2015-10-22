@@ -164,8 +164,7 @@ define([
         if (_.contains(activeWidgets, w.id)) {
           return {
             id: w.id,
-            tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null,
-            indicators: this.getIndicatorOptions(w.indicators),
+            tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null
           };
         }
         return null;
@@ -179,6 +178,7 @@ define([
     getTabsOptions: function(tabs) {
       return _.map(tabs, function(t){
         return {
+          type: t.type,
           position: t.position,
           unit: (t.switch) ? t['switch'][0]['unit'] : null,
           start_date: (t.range) ? t['range'][0] : null,

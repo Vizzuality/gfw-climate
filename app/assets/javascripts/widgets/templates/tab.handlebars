@@ -1,7 +1,11 @@
 <div class="sup-options">
   {{#if switch}}
-    <div class="unit-conversor">
-
+    <div class="switcher">
+      <ul class="switcher-track">
+        {{#each switch}}
+          <li class="switcher-item" data-unit="{{this.unit}}">{{this.unitname}}</li>
+        {{/each}}
+      </ul>
     </div>
   {{/if}}
   {{#if this.thresh}}

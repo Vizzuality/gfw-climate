@@ -66,11 +66,13 @@ define([
       this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('is-selected');
       //NEW TAB
       new TabView({
-        widget: this,
         el: this.$tabcontent,
-        iso: this.presenter.model.get('iso'),
-        data: _.findWhere(this.presenter.model.get('tabs'), {position: position}),
-        indicators: _.where(this.presenter.model.get('indicators'), {tab: position}),
+        widget: this,
+        model: {
+          iso: this.presenter.model.get('iso'),
+          data: _.findWhere(this.presenter.model.get('tabs'), {position: position}),
+          indicators: _.where(this.presenter.model.get('indicators'), {tab: position})
+        },
         status: this.presenter.status.toJSON()
       });
 

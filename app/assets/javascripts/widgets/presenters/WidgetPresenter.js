@@ -31,7 +31,6 @@ define([
     changeTab: function(position) {
       var tabs = _.clone(this.status.get('tabs'));
       tabs.position = position;
-      this.status.set('indicators',[_.findWhere(this.model.get('indicators'), {tab: position}).id]);
       this.status.set('tabs',tabs);
     },
 
