@@ -40,6 +40,7 @@ define([
     }, {
       'View/update': function(view) {
         this._updateView(view);
+        this.view._toggleWarnings();
       }
     }],
 

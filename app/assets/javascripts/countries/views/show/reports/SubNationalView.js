@@ -2,51 +2,47 @@ define([
   'backbone',
   'handlebars',
   'widgets/views/WidgetView',
-  'countries/models/CountryModel',
-  'text!countries/templates/country-subnational-grid.handlebars'
-], function(Backbone, Handlebars, WidgetView, CountryModel, tpl) {
+  'text!countries/templates/country-subnational-grid.handlebars',
+  'text!countries/templates/no-indicators.handlebars'
+], function(Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
 
   var SubNationalView = Backbone.View.extend({
 
     el: '.gridgraphs--container',
 
-    template: Handlebars.compile(tpl),
-
     initialize: function(options) {
       this.widgets = options.widgets;
-      this.countryModel = CountryModel;
-      var iso = sessionStorage.getItem('countryIso');
-
-      this.countryModel.setCountry(iso)
+      this.jurisdictions = options.jurisdictions;
     },
-
-    _populateJurisdictions: function() {
-      this.countryModel.fetch().done(function() {
-
-        var jurisdictions = this.countryModel.get('jurisdictions');
-        var $select = $('#jurisdictionSelector');
-        var options = '<option value="default">select jurisdiction</option>';
-
-        jurisdictions.forEach(function(jurisdiction) {
-          options += '<option value="' + jurisdiction.id + '">' + jurisdiction.name + '</option>';
-        });
-
-        $select.html(options);
-
-      }.bind(this));
-    },
-
 
     render: function() {
       this.$el.html('');
-      this.$el.html(this.template);
 
-      this._populateJurisdictions();
+      if (this.jurisdictions && this.jurisdictions.length > 0) {
 
-      this.widgets.forEach(_.bind(function(widget) {
-        widget.render()
-        this.$el.addClass('.subnational-grid').append(widget.el);
-      }, this));
+        this.template = Handlebars.compile(tpl);
+
+        this.$el.html(this.template);
+
+        this.widgets.forEach(_.bind(function(widget) {
+          widget.render()
+          this.$el.addClass('.subnational-grid').append(widget.el);
+        }, this));
+
+
+      } else {
+
+        this.template = Handlebars.compile(noIndicatorsTpl);
+
+        var options = {
+          isJurisdictions: true
+        };
+
+        this.$el.html(this.template({
+          setup: options
+        }));
+
+      }
 
       return this;
     }

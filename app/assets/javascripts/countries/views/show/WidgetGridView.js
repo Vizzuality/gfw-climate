@@ -27,7 +27,6 @@ define([
     },
 
     start: function() {
-      this._toggleWarnings();
       this.setupWidgets();
     },
 
@@ -37,43 +36,25 @@ define([
     },
 
     _cacheVars: function() {
-      this.$noIndicatorsWarning = $('.no-indicators-warning');
       this.$moreIndicatorsWarning = $('.more-indicators-warning');
+      this.$noIndicatorsWarning = $('.no-indicators-warning');
     },
 
     _toggleWarnings: function() {
+      var view = this.presenter.status.get('view');
 
-      var widgetsOnGrid = 0;
-
-      var widgets = this.presenter.status.get('options')[this.presenter.status.get('country')];
-
-
-
-      if (widgets) {
-        widgetsOnGrid = Object.keys(widgets).length;
-      }
-
-      if (widgetsOnGrid > 0) {
-        this.$moreIndicatorsWarning.removeClass('is-hidden');
+      if (view === 'national') {
         this.$noIndicatorsWarning.addClass('is-hidden');
-      } else {
-        this.$moreIndicatorsWarning.addClass('is-hidden');
-        this.$noIndicatorsWarning.removeClass('is-hidden');
+        this.$moreIndicatorsWarning.removeClass('is-hidden');
       }
-    },
+      else {
 
-    _setDisplay: function(display) {
-      this.presenter.status.set({
-        'display': display
-      });
-    },
+        if(view === 'subnational' && !this.presenter.status.get('jurisdictions') ||
+          view === 'areas-interest' && !this.presenter.status.get('areas')) {
 
-    _setWidgets: function(widgets) {
-      this.presenter.status.set({
-        'widgets': widgets
-      }, { silent: true });
-
-      this._checkEnabledWidgets();
+          this.$moreIndicatorsWarning.addClass('is-hidden');
+        }
+      }
     },
 
     _showModal: function(e) {
@@ -177,9 +158,15 @@ define([
           subview = new NationalView(options);
           break;
         case 'subnational':
+          _.extend(options, {
+            jurisdictions: this.presenter.status.get('jurisdictions')
+          });
           subview = new SubNationalView(options);
           break;
         case 'areas-interest':
+          _.extend(options, {
+            areas: this.presenter.status.get('areas')
+          });
           subview = new AreasView(options);
           break;
       }
