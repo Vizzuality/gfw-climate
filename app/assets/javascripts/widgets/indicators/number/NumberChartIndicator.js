@@ -41,7 +41,7 @@ define([
       if (!!this.model.get('data')[0]) {
         this.$el.html(this.templates[tpl](this.parseData()));
       } else {
-        this.$el.html(this.templates['nodata']());
+        this.$el.html(this.templates['nodata']({ classname: 'number' }));
       }
     },
 

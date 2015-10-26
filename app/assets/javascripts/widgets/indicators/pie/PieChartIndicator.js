@@ -6,13 +6,15 @@ define([
   'widgets/models/IndicatorModel',
   'widgets/indicators/pie/PieChart',
   'text!widgets/templates/indicators/pie/piechart.handlebars',
-], function(_, d3, Handleabars, IndicatorView, IndicatorModel, PieChart, tpl) {
+  'text!widgets/templates/indicators/no-data.handlebars',
+], function(_, d3, Handleabars, IndicatorView, IndicatorModel, PieChart, tpl, noDataTpl) {
 
   'use strict';
 
   var PieChartIndicator = Backbone.View.extend({
 
     template: Handlebars.compile(tpl),
+    noDataTemplate: Handlebars.compile(noDataTpl),
 
     events: function() {
       return _.extend({}, IndicatorView.prototype.events, {});
@@ -41,19 +43,25 @@ define([
 
       // Promises of each country resolved
       $.when.apply(null, status.promises).then(_.bind(function() {
-        var args = Array.prototype.slice.call(arguments);
-        var values = _.groupBy(_.map(args, function(i){
-          return i.values[0];
-        }),'indicator_id');
-
-        var data = _.map(this.model.get('indicators'), function(i){
-          i.country_name = values[i.id][0].country_name
-          i.data = values[i.id];
-          return i;
-        })
-        this.model.set('data', data);
         this.$el.removeClass('is-loading');
-        this.render();
+        var args = Array.prototype.slice.call(arguments);
+        var values = _.compact(_.map(args, function(i){
+          return i.values[0];
+        }));
+
+        if (!!values.length) {
+          values = _.groupBy(values,'indicator_id');
+
+          var data = _.map(this.model.get('indicators'), function(i){
+            i.country_name = values[i.id][0].country_name
+            i.data = values[i.id];
+            return i;
+          })
+          this.model.set('data', data);
+          this.render();
+        } else {
+          this.$el.html(this.noDataTemplate({ classname: 'pie' }));
+        }
       }, this ));
     },
 

@@ -6,14 +6,16 @@ define([
   'widgets/models/IndicatorModel',
   'widgets/views/IndicatorView',
   'widgets/indicators/line/LineChart',
+  'text!widgets/templates/indicators/line/linechart.handlebars',
   'text!widgets/templates/indicators/no-data.handlebars',
-], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, LineChart, noDataTpl) {
+], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, LineChart, Tpl, noDataTpl) {
 
   'use strict';
 
   var LineChartIndicator = IndicatorView.extend({
 
-    template: Handlebars.compile(noDataTpl),
+    template: Handlebars.compile(Tpl),
+    noDataTemplate: Handlebars.compile(noDataTpl),
 
     events: function() {
       return _.extend({}, IndicatorView.prototype.events, {});
@@ -27,15 +29,20 @@ define([
       // Fetch values
       this.$el.addClass('is-loading');
       this.model.fetch({ data: setup.data }).done(function() {
-        this._drawGraph();
+        this.render();
         this.$el.removeClass('is-loading');
       }.bind(this));
+    },
+
+    render: function() {
+      this.$el.html(this.template());
+      this._drawGraph();
     },
 
     _drawGraph: function() {
       var keys = { x: 'year', y: 'value' };
       var parseDate = d3.time.format("%Y").parse;
-      var $graphContainer = this.$el[0];
+      var $graphContainer = this.$el.find('.linechart-graph')[0];
       var data = _.compact(_.map(this.model.get('data'), function(d) {
         if (d && d.year && Number(d.year !== 0) && this.between(d.year,this.model.get('start_date'),this.model.get('end_date'),true)) {
           return {
@@ -58,7 +65,7 @@ define([
 
         lineChart.render();
       } else {
-        this.$el.html(this.template());
+        this.$el.html(this.noDataTemplate({ classname: 'line'}));
       }
 
     },

@@ -91,7 +91,6 @@ define([
             }, this ));
         } else {
           if ((!!this.oldCompare1 && this.oldCompare1 != params.compare1) || (!!this.oldCompare2 && this.oldCompare2 != params.compare2)) {
-            console.log(params.options);
             params.options = this.moveOptions(params);
             this.setModels(params);
           } else {
