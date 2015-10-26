@@ -775,14 +775,12 @@
     "id": 6,
     "name": "Emerging hotspots",
     "default_thresh": "25",
-    "default": true,
     "indicators": [
       {
         "id": 4,
         "name": "Emerging hotspots",
         "type": "map",
-        "unit": "number",
-        "default": true
+        "unit": "number"
       }
     ]
   },

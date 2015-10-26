@@ -131,8 +131,7 @@ define([
     },
 
     successCompare: function(data) {
-      consoel.log(this.status.get('widgets'));
-      var activeWidgets = [1,2,3,4,5];
+      var activeWidgets = this.getWidgets();
       var data = _.map(data.countries, function(c){
         c.widgets = _.compact(_.map(c.widgets, function(w){
           return (_.contains(activeWidgets, w.id)) ? w : null;
@@ -150,26 +149,25 @@ define([
 
     // HELPERS
     getWidgets: function() {
-      var widgets = this.status.get('options');
-      return _.map(widgets,function(w){
-        return w.id;
+      var widgetIds = _.map(this.status.get('options'),function(c){
+        return _.map(c, function(w,k){
+          return k;
+        })
       });
+      this.status.set('widgets',widgetIds[0]);
+      return widgetIds[0];
     },
 
     // SET OPTIONS PARAMS
     getOptions: function(params, widgets) {
-      // This should be removed to a dinamic var
-      var activeWidgets = [1,2,3,4,5];
-      var w = _.groupBy(_.compact(_.map(widgets.widgets,_.bind(function(w){
-        if (_.contains(activeWidgets, w.id)) {
-          return {
-            id: w.id,
-            tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null
-          };
-        }
-        return null;
-      }, this))), 'id');
-      // There is a better way to do this??
+      // Get the current options
+      var w = _.groupBy(_.map(widgets.widgets,_.bind(function(w){
+        return {
+          id: w.id,
+          tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null
+        };
+      }, this)), 'id');
+      // Is there a better way to do this??
       var r = {};
       r[this.objToSlug(params.compare1,'')] = w;
       r[this.objToSlug(params.compare2,'')] = w;
