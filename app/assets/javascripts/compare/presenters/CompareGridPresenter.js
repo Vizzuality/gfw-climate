@@ -132,7 +132,7 @@ define([
 
     successCompare: function(data) {
       // var activeWidgets = this.status.get('widgets');
-      var activeWidgets = [1,2,3];
+      var activeWidgets = [1,2,3,4];
       var data = _.map(data.countries, function(c){
         c.widgets = _.compact(_.map(c.widgets, function(w){
           return (_.contains(activeWidgets, w.id)) ? w : null;
@@ -159,7 +159,7 @@ define([
     // SET OPTIONS PARAMS
     getOptions: function(params, widgets) {
       // This should be removed to a dinamic var
-      var activeWidgets = [1,2,3];
+      var activeWidgets = [1,2,3,4];
       var w = _.groupBy(_.compact(_.map(widgets.widgets,_.bind(function(w){
         if (_.contains(activeWidgets, w.id)) {
           return {
@@ -183,7 +183,8 @@ define([
           unit: (t.switch) ? t['switch'][0]['unit'] : null,
           start_date: (t.range) ? t['range'][0] : null,
           end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-          thresh: (t.thresh) ? t['thresh'] : null
+          thresh: (t.thresh) ? t['thresh'] : null,
+          section: (t.section) ? t['section'] : null,
         }
       })[0];
     },

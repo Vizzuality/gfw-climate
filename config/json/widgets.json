@@ -283,6 +283,7 @@
         "position": 1,
         "name": "Woods Hole/Baccini",
         "type": "pie",
+        "section" : "biomass",
         "default": true
       },
       {

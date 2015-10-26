@@ -72,11 +72,14 @@ define([
 
     // SETTERS
     setStatusValues: function() {
-      this.setDates();
-      this.$threshold.val(this.presenter.status.get('tabs').thresh);
-      this.$switcher.find('li[data-unit='+this.presenter.status.get('tabs').unit+ ']').addClass('is-active');
+      var t = this.presenter.status.get('tabs');
+      (!!t.start_date && !!t.end_date) ? this.setDates() : null;
+      (!!t.thresh) ? this.$threshold.val(t.thresh) : null;
+      (!!t.unit) ? this.$switcher.find('li[data-unit='+t.unit+ ']').addClass('is-active') : null;
+      (!!t.section) ? console.log('setSection') : null;
     },
 
+    // SETTERS: dates
     setDates: function() {
       this.$start_date.val(this.presenter.status.get('tabs').start_date);
       this.$end_date.val(this.presenter.status.get('tabs').end_date);
@@ -99,28 +102,44 @@ define([
       }, this ));
     },
 
+    // SETTERS: indicator
     setIndicator: function() {
-      var type = this.presenter.status.get('tabs').type;
-      switch(type) {
+      var t = this.presenter.status.get('tabs');
+      switch(t.type) {
         case 'line':
-          var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: this.presenter.status.get('tabs').unit});
+          var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: t.unit});
           new LineChartIndicator({
             el: this.$graphContainer,
             model: {
               id: indicator.id,
-              unit: this.presenter.status.get('tabs').unit,
-              start_date: this.presenter.status.get('tabs').start_date,
-              end_date: this.presenter.status.get('tabs').end_date,
+              unit: t.unit,
+              start_date: t.start_date,
+              end_date: t.end_date,
             },
             data: {
               iso: this.presenter.model.get('iso'),
-              thresh: this.presenter.status.get('tabs').thresh
+              thresh: t.thresh
+            }
+          });
+          break;
+
+        case 'pie':
+          var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
+          new PieChartIndicator({
+            el: this.$graphContainer,
+            model: {
+              indicators: indicators,
+              template: 'biomass-carbon'
+            },
+            data: {
+              iso: this.presenter.model.get('iso'),
+              thresh: t.thresh
             }
           });
           break;
 
         case 'number':
-          var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: this.presenter.status.get('tabs').position})
+          var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: t.position})
           new NumberChartIndicator({
             el: this.$graphContainer,
             model: {
@@ -130,10 +149,11 @@ define([
             },
             data: {
               iso: this.presenter.model.get('iso'),
-              thresh: this.presenter.status.get('tabs').thresh
+              thresh: t.thresh
             }
           });
           break;
+
       };
 
     },
