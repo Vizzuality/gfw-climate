@@ -74,6 +74,16 @@
           "groups": "all"
         },
         {
+          "description": "Getting a list of widgets for country filtered by default false",
+          "link": "widgets/getting_a_list_of_widgets_for_country_filtered_by_default_false.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a list of widgets for country filtered by default true",
+          "link": "widgets/getting_a_list_of_widgets_for_country_filtered_by_default_true.json",
+          "groups": "all"
+        },
+        {
           "description": "Getting a list of widgets for jurisdiction",
           "link": "widgets/getting_a_list_of_widgets_for_jurisdiction.json",
           "groups": "all"

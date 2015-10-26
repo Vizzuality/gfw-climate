@@ -43,9 +43,10 @@ resource 'Indicators' do
     end
   end
 
-  get "/api/indicators/:id/:iso" do
+  get "/api/indicators/:id" do
     parameter :id, "ID of indicator"
     parameter :iso, "ISO of country (bra, chn...)"
+    parameter :area, "Value 'pra' for Protected Area"
     parameter :thresh, "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
 
     example_request "Getting a specific indicator for country", id: 1, iso: 'bra', thresh: 10 do
@@ -76,6 +77,17 @@ resource 'Indicators' do
       expect(value['country_name']).to eq("Cote d'Ivoire")
       expect(value['thresh']).to eq(25)
     end
+
+    example "Getting a specific indicator for protected area without thresh", document: false do
+      do_request(id: 3, iso: 'BRA', area: 'pra')
+      expect(status).to eq(200)
+      value = JSON.parse(response_body)['values'][0]
+      
+      expect(value['iso']).to eq('BRA')
+      expect(value['country_name']).to eq("Brazil")
+      expect(value['thresh']).to eq(25)
+      expect(value['boundary']).to eq('pra')
+    end
   end
 
   get "/api/indicators/:id/:iso/:id_1" do
@@ -91,6 +103,8 @@ resource 'Indicators' do
       expect(value['iso']).to eq('BRA')
       expect(value['country_name']).to eq('Brazil')
       expect(value['thresh']).to eq(10)
+      expect(value['boundary']).to eq('admin')
+      expect(value['iso_and_sub_nat']).to eq('BRA1')
     end
   end
 end
