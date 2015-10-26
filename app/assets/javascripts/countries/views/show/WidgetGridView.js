@@ -120,13 +120,22 @@ define([
         iso = this.presenter.status.get('country'),
         widgets = this.presenter.status.get('options')[iso];
 
+        // model: {
+        //       id: id,
+        //       slug: iso,
+        //       location: {
+        //         iso: iso,
+        //         jurisdiction: 0,
+        //         area: 0
+        //       }
+
       _.map(widgets, function(widget, id) {
           var deferred = $.Deferred();
           var widgetOptions =  widget[0];
           var newWidget = new WidgetView({
             id: id,
             slug: iso,
-            className: '',
+            className: 'gridgraphs--widget',
             iso: iso,
             options: widgetOptions
           });

@@ -7,7 +7,7 @@ define([
 
   var AreasView = Backbone.View.extend({
 
-    el: '.gridgraphs--container',
+    el: '.gridgraphs--container-profile',
 
     initialize: function(options) {
       this.widgets = options.widgets;

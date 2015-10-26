@@ -36,7 +36,7 @@ define([
      */
     render: function() {
 
-      this.$el.addClass('gridgraphs--item').html(this.template({
+      this.$el.html(this.template({
         id: this.presenter.model.get('id'),
         tabs: this.presenter.model.get('tabs'),
         name: this.presenter.model.get('name')

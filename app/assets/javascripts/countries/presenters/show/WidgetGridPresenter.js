@@ -87,6 +87,7 @@ define([
     _setupView: function(params) {
       if (!params.options) {
         var callback = function() {
+
           this.status.set({
             country: params.country.iso,
             jurisdictions: null,

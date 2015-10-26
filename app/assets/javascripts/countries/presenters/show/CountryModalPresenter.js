@@ -12,7 +12,7 @@ define([
       this.status = new (Backbone.Model.extend({
         defaults: {
           view: 'national',
-          indicators: [1, 2],
+          indicators: null,
           jurisdictions: null,
           areas: null
         }

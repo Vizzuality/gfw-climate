@@ -4,6 +4,10 @@
   .content-wrapper {
     padding: 40px;
 
+    .close {
+      cursor: pointer;
+    }
+
     .source_header {
       margin-bottom: 25px;
       padding: 0;
