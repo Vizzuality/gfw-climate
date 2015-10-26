@@ -294,6 +294,7 @@
             "unitname": "carbon"
           }
         ],
+        "thresh": 25,
         "default": true
       },
       {
@@ -531,6 +532,18 @@
         "position": 1,
         "name": "Woods Hole/Baccini",
         "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ],
+        "thresh": 25,
         "default": true
       },
       {

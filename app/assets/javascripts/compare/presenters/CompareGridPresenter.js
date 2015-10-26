@@ -131,8 +131,8 @@ define([
     },
 
     successCompare: function(data) {
-      // var activeWidgets = this.status.get('widgets');
-      var activeWidgets = [1,2,3,4];
+      consoel.log(this.status.get('widgets'));
+      var activeWidgets = [1,2,3,4,5];
       var data = _.map(data.countries, function(c){
         c.widgets = _.compact(_.map(c.widgets, function(w){
           return (_.contains(activeWidgets, w.id)) ? w : null;
@@ -159,7 +159,7 @@ define([
     // SET OPTIONS PARAMS
     getOptions: function(params, widgets) {
       // This should be removed to a dinamic var
-      var activeWidgets = [1,2,3,4];
+      var activeWidgets = [1,2,3,4,5];
       var w = _.groupBy(_.compact(_.map(widgets.widgets,_.bind(function(w){
         if (_.contains(activeWidgets, w.id)) {
           return {

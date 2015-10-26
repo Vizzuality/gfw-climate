@@ -63,17 +63,19 @@ PieChart.prototype._createDefs = function() {
 
 PieChart.prototype._createPie = function() {
   pie = d3.layout.pie()
-    .sort(null)
+    .sort(d3.descending)
     .value(function(d) { return d.value})
 };
 
 PieChart.prototype._defindeData = function(data) {
   var total = _.reduce(data, function(memo, i){ return memo + i.value; }, 0);
-  return _.map(data,function(i){
+  return _.sortBy(_.map(data,function(i){
     return {
       name: i.name,
       value: ((i.value/total)*100).toFixed(2)
     };
+  }),function(a, b) {
+    return b - a;
   });
 };
 
