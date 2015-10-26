@@ -115,6 +115,7 @@ define([
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: t.unit});
           new LineChartIndicator({
             el: this.$graphContainer,
+            className: 'is-line',
             model: {
               id: indicator.id,
               unit: t.unit,
@@ -132,6 +133,7 @@ define([
           var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
           new PieChartIndicator({
             el: this.$graphContainer,
+            className: 'is-pie',
             model: {
               indicators: indicators,
               section: t.section,
@@ -149,9 +151,9 @@ define([
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: t.position})
           new NumberChartIndicator({
             el: this.$graphContainer,
+            className: 'is-number',
             model: {
               id: indicator.id,
-              // widgets json must save this parameter
               template: 'umd'
             },
             data: {

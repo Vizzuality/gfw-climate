@@ -106,7 +106,7 @@ LineChart.prototype._drawLine = function(group) {
 LineChart.prototype._drawScatterplote = function() {
   // Tooltip
   var tooltip = d3.select('body').append('div')
-    .attr('class', 'tooltip')
+    .attr('class', 'linegraph-tooltip')
     .style('opacity', 0);
 
   var formatDate = d3.time.format("%Y")

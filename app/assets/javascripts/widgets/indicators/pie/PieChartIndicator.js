@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var PieChartIndicator = Backbone.View.extend({
+  var PieChartIndicator = IndicatorView.extend({
 
     template: Handlebars.compile(tpl),
     noDataTemplate: Handlebars.compile(noDataTpl),
@@ -21,7 +21,7 @@ define([
     },
 
     initialize: function(setup) {
-      this.constructor.__super__.initialize.apply(this);
+      this.constructor.__super__.initialize.apply(this, [setup]);
 
       this.$el.addClass('is-loading');
 

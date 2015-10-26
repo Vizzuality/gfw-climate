@@ -22,7 +22,7 @@ define([
     },
 
     initialize: function(setup) {
-      this.constructor.__super__.initialize.apply(this);
+      this.constructor.__super__.initialize.apply(this, [setup]);
       // Enable params when we have API data
       this.model = new IndicatorModel(setup.model);
 
