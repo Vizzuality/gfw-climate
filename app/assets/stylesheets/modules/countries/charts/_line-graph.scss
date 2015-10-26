@@ -1,0 +1,325 @@
+.sup-options {
+  overflow: hidden;
+  margin: 25px 0 10px 0;
+  font-size: 12px;
+
+  .switcher {
+    float: left;
+    .switcher-track {
+      display: flex;
+      align-items: center;
+      border: 1px solid $color-1;
+      border-radius: 11px;
+      padding: 1px;
+      li {
+        padding: 4px 8px 2px;
+        font-size: 12px;
+        border-radius: 11px;
+        cursor: pointer;
+        &.is-active {
+          background: $color-1;
+          color: $font-color-2;
+        }
+      }
+    }
+  }
+
+  .canopy-threshold {
+    float: right;
+  }
+}
+
+.line-chart {
+  path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+  }
+
+  .tick {
+    text {
+      font-size: 11px;
+      color: $dark;
+    }
+  }
+
+  circle {
+    fill: $blue;
+    stroke-width: 2px;
+    stroke: $white;
+
+  }
+}
+
+.sub-options {
+  padding-top: 20px;
+  font-size: 12px;
+  border-top: 1px solid #e5e5e5;
+
+  .total-areas {
+    margin-left: 15px;
+    font-size: 19px;
+  }
+}
+
+// We should remove this from here and move it to a tab.scss module
+
+//From WRW
+.tab-graph {
+  position: relative;
+
+  .tab-graph--no-data {
+    &.line {
+      height: 300px;
+    }
+    &.pie {
+      height: 200px;
+    }
+    &.number {
+      height: 200px;
+    }
+    div{
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h3 {
+        text-transform: uppercase;
+        font-weight: 300;
+      }
+    }
+  }
+}
+
+.linechart-graph {
+  height: 300px;
+}
+
+.lineChart {
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .line {
+    fill: none;
+    stroke: $color-1;
+    stroke-width: 3px;
+  }
+
+  .area {
+    fill: #61BED4;
+  }
+
+  .axis line {
+    stroke: #E5E5DF;
+    shape-rendering: crispEdges;
+  }
+
+  .axis text {
+    fill: #333;
+    font-weight: bold;
+    font-size: 11px;
+  }
+
+  .axis path {
+    stroke: #E5E5DF;
+    stroke-width: 3px;
+    fill: none;
+  }
+
+  .axis.y path {
+    visibility: hidden;
+  }
+
+  .axis2 path {
+    visibility: hidden;
+  }
+
+  .axis2 line {
+    fill: none;
+    stroke: #E5E5DF;
+    shape-rendering: crispEdges;
+  }
+
+  .axis2 text {
+    fill: #333;
+    font-size: 10px;
+  }
+
+  //Horizontal lines
+  .axis.y line {
+    fill :none;
+    stroke: none;
+  }
+
+  .axis.x .tick line {
+    visibility: hidden;
+  }
+
+  .brush .extent {
+    fill: #333;
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+  }
+
+  .resize rect {
+    visibility: visible !important;
+    fill: #333;
+  }
+
+  .context .background {
+    fill: #3DAFCB;
+  }
+
+  .hoverOverlay circle {
+    fill: $color-1;
+    stroke: white;
+    stroke-width: 2px;
+    pointer-events: none;
+  }
+
+  .hoverOverlay line {
+    stroke: white;
+    stroke-width: 1px;
+    pointer-events: none;
+  }
+
+  .dot {
+    fill: $color-1;
+    stroke: #fff;
+    stroke-width: 2px;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  max-width: 110px;
+  height: 65px;
+  padding: 12px;
+  font-size: 14px;
+  background: $blue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+
+  &:after {
+    content: '';
+    @include equi-triangle(7px, $blue, 'right');
+    position: absolute;
+    top: 50%;
+    right: -7px;
+    transform: translateY(-50%);
+  }
+
+  .data {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 26px;
+    color: $white;
+  }
+}
+.pantropical-title h3{
+  font-size: 18px;
+  color: #555;
+  text-align: center;
+  margin: 0 0 30px;
+}
+#pantropical_tooltip {
+  max-width: 230px;
+  bottom: 0;
+  width: 230px;
+  left: -125px;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 10px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.9);
+  color: #000;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  border:1px solid rgba(200,200,200,0.85);
+  text-align:center;
+  position: absolute;
+  &:after {
+    @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
+    right: inherit;
+    bottom: -7px;
+    top: 110%;
+  }
+}
+.pantropical-vis {
+  .btn-group {
+    background-color: #eee;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .btn {
+    background-color: transparent;
+    height: 100%;
+    border-radius: 0;
+    font-weight: 400;
+    color: #333;
+    font-size: 14px;
+    &.active {
+      background-color: white;
+    }
+  }
+}
+#vis {
+  .vis-tab {
+    position: absolute;
+    margin: 57px 50px;
+    color: #555;
+    &.total {
+      width: 300px;
+      h4 {
+        font-size: 18px;
+      }
+      p,li {
+        font-size: 14px;
+        line-height: 21px;
+        margin: 21px 0;
+      }
+      li {
+        margin: 4px 0;
+        &:before {
+          content: ' ';
+          height: 15px;
+          width: 15px;
+          border-radius: 100%;
+          background-color: grey;
+          display: inline-block;
+          top: 2px;
+          position: relative;
+          margin: 0 3px 0 0;
+        }
+        &.latam:before {
+          background-color: #3593c5;
+        }
+        &.africa:before {
+          background-color: #a0cddb;
+        }
+        &.asia:before {
+          background-color: #fb8f5e;
+        }
+      }
+    }
+  }
+}

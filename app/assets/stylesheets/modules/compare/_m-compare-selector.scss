@@ -1,0 +1,50 @@
+.m-compare-selector {
+  position: relative;
+  width: 47.5%;
+  min-height: 280px;
+
+  padding: 20px;
+  border: 1px solid rgba($font-color-2,0.3);
+  border-radius: 10px;
+  background-color: $dark-grey;
+
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    background-color: lighten($dark-grey, 5%);
+  }
+
+  .m-compare-selector-empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: $white;
+    font-size: 32px;
+  }
+
+  .m-compare-selector-not-empty {
+    color: $white;
+    font-size: 14px;
+    opacity: .5;
+  }
+
+  .selection-name {
+    color: $white;
+    font-size: 32px;
+    font-weight: 300;
+  }
+
+  .country-figure {
+    svg {
+      fill: $white;
+    }
+  }
+}
+
+

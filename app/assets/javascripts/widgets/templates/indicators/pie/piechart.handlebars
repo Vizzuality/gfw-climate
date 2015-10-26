@@ -1,0 +1,14 @@
+<div class="piechart-graph">
+  <h3>
+    There where
+    <span>{{this.total}}</span>
+    of
+    <select class="select-text section" name="section">
+      {{#each this.sectionswitch}}
+        <option value="{{this.unit}}">{{this.unitname}}</option>
+      {{/each}}
+    </select>
+    , in {{this.country_name}}'s forests in 2000.
+  </h3>
+  <div class="pie-graph"></div>
+</div>

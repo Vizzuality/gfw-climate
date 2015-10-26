@@ -1,0 +1,49 @@
+{
+  "resource": "Compare countries",
+  "http_method": "GET",
+  "route": "/api/compare-countries",
+  "description": "Getting a list of countries and jurisdictions for compare",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "path",
+      "description": "Allowed path: iso+1+0/iso+1+0/iso+0+3/iso+4/iso/iso+0+0 etc..."
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/compare-countries?path=Bra%2Faus%2B1%2Faut%2B4%2B0%2Fguy%2B0%2B5",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "path": "Bra/aus+1/aut+4+0/guy+0+5"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"countries\":[{\"iso\":\"BRA\",\"name\":\"Brazil\",\"cartodb_id\":42,\"conventions\":{\"cdb\":\"Ratification\",\"cites\":\"Ratification\",\"ilo\":\"Ratification\",\"itta\":\"Non Member\",\"kyoto\":\"Ratification\",\"nlbi\":\"Member State\",\"ramsar\":\"Contracting Party\",\"unccd\":\"Ratification\",\"unfccc\":\"Non-Annex I Party\",\"world_heritage\":\"Acceptance\"},\"emissions\":20.29430799,\"carbon_stocks\":62607,\"gva\":22513.5,\"gva_percent\":1.07,\"widgets\":[{\"id\":1,\"data\":\"/api/widgets/1/BRA\"},{\"id\":2,\"data\":\"/api/widgets/2/BRA\"},{\"id\":3,\"data\":\"/api/widgets/3/BRA\"},{\"id\":4,\"data\":\"/api/widgets/4/BRA\"},{\"id\":5,\"data\":\"/api/widgets/5/BRA\"},{\"id\":6,\"data\":\"/api/widgets/6/BRA\"}]},{\"iso\":\"AUS\",\"name\":\"Ashmore and Cartier Islands\",\"id_1\":1,\"cartodb_id\":3013,\"conventions\":{\"cdb\":null,\"cites\":null,\"ilo\":null,\"itta\":null,\"kyoto\":null,\"nlbi\":null,\"ramsar\":null,\"unccd\":null,\"unfccc\":null,\"world_heritage\":null},\"widgets\":[{\"id\":1,\"data\":\"/api/widgets/1/AUS/1\"},{\"id\":2,\"data\":\"/api/widgets/2/AUS/1\"},{\"id\":3,\"data\":\"/api/widgets/3/AUS/1\"},{\"id\":4,\"data\":\"/api/widgets/4/AUS/1\"},{\"id\":5,\"data\":\"/api/widgets/5/AUS/1\"},{\"id\":6,\"data\":\"/api/widgets/6/AUS/1\"}]},{\"iso\":\"AUT\",\"name\":\"Oberösterreich\",\"id_1\":4,\"cartodb_id\":1348,\"conventions\":{\"cdb\":null,\"cites\":null,\"ilo\":null,\"itta\":null,\"kyoto\":null,\"nlbi\":null,\"ramsar\":null,\"unccd\":null,\"unfccc\":null,\"world_heritage\":null},\"widgets\":[{\"id\":1,\"data\":\"/api/widgets/1/AUT/4\"},{\"id\":2,\"data\":\"/api/widgets/2/AUT/4\"},{\"id\":3,\"data\":\"/api/widgets/3/AUT/4\"},{\"id\":4,\"data\":\"/api/widgets/4/AUT/4\"},{\"id\":5,\"data\":\"/api/widgets/5/AUT/4\"},{\"id\":6,\"data\":\"/api/widgets/6/AUT/4\"}]},{\"iso\":\"GUY\",\"name\":\"Guyana\",\"cartodb_id\":91,\"conventions\":{\"cdb\":\"Ratification\",\"cites\":\"Accession\",\"ilo\":\"Not Ratified\",\"itta\":\"Producing Member\",\"kyoto\":\"Accession\",\"nlbi\":\"Member State\",\"ramsar\":\"Non Party\",\"unccd\":\"Accession\",\"unfccc\":\"Non-Annex I Party\",\"world_heritage\":\"Acceptance\"},\"emissions\":47.15322167,\"carbon_stocks\":1629,\"gva\":95.6842,\"gva_percent\":4.08,\"widgets\":[{\"id\":1,\"data\":\"/api/widgets/1/GUY\"},{\"id\":2,\"data\":\"/api/widgets/2/GUY\"},{\"id\":3,\"data\":\"/api/widgets/3/GUY\"},{\"id\":4,\"data\":\"/api/widgets/4/GUY\"},{\"id\":5,\"data\":\"/api/widgets/5/GUY\"},{\"id\":6,\"data\":\"/api/widgets/6/GUY\"}]}]}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"57dbdc294ffb4eeea8a5cd4fa2a926e8\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "996b43cb-ee4e-49b3-a4b8-a47a2c10f779",
+        "X-Runtime": "2.009653",
+        "Content-Length": "2173"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/compare-countries?path=Bra%2Faus%2B1%2Faut%2B4%2B0%2Fguy%2B0%2B5\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}

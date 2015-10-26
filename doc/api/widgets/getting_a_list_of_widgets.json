@@ -1,0 +1,56 @@
+{
+  "resource": "Widgets",
+  "http_method": "GET",
+  "route": "/api/widgets",
+  "description": "Getting a list of widgets",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "iso",
+      "description": "Country iso"
+    },
+    {
+      "name": "id_1",
+      "description": "Jurisdiction id"
+    },
+    {
+      "name": "thresh",
+      "description": "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/widgets",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"widgets\":[{\"id\":1,\"name\":\"Deforestation rate\",\"data\":\"/api/widgets/1\"},{\"id\":2,\"name\":\"Carbon emissions\",\"data\":\"/api/widgets/2\"},{\"id\":3,\"name\":\"Forest area 2000\",\"data\":\"/api/widgets/3\"},{\"id\":4,\"name\":\"Biomas s carbon stocks\",\"data\":\"/api/widgets/4\"},{\"id\":5,\"name\":\"Aboveground biomass density\",\"data\":\"/api/widgets/5\"},{\"id\":6,\"name\":\"Emerging hotspots\",\"data\":\"/api/widgets/6\"}]}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"f58c60b86d39c8505a40ff8ae0a0e89c\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "5a3c40fb-4096-41e7-aa4d-fcc8e19ec893",
+        "X-Runtime": "0.014435",
+        "Content-Length": "387"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}

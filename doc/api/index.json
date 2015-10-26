@@ -1,0 +1,99 @@
+{
+  "resources": [
+    {
+      "name": "Compare countries",
+      "examples": [
+        {
+          "description": "Getting a list of countries and jurisdictions for compare",
+          "link": "compare_countries/getting_a_list_of_countries_and_jurisdictions_for_compare.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Countries",
+      "examples": [
+        {
+          "description": "Getting a list of enabled countries",
+          "link": "countries/getting_a_list_of_enabled_countries.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific country",
+          "link": "countries/getting_a_specific_country.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific jurisdiction",
+          "link": "countries/getting_a_specific_jurisdiction.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Indicators",
+      "examples": [
+        {
+          "description": "Getting a list of indicators",
+          "link": "indicators/getting_a_list_of_indicators.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific indicator",
+          "link": "indicators/getting_a_specific_indicator.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific indicator for country",
+          "link": "indicators/getting_a_specific_indicator_for_country.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific indicator for jurisdiction",
+          "link": "indicators/getting_a_specific_indicator_for_jurisdiction.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific indicator with thresh 15",
+          "link": "indicators/getting_a_specific_indicator_with_thresh_15.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Widgets",
+      "examples": [
+        {
+          "description": "Getting a list of widgets",
+          "link": "widgets/getting_a_list_of_widgets.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a list of widgets for country",
+          "link": "widgets/getting_a_list_of_widgets_for_country.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a list of widgets for jurisdiction",
+          "link": "widgets/getting_a_list_of_widgets_for_jurisdiction.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific widget by id for a country",
+          "link": "widgets/getting_a_specific_widget_by_id_for_a_country.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific widget by id for a juridiction",
+          "link": "widgets/getting_a_specific_widget_by_id_for_a_juridiction.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a specific widget by id for a juridiction and thresh",
+          "link": "widgets/getting_a_specific_widget_by_id_for_a_juridiction_and_thresh.json",
+          "groups": "all"
+        }
+      ]
+    }
+  ]
+}
