@@ -91,6 +91,7 @@ define([
             }, this ));
         } else {
           if ((!!this.oldCompare1 && this.oldCompare1 != params.compare1) || (!!this.oldCompare2 && this.oldCompare2 != params.compare2)) {
+            console.log(params.options);
             params.options = this.moveOptions(params);
             this.setModels(params);
           } else {
@@ -194,8 +195,11 @@ define([
     },
     moveOptions: function(params) {
       var r = {};
-      r[this.objToSlug(params.compare1,'')] = params.options[this.objToSlug(this.oldCompare1,'')];
-      r[this.objToSlug(params.compare2,'')] = params.options[this.objToSlug(this.oldCompare2,'')];
+      var options = _.map(params.options, function(opt,key){
+        return opt;
+      });
+      r[this.objToSlug(params.compare1,'')] = options[0];
+      r[this.objToSlug(params.compare2,'')] = options[1];
       return r;
     },
 
