@@ -216,6 +216,7 @@
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
+  transform: translate(calc(-100% - 7px),-50%);
 
   &:after {
     content: '';
