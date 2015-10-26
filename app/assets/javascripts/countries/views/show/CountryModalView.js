@@ -30,7 +30,10 @@ define([
       this.constructor.__super__.initialize.apply(this);
       this.presenter = new CountryModalPresenter(this);
 
-      this.countryModel = CountryModel;
+      var iso = sessionStorage.getItem('countryIso');
+
+      this.countryModel = new CountryModel({id: iso});
+
 
       this.enabledIndicators = [];
 
@@ -100,10 +103,12 @@ define([
         case 'subnational':
 
           // TO FIX
+
           this.countryModel.fetch().done(function() {
+
             this.setup = {
               isJurisdictions: true,
-              jurisdictions: this.countryModel.fetch('jurisdictions')
+              jurisdictions: this.countryModel.get('jurisdictions')
             };
 
             this.render();

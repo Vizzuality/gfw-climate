@@ -8,8 +8,9 @@ define([
 
     url: '/api/countries/',
 
-    setCountry: function(country) {
-      this.url += country;
+
+    initialize: function(options) {
+      this.url += options.id;
     },
 
     parse: function(data) {
@@ -18,6 +19,6 @@ define([
 
   });
 
-  return new CountryModel();
+  return CountryModel;
 
 });

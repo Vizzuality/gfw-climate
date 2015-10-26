@@ -28,7 +28,7 @@ define([
     _onPlaceGo: function(place) {
       this._keepIso(place.country.iso);
       // console.log(place)
-      // // this.countryModel.setCountry(place.country.iso);
+      // this.countryModel.setCountry(place.country.iso);
       // // this.countryModel.fetchData();
     },
 
