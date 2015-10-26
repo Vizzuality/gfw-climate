@@ -30,11 +30,24 @@ define([
 
       // Fetch values
       this.$el.addClass('is-loading');
-      this.model.fetch({ data: setup.data }).done(function() {
+      this.model.fetch({
+        data: this.setFetchParams(setup.data)
+      }).done(function() {
         this.render();
         this.$el.removeClass('is-loading');
       }.bind(this));
     },
+
+    setFetchParams: function(data) {
+      if (data.location) {
+        data.iso = data.location.iso;
+        data.id_1 = data.location.jurisdiction;
+        data.area = data.location.area;
+        delete data.location
+      }
+      return data;
+    },
+
 
     render: function() {
       var tpl = this.model.get('template');

@@ -122,7 +122,7 @@ define([
               end_date: t.end_date,
             },
             data: {
-              iso: this.presenter.model.get('iso'),
+              location: this.presenter.model.get('location'),
               thresh: t.thresh
             }
           });
@@ -139,7 +139,7 @@ define([
               template: 'biomass-carbon'
             },
             data: {
-              iso: this.presenter.model.get('iso'),
+              location: this.presenter.model.get('location'),
               thresh: t.thresh
             }
           });
@@ -155,7 +155,7 @@ define([
               template: 'umd'
             },
             data: {
-              iso: this.presenter.model.get('iso'),
+              location: this.presenter.model.get('location'),
               thresh: t.thresh
             }
           });
