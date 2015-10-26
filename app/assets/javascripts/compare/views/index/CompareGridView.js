@@ -22,25 +22,23 @@ define([
     render: function() {
       this.$el.html(this.template(this.parseData()));
 
-      // Loop each country and get data and render its widgets
-      _.map(this.presenter.status.get('data'), _.bind(function(c,i){
-        // Create persistent variables
-        var status = {
-          el: null,
-          widgets: [],
-          promises: []
-        };
+      var status = {
+        widgets: [],
+        promises: []
+      };
 
-
-        _.each(c.widgets, _.bind(function(w) {
+      // Loop each widget and get data of each compare
+      _.each(this.presenter.status.get('widgets'), _.bind(function(w){
+        _.each(this.presenter.status.get('data'), _.bind(function(c,i){
           var deferred = $.Deferred();
           var slug = this.presenter.objToSlug(this.presenter.status.get('compare'+(i+1)),'');
           var currentWidget = new WidgetView({
-            id: w.id,
+            id: w,
             className: 'gridgraphs--widget',
+            compare: this.presenter.status.get('compare'+(i+1)),
             iso: c.iso,
             slug: slug,
-            options: this.presenter.status.get('options')[slug][w.id][0]
+            options: this.presenter.status.get('options')[slug][w][0]
           });
 
           currentWidget._loadMetaData(function(data) {
@@ -48,25 +46,22 @@ define([
           });
 
           // Set persistent variables
-          status.el = $('#compare-grid-'+slug);
           status.widgets.push(currentWidget);
           status.promises.push(deferred);
         }, this ));
-
-        // Promises of each country resolved
-        $.when.apply(null, status.promises).then(function() {
-          status.widgets.forEach(function(widget) {
-            widget.render();
-            status.el.append(widget.el);
-          });
-        });
       }, this ));
+
+      $.when.apply(null, status.promises).then(function() {
+        status.widgets.forEach(function(widget) {
+          widget.render();
+          $('#gridgraphs-compare-'+widget.id).append(widget.el);
+        });
+      });
     },
 
     parseData: function() {
       return {
-        compare1slug: this.presenter.objToSlug(this.presenter.status.get('compare1'),''),
-        compare2slug: this.presenter.objToSlug(this.presenter.status.get('compare2'),'')
+        widgets: this.presenter.status.get('widgets')
       };
     }
 

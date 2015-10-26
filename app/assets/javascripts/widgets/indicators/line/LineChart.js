@@ -105,7 +105,7 @@ LineChart.prototype._drawLine = function(group) {
 
 LineChart.prototype._drawScatterplote = function() {
   // Tooltip
-  var tooltip = d3.select(this.options.el).append('div')
+  var tooltip = d3.select('body').append('div')
     .attr('class', 'tooltip')
     .style('opacity', 0);
 
@@ -119,12 +119,18 @@ LineChart.prototype._drawScatterplote = function() {
     .attr('cx', function(d) { return x(d[xKey]);})
     .attr('cy', function(d) { return y(d[yKey]);})
     .on('mouseover', function(d) {
+      console.log(d);
+      console.log(d3.event.pageX);
+
       tooltip.transition()
-        .duration(200)
+        .duration(125)
         .style('opacity', 1);
-      tooltip.html('<span class="data">' + formatDate(d.year) + '</span>'  + yKey + d.loss)
+      tooltip.html('<span class="data">' + formatDate(d.year) + '</span>' + d.value)
         .style('left', (d3.event.pageX) + 'px')
         .style('top', (d3.event.pageY) + 'px');
+// max-width: 110px;
+// height: 65px;
+
       })
     .on('mouseout', function(d) {
       tooltip.transition()

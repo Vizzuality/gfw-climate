@@ -283,6 +283,18 @@
         "position": 1,
         "name": "Woods Hole/Baccini",
         "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ],
+        "thresh": 25,
         "default": true
       },
       {
@@ -520,6 +532,18 @@
         "position": 1,
         "name": "Woods Hole/Baccini",
         "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ],
+        "thresh": 25,
         "default": true
       },
       {
@@ -751,14 +775,12 @@
     "id": 6,
     "name": "Emerging hotspots",
     "default_thresh": "25",
-    "default": true,
     "indicators": [
       {
         "id": 4,
         "name": "Emerging hotspots",
         "type": "map",
-        "unit": "number",
-        "default": true
+        "unit": "number"
       }
     ]
   },

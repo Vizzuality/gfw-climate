@@ -70,26 +70,41 @@
   }
 }
 
-
+// We should remove this from here and move it to a tab.scss module
 
 //From WRW
 .tab-graph {
   position: relative;
-  height: 300px;
+
   .tab-graph--no-data {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    h3 {
-      text-transform: uppercase;
-      font-weight: 300;
+    &.line {
+      height: 300px;
+    }
+    &.pie {
+      height: 200px;
+    }
+    &.number {
+      height: 200px;
+    }
+    div{
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h3 {
+        text-transform: uppercase;
+        font-weight: 300;
+      }
     }
   }
+}
+
+.linechart-graph {
+  height: 300px;
 }
 
 .lineChart {
@@ -191,7 +206,7 @@
 }
 
 .tooltip {
-  position: static;
+  position: absolute;
   text-align: center;
   max-width: 110px;
   height: 65px;

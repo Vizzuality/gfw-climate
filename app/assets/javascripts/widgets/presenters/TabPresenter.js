@@ -52,6 +52,12 @@ define([
       this.status.set('tabs', tabs);
     },
 
+    changeSection: function(section) {
+      var tabs = _.clone(this.status.get('tabs'))
+      tabs.section = section;
+      this.status.set('tabs', tabs);
+    },
+
     // PUBLISH the current status of this tab
     publish: function() {
       this.view.widget.changeStatus(this.status.toJSON());
