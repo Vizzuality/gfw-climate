@@ -10,16 +10,17 @@
       .source_title {
         font-size: 32px;
         font-weight: 300;
-        text-transform: inherit;
+        text-align: center;
+        text-transform: none;
       }
     }
 
-    .indicator-list {
+    .item-list {
 
-      .indicators-group {
-        margin: 15px 0;
+      .item-group {
+        margin: 25px 0;
         h3 {
-          color: $dark;
+          color: rgba($dark, .5);
           font-size: 16px;
           font-weight: 500;
         }
@@ -29,7 +30,7 @@
           margin-top: 10px;
           flex-grow: 1;
           flex-wrap: wrap;
-          .indicator {
+          .item {
             display: inline-flex;
             align-items: center;
             width: calc(33.333% - 4px);
@@ -41,7 +42,7 @@
             border-radius: 6px;
             line-height: 1.1;
             cursor: pointer;
-            .indicator__name {
+            .item__name {
               position: relative;
               display: inline-block;
               width: 100%;
@@ -50,15 +51,40 @@
               font-size: 14px;
               font-weight: 500;
               text-transform: uppercase;
+              .checkbox {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 12px;
+                height: 12px;
+                border: 1px solid rgba($dark, .5);
+                border-radius: 3px;
+                .icon-check {
+                  display: none;
+                  left: 0;
+                  width: 0.6em;
+                  fill: $white;
+                }
+              }
             }
             &.is-selected {
               border-color: $blue;
-              .indicator__name {
-                color: $blue;
+              background: $blue;
+              .item__name {
+                color: $white;
               }
               svg {
-                fill: $blue;
+                fill: $white;
               }
+              .checkbox {
+                border-color: $white;
+                .icon-check {
+                  display: block;
+                }
+              }
+            }
+            .jurisdiction {
+              text-transform: initial;
             }
             svg {
               position: absolute;

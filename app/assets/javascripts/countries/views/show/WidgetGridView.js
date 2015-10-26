@@ -1,11 +1,12 @@
 define([
   'backbone',
+  'mps',
   'countries/presenters/show/WidgetGridPresenter',
   'widgets/views/WidgetView',
   'countries/views/show/reports/NationalView',
   'countries/views/show/reports/SubNationalView',
   'countries/views/show/reports/AreasView',
-], function(Backbone, WidgetGridPresenter, WidgetView, NationalView,
+], function(Backbone, mps, WidgetGridPresenter, WidgetView, NationalView,
     SubNationalView, AreasView) {
 
   'use strict';
@@ -77,7 +78,7 @@ define([
 
     _showModal: function(e) {
       e && e.preventDefault();
-      this.presenter._onOpenModal();
+      mps.publish('Modal/open', [this.presenter.status.get('view')]);
     },
 
     _checkEnabledWidgets: function() {

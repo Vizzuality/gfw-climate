@@ -1,0 +1,118 @@
+<div class="content-wrapper">
+  <div class="close">x</div>
+  <div id="sources">
+    <div class="page2 is-hidden">
+      <div id="indicators" class="source-item">
+        <div class="source_header">
+          <strong class="source_title">Select indicators</strong>
+        </div>
+      <div class="source_body">
+        <div class="item-list">
+          <div class="item-group">
+            <h3>Forest and Carbon Data</h3>
+            <ul>
+              <li id="1" class="item"><span class="item__name">annual deforestation rate</span></li>
+              <li id="2" class="item"><span class="item__name">carbon emissions from deforestation<svg class="icon-selector-piechart"><use xlink:href="#icon-selector-piechart"></use></svg></span></li>
+              <li id="3" class="item"><span class="item__name">forest area 2000<svg class="icon-selector-piechart"><use xlink:href="#icon-selector-piechart"></use></svg></span></li>
+              <li id="4" class="item"><span class="item__name">biomass carbon stock</span></li>
+              <li id="5" class="item"><span class="item__name">aboveground biomass density<svg class="icon-selector-piechart"><use xlink:href="#icon-selector-piechart"></use></svg></span></li>
+              <li id="6" class="item"><span class="item__name">emerging hotspots</span></li>
+              <li id="7" class="item"><span class="item__name">soil carbon stocks</span></li>
+              <li id="8" class="item"><span class="item__name">soil carbon density</span></li>
+            </ul>
+          </div>
+
+          {{#if data.isNational}}
+            <div class="item-group">
+              <h3>Policy and Drivers</h3>
+              <ul>
+                <li id="9" class="item"><span class="item__name">top 5 crops expanding in area</span></li>
+                <li id="10" class="item"><span class="item__name">c stocks vs. crop yields</span></li>
+                <li id="11" class="item"><span class="item__name">deforestation drivers</span></li>
+                <li id="12" class="item"><span class="item__name">deforestation emissions as a % of national ghg emissions</span></li>
+                <li id="13" class="item"><span class="item__name">climate change initiatives singed</span></li>
+                <li id="14" class="item"><span class="item__name">human population trends</span></li>
+              </ul>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+      <div class="row">
+        <button id="btn-done" class="btn medium blue">Continue</button>
+      </div>
+    </div>
+</div>
+
+    {{!-- Jurisdictions first page --}}
+    {{#if data.isJurisdictions}}
+      <div class="page1">
+        <div id="indicators" class="source-item">
+          <div class="source_header">
+            <strong class="source_title">Select jurisdictions</strong>
+          </div>
+        <div class="source_body">
+          <div class="item-list">
+            <div class="item-group">
+            {{#if data.jurisdictions}}
+              <ul>
+                {{#each data.jurisdictions}}
+                  <li id="{{id}}" class="item"><span class="item__name jurisdiction">{{name}}
+                    <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <button id="btn-next" class="btn medium blue">Continue</button>
+      </div>
+    {{/if}}
+
+    {{!-- Areas of interest first page --}}
+    {{#if data.isAreas}}
+      <div class="page1">
+        <div id="indicators" class="source-item">
+          <div class="source_header">
+            <strong class="source_title">Select areas</strong>
+          </div>
+        <div class="source_body">
+          <div class="item-list">
+            <div class="item-group">
+              <ul>
+                <li id="1" class="item"><span class="item__name">tree platantions
+                  <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
+                </li>
+                <li id="2" class="item"><span class="item__name">moratorium areas
+                  <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
+                </li>
+                <li id="3" class="item"><span class="item__name">plantation concessions
+                  <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
+                </li>
+                <li id="4" class="item"><span class="item__name">protected areas
+                  <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
+                </li>
+                <li id="5" class="item"><span class="item__name">mining concessions
+                  <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
+                </li>
+                <li id="6" class="item"><span class="item__name">key biodiversity areas
+                  <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
+                </li>
+                <li id="7" class="item"><span class="item__name">primary forests
+                  <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
+                </li>
+                <li id="8" class="item"><span class="item__name">logging concessions
+                  <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <button id="btn-next" class="btn medium blue">Continue</button>
+      </div>
+    {{/if}}
+
+  </div>
+</div>

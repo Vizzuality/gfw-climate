@@ -12,13 +12,6 @@ define([
       this.url += country;
     },
 
-    fetchData: function() {
-      $.get(this.url, function(data) {
-        this.set(data.country);
-        mps.publish('CountryModel/Fetch', [this]);
-      }.bind(this));
-    },
-
     parse: function(data) {
       return data.country;
     }
