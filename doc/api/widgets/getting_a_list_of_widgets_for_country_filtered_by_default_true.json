@@ -1,0 +1,62 @@
+{
+  "resource": "Widgets",
+  "http_method": "GET",
+  "route": "/api/widgets",
+  "description": "Getting a list of widgets for country filtered by default true",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "iso",
+      "description": "Country iso"
+    },
+    {
+      "name": "id_1",
+      "description": "Jurisdiction id"
+    },
+    {
+      "name": "thresh",
+      "description": "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+    },
+    {
+      "name": "default",
+      "description": "Filter widgets by default true or false"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/widgets?iso=aus&default=true",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "iso": "aus",
+        "default": "true"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"widgets\":[{\"id\":1,\"name\":\"Deforestation rate\",\"default\":true,\"data\":\"/api/widgets/1/aus\",\"tabs\":[{\"position\":1,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"range\":[2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],\"rangetype\":\"year\",\"switch\":[{\"unit\":\"hectares\",\"unitname\":\"ha\"},{\"unit\":\"percentage\",\"unitname\":\"%\"}],\"thresh\":25,\"default\":true}],\"indicators\":[{\"id\":15,\"name\":\"FAO FRA 2015 (IPCC Approach 1)\",\"type\":\"line\",\"unit\":\"hectares\",\"tab\":1,\"default\":true}]},{\"id\":2,\"name\":\"Carbon emissions\",\"default\":true,\"data\":\"/api/widgets/2/aus\",\"tabs\":[{\"position\":1,\"name\":\"Faostat (IPCC Tier 1)\",\"type\":\"line\",\"range\":[2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],\"rangetype\":\"year\",\"switch\":[{\"unit\":\"tg-c\",\"unitname\":\"Tg C\"},{\"unit\":\"mt-co2\",\"unitname\":\"Mt CO2\"}],\"thresh\":25,\"default\":true}],\"indicators\":[{\"id\":29,\"name\":\"Faostat (IPCC Tier 1)\",\"type\":\"line\",\"unit\":\"tg-c\",\"tab\":1,\"default\":true}]},{\"id\":3,\"name\":\"Forest area 2000\",\"default\":true,\"data\":\"/api/widgets/3/aus\",\"tabs\":[{\"position\":1,\"name\":\"Hansen/Google/UMD\",\"type\":\"number\",\"thresh\":25,\"default\":true}],\"indicators\":[{\"id\":3,\"name\":\"Hansen/Google/UMD\",\"type\":\"number\",\"unit\":\"hectares\",\"tab\":1,\"default\":true}]},{\"id\":4,\"name\":\"Biomas s carbon stocks\",\"default\":true,\"data\":\"/api/widgets/4/aus\",\"tabs\":[{\"position\":1,\"name\":\"Woods Hole/Baccini\",\"type\":\"pie\",\"default\":true}],\"indicators\":[{\"id\":4,\"name\":\"Woods Hole/Baccini\",\"type\":\"pie\",\"unit\":\"percentage\",\"tab\":1,\"section\":\"biomass\",\"direction\":\"aboveground\",\"default\":true},{\"id\":6,\"name\":\"Woods Hole/Baccini\",\"type\":\"pie\",\"unit\":\"percentage\",\"tab\":1,\"section\":\"biomass\",\"direction\":\"belowground\",\"default\":true},{\"id\":8,\"name\":\"Woods Hole/Baccini\",\"type\":\"total\",\"unit\":\"number\",\"tab\":1,\"section\":\"biomass\",\"default\":true}]},{\"id\":5,\"name\":\"Aboveground biomass density\",\"default\":true,\"data\":\"/api/widgets/5/aus\",\"tabs\":[{\"position\":1,\"name\":\"Woods Hole/Baccini\",\"type\":\"pie\",\"default\":true}],\"indicators\":[{\"id\":4,\"name\":\"Woods Hole/Baccini\",\"type\":\"pie\",\"unit\":\"percentage\",\"tab\":1,\"section\":\"biomass\",\"direction\":\"aboveground\",\"default\":true},{\"id\":6,\"name\":\"Woods Hole/Baccini\",\"type\":\"pie\",\"unit\":\"percentage\",\"tab\":1,\"section\":\"biomass\",\"direction\":\"belowground\",\"default\":true},{\"id\":8,\"name\":\"Woods Hole/Baccini\",\"type\":\"total\",\"unit\":\"number\",\"tab\":1,\"section\":\"biomass\",\"default\":true}]},{\"id\":6,\"name\":\"Emerging hotspots\",\"default\":true,\"data\":\"/api/widgets/6/aus\",\"indicators\":[{\"id\":4,\"name\":\"Emerging hotspots\",\"type\":\"map\",\"unit\":\"number\",\"default\":true}]}]}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"db5fdd53ad7d6384a210188a0109cc3c\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "01255088-40d0-4fbb-abae-fac8d6ebb940",
+        "X-Runtime": "0.008092",
+        "Content-Length": "2559"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/widgets?iso=aus&default=true\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}
