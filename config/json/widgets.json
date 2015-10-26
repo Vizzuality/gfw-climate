@@ -284,6 +284,16 @@
         "name": "Woods Hole/Baccini",
         "type": "pie",
         "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ],
         "default": true
       },
       {

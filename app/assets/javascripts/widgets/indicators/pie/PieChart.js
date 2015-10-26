@@ -11,7 +11,7 @@ var arrayColor = ['#5B80A0', '#b6b6ba'];
 
 var PieChart = function(options) {
   this.options = options;
-  this.data = options.data;
+  this.data = this._defindeData(options.data);
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
@@ -65,6 +65,16 @@ PieChart.prototype._createPie = function() {
   pie = d3.layout.pie()
     .sort(null)
     .value(function(d) { return d.value})
+};
+
+PieChart.prototype._defindeData = function(data) {
+  var total = _.reduce(data, function(memo, i){ return memo + i.value; }, 0);
+  return _.map(data,function(i){
+    return {
+      name: i.name,
+      value: ((i.value/total)*100).toFixed(2)
+    };
+  });
 };
 
 PieChart.prototype.render = function() {

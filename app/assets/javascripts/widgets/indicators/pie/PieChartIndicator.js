@@ -60,26 +60,48 @@ define([
 
     render: function() {
       this.$el.html(this.template(this.parseData()));
-      this._drawGraph();
+      this.cacheVars();
+      this.setStatusValues();
+      this.drawGraph();
       return this;
     },
 
     parseData: function() {
       var parseValues = d3.format(".3s");
       return {
+        sectionswitch: this.model.get('sectionswitch'),
         country_name: this.model.get('data')[0].country_name,
-        total: parseValues(_.findWhere(this.model.get('data'), {id:8}).data[0].value) + ' tons'
+        total: parseValues(_.findWhere(this.model.get('data'), {type:'total'}).data[0].value) + ' tons'
       }
     },
 
-    _drawGraph: function() {
+    cacheVars: function() {
+      this.$section = this.$el.find('.section');
+    },
+
+    setStatusValues: function() {
+      var t = this.model.toJSON();
+      (!!t.section) ? this.$section.val(t.section) : null;
+    },
+
+    drawGraph: function() {
       var pieChart = new PieChart({
         el: this.$el.find('.pie-graph')[0],
-        data: [{"name": "Aboveground","value": 32},{"name": "Belowground","value": 68}],
+        data: this.graphData(),
         sizing: {top: 0, right: 0, bottom: 0, left: 0},
         innerPadding: { top: 0, right: 0, bottom: 0, left: 0 },
       });
       pieChart.render();
+    },
+
+    graphData: function() {
+      var pieIndicators = _.where(this.model.get('data'), {type:'pie'});
+      return _.map(pieIndicators, function(i){
+        return {
+          name: i.direction,
+          value: i.data[0].value
+        }
+      })
     },
 
   });

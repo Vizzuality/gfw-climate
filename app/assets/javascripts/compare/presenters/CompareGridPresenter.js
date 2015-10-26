@@ -185,6 +185,7 @@ define([
           end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
           thresh: (t.thresh) ? t['thresh'] : null,
           section: (t.section) ? t['section'] : null,
+          sectionswitch: (t.sectionswitch) ? t['sectionswitch'] : null,
         }
       })[0];
     },

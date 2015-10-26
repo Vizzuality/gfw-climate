@@ -19,6 +19,7 @@ define([
       'change .threshold' : 'changeThreshold',
       'change .start-date' : 'changeStartDate',
       'change .end-date' : 'changeEndDate',
+      'change .section' : 'changeSection',
       'click .switcher-item' : 'changeUnit'
     },
 
@@ -35,8 +36,8 @@ define([
       this.$el.html(this.template(this.parseData()));
       this.delegateEvents();
       this.cacheVars();
-      this.setStatusValues();
       this.setIndicator();
+      this.setStatusValues();
       return this;
     },
 
@@ -50,6 +51,7 @@ define([
       this.$date_selects = this.$el.find('.date-selector');
       this.$threshold = this.$el.find('.threshold');
       this.$switcher = this.$el.find('.switcher');
+
       this.$graphContainer = this.$el.find('.tab-graph');
     },
 
@@ -70,13 +72,16 @@ define([
       this.presenter.changeEndDate($(e.currentTarget).val());
     },
 
+    changeSection: function(e) {
+      this.presenter.changeSection($(e.currentTarget).val());
+    },
+
     // SETTERS
     setStatusValues: function() {
       var t = this.presenter.status.get('tabs');
       (!!t.start_date && !!t.end_date) ? this.setDates() : null;
       (!!t.thresh) ? this.$threshold.val(t.thresh) : null;
       (!!t.unit) ? this.$switcher.find('li[data-unit='+t.unit+ ']').addClass('is-active') : null;
-      (!!t.section) ? console.log('setSection') : null;
     },
 
     // SETTERS: dates
@@ -129,6 +134,8 @@ define([
             el: this.$graphContainer,
             model: {
               indicators: indicators,
+              section: t.section,
+              sectionswitch: t.sectionswitch,
               template: 'biomass-carbon'
             },
             data: {
