@@ -26,7 +26,7 @@ define([
 
       // Fetch values
       this.$el.addClass('is-loading');
-      this.model.fetch({ data: setup.data}).done(function() {
+      this.model.fetch({ data: setup.data }).done(function() {
         this._drawGraph();
         this.$el.removeClass('is-loading');
       }.bind(this));
@@ -37,14 +37,14 @@ define([
       var parseDate = d3.time.format("%Y").parse;
       var $graphContainer = this.$el[0];
       var data = _.compact(_.map(this.model.get('data'), function(d) {
-        if (d && d.year && Number(d.year !== 0)) {
+        if (d && d.year && Number(d.year !== 0) && this.between(d.year,this.model.get('start_date'),this.model.get('end_date'),true)) {
           return {
             year: parseDate(d.year.toString()),
             value: d.value
           };
         }
         return null;
-      }));
+      }.bind(this)));
 
       if (!!data.length) {
         var lineChart = new LineChart({
@@ -62,6 +62,12 @@ define([
       }
 
     },
+
+    between: function(num, a, b, inclusive) {
+      var min = Math.min(a, b),
+          max = Math.max(a, b);
+      return inclusive ? num >= min && num <= max : num > min && num < max;
+    }
 
   });
 

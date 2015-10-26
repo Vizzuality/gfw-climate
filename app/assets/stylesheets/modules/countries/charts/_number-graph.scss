@@ -1,0 +1,13 @@
+.number-graph {
+  h3{
+    font-size: 32px;
+    color: $font-color-1;
+    font-weight: 300;
+    max-width: 400px;
+    line-height: 1.25;
+    span {
+      color: $font-color-3;
+      font-weight: 500;
+    }
+  }
+}

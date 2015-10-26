@@ -225,17 +225,20 @@
         "position": 1,
         "name": "Hansen/Google/UMD",
         "type": "number",
+        "thresh" : 25,
         "default": true
       },
       {
         "position": 2,
         "name": "FAO",
-        "type": "number"
+        "type": "number",
+        "thresh" : 25
       },
       {
         "position": 3,
         "name": "Compare All",
-        "type": "number"
+        "type": "number",
+        "thresh" : 25
       }
     ],
     "indicators": [
