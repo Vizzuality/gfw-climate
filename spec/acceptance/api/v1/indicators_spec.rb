@@ -10,7 +10,7 @@ resource 'Indicators' do
       expect(status).to eq(200)
       indicators = JSON.parse(response_body)['indicators']
 
-      expect(indicators.length).to eq(37)
+      expect(indicators.length).to eq(44)
       expect(indicators[0]['indicator_id']).to eq(1)
       expect(indicators[0]['indicator_group']).to eq('Deforestation')
       expect(indicators[0]['description']).to eq('Tree cover loss per year ({{years}}) at {{threshold}} threshold in units of hectares')
@@ -51,7 +51,7 @@ resource 'Indicators' do
     example_request "Getting a specific indicator for country", id: 1, iso: 'bra', thresh: 10 do
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
-      
+
       expect(value['iso']).to eq('BRA')
       expect(value['country_name']).to eq('Brazil')
       expect(value['thresh']).to eq(10)
@@ -61,7 +61,7 @@ resource 'Indicators' do
       do_request(id: 2, iso: 'guy', thresh: 30)
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
-      
+
       expect(value['iso']).to eq('GUY')
       expect(value['country_name']).to eq('Guyana')
       expect(value['thresh']).to eq(30)
@@ -71,7 +71,7 @@ resource 'Indicators' do
       do_request(id: 3, iso: 'CIV')
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
-      
+
       expect(value['iso']).to eq('CIV')
       expect(value['country_name']).to eq("Cote d'Ivoire")
       expect(value['thresh']).to eq(25)
@@ -87,7 +87,7 @@ resource 'Indicators' do
     example_request "Getting a specific indicator for jurisdiction", id: 1, iso: 'bra', id_1: 1, thresh: 10 do
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
-      
+
       expect(value['iso']).to eq('BRA')
       expect(value['country_name']).to eq('Brazil')
       expect(value['thresh']).to eq(10)

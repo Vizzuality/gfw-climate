@@ -1,55 +1,20 @@
-.piechart-container {
-  position: relative;
-  overflow: hidden;
-  .description {
-    margin: 20px 0;
+.piechart-graph {
+  h3{
     font-size: 32px;
-    color: $dark;
+    color: $font-color-1;
+    font-weight: 300;
+    max-width: 400px;
+    line-height: 1.25;
     span {
-      color: $blue;
-    }
-    .underline {
-      text-decoration: underline;
+      color: $font-color-3;
+      font-weight: 500;
     }
   }
-
-  .legend {
-    position: absolute;
-    top: auto;
-    left: 5%;
-    bottom: 15%;
-    display: inline-block;
-    padding: 10px;
-    .item {
-      display: flex;
-      margin: 5px 0;
-      align-items: baseline;
-      .circle {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        margin: 5px;
-        border-radius: 50%;
-        &.blue {
-          background-color: $blue;
-        }
-        &.gray {
-          background: rgb(182, 182, 186);
-        }
-      }
-      span:last-child {
-        font-size: 13px;
-      }
-    }
-
-  }
-
-  svg {
-    float: right;
-    text {
-      font-size: 13px;
-      fill: $white;
+  .pie-graph {
+    width: 100%;
+    height: 250px;
+    .pieChart {
+      float: right;
     }
   }
-
 }

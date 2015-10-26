@@ -260,3 +260,18 @@
   }
   /* @end */
 }
+
+
+.select-text {
+  appearance: none;
+  color: $font-color-3;
+  border: none;
+  box-shadow: none;
+  font-size: inherit;
+  font-weight: 500;
+  background: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 3px solid $font-color-3;
+  border-radius: 0;
+}

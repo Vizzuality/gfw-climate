@@ -40,7 +40,7 @@ resource 'Widgets' do
       expect(status).to eq(200)
       widgets = JSON.parse(response_body)['widgets']
 
-      expect(widgets.length).to eq(6)
+      expect(widgets.length).to eq(5)
       expect(widgets[0]['data']).to eq('/api/widgets/1/aus')
       expect(widgets[0]['tabs'].count).to eq(1)
       expect(widgets[0]['tabs'][0]['default']).to eq(true)
