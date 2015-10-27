@@ -35,10 +35,12 @@ define([
           var currentWidget = new WidgetView({
             id: w,
             className: 'gridgraphs--widget',
-            compare: this.presenter.status.get('compare'+(i+1)),
-            iso: c.iso,
-            slug: slug,
-            options: this.presenter.status.get('options')[slug][w][0]
+            model: {
+              id: w,
+              location: this.presenter.status.get('compare'+(i+1)),
+              slug: slug,
+            },
+            status: this.presenter.status.get('options')[slug][w][0]
           });
 
           currentWidget._loadMetaData(function(data) {

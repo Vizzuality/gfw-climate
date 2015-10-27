@@ -24,17 +24,30 @@ define([
     },
 
     initialize: function(setup) {
-      this.constructor.__super__.initialize.apply(this);
+      this.constructor.__super__.initialize.apply(this, [setup]);
       // Enable params when we have API data
       this.model = new IndicatorModel(setup.model);
 
       // Fetch values
       this.$el.addClass('is-loading');
-      this.model.fetch({ data: setup.data }).done(function() {
+      this.model.fetch({
+        data: this.setFetchParams(setup.data)
+      }).done(function() {
         this.render();
         this.$el.removeClass('is-loading');
       }.bind(this));
     },
+
+    setFetchParams: function(data) {
+      if (data.location) {
+        data.iso = data.location.iso;
+        data.id_1 = (!!data.location.jurisdiction) ? data.location.jurisdiction : null;
+        data.area = (!!data.location.area) ? data.location.area : null;
+        delete data.location
+      }
+      return data;
+    },
+
 
     render: function() {
       var tpl = this.model.get('template');

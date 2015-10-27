@@ -184,6 +184,7 @@ define([
       p.compare2 = (p.compare2) ? p.compare2.iso + '+' + p.compare2.jurisdiction + '+' + p.compare2.area : null;
 
       if (p.options) {
+        p.options = params.options;
         p.options = btoa(JSON.stringify(p.options));
       }
 

@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var PieChartIndicator = Backbone.View.extend({
+  var PieChartIndicator = IndicatorView.extend({
 
     template: Handlebars.compile(tpl),
     noDataTemplate: Handlebars.compile(noDataTpl),
@@ -21,7 +21,7 @@ define([
     },
 
     initialize: function(setup) {
-      this.constructor.__super__.initialize.apply(this);
+      this.constructor.__super__.initialize.apply(this, [setup]);
 
       this.$el.addClass('is-loading');
 
@@ -37,7 +37,13 @@ define([
       };
       _.each(this.model.get('indicators'), _.bind(function(i) {
         var deferred = $.Deferred();
-        new IndicatorModel({id: i.id}).fetch({data:setup.data}).done(function(data){ deferred.resolve(data);});
+        new IndicatorModel({id: i.id})
+            .fetch({
+              data:this.setFetchParams(setup.data)
+            })
+            .done(function(data){
+              deferred.resolve(data);
+            });
         status.promises.push(deferred);
       }, this))
 
@@ -65,6 +71,15 @@ define([
       }, this ));
     },
 
+    setFetchParams: function(data) {
+      if (data.location) {
+        data.iso = data.location.iso;
+        data.id_1 = (!!data.location.jurisdiction) ? data.location.jurisdiction : null;
+        data.area = (!!data.location.area) ? data.location.area : null;
+        delete data.location
+      }
+      return data;
+    },
 
     render: function() {
       this.$el.html(this.template(this.parseData()));

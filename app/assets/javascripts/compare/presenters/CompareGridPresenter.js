@@ -204,11 +204,9 @@ define([
 
     objToSlug: function(obj,join) {
       var arr_temp = [];
-      for (var p in obj) {
-        if (obj.hasOwnProperty(p)) {
-          arr_temp.push(obj[p]);
-        }
-      }
+      arr_temp[0] = obj['iso'];
+      arr_temp[1] = obj['jurisdiction'];
+      arr_temp[2] = obj['area'];
       return arr_temp.join(join);
     }
 
