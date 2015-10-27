@@ -6,11 +6,11 @@ define([
 
   var IndicatorView = Backbone.View.extend({
 
-    el: '.indicators__content',
-
     events: {},
 
-    initialize: function() {},
+    initialize: function(setup) {
+      this.$el.addClass(setup.className);
+    },
 
     render: function() {}
 

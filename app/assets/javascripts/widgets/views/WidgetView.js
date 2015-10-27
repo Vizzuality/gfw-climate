@@ -69,7 +69,7 @@ define([
         el: this.$tabcontent,
         widget: this,
         model: {
-          iso: this.presenter.model.get('iso'),
+          location: this.presenter.model.get('location'),
           data: _.findWhere(this.presenter.model.get('tabs'), {position: position}),
           indicators: _.where(this.presenter.model.get('indicators'), {tab: position})
         },
