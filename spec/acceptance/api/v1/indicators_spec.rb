@@ -106,5 +106,29 @@ resource 'Indicators' do
       expect(value['boundary']).to eq('admin')
       expect(value['iso_and_sub_nat']).to eq('BRA1')
     end
+
+    example "Getting a specific indicator for country if id_1 is 0" do
+      do_request(id: 1, iso: 'bra', id_1: 0, thresh: 10)
+      expect(status).to eq(200)
+      value = JSON.parse(response_body)['values'][0]
+
+      expect(value['iso']).to eq('BRA')
+      expect(value['country_name']).to eq('Brazil')
+      expect(value['thresh']).to eq(10)
+      expect(value['boundary']).to eq('admin')
+      expect(value['iso_and_sub_nat']).to eq('BRA')
+    end
+
+    example "Getting a specific indicator for country if id_1 is not a number" do
+      do_request(id: 1, iso: 'bra', id_1: 'not_number', thresh: 10)
+      expect(status).to eq(200)
+      value = JSON.parse(response_body)['values'][0]
+
+      expect(value['iso']).to eq('BRA')
+      expect(value['country_name']).to eq('Brazil')
+      expect(value['thresh']).to eq(10)
+      expect(value['boundary']).to eq('admin')
+      expect(value['iso_and_sub_nat']).to eq('BRA')
+    end
   end
 end

@@ -23,7 +23,7 @@ class Indicator
     def find_indicator(filter_params)
       indicator_id = filter_params[:id]
       iso          = filter_params[:iso].downcase if filter_params[:iso].present?
-      id_1         = filter_params[:id_1] if filter_params[:id_1].present?
+      id_1         = filter_params[:id_1] if filter_params[:id_1].present? && filter_params[:id_1].to_i > 0
       area         = filter_params[:area] if filter_params[:area].present?
       thresh_value = filter_params[:thresh].present? ? filter_params['thresh'] : '25'
 
