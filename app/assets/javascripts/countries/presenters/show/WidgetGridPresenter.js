@@ -15,11 +15,7 @@ define([
 
       this.widgetCollection = new WidgetCollection()
 
-      this.status = new (Backbone.Model.extend({
-        // defaults: {
-        //   view: 'national'
-        // }
-      }));
+      this.status = new (Backbone.Model.extend());
 
       this._setListeners();
 
@@ -58,13 +54,21 @@ define([
     getPlaceParams: function() {
       var p = {};
 
-      p.options = this.status.get('options');
 
-      _.extend(p.options, {
-        jurisdictions: this.status.get('jurisdictions'),
-        areas: this.status.get('areas'),
-        view: this.status.get('view')
-      });
+
+      p.options = this.status.get('options') || null;
+
+
+      if (!!(this.status.toJSON() && this.status.get('jurisdictions'))) {
+        _.extend(p.options, {
+          jurisdictions: this.status.get('jurisdictions'),
+          areas: this.status.get('areas'),
+          view: this.status.get('view')
+        });
+      }
+
+
+
 
       return p;
     },
@@ -85,8 +89,9 @@ define([
      * @param  {[object]} params
      */
     _setupView: function(params) {
-      if (!params.options) {
+      if (params.options === null) {
         var callback = function() {
+
 
           this.status.set({
             country: params.country.iso,
@@ -94,6 +99,7 @@ define([
             areas: null,
             options: this.getOptions(params, this.widgetCollection.toJSON())
           });
+
           mps.publish('Place/update');
         };
 
@@ -126,13 +132,6 @@ define([
       mps.publish('Place/update');
     },
 
-    // _onViewUpdate: function(view) {
-    //   this.status.set({
-    //     view: view
-    //   });
-    //   mps.publish('Place/update');
-    // },
-
     getJurisdictions: function(params) {
 
       var jurisdictions = null;
@@ -140,9 +139,6 @@ define([
       if (params.options.hasOwnProperty('jurisdictions') &&
         params.options.jurisdictions !== null) {
         jurisdictions = params.options.jurisdictions;
-        // this.status.set({
-        //   view: 'subnational'
-        // });
       }
 
       return jurisdictions;
@@ -154,9 +150,6 @@ define([
 
       if (!_.isNull(params.options.areas)) {
         areas = params.options.areas;
-        // this.status.set({
-        //   view: 'areas'
-        // })
       }
 
       return areas;
@@ -164,7 +157,7 @@ define([
 
     getOptions: function(params, defaultWidgets) {
       // This should be removed to a dinamic var
-      var activeWidgets = [1,2];
+      var activeWidgets = [1, 2, 3, 4, 5];
       var w = _.groupBy(_.compact(_.map(defaultWidgets,_.bind(function(w){
         if (_.contains(activeWidgets, w.id)) {
           return {
@@ -210,10 +203,6 @@ define([
       }
       return arr_temp.join(join);
     }
-
-    // _onOpenModal: function() {
-    //   mps.publish('ReportsPanel/open', []);
-    // },
 
   });
 
