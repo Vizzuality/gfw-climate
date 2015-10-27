@@ -23,13 +23,14 @@ class Indicator
     def find_indicator(filter_params)
       indicator_id = filter_params[:id]
       iso          = filter_params[:iso].downcase if filter_params[:iso].present?
-      id_1         = filter_params[:id_1]         if filter_params[:id_1].present?
+      id_1         = filter_params[:id_1] if filter_params[:id_1].present?
+      area         = filter_params[:area] if filter_params[:area].present?
       thresh_value = filter_params[:thresh].present? ? filter_params['thresh'] : '25'
 
       # Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75
       url =  base_path
-      url += show_query(indicator_id, iso, id_1, thresh_value)
-      ids = "#{iso}_#{id_1}"
+      url += show_query(indicator_id, iso, id_1, area, thresh_value)
+      ids = "#{iso}_#{id_1}_#{area}"
 
       timeouts do
         item_caching(indicator_id, ids, nil, thresh_value) do
@@ -44,14 +45,22 @@ class Indicator
        GROUP BY indicator_id, indicator_group, description, value_units, chart_type'
     end
 
-    def show_query(indicator_id, iso, id_1, thresh_value)
+    def show_query(indicator_id, iso, id_1, area, thresh_value)
       filter =  "indicator_id = '#{indicator_id}'"
-      filter += "AND iso = UPPER('#{iso}')" if iso.present?
+      filter += "AND iso = UPPER('#{iso}') 
+                 AND sub_nat_id IS NULL 
+                 AND boundary = 'admin'"    if iso.present? && id_1.blank? && area.blank? 
+      filter += "AND iso = UPPER('#{iso}') 
+                 AND sub_nat_id IS NULL 
+                 AND boundary = 'pra'"      if iso.present? && area.present?
+      filter += "AND iso = UPPER('#{iso}') 
+                 AND sub_nat_id = '#{id_1}' 
+                 AND boundary = 'admin'"    if iso.present? && id_1.present?
+
       filter += "AND threshold = '#{thresh_value}'"
       "SELECT *
-       FROM indicators_values
-       WHERE #{filter}
-       GROUP BY year, cartodb_id, value"
+       FROM indicators_values AS values
+       WHERE #{filter}"
     end
 
     include Concerns::Cached

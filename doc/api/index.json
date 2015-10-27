@@ -54,6 +54,11 @@
           "groups": "all"
         },
         {
+          "description": "Getting a specific indicator for protected area",
+          "link": "indicators/getting_a_specific_indicator_for_protected_area.json",
+          "groups": "all"
+        },
+        {
           "description": "Getting a specific indicator with thresh 15",
           "link": "indicators/getting_a_specific_indicator_with_thresh_15.json",
           "groups": "all"
@@ -71,6 +76,16 @@
         {
           "description": "Getting a list of widgets for country",
           "link": "widgets/getting_a_list_of_widgets_for_country.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a list of widgets for country filtered by default false",
+          "link": "widgets/getting_a_list_of_widgets_for_country_filtered_by_default_false.json",
+          "groups": "all"
+        },
+        {
+          "description": "Getting a list of widgets for country filtered by default true",
+          "link": "widgets/getting_a_list_of_widgets_for_country_filtered_by_default_true.json",
           "groups": "all"
         },
         {
