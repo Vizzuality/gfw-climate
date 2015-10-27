@@ -11,10 +11,15 @@ class Country
     end
 
     def find_all
-      url = base_path
+      sql = <<-SQL
+        SELECT DISTINCT iso, admin0_name AS name, true as enabled
+        FROM indicators_values
+        ORDER BY name
+      SQL
+      url = "#{ENV['CDB_API_HOST']}?q=#{sql}"
       timeouts do
         items_caching do
-          get(url)['countries']
+          get(url)['rows']
         end
       end
     end

@@ -7,11 +7,12 @@
     background: $blue;
     text-align: center;
     h3{
-      color: $white;
       font-size: 32px;
+      color: $white;
+      font-weight: 300;
     }
     button {
-      margin: 20px 0;
+      margin: 20px 0 0;
       color: $blue;
     }
   }

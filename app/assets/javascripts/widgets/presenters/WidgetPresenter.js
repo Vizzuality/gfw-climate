@@ -12,13 +12,9 @@ define([
     init: function(view, setup) {
       this.view = view;
       this._super();
-      this.model = new WidgetModel({
-        id: setup.id,
-        iso: setup.iso,
-        slug: setup.slug
-      });
+      this.model = new WidgetModel(setup.model);
       this.status = new (Backbone.Model.extend({
-        defaults: setup.options
+        defaults: setup.status
       }));
 
       this._setListeners();

@@ -1,34 +1,3 @@
-.sup-options {
-  overflow: hidden;
-  margin: 25px 0 10px 0;
-  font-size: 12px;
-
-  .switcher {
-    float: left;
-    .switcher-track {
-      display: flex;
-      align-items: center;
-      border: 1px solid $color-1;
-      border-radius: 11px;
-      padding: 1px;
-      li {
-        padding: 4px 8px 2px;
-        font-size: 12px;
-        border-radius: 11px;
-        cursor: pointer;
-        &.is-active {
-          background: $color-1;
-          color: $font-color-2;
-        }
-      }
-    }
-  }
-
-  .canopy-threshold {
-    float: right;
-  }
-}
-
 .line-chart {
   path {
     stroke: steelblue;
@@ -56,50 +25,6 @@
     stroke-width: 2px;
     stroke: $white;
 
-  }
-}
-
-.sub-options {
-  padding-top: 20px;
-  font-size: 12px;
-  border-top: 1px solid #e5e5e5;
-
-  .total-areas {
-    margin-left: 15px;
-    font-size: 19px;
-  }
-}
-
-// We should remove this from here and move it to a tab.scss module
-
-//From WRW
-.tab-graph {
-  position: relative;
-
-  .tab-graph--no-data {
-    &.line {
-      height: 300px;
-    }
-    &.pie {
-      height: 200px;
-    }
-    &.number {
-      height: 200px;
-    }
-    div{
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      h3 {
-        text-transform: uppercase;
-        font-weight: 300;
-      }
-    }
   }
 }
 
@@ -205,7 +130,7 @@
   }
 }
 
-.tooltip {
+.linegraph-tooltip {
   position: absolute;
   text-align: center;
   max-width: 110px;
@@ -216,6 +141,7 @@
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
+  transform: translate(calc(-100% - 7px),-50%);
 
   &:after {
     content: '';
@@ -233,6 +159,7 @@
     color: $white;
   }
 }
+
 .pantropical-title h3{
   font-size: 18px;
   color: #555;
@@ -241,7 +168,6 @@
 }
 #pantropical_tooltip {
   max-width: 230px;
-  bottom: 0;
   width: 230px;
   left: -125px;
   font-size: 12px;
@@ -260,6 +186,7 @@
     right: inherit;
     bottom: -7px;
     top: 110%;
+    content: ' ';
   }
 }
 .pantropical-vis {

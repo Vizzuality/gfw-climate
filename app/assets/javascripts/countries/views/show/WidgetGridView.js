@@ -1,11 +1,12 @@
 define([
   'backbone',
+  'mps',
   'countries/presenters/show/WidgetGridPresenter',
   'widgets/views/WidgetView',
   'countries/views/show/reports/NationalView',
   'countries/views/show/reports/SubNationalView',
   'countries/views/show/reports/AreasView',
-], function(Backbone, WidgetGridPresenter, WidgetView, NationalView,
+], function(Backbone, mps, WidgetGridPresenter, WidgetView, NationalView,
     SubNationalView, AreasView) {
 
   'use strict';
@@ -25,9 +26,7 @@ define([
       this._cacheVars();
     },
 
-    start: function(countryModel) {
-      this.CountryModel = countryModel;
-      this._toggleWarnings();
+    start: function() {
       this.setupWidgets();
     },
 
@@ -37,44 +36,30 @@ define([
     },
 
     _cacheVars: function() {
-      this.$noIndicatorsWarning = $('.no-indicators-warning');
       this.$moreIndicatorsWarning = $('.more-indicators-warning');
+      this.$noIndicatorsWarning = $('.no-indicators-warning');
     },
 
     _toggleWarnings: function() {
+      var view = this.presenter.status.get('view');
 
-      var widgetsOnGrid = 0;
-
-      if (this.presenter.status.get('widgets')) {
-        widgetsOnGrid = Object.keys(this.presenter.status.get('widgets')).length;
-      }
-
-      if (widgetsOnGrid > 0) {
-        this.$moreIndicatorsWarning.removeClass('is-hidden');
+      if (view === 'national') {
         this.$noIndicatorsWarning.addClass('is-hidden');
-      } else {
-        this.$moreIndicatorsWarning.addClass('is-hidden');
-        this.$noIndicatorsWarning.removeClass('is-hidden');
+        this.$moreIndicatorsWarning.removeClass('is-hidden');
       }
-    },
+      else {
 
-    _setDisplay: function(display) {
-      this.presenter.status.set({
-        'display': display
-      });
-    },
+        if(view === 'subnational' && !this.presenter.status.get('jurisdictions') ||
+          view === 'areas-interest' && !this.presenter.status.get('areas')) {
 
-    _setWidgets: function(widgets) {
-      this.presenter.status.set({
-        'widgets': widgets
-      }, { silent: true });
-
-      this._checkEnabledWidgets();
+          this.$moreIndicatorsWarning.addClass('is-hidden');
+        }
+      }
     },
 
     _showModal: function(e) {
       e && e.preventDefault();
-      this.presenter._onOpenModal();
+      mps.publish('Modal/open', [this.presenter.status.get('view')]);
     },
 
     _checkEnabledWidgets: function() {
@@ -131,42 +116,39 @@ define([
 
     setupWidgets: function() {
 
-      var widgets = this.presenter.status.get('widgets'),
-        widgetsId = this._getWidgetsId(),
-        promises = [];
+      var promises = [],
+        widgetsArray = [],
+        iso = this.presenter.status.get('country'),
+        // widgets = this.presenter.status.get('options')[iso];
+        widgets = JSON.parse(atob('eyJCUkEwMCI6eyIxIjpbeyJpZCI6MSwidGFicyI6eyJ0eXBlIjoibGluZSIsInBvc2l0aW9uIjoxLCJ1bml0IjoiaGVjdGFyZXMiLCJzdGFydF9kYXRlIjoyMDAxLCJlbmRfZGF0ZSI6MjAxNCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiMiI6W3siaWQiOjIsInRhYnMiOnsidHlwZSI6ImxpbmUiLCJwb3NpdGlvbiI6MSwidW5pdCI6InRnLWMiLCJzdGFydF9kYXRlIjoyMDAxLCJlbmRfZGF0ZSI6MjAxNCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiMyI6W3siaWQiOjMsInRhYnMiOnsidHlwZSI6Im51bWJlciIsInBvc2l0aW9uIjoxLCJ1bml0IjpudWxsLCJzdGFydF9kYXRlIjpudWxsLCJlbmRfZGF0ZSI6bnVsbCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiNCI6W3siaWQiOjQsInRhYnMiOnsidHlwZSI6InBpZSIsInBvc2l0aW9uIjoxLCJ1bml0IjpudWxsLCJzdGFydF9kYXRlIjpudWxsLCJlbmRfZGF0ZSI6bnVsbCwidGhyZXNoIjoyNSwic2VjdGlvbiI6ImJpb21hc3MiLCJzZWN0aW9uc3dpdGNoIjpbeyJ1bml0IjoiYmlvbWFzcyIsInVuaXRuYW1lIjoiYmlvbWFzcyJ9LHsidW5pdCI6ImNhcmJvbiIsInVuaXRuYW1lIjoiY2FyYm9uIn1dfX1dLCI1IjpbeyJpZCI6NSwidGFicyI6eyJ0eXBlIjoicGllIiwicG9zaXRpb24iOjEsInVuaXQiOm51bGwsInN0YXJ0X2RhdGUiOm51bGwsImVuZF9kYXRlIjpudWxsLCJ0aHJlc2giOjI1LCJzZWN0aW9uIjoiYmlvbWFzcyIsInNlY3Rpb25zd2l0Y2giOlt7InVuaXQiOiJiaW9tYXNzIiwidW5pdG5hbWUiOiJiaW9tYXNzIn0seyJ1bml0IjoiY2FyYm9uIiwidW5pdG5hbWUiOiJjYXJib24ifV19fV19LCJDTVIwMCI6eyIxIjpbeyJpZCI6MSwidGFicyI6eyJ0eXBlIjoibGluZSIsInBvc2l0aW9uIjoxLCJ1bml0IjoiaGVjdGFyZXMiLCJzdGFydF9kYXRlIjoyMDAxLCJlbmRfZGF0ZSI6MjAxNCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiMiI6W3siaWQiOjIsInRhYnMiOnsidHlwZSI6ImxpbmUiLCJwb3NpdGlvbiI6MSwidW5pdCI6InRnLWMiLCJzdGFydF9kYXRlIjoyMDAxLCJlbmRfZGF0ZSI6MjAxNCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiMyI6W3siaWQiOjMsInRhYnMiOnsidHlwZSI6Im51bWJlciIsInBvc2l0aW9uIjoxLCJ1bml0IjpudWxsLCJzdGFydF9kYXRlIjpudWxsLCJlbmRfZGF0ZSI6bnVsbCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiNCI6W3siaWQiOjQsInRhYnMiOnsidHlwZSI6InBpZSIsInBvc2l0aW9uIjoxLCJ1bml0IjpudWxsLCJzdGFydF9kYXRlIjpudWxsLCJlbmRfZGF0ZSI6bnVsbCwidGhyZXNoIjoyNSwic2VjdGlvbiI6ImJpb21hc3MiLCJzZWN0aW9uc3dpdGNoIjpbeyJ1bml0IjoiYmlvbWFzcyIsInVuaXRuYW1lIjoiYmlvbWFzcyJ9LHsidW5pdCI6ImNhcmJvbiIsInVuaXRuYW1lIjoiY2FyYm9uIn1dfX1dLCI1IjpbeyJpZCI6NSwidGFicyI6eyJ0eXBlIjoicGllIiwicG9zaXRpb24iOjEsInVuaXQiOm51bGwsInN0YXJ0X2RhdGUiOm51bGwsImVuZF9kYXRlIjpudWxsLCJ0aHJlc2giOjI1LCJzZWN0aW9uIjoiYmlvbWFzcyIsInNlY3Rpb25zd2l0Y2giOlt7InVuaXQiOiJiaW9tYXNzIiwidW5pdG5hbWUiOiJiaW9tYXNzIn0seyJ1bml0IjoiY2FyYm9uIiwidW5pdG5hbWUiOiJjYXJib24ifV19fV19fQ=='))
 
-      var widgetsArray = [];
 
-      widgetsId.forEach(_.bind(function(id) {
 
-        if (_.has(widgets, id)) {
-
+      _.map(widgets.BRA00, function(widget, id) {
           var deferred = $.Deferred();
-          var options =  _.where(widgets, {id: id})[0];
-          var currentWidget = new WidgetView(options);
-
-          widgetsArray.push(currentWidget);
-
-          currentWidget._loadMetaData({
-            id: id,
-            iso: this.CountryModel.get('iso')
-          }, function(data) {
-
-            var currentIndicator = _.where(currentWidget.widgetModel.get('indicators'), {default: true}),
-              currentTab = _.where(currentWidget.widgetModel.get('tabs'), {default: true });
-
-            options.indicators = currentIndicator[0];
-            options.tab = currentTab[0];
-
-            currentWidget.setupView(options);
-
-            deferred.resolve(data);
+          var widgetOptions =  widget[0];
+          var newWidget = new WidgetView({
+            model: {
+              id: id,
+              slug: 'BRA',
+              location: {
+                iso: 'BRA',
+                jurisdiction: 0,
+                area: 0
+              },
+            },
+            className: 'gridgraphs--widget',
+            status: widgets.BRA00[id][0]
           });
 
-          promises.push(deferred);
-        }
+          newWidget._loadMetaData(function() {
+            deferred.resolve();
+          });
 
-      }, this));
+          widgetsArray.push(newWidget);
+          promises.push(deferred);
+
+      }.bind(this));
 
       $.when.apply(null, promises).then(function() {
         this.render(widgetsArray);
@@ -186,12 +168,19 @@ define([
           subview = new NationalView(options);
           break;
         case 'subnational':
+          _.extend(options, {
+            jurisdictions: this.presenter.status.get('jurisdictions')
+          });
           subview = new SubNationalView(options);
           break;
         case 'areas-interest':
+          _.extend(options, {
+            areas: this.presenter.status.get('areas')
+          });
           subview = new AreasView(options);
           break;
       }
+
 
       this.$el.find('.reports-grid').append(subview.render().el);
     }

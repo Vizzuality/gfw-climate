@@ -7,7 +7,7 @@ define([
     url: '/api/widgets/',
 
     initialize: function() {
-      this.url += this.get('id') + '/' + this.get('iso');
+      this.url += this.get('id') + '/' + this.get('location').iso;
     },
 
     parse: function(data) {

@@ -8,9 +8,8 @@ require([
   'countries/router',
   'countries/views/CountryShowView',
   'countries/views/CountryIndexView',
-  'countries/views/CountryModalView'
-], function($, _, Backbone, RouterView, CountryShowView, CountryIndexView,
-  CountryModalView) {
+  // 'countries/views/CountryModalView'
+], function($, _, Backbone, RouterView, CountryShowView, CountryIndexView) {
 
   'use strict';
 
@@ -36,7 +35,7 @@ require([
     _initViews: function() {
       new CountryShowView();
       new CountryIndexView();
-      new CountryModalView();
+      // new CountryModalView();
     },
 
     _initRouter: function() {
