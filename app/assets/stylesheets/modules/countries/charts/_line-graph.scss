@@ -168,7 +168,6 @@
 }
 #pantropical_tooltip {
   max-width: 230px;
-  bottom: 0;
   width: 230px;
   left: -125px;
   font-size: 12px;
@@ -187,6 +186,7 @@
     right: inherit;
     bottom: -7px;
     top: 110%;
+    content: ' ';
   }
 }
 .pantropical-vis {
