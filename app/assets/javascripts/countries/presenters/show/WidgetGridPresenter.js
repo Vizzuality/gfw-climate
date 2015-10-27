@@ -36,8 +36,7 @@ define([
     }, {
       'View/update': function(view) {
         this._updateView(view);
-        // this.view.start();
-        // this.view._toggleWarnings();
+        this.view._toggleWarnings();
       }
     }],
 
@@ -112,8 +111,8 @@ define([
           view: params.view
         });
 
-        mps.publish('View/update', [this.status.get('view')]);
         this.view.start();
+        mps.publish('View/update', [this.status.get('view')]);
       }
     },
 

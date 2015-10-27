@@ -19,8 +19,6 @@ define([
       }));
 
       this._setListeners();
-
-      // mps.publish('Place/register', [this]);
     },
 
     /**
@@ -33,7 +31,6 @@ define([
     }, {
       'View/update': function(view) {
         this.setDisplay(view);
-        // this.view.start();
       }
     }],
 
