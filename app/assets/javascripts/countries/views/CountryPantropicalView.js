@@ -21,8 +21,8 @@ define([
       $('#vis').find('.vis-tab').hide();
       $('#view_selection').find('.btn').removeClass('active');
       $(e.target).addClass('active');
-      toggle_view($(e.target).attr('id'));
       $('#vis').find('.' + $(e.target).attr('id')).show();
+      toggle_view($(e.target).attr('id'));
     }
 
   });
