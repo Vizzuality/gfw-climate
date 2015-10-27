@@ -28,7 +28,7 @@ resource 'Indicators' do
       expect(value['thresh']).to eq(25)
     end
 
-    example_request "Getting a specific indicator with thresh 15", document: false do
+    example "Getting a specific indicator with thresh 15", document: false do
       do_request(id: 2, thresh: 15)
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
