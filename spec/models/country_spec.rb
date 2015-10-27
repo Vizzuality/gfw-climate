@@ -6,7 +6,7 @@ RSpec.describe Country, type: :model do
 
     it "Find all countries" do
       countries = Country.find_all
-      expect(countries[0]['name']).to eq 'Afghanistan'
+      expect(countries[0]['name']).to eq 'Angola'
     end
 
   end

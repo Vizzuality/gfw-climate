@@ -10,9 +10,9 @@ resource 'Countries' do
       expect(status).to eq(200)
       countries = JSON.parse(response_body)['countries']
 
-      expect(countries.length).to eq(167)
-      expect(countries[6]['name']).to eq('Australia')
-      expect(countries[6]['iso']).to eq('AUS')
+      expect(countries.length).to eq(105)
+      expect(countries[6]['name']).to eq('Barbados')
+      expect(countries[6]['iso']).to eq('BRB')
       expect(countries[6]['enabled']).to eq(true)
     end
   end
