@@ -14,7 +14,7 @@ module Api::V1
 
     private
       def filter_params
-        params.permit(:id, :iso, :id_1, :thresh, :format)
+        params.permit(:id, :iso, :id_1, :area, :thresh, :format)
       end
 
       def set_indicator

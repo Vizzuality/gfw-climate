@@ -8,7 +8,7 @@ define([
   'amplify',
   'd3',
   'mps',
-  'countries/helpers/CountryHelper'
+  'helpers/CountryHelper'
 ], function($, Backbone, _,amplify, d3, mps, CountryHelper) {
 
   'use strict';

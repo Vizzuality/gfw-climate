@@ -1,6 +1,4 @@
 .country-widget {
-  float: left;
-  width: 48%;
   min-height: 250px;
   .country-widget__header {
     overflow: hidden;
@@ -63,10 +61,10 @@
 
   .country-widget__content {
     margin-top: 25px;
-    .indicators-grid {
+    .tab-ul {
       display: flex;
       justify-content: space-around;
-      .indicators-grid__item {
+      .tab-li {
         display: inline-flex;
         width: 100%;
         padding: 15px;
@@ -88,15 +86,12 @@
       }
     }
   }
-  &:nth-child(2n+1) {
-    margin-right: 2%;
-  }
   select.selector {
     display: inline-block;
     -webkit-appearance:none;
     -moz-appearance:none;
     appearance:none;
-    padding: 3px;
+    padding: 2px 5px 3px;
     border-radius: 11px;
     &.blue {
       border: 1px solid $blue;

@@ -1,7 +1,7 @@
 define([
   'backbone',
   'handlebars',
-  'views/WidgetView',
+  'widgets/views/WidgetView',
   'text!countries/templates/country-subnational-grid.handlebars'
 ], function(Backbone, Handlebars, WidgetView, tpl) {
 

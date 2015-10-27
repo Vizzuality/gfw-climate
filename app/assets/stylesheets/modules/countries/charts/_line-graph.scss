@@ -1,13 +1,3 @@
-.sup-options {
-  overflow: hidden;
-  margin: 25px 0 10px 0;
-  font-size: 12px;
-
-  .canopy-treshold {
-    float: right;
-  }
-}
-
 .line-chart {
   path {
     stroke: steelblue;
@@ -38,27 +28,8 @@
   }
 }
 
-.sub-options {
-  margin-bottom: 15px;
-  padding-top: 20px;
-  font-size: 12px;
-  border-top: 1px solid #e5e5e5;
-
-  .total-areas {
-    margin-left: 15px;
-    font-size: 19px;
-  }
-}
-
-
-
-//From WRW
-.graph-container {
-  position: relative;
-
-  .content {
-    height: 300px;
-  }
+.linechart-graph {
+  height: 300px;
 }
 
 .lineChart {
@@ -159,8 +130,8 @@
   }
 }
 
-.tooltip {
-  position: static;
+.linegraph-tooltip {
+  position: absolute;
   text-align: center;
   max-width: 110px;
   height: 65px;
@@ -170,6 +141,7 @@
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
+  transform: translate(calc(-100% - 7px),-50%);
 
   &:after {
     content: '';
@@ -187,6 +159,7 @@
     color: $white;
   }
 }
+
 .pantropical-title h3{
   font-size: 18px;
   color: #555;
@@ -208,6 +181,7 @@
   -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.4);
   border:1px solid rgba(200,200,200,0.85);
   text-align:center;
+  position: absolute;
   &:after {
     @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
     right: inherit;
@@ -238,41 +212,60 @@
 #vis {
   .vis-tab {
     position: absolute;
-    margin: 57px 50px;
+    margin: 57px 0 0 50px;
     color: #555;
-    &.total {
-      width: 300px;
-      h4 {
-        font-size: 18px;
+    display: none;
+    &.right-side {
+      right: 0;
+      margin: 57px 50px 0 0;
+      width: 250px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+    h5 {
+      margin: 22px 0;
+    }
+    width: 300px;
+    p,li {
+      font-size: 14px;
+      line-height: 21px;
+      margin: 21px 0;
+    }
+    li {
+      margin: 4px 0;
+      &:before {
+        content: ' ';
+        height: 15px;
+        width: 15px;
+        border-radius: 100%;
+        background-color: grey;
+        display: inline-block;
+        top: 2px;
+        position: relative;
+        margin: 0 3px 0 0;
       }
-      p,li {
-        font-size: 14px;
-        line-height: 21px;
-        margin: 21px 0;
+      &.latam:before {
+        background-color: #3593c5;
       }
-      li {
-        margin: 4px 0;
-        &:before {
-          content: ' ';
-          height: 15px;
-          width: 15px;
-          border-radius: 100%;
-          background-color: grey;
-          display: inline-block;
-          top: 2px;
-          position: relative;
-          margin: 0 3px 0 0;
-        }
-        &.latam:before {
-          background-color: #3593c5;
-        }
-        &.africa:before {
-          background-color: #a0cddb;
-        }
-        &.asia:before {
-          background-color: #fb8f5e;
-        }
+      &.africa:before {
+        background-color: #a0cddb;
       }
+      &.asia:before {
+        background-color: #fb8f5e;
+      }
+    }
+    sup,
+    sub {
+      font-size: 10px;
+      position: relative;
+      top: 2px;
+    }
+    sup {
+      top: -3px;
+    }
+    &.all {
+      display: block;
     }
   }
 }
