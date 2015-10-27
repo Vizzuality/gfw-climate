@@ -20,9 +20,10 @@ define([
 
     events: function() {
       return _.extend({}, SourceWindowView.prototype.events, {
-        'click .item' : '_toggleWidgets',
+        'click .item'      : '_toggleWidgets',
         'click #btn-done'  : '_submitWidgets',
-        'click #btn-next'  : '_nextStep'
+        'click #btn-next'  : '_navModal',
+        'click #btn-back'  : '_navModal'
       });
     },
 
@@ -53,9 +54,9 @@ define([
       this.model.set('hidden', false);
     },
 
-    _nextStep: function(e) {
-      this.$el.find('.page1').addClass('is-hidden');
-      this.$el.find('.page2').removeClass('is-hidden');
+    _navModal: function() {
+      this.$el.find('.page1').toggleClass('is-hidden');
+      this.$el.find('.page2').toggleClass('is-hidden');
     },
 
     _toggleWidgets: function(e) {

@@ -40,6 +40,18 @@
         </div>
       </div>
       <div class="row">
+
+        <svg class="svg-left-arrow">
+          <use xlink:href="#shape-arrow-left"></use>
+        </svg>
+        {{#if data.isJurisdictions}}
+          <button id="btn-back" class="btn--back">select jurisdictions</button>
+        {{/if}}
+
+        {{#if data.isAreas}}
+          <button id="btn-back" class="btn--back">select areas</button>
+        {{/if}}
+
         <button id="btn-done" class="btn medium blue">Continue</button>
       </div>
     </div>
