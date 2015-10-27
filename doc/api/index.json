@@ -54,8 +54,8 @@
           "groups": "all"
         },
         {
-          "description": "Getting a specific indicator with thresh 15",
-          "link": "indicators/getting_a_specific_indicator_with_thresh_15.json",
+          "description": "Getting a specific indicator for protected area",
+          "link": "indicators/getting_a_specific_indicator_for_protected_area.json",
           "groups": "all"
         }
       ]
