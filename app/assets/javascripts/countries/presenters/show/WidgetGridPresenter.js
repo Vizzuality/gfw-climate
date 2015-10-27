@@ -36,11 +36,16 @@ define([
     }, {
       'View/update': function(view) {
         this._updateView(view);
-        this.view._toggleWarnings();
+        // this.view.start();
+        // this.view._toggleWarnings();
       }
     }],
 
     _setListeners: function() {
+      this.status.on('change', function() {
+        mps.publish('Place/update', []);
+      }, this);
+
       this.status.on('change:view', function() {
         this.view.start();
       }, this);
@@ -54,21 +59,13 @@ define([
     getPlaceParams: function() {
       var p = {};
 
+      p.options = this.status.get('options');
 
-
-      p.options = this.status.get('options') || null;
-
-
-      if (!!(this.status.toJSON() && this.status.get('jurisdictions'))) {
-        _.extend(p.options, {
-          jurisdictions: this.status.get('jurisdictions'),
-          areas: this.status.get('areas'),
-          view: this.status.get('view')
-        });
-      }
-
-
-
+      _.extend(p.options, {
+        jurisdictions: this.status.get('jurisdictions'),
+        areas: this.status.get('areas'),
+        view: this.status.get('view')
+      });
 
       return p;
     },
@@ -92,15 +89,16 @@ define([
       if (params.options === null) {
         var callback = function() {
 
-
           this.status.set({
             country: params.country.iso,
             jurisdictions: null,
             areas: null,
+            view: params.view,
             options: this.getOptions(params, this.widgetCollection.toJSON())
           });
 
-          mps.publish('Place/update');
+          this.view.start();
+          mps.publish('View/update', [this.status.get('view')])
         };
 
         this.widgetCollection.fetch({default: true}).done(callback.bind(this));
@@ -113,7 +111,9 @@ define([
           options: params.options,
           view: params.view
         });
-        mps.publish('Place/update');
+
+        mps.publish('View/update', [this.status.get('view')]);
+        this.view.start();
       }
     },
 
