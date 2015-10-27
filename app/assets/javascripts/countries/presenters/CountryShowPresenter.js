@@ -7,11 +7,10 @@ define([
   var CountryShowPresenter = PresenterClass.extend({
 
     init: function(view) {
-      this._super();
-
-      this.iso;
       this.view = view;
       this.countryModel = CountryModel;
+
+      this._super();
     },
 
     /**
@@ -23,16 +22,15 @@ define([
       }
     }],
 
-
     /**
       * Triggered from 'Place/Go' events.
       */
     _onPlaceGo: function(place) {
-      this._keepIso(place.country);
-      this.countryModel.setCountry(place.country);
-      this.countryModel.fetchData();
+      this._keepIso(place.country.iso);
+      // console.log(place)
+      // this.countryModel.setCountry(place.country.iso);
+      // // this.countryModel.fetchData();
     },
-
 
     /**
      * Saves on sessionStorage the current ISO.

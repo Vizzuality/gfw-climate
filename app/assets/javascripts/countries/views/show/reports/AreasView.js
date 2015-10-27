@@ -1,41 +1,45 @@
 define([
   'backbone',
   'handlebars',
-  'text!countries/templates/country-areas-grid.handlebars'
-], function(Backbone, Handlebars, tpl) {
+  'text!countries/templates/country-areas-grid.handlebars',
+  'text!countries/templates/no-indicators.handlebars'
+], function(Backbone, Handlebars, tpl, noIndicatorsTpl) {
 
   var AreasView = Backbone.View.extend({
 
-    el: '.reports-grid',
+    el: '.gridgraphs--container-profile',
 
-    template: Handlebars.compile(tpl),
-
-    events: {
-      'click .areaSelector': '_toggleAvailableAreas',
-      'click .available-areas-menu span' : '_selectArea',
-      'click #submitAreas': '_setAreas'
-    },
-
-    initialize: function(model) {
-      this.model = model;
-
-    },
-
-    _toggleAvailableAreas: function() {
-      $('.available-areas-menu').toggleClass('is-hidden');
-    },
-
-    _selectArea: function(e) {
-      $(e.currentTarget).parent().toggleClass('is-selected');
-    },
-
-    _setAreas: function() {
-      // Set areas in model
-      this._toggleAvailableAreas();
+    initialize: function(options) {
+      this.widgets = options.widgets;
+      this.areas = options.areas;
     },
 
     render: function() {
-      this.$el.html(this.template);
+      this.$el.html('');
+
+      if (this.areas && this.areas.length > 0) {
+
+        this.template = Handlebars.compile(tpl);
+
+        this.$el.html(this.template);
+
+        this.widgets.forEach(_.bind(function(widget) {
+          widget.render()
+          this.$el.addClass('.areas-grid').append(widget.el);
+        }, this));
+
+      } else {
+
+        this.template = Handlebars.compile(noIndicatorsTpl);
+
+        var options = {
+          isAreas: true
+        };
+
+        this.$el.html(this.template({
+          setup: options
+        }));
+      }
 
       return this;
     }

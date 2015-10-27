@@ -13,9 +13,9 @@ define([
       this._super();
 
       this.status = new (Backbone.Model.extend({
-        defaults: {
-          view: 'national'
-        }
+        // defaults: {
+        //   view: 'national'
+        // }
       }));
 
       this._setListeners();
@@ -47,21 +47,20 @@ define([
       return p;
     },
 
-
     /**
      * Triggered from 'Place/Go' events.
      *
      * @param  {Object} place PlaceService's place object
      */
-    _onPlaceGo: function(place) {
-      this._setupView(place);
-      this.view.start();
+    _onPlaceGo: function(params) {
+      this._setupView(params);
     },
 
     _setupView: function(params) {
-      var currentView = params.options ? params.options.gridStatus.view : this.status.get('view');
 
-      this.setDisplay(currentView);
+      if(params.view) {
+        this.setDisplay(params.view);
+      }
     },
 
     setDisplay: function(display) {
@@ -72,7 +71,8 @@ define([
 
     onUpdateTab: function() {
       this.view._setCurrentTab();
-      // mps.publish('Place/update');
+      mps.publish('Place/update', []);
+      mps.publish('View/update', [this.status.get('view')])
     },
 
   });

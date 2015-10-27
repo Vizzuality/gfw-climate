@@ -53,13 +53,15 @@ define([
 
   'use strict';
 
-  var urlDefaultsParams = {};
+  var urlDefaultsParams = {
+    view: 'national'
+  };
 
   var widgetStatus = {};
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: 'countries{/country}{/area}{?options}',
+    _uriTemplate: 'countries/{country}/{view}{?options}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -115,8 +117,6 @@ define([
      * @param  {Object}  params The place parameters
      */
     _newPlace: function(params) {
-      var place = {};
-
       this.params = this._standardizeParams(params);
       mps.publish('Place/go', [this.params]);
     },
@@ -141,8 +141,11 @@ define([
     _standardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
 
-      p.country = p.country ? p.country : null;
-      p.area = p.area ? p.area : null;
+      p.country = {
+        iso: p.country
+      };
+
+      p.view = p.view;
       p.options = p.options ? JSON.parse(atob(p.options)) : null;
 
       return p;
@@ -158,16 +161,9 @@ define([
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, this.params, params);
 
-      p.country = p.country ? p.country : null;
-      p.area = p.area ? p.area : null;
-
-      var localOptions = {
-        view : p.view ? p.view : null,
-        widgets: p.widgetStatus ? p.widgetStatus : null,
-        treshold: p.treshold ? p.treshold : null
-      };
-
-      p.options = btoa(JSON.stringify(localOptions));
+      p.country = p.country.iso ? p.country.iso : null;
+      p.view = p.view;
+      p.options = p.options ? btoa(JSON.stringify(p.options)) : null;
 
       return p;
     },
@@ -184,12 +180,7 @@ define([
 
       _.each(presenters, function(presenter) {
         _.extend(p, presenter.getPlaceParams());
-        if (p.hasOwnProperty('widgetStatus')) {
-          widgetStatus[p.widgetStatus.id] = p.widgetStatus;
-        }
       }, this);
-
-      p.widgetStatus = widgetStatus;
 
       return p;
     }

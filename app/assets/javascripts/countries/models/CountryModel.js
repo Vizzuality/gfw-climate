@@ -8,15 +8,9 @@ define([
 
     url: '/api/countries/',
 
-    setCountry: function(country) {
-      this.url += country;
-    },
 
-    fetchData: function() {
-      $.get(this.url, function(data) {
-        this.set(data.country);
-        mps.publish('CountryModel/Fetch', [this]);
-      }.bind(this));
+    initialize: function(options) {
+      this.url += options.id;
     },
 
     parse: function(data) {
@@ -25,6 +19,6 @@ define([
 
   });
 
-  return new CountryModel();
+  return CountryModel;
 
 });
