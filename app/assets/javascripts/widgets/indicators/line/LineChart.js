@@ -131,7 +131,7 @@ LineChart.prototype._drawTooltip = function() {
     .attr('x2', 0)
     .attr('y2', this.height)
     .style('visibility', 'hidden')
-    .style('stroke', '#aaa');
+    .style('stroke', '#DDD');
 
   var data = this.data;
   var self = this;
@@ -153,16 +153,20 @@ LineChart.prototype._drawTooltip = function() {
           d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
 
       if (!!d) {
+        var format = (self.unit != 'percentage') ? ".3s" : ".0%",
+            xyear = x(d.year),
+            year = formatDate(d.year),
+            value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
         // Positioner
         positioner
-          .attr('x1', x(d.year) + self.sizing.left)
-          .attr('x2', x(d.year) + self.sizing.left)
+          .attr('x1', xyear + self.sizing.left)
+          .attr('x2', xyear + self.sizing.left)
 
         // Tooltip
         tooltip.transition()
           .duration(125)
           .style('visibility', 'visible');
-        tooltip.html('<span class="data">' + formatDate(d.year) + '</span>' + d.value)
+        tooltip.html('<span class="data">' + year + '</span>' + value )
           .style('left', (d3.event.pageX) + 'px')
           .style('top', (d3.event.pageY) + 'px');
       }
