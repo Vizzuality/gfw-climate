@@ -26,9 +26,11 @@ var LineChart = function(options) {
   this.parentHeight = $(this.options.el).outerHeight();
   this.width = this.parentWidth - this.sizing.left - this.sizing.right,
   this.height = this.parentHeight - this.sizing.top - this.sizing.bottom;
-  this._createEl();
-  this._createDefs();
-  this._createScales();
+  if (!!this.parentWidth && !!this.parentHeight) {
+    this._createEl();
+    this._createDefs();
+    this._createScales();
+  }
 
   $(window).resize(_.debounce(this.resize.bind(this), 100));
 };
