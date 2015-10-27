@@ -50,8 +50,8 @@
         "Content-Type": "application/json; charset=utf-8",
         "ETag": "W/\"e5ee600463e63416a35535ab90776bf2\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "562c6867-b360-4b10-802f-cb7bb3c812e8",
-        "X-Runtime": "0.507253",
+        "X-Request-Id": "5a31f969-5fe4-4941-9606-8c7548b03057",
+        "X-Runtime": "0.501041",
         "Content-Length": "169"
       },
       "response_content_type": "application/json; charset=utf-8",
