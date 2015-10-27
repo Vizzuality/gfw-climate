@@ -20,6 +20,7 @@
 @import "modules/icons";
 @import "modules/slick";
 @import "modules/select";
+@import "modules/gridgraphs";
 
 //Countries
 @import "modules/compare/m-compare-modal";
@@ -29,13 +30,8 @@
 // @import "modules/countries/header-show";
 // @import "modules/countries/indicators-modal";
 // @import "modules/countries/show";
-// @import "modules/countries/country-widget";
-// @import 'modules/countries/tabs.scss';
-
-// Grids
-// @import "modules/countries/grid";
-// @import "modules/countries/reports/subnational-grid";
-// @import "modules/countries/reports/areas-grid";
+@import "modules/countries/country-widget";
+@import 'modules/countries/tabs.scss';
 
 //Compare
 @import "modules/compare/*";
@@ -44,6 +40,7 @@
 // Charts
 @import "modules/countries/charts/line-graph";
 @import "modules/countries/charts/pie-chart";
+@import "modules/countries/charts/number-graph";
 // @import "modules/dropdowns";
 // @import "modules/map/control-threshold";
 

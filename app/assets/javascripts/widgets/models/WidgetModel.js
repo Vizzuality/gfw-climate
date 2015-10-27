@@ -6,24 +6,12 @@ define([
 
     url: '/api/widgets/',
 
-    setUrl: function(id) {
-      this.url += id;
+    initialize: function() {
+      this.url += this.get('id') + '/' + this.get('iso');
     },
 
-    getData: function(id, cb) {
-      this.setUrl(id);
-      $.ajax({
-        url: this.url,
-        success: function(data) {
-          if (cb && typeof cb === 'function') {
-            this.set(data.widget);
-            cb();
-          }
-        }.bind(this),
-        error: function(err) {
-          throw err;
-        }
-      });
+    parse: function(data) {
+      return data.widget;
     }
 
   });

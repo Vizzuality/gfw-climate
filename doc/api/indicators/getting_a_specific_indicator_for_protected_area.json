@@ -1,0 +1,61 @@
+{
+  "resource": "Indicators",
+  "http_method": "GET",
+  "route": "/api/indicators/:id/:iso",
+  "description": "Getting a specific indicator for protected area",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "id",
+      "description": "ID of indicator"
+    },
+    {
+      "name": "iso",
+      "description": "ISO of country (bra, chn...)"
+    },
+    {
+      "name": "area",
+      "description": "Value 'pra' for Protected Area"
+    },
+    {
+      "name": "thresh",
+      "description": "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/indicators/3/BRA?area=pra",
+      "request_body": null,
+      "request_headers": {
+        "Accept": "application/json; application/gfwc-v1+json",
+        "Content-Type": "application/json",
+        "Host": "gfwc-staging.herokuapp.com",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+        "area": "pra"
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"values\":[{\"indicator_id\":3,\"cartodb_id\":761344,\"iso\":\"BRA\",\"iso_and_sub_nat\":\"BRA\",\"boundary\":\"pra\",\"thresh\":25,\"country_name\":\"Brazil\",\"year\":0,\"value\":213208914.8}]}",
+      "response_headers": {
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"e5ee600463e63416a35535ab90776bf2\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "X-Request-Id": "5a31f969-5fe4-4941-9606-8c7548b03057",
+        "X-Runtime": "0.501041",
+        "Content-Length": "169"
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/indicators/3/BRA?area=pra\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+    }
+  ]
+}

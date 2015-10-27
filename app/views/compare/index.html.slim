@@ -1,4 +1,16 @@
 section.l-compare-countries
+  .l-toolbar
+    .inner
+      .m-toolbar
+        ul.options
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#share-country share
+          li.options_item
+            svg
+              use (xlink:href="#shape-share")
+            button#print-country save/print report
   .l-header
     .inner
       .m-section-header
@@ -15,29 +27,7 @@ section.l-compare-countries
             .m-compare-selector-empty
               p Click to select
 
-  .l-toolbar
-    .inner
-      .m-toolbar
-        ul.options
-          li.options_item
-            svg
-              use (xlink:href="#shape-share")
-            button#share-country share
-          li.options_item
-            svg
-              use (xlink:href="#shape-share")
-            button#print-country save/print report
-          li.options_item
-            svg
-              use (xlink:href="#shape-country")
-            a#analyze-country (href="#") analyze on map
 
   .l-main-content
     .inner
-      #compareResultsView
-
-  .l-aside-content
-    .inner
-      #compareCustomizeView.m-aside
-        h3 Customize your report
-        button class="btn-addIndicators btn medium white" data-source="indicators" Add indicators
+      #compareGridView

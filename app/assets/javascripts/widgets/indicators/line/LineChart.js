@@ -17,6 +17,7 @@ var line = d3.svg.line()
 var LineChart = function(options) {
   this.options = options;
   this.data = options.data;
+  this.unit = options.unit
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
@@ -60,7 +61,12 @@ LineChart.prototype._createScales = function() {
   })));
 
   y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom, 10 + this.options.innerPadding.top]);
-  y.domain([0, d3.max(this.data.map(function(d) { return d[yKey]; }))]);
+  if(this.unit == 'percentage') {
+    y.domain([0, 1]);
+  } else {
+    y.domain([0, d3.max(this.data.map(function(d) { return d[yKey]; }))]);
+  }
+
 };
 
 LineChart.prototype._createDefs = function() {
@@ -72,8 +78,9 @@ LineChart.prototype._createDefs = function() {
 };
 
 LineChart.prototype._drawAxes = function(group) {
-  xAxis = d3.svg.axis().scale(x).orient("bottom");
-  yAxis = d3.svg.axis().scale(y).tickSize(-this.width, 0).orient("left");
+  var tickFormatY = (this.unit != 'percentage') ? "s" : ".0%";
+  xAxis = d3.svg.axis().scale(x).ticks(d3.time.year, 1).tickSize(-this.width, 0).orient("bottom").tickFormat(d3.time.format("%Y"));;
+  yAxis = d3.svg.axis().scale(y).tickSize(-this.width, 0).orient("left").tickFormat(d3.format(tickFormatY));
 
   group.append("g")
     .attr("class", "x axis")
@@ -98,7 +105,7 @@ LineChart.prototype._drawLine = function(group) {
 
 LineChart.prototype._drawScatterplote = function() {
   // Tooltip
-  var tooltip = d3.select(this.options.el).append('div')
+  var tooltip = d3.select('body').append('div')
     .attr('class', 'tooltip')
     .style('opacity', 0);
 
@@ -112,13 +119,18 @@ LineChart.prototype._drawScatterplote = function() {
     .attr('cx', function(d) { return x(d[xKey]);})
     .attr('cy', function(d) { return y(d[yKey]);})
     .on('mouseover', function(d) {
-      console.log(d)
+      console.log(d);
+      console.log(d3.event.pageX);
+
       tooltip.transition()
-        .duration(200)
+        .duration(125)
         .style('opacity', 1);
-      tooltip.html('<span class="data">' + formatDate(d.year) + '</span>'  + yKey + d.loss)
+      tooltip.html('<span class="data">' + formatDate(d.year) + '</span>' + d.value)
         .style('left', (d3.event.pageX) + 'px')
         .style('top', (d3.event.pageY) + 'px');
+// max-width: 110px;
+// height: 65px;
+
       })
     .on('mouseout', function(d) {
       tooltip.transition()
@@ -174,16 +186,18 @@ LineChart.prototype._setupHandlers = function() {
 };
 
 LineChart.prototype.render = function() {
-  var group = svg.append("g")
-    .attr("class", "focus")
-    .attr("transform",
-      "translate(" + this.sizing.left + "," + this.sizing.top + ")");
+  if (!!this.data.length) {
+    var group = svg.append("g")
+      .attr("class", "focus")
+      .attr("transform",
+        "translate(" + this.sizing.left + "," + this.sizing.top + ")");
 
-  this._drawAxes(group);
-  this._drawLine(group);
-  // this._setupHandlers();
-  this._drawScatterplote();
-  // this._drawContext(group);
+    this._drawAxes(group);
+    this._drawLine(group);
+    // this._setupHandlers();
+    this._drawScatterplote();
+    // this._drawContext(group);
+  }
 };
 
 return LineChart;

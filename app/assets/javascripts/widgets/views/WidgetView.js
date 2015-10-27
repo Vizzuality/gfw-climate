@@ -1,15 +1,10 @@
 define([
   'backbone',
   'handlebars',
-  'countries/models/CountryModel',
   'widgets/presenters/WidgetPresenter',
-  'widgets/models/WidgetModel',
-  'widgets/indicators/line/LineChartIndicator',
-  'widgets/indicators/map/MapIndicator',
-  'widgets/indicators/pie/PieChartIndicator',
-  'text!widgets/templates/widget.handlebars'
-], function(Backbone, Handlebars, CountryModel, WidgetPresenter, widgetModel, LineChartIndicator,
-  MapIndicator, PieChartIndicator, tpl) {
+  'widgets/views/TabView',
+  'text!widgets/templates/widget.handlebars',
+], function(Backbone, Handlebars, WidgetPresenter, TabView, tpl) {
 
   'use strict';
 
@@ -18,65 +13,79 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .close'                : '_close',
-      'click #info'                 : '_info',
-      'click #share'                : '_share',
-      'click .indicators-grid__item': '_onClick'
-      // 'change .selector'            : 'updateTreshold'
+      'click .close'   : '_close',
+      'click .info'    : '_info',
+      'click .share'   : '_share',
+      'click .tab-li'  : '_changeTab'
     },
 
-    initialize: function() {
-      this.presenter = new WidgetPresenter(this);
-
-      this.widgetModel = new widgetModel();
-      this.CountryModel = CountryModel;
+    initialize: function(setup) {
+      this.presenter = new WidgetPresenter(this, setup);
     },
-
-    setupView: function(options) {
-      this.presenter.setParams(options);
-    },
-
-    start: function() {
-      this._loadMetaData((this.render.bind(this)));
-    },
-
-    // updateTreshold: function(e) {
-    //   var treshold = e.currentTarget.value;
-    //   this.presenter.updateStatus({
-    //     treshold: treshold
-    //   });
-    // },
 
     /**
-     * Setup the current tab and update the status.
+     * Fetch MODEL
+     * @param  {function} callback
+     */
+    _loadMetaData: function(callback) {
+      this.presenter.model.fetch().done(callback.bind(this));
+    },
+
+    /**
+     * RENDER
+     */
+    render: function() {
+      this.$el.html(this.template({
+        id: this.presenter.model.get('id'),
+        tabs: this.presenter.model.get('tabs'),
+        name: this.presenter.model.get('name')
+      }));
+
+      this.cacheVars();
+
+      this.setTab();
+
+      return this;
+    },
+
+    cacheVars: function() {
+      this.$tabgrid = this.$el.find('.tab-ul');
+      this.$tablink = this.$el.find('.tab-li');
+      this.$tabcontent = this.$el.find('.tab-content');
+    },
+
+    /**
+     * SETTERS
+     */
+    setTab: function() {
+      var position = this.presenter.status.get('tabs').position;
+      // UI
+      this.$tablink.removeClass('is-selected');
+      this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('is-selected');
+      //NEW TAB
+      new TabView({
+        el: this.$tabcontent,
+        widget: this,
+        model: {
+          iso: this.presenter.model.get('iso'),
+          data: _.findWhere(this.presenter.model.get('tabs'), {position: position}),
+          indicators: _.where(this.presenter.model.get('indicators'), {tab: position})
+        },
+        status: this.presenter.status.toJSON()
+      });
+
+    },
+
+    /**
+     * EVENTS
      * @param  {click event} e
      */
-    _onClick: function(e) {
-      var tab = $(e.currentTarget).data('position');
-      this.presenter.onUpdateWidget({
-        tab: {
-          position: tab
-        }
-      })
+    _changeTab: function(e) {
+      this.presenter.changeTab($(e.currentTarget).data('position'));
     },
 
-    /**
-     * Set the class "is-selected" to the tab settted by
-     * the presenter status.
-     */
-    _setTab: function() {
-      var indicatorTabs = this.$el.find('.indicators-grid__item'),
-        currentTab = this.presenter.status.get('tab');
-
-      $(indicatorTabs).removeClass('is-selected');
-
-      this.$el.find('[data-position="' + currentTab.position + '"]').addClass('is-selected');
-    },
-
-    _loadMetaData: function(widgetId, callback) {
-      // var widgetId = this.presenter.status.get('id');
-
-      this.widgetModel.getData(widgetId, callback);
+    changeStatus: function(status) {
+      this.presenter.changeStatus(status);
     },
 
     _close: function(e) {
@@ -84,47 +93,11 @@ define([
       this.$el.remove();
     },
 
-    _info: function() {},
+    _info: function(e) {},
 
-    _share: function() {},
-
-    render: function() {
-
-      this.$el.html(this.template({
-        id: this.widgetModel.get('id'),
-        tabs: this.widgetModel.get('tabs'),
-        name: this.widgetModel.get('name')
-      }));
-
-      this._setTab();
-
-      var widgetId = this.presenter.status.get('id');
-      var currentDataSetLink = this.presenter.status.get('')
+    _share: function(e) {},
 
 
-      var data = {
-        country: this.CountryModel.get('iso'),
-        url: this.presenter.status.get('indicators').data
-      };
-
-      // Mejorar
-      $(document.querySelector('.reports-grid').firstChild).append(this.el);
-
-      var $nextEl = $('#' + widgetId).find('.graph-container');
-
-      if (this.presenter.status.get('indicators').type === 'line') {
-        new LineChartIndicator({
-          el: $nextEl,
-          indicator: this.presenter.status.get('indicators')
-        });
-      }
-
-      // if (this.data.type === 'pie') {
-      //   this.$el.find('.graph-container .content').append(new PieChartIndicator().render(firstDataSetLink).el);
-      // }
-
-      return this;
-    }
 
   });
 

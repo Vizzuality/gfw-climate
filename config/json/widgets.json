@@ -9,17 +9,56 @@
         "position": 1,
         "name": "FAO FRA 2015 (IPCC Approach 1)",
         "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "thresh": 25,
         "default": true
       },
       {
         "position": 2,
         "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
-        "type": "line"
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "thresh": 25
       },
       {
         "position": 3,
         "name": "National Data (IPCC Approach 2/3)",
-        "type": "line"
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "thresh": 25
       }
     ],
     "indicators": [
@@ -78,17 +117,56 @@
         "position": 1,
         "name": "Faostat (IPCC Tier 1)",
         "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "tg-c",
+            "unitname": "Tg C"
+          },
+          {
+            "unit": "mt-co2",
+            "unitname": "Mt CO2"
+          }
+        ],
+        "thresh": 25,
         "default": true
       },
       {
         "position": 2,
         "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
-        "type": "line"
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "tg-c",
+            "unitname": "Tg C"
+          },
+          {
+            "unit": "mt-co2",
+            "unitname": "Mt CO2"
+          }
+        ],
+        "thresh": 25
       },
       {
         "position": 3,
         "name": "National Data (IPCC Tier 2)",
-        "type": "line"
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "tg-c",
+            "unitname": "Tg C"
+          },
+          {
+            "unit": "mt-co2",
+            "unitname": "Mt CO2"
+          }
+        ],
+        "thresh": 25
       }
     ],
     "indicators": [
@@ -96,7 +174,7 @@
         "id": 29,
         "name": "Faostat (IPCC Tier 1)",
         "type": "line",
-        "unit": "Tg C",
+        "unit": "tg-c",
         "tab": 1,
         "default": true
       },
@@ -104,35 +182,35 @@
         "id": 30,
         "name": "Faostat (IPCC Tier 1)",
         "type": "line",
-        "unit": "Mt CO2",
+        "unit": "mt-co2",
         "tab": 1
       },
       {
         "id": 34,
         "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
         "type": "line",
-        "unit": "Tg CO2",
+        "unit": "tg-c",
         "tab": 2
       },
       {
         "id": 35,
         "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
         "type": "line",
-        "unit": "Mt CO2",
+        "unit": "mt-co2",
         "tab": 2
       },
       {
         "id": 13,
         "name": "National Data (IPCC Tier 2)",
         "type": "line",
-        "unit": "Tg C",
+        "unit": "tg-c",
         "tab": 3
       },
       {
         "id": 14,
         "name": "National Data (IPCC Tier 2)",
         "type": "line",
-        "unit": "Mt CO2",
+        "unit": "mt-co2",
         "tab": 3
       }
     ]
@@ -147,17 +225,20 @@
         "position": 1,
         "name": "Hansen/Google/UMD",
         "type": "number",
+        "thresh" : 25,
         "default": true
       },
       {
         "position": 2,
         "name": "FAO",
-        "type": "number"
+        "type": "number",
+        "thresh" : 25
       },
       {
         "position": 3,
         "name": "Compare All",
-        "type": "number"
+        "type": "number",
+        "thresh" : 25
       }
     ],
     "indicators": [
@@ -202,6 +283,18 @@
         "position": 1,
         "name": "Woods Hole/Baccini",
         "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ],
+        "thresh": 25,
         "default": true
       },
       {
@@ -439,6 +532,18 @@
         "position": 1,
         "name": "Woods Hole/Baccini",
         "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ],
+        "thresh": 25,
         "default": true
       },
       {
@@ -670,14 +775,12 @@
     "id": 6,
     "name": "Emerging hotspots",
     "default_thresh": "25",
-    "default": true,
     "indicators": [
       {
         "id": 4,
         "name": "Emerging hotspots",
         "type": "map",
-        "unit": "number",
-        "default": true
+        "unit": "number"
       }
     ]
   },

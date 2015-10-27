@@ -40,7 +40,7 @@ resource 'Widgets' do
       expect(status).to eq(200)
       widgets = JSON.parse(response_body)['widgets']
 
-      expect(widgets.length).to eq(6)
+      expect(widgets.length).to eq(5)
       expect(widgets[0]['data']).to eq('/api/widgets/1/aus')
       expect(widgets[0]['tabs'].count).to eq(1)
       expect(widgets[0]['tabs'][0]['default']).to eq(true)
@@ -69,6 +69,8 @@ resource 'Widgets' do
 
       expect(widget['tabs'][0]['position']).to eq(1)
       expect(widget['tabs'][0]['default']).to eq(true)
+      expect(widget['tabs'][0]['switch'].length).to eq(2)
+      expect(widget['tabs'][0]['switch'][0]['unit']).to eq('hectares')
       expect(widget['indicators'][0]['data']).to eq('/api/indicators/1/aus')
       expect(widget['indicators'][2]['data']).to eq('/api/indicators/15/aus')
       expect(widget['indicators'][0]['tab']).to eq(2)

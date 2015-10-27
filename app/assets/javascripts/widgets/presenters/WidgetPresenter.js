@@ -1,90 +1,50 @@
 define([
   'mps',
   'backbone',
+  'widgets/models/WidgetModel',
   'countries/presenters/PresenterClass'
-], function(mps, Backbone, PresenterClass) {
+], function(mps, Backbone, WidgetModel, PresenterClass) {
 
   'use strict';
 
   var WidgetPresenter = PresenterClass.extend({
 
-    init: function(view) {
+    init: function(view, setup) {
       this.view = view;
       this._super();
-
-      this.status = new (Backbone.Model.extend());
+      this.model = new WidgetModel({
+        id: setup.id,
+        iso: setup.iso,
+        slug: setup.slug
+      });
+      this.status = new (Backbone.Model.extend({
+        defaults: setup.options
+      }));
 
       this._setListeners();
-
-      mps.publish('Place/register', [this]);
     },
-
-    /**
-     * Application subscriptions.
-     */
-    // _subscriptions: [{
-    //   'Place/go': function(place) {
-    //     this._onPlaceGo(place);
-    //   }
-    // }],
-
 
     _setListeners: function() {
-      this.status.on('change:tab', this.onChangeTab, this);
+      this.status.on('change:tabs', this.setTab, this);
     },
 
-    setParams: function(options) {
-      this.status.set({
-        id: options.id,
-        name: options.name,
-        data: options.data,
-        tab: options.tab,
-        indicators: options.indicators
-      });
+    changeTab: function(position) {
+      var tabs = _.clone(this.status.get('tabs'));
+      tabs.position = position;
+      this.status.set('tabs',tabs);
     },
 
-    /**
-     * Used by PlaceService to get the current iso/area params.
-     *
-     * @return {object} iso/area params
-     */
-    getPlaceParams: function() {
-      var p = {};
-
-      // p.widgetStatus = {
-      //   id: this.status.get('id'),
-      //   tab: this.status.get('tab'),
-      //   options: {
-      //     average: this.status.get('average'),
-      //     indicator: this.status.get('indicator'),
-      //     treshold: this.status.get('treshold'),
-      //     unit: this.status.get('unit')
-      //   }
-      // };
-
-      return p;
-    },
-
-    /**
-     * Triggered from 'Place/Go' events.
-     *
-     * @param  {Object} place PlaceService's place object
-     */
-    // _onPlaceGo: function(place) {
-    //   this.view.start(place);
-    // },
-
-    onUpdateWidget: function(status) {
+    changeStatus: function(status) {
       this.status.set(status);
     },
 
-    onChangeTab: function() {
-      this.view._setTab();
+    setTab: function() {
+      this.view.setTab();
+      this.publish();
     },
 
-    updateStatus: function(status) {
-      this.onUpdateIndicator(status);
-      mps.publish('Place/update');
+    publish: function() {
+      mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
     }
 
   });
