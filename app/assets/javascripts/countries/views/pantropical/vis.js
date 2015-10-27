@@ -219,7 +219,7 @@ function addCommas(nStr) {
       }).on("mouseover", function(d, i) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 122;
-        var ypos = (el.attr('cy') - d.radius - 30);
+        var ypos = (el.attr('cy') - d.radius - 27);
         d3.select("#pantropical_tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
         return that.show_details(d, i, this);
       }).on("mouseout", function(d, i) {
