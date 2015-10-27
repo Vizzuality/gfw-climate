@@ -1,7 +1,7 @@
 {
   "resource": "Indicators",
   "http_method": "GET",
-  "route": "/api/indicators/:id",
+  "route": "/api/indicators/:id/:iso",
   "description": "Getting a specific indicator for country",
   "explanation": null,
   "parameters": [
@@ -28,7 +28,7 @@
   "requests": [
     {
       "request_method": "GET",
-      "request_path": "/api/indicators/1?iso=bra&thresh=10",
+      "request_path": "/api/indicators/1/bra?thresh=10",
       "request_body": null,
       "request_headers": {
         "Accept": "application/json; application/gfwc-v1+json",
@@ -37,7 +37,6 @@
         "Cookie": ""
       },
       "request_query_parameters": {
-        "iso": "bra",
         "thresh": "10"
       },
       "request_content_type": "application/json",
@@ -51,12 +50,12 @@
         "Content-Type": "application/json; charset=utf-8",
         "ETag": "W/\"b13cb599d0e5dc932246ada15f5ef517\"",
         "Cache-Control": "max-age=0, private, must-revalidate",
-        "X-Request-Id": "3ebd7054-afdc-4522-9e0f-eec93ef0d74f",
-        "X-Runtime": "0.462415",
+        "X-Request-Id": "fdb2a940-617a-4373-a516-65345d045b9e",
+        "X-Runtime": "0.443058",
         "Content-Length": "2439"
       },
       "response_content_type": "application/json; charset=utf-8",
-      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/indicators/1?iso=bra&thresh=10\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
+      "curl": "curl \"http://gfwc-staging.herokuapp.com/api/indicators/1/bra?thresh=10\" -X GET \\\n\t-H \"Accept: application/json; application/gfwc-v1+json\" \\\n\t-H \"Content-Type: application/json\" \\\n\t-H \"Host: gfwc-staging.herokuapp.com\" \\\n\t-H \"Cookie: \""
     }
   ]
 }

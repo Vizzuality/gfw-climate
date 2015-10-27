@@ -43,7 +43,7 @@ resource 'Indicators' do
     end
   end
 
-  get "/api/indicators/:id" do
+  get "/api/indicators/:id/:iso" do
     parameter :id, "ID of indicator"
     parameter :iso, "ISO of country (bra, chn...)"
     parameter :area, "Value 'pra' for Protected Area"
@@ -78,7 +78,7 @@ resource 'Indicators' do
       expect(value['thresh']).to eq(25)
     end
 
-    example "Getting a specific indicator for protected area without thresh", document: false do
+    example "Getting a specific indicator for protected area" do
       do_request(id: 3, iso: 'BRA', area: 'pra')
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
