@@ -41,9 +41,12 @@
       </div>
       <div class="row">
 
-        <svg class="svg-left-arrow">
-          <use xlink:href="#shape-arrow-left"></use>
-        </svg>
+        {{#unless data.isNational}}
+          <svg class="svg-left-arrow">
+            <use xlink:href="#shape-arrow-left"></use>
+          </svg>
+        {{/unless}}
+
         {{#if data.isJurisdictions}}
           <button id="btn-back" class="btn--back">select jurisdictions</button>
         {{/if}}
