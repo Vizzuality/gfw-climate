@@ -3,7 +3,7 @@ define([
   'underscore',
   'countries/presenters/PresenterClass',
   'widgets/collections/WidgetCollection'
-], function(mps,underscore, PresenterClass, WidgetCollection) {
+], function(mps, _, PresenterClass, WidgetCollection) {
 
   'use strict';
 
@@ -15,11 +15,9 @@ define([
 
       this.widgetCollection = new WidgetCollection()
 
-      this.status = new (Backbone.Model.extend({
-        defaults: {
-          view: 'national'
-        }
-      }));
+      this.status = new (Backbone.Model.extend());
+
+      this._setListeners();
 
       mps.publish('Place/register', [this]);
     },
@@ -31,11 +29,22 @@ define([
       'Place/go': function(place) {
         this._onPlaceGo(place);
       }
+    },{
+      'Options/updated': function(id,slug,wstatus) {
+        this._onOptionsUpdate(id,slug,wstatus);
+      }
     }, {
-      'CountryModel/Fetch': function(countryModel) {
-        this.view.start(countryModel);
+      'View/update': function(view) {
+        this._updateView(view);
+        this.view._toggleWarnings();
       }
     }],
+
+    _setListeners: function() {
+      this.status.on('change:view', function() {
+        this.view.start();
+      }, this);
+    },
 
     /**
      * Used by PlaceService to get the current iso/area params.
@@ -45,10 +54,21 @@ define([
     getPlaceParams: function() {
       var p = {};
 
-      p.widgetGridStatus = {
-        view: this.status.get('view'),
-        widgets: this.status.get('widgets')
-      };
+
+
+      p.options = this.status.get('options') || null;
+
+
+      if (!!(this.status.toJSON() && this.status.get('jurisdictions'))) {
+        _.extend(p.options, {
+          jurisdictions: this.status.get('jurisdictions'),
+          areas: this.status.get('areas'),
+          view: this.status.get('view')
+        });
+      }
+
+
+
 
       return p;
     },
@@ -58,17 +78,8 @@ define([
      *
      * @param  {Object} place PlaceService's place object
      */
-    _onPlaceGo: function(place) {
-      this._setupView(place);
-    },
-
-    /**
-     * Get the keys (widget's id) from an object
-     * @param  {[object]} widgets
-     * @return {[array]} array with widget's id will be displayed
-     */
-    _getWidgetsIds: function(widgets) {
-      return _.keys(widgets);
+    _onPlaceGo: function(params) {
+      this._setupView(params);
     },
 
     /**
@@ -78,31 +89,120 @@ define([
      * @param  {[object]} params
      */
     _setupView: function(params) {
-      var gridStatus = params.options ? params.options.gridStatus : null,
-        widgetStatus = gridStatus ? gridStatus.widgets : null;
+      if (params.options === null) {
+        var callback = function() {
 
-        if (!widgetStatus) {
 
-          var callback = function() {
-            this.status.set({
-              view: gridStatus ? gridStatus.view : this.status.get('view'),
-              widgets: _.where(this.widgetCollection.toJSON(), {default: true})
-            });
-          };
-
-          this.widgetCollection.fetch().done(callback.bind(this));
-
-        } else {
           this.status.set({
-            view: gridStatus ? gridStatus.view : this.status.get('view'),
-            widgets: widgetStatus
+            country: params.country.iso,
+            jurisdictions: null,
+            areas: null,
+            options: this.getOptions(params, this.widgetCollection.toJSON())
           });
-        }
+
+          mps.publish('Place/update');
+        };
+
+        this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+
+      } else {
+        this.status.set({
+          country: params.country.iso,
+          jurisdictions: this.getJurisdictions(params),
+          areas: this.getAreas(params),
+          options: params.options,
+          view: params.view
+        });
+        mps.publish('Place/update');
+      }
     },
 
-    _onOpenModal: function() {
-      mps.publish('ReportsPanel/open', []);
+    _updateView: function(view) {
+      this.status.set({
+        view: view
+      });
     },
+
+    _onOptionsUpdate: function(id,slug,wstatus) {
+      var options = _.clone(this.status.get('options'));
+      options[slug][id][0] = wstatus;
+
+      // Set and publish
+      this.status.set('options', options);
+      mps.publish('Place/update');
+    },
+
+    getJurisdictions: function(params) {
+
+      var jurisdictions = null;
+
+      if (params.options.hasOwnProperty('jurisdictions') &&
+        params.options.jurisdictions !== null) {
+        jurisdictions = params.options.jurisdictions;
+      }
+
+      return jurisdictions;
+    },
+
+    getAreas: function(params) {
+
+      var areas = null;
+
+      if (!_.isNull(params.options.areas)) {
+        areas = params.options.areas;
+      }
+
+      return areas;
+    },
+
+    getOptions: function(params, defaultWidgets) {
+      // This should be removed to a dinamic var
+      var activeWidgets = [1, 2, 3, 4, 5];
+      var w = _.groupBy(_.compact(_.map(defaultWidgets,_.bind(function(w){
+        if (_.contains(activeWidgets, w.id)) {
+          return {
+            id: w.id,
+            tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null,
+            indicators: this.getIndicatorOptions(w.indicators),
+          };
+        }
+        return null;
+      }, this))), 'id');
+
+      var r = {};
+      r[this.objToSlug(params.country,'')] = w;
+
+      return r;
+    },
+
+    getTabsOptions: function(tabs) {
+      return _.map(tabs, function(t){
+        return {
+          type: t.type,
+          position: t.position,
+          unit: (t.switch) ? t['switch'][0]['unit'] : null,
+          start_date: (t.range) ? t['range'][0] : null,
+          end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
+          thresh: (t.thresh) ? t['thresh'] : null
+        }
+      })[0];
+    },
+
+    getIndicatorOptions: function(indicators) {
+      return _.map(indicators,function(i){
+        return i.id;
+      });
+    },
+
+    objToSlug: function(obj,join) {
+      var arr_temp = [];
+      for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          arr_temp.push(obj[p]);
+        }
+      }
+      return arr_temp.join(join);
+    }
 
   });
 

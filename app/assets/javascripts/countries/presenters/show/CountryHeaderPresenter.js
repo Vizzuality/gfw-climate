@@ -38,8 +38,8 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
-      p.country = this.status.attributes.country;
-      p.area = this.status.attributes.area;
+      // p.country = this.status.attributes.country;
+      // p.area = this.status.attributes.area;
 
       return p;
     },

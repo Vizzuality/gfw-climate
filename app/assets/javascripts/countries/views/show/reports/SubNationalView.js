@@ -2,44 +2,47 @@ define([
   'backbone',
   'handlebars',
   'widgets/views/WidgetView',
-  'text!countries/templates/country-subnational-grid.handlebars'
-], function(Backbone, Handlebars, WidgetView, tpl) {
+  'text!countries/templates/country-subnational-grid.handlebars',
+  'text!countries/templates/no-indicators.handlebars'
+], function(Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
 
   var SubNationalView = Backbone.View.extend({
 
-    el: '.reports-grid',
-
-    template: Handlebars.compile(tpl),
+    el: '.gridgraphs--container-profile',
 
     initialize: function(options) {
       this.widgets = options.widgets;
-      this.CountryModel = options.model;
+      this.jurisdictions = options.jurisdictions;
     },
-
-    _populateJurisdictions: function() {
-      var jurisdictions = this.CountryModel.attributes.jurisdictions;
-      var $select = $('#jurisdictionSelector');
-      var options = '<option value="default">select jurisdiction</option>';
-
-      jurisdictions.forEach(function(jurisdiction) {
-        options += '<option value="' + jurisdiction.id + '">' + jurisdiction.name + '</option>';
-      });
-
-      $select.html(options);
-    },
-
 
     render: function() {
+      this.$el.html('');
 
-      this.$el.html(this.template);
+      if (this.jurisdictions && this.jurisdictions.length > 0) {
 
-      this._populateJurisdictions();
+        this.template = Handlebars.compile(tpl);
 
-      this.widgets.forEach(_.bind(function(id) {
-        this.$el.find('.subnational-grid').append(new WidgetView({id: id}).start());
-      }, this));
+        this.$el.html(this.template);
 
-      this.$el.html();
+        this.widgets.forEach(_.bind(function(widget) {
+          widget.render()
+          this.$el.addClass('.subnational-grid').append(widget.el);
+        }, this));
+
+
+      } else {
+
+        this.template = Handlebars.compile(noIndicatorsTpl);
+
+        var options = {
+          isJurisdictions: true
+        };
+
+        this.$el.html(this.template({
+          setup: options
+        }));
+
+      }
 
       return this;
     }
