@@ -71,16 +71,6 @@ define([
       }, this ));
     },
 
-    setFetchParams: function(data) {
-      if (data.location) {
-        data.iso = data.location.iso;
-        data.id_1 = (!!data.location.jurisdiction) ? data.location.jurisdiction : null;
-        data.area = (!!data.location.area) ? data.location.area : null;
-        delete data.location
-      }
-      return data;
-    },
-
     render: function() {
       this.$el.html(this.template(this.parseData()));
       this.cacheVars();

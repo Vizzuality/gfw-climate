@@ -7,7 +7,7 @@ define([
   LineChartContext, LineChartInteractionHandler
 ) {
 
-var svg, x, y, xKey, yKey, xAxis, yAxis;
+var x, y, xKey, yKey, xAxis, yAxis;
 
 var line = d3.svg.line()
   .interpolate('cardinal')
@@ -15,6 +15,7 @@ var line = d3.svg.line()
   .y(function(d) { return y(d[yKey]); });
 
 var LineChart = function(options) {
+  this.svg;
   this.options = options;
   this.data = options.data;
   this.unit = options.unit
@@ -46,7 +47,7 @@ LineChart.prototype.resize = function() {
 };
 
 LineChart.prototype._createEl = function() {
-  svg = d3.select(this.options.el)
+  this.svg = d3.select(this.options.el)
     .append("svg")
       .attr('class', 'lineChart')
       .attr("width", this.parentWidth)
@@ -72,7 +73,7 @@ LineChart.prototype._createScales = function() {
 };
 
 LineChart.prototype._createDefs = function() {
-  svg.append("defs").append("clipPath")
+  this.svg.append("defs").append("clipPath")
     .attr("id", "clip")
   .append("rect")
     .attr("width", this.width)
@@ -105,99 +106,94 @@ LineChart.prototype._drawLine = function(group) {
     .attr("d", line);
 };
 
-LineChart.prototype._drawScatterplote = function() {
-  // Tooltip
-  var tooltip = d3.select('body').append('div')
-    .attr('class', 'linegraph-tooltip')
-    .style('opacity', 0);
-
-  var formatDate = d3.time.format("%Y")
-
-  svg.selectAll('circle.dot')
+LineChart.prototype._drawTicks = function() {
+  this.svg.selectAll('circle.dot')
   .data(this.data)
   .enter().append('circle')
     .attr('class', 'dot')
     .attr('r', 5)
     .attr('cx', function(d) { return x(d[xKey]);})
-    .attr('cy', function(d) { return y(d[yKey]);})
-    .on('mouseover', function(d) {
-      console.log(d);
-      console.log(d3.event.pageX);
+    .attr('cy', function(d) { return y(d[yKey]);});
+};
 
-      tooltip.transition()
-        .duration(125)
-        .style('opacity', 1);
-      tooltip.html('<span class="data">' + formatDate(d.year) + '</span>' + d.value)
-        .style('left', (d3.event.pageX) + 'px')
-        .style('top', (d3.event.pageY) + 'px');
-// max-width: 110px;
-// height: 65px;
 
-      })
-    .on('mouseout', function(d) {
-      tooltip.transition()
-        .duration(500)
-        .style('opacity', 0);
+LineChart.prototype._drawTooltip = function() {
+  var formatDate = d3.time.format("%Y");
+  var bisectDate = d3.bisector(function(d) { return d.year; }).left;
+  // Tooltip
+  var tooltip = d3.select('body').append('div')
+    .attr('class', 'linegraph-tooltip')
+    .style('visibility', 'hidden')
+
+  var positioner = this.svg.append('svg:line')
+    .attr('x1', 0)
+    .attr('y1', 0)
+    .attr('x2', 0)
+    .attr('y2', this.height)
+    .style('visibility', 'hidden')
+    .style('stroke', '#DDD');
+
+  var data = this.data;
+  var self = this;
+
+  this.svg
+    .on("mouseout", function() {
+      positioner.style("visibility", "hidden");
+      tooltip.style("visibility", "hidden");
+    })
+    .on("mouseover", function() {
+      positioner.style("visibility", "visible");
+      tooltip.style("visibility", "visible");
+    })
+    .on('mousemove', function() {
+      var x0 = x.invert(d3.mouse(this)[0]),
+          i  = bisectDate(self.data, x0, 1),
+          d0 = data[i - 1],
+          d1 = data[i],
+          d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
+
+      if (!!d) {
+        var format = (self.unit != 'percentage') ? ".3s" : ".0%",
+            xyear = x(d.year),
+            year = formatDate(d.year),
+            value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
+        // Positioner
+        positioner
+          .attr('x1', xyear + self.sizing.left)
+          .attr('x2', xyear + self.sizing.left)
+
+        // Tooltip
+        tooltip.transition()
+          .duration(125)
+          .style('visibility', 'visible');
+        tooltip.html('<span class="data">' + year + '</span>' + value )
+          .style('left', (d3.event.pageX) + 'px')
+          .style('top', (d3.event.pageY) + 'px');
+      }
     });
 };
 
-//From WRW
-// LineChart.prototype._drawContext = function(group) {
-//   var contextGroup = svg.append("g").attr("class", "context")
-
-//   var context = new LineChartContext({
-//     el: this.options.el,
-//     data: this.data,
-//     group: contextGroup,
-//     sizing: {
-//       width: this.width,
-//       height: this.parentHeight
-//     },
-//     keys: this.options.keys,
-//     domain: {
-//       x: x.domain(),
-//       y: y.domain()
-//     },
-//     onBrush: function(newDomain) {
-//       x.domain(newDomain);
-//       group.select(".line").attr("d", line);
-//       group.select(".x.axis").call(xAxis);
-//     }
-//   });
-//   context.render();
-// };
 
 LineChart.prototype._setupHandlers = function() {
-  var eventInterceptor = svg.append("rect")
+  var eventInterceptor = this.svg.append("rect")
     .attr("class", "overlay")
     .attr("width", this.width)
     .attr("height", this.height)
     .attr("transform", "translate(" + this.sizing.left + "," + this.sizing.top + ")");
-
-  // var handler = new LineChartInteractionHandler(svg, {
-  //   width: this.width,
-  //   height: this.height,
-  //   sizing: this.sizing,
-  //   innerPadding: this.innerPadding,
-  //   data: this.data,
-  //   keys: this.options.keys,
-  //   interceptor: eventInterceptor,
-  //   x: x,
-  //   y: y
-  // });
 };
 
 LineChart.prototype.render = function() {
   if (!!this.data.length) {
-    var group = svg.append("g")
+    var group = this.svg.append("g")
       .attr("class", "focus")
       .attr("transform",
         "translate(" + this.sizing.left + "," + this.sizing.top + ")");
 
     this._drawAxes(group);
     this._drawLine(group);
+    this._drawTicks();
+    this._drawTooltip();
     // this._setupHandlers();
-    this._drawScatterplote();
     // this._drawContext(group);
   }
 };
