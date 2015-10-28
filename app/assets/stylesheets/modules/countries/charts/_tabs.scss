@@ -6,6 +6,11 @@
 
   .switcher {
     float: left;
+    display: flex;
+    align-items: center;
+    > span {
+      margin: 0 0 0 5px;
+    }
     .switcher-track {
       display: flex;
       align-items: center;
