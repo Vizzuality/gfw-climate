@@ -67,11 +67,12 @@
       justify-content: space-around;
       .tab-li {
         display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         min-height: 69px;
         padding: 15px;
-        justify-content: center;
-        align-items: center;
         font-size: 12px;
         text-align: center;
         background-color: #f2f2f3;
@@ -85,6 +86,22 @@
           color: $black;
           background: $white;
           border-bottom: 1px solid transparent;
+        }
+        .name {
+          display: block;
+          width: 100%;
+        }
+        .subname {
+          font-size: 10px;
+          display: block;
+          width: 100%;
+          color: #777;
+        }
+        .ipcc {
+          font-size: 9px;
+          display: block;
+          width: 100%;
+          color: #777;
         }
       }
     }
