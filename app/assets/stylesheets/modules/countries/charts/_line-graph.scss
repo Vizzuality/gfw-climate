@@ -211,11 +211,15 @@
   }
 }
 #vis {
+  min-height: 525px;
   .vis-tab {
     position: absolute;
     margin: 57px 0 0 50px;
     color: #555;
     display: none;
+    &.nydfs {
+      width: 220px
+    }
     &.right-side {
       right: 0;
       margin: 57px 50px 0 0;

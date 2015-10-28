@@ -289,12 +289,10 @@ function addCommas(nStr) {
 
         if (d.category.includes('non-NYDF'))
           d.category = 'Other non-NYDF Signatory';
-        if (d.category === that.NONYDF) {
+        if ((d.category === that.NYDF)||(d.category === that.NET_INTEREST)) {
           targetX = 550
-        } else if ((d.category === that.NYDF)||(d.category === that.NET_INTEREST)) {
-          targetX = 400
         } else {
-          targetX = 900
+          targetX = 450
         };
 
 
@@ -319,7 +317,7 @@ function addCommas(nStr) {
             .attr("cy", function(d) { return d.y; });
         })
         .start();
-      return this.display_ny();
+      //return this.display_ny();
     };
 
     BubbleChart.prototype.move_towards_year = function(alpha) {
