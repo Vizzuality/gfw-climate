@@ -60,7 +60,7 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate:'{name}{/compare1}{/compare2}{?options,widgets}',
+    _uriTemplate:'{name}{/compare1}{/compare2}{?options}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -162,9 +162,6 @@ define([
       if (p.options) {
         p.options = JSON.parse(atob(p.options));
       }
-      if (p.widgets) {
-        p.widgets = JSON.parse(atob(p.widgets));
-      }
       return p;
     },
 
@@ -186,10 +183,6 @@ define([
       if (p.options) {
         p.options = params.options;
         p.options = btoa(JSON.stringify(p.options));
-      }
-
-      if (p.widgets) {
-        p.widgets = btoa(JSON.stringify(p.widgets));
       }
 
       return p;
