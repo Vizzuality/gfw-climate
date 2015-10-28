@@ -162,7 +162,7 @@ define([
       var p = _.extendNonNull({}, this.params, params);
 
       p.country = p.country.iso ? p.country.iso : null;
-      p.view = p.view;
+      p.view = p.options.view;
       p.options = p.options ? btoa(JSON.stringify(p.options)) : null;
 
       return p;

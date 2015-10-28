@@ -13,14 +13,12 @@ define([
       this._super();
 
       this.status = new (Backbone.Model.extend({
-        // defaults: {
-        //   view: 'national'
-        // }
+        defaults: {
+          view: 'national'
+        }
       }));
 
       this._setListeners();
-
-      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -30,22 +28,16 @@ define([
       'Place/go': function(place) {
         this._onPlaceGo(place);
       }
+    }, {
+      'View/update': function(view) {
+        this.setDisplay(view);
+      }
     }],
 
     _setListeners:function() {
       this.status.on('change:view', this.onUpdateTab, this);
     },
 
-    /**
-     * Used by PlaceService to get the current iso/area params.
-     *
-     * @return {object} iso/area params
-     */
-    getPlaceParams: function() {
-      var p = {};
-      p.view = this.status.get('view');
-      return p;
-    },
 
     /**
      * Triggered from 'Place/Go' events.
@@ -54,12 +46,15 @@ define([
      */
     _onPlaceGo: function(params) {
       this._setupView(params);
+      this.view.start();
     },
 
     _setupView: function(params) {
 
       if(params.view) {
-        this.setDisplay(params.view);
+        this.status.set({
+          view: params.view
+        }, {silent: true});
       }
     },
 
@@ -71,7 +66,6 @@ define([
 
     onUpdateTab: function() {
       this.view._setCurrentTab();
-      mps.publish('Place/update', []);
       mps.publish('View/update', [this.status.get('view')])
     },
 
