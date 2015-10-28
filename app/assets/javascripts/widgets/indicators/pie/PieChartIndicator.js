@@ -17,7 +17,9 @@ define([
     noDataTemplate: Handlebars.compile(noDataTpl),
 
     events: function() {
-      return _.extend({}, IndicatorView.prototype.events, {});
+      return _.extend({}, IndicatorView.prototype.events, {
+        'change .section': 'changeSection'
+      });
     },
 
     initialize: function(setup) {
@@ -90,13 +92,23 @@ define([
 
     cacheVars: function() {
       this.$section = this.$el.find('.section');
+      this.$section_name = this.$el.find('.section-name');
     },
 
     setStatusValues: function() {
       var t = this.model.toJSON();
-      (!!t.section) ? this.$section.val(t.section) : null;
+      if(!!t.section) {
+        this.$section.val(t.section)
+        this.$section_name.text(t.section)
+      }
     },
 
+    // SELECT
+    changeSection: function(e) {
+      this.$section_name.text($(e.currentTarget).val());
+    },
+
+    // GRAPH
     drawGraph: function() {
       var pieChart = new PieChart({
         el: this.$el.find('.pie-graph')[0],
