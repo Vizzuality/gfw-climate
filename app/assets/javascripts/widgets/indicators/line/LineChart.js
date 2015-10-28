@@ -7,13 +7,6 @@ define([
   LineChartContext, LineChartInteractionHandler
 ) {
 
-var x, y, xKey, yKey, xAxis, yAxis;
-
-var line = d3.svg.line()
-  .interpolate('cardinal')
-  .x(function(d) { return x(d[xKey]); })
-  .y(function(d) { return y(d[yKey]); });
-
 var LineChart = function(options) {
   this.svg;
   this.options = options;
@@ -55,20 +48,28 @@ LineChart.prototype._createEl = function() {
 };
 
 LineChart.prototype._createScales = function() {
-  xKey = this.options.keys.x;
-  yKey = this.options.keys.y;
+  var self = this;
+  this.xKey = this.options.keys.x;
+  this.yKey = this.options.keys.y;
 
-  x = d3.time.scale().range([this.options.innerPadding.left, this.width - this.options.innerPadding.right]);
-  x.domain(d3.extent(this.data.map(function(d) {
-    return d[xKey];
+  this.x = d3.time.scale().range([this.options.innerPadding.left, this.width - this.options.innerPadding.right]);
+  this.x.domain(d3.extent(this.data.map(function(d) {
+    return d[self.xKey];
   })));
 
-  y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom, 10 + this.options.innerPadding.top]);
+  this.y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom, 10 + this.options.innerPadding.top]);
   if(this.unit == 'percentage') {
-    y.domain([0, 1]);
+    this.y.domain([0, 1]);
   } else {
-    y.domain([0, d3.max(this.data.map(function(d) { return d[yKey]; }))]);
+    this.y.domain([0, d3.max(this.data.map(function(d) { return d[self.yKey]; }))]);
   }
+
+  this.line = d3.svg.line()
+    .interpolate('cardinal')
+    .x(function(d) { return self.x(d[self.xKey]); })
+    .y(function(d) { return self.y(d[self.yKey]); });
+
+
 
 };
 
@@ -81,18 +82,19 @@ LineChart.prototype._createDefs = function() {
 };
 
 LineChart.prototype._drawAxes = function(group) {
+  var self = this;
   var tickFormatY = (this.unit != 'percentage') ? "s" : ".0%";
-  xAxis = d3.svg.axis().scale(x).ticks(d3.time.year, 1).tickSize(-this.width, 0).orient("bottom").tickFormat(d3.time.format("%Y"));;
-  yAxis = d3.svg.axis().scale(y).tickSize(-this.width, 0).orient("left").tickFormat(d3.format(tickFormatY));
+  this.xAxis = d3.svg.axis().scale(self.x).ticks(d3.time.year, 1).tickSize(-this.width, 0).orient("bottom").tickFormat(d3.time.format("%Y"));;
+  this.yAxis = d3.svg.axis().scale(self.y).tickSize(-this.height, 0).orient("left").tickFormat(d3.format(tickFormatY));
 
   group.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + this.height + ")")
-    .call(xAxis);
+    .call(this.xAxis);
 
   group.append("g")
       .attr("class", "y axis")
-      .call(yAxis)
+      .call(this.yAxis)
     .selectAll("text")
       .attr("y", -10)
       .attr("x", 5)
@@ -100,20 +102,22 @@ LineChart.prototype._drawAxes = function(group) {
 };
 
 LineChart.prototype._drawLine = function(group) {
+  var self = this;
   group.append("path")
     .datum(this.data)
     .attr("class", "line")
-    .attr("d", line);
+    .attr("d", self.line);
 };
 
 LineChart.prototype._drawTicks = function() {
+  var self = this;
   this.svg.selectAll('circle.dot')
   .data(this.data)
   .enter().append('circle')
     .attr('class', 'dot')
     .attr('r', 5)
-    .attr('cx', function(d) { return x(d[xKey]);})
-    .attr('cy', function(d) { return y(d[yKey]);});
+    .attr('cx', function(d) { return self.x(d[self.xKey]);})
+    .attr('cy', function(d) { return self.y(d[self.yKey]);});
 };
 
 
@@ -121,11 +125,11 @@ LineChart.prototype._drawTooltip = function() {
   var formatDate = d3.time.format("%Y");
   var bisectDate = d3.bisector(function(d) { return d.year; }).left;
   // Tooltip
-  var tooltip = d3.select('body').append('div')
+  this.tooltip = d3.select('body').append('div')
     .attr('class', 'linegraph-tooltip')
     .style('visibility', 'hidden')
 
-  var positioner = this.svg.append('svg:line')
+  this.positioner = this.svg.append('svg:line')
     .attr('x1', 0)
     .attr('y1', 0)
     .attr('x2', 0)
@@ -138,15 +142,15 @@ LineChart.prototype._drawTooltip = function() {
 
   this.svg
     .on("mouseout", function() {
-      positioner.style("visibility", "hidden");
-      tooltip.style("visibility", "hidden");
+      self.positioner.style("visibility", "hidden");
+      self.tooltip.style("visibility", "hidden");
     })
     .on("mouseover", function() {
-      positioner.style("visibility", "visible");
-      tooltip.style("visibility", "visible");
+      self.positioner.style("visibility", "visible");
+      self.tooltip.style("visibility", "visible");
     })
     .on('mousemove', function() {
-      var x0 = x.invert(d3.mouse(this)[0]),
+      var x0 = self.x.invert(d3.mouse(this)[0]),
           i  = bisectDate(self.data, x0, 1),
           d0 = data[i - 1],
           d1 = data[i],
@@ -154,19 +158,19 @@ LineChart.prototype._drawTooltip = function() {
 
       if (!!d) {
         var format = (self.unit != 'percentage') ? ".3s" : ".0%",
-            xyear = x(d.year),
+            xyear = self.x(d.year),
             year = formatDate(d.year),
             value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
         // Positioner
-        positioner
+        self.positioner
           .attr('x1', xyear + self.sizing.left)
           .attr('x2', xyear + self.sizing.left)
 
         // Tooltip
-        tooltip.transition()
+        self.tooltip.transition()
           .duration(125)
           .style('visibility', 'visible');
-        tooltip.html('<span class="data">' + year + '</span>' + value )
+        self.tooltip.html('<span class="data">' + year + '</span>' + value )
           .style('left', (d3.event.pageX) + 'px')
           .style('top', (d3.event.pageY) + 'px');
       }

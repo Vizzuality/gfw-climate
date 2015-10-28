@@ -16,7 +16,7 @@
   .tick {
     text {
       font-size: 11px;
-      color: $dark;
+      color: $font-color-1;
     }
   }
 
@@ -55,8 +55,8 @@
   }
 
   .axis text {
-    fill: #333;
-    font-weight: bold;
+    fill: $font-color-1;
+    font-weight: 500;
     font-size: 11px;
   }
 
@@ -81,7 +81,7 @@
   }
 
   .axis2 text {
-    fill: #333;
+    fill: $font-color-1;
     font-size: 10px;
   }
 

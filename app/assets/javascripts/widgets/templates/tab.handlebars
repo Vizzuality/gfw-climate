@@ -30,19 +30,19 @@
 {{#if this.range}}
 <div class="sub-options">
     <div class="average">
-      <span>Average:
-        <select class="selector date-selector blue start-date" data-direction="1" data-compare=".end-date" name="start-date">
-          {{#each this.range}}
-            <option value="{{this}}">{{this}}</option>
-          {{/each}}
-        </select>
-        to
-        <select class="selector date-selector blue end-date" data-direction="0" data-compare=".start-date" name="end-date">
-          {{#each this.range}}
-            <option value="{{this}}">{{this}}</option>
-          {{/each}}
-        </select>
-      </span>
+      <span>Average:</span>
+      <select class="selector date-selector blue start-date" data-direction="1" data-compare=".end-date" name="start-date">
+        {{#each this.range}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+      <span>to</span>
+      <select class="selector date-selector blue end-date" data-direction="0" data-compare=".start-date" name="end-date">
+        {{#each this.range}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+      <span class="tab-average"></span>
     </div>
 </div>
 {{/if}}
