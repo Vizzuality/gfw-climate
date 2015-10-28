@@ -51,6 +51,7 @@ define([
       this.$date_selects = this.$el.find('.date-selector');
       this.$threshold = this.$el.find('.threshold');
       this.$switcher = this.$el.find('.switcher');
+      this.$average = this.$el.find('.tab-average');
 
       this.$graphContainer = this.$el.find('.tab-graph');
     },
@@ -75,6 +76,7 @@ define([
     changeSection: function(e) {
       this.presenter.changeSection($(e.currentTarget).val());
     },
+
 
     // SETTERS
     setStatusValues: function() {
@@ -107,6 +109,27 @@ define([
       }, this ));
     },
 
+    // SETTERS: average
+    setAverage: function(average) {
+      var t = this.presenter.status.get('tabs');
+      var txt = '';
+      switch(t.unit) {
+        case 'hectares':
+          txt = d3.format(",.0f")(average) + ' ha';
+        break;
+        case 'percentage':
+          txt = d3.format(".2%")(average);
+        break;
+        case 'tg-c':
+          txt = d3.format(",.2f")(average) + ' tg-c';
+        break;
+        case 'mt-co2':
+          txt = d3.format(",.2f")(average) + ' mt-co2';
+        break
+      }
+      this.$average.html(txt);
+    },
+
     // SETTERS: indicator
     setIndicator: function() {
       var t = this.presenter.status.get('tabs');
@@ -115,6 +138,7 @@ define([
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: t.unit});
           new LineChartIndicator({
             el: this.$graphContainer,
+            tab: this,
             className: 'is-line',
             model: {
               id: indicator.id,
@@ -133,6 +157,7 @@ define([
           var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
           new PieChartIndicator({
             el: this.$graphContainer,
+            tab: this,
             className: 'is-pie',
             model: {
               indicators: indicators,
@@ -151,6 +176,7 @@ define([
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: t.position})
           new NumberChartIndicator({
             el: this.$graphContainer,
+            tab: this,
             className: 'is-number',
             model: {
               id: indicator.id,

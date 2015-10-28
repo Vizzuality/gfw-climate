@@ -12,8 +12,17 @@ define([
       this.$el.addClass(setup.className);
     },
 
-    render: function() {}
+    render: function() {},
 
+    setFetchParams: function(data) {
+      if (data.location) {
+        data.iso = data.location.iso;
+        data.id_1 = (!!data.location.jurisdiction) ? data.location.jurisdiction : null;
+        data.area = (!!data.location.area) ? data.location.area : null;
+        delete data.location
+      }
+      return data;
+    },
 
   });
 

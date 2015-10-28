@@ -1,5 +1,6 @@
 .country-widget {
   min-height: 250px;
+  color: $dark;
   .country-widget__header {
     overflow: hidden;
     display: flex;
@@ -66,11 +67,12 @@
       justify-content: space-around;
       .tab-li {
         display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         min-height: 69px;
         padding: 15px;
-        justify-content: center;
-        align-items: center;
         font-size: 12px;
         text-align: center;
         background-color: #f2f2f3;
@@ -81,8 +83,22 @@
           border-right: 1px solid #e5e5e5;
         }
         &.is-selected {
+          color: $black;
           background: $white;
           border-bottom: 1px solid transparent;
+        }
+        span {
+          display: block;
+          width: 100%;
+        }
+        .subname,.ipcc {
+          color: #777;
+        }
+        .subname {
+          font-size: 10px;
+        }
+        .ipcc {
+          font-size: 9px;
         }
       }
     }
@@ -92,7 +108,7 @@
     -webkit-appearance:none;
     -moz-appearance:none;
     appearance:none;
-    padding: 2px 5px 3px;
+    padding: 2px 8px 3px;
     border-radius: 11px;
     &.blue {
       border: 1px solid $blue;

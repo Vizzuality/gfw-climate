@@ -6,13 +6,14 @@
 
   .container-country__content {
     width: 100%;
+    min-height: 380px;
     padding-right: 300px;
 
     .header-country__title-country {
       padding: 35px 0 25px;
       h1 {
         display: inline-block;
-        color: white;
+        color: $white;
         font-size: 47px;
         font-weight: 300;
       }
@@ -25,69 +26,6 @@
       width: 310px;
       border: 1px solid #6B6B6B;
       border-radius: 39px;
-
-
-      select {
-        border: none;
-        font-size: 13px;
-        text-transform: uppercase;
-        background: transparent;
-        color: #FFF;
-        -webkit-appearance: none;
-        padding: 10px 15px;
-        width: 100%;
-        -moz-appearance: none;
-        text-indent: 0.01px;
-        text-overflow: '';
-
-        &::-ms-expand {
-          display: none;
-        }
-
-        &:focus {
-          outline: 0;
-        }
-      }
-
-      .selector-area-country--white {
-        color: $white;
-      }
-
-      .selector-area-country--dark {
-        color: $dark;
-      }
-
-      .selector-area-country--embed & {
-        display: none;
-      }
-
-      .selector-arrow {
-        border-color: #73707D transparent;
-        border-style: solid;
-        border-width: 6px 5px 0 5px;
-        width: 0;
-        height: 0;
-        top: 50%;
-        right: 20px;
-        margin-top: -3px;
-        position: absolute;
-        pointer-events: none;
-      }
-
-      .selector-remove {
-        padding: 5px;
-        color: #73707D;
-        font-size: 13px;
-        top: 9px;
-        right: 35px;
-        position: absolute;
-        cursor: pointer;
-        display: none;
-
-        &:hover {
-          color: lighten(#73707D, 10);
-        }
-      }
     }
 
     .country-description {
@@ -102,6 +40,10 @@
       top: 0;
       right: 0;
       width: 300px;
+      padding: 40px 0 0;
+      svg {
+        fill: $blue;
+      }
     }
     .header-country__display-options {
       position: absolute;

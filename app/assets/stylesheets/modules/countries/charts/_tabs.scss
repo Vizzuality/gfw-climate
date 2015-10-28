@@ -6,6 +6,11 @@
 
   .switcher {
     float: left;
+    display: flex;
+    align-items: center;
+    > span {
+      margin: 0 0 0 5px;
+    }
     .switcher-track {
       display: flex;
       align-items: center;
@@ -40,6 +45,22 @@
     margin-left: 15px;
     font-size: 19px;
   }
+
+  .average {
+    display: flex;
+    align-items: center;
+    > span {
+      margin: 2px 0 0;
+    }
+    select {
+      margin: 0 4px;
+    }
+    .tab-average {
+      font-size: 19px;
+      margin: 3px 0 0 10px;
+    }
+  }
+
 }
 
 
