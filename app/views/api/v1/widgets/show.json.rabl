@@ -21,6 +21,9 @@ def tabs
       rangetype:     tab['rangetype'],
       switch:        tab['switch'],
       thresh:        tab['thresh'],
+      threshunit:    tab['threshunit'],
+      switch:        tab['switch'],
+      sectionswitch: tab['sectionswitch'],
       default:       tab['default']
     }
   end rescue nil

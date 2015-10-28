@@ -17,8 +17,8 @@ define([
     setFetchParams: function(data) {
       if (data.location) {
         data.iso = data.location.iso;
-        data.id_1 = (!!data.location.jurisdiction) ? data.location.jurisdiction : null;
-        data.area = (!!data.location.area) ? data.location.area : null;
+        data.id_1 = (!!data.location.jurisdiction && Number(data.location.jurisdiction) != 0) ? data.location.jurisdiction : null;
+        data.area = (!!data.location.area && Number(data.location.area) != 0) ? data.location.area : null;
         delete data.location
       }
       return data;

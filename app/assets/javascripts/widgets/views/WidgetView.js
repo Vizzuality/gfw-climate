@@ -63,7 +63,6 @@ define([
       // UI
       this.$tablink.removeClass('is-selected');
       this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('is-selected');
-
       //NEW TAB
       new TabView({
         el: this.$tabcontent,
