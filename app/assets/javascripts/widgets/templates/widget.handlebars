@@ -1,7 +1,7 @@
 {{!-- Cambiar id numérico por widget-id --}}
 <section class="country-widget">
   <div class="country-widget__header">
-    <h2 class="country-widget__name">{{name}}</h2>
+    <h2 class="country-widget__name">{{this.name}}</h2>
     <div class="options">
       <a class="close" href="#">Delete
         <svg>
@@ -22,10 +22,14 @@
   </div>
   <div class="country-widget__content">
 
-    {{#if tabs}}
+    {{#if this.tabs}}
       <ul class="tab-ul">
-      {{#each tabs}}
-        <li class="tab-li" data-position="{{position}}">{{name}}</li>
+      {{#each this.tabs}}
+        <li class="tab-li" data-position="{{this.position}}">
+          <span class="name">{{this.name}}</span>
+          {{#if this.subname}}<span class="subname">{{this.subname}}</span>{{/if}}
+          {{#if this.ipcc}}<span class="ipcc">{{this.ipcc}}</span>{{/if}}
+        </li>
       {{/each}}
       </ul>
       <div class="tab-content"></div>

@@ -14,6 +14,8 @@ def tabs
     {
       position:      tab['position'],
       name:          tab['name'],
+      subname:       tab['subname'],
+      ipcc:          tab['ipcc'],
       type:          tab['type'],
       range:         tab['range'],
       rangetype:     tab['rangetype'],
