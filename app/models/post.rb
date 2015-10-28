@@ -2,7 +2,7 @@ require 'httparty'
 
 class Post
   include HTTParty
-  default_timeout 5
+  default_timeout 10
 
   class << self
 
