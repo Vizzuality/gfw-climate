@@ -8,16 +8,11 @@ define([
 
   var CountryHeaderPresenter = PresenterClass.extend({
 
-    status: new (Backbone.Model.extend({
-      defaults: {
-        country: '',
-        area: ''
-      }
-    })),
-
     init: function(view) {
       this._super();
       this.view = view
+
+      this.status = new (Backbone.Model.extend()),
 
       mps.publish('Place/register', [this]);
     },
@@ -38,9 +33,6 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
-      // p.country = this.status.attributes.country;
-      // p.area = this.status.attributes.area;
-
       return p;
     },
 
@@ -50,9 +42,15 @@ define([
      * @param  {Object} place PlaceService's place object
      */
     _onPlaceGo: function(place) {
-      this.status.set('country', place.country);
-      this.status.set('area', place.area);
+      this._setCountry(place.country.iso);
+      this.view.start();
     },
+
+    _setCountry: function(country) {
+      this.status.set({
+        iso: country
+      });
+    }
 
   });
 

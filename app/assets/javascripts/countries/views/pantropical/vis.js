@@ -80,11 +80,22 @@ function addCommas(nStr) {
       this.data = data;
       this.width = 960;
       this.height = 480;
+      this.NYDF = "Other NYDF Signatory",
+      this.NONYDF = "Other non-NYDF Signatory",
+      this.NET_INTEREST = "Net interest",
+      this.defaultCharge  = function(d){
+                        if (d.value < 0) {
+                          return 0
+                        } else {
+                          return -Math.pow(d.radius,2.0)/8
+                        }
+                      };
       this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
         x: this.width / 2,
         y: this.height / 2
       };
+      this.centerY = 300;
       this.year_centers = {
         "2001": {
           x: this.width * (1/13),
@@ -140,6 +151,7 @@ function addCommas(nStr) {
         }
       };
       this.layout_gravity = -0.01;
+      this.defaultGravity = 0.1;
       this.damper = 0.1;
       this.vis = null;
       this.nodes = [];
@@ -218,8 +230,8 @@ function addCommas(nStr) {
         return "bubble_" + d.id;
       }).on("mouseover", function(d, i) {
         var el = d3.select(this);
-        var xpos = ~~el.attr('cx') - 122;
-        var ypos = (el.attr('cy') - d.radius - 27);
+        var xpos = ~~el.attr('cx') - 115;
+        var ypos = (el.attr('cy') - d.radius - 37);
         d3.select("#pantropical_tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
         return that.show_details(d, i, this);
       }).on("mouseout", function(d, i) {
@@ -261,18 +273,51 @@ function addCommas(nStr) {
       })(this);
     };
 
-    BubbleChart.prototype.display_by_year = function() {
-      this.force.gravity(this.layout_gravity).charge(this.charge).friction(0.9).on("tick", (function(_this) {
-        return function(e) {
-          return _this.circles.each(_this.move_towards_year(e.alpha)).attr("cx", function(d) {
-            return d.x;
-          }).attr("cy", function(d) {
-            return d.y;
-          });
+    BubbleChart.prototype.buoyancy = function(alpha) {
+      var that = this;
+      return function(d) {
+          var targetY = that.centerY
+          d.y = d.y + (targetY - d.y) * (that.defaultGravity) * alpha * alpha * alpha * 100
+      };
+    };
+
+    BubbleChart.prototype.mandatorySort = function(alpha) {
+      var that = this;
+      return function(d){
+        var targetY = that.centerY;
+        var targetX = 0;
+
+        if (d.category.includes('non-NYDF'))
+          d.category = 'Other non-NYDF Signatory';
+        if ((d.category === that.NYDF)||(d.category === that.NET_INTEREST)) {
+          targetX = 550
+        } else {
+          targetX = 450
         };
-      })(this));
-      this.force.start();
-      return this.display_years();
+
+
+
+
+        d.y = d.y + (targetY - d.y) * (that.defaultGravity) * alpha * 1.1
+        d.x = d.x + (targetX - d.x) * (that.defaultGravity) * alpha * 1.1
+      };
+    },
+
+    BubbleChart.prototype.display_by_ny = function() {
+      var that = this;
+      this.force
+        .gravity(0)
+        .friction(0.9)
+        .charge(that.defaultCharge)
+        .on("tick", function(e){
+          that.circles
+            .each(that.mandatorySort(e.alpha))
+            .each(that.buoyancy(e.alpha))
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+        })
+        .start();
+      //return this.display_ny();
     };
 
     BubbleChart.prototype.move_towards_year = function(alpha) {
@@ -286,7 +331,7 @@ function addCommas(nStr) {
       })(this);
     };
 
-    BubbleChart.prototype.display_years = function() {
+    BubbleChart.prototype.display_ny = function() {
       var years, years_data, years_x;
       years_x = {
         "2001": this.width / (1/13),
@@ -352,9 +397,9 @@ function addCommas(nStr) {
         return chart.display_group_all();
       };
     })(this);
-    root.display_year = (function(_this) {
+    root.display_ny = (function(_this) {
       return function() {
-        return chart.display_by_year();
+        return chart.display_by_ny();
       };
     })(this);
     root.display_change = (function(_this) {
@@ -371,7 +416,7 @@ function addCommas(nStr) {
       return function(view_type) {
         switch (view_type) {
           case 'nydfs':
-            return root.display_year();
+            return root.display_ny();
           case 'all':
             return root.display_all();
           case 'change':

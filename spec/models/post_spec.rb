@@ -2,27 +2,28 @@ require "rails_helper"
 
 RSpec.describe Post, type: :model do
 
-  context "Get list of posts" do
+  # ToDo: Blog feature pending on deliverance
+  # context "Get list of posts" do
 
-    it "Find all posts on page one" do
-      posts = Post.find_all(page: nil)
-      expect(posts.count).to eq 10
-    end
+  #   it "Find all posts on page one" do
+  #     posts = Post.find_all(page: nil)
+  #     expect(posts.count).to eq 10
+  #   end
 
-    it "Find all posts on page ten" do
-      posts = Post.find_all(page: '10')
-      expect(posts.count).to eq 10
-    end
+  #   it "Find all posts on page ten" do
+  #     posts = Post.find_all(page: '10')
+  #     expect(posts.count).to eq 10
+  #   end
 
-  end
+  # end
 
-  context "Get certain post" do
+  # context "Get certain post" do
 
-    it "Find post by link" do
-      post = Post.find_post(link: '2015/07/gfw-user-profile-andrew-heald')
-      expect(post).not_to be_nil
-    end
+  #   it "Find post by link" do
+  #     post = Post.find_post(link: '2015/07/gfw-user-profile-andrew-heald')
+  #     expect(post).not_to be_nil
+  #   end
 
-  end
+  # end
 
 end

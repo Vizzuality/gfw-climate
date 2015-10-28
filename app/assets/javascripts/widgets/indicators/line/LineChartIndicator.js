@@ -23,7 +23,8 @@ define([
 
     initialize: function(setup) {
       this.constructor.__super__.initialize.apply(this, [setup]);
-      // Enable params when we have API data
+
+      this.tab = setup.tab;
       this.model = new IndicatorModel(setup.model);
 
       // Fetch values
@@ -32,16 +33,6 @@ define([
         this.render();
         this.$el.removeClass('is-loading');
       }.bind(this));
-    },
-
-    setFetchParams: function(data) {
-      if (data.location) {
-        data.iso = data.location.iso;
-        data.id_1 = (!!data.location.jurisdiction) ? data.location.jurisdiction : null;
-        data.area = (!!data.location.area) ? data.location.area : null;
-        delete data.location
-      }
-      return data;
     },
 
     render: function() {
@@ -72,12 +63,19 @@ define([
           innerPadding: { top: 10, right: 15, bottom: 0, left: 50 },
           keys: keys
         });
-
         lineChart.render();
+        this.changeAverage(data);
+
       } else {
         this.$el.html(this.noDataTemplate({ classname: 'line'}));
       }
+    },
 
+    changeAverage: function(data) {
+      var average = _.reduce(data, function(memo, num) {
+        return memo + num.value;
+      }, 0) / data.length;
+      this.tab.setAverage(average);
     },
 
     between: function(num, a, b, inclusive) {

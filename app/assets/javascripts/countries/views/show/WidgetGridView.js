@@ -119,26 +119,23 @@ define([
       var promises = [],
         widgetsArray = [],
         iso = this.presenter.status.get('country'),
-        // widgets = this.presenter.status.get('options')[iso];
-        widgets = JSON.parse(atob('eyJCUkEwMCI6eyIxIjpbeyJpZCI6MSwidGFicyI6eyJ0eXBlIjoibGluZSIsInBvc2l0aW9uIjoxLCJ1bml0IjoiaGVjdGFyZXMiLCJzdGFydF9kYXRlIjoyMDAxLCJlbmRfZGF0ZSI6MjAxNCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiMiI6W3siaWQiOjIsInRhYnMiOnsidHlwZSI6ImxpbmUiLCJwb3NpdGlvbiI6MSwidW5pdCI6InRnLWMiLCJzdGFydF9kYXRlIjoyMDAxLCJlbmRfZGF0ZSI6MjAxNCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiMyI6W3siaWQiOjMsInRhYnMiOnsidHlwZSI6Im51bWJlciIsInBvc2l0aW9uIjoxLCJ1bml0IjpudWxsLCJzdGFydF9kYXRlIjpudWxsLCJlbmRfZGF0ZSI6bnVsbCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiNCI6W3siaWQiOjQsInRhYnMiOnsidHlwZSI6InBpZSIsInBvc2l0aW9uIjoxLCJ1bml0IjpudWxsLCJzdGFydF9kYXRlIjpudWxsLCJlbmRfZGF0ZSI6bnVsbCwidGhyZXNoIjoyNSwic2VjdGlvbiI6ImJpb21hc3MiLCJzZWN0aW9uc3dpdGNoIjpbeyJ1bml0IjoiYmlvbWFzcyIsInVuaXRuYW1lIjoiYmlvbWFzcyJ9LHsidW5pdCI6ImNhcmJvbiIsInVuaXRuYW1lIjoiY2FyYm9uIn1dfX1dLCI1IjpbeyJpZCI6NSwidGFicyI6eyJ0eXBlIjoicGllIiwicG9zaXRpb24iOjEsInVuaXQiOm51bGwsInN0YXJ0X2RhdGUiOm51bGwsImVuZF9kYXRlIjpudWxsLCJ0aHJlc2giOjI1LCJzZWN0aW9uIjoiYmlvbWFzcyIsInNlY3Rpb25zd2l0Y2giOlt7InVuaXQiOiJiaW9tYXNzIiwidW5pdG5hbWUiOiJiaW9tYXNzIn0seyJ1bml0IjoiY2FyYm9uIiwidW5pdG5hbWUiOiJjYXJib24ifV19fV19LCJDTVIwMCI6eyIxIjpbeyJpZCI6MSwidGFicyI6eyJ0eXBlIjoibGluZSIsInBvc2l0aW9uIjoxLCJ1bml0IjoiaGVjdGFyZXMiLCJzdGFydF9kYXRlIjoyMDAxLCJlbmRfZGF0ZSI6MjAxNCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiMiI6W3siaWQiOjIsInRhYnMiOnsidHlwZSI6ImxpbmUiLCJwb3NpdGlvbiI6MSwidW5pdCI6InRnLWMiLCJzdGFydF9kYXRlIjoyMDAxLCJlbmRfZGF0ZSI6MjAxNCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiMyI6W3siaWQiOjMsInRhYnMiOnsidHlwZSI6Im51bWJlciIsInBvc2l0aW9uIjoxLCJ1bml0IjpudWxsLCJzdGFydF9kYXRlIjpudWxsLCJlbmRfZGF0ZSI6bnVsbCwidGhyZXNoIjoyNSwic2VjdGlvbiI6bnVsbCwic2VjdGlvbnN3aXRjaCI6bnVsbH19XSwiNCI6W3siaWQiOjQsInRhYnMiOnsidHlwZSI6InBpZSIsInBvc2l0aW9uIjoxLCJ1bml0IjpudWxsLCJzdGFydF9kYXRlIjpudWxsLCJlbmRfZGF0ZSI6bnVsbCwidGhyZXNoIjoyNSwic2VjdGlvbiI6ImJpb21hc3MiLCJzZWN0aW9uc3dpdGNoIjpbeyJ1bml0IjoiYmlvbWFzcyIsInVuaXRuYW1lIjoiYmlvbWFzcyJ9LHsidW5pdCI6ImNhcmJvbiIsInVuaXRuYW1lIjoiY2FyYm9uIn1dfX1dLCI1IjpbeyJpZCI6NSwidGFicyI6eyJ0eXBlIjoicGllIiwicG9zaXRpb24iOjEsInVuaXQiOm51bGwsInN0YXJ0X2RhdGUiOm51bGwsImVuZF9kYXRlIjpudWxsLCJ0aHJlc2giOjI1LCJzZWN0aW9uIjoiYmlvbWFzcyIsInNlY3Rpb25zd2l0Y2giOlt7InVuaXQiOiJiaW9tYXNzIiwidW5pdG5hbWUiOiJiaW9tYXNzIn0seyJ1bml0IjoiY2FyYm9uIiwidW5pdG5hbWUiOiJjYXJib24ifV19fV19fQ=='))
+        widgets = this.presenter.status.get('options')[iso];
 
-
-
-      _.map(widgets.BRA00, function(widget, id) {
+      _.map(widgets, function(widget, id) {
           var deferred = $.Deferred();
           var widgetOptions =  widget[0];
           var newWidget = new WidgetView({
             model: {
               id: id,
-              slug: 'BRA',
+              slug: iso,
               location: {
-                iso: 'BRA',
+                iso: iso,
                 jurisdiction: 0,
                 area: 0
               },
             },
             className: 'gridgraphs--widget',
-            status: widgets.BRA00[id][0]
+            status: this.presenter.status.get('options')[iso][id][0]
           });
 
           newWidget._loadMetaData(function() {
