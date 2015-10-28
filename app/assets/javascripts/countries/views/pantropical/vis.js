@@ -95,6 +95,7 @@ function addCommas(nStr) {
         x: this.width / 2,
         y: this.height / 2
       };
+      this.centerY = 300;
       this.year_centers = {
         "2001": {
           x: this.width * (1/13),
@@ -150,6 +151,7 @@ function addCommas(nStr) {
         }
       };
       this.layout_gravity = -0.01;
+      this.defaultGravity = 0.1;
       this.damper = 0.1;
       this.vis = null;
       this.nodes = [];
@@ -228,8 +230,8 @@ function addCommas(nStr) {
         return "bubble_" + d.id;
       }).on("mouseover", function(d, i) {
         var el = d3.select(this);
-        var xpos = ~~el.attr('cx') - 122;
-        var ypos = (el.attr('cy') - d.radius - 27);
+        var xpos = ~~el.attr('cx') - 115;
+        var ypos = (el.attr('cy') - d.radius - 37);
         d3.select("#pantropical_tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
         return that.show_details(d, i, this);
       }).on("mouseout", function(d, i) {
@@ -273,21 +275,9 @@ function addCommas(nStr) {
 
     BubbleChart.prototype.buoyancy = function(alpha) {
       var that = this;
-      return function(d){
-          // d.y -= 1000 * alpha * alpha * alpha * d.changeCategory
-
-          // if (d.changeCategory >= 0) {
-          //   d.y -= 1000 * alpha * alpha * alpha
-          // } else {
-          //   d.y += 1000 * alpha * alpha * alpha
-          // }
-
-
-          var targetY = that.centerY - (d.changeCategory / 3) * that.boundingRadius
+      return function(d) {
+          var targetY = that.centerY
           d.y = d.y + (targetY - d.y) * (that.defaultGravity) * alpha * alpha * alpha * 100
-
-
-
       };
     };
 
