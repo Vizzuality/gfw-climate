@@ -1,5 +1,6 @@
 .country-widget {
   min-height: 250px;
+  color: $dark;
   .country-widget__header {
     overflow: hidden;
     display: flex;
@@ -81,6 +82,7 @@
           border-right: 1px solid #e5e5e5;
         }
         &.is-selected {
+          color: $black;
           background: $white;
           border-bottom: 1px solid transparent;
         }
@@ -92,7 +94,7 @@
     -webkit-appearance:none;
     -moz-appearance:none;
     appearance:none;
-    padding: 2px 5px 3px;
+    padding: 2px 8px 3px;
     border-radius: 11px;
     &.blue {
       border: 1px solid $blue;
