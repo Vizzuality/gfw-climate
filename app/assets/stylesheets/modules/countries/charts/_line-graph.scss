@@ -184,9 +184,10 @@
   &:after {
     @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
     right: inherit;
-    bottom: -7px;
+    bottom: -35px;
     top: 110%;
     content: ' ';
+    position: relative;
   }
 }
 .pantropical-vis {
