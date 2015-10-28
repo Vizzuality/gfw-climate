@@ -1,0 +1,32 @@
+
+.layout-content {
+  section{
+    &.feature {
+      padding: 60px 0;
+
+      h3 {
+        font-size: 35px;
+        font-weight: 300;
+        color: $dark;
+      }
+
+      p {
+        font-size: 19px;
+        line-height: 24px;
+        color: $dark;
+        .bold {
+          color: $blue;
+          font-weight: 700;
+        }
+      }
+
+    }
+    &:nth-of-type(3) {
+      border-top: 1px solid $border;
+    }
+    &:last-child {
+      border-bottom: 1px solid $border;
+    }
+  }
+
+}
