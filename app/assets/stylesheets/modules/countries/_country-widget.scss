@@ -87,21 +87,18 @@
           background: $white;
           border-bottom: 1px solid transparent;
         }
-        .name {
+        span {
           display: block;
           width: 100%;
+        }
+        .subname,.ipcc {
+          color: #777;
         }
         .subname {
           font-size: 10px;
-          display: block;
-          width: 100%;
-          color: #777;
         }
         .ipcc {
           font-size: 9px;
-          display: block;
-          width: 100%;
-          color: #777;
         }
       }
     }
