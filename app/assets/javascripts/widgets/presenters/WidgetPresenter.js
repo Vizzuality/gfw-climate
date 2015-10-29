@@ -16,13 +16,20 @@ define([
       this.status = new (Backbone.Model.extend({
         defaults: setup.status
       }));
-
       this._setListeners();
     },
 
     _setListeners: function() {
       this.status.on('change:tabs', this.setTab, this);
     },
+
+    _subscriptions: [{
+      'Compare/reflection': function(id,slug_compare,status) {
+        if (this.model.get('id') == id && this.model.get('slug') == slug_compare) {
+          this.status.set(status);
+        }
+      }
+    }],
 
     changeTab: function(position) {
       var tabs = _.clone(this.status.get('tabs'));
@@ -41,7 +48,10 @@ define([
 
     publish: function() {
       mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
-    }
+      if (!!this.model.get('slug_compare')) {
+        mps.publish('Compare/reflection', [this.model.get('id'),this.model.get('slug_compare'),this.status.toJSON()]);
+      }
+    },
 
   });
 
