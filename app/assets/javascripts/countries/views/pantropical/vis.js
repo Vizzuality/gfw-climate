@@ -90,6 +90,7 @@ function addCommas(nStr) {
                           return -Math.pow(d.radius,2.0)/8
                         }
                       };
+      this.year_to_compare = undefined;
       this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
         x: this.width / 2,
@@ -328,7 +329,8 @@ function addCommas(nStr) {
       //return this.display_ny();
     };
 
-    BubbleChart.prototype.display_by_change = function() {
+    BubbleChart.prototype.display_by_change = function(year) {
+      this.year_to_compare = year;
       var that = this;
       this.force
         .gravity(0)
@@ -337,7 +339,16 @@ function addCommas(nStr) {
         .on("tick", function(e){
           that.circles
             .transition().duration(50).attr("r", function(d) {
-              return that.radius_scale(d.y2013 * 1.6);
+              if (! !!that.year_to_compare) {
+                var value = d.y2001;
+              } else {
+                for (key in d) {
+                  if (key.includes(that.year_to_compare.toString())){
+                    var value = d[key];
+                  }
+                }
+              }
+              return that.radius_scale(value * 1.6);
             })
             .each(that.mandatorySort(e.alpha))
             .each(that.buoyancy(e.alpha))
@@ -431,8 +442,8 @@ function addCommas(nStr) {
       };
     })(this);
     root.display_change = (function(_this) {
-      return function() {
-        return chart.display_by_change();
+      return function(year) {
+        return chart.display_by_change(year);
       };
     })(this);
     root.display_country = (function(_this) {
@@ -441,14 +452,14 @@ function addCommas(nStr) {
       };
     })(this);
     root.toggle_view = (function(_this) {
-      return function(view_type) {
+      return function(view_type, year) {
         switch (view_type) {
           case 'nydfs':
             return root.display_ny();
           case 'all':
             return root.display_all();
           case 'change':
-            return root.display_change();
+            return root.display_change(year);
           case 'country':
             return root.display_country();
         }
