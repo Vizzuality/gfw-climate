@@ -228,8 +228,10 @@ function addCommas(nStr) {
         };
       })(this)).attr("id", function(d) {
         return "bubble_" + d.id;
-      }).on("mouseover", function(d, i) {
+      }).on("mouseenter", function(d, i) {
         var el = d3.select(this);
+        // el.style('z-index','20');
+        // el.style('position','relative');
         var xpos = ~~el.attr('cx') - 115;
         var ypos = (el.attr('cy') - d.radius - 37);
         d3.select("#pantropical_tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
@@ -253,6 +255,9 @@ function addCommas(nStr) {
     BubbleChart.prototype.display_group_all = function() {
       this.force.gravity(this.layout_gravity).charge(this.charge).friction(0.9).on("tick", (function(_this) {
         return function(e) {
+          _this.circles.transition().duration(50).attr("r", function(d) {
+              return _this.radius_scale(d.value * 1.6);
+            })
           return _this.circles.each(_this.move_towards_center(e.alpha)).attr("cx", function(d) {
             return d.x;
           }).attr("cy", function(d) {
@@ -289,7 +294,7 @@ function addCommas(nStr) {
 
         if (d.category.includes('non-NYDF'))
           d.category = 'Other non-NYDF Signatory';
-        if ((d.category === that.NYDF)||(d.category === that.NET_INTEREST)) {
+        if ((d.category === that.NYDF)) {
           targetX = 550
         } else {
           targetX = 450
@@ -311,6 +316,29 @@ function addCommas(nStr) {
         .charge(that.defaultCharge)
         .on("tick", function(e){
           that.circles
+            .transition().duration(50).attr("r", function(d) {
+              return that.radius_scale(d.value * 1.6);
+            })
+            .each(that.mandatorySort(e.alpha))
+            .each(that.buoyancy(e.alpha))
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+        })
+        .start();
+      //return this.display_ny();
+    };
+
+    BubbleChart.prototype.display_by_change = function() {
+      var that = this;
+      this.force
+        .gravity(0)
+        .friction(0.9)
+        .charge(that.defaultCharge)
+        .on("tick", function(e){
+          that.circles
+            .transition().duration(50).attr("r", function(d) {
+              return that.radius_scale(d.y2013 * 1.6);
+            })
             .each(that.mandatorySort(e.alpha))
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
