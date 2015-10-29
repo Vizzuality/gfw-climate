@@ -60,9 +60,7 @@ define([
       this.$el.html(this.template)
 
       widgetsArray.forEach(function(widget) {
-
-
-        this.$el.find('.national-grid__content').append(widget.render().el);
+        this.$el.find('.national-grid__content').find('.gridgraphs--container-profile').append(widget.render().el);
       }.bind(this));
 
       this.parent.append(this.el);
