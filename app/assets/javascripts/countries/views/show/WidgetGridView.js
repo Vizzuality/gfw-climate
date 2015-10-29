@@ -22,15 +22,13 @@ define([
     initialize: function() {
       this.presenter = new WidgetGridPresenter(this);
 
-      this._setListeners();
       this._cacheVars();
     },
 
     start: function() {
+
       this.render();
     },
-
-    _setListeners: function() {},
 
     _cacheVars: function() {
       this.$moreIndicatorsWarning = $('.more-indicators-warning');
@@ -60,7 +58,6 @@ define([
     },
 
     render: function() {
-      console.log('render');
 
       var subview,
         view = this.presenter.status.get('view');
@@ -89,6 +86,7 @@ define([
 
           new SubNationalView(options);
           break;
+
         case 'areas-interest':
 
           var opts = $.extend(true, {}, this.presenter.status.get('options'));

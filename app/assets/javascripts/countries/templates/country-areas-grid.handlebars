@@ -1,5 +1,19 @@
-<div class="area-grid">
+<div class="areas-grid">
 
-  <div class="area-grid__content"></div>
+  <div class="areas-grid__content">
+
+    {{#each areas}}
+
+      <div id="box-areas-{{this.id}}">
+
+        <h2>{{this.name}}</h2>
+
+        <div class="gridgraphs--container-profile"></div>
+
+      </div>
+
+    {{/each}}
+
+  </div>
 
 </div>

@@ -72,13 +72,30 @@ define([
 
         this.template = Handlebars.compile(tpl);
 
-        this.$el.html(this.template);
+        this.$el.html(this.template(this.parseData()));
 
+        var data = [];
 
-        widgetsArray.forEach(_.bind(function(widget) {
-          widget.render()
-          this.$el.addClass('.areas-grid').append(widget.el);
+        var widgetsGroup = _.groupBy(widgetsArray, function(w) {
+          return w.presenter.model.attributes.slug;
+        });
+
+        this.areas.forEach(function(a, i) {
+          data.push({
+              areas: a,
+              widgets: widgetsGroup[a.id]
+          });
+
+        }.bind(this));
+
+        _.each(data, _.bind(function(d) {
+
+          _.each(d.widgets, (function(w) {
+            $('#box-areas-' + d.areas.id+ ' .gridgraphs--container-profile').append(w.render().el);
+          }));
+
         }, this));
+
 
       } else {
 
@@ -94,6 +111,13 @@ define([
       }
 
       this.parent.append(this.$el);
+    },
+
+
+    parseData: function() {
+      return {
+        areas: this.areas
+      };
     }
 
   });

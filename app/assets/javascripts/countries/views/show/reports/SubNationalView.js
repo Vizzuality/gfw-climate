@@ -11,13 +11,10 @@ define([
     el: '.gridgraphs--container-profile',
 
     initialize: function(options) {
+
       this.jurisdictions = options.jurisdictions;
       this.parent = options.parent;
       this.widgets = options.widgets;
-
-
-      console.log(this.jurisdictions);
-      console.log(this.widgets);
 
       if (!this.jurisdictions || !this.widgets) {
         this.render();
@@ -36,6 +33,7 @@ define([
       _.map(this.widgets, function(j, key) {
 
         _.map(j, function(w) {
+
 
           var deferred = $.Deferred();
           var newWidget = new WidgetView({
@@ -75,13 +73,30 @@ define([
 
         this.template = Handlebars.compile(tpl);
 
-        this.$el.html(this.template);
+        this.$el.html(this.template(this.parseData()));
 
-        widgetsArray.forEach(_.bind(function(widget) {
-          widget.render()
-          this.$el.addClass('.subnational-grid').append(widget.el);
+        var data = [];
+
+        var widgetsGroup = _.groupBy(widgetsArray, function(w) {
+          return w.presenter.model.attributes.slug;
+        });
+
+        this.jurisdictions.forEach(function(j, i) {
+          data.push({
+              jurisdiction: j,
+              widgets: widgetsGroup[j.id]
+          });
+
+        }.bind(this));
+
+
+        _.each(data, _.bind(function(d) {
+
+          _.each(d.widgets, (function(w) {
+            $('#box-jurisdictions-' + d.jurisdiction.id+ ' .gridgraphs--container-profile').append(w.render().el);
+          }));
+
         }, this));
-
 
       } else {
 
@@ -99,6 +114,12 @@ define([
       this.parent.append(this.$el);
 
       // return this;
+    },
+
+    parseData: function() {
+      return {
+        jurisdictions: this.jurisdictions
+      };
     }
 
   });

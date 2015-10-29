@@ -40,23 +40,61 @@ define([
         }
 
         this._updateView(view);
-        this._loadDefaultOptions(p);
-        this.view._toggleWarnings();
+
+        if (view === 'national') {
+
+          var p = {
+            view: view
+          }
+
+          var callback = function() {
+            this.status.set({
+              country: sessionStorage.getItem('countryIso'),
+              jurisdictions: null,
+              areas: null,
+              view: view,
+              options: this.getOptions(p, this.widgetCollection.toJSON())
+            });
+
+            this.view.start();
+            this.view._toggleWarnings();
+          }
+
+          this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+        }
+
+        if (view === 'subnational' || view === 'areas-interest') {
+
+          this.status.set({
+            country: sessionStorage.getItem('countryIso'),
+            jurisdictions: null,
+            areas: null,
+            view: view,
+            options: {}
+          });
+          this.view.start();
+          this.view._toggleWarnings();
+        }
+
+
       }
     }, {
       'Grid/update': function(params) {
         var p = jQuery.extend({}, params)
 
-        delete this.status.get('options')[sessionStorage.getItem('countryIso')]
+        var callback = function() {
+          this.status.set({
+            areas: params.areas,
+            view: params.view,
+            jurisdictions: params.jurisdictions,
+            options: this.getOptions(p, this.widgetCollection.toJSON())
+          })
 
-        _.extend(p, {
-          areas: params.areas,
-          view: params.view,
-          jurisdictions: params.jurisdictions,
-          options: this.getOptions(p, this.widgetCollection.toJSON())
-        });
+          this.view.start();
+        };
 
-        this._loadCustomizedOptions(p)
+        this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+
       }
     }],
 
@@ -91,7 +129,62 @@ define([
      * @param  {Object} place PlaceService's place object
      */
     _onPlaceGo: function(params) {
-      this._setupView(params);
+      switch(params.view) {
+        case 'national':
+
+          if (params.options) {
+            this._loadCustomizedOptions(params);
+          } else {
+            this._loadDefaultOptions(params);
+          }
+
+          break;
+
+        case 'subnational':
+
+          if (params.options) {
+            this._loadCustomizedOptions(params);
+          } else {
+            this.status.set({
+              country: params.country.iso,
+              view: params.view,
+              areas: null,
+              jurisdictions: null,
+              options: {}
+            });
+            this.view.start()
+
+            mps.publish('Tab/update', [{
+              view: this.status.get('view'),
+              silent: true
+            }]);
+          }
+
+          break;
+
+        case 'areas-interest':
+
+          if (params.options) {
+            this._loadCustomizedOptions(params);
+          } else {
+            this.status.set({
+              country: params.country.iso,
+              view: params.view,
+              areas: null,
+              jurisdictions: null,
+              options: {}
+            });
+
+            this.view.start();
+            mps.publish('Tab/update', [this.status.get('view')]);
+          }
+
+          break;
+
+        default:
+          this._loadDefaultOptions(params);
+          break;
+      }
     },
 
     /**
@@ -100,13 +193,6 @@ define([
      * with the default ones.
      * @param  {[object]} params
      */
-    _setupView: function(params) {
-      if (params.options === null) {
-        this._loadDefaultOptions(params);
-      } else {
-        this._loadCustomizedOptions(params);
-      }
-    },
 
     _loadDefaultOptions: function(params) {
 
@@ -122,6 +208,7 @@ define([
 
         this.view.start();
         mps.publish('Tab/update', [this.status.get('view')])
+
       };
 
       this.widgetCollection.fetch({default: true}).done(callback.bind(this));
@@ -137,8 +224,14 @@ define([
         view: params.view
       });
 
+
       this.view.start();
-      mps.publish('Tab/update', [this.status.get('view')]);
+      // mps.publish('Tab/update', [this.status.get('view')]);
+
+      mps.publish('Tab/update', [{
+        view: this.status.get('view'),
+        silent: true
+      }]);
     },
 
     _updateView: function(view) {
@@ -181,6 +274,7 @@ define([
     },
 
     getOptions: function(params, defaultWidgets) {
+
       // This should be removed to a dinamic var
       var activeWidgets = [1, 2, 3, 4, 5];
       var w = _.groupBy(_.compact(_.map(defaultWidgets,_.bind(function(w){
@@ -196,24 +290,32 @@ define([
 
       var r = {};
 
-      if (!params.options) {
+      switch(params.view) {
 
-        console.log('AQUI')
-        r[this.objToSlug(sessionStorage.getItem('countryIso'), '')] = w;
+        case 'national':
+            r[this.objToSlug(sessionStorage.getItem('countryIso'), '')] = w;
+          break;
 
-      } else {
+        case 'subnational':
 
-        if(params.options.jurisdictions) {
-          _.map(params.options.jurisdictions, function(j) {
-            r[this.objToSlug(j.id, '')] = w;
-          }.bind(this));
-        }
+            if(params.options.jurisdictions) {
+              _.map(params.options.jurisdictions, function(j) {
+                r[this.objToSlug(j.id, '')] = w;
+              }.bind(this));
+            }
 
-        if (params.options.areas) {
-          _.map(params.options.areas, function(a) {
-            r[this.objToSlug(a.id, '')] = w;
-          }.bind(this));
-        };
+          break;
+
+        case 'areas-interest':
+
+            if (params.options.areas) {
+              _.map(params.options.areas, function(a) {
+                r[this.objToSlug(a.id, '')] = w;
+              }.bind(this));
+            };
+
+          break;
+
       }
 
       return r;

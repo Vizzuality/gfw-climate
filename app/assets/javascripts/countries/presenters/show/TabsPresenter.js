@@ -29,8 +29,8 @@ define([
         this._onPlaceGo(place);
       }
     }, {
-      'Tab/update': function(view) {
-        this.setDisplay(view);
+      'Tab/update': function(opts) {
+        this.setDisplay(opts);
       }
     }],
 
@@ -58,15 +58,24 @@ define([
       }
     },
 
-    setDisplay: function(display) {
-      this.status.set({
-        view: display
-      });
+    setDisplay: function(opts) {
+
+      if (opts.silent) {
+        this.status.set({
+          view: opts.view
+        }, {silent: true});
+      } else {
+        this.status.set({
+          view: opts
+        });
+      }
+
+      this.view._setCurrentTab();
     },
 
     onUpdateTab: function() {
       this.view._setCurrentTab();
-      mps.publish('View/update', [this.status.get('view')])
+      mps.publish('View/update', [this.status.get('view')]);
     },
 
   });
