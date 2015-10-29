@@ -1,11 +1,15 @@
 define([
   'backbone',
-  'widgets/views/WidgetView'
-], function(Backbone, WidgetView) {
+  'handlebars',
+  'widgets/views/WidgetView',
+  'text!countries/templates/country-national-grid.handlebars',
+], function(Backbone, Handlebars, WidgetView, tpl) {
 
   var NationalView = Backbone.View.extend({
 
     el: '.gridgraphs--container-profile',
+
+    template: Handlebars.compile(tpl),
 
     initialize: function(options) {
       this.parent = options.parent;
@@ -53,14 +57,15 @@ define([
     render: function(widgetsArray) {
       this.$el.html('');
 
+      this.$el.html(this.template)
+
       widgetsArray.forEach(function(widget) {
-        widget.render();
-        this.$el.addClass('national-grid').append(widget.el);
+
+
+        this.$el.find('.national-grid__content').append(widget.render().el);
       }.bind(this));
 
       this.parent.append(this.el);
-
-      // return this;
     }
 
   });
