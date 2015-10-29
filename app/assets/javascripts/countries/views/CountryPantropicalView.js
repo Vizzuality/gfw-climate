@@ -2,7 +2,7 @@ define([
   'backbone',
   'countries/views/pantropical/vis',
 
-], function(Backbone,d3) {
+], function(Backbone) {
 
   'use strict';
 
