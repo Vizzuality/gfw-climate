@@ -42,6 +42,7 @@ class Country
     def index_query
       'SELECT DISTINCT iso, admin0_name AS name, true as enabled
        FROM indicators_values
+       WHERE iso IS NOT NULL AND admin0_name IS NOT NULL
        ORDER BY name'
     end
 
