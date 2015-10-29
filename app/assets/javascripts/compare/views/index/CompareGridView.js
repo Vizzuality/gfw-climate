@@ -42,6 +42,7 @@ define([
             model: {
               id: w,
               location: this.presenter.status.get('compare'+(i+1)),
+              location_compare: this.presenter.status.get('compare'+((data.length) - i )),
               slug: slug,
               slug_compare: slug_compare,
             },
