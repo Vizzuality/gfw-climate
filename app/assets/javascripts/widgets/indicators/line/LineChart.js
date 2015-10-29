@@ -1,11 +1,11 @@
 define([
- 'jquery', 'd3', 'underscore',
+ 'jquery',
+ 'd3',
+ 'underscore',
+ 'mps',
  'widgets/indicators/line/line_chart_context',
  'widgets/indicators/line/line_chart_interactionHandler'
-], function(
-  $, d3, _,
-  LineChartContext, LineChartInteractionHandler
-) {
+], function($, d3, _, mps, LineChartContext, LineChartInteractionHandler ){
 
 var LineChart = function(options) {
   this.svg;

@@ -56,8 +56,10 @@ define([
 
       if (!!data.length) {
         var lineChart = new LineChart({
+          id: this.model.get('id'),
           el: $graphContainer,
           unit: this.model.get('unit'),
+          compare: this.model.get('slug_compare'),
           data: data,
           sizing: {top: 0, right: 0, bottom: 25, left: 0},
           innerPadding: { top: 10, right: 15, bottom: 0, left: 50 },

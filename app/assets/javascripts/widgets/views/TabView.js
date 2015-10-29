@@ -145,6 +145,9 @@ define([
               unit: t.unit,
               start_date: t.start_date,
               end_date: t.end_date,
+              // Compare model params
+              location_compare: this.presenter.model.get('location_compare'),
+              slug_compare: this.presenter.model.get('slug_compare'),
             },
             data: {
               location: this.presenter.model.get('location'),
