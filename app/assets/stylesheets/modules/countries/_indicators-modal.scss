@@ -20,7 +20,9 @@
     }
 
     .item-list {
-      .item-group {
+      .indicators-group,
+      .jurisdictions-group,
+      .areas-group {
         margin: 25px 0;
         h3 {
           color: rgba($dark, .5);

@@ -35,18 +35,72 @@ define([
       }
     }, {
       'View/update': function(view) {
+        var p = {
+          view: view
+        }
+
         this._updateView(view);
-        this.view._toggleWarnings();
+
+        if (view === 'national') {
+
+          var p = {
+            view: view
+          }
+
+          var callback = function() {
+            this.status.set({
+              country: sessionStorage.getItem('countryIso'),
+              jurisdictions: null,
+              areas: null,
+              view: view,
+              options: this.getOptions(p, this.widgetCollection.toJSON())
+            });
+
+            this.view.start();
+            this.view._toggleWarnings();
+          }
+
+          this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+        }
+
+        if (view === 'subnational' || view === 'areas-interest') {
+
+          this.status.set({
+            country: sessionStorage.getItem('countryIso'),
+            jurisdictions: null,
+            areas: null,
+            view: view,
+            options: {}
+          });
+          this.view.start();
+          this.view._toggleWarnings();
+        }
+
+
+      }
+    }, {
+      'Grid/update': function(params) {
+        var p = jQuery.extend({}, params)
+
+        var callback = function() {
+          this.status.set({
+            areas: params.areas,
+            view: params.view,
+            jurisdictions: params.jurisdictions,
+            options: this.getOptions(p, this.widgetCollection.toJSON())
+          })
+
+          this.view.start();
+        };
+
+        this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+
       }
     }],
 
     _setListeners: function() {
       this.status.on('change', function() {
         mps.publish('Place/update', []);
-      }, this);
-
-      this.status.on('change:view', function() {
-        this.view.start();
       }, this);
     },
 
@@ -75,7 +129,62 @@ define([
      * @param  {Object} place PlaceService's place object
      */
     _onPlaceGo: function(params) {
-      this._setupView(params);
+      switch(params.view) {
+        case 'national':
+
+          if (params.options) {
+            this._loadCustomizedOptions(params);
+          } else {
+            this._loadDefaultOptions(params);
+          }
+
+          break;
+
+        case 'subnational':
+
+          if (params.options) {
+            this._loadCustomizedOptions(params);
+          } else {
+            this.status.set({
+              country: params.country.iso,
+              view: params.view,
+              areas: null,
+              jurisdictions: null,
+              options: {}
+            });
+            this.view.start()
+
+            mps.publish('Tab/update', [{
+              view: this.status.get('view'),
+              silent: true
+            }]);
+          }
+
+          break;
+
+        case 'areas-interest':
+
+          if (params.options) {
+            this._loadCustomizedOptions(params);
+          } else {
+            this.status.set({
+              country: params.country.iso,
+              view: params.view,
+              areas: null,
+              jurisdictions: null,
+              options: {}
+            });
+
+            this.view.start();
+            mps.publish('Tab/update', [this.status.get('view')]);
+          }
+
+          break;
+
+        default:
+          this._loadDefaultOptions(params);
+          break;
+      }
     },
 
     /**
@@ -84,36 +193,45 @@ define([
      * with the default ones.
      * @param  {[object]} params
      */
-    _setupView: function(params) {
-      if (params.options === null) {
-        var callback = function() {
 
-          this.status.set({
-            country: params.country.iso,
-            jurisdictions: null,
-            areas: null,
-            view: params.view,
-            options: this.getOptions(params, this.widgetCollection.toJSON())
-          });
+    _loadDefaultOptions: function(params) {
 
-          this.view.start();
-          mps.publish('View/update', [this.status.get('view')])
-        };
+      var callback = function() {
 
-        this.widgetCollection.fetch({default: true}).done(callback.bind(this));
-
-      } else {
         this.status.set({
-          country: params.country.iso,
-          jurisdictions: this.getJurisdictions(params),
-          areas: this.getAreas(params),
-          options: params.options,
-          view: params.view
+          country: sessionStorage.getItem('countryIso'),
+          jurisdictions: null,
+          areas: null,
+          view: params.view,
+          options: this.getOptions(params, this.widgetCollection.toJSON())
         });
 
         this.view.start();
-        mps.publish('View/update', [this.status.get('view')]);
-      }
+        mps.publish('Tab/update', [this.status.get('view')])
+
+      };
+
+      this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+    },
+
+    _loadCustomizedOptions: function(params) {
+
+      this.status.set({
+        country: sessionStorage.getItem('countryIso'),
+        jurisdictions: params.jurisdictions ? params.jurisdictions :  this.getJurisdictions(params),
+        areas: params.areas ? params.areas : this.getAreas(params),
+        options: params.options,
+        view: params.view
+      });
+
+
+      this.view.start();
+      // mps.publish('Tab/update', [this.status.get('view')]);
+
+      mps.publish('Tab/update', [{
+        view: this.status.get('view'),
+        silent: true
+      }]);
     },
 
     _updateView: function(view) {
@@ -147,7 +265,8 @@ define([
 
       var areas = null;
 
-      if (!_.isNull(params.options.areas)) {
+      if (params.options.hasOwnProperty('areas') &&
+        params.options.areas !== null) {
         areas = params.options.areas;
       }
 
@@ -155,6 +274,7 @@ define([
     },
 
     getOptions: function(params, defaultWidgets) {
+
       // This should be removed to a dinamic var
       var activeWidgets = [1, 2, 3, 4, 5];
       var w = _.groupBy(_.compact(_.map(defaultWidgets,_.bind(function(w){
@@ -169,7 +289,34 @@ define([
       }, this))), 'id');
 
       var r = {};
-      r[this.objToSlug(params.country,'')] = w;
+
+      switch(params.view) {
+
+        case 'national':
+            r[this.objToSlug(sessionStorage.getItem('countryIso'), '')] = w;
+          break;
+
+        case 'subnational':
+
+            if(params.options.jurisdictions) {
+              _.map(params.options.jurisdictions, function(j) {
+                r[this.objToSlug(j.id, '')] = w;
+              }.bind(this));
+            }
+
+          break;
+
+        case 'areas-interest':
+
+            if (params.options.areas) {
+              _.map(params.options.areas, function(a) {
+                r[this.objToSlug(a.id, '')] = w;
+              }.bind(this));
+            };
+
+          break;
+
+      }
 
       return r;
     },
