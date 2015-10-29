@@ -283,10 +283,14 @@
       font-size: 14px;
       color: #555;
       line-height: 31px;
-      cursor: pointer;
       .minusy {
+        cursor: pointer;
         font-size: 20px;
         color: #5b80a0;
+        &.stop {
+          color: #eaeaea;
+          cursor: default;
+        }
       }
     }
   }
