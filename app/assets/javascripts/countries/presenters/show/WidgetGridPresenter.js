@@ -35,18 +35,34 @@ define([
       }
     }, {
       'View/update': function(view) {
+        var p = {
+          view: view
+        }
+
         this._updateView(view);
+        this._loadDefaultOptions(p);
         this.view._toggleWarnings();
+      }
+    }, {
+      'Grid/update': function(params) {
+        var p = jQuery.extend({}, params)
+
+        delete this.status.get('options')[sessionStorage.getItem('countryIso')]
+
+        _.extend(p, {
+          areas: params.areas,
+          view: params.view,
+          jurisdictions: params.jurisdictions,
+          options: this.getOptions(p, this.widgetCollection.toJSON())
+        });
+
+        this._loadCustomizedOptions(p)
       }
     }],
 
     _setListeners: function() {
       this.status.on('change', function() {
         mps.publish('Place/update', []);
-      }, this);
-
-      this.status.on('change:view', function() {
-        this.view.start();
       }, this);
     },
 
@@ -86,34 +102,43 @@ define([
      */
     _setupView: function(params) {
       if (params.options === null) {
-        var callback = function() {
-
-          this.status.set({
-            country: params.country.iso,
-            jurisdictions: null,
-            areas: null,
-            view: params.view,
-            options: this.getOptions(params, this.widgetCollection.toJSON())
-          });
-
-          this.view.start();
-          mps.publish('View/update', [this.status.get('view')])
-        };
-
-        this.widgetCollection.fetch({default: true}).done(callback.bind(this));
-
+        this._loadDefaultOptions(params);
       } else {
+        this._loadCustomizedOptions(params);
+      }
+    },
+
+    _loadDefaultOptions: function(params) {
+
+      var callback = function() {
+
         this.status.set({
-          country: params.country.iso,
-          jurisdictions: this.getJurisdictions(params),
-          areas: this.getAreas(params),
-          options: params.options,
-          view: params.view
+          country: sessionStorage.getItem('countryIso'),
+          jurisdictions: null,
+          areas: null,
+          view: params.view,
+          options: this.getOptions(params, this.widgetCollection.toJSON())
         });
 
         this.view.start();
-        mps.publish('View/update', [this.status.get('view')]);
-      }
+        mps.publish('Tab/update', [this.status.get('view')])
+      };
+
+      this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+    },
+
+    _loadCustomizedOptions: function(params) {
+
+      this.status.set({
+        country: sessionStorage.getItem('countryIso'),
+        jurisdictions: params.jurisdictions ? params.jurisdictions :  this.getJurisdictions(params),
+        areas: params.areas ? params.areas : this.getAreas(params),
+        options: params.options,
+        view: params.view
+      });
+
+      this.view.start();
+      mps.publish('Tab/update', [this.status.get('view')]);
     },
 
     _updateView: function(view) {
@@ -147,7 +172,8 @@ define([
 
       var areas = null;
 
-      if (!_.isNull(params.options.areas)) {
+      if (params.options.hasOwnProperty('areas') &&
+        params.options.areas !== null) {
         areas = params.options.areas;
       }
 
@@ -169,7 +195,26 @@ define([
       }, this))), 'id');
 
       var r = {};
-      r[this.objToSlug(params.country,'')] = w;
+
+      if (!params.options) {
+
+        console.log('AQUI')
+        r[this.objToSlug(sessionStorage.getItem('countryIso'), '')] = w;
+
+      } else {
+
+        if(params.options.jurisdictions) {
+          _.map(params.options.jurisdictions, function(j) {
+            r[this.objToSlug(j.id, '')] = w;
+          }.bind(this));
+        }
+
+        if (params.options.areas) {
+          _.map(params.options.areas, function(a) {
+            r[this.objToSlug(a.id, '')] = w;
+          }.bind(this));
+        };
+      }
 
       return r;
     },

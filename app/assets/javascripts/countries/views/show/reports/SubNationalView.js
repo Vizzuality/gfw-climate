@@ -11,11 +11,64 @@ define([
     el: '.gridgraphs--container-profile',
 
     initialize: function(options) {
-      this.widgets = options.widgets;
       this.jurisdictions = options.jurisdictions;
+      this.parent = options.parent;
+      this.widgets = options.widgets;
+
+
+      console.log(this.jurisdictions);
+      console.log(this.widgets);
+
+      if (!this.jurisdictions || !this.widgets) {
+        this.render();
+      } else {
+        this._setupGrid();
+      }
     },
 
-    render: function() {
+    _setupGrid: function() {
+
+      var promises = [],
+        widgetsArray = [],
+        iso = sessionStorage.getItem('countryIso');
+
+
+      _.map(this.widgets, function(j, key) {
+
+        _.map(j, function(w) {
+
+          var deferred = $.Deferred();
+          var newWidget = new WidgetView({
+            model: {
+              id: w[0].id,
+              slug: key,
+              location: {
+                iso: iso,
+                jurisdiction: 0,
+                area: 0
+              },
+            },
+            className: 'gridgraphs--widget',
+            status: this.widgets[key][w[0].id][0]
+          });
+
+          newWidget._loadMetaData(function() {
+            deferred.resolve();
+          });
+
+          widgetsArray.push(newWidget);
+          promises.push(deferred);
+
+        }.bind(this));
+
+      }.bind(this));
+
+      $.when.apply(null, promises).then(function() {
+        this.render(widgetsArray);
+      }.bind(this));
+    },
+
+    render: function(widgetsArray) {
       this.$el.html('');
 
       if (this.jurisdictions && this.jurisdictions.length > 0) {
@@ -24,7 +77,7 @@ define([
 
         this.$el.html(this.template);
 
-        this.widgets.forEach(_.bind(function(widget) {
+        widgetsArray.forEach(_.bind(function(widget) {
           widget.render()
           this.$el.addClass('.subnational-grid').append(widget.el);
         }, this));
@@ -41,10 +94,11 @@ define([
         this.$el.html(this.template({
           setup: options
         }));
-
       }
 
-      return this;
+      this.parent.append(this.$el);
+
+      // return this;
     }
 
   });

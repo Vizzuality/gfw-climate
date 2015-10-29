@@ -43,21 +43,21 @@ define([
       }
     }],
 
-    _onAddIndicator: function(indicator) {
-      var currentIndicators = this.status.get('indicators');
-      currentIndicators.push(indicator);
-
+    setIndicators: function(i) {
       this.status.set({
-        indicators: currentIndicators
+        indicators: i
       });
     },
 
-    _onRemoveIndicator: function(indicator) {
-      var currentIndicators = this.status.get('indicators');
-      var updatedIndicators = _.without(currentIndicators, indicator);
-
+    setJurisdictions: function(j) {
       this.status.set({
-        indicators: updatedIndicators
+        jurisdictions: j,
+      });
+    },
+
+    setAreas: function(a) {
+      this.status.set({
+        areas: a
       });
     },
 

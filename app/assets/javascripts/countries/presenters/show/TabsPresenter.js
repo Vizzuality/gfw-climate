@@ -29,7 +29,7 @@ define([
         this._onPlaceGo(place);
       }
     }, {
-      'View/update': function(view) {
+      'Tab/update': function(view) {
         this.setDisplay(view);
       }
     }],
