@@ -272,5 +272,26 @@
     &.all {
       display: block;
     }
+    #year-picker {
+      height: 34px;
+      width: 103px;
+      border: 1px solid #5b80a0;
+      border-radius: 40px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 14px;
+      color: #555;
+      line-height: 31px;
+      .minusy {
+        cursor: pointer;
+        font-size: 20px;
+        color: #5b80a0;
+        &.stop {
+          color: #eaeaea;
+          cursor: default;
+        }
+      }
+    }
   }
 }
