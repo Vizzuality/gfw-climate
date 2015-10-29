@@ -187,7 +187,7 @@ LineChart.prototype._setupHandlers = function() {
 };
 
 LineChart.prototype.render = function() {
-  if (!!this.data.length) {
+  if (!!this.data.length && !!this.svg) {
     var group = this.svg.append("g")
       .attr("class", "focus")
       .attr("transform",
