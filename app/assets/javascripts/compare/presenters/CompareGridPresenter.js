@@ -73,10 +73,12 @@ define([
 
     _onOptionsUpdate: function(id,slug,wstatus) {
       var options = _.clone(this.status.get('options'));
-      options[slug][id][0] = wstatus;
-      // Set and publish
-      this.status.set('options', options);
-      mps.publish('Place/update');
+      if (!!options[slug]) {
+        options[slug][id][0] = wstatus;
+        // Set and publish
+        this.status.set('options', options);
+        mps.publish('Place/update');
+      }
     },
 
     setParams: function(params) {

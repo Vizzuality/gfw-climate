@@ -1,17 +1,18 @@
 define([
- 'jquery', 'd3', 'underscore',
+ 'jquery',
+ 'd3',
+ 'underscore',
+ 'mps',
  'widgets/indicators/line/line_chart_context',
  'widgets/indicators/line/line_chart_interactionHandler'
-], function(
-  $, d3, _,
-  LineChartContext, LineChartInteractionHandler
-) {
+], function($, d3, _, mps, LineChartContext, LineChartInteractionHandler ){
 
 var LineChart = function(options) {
   this.svg;
   this.options = options;
   this.data = options.data;
   this.unit = options.unit
+  this.range = options.range;
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
@@ -58,7 +59,7 @@ LineChart.prototype._createScales = function() {
   })));
 
   this.y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom, 10 + this.options.innerPadding.top]);
-  this.y.domain([0, d3.max(this.data.map(function(d) { return d[self.yKey]; }))]);
+  this.y.domain(this.range);
 
   this.line = d3.svg.line()
     .interpolate('cardinal')
