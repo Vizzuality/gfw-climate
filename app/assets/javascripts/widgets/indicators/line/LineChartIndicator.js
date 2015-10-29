@@ -26,13 +26,32 @@ define([
 
       this.tab = setup.tab;
       this.model = new IndicatorModel(setup.model);
+      // Create model for compare indicator
+      if(this.model.get('location_compare')) {
+        this.modelCompare = new IndicatorModel(setup.model);
+      }
+      this.fetchIndicator(setup.data);
+    },
 
-      // Fetch values
+    fetchIndicator: function(data) {
       this.$el.addClass('is-loading');
-      this.model.fetch({ data: this.setFetchParams(setup.data) }).done(function() {
-        this.render();
-        this.$el.removeClass('is-loading');
-      }.bind(this));
+      // Fetch both models if compare exists
+      if (this.model.get('location_compare')) {
+        // set data compare
+        var dataCompare = _.extend({},data,{ location: this.model.get('location_compare')});
+
+        $.when(this.model.fetch({ data: this.setFetchParams(data) }),this.modelCompare.fetch({ data: this.setFetchParams(dataCompare) })).done(function(){
+          this.render();
+          this.$el.removeClass('is-loading');
+        }.bind(this));
+      } else {
+        // Fetch values
+        this.model.fetch({ data: this.setFetchParams(data) }).done(function() {
+          this.render();
+          this.$el.removeClass('is-loading');
+        }.bind(this));
+      }
+
     },
 
     render: function() {
@@ -54,13 +73,17 @@ define([
         return null;
       }.bind(this)));
 
+
       if (!!data.length) {
+        // Set range
+        var arr = (this.model.get('location_compare')) ? _.union(this.model.get('data'), this.modelCompare.get('data')) : this.model.get('data');
+        var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
         var lineChart = new LineChart({
           id: this.model.get('id'),
           el: $graphContainer,
           unit: this.model.get('unit'),
-          compare: this.model.get('slug_compare'),
           data: data,
+          range: range,
           sizing: {top: 0, right: 0, bottom: 25, left: 0},
           innerPadding: { top: 10, right: 15, bottom: 0, left: 50 },
           keys: keys
