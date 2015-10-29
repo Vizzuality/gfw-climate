@@ -27,18 +27,24 @@ define([
         promises: []
       };
 
+      var widgetsIds = this.presenter.status.get('widgets');
+      var data = this.presenter.status.get('data');
+
       // Loop each widget and get data of each compare
-      _.each(this.presenter.status.get('widgets'), _.bind(function(w){
-        _.each(this.presenter.status.get('data'), _.bind(function(c,i){
+      _.each(widgetsIds, _.bind(function(w){
+        _.each(data, _.bind(function(c,i){
           var deferred = $.Deferred();
           var slug = this.presenter.objToSlug(this.presenter.status.get('compare'+(i+1)),'');
+          var slug_compare = this.presenter.objToSlug(this.presenter.status.get('compare'+((data.length) - i )), '');
           var currentWidget = new WidgetView({
             id: w,
             className: 'gridgraphs--widget',
             model: {
               id: w,
               location: this.presenter.status.get('compare'+(i+1)),
+              location_compare: this.presenter.status.get('compare'+((data.length) - i )),
               slug: slug,
+              slug_compare: slug_compare,
             },
             status: this.presenter.status.get('options')[slug][w][0]
           });

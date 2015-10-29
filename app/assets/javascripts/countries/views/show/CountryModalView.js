@@ -1,5 +1,6 @@
 define([
   'jquery',
+  'mps',
   'backbone',
   'underscore',
   'handlebars',
@@ -7,7 +8,7 @@ define([
   'countries/models/CountryModel',
   'countries/presenters/show/CountryModalPresenter',
   'text!countries/templates/reports-modal.handlebars'
-], function($, Backbone, _, Handlebars, SourceWindowView,
+], function($, mps, Backbone, _, Handlebars, SourceWindowView,
   CountryModel, CountryModalPresenter, indicatorTemplate) {
 
   'use strict';
@@ -22,8 +23,8 @@ define([
       return _.extend({}, SourceWindowView.prototype.events, {
         'click .item'      : '_toggleWidgets',
         'click #btn-done'  : '_submitWidgets',
-        'click #btn-next'  : '_navModal',
-        'click #btn-back'  : '_navModal'
+        'click #btn-next'  : '_nextStep',
+        'click #btn-back'  : '_prevStep'
       });
     },
 
@@ -54,36 +55,95 @@ define([
       this.model.set('hidden', false);
     },
 
-    _navModal: function() {
+    _prevStep: function() {
       this.$el.find('.page1').toggleClass('is-hidden');
       this.$el.find('.page2').toggleClass('is-hidden');
     },
 
-    _toggleWidgets: function(e) {
-      var indicator = e.currentTarget;
-      var id = $(indicator).attr('id');
+    _nextStep: function() {
+      var view = this.presenter.status.get('view');
 
-      $(indicator).toggleClass('is-selected');
+      switch(view) {
+        case 'subnational':
+          this._addJurisdictions();
+          break;
 
-      if ($(indicator).hasClass('is-selected')) {
-
-        if (_.contains(this.enabledIndicators, id)) {
-          return;
-        }
-
-        this.enabledIndicators.push(id);
-
-      } else {
-
-        if (!_.contains(this.enabledIndicators, id)) {
-          return;
-        }
-
-        this.enabledIndicators = _.without(this.enabledIndicators, id);
+        case 'areas-interest':
+          this._addAreas();
+          break;
       }
+
+      this.$el.find('.page1').toggleClass('is-hidden');
+      this.$el.find('.page2').toggleClass('is-hidden');
+    },
+
+    _addIndicators: function() {
+      var items = $('.indicators-group').find('.is-selected'),
+        indicators = [];
+
+      _.map(items, function(i) {
+        indicators.push(~~i.getAttribute('id'));
+      });
+
+      this.presenter.setIndicators(indicators);
+    },
+
+    _addJurisdictions: function() {
+      var items = $('.jurisdictions-group').find('.is-selected'),
+        jurisdictions = [];
+
+      var iso = sessionStorage.getItem('countryIso');
+
+      _.map(items, function(i) {
+        jurisdictions.push({
+          id: iso + i.getAttribute('id') + '0',
+          idNumber: ~~i.getAttribute('id'),
+          name: $(i).data('name')
+        });
+      });
+
+      this.presenter.setJurisdictions(jurisdictions);
+      this.presenter.setAreas(null);
+    },
+
+    _addAreas: function() {
+      var items = $('.areas-group').find('.is-selected'),
+        areas = [];
+
+      var iso = sessionStorage.getItem('countryIso');
+
+      _.map(items, function(i) {
+        areas.push({
+          id: iso + i.getAttribute('id') + '0',
+          idNumber: ~~i.getAttribute('id'),
+          name: $(i).data('name')
+        });
+      });
+
+      this.presenter.setAreas(areas);
+      this.presenter.setJurisdictions(null);
+    },
+
+    _toggleWidgets: function(e) {
+      $(e.currentTarget).toggleClass('is-selected');
     },
 
     _submitWidgets: function() {
+      this._addIndicators();
+
+      if (this.presenter.status.get('view') === 'national') {
+        this.presenter.setJurisdictions(null);
+        this.presenter.setAreas(null);
+      }
+
+      mps.publish('Grid/update', [{
+        options: this.presenter.status.toJSON(),
+        jurisdictions: this.presenter.status.get('jurisdictions'),
+        areas: this.presenter.status.get('areas'),
+        view: this.presenter.status.get('view'),
+        country: sessionStorage.getItem('countryIso')
+      }]);
+
       this.hide();
     },
 

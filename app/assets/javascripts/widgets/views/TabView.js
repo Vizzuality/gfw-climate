@@ -145,10 +145,14 @@ define([
               unit: t.unit,
               start_date: t.start_date,
               end_date: t.end_date,
+              type: 'line',
+              // Compare model params
+              location_compare: this.presenter.model.get('location_compare'),
+              slug_compare: this.presenter.model.get('slug_compare'),
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: t.thresh
+              thresh: this.presenter.model.get('data').thresh ? t.thresh : 0
             }
           });
           break;
@@ -163,7 +167,8 @@ define([
               indicators: indicators,
               section: t.section,
               sectionswitch: t.sectionswitch,
-              template: 'biomass-carbon'
+              template: 'biomass-carbon',
+              type: 'pie',
             },
             data: {
               location: this.presenter.model.get('location'),
@@ -180,7 +185,8 @@ define([
             className: 'is-number',
             model: {
               id: indicator.id,
-              template: 'umd'
+              template: 'umd',
+              type: 'number',
             },
             data: {
               location: this.presenter.model.get('location'),

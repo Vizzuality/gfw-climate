@@ -1,17 +1,18 @@
 define([
- 'jquery', 'd3', 'underscore',
+ 'jquery',
+ 'd3',
+ 'underscore',
+ 'mps',
  'widgets/indicators/line/line_chart_context',
  'widgets/indicators/line/line_chart_interactionHandler'
-], function(
-  $, d3, _,
-  LineChartContext, LineChartInteractionHandler
-) {
+], function($, d3, _, mps, LineChartContext, LineChartInteractionHandler ){
 
 var LineChart = function(options) {
   this.svg;
   this.options = options;
   this.data = options.data;
   this.unit = options.unit
+  this.range = options.range;
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
@@ -58,11 +59,7 @@ LineChart.prototype._createScales = function() {
   })));
 
   this.y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom, 10 + this.options.innerPadding.top]);
-  if(this.unit == 'percentage') {
-    this.y.domain([0, 1]);
-  } else {
-    this.y.domain([0, d3.max(this.data.map(function(d) { return d[self.yKey]; }))]);
-  }
+  this.y.domain(this.range);
 
   this.line = d3.svg.line()
     .interpolate('cardinal')
@@ -83,7 +80,7 @@ LineChart.prototype._createDefs = function() {
 
 LineChart.prototype._drawAxes = function(group) {
   var self = this;
-  var tickFormatY = (this.unit != 'percentage') ? "s" : ".0%";
+  var tickFormatY = (this.unit != 'percentage') ? "s" : ".2f";
   this.xAxis = d3.svg.axis().scale(self.x).ticks(d3.time.year, 1).tickSize(-this.width, 0).orient("bottom").tickFormat(d3.time.format("%Y"));;
   this.yAxis = d3.svg.axis().scale(self.y).tickSize(-this.height, 0).orient("left").tickFormat(d3.format(tickFormatY));
 
@@ -157,7 +154,7 @@ LineChart.prototype._drawTooltip = function() {
           d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
 
       if (!!d) {
-        var format = (self.unit != 'percentage') ? ".3s" : ".0%",
+        var format = (self.unit != 'percentage') ? ".3s" : ".2f",
             xyear = self.x(d.year),
             year = formatDate(d.year),
             value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
@@ -187,7 +184,7 @@ LineChart.prototype._setupHandlers = function() {
 };
 
 LineChart.prototype.render = function() {
-  if (!!this.data.length) {
+  if (!!this.data.length && !!this.svg) {
     var group = this.svg.append("g")
       .attr("class", "focus")
       .attr("transform",
