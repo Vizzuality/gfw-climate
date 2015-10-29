@@ -33,7 +33,18 @@ define([
 
     changeTab: function(position) {
       var tabs = _.clone(this.status.get('tabs'));
-      tabs.position = position;
+      var t = _.findWhere(this.model.get('tabs'), { position: position });
+      tabs = {
+        type: t.type,
+        position: position,
+        unit: (t.switch) ? t['switch'][0]['unit'] : null,
+        start_date: (t.range) ? t['range'][0] : null,
+        end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
+        thresh: (t.thresh) ? t['thresh'] : null,
+        section: (t.section) ? t['section'] : null,
+        sectionswitch: (t.sectionswitch) ? t['sectionswitch'] : null,
+      }
+
       this.status.set('tabs',tabs);
     },
 
