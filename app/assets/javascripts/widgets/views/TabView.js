@@ -136,7 +136,7 @@ define([
       switch(t.type) {
         case 'line':
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: t.unit});
-          new LineChartIndicator({
+          this.indicator = new LineChartIndicator({
             el: this.$graphContainer,
             tab: this,
             className: 'is-line',
@@ -159,7 +159,7 @@ define([
 
         case 'pie':
           var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
-          new PieChartIndicator({
+          this.indicator = new PieChartIndicator({
             el: this.$graphContainer,
             tab: this,
             className: 'is-pie',
@@ -179,7 +179,7 @@ define([
 
         case 'number':
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: t.position})
-          new NumberChartIndicator({
+          this.indicator = new NumberChartIndicator({
             el: this.$graphContainer,
             tab: this,
             className: 'is-number',

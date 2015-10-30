@@ -82,7 +82,6 @@ LineChart.prototype._createDefs = function() {
 LineChart.prototype._drawAxes = function(group) {
   var self = this;
   var tickFormatY = (this.unit != 'percentage') ? "s" : ".2f";
-
   this.xAxis = d3.svg.axis()
                  .scale(self.x)
                  .ticks(d3.time.year, 1)
@@ -202,6 +201,11 @@ LineChart.prototype.render = function() {
     this._drawTooltip();
   }
 };
+
+LineChart.prototype.destroy = function() {
+  this.tooltip.remove();
+};
+
 
 return LineChart;
 

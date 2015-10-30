@@ -79,7 +79,7 @@ define([
         var arr = (this.model.get('location_compare')) ? _.union(this.model.get('data'), this.modelCompare.get('data')) : this.model.get('data');
         var range = [0, _.max(arr, function(o){return o.value;}).value];
         // var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
-        var lineChart = new LineChart({
+        this.lineChart = new LineChart({
           id: this.model.get('id'),
           el: $graphContainer,
           unit: this.model.get('unit'),
@@ -89,7 +89,7 @@ define([
           innerPadding: { top: 10, right: 10, bottom: 20, left: 50 },
           keys: keys
         });
-        lineChart.render();
+        this.lineChart.render();
         this.changeAverage(data);
 
       } else {
@@ -108,6 +108,12 @@ define([
       var min = Math.min(a, b),
           max = Math.max(a, b);
       return inclusive ? num >= min && num <= max : num > min && num < max;
+    },
+
+    destroy: function() {
+      if (this.lineChart) {
+       this.lineChart.destroy();
+      }
     }
 
   });
