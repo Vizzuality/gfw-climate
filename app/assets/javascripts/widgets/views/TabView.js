@@ -166,7 +166,7 @@ define([
             model: {
               indicators: indicators,
               section: t.section,
-              sectionswitch: t.sectionswitch,
+              sectionswitch: this.presenter.model.get('data').sectionswitch,
               template: 'biomass-carbon',
               type: 'pie',
             },
