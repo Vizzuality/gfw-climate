@@ -114,6 +114,10 @@ define([
       if (this.lineChart) {
        this.lineChart.destroy();
       }
+    },
+
+    resize: function(){
+      console.log('hello');
     }
 
   });

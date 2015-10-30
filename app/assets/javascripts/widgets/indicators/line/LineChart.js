@@ -16,6 +16,7 @@ var LineChart = function(options) {
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
+  this.namespace = new Date().valueOf().toString();
 
   this.parentWidth = $(this.options.el).outerWidth();
   this.parentHeight = $(this.options.el).outerHeight();
@@ -27,11 +28,12 @@ var LineChart = function(options) {
     this._createScales();
   }
 
-  $(window).resize(_.debounce(this.resize.bind(this), 100));
+  // $(window).resize(_.debounce(this.resize.bind(this), 100))
+  $(window).on('resize.namespace'+this.namespace, _.debounce(this.resize.bind(this), 100));
 };
 
 LineChart.prototype.offResize = function() {
-  $(window).off('resize');
+  $(window).off('resize.namespace'+this.namespace);
 };
 
 LineChart.prototype.resize = function() {
