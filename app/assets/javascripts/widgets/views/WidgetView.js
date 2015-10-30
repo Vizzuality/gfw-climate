@@ -67,6 +67,7 @@ define([
       if (this.tab) {
         this.tab.undelegateEvents();
         this.tab.$el.removeData().unbind();
+        (!!this.tab.indicator) ? this.tab.indicator.destroy() : null;
       }
       // NEW TAB
       this.tab = new TabView({

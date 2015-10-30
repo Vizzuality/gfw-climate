@@ -32,18 +32,9 @@ var PieChart = function(options) {
   this._createDefs();
   this._createPie();
 
-  $(window).resize(_.debounce(this.resize.bind(this), 100));
+  // $(window).resize(_.debounce(this.resize.bind(this), 100));
 };
 
-PieChart.prototype.offResize = function() {
-  $(window).off('resize');
-};
-
-PieChart.prototype.resize = function() {
-  this.offResize();
-  $(this.options.el).find('svg').remove();
-  new PieChart(this.options).render();
-};
 
 PieChart.prototype._createEl = function() {
   svg = d3.select(this.options.el)

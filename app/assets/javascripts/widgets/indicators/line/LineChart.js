@@ -16,6 +16,7 @@ var LineChart = function(options) {
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
+  this.namespace = new Date().valueOf().toString();
 
   this.parentWidth = $(this.options.el).outerWidth();
   this.parentHeight = $(this.options.el).outerHeight();
@@ -27,11 +28,12 @@ var LineChart = function(options) {
     this._createScales();
   }
 
-  $(window).resize(_.debounce(this.resize.bind(this), 100));
+  // $(window).resize(_.debounce(this.resize.bind(this), 100))
+  $(window).on('resize.namespace'+this.namespace, _.debounce(this.resize.bind(this), 100));
 };
 
 LineChart.prototype.offResize = function() {
-  $(window).off('resize');
+  $(window).off('resize.namespace'+this.namespace);
 };
 
 LineChart.prototype.resize = function() {
@@ -58,11 +60,12 @@ LineChart.prototype._createScales = function() {
     return d[self.xKey];
   })));
 
-  this.y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom, 10 + this.options.innerPadding.top]);
+  // this.y = d3.scale.linear().range([this.height,this.options.innerPadding.top]);
+  this.y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom,this.options.innerPadding.top]);
   this.y.domain(this.range);
 
   this.line = d3.svg.line()
-    .interpolate('cardinal')
+    .interpolate('linear')
     .x(function(d) { return self.x(d[self.xKey]); })
     .y(function(d) { return self.y(d[self.yKey]); });
 
@@ -81,12 +84,22 @@ LineChart.prototype._createDefs = function() {
 LineChart.prototype._drawAxes = function(group) {
   var self = this;
   var tickFormatY = (this.unit != 'percentage') ? "s" : ".2f";
-  this.xAxis = d3.svg.axis().scale(self.x).ticks(d3.time.year, 1).tickSize(-this.width, 0).orient("bottom").tickFormat(d3.time.format("%Y"));;
-  this.yAxis = d3.svg.axis().scale(self.y).tickSize(-this.height, 0).orient("left").tickFormat(d3.format(tickFormatY));
+  this.xAxis = d3.svg.axis()
+                 .scale(self.x)
+                 .ticks(d3.time.year, 1)
+                 .tickSize(6, 6)
+                 .orient("bottom")
+                 .tickFormat(d3.time.format("%Y"));
+
+  this.yAxis = d3.svg.axis()
+                 .scale(self.y)
+                 .tickSize(-this.height, 0)
+                 .orient("left")
+                 .tickFormat(d3.format(tickFormatY));
 
   group.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + this.height + ")")
+    .attr("transform", "translate(0," + (this.height - this.sizing.top) + ")")
     .call(this.xAxis);
 
   group.append("g")
@@ -102,6 +115,7 @@ LineChart.prototype._drawLine = function(group) {
   var self = this;
   group.append("path")
     .datum(this.data)
+    .attr("transform", "translate(0,"+ -this.sizing.top +")")
     .attr("class", "line")
     .attr("d", self.line);
 };
@@ -174,19 +188,12 @@ LineChart.prototype._drawTooltip = function() {
     });
 };
 
-
-LineChart.prototype._setupHandlers = function() {
-  var eventInterceptor = this.svg.append("rect")
-    .attr("class", "overlay")
-    .attr("width", this.width)
-    .attr("height", this.height)
-    .attr("transform", "translate(" + this.sizing.left + "," + this.sizing.top + ")");
-};
-
 LineChart.prototype.render = function() {
   if (!!this.data.length && !!this.svg) {
     var group = this.svg.append("g")
       .attr("class", "focus")
+      .attr("width", this.width)
+      .attr("height", this.height)
       .attr("transform",
         "translate(" + this.sizing.left + "," + this.sizing.top + ")");
 
@@ -194,10 +201,13 @@ LineChart.prototype.render = function() {
     this._drawLine(group);
     this._drawTicks();
     this._drawTooltip();
-    // this._setupHandlers();
-    // this._drawContext(group);
   }
 };
+
+LineChart.prototype.destroy = function() {
+  this.tooltip.remove();
+};
+
 
 return LineChart;
 
