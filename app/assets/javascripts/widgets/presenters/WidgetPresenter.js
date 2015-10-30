@@ -40,11 +40,9 @@ define([
         unit: (t.switch) ? t['switch'][0]['unit'] : null,
         start_date: (t.range) ? t['range'][0] : null,
         end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-        thresh: (t.thresh) ? t['thresh'] : null,
-        section: (t.section) ? t['section'] : null,
-        sectionswitch: (t.sectionswitch) ? t['sectionswitch'] : null,
+        thresh: (t.thresh) ? t['thresh'] : 0,
+        section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
       }
-
       this.status.set('tabs',tabs);
     },
 

@@ -246,9 +246,7 @@
       {
         "position": 2,
         "name": "FAO",
-        "type": "number",
-        "thresh" : 25,
-        "threshunit": "tree cover"
+        "type": "number"
       },
       {
         "position": 3,
@@ -318,7 +316,18 @@
       {
         "position": 2,
         "name": "FAO",
-        "type": "pie"
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       },
       {
         "position": 3,
@@ -424,7 +433,7 @@
         "type": "total",
         "unit": "number",
         "tab": 2,
-        "section": "carbon"
+        "section": "biomass"
       },
       {
         "id": 23,
@@ -514,7 +523,7 @@
         "direction": "belowground"
       },
       {
-        "id": 20,
+        "id": 21,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -528,7 +537,7 @@
         "type": "total",
         "unit": "number",
         "tab": 3,
-        "section": "carbon"
+        "section": "biomass"
       },
       {
         "id": 23,
@@ -568,7 +577,18 @@
       {
         "position": 2,
         "name": "FAO",
-        "type": "pie"
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       },
       {
         "position": 3,
@@ -674,7 +694,7 @@
         "type": "total",
         "unit": "number",
         "tab": 2,
-        "section": "carbon"
+        "section": "biomass"
       },
       {
         "id": 23,
@@ -764,7 +784,7 @@
         "direction": "belowground"
       },
       {
-        "id": 20,
+        "id": 21,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -778,7 +798,7 @@
         "type": "total",
         "unit": "number",
         "tab": 3,
-        "section": "carbon"
+        "section": "biomass"
       },
       {
         "id": 23,
