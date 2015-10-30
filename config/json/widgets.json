@@ -318,7 +318,18 @@
       {
         "position": 2,
         "name": "FAO",
-        "type": "pie"
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       },
       {
         "position": 3,
@@ -568,7 +579,18 @@
       {
         "position": 2,
         "name": "FAO",
-        "type": "pie"
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       },
       {
         "position": 3,
