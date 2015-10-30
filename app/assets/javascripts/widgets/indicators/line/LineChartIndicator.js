@@ -67,7 +67,7 @@ define([
         if (d && d.year && Number(d.year !== 0) && this.between(d.year,this.model.get('start_date'),this.model.get('end_date'),true)) {
           return {
             year: parseDate(d.year.toString()),
-            value: d.value
+            value: (!isNaN(d.value)) ? d.value : 0
           };
         }
         return null;
@@ -77,15 +77,16 @@ define([
       if (!!data.length) {
         // Set range
         var arr = (this.model.get('location_compare')) ? _.union(this.model.get('data'), this.modelCompare.get('data')) : this.model.get('data');
-        var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
+        var range = [0, _.max(arr, function(o){return o.value;}).value];
+        // var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
         var lineChart = new LineChart({
           id: this.model.get('id'),
           el: $graphContainer,
           unit: this.model.get('unit'),
           data: data,
           range: range,
-          sizing: {top: 0, right: 0, bottom: 25, left: 0},
-          innerPadding: { top: 10, right: 15, bottom: 0, left: 50 },
+          sizing: {top: 10, right: 10, bottom: 20, left: 0},
+          innerPadding: { top: 10, right: 10, bottom: 20, left: 50 },
           keys: keys
         });
         lineChart.render();
