@@ -143,6 +143,14 @@
   pointer-events: none;
   transform: translate(calc(-100% - 7px),-50%);
 
+  &.is-reflect {
+    background: $dark;
+    color: $white;
+    &:after {
+      @include equi-triangle(7px, $dark, 'right');
+    }
+  }
+
   &:after {
     content: '';
     @include equi-triangle(7px, $blue, 'right');

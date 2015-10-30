@@ -77,6 +77,7 @@ define([
           location: this.presenter.model.get('location'),
           data: _.findWhere(this.presenter.model.get('tabs'), {position: position}),
           indicators: _.where(this.presenter.model.get('indicators'), {tab: position}),
+          slug: this.presenter.model.get('slug'),
           // Compare model params
           location_compare: this.presenter.model.get('location_compare'),
           slug_compare: this.presenter.model.get('slug_compare'),

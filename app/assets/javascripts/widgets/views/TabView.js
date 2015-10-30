@@ -146,6 +146,7 @@ define([
               start_date: t.start_date,
               end_date: t.end_date,
               type: 'line',
+              slug: this.presenter.model.get('slug'),
               // Compare model params
               location_compare: this.presenter.model.get('location_compare'),
               slug_compare: this.presenter.model.get('slug_compare'),

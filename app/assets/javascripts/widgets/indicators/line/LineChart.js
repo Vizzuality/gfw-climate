@@ -28,6 +28,7 @@ var LineChart = function(options) {
     this._createScales();
   }
 
+  this.setListeners();
   // $(window).resize(_.debounce(this.resize.bind(this), 100))
   $(window).on('resize.namespace'+this.namespace, _.debounce(this.resize.bind(this), 100));
 };
@@ -135,6 +136,9 @@ LineChart.prototype._drawTicks = function() {
 LineChart.prototype._drawTooltip = function() {
   var formatDate = d3.time.format("%Y");
   var bisectDate = d3.bisector(function(d) { return d.year; }).left;
+  var data = this.data;
+  var self = this;
+
   // Tooltip
   this.tooltip = d3.select('body').append('div')
     .attr('class', 'linegraph-tooltip')
@@ -148,13 +152,12 @@ LineChart.prototype._drawTooltip = function() {
     .style('visibility', 'hidden')
     .style('stroke', '#DDD');
 
-  var data = this.data;
-  var self = this;
 
   this.svg
     .on("mouseout", function() {
       self.positioner.style("visibility", "hidden");
       self.tooltip.style("visibility", "hidden");
+      mps.publish('LineChart/mouseout'+self.options.slug_compare+self.options.id);
     })
     .on("mouseover", function() {
       self.positioner.style("visibility", "visible");
@@ -166,7 +169,6 @@ LineChart.prototype._drawTooltip = function() {
           d0 = data[i - 1],
           d1 = data[i],
           d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
-
       if (!!d) {
         var format = (self.unit != 'percentage') ? ".3s" : ".2f",
             xyear = self.x(d.year),
@@ -182,11 +184,67 @@ LineChart.prototype._drawTooltip = function() {
           .duration(125)
           .style('visibility', 'visible');
         self.tooltip.html('<span class="data">' + year + '</span>' + value )
-          .style('left', (d3.event.pageX) + 'px')
+          .style('left', (($(self.positioner[0]).offset().left)) + 'px')
           .style('top', (d3.event.pageY) + 'px');
+
+
+        mps.publish('LineChart/mousemove'+self.options.slug_compare+self.options.id,[x0]);
+
       }
     });
 };
+
+LineChart.prototype.setListeners = function() {
+  var formatDate = d3.time.format("%Y");
+  var bisectDate = d3.bisector(function(d) { return d.year; }).left;
+  var data = this.data;
+  var self = this;
+
+  mps.subscribe('LineChart/mouseout'+this.options.slug+this.options.id,function(){
+    self.positioner
+      .classed("is-reflect", false)
+      .style("visibility", "hidden");
+    self.tooltip
+      .classed("is-reflect", false)
+      .style("visibility", "hidden");
+  });
+
+  mps.subscribe('LineChart/mousemove'+this.options.slug+this.options.id,function(x0){
+    var x0 = x0,
+        i  = bisectDate(self.data, x0, 1),
+        d0 = data[i - 1],
+        d1 = data[i],
+        d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
+
+      if (!!d) {
+        var format = (self.unit != 'percentage') ? ".3s" : ".2f",
+            xyear = self.x(d.year),
+            year = formatDate(d.year),
+            value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
+        // Positioner
+        self.positioner
+          .style('visibility', 'visible')
+          .attr('x1', xyear + self.sizing.left)
+          .attr('x2', xyear + self.sizing.left)
+
+        // Tooltip
+        self.tooltip.transition()
+          .duration(125)
+          .style('visibility', 'visible');
+        self.tooltip
+          .classed("is-reflect", true)
+          .html('<span class="data">' + year + '</span>' + value )
+          .style('left', (($(self.positioner[0]).offset().left)) + 'px')
+          .style('top', (d3.event.pageY) + 'px');
+
+      }
+  });
+};
+
+
+
+
+
 
 LineChart.prototype.render = function() {
   if (!!this.data.length && !!this.svg) {
