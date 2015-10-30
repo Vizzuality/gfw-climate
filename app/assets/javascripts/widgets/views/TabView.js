@@ -152,7 +152,7 @@ define([
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: this.presenter.model.get('data').thresh ? t.thresh : 0
+              thresh: t.thresh,
             }
           });
           break;
@@ -172,7 +172,7 @@ define([
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: t.thresh
+              thresh: t.thresh,
             }
           });
           break;
@@ -190,7 +190,7 @@ define([
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: t.thresh
+              thresh: t.thresh,
             }
           });
           break;

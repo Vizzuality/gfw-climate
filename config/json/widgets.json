@@ -246,9 +246,7 @@
       {
         "position": 2,
         "name": "FAO",
-        "type": "number",
-        "thresh" : 25,
-        "threshunit": "tree cover"
+        "type": "number"
       },
       {
         "position": 3,
