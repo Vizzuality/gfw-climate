@@ -210,16 +210,20 @@ LineChart.prototype.setListeners = function() {
   var self = this;
 
   mps.subscribe('LineChart/mouseout'+this.options.slug+this.options.id,function(){
-    self.positioner
-      .classed("is-reflect", false)
-      .style("visibility", "hidden");
-    self.tooltip
-      .classed("is-reflect", false)
-      .style("visibility", "hidden");
+    if (!!self.svg) {
+      self.positioner
+        .classed("is-reflect", false)
+        .style("visibility", "hidden");
+      self.tooltip
+        .classed("is-reflect", false)
+        .style("visibility", "hidden");
+    }
   });
 
   mps.subscribe('LineChart/mousemove'+this.options.slug+this.options.id,function(x0){
-    self.setTooltip(x0,true);
+    if (!!self.svg) {
+      self.setTooltip(x0,true);
+    }
   });
 };
 
@@ -245,7 +249,9 @@ LineChart.prototype.render = function() {
 };
 
 LineChart.prototype.destroy = function() {
-  this.tooltip.remove();
+  if (!!this.tooltip) {
+    this.tooltip.remove();
+  }
 };
 
 
