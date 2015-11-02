@@ -134,9 +134,6 @@ LineChart.prototype._drawTicks = function() {
 
 
 LineChart.prototype._drawTooltip = function() {
-  var formatDate = d3.time.format("%Y");
-  var bisectDate = d3.bisector(function(d) { return d.year; }).left;
-  var data = this.data;
   var self = this;
 
   // Tooltip
@@ -154,44 +151,56 @@ LineChart.prototype._drawTooltip = function() {
 
 
   this.svg
-    .on("mouseout", function() {
-      self.positioner.style("visibility", "hidden");
-      self.tooltip.style("visibility", "hidden");
-      mps.publish('LineChart/mouseout'+self.options.slug_compare+self.options.id);
-    })
-    .on("mouseover", function() {
+    .on("mouseenter", function() {
       self.positioner.style("visibility", "visible");
       self.tooltip.style("visibility", "visible");
     })
     .on('mousemove', function() {
-      var x0 = self.x.invert(d3.mouse(this)[0]),
-          i  = bisectDate(self.data, x0, 1),
-          d0 = data[i - 1],
-          d1 = data[i],
-          d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
-      if (!!d) {
-        var format = (self.unit != 'percentage') ? ".3s" : ".2f",
-            xyear = self.x(d.year),
-            year = formatDate(d.year),
-            value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
-        // Positioner
-        self.positioner
-          .attr('x1', xyear + self.sizing.left)
-          .attr('x2', xyear + self.sizing.left)
-
-        // Tooltip
-        self.tooltip.transition()
-          .duration(125)
-          .style('visibility', 'visible');
-        self.tooltip.html('<span class="data">' + year + '</span>' + value )
-          .style('left', (($(self.positioner[0]).offset().left)) + 'px')
-          .style('top', (d3.event.pageY) + 'px');
+      var x0 = self.x.invert(d3.mouse(this)[0]);
+      self.setTooltip(x0,false);
+      mps.publish('LineChart/mousemove'+self.options.slug_compare+self.options.id,[x0]);
+    })
+    .on("mouseleave", function() {
+      self.positioner.style("visibility", "hidden");
+      self.tooltip.style("visibility", "hidden");
+      mps.publish('LineChart/mouseout'+self.options.slug_compare+self.options.id);
+    })
+};
 
 
-        mps.publish('LineChart/mousemove'+self.options.slug_compare+self.options.id,[x0]);
+LineChart.prototype.setTooltip = function(x0,is_reflect) {
+  var self = this;
+  var data = this.data;
+  var formatDate = d3.time.format("%Y");
+  var bisectDate = d3.bisector(function(d) { return d.year; }).left;
+  var x0 = x0,
+      i  = bisectDate(self.data, x0, 1),
+      d0 = data[i - 1],
+      d1 = data[i],
+      d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
 
-      }
-    });
+  if (!!d) {
+    var format = (self.unit != 'percentage') ? ".3s" : ".2f",
+        xyear = self.x(d.year),
+        year = formatDate(d.year),
+        value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
+    // Positioner
+    self.positioner
+      .style('visibility', 'visible')
+      .attr('x1', xyear + self.sizing.left)
+      .attr('x2', xyear + self.sizing.left)
+
+    // Tooltip
+    self.tooltip.transition()
+      .duration(125)
+      .style('visibility', 'visible');
+    self.tooltip
+      .classed("is-reflect", is_reflect)
+      .html('<span class="data">' + year + '</span>' + value )
+      .style('left', (($(self.positioner[0]).offset().left)) + 'px')
+      .style('top', (d3.event.pageY) + 'px');
+
+  }
 };
 
 LineChart.prototype.setListeners = function() {
@@ -210,34 +219,7 @@ LineChart.prototype.setListeners = function() {
   });
 
   mps.subscribe('LineChart/mousemove'+this.options.slug+this.options.id,function(x0){
-    var x0 = x0,
-        i  = bisectDate(self.data, x0, 1),
-        d0 = data[i - 1],
-        d1 = data[i],
-        d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
-
-      if (!!d) {
-        var format = (self.unit != 'percentage') ? ".3s" : ".2f",
-            xyear = self.x(d.year),
-            year = formatDate(d.year),
-            value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
-        // Positioner
-        self.positioner
-          .style('visibility', 'visible')
-          .attr('x1', xyear + self.sizing.left)
-          .attr('x2', xyear + self.sizing.left)
-
-        // Tooltip
-        self.tooltip.transition()
-          .duration(125)
-          .style('visibility', 'visible');
-        self.tooltip
-          .classed("is-reflect", true)
-          .html('<span class="data">' + year + '</span>' + value )
-          .style('left', (($(self.positioner[0]).offset().left)) + 'px')
-          .style('top', (d3.event.pageY) + 'px');
-
-      }
+    self.setTooltip(x0,true);
   });
 };
 
