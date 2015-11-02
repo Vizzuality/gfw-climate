@@ -85,6 +85,8 @@ define([
           unit: this.model.get('unit'),
           data: data,
           range: range,
+          slug: this.model.get('slug'),
+          slug_compare: this.model.get('slug_compare'),
           sizing: {top: 10, right: 10, bottom: 20, left: 0},
           innerPadding: { top: 10, right: 10, bottom: 20, left: 50 },
           keys: keys
