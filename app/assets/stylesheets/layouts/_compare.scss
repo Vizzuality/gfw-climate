@@ -10,6 +10,10 @@ $l-padding: 50px;
   background-color: $extra-light-grey;
 }
 
+.l-main-content-wrap {
+  position: relative;
+}
+
 .l-main-content {
   padding: $l-padding 0;
 }
@@ -28,4 +32,8 @@ $l-padding: 50px;
   padding: $l-padding 0;
   background-color: $color-1;
   text-align: center;
+}
+
+.l-cutpoint {
+  height: 1px;
 }

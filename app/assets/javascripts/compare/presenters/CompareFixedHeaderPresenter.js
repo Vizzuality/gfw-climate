@@ -1,19 +1,18 @@
 define([
   'backbone',
   'mps',
+  'compare/presenters/PresenterClass',
   'compare/models/CountryModel',
-  'compare/presenters/PresenterClass'
-], function(Backbone, mps, CountryModel, PresenterClass) {
+], function(Backbone, mps, PresenterClass, CountryModel) {
 
   'use strict';
 
-  var CompareSelectorsPresenter = PresenterClass.extend({
+  var CompareFixedHeaderPresenter = PresenterClass.extend({
 
     status: new (Backbone.Model.extend({
-      defaults: {
-        name: 'compare-countries'
-      }
+      defaults: {}
     })),
+
 
     init: function(view) {
       this._super();
@@ -60,12 +59,9 @@ define([
       }
     },
 
-    showModal: function(tab) {
-      mps.publish('CompareModal/show', [tab]);
-    }
 
   });
 
-  return CompareSelectorsPresenter;
+  return CompareFixedHeaderPresenter;
 
 });
