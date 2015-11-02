@@ -118,7 +118,7 @@ define([
           txt = d3.format(",.0f")(average) + ' ha';
         break;
         case 'percentage':
-          txt = d3.format(".2%")(average);
+          txt = d3.format(".2f")(average) + ' %';
         break;
         case 'tg-c':
           txt = d3.format(",.2f")(average) + ' tg-c';
