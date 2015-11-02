@@ -231,11 +231,12 @@ function addCommas(nStr) {
         return "bubble_" + d.id;
       }).on("mouseenter", function(d, i) {
         var el = d3.select(this);
-        // el.style('z-index','20');
-        // el.style('position','relative');
         var xpos = ~~el.attr('cx') - 115;
         var ypos = (el.attr('cy') - d.radius - 37);
-        d3.select("#pantropical_tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
+        d3.select("#pantropical_tooltip")
+          .style('top',ypos+"px")
+          .style('left',xpos+"px")
+          .style('display','block');
         return that.show_details(d, i, this);
       }).on("mouseout", function(d, i) {
         return that.hide_details(d, i, this);
