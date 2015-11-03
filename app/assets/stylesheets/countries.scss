@@ -27,6 +27,7 @@
 @import "modules/countries/show";
 @import "modules/countries/country-widget";
 @import 'modules/countries/tabs.scss';
+@import "modules/select";
 @import "modules/gridgraphs";
 
 // Grids
@@ -38,6 +39,7 @@
 @import "modules/countries/charts/tabs";
 @import "modules/countries/charts/line-graph";
 @import "modules/countries/charts/pie-chart";
+@import "modules/countries/charts/number-graph";
 // @import "modules/dropdowns";
 // @import "modules/map/control-threshold";
 

@@ -22,23 +22,31 @@ define([
     render: function() {
       this.$el.html(this.template(this.parseData()));
 
-      var status = {
-        widgets: [],
-        promises: []
-      };
+      if (!!this.widgets && !!this.widgets.length) {
+        this.destroy();
+      }
+
+      this.widgets = [];
+      this.promises = [];
+
+      var widgetsIds = this.presenter.status.get('widgets');
+      var data = this.presenter.status.get('data');
 
       // Loop each widget and get data of each compare
-      _.each(this.presenter.status.get('widgets'), _.bind(function(w){
-        _.each(this.presenter.status.get('data'), _.bind(function(c,i){
+      _.each(widgetsIds, _.bind(function(w){
+        _.each(data, _.bind(function(c,i){
           var deferred = $.Deferred();
           var slug = this.presenter.objToSlug(this.presenter.status.get('compare'+(i+1)),'');
+          var slug_compare = this.presenter.objToSlug(this.presenter.status.get('compare'+((data.length) - i )), '');
           var currentWidget = new WidgetView({
             id: w,
             className: 'gridgraphs--widget',
             model: {
               id: w,
               location: this.presenter.status.get('compare'+(i+1)),
+              location_compare: this.presenter.status.get('compare'+((data.length) - i )),
               slug: slug,
+              slug_compare: slug_compare,
             },
             status: this.presenter.status.get('options')[slug][w][0]
           });
@@ -48,23 +56,29 @@ define([
           });
 
           // Set persistent variables
-          status.widgets.push(currentWidget);
-          status.promises.push(deferred);
+          this.widgets.push(currentWidget);
+          this.promises.push(deferred);
         }, this ));
       }, this ));
 
-      $.when.apply(null, status.promises).then(function() {
-        status.widgets.forEach(function(widget) {
+      $.when.apply(null, this.promises).then(_.bind(function() {
+        this.widgets.forEach(function(widget) {
           widget.render();
           $('#gridgraphs-compare-'+widget.id).append(widget.el);
         });
-      });
+      },this));
     },
 
     parseData: function() {
       return {
         widgets: this.presenter.status.get('widgets')
       };
+    },
+
+    destroy: function() {
+      this.widgets.forEach(function(widget) {
+        widget.destroy();
+      });
     }
 
 

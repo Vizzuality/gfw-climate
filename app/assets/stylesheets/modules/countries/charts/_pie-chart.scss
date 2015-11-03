@@ -11,10 +11,19 @@
     }
   }
   .pie-graph {
-    width: 100%;
-    height: 250px;
-    .pieChart {
-      float: right;
+    width: 350px;
+    height: 200px;
+    margin: 0 10px;
+    svg {
+      .legend {
+        .legend-dot{
+          border-radius: 50%;
+        }
+        .legend-text{
+          font-size: 12px;
+          text-transform: capitalize;
+        }
+      }
     }
   }
 }
