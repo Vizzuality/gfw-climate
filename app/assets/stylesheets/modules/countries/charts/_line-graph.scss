@@ -141,15 +141,23 @@
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
-  transform: translate(calc(-100% - 7px),-50%);
+  transform: translate(-50%,calc(-100% - 10px));
+
+  &.is-reflect {
+    background: $dark;
+    color: $white;
+    &:after {
+      @include equi-triangle(7px, $dark, 'bottom');
+    }
+  }
 
   &:after {
     content: '';
-    @include equi-triangle(7px, $blue, 'right');
+    @include equi-triangle(7px, $blue, 'bottom');
     position: absolute;
-    top: 50%;
-    right: -7px;
-    transform: translateY(-50%);
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%,7px);
   }
 
   .data {
@@ -283,6 +291,7 @@
       font-size: 14px;
       color: #555;
       line-height: 31px;
+      margin: 0 0 110px;
       .minusy {
         cursor: pointer;
         font-size: 20px;

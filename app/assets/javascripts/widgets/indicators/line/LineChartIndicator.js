@@ -67,7 +67,7 @@ define([
         if (d && d.year && Number(d.year !== 0) && this.between(d.year,this.model.get('start_date'),this.model.get('end_date'),true)) {
           return {
             year: parseDate(d.year.toString()),
-            value: d.value
+            value: (!isNaN(d.value)) ? d.value : 0
           };
         }
         return null;
@@ -77,18 +77,21 @@ define([
       if (!!data.length) {
         // Set range
         var arr = (this.model.get('location_compare')) ? _.union(this.model.get('data'), this.modelCompare.get('data')) : this.model.get('data');
-        var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
-        var lineChart = new LineChart({
+        var range = [0, _.max(arr, function(o){return o.value;}).value];
+        // var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
+        this.chart = new LineChart({
           id: this.model.get('id'),
           el: $graphContainer,
           unit: this.model.get('unit'),
           data: data,
           range: range,
-          sizing: {top: 0, right: 0, bottom: 25, left: 0},
-          innerPadding: { top: 10, right: 15, bottom: 0, left: 50 },
+          slug: this.model.get('slug'),
+          slug_compare: this.model.get('slug_compare'),
+          sizing: {top: 10, right: 10, bottom: 20, left: 0},
+          innerPadding: { top: 10, right: 10, bottom: 20, left: 50 },
           keys: keys
         });
-        lineChart.render();
+        this.chart.render();
         this.changeAverage(data);
 
       } else {
@@ -107,6 +110,17 @@ define([
       var min = Math.min(a, b),
           max = Math.max(a, b);
       return inclusive ? num >= min && num <= max : num > min && num < max;
+    },
+
+    destroy: function() {
+      if (this.chart) {
+       this.chart.destroy();
+       this.chart = null;
+      }
+    },
+
+    resize: function(){
+      console.log('hello');
     }
 
   });

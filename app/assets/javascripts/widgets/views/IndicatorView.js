@@ -24,6 +24,10 @@ define([
       return data;
     },
 
+    destroy: function() {
+
+    }
+
   });
 
   return IndicatorView;

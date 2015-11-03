@@ -118,7 +118,7 @@ define([
           txt = d3.format(",.0f")(average) + ' ha';
         break;
         case 'percentage':
-          txt = d3.format(".2%")(average);
+          txt = d3.format(".2f")(average) + ' %';
         break;
         case 'tg-c':
           txt = d3.format(",.2f")(average) + ' tg-c';
@@ -136,7 +136,7 @@ define([
       switch(t.type) {
         case 'line':
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: t.unit});
-          new LineChartIndicator({
+          this.indicator = new LineChartIndicator({
             el: this.$graphContainer,
             tab: this,
             className: 'is-line',
@@ -146,40 +146,41 @@ define([
               start_date: t.start_date,
               end_date: t.end_date,
               type: 'line',
+              slug: this.presenter.model.get('slug'),
               // Compare model params
               location_compare: this.presenter.model.get('location_compare'),
               slug_compare: this.presenter.model.get('slug_compare'),
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: this.presenter.model.get('data').thresh ? t.thresh : 0
+              thresh: t.thresh,
             }
           });
           break;
 
         case 'pie':
           var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
-          new PieChartIndicator({
+          this.indicator = new PieChartIndicator({
             el: this.$graphContainer,
             tab: this,
             className: 'is-pie',
             model: {
               indicators: indicators,
               section: t.section,
-              sectionswitch: t.sectionswitch,
+              sectionswitch: this.presenter.model.get('data').sectionswitch,
               template: 'biomass-carbon',
               type: 'pie',
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: t.thresh
+              thresh: t.thresh,
             }
           });
           break;
 
         case 'number':
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: t.position})
-          new NumberChartIndicator({
+          this.indicator = new NumberChartIndicator({
             el: this.$graphContainer,
             tab: this,
             className: 'is-number',
@@ -190,7 +191,7 @@ define([
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: t.thresh
+              thresh: t.thresh,
             }
           });
           break;
@@ -198,6 +199,12 @@ define([
       };
 
     },
+
+    destroy: function() {
+      if (!!this.indicator) {
+        this.indicator.destroy();
+      }
+    }
 
   });
 

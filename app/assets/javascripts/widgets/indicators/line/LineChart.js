@@ -16,6 +16,7 @@ var LineChart = function(options) {
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
+  this.namespace = new Date().valueOf().toString();
 
   this.parentWidth = $(this.options.el).outerWidth();
   this.parentHeight = $(this.options.el).outerHeight();
@@ -27,11 +28,13 @@ var LineChart = function(options) {
     this._createScales();
   }
 
-  $(window).resize(_.debounce(this.resize.bind(this), 100));
+  this.setListeners();
+  // $(window).resize(_.debounce(this.resize.bind(this), 100))
+  $(window).on('resize.namespace'+this.namespace, _.debounce(this.resize.bind(this), 100));
 };
 
 LineChart.prototype.offResize = function() {
-  $(window).off('resize');
+  $(window).off('resize.namespace'+this.namespace);
 };
 
 LineChart.prototype.resize = function() {
@@ -58,11 +61,12 @@ LineChart.prototype._createScales = function() {
     return d[self.xKey];
   })));
 
-  this.y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom, 10 + this.options.innerPadding.top]);
+  // this.y = d3.scale.linear().range([this.height,this.options.innerPadding.top]);
+  this.y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom,this.options.innerPadding.top]);
   this.y.domain(this.range);
 
   this.line = d3.svg.line()
-    .interpolate('cardinal')
+    .interpolate('linear')
     .x(function(d) { return self.x(d[self.xKey]); })
     .y(function(d) { return self.y(d[self.yKey]); });
 
@@ -81,12 +85,22 @@ LineChart.prototype._createDefs = function() {
 LineChart.prototype._drawAxes = function(group) {
   var self = this;
   var tickFormatY = (this.unit != 'percentage') ? "s" : ".2f";
-  this.xAxis = d3.svg.axis().scale(self.x).ticks(d3.time.year, 1).tickSize(-this.width, 0).orient("bottom").tickFormat(d3.time.format("%Y"));;
-  this.yAxis = d3.svg.axis().scale(self.y).tickSize(-this.height, 0).orient("left").tickFormat(d3.format(tickFormatY));
+  this.xAxis = d3.svg.axis()
+                 .scale(self.x)
+                 .ticks(d3.time.year, 1)
+                 .tickSize(6, 6)
+                 .orient("bottom")
+                 .tickFormat(d3.time.format("%Y"));
+
+  this.yAxis = d3.svg.axis()
+                 .scale(self.y)
+                 .tickSize(-this.height, 0)
+                 .orient("left")
+                 .tickFormat(d3.format(tickFormatY));
 
   group.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + this.height + ")")
+    .attr("transform", "translate(0," + (this.height - this.sizing.top) + ")")
     .call(this.xAxis);
 
   group.append("g")
@@ -102,6 +116,7 @@ LineChart.prototype._drawLine = function(group) {
   var self = this;
   group.append("path")
     .datum(this.data)
+    .attr("transform", "translate(0,"+ -this.sizing.top +")")
     .attr("class", "line")
     .attr("d", self.line);
 };
@@ -119,8 +134,8 @@ LineChart.prototype._drawTicks = function() {
 
 
 LineChart.prototype._drawTooltip = function() {
-  var formatDate = d3.time.format("%Y");
-  var bisectDate = d3.bisector(function(d) { return d.year; }).left;
+  var self = this;
+
   // Tooltip
   this.tooltip = d3.select('body').append('div')
     .attr('class', 'linegraph-tooltip')
@@ -134,59 +149,95 @@ LineChart.prototype._drawTooltip = function() {
     .style('visibility', 'hidden')
     .style('stroke', '#DDD');
 
-  var data = this.data;
-  var self = this;
 
   this.svg
-    .on("mouseout", function() {
-      self.positioner.style("visibility", "hidden");
-      self.tooltip.style("visibility", "hidden");
-    })
-    .on("mouseover", function() {
+    .on("mouseenter", function() {
       self.positioner.style("visibility", "visible");
       self.tooltip.style("visibility", "visible");
     })
     .on('mousemove', function() {
-      var x0 = self.x.invert(d3.mouse(this)[0]),
-          i  = bisectDate(self.data, x0, 1),
-          d0 = data[i - 1],
-          d1 = data[i],
-          d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
-
-      if (!!d) {
-        var format = (self.unit != 'percentage') ? ".3s" : ".2f",
-            xyear = self.x(d.year),
-            year = formatDate(d.year),
-            value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
-        // Positioner
-        self.positioner
-          .attr('x1', xyear + self.sizing.left)
-          .attr('x2', xyear + self.sizing.left)
-
-        // Tooltip
-        self.tooltip.transition()
-          .duration(125)
-          .style('visibility', 'visible');
-        self.tooltip.html('<span class="data">' + year + '</span>' + value )
-          .style('left', (d3.event.pageX) + 'px')
-          .style('top', (d3.event.pageY) + 'px');
-      }
-    });
+      var x0 = self.x.invert(d3.mouse(this)[0]);
+      self.setTooltip(x0,false);
+      mps.publish('LineChart/mousemove'+self.options.slug_compare+self.options.id,[x0]);
+    })
+    .on("mouseleave", function() {
+      self.positioner.style("visibility", "hidden");
+      self.tooltip.style("visibility", "hidden");
+      mps.publish('LineChart/mouseout'+self.options.slug_compare+self.options.id);
+    })
 };
 
 
-LineChart.prototype._setupHandlers = function() {
-  var eventInterceptor = this.svg.append("rect")
-    .attr("class", "overlay")
-    .attr("width", this.width)
-    .attr("height", this.height)
-    .attr("transform", "translate(" + this.sizing.left + "," + this.sizing.top + ")");
+LineChart.prototype.setTooltip = function(x0,is_reflect) {
+  var self = this;
+  var data = this.data;
+  var formatDate = d3.time.format("%Y");
+  var bisectDate = d3.bisector(function(d) { return d.year; }).left;
+  var x0 = x0,
+      i  = bisectDate(self.data, x0, 1),
+      d0 = data[i - 1],
+      d1 = data[i],
+      d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
+
+  if (!!d) {
+    var format = (self.unit != 'percentage') ? ".3s" : ".2f",
+        xyear = self.x(d.year),
+        year = formatDate(d.year),
+        value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
+    // Positioner
+    self.positioner
+      .style('visibility', 'visible')
+      .attr('x1', xyear + self.sizing.left)
+      .attr('x2', xyear + self.sizing.left)
+
+    // Tooltip
+    self.tooltip.transition()
+      .duration(125)
+      .style('visibility', 'visible');
+    self.tooltip
+      .classed("is-reflect", is_reflect)
+      .html('<span class="data">' + year + '</span>' + value )
+      .style('left', (($(self.positioner[0]).offset().left)) + 'px')
+      .style('top', (d3.event.pageY) + 'px');
+
+  }
 };
+
+LineChart.prototype.setListeners = function() {
+  var formatDate = d3.time.format("%Y");
+  var bisectDate = d3.bisector(function(d) { return d.year; }).left;
+  var data = this.data;
+  var self = this;
+
+  mps.subscribe('LineChart/mouseout'+this.options.slug+this.options.id,function(){
+    if (!!self.svg) {
+      self.positioner
+        .classed("is-reflect", false)
+        .style("visibility", "hidden");
+      self.tooltip
+        .classed("is-reflect", false)
+        .style("visibility", "hidden");
+    }
+  });
+
+  mps.subscribe('LineChart/mousemove'+this.options.slug+this.options.id,function(x0){
+    if (!!self.svg) {
+      self.setTooltip(x0,true);
+    }
+  });
+};
+
+
+
+
+
 
 LineChart.prototype.render = function() {
   if (!!this.data.length && !!this.svg) {
     var group = this.svg.append("g")
       .attr("class", "focus")
+      .attr("width", this.width)
+      .attr("height", this.height)
       .attr("transform",
         "translate(" + this.sizing.left + "," + this.sizing.top + ")");
 
@@ -194,10 +245,15 @@ LineChart.prototype.render = function() {
     this._drawLine(group);
     this._drawTicks();
     this._drawTooltip();
-    // this._setupHandlers();
-    // this._drawContext(group);
   }
 };
+
+LineChart.prototype.destroy = function() {
+  if (!!this.tooltip) {
+    this.tooltip.remove();
+  }
+};
+
 
 return LineChart;
 

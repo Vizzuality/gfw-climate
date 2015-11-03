@@ -5,7 +5,7 @@ define([
   'chosen',
   'compare/presenters/CompareSelectorsPresenter',
   'helpers/CountryHelper',
-  'text!compare/templates/compareSelectorTpl.handlebars'
+  'text!compare/templates/compareSelector.handlebars'
 ], function(Backbone, Handlebars, _, chosen, CompareSelectorsPresenter, CountryHelper, tpl) {
 
   var CompareSelectorsView = Backbone.View.extend({

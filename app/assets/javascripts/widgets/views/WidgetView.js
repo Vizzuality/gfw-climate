@@ -64,9 +64,8 @@ define([
       this.$tablink.removeClass('is-selected');
       this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('is-selected');
       // Check if the tab exist to remove all the events and data
-      if (this.tab) {
-        this.tab.undelegateEvents();
-        this.tab.$el.removeData().unbind();
+      if (!!this.tab) {
+        this.tab.destroy();
       }
       // NEW TAB
       this.tab = new TabView({
@@ -76,6 +75,7 @@ define([
           location: this.presenter.model.get('location'),
           data: _.findWhere(this.presenter.model.get('tabs'), {position: position}),
           indicators: _.where(this.presenter.model.get('indicators'), {tab: position}),
+          slug: this.presenter.model.get('slug'),
           // Compare model params
           location_compare: this.presenter.model.get('location_compare'),
           slug_compare: this.presenter.model.get('slug_compare'),
@@ -106,7 +106,14 @@ define([
 
     _share: function(e) {},
 
-
+    destroy: function() {
+      if (!!this.tab) {
+        this.tab.destroy();
+      }
+      this.undelegateEvents();
+      this.$el.removeData().unbind();
+      this.$el.remove();
+    }
 
   });
 

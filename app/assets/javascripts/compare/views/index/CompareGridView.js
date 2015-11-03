@@ -22,10 +22,12 @@ define([
     render: function() {
       this.$el.html(this.template(this.parseData()));
 
-      var status = {
-        widgets: [],
-        promises: []
-      };
+      if (!!this.widgets && !!this.widgets.length) {
+        this.destroy();
+      }
+
+      this.widgets = [];
+      this.promises = [];
 
       var widgetsIds = this.presenter.status.get('widgets');
       var data = this.presenter.status.get('data');
@@ -54,23 +56,29 @@ define([
           });
 
           // Set persistent variables
-          status.widgets.push(currentWidget);
-          status.promises.push(deferred);
+          this.widgets.push(currentWidget);
+          this.promises.push(deferred);
         }, this ));
       }, this ));
 
-      $.when.apply(null, status.promises).then(function() {
-        status.widgets.forEach(function(widget) {
+      $.when.apply(null, this.promises).then(_.bind(function() {
+        this.widgets.forEach(function(widget) {
           widget.render();
           $('#gridgraphs-compare-'+widget.id).append(widget.el);
         });
-      });
+      },this));
     },
 
     parseData: function() {
       return {
         widgets: this.presenter.status.get('widgets')
       };
+    },
+
+    destroy: function() {
+      this.widgets.forEach(function(widget) {
+        widget.destroy();
+      });
     }
 
 
