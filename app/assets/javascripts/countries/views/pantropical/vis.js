@@ -231,11 +231,12 @@ function addCommas(nStr) {
         return "bubble_" + d.id;
       }).on("mouseenter", function(d, i) {
         var el = d3.select(this);
-        // el.style('z-index','20');
-        // el.style('position','relative');
         var xpos = ~~el.attr('cx') - 115;
         var ypos = (el.attr('cy') - d.radius - 37);
-        d3.select("#pantropical_tooltip").style('top',ypos+"px").style('left',xpos+"px").style('display','block');
+        d3.select("#pantropical_tooltip")
+          .style('top',ypos+"px")
+          .style('left',xpos+"px")
+          .style('display','block');
         return that.show_details(d, i, this);
       }).on("mouseout", function(d, i) {
         return that.hide_details(d, i, this);
@@ -370,19 +371,19 @@ function addCommas(nStr) {
       })(this);
     };
 
-    BubbleChart.prototype.display_ny = function() {
+    BubbleChart.prototype.display_by_country = function() {
       var years, years_data, years_x;
       years_x = {
-        "2001": this.width / (1/13),
-        "2002": this.width / (2/13),
-        "2003": this.width / (3/13),
-        "2004": this.width / (4/13),
-        "2005": this.width / (5/13),
-        "2006": this.width / (6/13),
-        "2007": this.width / (7/13),
-        "2008": this.width / (8/13),
-        "2009": this.width / 2,
-        "2010": this.width - 160
+        "2001": this.width - (this.width*0.95),
+        "2002": this.width - (this.width*0.85),
+        "2003": this.width - (this.width*0.75),
+        "2004": this.width - (this.width*0.65),
+        "2005": this.width - (this.width*0.55),
+        "2006": this.width - (this.width*0.45),
+        "2007": this.width - (this.width*0.35),
+        "2008": this.width - (this.width*0.25),
+        "2009": this.width - (this.width*0.15),
+        "2010": this.width - (this.width*0.05)
       };
       years_data = d3.keys(years_x);
       years = this.vis.selectAll(".years").data(years_data);
