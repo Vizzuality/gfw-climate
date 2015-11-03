@@ -5,10 +5,11 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'handlebars',
   'mps',
   'compare/presenters/CompareFixedHeaderPresenter',
   'text!compare/templates/compareFixedHeader.handlebars'
-], function($, Backbone, _, mps, CompareFixedHeaderPresenter, tpl) {
+], function($, Backbone, _, Handlebars, mps, CompareFixedHeaderPresenter, tpl) {
 
   'use strict';
 

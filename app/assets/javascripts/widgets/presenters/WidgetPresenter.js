@@ -28,7 +28,7 @@ define([
         if (this.model.get('id') == id && this.model.get('slug') == slug_compare) {
           this.status.set(status);
         }
-      }
+      },
     }],
 
     changeTab: function(position) {
@@ -55,12 +55,17 @@ define([
       this.publish();
     },
 
+
     publish: function() {
       // Duplicate events, be careful and check it later
       mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
       if (!!this.model.get('slug_compare')) {
         mps.publish('Compare/reflection', [this.model.get('id'),this.model.get('slug_compare'),this.status.toJSON()]);
       }
+    },
+
+    deleteWidget: function() {
+      mps.publish('Options/delete', [this.model.get('id')]);
     },
 
   });

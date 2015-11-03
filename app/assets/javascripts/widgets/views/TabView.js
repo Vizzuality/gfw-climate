@@ -200,6 +200,12 @@ define([
 
     },
 
+    destroy: function() {
+      if (!!this.indicator) {
+        this.indicator.destroy();
+      }
+    }
+
   });
 
   return TabView;
