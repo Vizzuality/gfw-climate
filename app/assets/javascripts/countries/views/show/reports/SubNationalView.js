@@ -46,7 +46,7 @@ define([
                 area: 0
               },
             },
-            className: 'gridgraphs--widget',
+            className: 'gridgraphs-widget',
             status: this.widgets[key][w[0].id][0]
           });
 
