@@ -61,8 +61,8 @@ define([
     setTab: function() {
       var position = this.presenter.status.get('tabs').position;
       // UI
-      this.$tablink.removeClass('is-selected');
-      this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('is-selected');
+      this.$tablink.removeClass('-selected');
+      this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('-selected');
       // Check if the tab exist to remove all the events and data
       if (!!this.tab) {
         this.tab.destroy();
@@ -99,7 +99,7 @@ define([
 
     _close: function(e) {
       e && e.preventDefault();
-      this.$el.remove();
+      this.presenter.deleteWidget();
     },
 
     _info: function(e) {},

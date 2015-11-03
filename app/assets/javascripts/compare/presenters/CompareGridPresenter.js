@@ -53,6 +53,10 @@ define([
 
       'Options/updated': function(id,slug,wstatus) {
         this._onOptionsUpdate(id,slug,wstatus);
+      },
+
+      'Options/delete': function(id) {
+        this._onOptionsDelete(id);
       }
 
     }],
@@ -79,6 +83,19 @@ define([
         this.status.set('options', options);
         mps.publish('Place/update');
       }
+    },
+
+    _onOptionsDelete: function(id) {
+      var options = _.clone(this.status.get('options'));
+      _.each(options, function(c){
+        console.log(c);
+      })
+      // if (!!options[slug]) {
+      //   options[slug][id][0] = wstatus;
+      //   // Set and publish
+      //   this.status.set('options', options);
+      //   mps.publish('Place/update');
+      // }
     },
 
     setParams: function(params) {
