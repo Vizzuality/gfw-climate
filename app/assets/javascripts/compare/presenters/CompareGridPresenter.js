@@ -20,12 +20,7 @@ define([
       this._super();
       this.view = view;
       this.service = CompareService;
-      this.setListeners();
       mps.publish('Place/register', [this]);
-    },
-
-    setListeners: function() {
-      this.status.on('change:data', this.changeData, this);
     },
 
     /**
@@ -87,15 +82,13 @@ define([
 
     _onOptionsDelete: function(id) {
       var options = _.clone(this.status.get('options'));
-      _.each(options, function(c){
-        console.log(c);
-      })
-      // if (!!options[slug]) {
-      //   options[slug][id][0] = wstatus;
-      //   // Set and publish
-      //   this.status.set('options', options);
-      //   mps.publish('Place/update');
-      // }
+      _.each(options, function(c,k){
+        (!!c && c[id]) ? delete c[id] : null;
+        options[k] = c;
+      });
+      this.status.set('options', options);
+      mps.publish('Place/update');
+      this.changeCompare();
     },
 
     setParams: function(params) {
@@ -132,7 +125,7 @@ define([
     },
 
     // COMPARE EVENTS
-    changeData: function() {
+    render: function() {
       this.view.render();
     },
 
@@ -158,6 +151,7 @@ define([
         return c;
       });
       this.status.set('data', data);
+      this.render();
     },
 
     errorCompare: function() {
