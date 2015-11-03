@@ -1,14 +1,18 @@
-<div class="no-indicators">
-  <button class="btn medium blue addIndicators">customize report</button>
+<div class="m-no-indicators">
+  <div class="arrow-container">
+    <button class="btn medium blue addIndicators">customize report</button>
+    <svg class="svg-arrow"><use xlink:href="#icon-first_step-arrow"></use></svg>
+  </div>
 
-  <div class="instructions">
-    <svg class="arrow"><use xlink:href="#icon-first_step-arrow"></use></svg>
+
+  <div class="start-container">
+
     {{#if setup.isJurisdictions}}
-      <p>Start adding some<br> <span class="blue">jurisdictions</span> and <span class="blue"> data indicators</span></p>
+      <p class="start-text">Start adding some<br> <span>jurisdictions</span> and <span> data indicators</span></p>
     {{/if}}
 
     {{#if setup.isAreas}}
-      <p>Start adding some<br> <span class="blue">areas of interest</span> and <span class="blue"> data indicators</span></p>
+      <p class="start-text">Start adding some<br> <span>areas of interest</span> and <span> data indicators</span></p>
     {{/if}}
   </div>
 </div>

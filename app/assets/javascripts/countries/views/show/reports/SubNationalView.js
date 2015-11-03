@@ -8,7 +8,7 @@ define([
 
   var SubNationalView = Backbone.View.extend({
 
-    el: '.gridgraphs--container-profile',
+    el: '.gridgraphs',
 
     initialize: function(options) {
 
@@ -69,6 +69,9 @@ define([
     render: function(widgetsArray) {
       this.$el.html('');
 
+      this.$el.removeClass();
+      this.$el.addClass('gridgraphs -subnational');
+
       if (this.jurisdictions && this.jurisdictions.length > 0) {
 
         this.template = Handlebars.compile(tpl);
@@ -93,7 +96,7 @@ define([
         _.each(data, _.bind(function(d) {
 
           _.each(d.widgets, (function(w) {
-            $('#box-jurisdictions-' + d.jurisdiction.id+ ' .gridgraphs--container-profile').append(w.render().el);
+            $('#box-jurisdictions-' + d.jurisdiction.id+ ' .gridgraphs-container').append(w.render().el);
           }));
 
         }, this));

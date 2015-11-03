@@ -8,7 +8,7 @@ define([
 
   var AreasView = Backbone.View.extend({
 
-    el: '.gridgraphs--container-profile',
+    el: '.gridgraphs',
 
     initialize: function(options) {
       this.areas = options.areas;
@@ -67,6 +67,9 @@ define([
     render: function(widgetsArray) {
       this.$el.html('');
 
+      this.$el.removeClass();
+      this.$el.addClass('gridgraphs -areas')
+
 
       if (this.areas && this.areas.length > 0) {
 
@@ -91,7 +94,7 @@ define([
         _.each(data, _.bind(function(d) {
 
           _.each(d.widgets, (function(w) {
-            $('#box-areas-' + d.areas.id+ ' .gridgraphs--container-profile').append(w.render().el);
+            $('#box-areas-' + d.areas.id+ ' .gridgraphs-container').append(w.render().el);
           }));
 
         }, this));

@@ -7,7 +7,7 @@ define([
 
   var NationalView = Backbone.View.extend({
 
-    el: '.gridgraphs--container-profile',
+    el: '.gridgraphs',
 
     template: Handlebars.compile(tpl),
 
@@ -57,10 +57,13 @@ define([
     render: function(widgetsArray) {
       this.$el.html('');
 
+      this.$el.removeClass();
+      this.$el.addClass('gridgraphs -national');
+
       this.$el.html(this.template)
 
       widgetsArray.forEach(function(widget) {
-        this.$el.find('.national-grid__content').find('.gridgraphs--container-profile').append(widget.render().el);
+        this.$el.find('.gridgraphs-container').append(widget.render().el);
       }.bind(this));
 
       this.parent.append(this.el);
