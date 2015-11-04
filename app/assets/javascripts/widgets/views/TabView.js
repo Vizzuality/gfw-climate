@@ -51,6 +51,7 @@ define([
       this.$date_selects = this.$el.find('.date-selector');
       this.$threshold = this.$el.find('.threshold');
       this.$switcher = this.$el.find('.switcher');
+      this.$average = this.$el.find('.tab-average');
 
       this.$graphContainer = this.$el.find('.tab-graph');
     },
@@ -75,6 +76,7 @@ define([
     changeSection: function(e) {
       this.presenter.changeSection($(e.currentTarget).val());
     },
+
 
     // SETTERS
     setStatusValues: function() {
@@ -107,58 +109,89 @@ define([
       }, this ));
     },
 
+    // SETTERS: average
+    setAverage: function(average) {
+      var t = this.presenter.status.get('tabs');
+      var txt = '';
+      switch(t.unit) {
+        case 'hectares':
+          txt = d3.format(",.0f")(average) + ' ha';
+        break;
+        case 'percentage':
+          txt = d3.format(".2f")(average) + ' %';
+        break;
+        case 'tg-c':
+          txt = d3.format(",.2f")(average) + ' tg-c';
+        break;
+        case 'mt-co2':
+          txt = d3.format(",.2f")(average) + ' mt-co2';
+        break
+      }
+      this.$average.html(txt);
+    },
+
     // SETTERS: indicator
     setIndicator: function() {
       var t = this.presenter.status.get('tabs');
       switch(t.type) {
         case 'line':
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: t.unit});
-          new LineChartIndicator({
+          this.indicator = new LineChartIndicator({
             el: this.$graphContainer,
+            tab: this,
             className: 'is-line',
             model: {
               id: indicator.id,
               unit: t.unit,
               start_date: t.start_date,
               end_date: t.end_date,
+              type: 'line',
+              slug: this.presenter.model.get('slug'),
+              // Compare model params
+              location_compare: this.presenter.model.get('location_compare'),
+              slug_compare: this.presenter.model.get('slug_compare'),
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: t.thresh
+              thresh: t.thresh,
             }
           });
           break;
 
         case 'pie':
           var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
-          new PieChartIndicator({
+          this.indicator = new PieChartIndicator({
             el: this.$graphContainer,
+            tab: this,
             className: 'is-pie',
             model: {
               indicators: indicators,
               section: t.section,
-              sectionswitch: t.sectionswitch,
-              template: 'biomass-carbon'
+              sectionswitch: this.presenter.model.get('data').sectionswitch,
+              template: 'biomass-carbon',
+              type: 'pie',
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: t.thresh
+              thresh: t.thresh,
             }
           });
           break;
 
         case 'number':
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: t.position})
-          new NumberChartIndicator({
+          this.indicator = new NumberChartIndicator({
             el: this.$graphContainer,
+            tab: this,
             className: 'is-number',
             model: {
               id: indicator.id,
-              template: 'umd'
+              template: 'umd',
+              type: 'number',
             },
             data: {
               location: this.presenter.model.get('location'),
-              thresh: t.thresh
+              thresh: t.thresh,
             }
           });
           break;
@@ -166,6 +199,12 @@ define([
       };
 
     },
+
+    destroy: function() {
+      if (!!this.indicator) {
+        this.indicator.destroy();
+      }
+    }
 
   });
 

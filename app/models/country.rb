@@ -2,24 +2,24 @@ require 'httparty'
 
 class Country
   include HTTParty
-  default_timeout 5
+  default_timeout 10
 
   class << self
 
-    def base_path
+    def base_countries_path
+      "#{ENV['CDB_API_HOST']}?q="
+    end
+
+    def base_country_path
       "#{ENV['GFW_API_HOST']}/countries"
     end
 
     def find_all
-      sql = <<-SQL
-        SELECT DISTINCT iso, admin0_name AS name, true as enabled
-        FROM indicators_values
-        ORDER BY name
-      SQL
-      url = "#{ENV['CDB_API_HOST']}?q=#{sql}"
+      url =  base_countries_path
+      url += index_query
       timeouts do
         items_caching do
-          get(url)['rows']
+          get(url)['rows'].sort_by { |i| i['name'] }
         end
       end
     end
@@ -29,7 +29,7 @@ class Country
       thresh_value = filter_params[:thresh].present? ? filter_params['thresh'] : '25'
 
       # Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75
-      url =  "#{ base_path }/#{ country_id }"
+      url =  "#{ base_country_path }/#{ country_id }"
       url += "?thresh=#{ thresh_value }"
 
       timeouts do
@@ -37,6 +37,13 @@ class Country
           get(url)
         end
       end
+    end
+
+    def index_query
+      'SELECT DISTINCT iso, admin0_name AS name, true as enabled
+       FROM indicators_values
+       WHERE iso IS NOT NULL AND admin0_name IS NOT NULL
+       ORDER BY name'
     end
 
     include Concerns::Cached

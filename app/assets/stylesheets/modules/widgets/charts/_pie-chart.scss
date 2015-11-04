@@ -1,0 +1,29 @@
+.piechart-graph {
+  h3{
+    font-size: 32px;
+    color: $font-color-1;
+    font-weight: 300;
+    max-width: 400px;
+    line-height: 1.25;
+    span {
+      color: $font-color-3;
+      font-weight: 500;
+    }
+  }
+  .pie-graph {
+    width: 350px;
+    height: 200px;
+    margin: 0 10px;
+    svg {
+      .legend {
+        .legend-dot{
+          border-radius: 50%;
+        }
+        .legend-text{
+          font-size: 12px;
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+}

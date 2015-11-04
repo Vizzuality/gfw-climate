@@ -23,15 +23,35 @@ define([
 
     initialize: function(setup) {
       this.constructor.__super__.initialize.apply(this, [setup]);
-      // Enable params when we have API data
-      this.model = new IndicatorModel(setup.model);
 
-      // Fetch values
+      this.tab = setup.tab;
+      this.model = new IndicatorModel(setup.model);
+      // Create model for compare indicator
+      if(this.model.get('location_compare')) {
+        this.modelCompare = new IndicatorModel(setup.model);
+      }
+      this.fetchIndicator(setup.data);
+    },
+
+    fetchIndicator: function(data) {
       this.$el.addClass('is-loading');
-      this.model.fetch({ data: this.setFetchParams(setup.data) }).done(function() {
-        this.render();
-        this.$el.removeClass('is-loading');
-      }.bind(this));
+      // Fetch both models if compare exists
+      if (this.model.get('location_compare')) {
+        // set data compare
+        var dataCompare = _.extend({},data,{ location: this.model.get('location_compare')});
+
+        $.when(this.model.fetch({ data: this.setFetchParams(data) }),this.modelCompare.fetch({ data: this.setFetchParams(dataCompare) })).done(function(){
+          this.render();
+          this.$el.removeClass('is-loading');
+        }.bind(this));
+      } else {
+        // Fetch values
+        this.model.fetch({ data: this.setFetchParams(data) }).done(function() {
+          this.render();
+          this.$el.removeClass('is-loading');
+        }.bind(this));
+      }
+
     },
 
     render: function() {
@@ -47,33 +67,60 @@ define([
         if (d && d.year && Number(d.year !== 0) && this.between(d.year,this.model.get('start_date'),this.model.get('end_date'),true)) {
           return {
             year: parseDate(d.year.toString()),
-            value: d.value
+            value: (!isNaN(d.value)) ? d.value : 0
           };
         }
         return null;
       }.bind(this)));
 
+
       if (!!data.length) {
-        var lineChart = new LineChart({
+        // Set range
+        var arr = (this.model.get('location_compare')) ? _.union(this.model.get('data'), this.modelCompare.get('data')) : this.model.get('data');
+        var range = [0, _.max(arr, function(o){return o.value;}).value];
+        // var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
+        this.chart = new LineChart({
+          id: this.model.get('id'),
           el: $graphContainer,
           unit: this.model.get('unit'),
           data: data,
-          sizing: {top: 0, right: 0, bottom: 25, left: 0},
-          innerPadding: { top: 10, right: 15, bottom: 0, left: 50 },
+          range: range,
+          slug: this.model.get('slug'),
+          slug_compare: this.model.get('slug_compare'),
+          sizing: {top: 10, right: 10, bottom: 20, left: 0},
+          innerPadding: { top: 10, right: 10, bottom: 20, left: 50 },
           keys: keys
         });
+        this.chart.render();
+        this.changeAverage(data);
 
-        lineChart.render();
       } else {
         this.$el.html(this.noDataTemplate({ classname: 'line'}));
       }
+    },
 
+    changeAverage: function(data) {
+      var average = _.reduce(data, function(memo, num) {
+        return memo + num.value;
+      }, 0) / data.length;
+      this.tab.setAverage(average);
     },
 
     between: function(num, a, b, inclusive) {
       var min = Math.min(a, b),
           max = Math.max(a, b);
       return inclusive ? num >= min && num <= max : num > min && num < max;
+    },
+
+    destroy: function() {
+      if (this.chart) {
+       this.chart.destroy();
+       this.chart = null;
+      }
+    },
+
+    resize: function(){
+      console.log('hello');
     }
 
   });

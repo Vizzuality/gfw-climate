@@ -6,19 +6,18 @@
           <li class="switcher-item" data-unit="{{this.unit}}">{{this.unitname}}</li>
         {{/each}}
       </ul>
+      <span>per year</span>
     </div>
   {{/if}}
   {{#if this.thresh}}
     <div class="canopy-threshold">
-      <span>display loss with
+      <span>display {{this.threshunit}} with
         <select class="selector blue threshold" name="threshold">
           <option value="10">>10%</option>
           <option value="15">>15%</option>
           <option value="20">>20%</option>
           <option value="25">>25%</option>
           <option value="30">>30%</option>
-          <option value="50">>50%</option>
-          <option value="75">>75%</option>
         </select>
       canopy density</span>
     </div>
@@ -30,19 +29,19 @@
 {{#if this.range}}
 <div class="sub-options">
     <div class="average">
-      <span>Average:
-        <select class="selector date-selector blue start-date" data-direction="1" data-compare=".end-date" name="start-date">
-          {{#each this.range}}
-            <option value="{{this}}">{{this}}</option>
-          {{/each}}
-        </select>
-        to
-        <select class="selector date-selector blue end-date" data-direction="0" data-compare=".start-date" name="end-date">
-          {{#each this.range}}
-            <option value="{{this}}">{{this}}</option>
-          {{/each}}
-        </select>
-      </span>
+      <span>Average:</span>
+      <select class="selector date-selector blue start-date" data-direction="1" data-compare=".end-date" name="start-date">
+        {{#each this.range}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+      <span>to</span>
+      <select class="selector date-selector blue end-date" data-direction="0" data-compare=".start-date" name="end-date">
+        {{#each this.range}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+      <span class="tab-average"></span>
     </div>
 </div>
 {{/if}}

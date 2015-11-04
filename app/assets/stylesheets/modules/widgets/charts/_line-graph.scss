@@ -16,7 +16,7 @@
   .tick {
     text {
       font-size: 11px;
-      color: $dark;
+      color: $font-color-1;
     }
   }
 
@@ -55,8 +55,8 @@
   }
 
   .axis text {
-    fill: #333;
-    font-weight: bold;
+    fill: $font-color-1;
+    font-weight: 500;
     font-size: 11px;
   }
 
@@ -81,7 +81,7 @@
   }
 
   .axis2 text {
-    fill: #333;
+    fill: $font-color-1;
     font-size: 10px;
   }
 
@@ -130,36 +130,6 @@
   }
 }
 
-.linegraph-tooltip {
-  position: absolute;
-  text-align: center;
-  max-width: 150px;
-  height: 65px;
-  padding: 12px;
-  font-size: 14px;
-  background: $blue;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
-  transform: translate(calc(-100% - 7px),-50%);
-
-  &:after {
-    content: '';
-    @include equi-triangle(7px, $blue, 'right');
-    position: absolute;
-    top: 50%;
-    right: -7px;
-    transform: translateY(-50%);
-  }
-
-  .data {
-    display: block;
-    margin-bottom: 4px;
-    font-size: 26px;
-    color: $white;
-  }
-}
-
 .pantropical-title h3{
   font-size: 18px;
   color: #555;
@@ -184,9 +154,10 @@
   &:after {
     @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
     right: inherit;
-    bottom: -7px;
+    bottom: -35px;
     top: 110%;
     content: ' ';
+    position: relative;
   }
 }
 .pantropical-vis {
@@ -210,11 +181,15 @@
   }
 }
 #vis {
+  min-height: 525px;
   .vis-tab {
     position: absolute;
     margin: 57px 0 0 50px;
     color: #555;
     display: none;
+    &.nydfs {
+      width: 220px
+    }
     &.right-side {
       right: 0;
       margin: 57px 50px 0 0;
@@ -266,6 +241,28 @@
     }
     &.all {
       display: block;
+    }
+    #year-picker {
+      height: 34px;
+      width: 103px;
+      border: 1px solid #5b80a0;
+      border-radius: 40px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 14px;
+      color: #555;
+      line-height: 31px;
+      margin: 0 0 110px;
+      .minusy {
+        cursor: pointer;
+        font-size: 20px;
+        color: #5b80a0;
+        &.stop {
+          color: #eaeaea;
+          cursor: default;
+        }
+      }
     }
   }
 }

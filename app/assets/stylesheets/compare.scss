@@ -22,28 +22,13 @@
 @import "modules/select";
 @import "modules/gridgraphs";
 
-//Countries
-@import "modules/compare/m-compare-modal";
+// Widgets and charts
+@import "modules/widgets/*";
+@import "modules/widgets/charts/*";
 
-// @import "modules/countries/header-profile";
-// @import "modules/countries/list";
-// @import "modules/countries/header-show";
-// @import "modules/countries/indicators-modal";
-// @import "modules/countries/show";
-@import "modules/countries/country-widget";
-@import 'modules/countries/tabs.scss';
-
-//Compare
+// Compare
 @import "modules/compare/*";
 @import "modules/common/m-toolbar";
-
-// Charts
-@import "modules/countries/charts/tabs";
-@import "modules/countries/charts/line-graph";
-@import "modules/countries/charts/pie-chart";
-@import "modules/countries/charts/number-graph";
-// @import "modules/dropdowns";
-// @import "modules/map/control-threshold";
 
 // Common
 @import "states";

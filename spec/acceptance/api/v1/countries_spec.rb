@@ -10,9 +10,9 @@ resource 'Countries' do
       expect(status).to eq(200)
       countries = JSON.parse(response_body)['countries']
 
-      expect(countries.length).to eq(105)
-      expect(countries[6]['name']).to eq('Barbados')
-      expect(countries[6]['iso']).to eq('BRB')
+      expect(countries.length).to eq(106)
+      expect(countries[6]['name']).to eq('Bangladesh')
+      expect(countries[6]['iso']).to eq('BGD')
       expect(countries[6]['enabled']).to eq(true)
     end
   end
@@ -23,7 +23,7 @@ resource 'Countries' do
     example_request "Getting a specific country", thresh: 50 do
       expect(status).to eq(200)
       country = JSON.parse(response_body)['country']
-      
+
       expect(country['iso']).to eq('AUS')
       expect(country['thresh']).to eq('50')
       expect(country['enabled']).to eq(true)
@@ -44,7 +44,7 @@ resource 'Countries' do
       do_request(thresh: '75')
       expect(status).to eq(200)
       country = JSON.parse(response_body)['country']
-      
+
       expect(country['iso']).to eq('AUS')
       expect(country['thresh']).to eq('75')
     end
@@ -53,7 +53,7 @@ resource 'Countries' do
       do_request
       expect(status).to eq(200)
       country = JSON.parse(response_body)['country']
-      
+
       expect(country['iso']).to eq('AUS')
       expect(country['thresh']).to eq('25')
     end
@@ -77,7 +77,7 @@ resource 'Countries' do
       do_request(thresh: '75')
       expect(status).to eq(200)
       jurisdiction = JSON.parse(response_body)['jurisdiction']
-      
+
       expect(jurisdiction['iso']).to eq('BRA')
       expect(jurisdiction['thresh']).to eq('75')
     end
@@ -86,7 +86,7 @@ resource 'Countries' do
       do_request
       expect(status).to eq(200)
       jurisdiction = JSON.parse(response_body)['jurisdiction']
-      
+
       expect(jurisdiction['iso']).to eq('BRA')
       expect(jurisdiction['thresh']).to eq('25')
     end

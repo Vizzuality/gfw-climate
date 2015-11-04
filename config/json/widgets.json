@@ -7,7 +7,29 @@
     "tabs": [
       {
         "position": 1,
-        "name": "FAO FRA 2015 (IPCC Approach 1)",
+        "name": "Net forest conversion",
+        "subname": "(FAO FRA 2015)",
+        "ipcc" : "(IPCC Approach 1)",
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%"
+          }
+        ],
+        "default": true
+      },
+      {
+        "position": 2,
+        "name": "Annual gross tree cover loss",
+        "subname": "(Hansen/UMD/Google/USGS/NASA)",
+        "ipcc" : "(IPCC Approach 3)",
         "type": "line",
         "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
         "rangetype" : "year",
@@ -22,29 +44,13 @@
           }
         ],
         "thresh": 25,
-        "default": true
-      },
-      {
-        "position": 2,
-        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
-        "type": "line",
-        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
-        "rangetype" : "year",
-        "switch" : [
-          {
-            "unit": "hectares",
-            "unitname": "ha"
-          },
-          {
-            "unit": "percentage",
-            "unitname": "%"
-          }
-        ],
-        "thresh": 25
+        "threshunit": "loss"
       },
       {
         "position": 3,
-        "name": "National Data (IPCC Approach 2/3)",
+        "name": "Other national data",
+        "subname": "(Sources vary)",
+        "ipcc" : "(IPCC Approach 2/3)",
         "type": "line",
         "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
         "rangetype" : "year",
@@ -58,7 +64,8 @@
             "unitname": "%"
           }
         ],
-        "thresh": 25
+        "thresh": 25,
+        "threshunit": "loss"
       }
     ],
     "indicators": [
@@ -115,7 +122,29 @@
     "tabs": [
       {
         "position": 1,
-        "name": "Faostat (IPCC Tier 1)",
+        "name": "Annual net carbon emissions",
+        "subname": "(FAO/Federici et al. 2015)",
+        "ipcc" : "(IPCC Tier 1)",
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "tg-c",
+            "unitname": "Tg C"
+          },
+          {
+            "unit": "mt-co2",
+            "unitname": "Mt CO2"
+          }
+        ],
+        "default": true
+      },
+      {
+        "position": 2,
+        "name": "Annual gross carbon emissions",
+        "subname": "(WHRC/Baccini et al. 2015)",
+        "ipcc" : "(IPCC Tier 2)",
         "type": "line",
         "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
         "rangetype" : "year",
@@ -130,29 +159,13 @@
           }
         ],
         "thresh": 25,
-        "default": true
-      },
-      {
-        "position": 2,
-        "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
-        "type": "line",
-        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
-        "rangetype" : "year",
-        "switch" : [
-          {
-            "unit": "tg-c",
-            "unitname": "Tg C"
-          },
-          {
-            "unit": "mt-co2",
-            "unitname": "Mt CO2"
-          }
-        ],
-        "thresh": 25
+        "threshunit": "loss"
       },
       {
         "position": 3,
-        "name": "National Data (IPCC Tier 2)",
+        "name": "Other national data",
+        "subname": "(Sources vary)",
+        "ipcc" : "(IPCC Tier 2)",
         "type": "line",
         "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
         "rangetype" : "year",
@@ -166,7 +179,8 @@
             "unitname": "Mt CO2"
           }
         ],
-        "thresh": 25
+        "thresh": 25,
+        "threshunit": "loss"
       }
     ],
     "indicators": [
@@ -226,19 +240,20 @@
         "name": "Hansen/Google/UMD",
         "type": "number",
         "thresh" : 25,
+        "threshunit": "tree cover",
         "default": true
       },
       {
         "position": 2,
         "name": "FAO",
-        "type": "number",
-        "thresh" : 25
+        "type": "number"
       },
       {
         "position": 3,
         "name": "Compare All",
         "type": "number",
-        "thresh" : 25
+        "thresh" : 25,
+        "threshunit": "tree cover"
       }
     ],
     "indicators": [
@@ -295,12 +310,24 @@
           }
         ],
         "thresh": 25,
+        "threshunit": "biomass/carbon",
         "default": true
       },
       {
         "position": 2,
         "name": "FAO",
-        "type": "pie"
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       },
       {
         "position": 3,
@@ -406,7 +433,7 @@
         "type": "total",
         "unit": "number",
         "tab": 2,
-        "section": "carbon"
+        "section": "biomass"
       },
       {
         "id": 23,
@@ -496,7 +523,7 @@
         "direction": "belowground"
       },
       {
-        "id": 20,
+        "id": 21,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -510,7 +537,7 @@
         "type": "total",
         "unit": "number",
         "tab": 3,
-        "section": "carbon"
+        "section": "biomass"
       },
       {
         "id": 23,
@@ -544,12 +571,24 @@
           }
         ],
         "thresh": 25,
+        "threshunit": "biomass/carbon",
         "default": true
       },
       {
         "position": 2,
         "name": "FAO",
-        "type": "pie"
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       },
       {
         "position": 3,
@@ -655,7 +694,7 @@
         "type": "total",
         "unit": "number",
         "tab": 2,
-        "section": "carbon"
+        "section": "biomass"
       },
       {
         "id": 23,
@@ -745,7 +784,7 @@
         "direction": "belowground"
       },
       {
-        "id": 20,
+        "id": 21,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -759,7 +798,7 @@
         "type": "total",
         "unit": "number",
         "tab": 3,
-        "section": "carbon"
+        "section": "biomass"
       },
       {
         "id": 23,

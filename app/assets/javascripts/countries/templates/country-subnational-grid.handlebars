@@ -1,5 +1,20 @@
 <div class="subnational-grid">
+  <button class="btn medium blue addIndicators">customize report</button>
 
-  <div class="subnational-grid__content"></div>
+  <div class="subnational-grid__content">
+
+    {{#each jurisdictions}}
+
+      <div id="box-jurisdictions-{{this.id}}">
+
+        <h2>{{this.name}}</h2>
+
+        <div class="gridgraphs--container-profile"></div>
+
+      </div>
+
+    {{/each}}
+
+  </div>
 
 </div>

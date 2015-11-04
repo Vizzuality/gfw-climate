@@ -13,14 +13,12 @@ define([
       this._super();
 
       this.status = new (Backbone.Model.extend({
-        // defaults: {
-        //   view: 'national'
-        // }
+        defaults: {
+          view: 'national'
+        }
       }));
 
       this._setListeners();
-
-      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -30,22 +28,16 @@ define([
       'Place/go': function(place) {
         this._onPlaceGo(place);
       }
+    }, {
+      'Tab/update': function(opts) {
+        this.setDisplay(opts);
+      }
     }],
 
     _setListeners:function() {
       this.status.on('change:view', this.onUpdateTab, this);
     },
 
-    /**
-     * Used by PlaceService to get the current iso/area params.
-     *
-     * @return {object} iso/area params
-     */
-    getPlaceParams: function() {
-      var p = {};
-      p.view = this.status.get('view');
-      return p;
-    },
 
     /**
      * Triggered from 'Place/Go' events.
@@ -54,25 +46,36 @@ define([
      */
     _onPlaceGo: function(params) {
       this._setupView(params);
+      this.view.start();
     },
 
     _setupView: function(params) {
 
       if(params.view) {
-        this.setDisplay(params.view);
+        this.status.set({
+          view: params.view
+        }, {silent: true});
       }
     },
 
-    setDisplay: function(display) {
-      this.status.set({
-        view: display
-      });
+    setDisplay: function(opts) {
+
+      if (opts.silent) {
+        this.status.set({
+          view: opts.view
+        }, {silent: true});
+      } else {
+        this.status.set({
+          view: opts
+        });
+      }
+
+      this.view._setCurrentTab();
     },
 
     onUpdateTab: function() {
       this.view._setCurrentTab();
-      mps.publish('Place/update', []);
-      mps.publish('View/update', [this.status.get('view')])
+      mps.publish('View/update', [this.status.get('view')]);
     },
 
   });

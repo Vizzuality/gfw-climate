@@ -20,12 +20,7 @@ define([
       this._super();
       this.view = view;
       this.service = CompareService;
-      this.setListeners();
       mps.publish('Place/register', [this]);
-    },
-
-    setListeners: function() {
-      this.status.on('change:data', this.changeData, this);
     },
 
     /**
@@ -53,6 +48,10 @@ define([
 
       'Options/updated': function(id,slug,wstatus) {
         this._onOptionsUpdate(id,slug,wstatus);
+      },
+
+      'Options/delete': function(id) {
+        this._onOptionsDelete(id);
       }
 
     }],
@@ -73,10 +72,23 @@ define([
 
     _onOptionsUpdate: function(id,slug,wstatus) {
       var options = _.clone(this.status.get('options'));
-      options[slug][id][0] = wstatus;
-      // Set and publish
+      if (!!options[slug]) {
+        options[slug][id][0] = wstatus;
+        // Set and publish
+        this.status.set('options', options);
+        mps.publish('Place/update');
+      }
+    },
+
+    _onOptionsDelete: function(id) {
+      var options = _.clone(this.status.get('options'));
+      _.each(options, function(c,k){
+        (!!c && c[id]) ? delete c[id] : null;
+        options[k] = c;
+      });
       this.status.set('options', options);
       mps.publish('Place/update');
+      this.changeCompare();
     },
 
     setParams: function(params) {
@@ -113,7 +125,7 @@ define([
     },
 
     // COMPARE EVENTS
-    changeData: function() {
+    render: function() {
       this.view.render();
     },
 
@@ -139,6 +151,7 @@ define([
         return c;
       });
       this.status.set('data', data);
+      this.render();
     },
 
     errorCompare: function() {
@@ -181,9 +194,8 @@ define([
           unit: (t.switch) ? t['switch'][0]['unit'] : null,
           start_date: (t.range) ? t['range'][0] : null,
           end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-          thresh: (t.thresh) ? t['thresh'] : null,
-          section: (t.section) ? t['section'] : null,
-          sectionswitch: (t.sectionswitch) ? t['sectionswitch'] : null,
+          thresh: (t.thresh) ? t['thresh'] : 0,
+          section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
         }
       })[0];
     },
