@@ -271,6 +271,35 @@ function addCommas(nStr) {
       return this.hide_years();
     };
 
+    BubbleChart.prototype.make_chart = function(bubble_id){
+      // return (function(_this) {
+      //   return function(d) {
+          // console.log('d.id: ' + d.id);
+          // d.x = d.x + (_this.center.x - d.x + 150) * (_this.damper + 0.02) * alpha;
+          // return d.y = d.y + (_this.center.y - d.y) * (_this.damper + 0.02) * alpha;
+
+          // this.circles where id = d ===> cx cy
+      var bubble_id_string = "bubble_" + bubble_id;
+
+      for (var i in this.circles[0]) {
+        if(bubble_id_string == this.circles[0][i].id) {
+          // this.circles[0][i].x = ((i%5) * 100 ) + 450;
+
+          // $(this.circles[0][i]).attr('cx', (((i + 1) % 5) * 100 ) );
+          // // this.circles[0][i].y = ((i%6) * 200) + 200;
+          // $(this.circles[0][i]).attr('cy', (((i + 1) % 20) * 200) );
+          // debugger
+          $(this.circles[0][i]).attr('cx', (((i+1) % 5)  * 100));
+
+          $(this.circles[0][i]).attr('cy', (((i+1) % 20) * 100));
+
+          }
+        }
+
+      //   };
+      // })(this);
+    };
+
     BubbleChart.prototype.move_towards_center = function(alpha) {
       return (function(_this) {
         return function(d) {
@@ -372,28 +401,83 @@ function addCommas(nStr) {
     };
 
     BubbleChart.prototype.display_by_country = function() {
-      var years, years_data, years_x;
-      years_x = {
-        "2001": this.width - (this.width*0.95),
-        "2002": this.width - (this.width*0.85),
-        "2003": this.width - (this.width*0.75),
-        "2004": this.width - (this.width*0.65),
-        "2005": this.width - (this.width*0.55),
-        "2006": this.width - (this.width*0.45),
-        "2007": this.width - (this.width*0.35),
-        "2008": this.width - (this.width*0.25),
-        "2009": this.width - (this.width*0.15),
-        "2010": this.width - (this.width*0.05)
-      };
-      years_data = d3.keys(years_x);
-      years = this.vis.selectAll(".years").data(years_data);
-      return years.enter().append("text").attr("class", "years").attr("x", (function(_this) {
-        return function(d) {
-          return years_x[d];
-        };
-      })(this)).attr("y", 40).attr("text-anchor", "middle").text(function(d) {
-        return d;
+      // var years, years_data, years_x;
+      // years_x = {
+      //   "2001": this.width - (this.width*0.95),
+      //   "2002": this.width - (this.width*0.85),
+      //   "2003": this.width - (this.width*0.75),
+      //   "2004": this.width - (this.width*0.65),
+      //   "2005": this.width - (this.width*0.55),
+      //   "2006": this.width - (this.width*0.45),
+      //   "2007": this.width - (this.width*0.35),
+      //   "2008": this.width - (this.width*0.25),
+      //   "2009": this.width - (this.width*0.15),
+      //   "2010": this.width - (this.width*0.05)
+      // };
+      // years_data = d3.keys(years_x);
+      // years = this.vis.selectAll(".years").data(years_data);
+      // return years.enter().append("text").attr("class", "years").attr("x", (function(_this) {
+      //   return function(d) {
+      //     return years_x[d];
+      //   };
+      // })(this)).attr("y", 40).attr("text-anchor", "middle").text(function(d) {
+      //   return d;
+      // });
+
+      var that = this;
+      var sorted_array = that.get_id_val();
+      this.force
+        .gravity(0)
+        .friction(0.9)
+        .charge(that.defaultCharge)
+        .on("tick", function(e){
+          for (var i in sorted_array) {
+
+            that.make_chart(sorted_array[i].id)
+          }
+
+          that.circles
+            .transition().duration(50).attr("r", function(d) {
+              value = d.average;
+              id = d.id;
+
+              return that.radius_scale(value * 1.6);
+            })
+            .each(that.buoyancy(e.alpha))
+
+        })
+        .start();
+
+    };
+
+    BubbleChart.prototype.get_id_val = function() {
+      var b_arr = [];
+      this.circles
+        .each(function(d) {
+          id = ~~d.id;
+          value = parseFloat(d.average);
+          b_arr.push({id: id, value: value});
+
+        })
+
+      return this.sort_by_average(b_arr);
+    }
+    BubbleChart.prototype.sort_by_average = function(array){
+      var b_arr = array;
+      b_arr.sort(function(a, b) {
+        if (a.value > b.value) {
+          return 1;
+        }
+        if (a.value < b.value) {
+          return -1;
+        }
+        return 0;
       });
+
+      b_arr = b_arr.reverse();
+
+      return b_arr;
+
     };
 
     BubbleChart.prototype.hide_years = function() {
