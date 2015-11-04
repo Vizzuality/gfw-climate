@@ -558,6 +558,33 @@
   }
 }
 
+.m-features {
+
+  .feature-content {
+    display: flex;
+    min-height: 500px;
+    padding: 60px;
+    &.-right {
+      justify-content: flex-end;
+    }
+  }
+
+  .feature-content > .col {
+    display: flex;
+    flex-direction: column;
+  }
+  .col {
+    position: relative;
+    &.-c3 {
+      @include col(30);
+    }
+    &.-c5 {
+      @include col(50);
+    }
+  }
+
+}
+
 
 
 

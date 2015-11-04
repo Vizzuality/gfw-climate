@@ -1,0 +1,87 @@
+.m-feature-slider {
+
+  &.main-slider {
+    @media (min-width: $br-mobile) {
+      margin: 0 0 60px;
+    }
+
+  }
+
+  .main-slider-viewport > .slick-dots {
+    top: 30px;
+    right: 50px;
+    bottom: auto;
+  }
+
+  .slide > .slide-container {
+    display: flex;
+    min-height: 620px;
+    padding: 0;
+  }
+
+  .col > .col-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 120px 60px;
+  }
+
+  .col-container .title {
+    font-size: 19px;
+    color: $dark;
+    text-transform: uppercase;
+    font-weight: 300;
+    line-height: 24px;
+  }
+
+  .col-container .description {
+    margin: 10px 0 0;
+    font-size: 35px;
+    color: $white;
+    font-weight: 300;
+    line-height: 40px;
+  }
+
+  .profile-list {
+    position: absolute;
+    top: auto;
+    left: 50%;
+    bottom: 0;
+    margin: 0 0 -10px 0;
+    transform: translate(-50%, 50%);
+  }
+
+  .profile-list > .profile {
+    display: inline-block;
+    cursor: pointer;
+    &.-is-current > .circle {
+      background: $blue;
+    }
+    &.-country-technician > .circle {}
+    &.-investor > .circle {}
+    &.-policy-maker > .circle {}
+    &.-policy-researcher > .circle {}
+  }
+
+  .profile > .circle {
+    width: 100px;
+    height: 100px;
+    margin: 5px 15px;
+    border: 5px solid $white;
+    border-radius: 50%;
+    background: #ECEBE6;
+  }
+
+  .profile > .profile-name {
+    font-size: 14px;
+    color: $dark;
+    line-height: 21px;
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  .slide0 .col-container {
+    background: $brown;
+  }
+
+}

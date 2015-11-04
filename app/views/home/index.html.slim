@@ -138,46 +138,102 @@
                 svg
                   use (xlink:href="#shape-country" xmlns:xlink="http://www.w3.org/1999/xlink")
               h3 Stay informed
-  section.feature.intro
-    .inner
-      .row
-        .intro__content
-          h3 Meaning information
-          p GFW Climate catalyzes action on climate change by providing
-          span.bold timely, credible answers
-            | to questions about carbon emissions from tropical deforestation.
+  .m-features
+    section.feature-section.-intro
+      .feature-content
+        .col.-c3
+          .col-container
+            h3.title Meaning information
+            p.description
+              | GFW Climate catalyzes action on climate change by providing 
+              span timely, credible answers 
+              | to questions about carbon emissions from tropical deforestation.
+    section.feature-section.-map
+      .feature-content.-right
+        .col.-c3
+          .col-container
+            h3.title Forests in high definition
+            p.description 
+              | Explore the landscape and analyze carbon data on the 
+              span interactive map.
 
-  section.feature.map
-    .inner
-      .row
-        .map__content
-          h3 Forests in high definition
-          p Explore the landscape and analyze carbon data on the interactive map.
+            .link-container
+              a(href="/map" class="btn medium blue") Explore map
+              a(href="#" class="btn medium blue") Download data
 
-          a(href="/map" class="btn medium blue") Explore map
-          a(href="#" class="btn medium blue") Download data
+    section.feature-section.-country-profiles
+      .feature-content
+        .col.-c3
+          .col-container
+            h3.title Interactive dashboards
+            p.description 
+              span Customize reports 
+              | to show the data you want to see, the way you want to see it. Combine your indicators then save, 
+              | print or share your report with the world.
 
-  section.feature.country-profiles
-    .inner
-      .row
-        h3 Interactive dashboards
-        p GFW Climate catalyzes action on climate change by providing timely, credible answers
-          | to questions about carbon emissions from tropical deforestation.
+            .link-container
+              a(href="/countries" class="btn medium blue") Country profiles
 
-        a(href="/countries" class="btn medium blue") Country profiles
+    section.feature-section.-compare-countries
+      .feature-content.-right
+        .col.-c3
+          .col-container
+            h3.title Compare countries, jurisdictions and areas of interest
+            p.description 
+              | Easy to access, easy to understand, 
+              span everything in one place
+              | . Select multiple areas of interest and compare information side-by-side so 
+              | you can make the decisions that matter.
 
-  section.feature.compare-countries
-    .inner
-      .row
-        h3 Compare countries, jurisdictions and areas of interest
-        p Easy to access, easy to understand, everything in one place. Select multiple areas of
-          | interest and compare information side-by-side so you can make the decisions that matter.
+            .link-container
+              a(href="/compare-countries" class="btn medium blue") Compare countries
 
-        a(href="/compare-countries" class="btn medium blue") Compare countries
+    section.feature-section.-pantropical
+      .feature-content.
+        .col.-c3
+          .col-container
+            h3.title Monitor progress
+            p.description 
+              | See how 
+              span emissions from tropical deforestation 
+              | have changed over the 21st century.
 
-  section.feature.profiles
-    .inner
-      / To do: slider
+            .link-container
+              a(href="/pantropical" class="btn medium blue") Pantropical overview
+
+    section.feature-section.-profiles
+      section.m-feature-slider.main-slider
+        ul.main-slider-viewport
+          li.slide.slide0.current
+            .slide-container
+              / a href="http://bit.ly/1HSyDPa?referral=carousel"
+              .col.-c5
+                .col-container
+                  h3.title Features for country technician
+                  p.description 
+                    | Lorem ipsum dalor sit amet. Maecenas sed diam eget risus varius blandit sit magna.
+
+                  .link-container
+                    a(href="/compare-countries" class="btn medium white") Learn more
+
+          li.slide.slide1
+          li.slide.slide2
+          li.slide.slide3
+        ul.profile-list
+            li.profile.-country-technician
+              .circle
+              p.profile-name Country technician
+            li.profile.-investor
+              .circle
+              p.profile-name Investor
+            li.profile.-policy-maker
+              .circle.
+              p.profile-name Policy Maker
+            li.profile.-policy-researcher
+              .circle
+              p.profile-name Policy Researcher
+            
+        
 
 
 

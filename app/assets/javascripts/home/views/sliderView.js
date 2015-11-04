@@ -16,7 +16,7 @@ define([
   // SLIDER
   var SlideView = Backbone.View.extend({
 
-    el: '#main-slider',
+    el: '.main-slider',
 
     events: {
       'click #get-started' : 'getStarted',
@@ -37,7 +37,7 @@ define([
       $('.main-slider-viewport').slick({
         infinite: true,
         speed: 500,
-        autoplay: true,
+        // autoplay: true,
         autoplaySpeed: 3000,
         slide: 'li',
         fade: true,
