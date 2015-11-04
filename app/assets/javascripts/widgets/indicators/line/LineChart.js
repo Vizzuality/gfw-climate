@@ -183,7 +183,7 @@ LineChart.prototype.setTooltip = function(x0,is_reflect) {
     var format = (self.unit != 'percentage') ? ".3s" : ".2f",
         xyear = self.x(d.year),
         year = formatDate(d.year),
-        value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
+        value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value) +' %';
     // Positioner
     self.positioner
       .style('visibility', 'visible')
