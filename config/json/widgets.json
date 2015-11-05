@@ -63,9 +63,7 @@
             "unit": "percentage",
             "unitname": "%"
           }
-        ],
-        "thresh": 25,
-        "threshunit": "loss"
+        ]
       }
     ],
     "indicators": [
