@@ -578,8 +578,17 @@
     &.-c3 {
       @include col(30);
     }
+    &.-c4 {
+      @include col(40);
+    }
     &.-c5 {
       @include col(50);
+    }
+    &.-c6 {
+      @include col(60);
+    }
+    &.-c7 {
+      @include col(70);
     }
   }
 

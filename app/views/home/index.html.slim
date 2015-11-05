@@ -87,7 +87,7 @@
                 span.mobile-hide more info
                 span.mobile-show +
         p.credits
-          a< (href="https://www.flickr.com/photos/ciat/5641590542/in/photolist-9AwCjs-pWuPfP-4Ghbck-dMtz65-hQviys-9AwE53-9AwDnd-9AwEd1-9AtFDi-e11QhV-jc1Q63-9KfN2U-4Ghbgt-de9HfG-eYB1Km-9AwAT7-bj7gMa-e7cxj-9KfN9C-bj7f14-dMtLUY-dMnVDg-9BZPYT-dMo2Wv-9AtJDk-9AwC3G-dMtvWS-bj7h3M-9BZPa2-9AwAsf-bj7f92-bj7eJi-dMnYLM-6tQEqP-6tUM3G-3ePvJ3-akEy6o-dqcX2j-9Bda7P-8UjyyX-9BZPFi-bWww6i-9AtHxr-9AtGP2-48TdKY-8HcXg5-9AtJog-6yn7JD-9AtH2e-dMttcA") Photo: CIAT
+          a< (href="https://www.flickr.com/photos/ciat/5641590542/in/photolist-9AwCjs-pWuPfP-4Ghbck-dMtz65-hQviys-9AwE53-9AwDnd-9AwEd1-9AtFDi-e11QhV-jc1Q63-9KfN2U-4Ghbgt-de9HfG-eYB1Km-9AwAT7-bj7gMa-e7cxj-9KfN9C-bj7f14-dMtLUY-dMnVDg-9BZPYT-dMo2Wv-9AtJDk-9AwC4G-dMtvWS-bj7h3M-9BZPa2-9AwAsf-bj7f92-bj7eJi-dMnYLM-6tQEqP-6tUM3G-3ePvJ3-akEy6o-dqcX2j-9Bda7P-8UjyyX-9BZPFi-bWww6i-9AtHxr-9AtGP2-48TdKY-8HcXg5-9AtJog-6yn7JD-9AtH2e-dMttcA") Photo: CIAT
       / li.slide.slide3
       /   a.mobile-friendly href="http://fires.globalforestwatch.org/#v=map&x=115&y=0&l=5&lyrs=Active_Fires%3AAir_Quality%3AWind_Direction&dirty=true&referral=carousel"
       /   .inner
@@ -139,99 +139,116 @@
                   use (xlink:href="#shape-country" xmlns:xlink="http://www.w3.org/1999/xlink")
               h3 Stay informed
   .m-features
-    section.feature-section.-intro
-      .feature-content
-        .col.-c3
-          .col-container
-            h3.title Meaning information
-            p.description
-              | GFW Climate catalyzes action on climate change by providing 
-              span timely, credible answers 
-              | to questions about carbon emissions from tropical deforestation.
-    section.feature-section.-map
-      .feature-content.-right
-        .col.-c3
-          .col-container
-            h3.title Forests in high definition
-            p.description 
-              | Explore the landscape and analyze carbon data on the 
-              span interactive map.
+    .inner
+      section.feature-section.-intro
+        .feature-content
+          .col.-c4
+            .col-container
+              .description-container
+                h3.title Meaning information
+                p.description
+                  | GFW Climate catalyzes action on climate change by providing 
+                  span timely, credible answers 
+                  | to questions about carbon emissions from tropical deforestation.
+          .col.-c5
+            .translated-image
+              = image_tag("home/features/img-info.png")
 
-            .link-container
-              a(href="/map" class="btn medium blue") Explore map
-              a(href="#" class="btn medium blue") Download data
+      section.feature-section.-map
+        .feature-content.-right
+          .col.-c4
+            .col-container
+              .description-container
+                h3.title Forests in high definition
+                p.description 
+                  | Explore the landscape and analyze carbon data on the 
+                  span interactive map.
 
-    section.feature-section.-country-profiles
-      .feature-content
-        .col.-c3
-          .col-container
-            h3.title Interactive dashboards
-            p.description 
-              span Customize reports 
-              | to show the data you want to see, the way you want to see it. Combine your indicators then save, 
-              | print or share your report with the world.
+                .link-container
+                  a(href="/map" class="btn medium blue") Explore map
+                  a(href="#" class="btn medium blue") Download data
 
-            .link-container
-              a(href="/countries" class="btn medium blue") Country profiles
+      section.feature-section.-country-profiles
+        .feature-content
+          .col.-c4
+            .col-container
+              .description-container
+                h3.title Interactive dashboards
+                p.description 
+                  span Customize reports 
+                  | to show the data you want to see, the way you want to see it. Combine your indicators then save, 
+                  | print or share your report with the world.
 
-    section.feature-section.-compare-countries
-      .feature-content.-right
-        .col.-c3
-          .col-container
-            h3.title Compare countries, jurisdictions and areas of interest
-            p.description 
-              | Easy to access, easy to understand, 
-              span everything in one place
-              | . Select multiple areas of interest and compare information side-by-side so 
-              | you can make the decisions that matter.
+                .link-container
+                  a(href="/countries" class="btn medium blue") Country profiles
+          = image_tag("home/features/img-profiles.png")
 
-            .link-container
-              a(href="/compare-countries" class="btn medium blue") Compare countries
+      section.feature-section.-compare-countries
+        .feature-content
+          = image_tag("home/features/img-compare.png")
+          .col.-c4
+            .col-container
+              .description-container
+                h3.title Compare countries, jurisdictions and areas of interest
+                p.description 
+                  | Easy to access, easy to understand, 
+                  span everything in one place
+                  | . Select multiple areas of interest and compare information side-by-side so 
+                  | you can make the decisions that matter.
 
-    section.feature-section.-pantropical
-      .feature-content.
-        .col.-c3
-          .col-container
-            h3.title Monitor progress
-            p.description 
-              | See how 
-              span emissions from tropical deforestation 
-              | have changed over the 21st century.
+                .link-container
+                  a(href="/compare-countries" class="btn medium blue") Compare countries
 
-            .link-container
-              a(href="/pantropical" class="btn medium blue") Pantropical overview
+      section.feature-section.-pantropical
+        .feature-content.
+          .col.-c4
+            .col-container
+              .description-container
+                h3.title Monitor progress
+                p.description 
+                  | See how 
+                  span emissions from tropical deforestation 
+                  | have changed over the 21st century.
 
-    section.feature-section.-profiles
-      section.m-feature-slider.main-slider
-        ul.main-slider-viewport
-          li.slide.slide0.current
-            .slide-container
-              / a href="http://bit.ly/1HSyDPa?referral=carousel"
-              .col.-c5
-                .col-container
-                  h3.title Features for country technician
-                  p.description 
-                    | Lorem ipsum dalor sit amet. Maecenas sed diam eget risus varius blandit sit magna.
+                .link-container
+                  a(href="/pantropical" class="btn medium blue") Pantropical overview
+          .col.-c6
+            = image_tag("home/features/img-pantropical.png")
 
-                  .link-container
-                    a(href="/compare-countries" class="btn medium white") Learn more
+      section.feature-section.-profiles
+        section.m-feature-slider.main-slider
+          ul.main-slider-viewport
+            li.slide.slide0.current
+              .slide-container
+                .col.-c5
+                  .col-container
+                    .description-container
+                      h3.title Features for country technician
+                      p.description 
+                        | Lorem ipsum dalor sit amet. Maecenas sed diam eget risus varius blandit sit magna.
 
-          li.slide.slide1
-          li.slide.slide2
-          li.slide.slide3
-        ul.profile-list
-            li.profile.-country-technician
-              .circle
-              p.profile-name Country technician
-            li.profile.-investor
-              .circle
-              p.profile-name Investor
-            li.profile.-policy-maker
-              .circle.
-              p.profile-name Policy Maker
-            li.profile.-policy-researcher
-              .circle
-              p.profile-name Policy Researcher
+                      .link-container
+                        a(href="/compare-countries" class="btn medium white") Learn more
+                .col.-c5
+                  / = image_tag("home/features/slider/slide0.png")
+                  .slide-background
+
+            li.slide.slide1
+            li.slide.slide2
+            li.slide.slide3
+          ul.profile-list
+              li.profile.-country-technician
+                = image_tag("home/features/profiles/profile1.png")
+                p.profile-name Country technician
+              li.profile.-investor
+                = image_tag("home/features/profiles/profile2b.png")
+                p.profile-name Investor
+              li.profile.-policy-maker
+                = image_tag("home/features/profiles/profile3b.png")
+                p.profile-name Policy Maker
+              li.profile.-policy-researcher
+                = image_tag("home/features/profiles/profile4b.png")
+                p.profile-name Policy Researcher
             
         
 
