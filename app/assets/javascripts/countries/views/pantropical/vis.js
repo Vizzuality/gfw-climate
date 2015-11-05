@@ -273,11 +273,11 @@ function addCommas(nStr) {
 
     //returns an array of the coordinates according to the sorted_array index (bubble_id, starts at 1)
     //sorted_index, index_of start at 0
-    BubbleChart.prototype.get_coordinates = function(sorted_index, index_of, y){
-      // debugger
+    BubbleChart.prototype.get_coordinates = function(sorted_index, y){
+
       var dist_x = 100;
-      var dist_y = 100;
-      var offset_x = 100;
+      var dist_y = 150;
+      var offset_x = 200;
       var offset_y = 0;
       var col_count = 7;
 
@@ -286,7 +286,9 @@ function addCommas(nStr) {
       var cx = x_position + offset_x;
       var cy = y + offset_y;
 
-      if ((index_of % 7) == 0) {
+
+
+      if ((sorted_index % 7) == 0) {
         cy += dist_y;
       }
       return [cx, cy];
@@ -413,7 +415,7 @@ function addCommas(nStr) {
       //   return d;
       // });
 
-      $('#svg_vis').css('height', 1500);
+      $('#svg_vis').css('height', 2300);
       var that = this;
       var sorted_array = that.get_sorted_array();
       this.force
@@ -428,47 +430,55 @@ function addCommas(nStr) {
               id = d.id;
               return that.radius_scale(value * 1.6);
             })
+
             .each( function() {
               var coordinates = [];
-              var res;
-              //look up bubble id in sorted array, return index of that bubble id -> hierarchy
+              var res_index;
+              //look up bubble id in sorted array, return index of that bubble id
+              // imposes the hierarchy on bubbles
               for(var i = 0; i < sorted_array.length; i++){
                 var lookup_string = "bubble_" + sorted_array[i].id;
                 //if bubble_37 === bubble_37
+                //easier than getting the id-number out of the string
                 if(lookup_string === this.id){
                   //hierarchy of current bubble in sorted array
-                  res = i;
+                  //to know where to paint it
+                  res_index = i;
                 }
               }
-              //use index in sorted_array to calculate corresponding coordinates
-              var index_of = (that.circles[0]).indexOf(this);
-              coordinates = that.get_coordinates(res, index_of, y)
+              //use each bubble's index in the sorted_array to calculate each bubble's coordinates
+              coordinates = that.get_coordinates(res_index, y)
 
-              // console.log(coordinates[1]);
+              //get current y in case it was incremented in get_coordinates()
               y = coordinates[1];
+
+              //set coordinates of bubble
               $(this).attr('cx', coordinates[0]);
               $(this).attr('cy', coordinates[1]);
-
-
             })
+            // .transition().duration(50).attr("cx", function() { return $(this).attr('cx')})
+            // .transition().duration(50).attr("cy", function() { return $(this).attr('cy')})
             .each(that.buoyancy(e.alpha))
         })
         .start();
     };
 
-    // array: [{id: bubble's id, value: average descending}]
+    // creates an array for ordering: [{id: bubble's id, value: average descending}]
     BubbleChart.prototype.get_sorted_array = function() {
       var b_arr = [];
       this.circles
         .each(function(d) {
           id = ~~d.id;
           value = parseFloat(d.average);
+
+          //stores id and value
+          //we need the id later to know which bubble to paint
           b_arr.push({id: id, value: value});
         })
       return this.sort_by_average(b_arr);
     }
 
-    // descending order
+    // returns array of bubbles in descending order
     BubbleChart.prototype.sort_by_average = function(array){
       var b_arr = array;
       b_arr.sort(function(a, b) {
