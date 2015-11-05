@@ -271,33 +271,25 @@ function addCommas(nStr) {
       return this.hide_years();
     };
 
-    BubbleChart.prototype.make_chart = function(bubble_id){
-      // return (function(_this) {
-      //   return function(d) {
-          // console.log('d.id: ' + d.id);
-          // d.x = d.x + (_this.center.x - d.x + 150) * (_this.damper + 0.02) * alpha;
-          // return d.y = d.y + (_this.center.y - d.y) * (_this.damper + 0.02) * alpha;
+    //returns an array of the coordinates according to the sorted_array index (bubble_id, starts at 1)
+    //sorted_index, index_of start at 0
+    BubbleChart.prototype.get_coordinates = function(sorted_index, index_of, y){
+      // debugger
+      var dist_x = 100;
+      var dist_y = 100;
+      var offset_x = 100;
+      var offset_y = 0;
+      var col_count = 7;
 
-          // this.circles where id = d ===> cx cy
-      var bubble_id_string = "bubble_" + bubble_id;
+      var x_position = ((sorted_index % col_count) * dist_x);
 
-      for (var i in this.circles[0]) {
-        if(bubble_id_string == this.circles[0][i].id) {
-          // this.circles[0][i].x = ((i%5) * 100 ) + 450;
+      var cx = x_position + offset_x;
+      var cy = y + offset_y;
 
-          // $(this.circles[0][i]).attr('cx', (((i + 1) % 5) * 100 ) );
-          // // this.circles[0][i].y = ((i%6) * 200) + 200;
-          // $(this.circles[0][i]).attr('cy', (((i + 1) % 20) * 200) );
-          // debugger
-          $(this.circles[0][i]).attr('cx', (((i+1) % 5)  * 100));
-
-          $(this.circles[0][i]).attr('cy', (((i+1) % 20) * 100));
-
-          }
-        }
-
-      //   };
-      // })(this);
+      if ((index_of % 7) == 0) {
+        cy += dist_y;
+      }
+      return [cx, cy];
     };
 
     BubbleChart.prototype.move_towards_center = function(alpha) {
@@ -330,10 +322,6 @@ function addCommas(nStr) {
         } else {
           targetX = 450
         };
-
-
-
-
         d.y = d.y + (targetY - d.y) * (that.defaultGravity) * alpha * 1.1
         d.x = d.x + (targetX - d.x) * (that.defaultGravity) * alpha * 1.1
       };
@@ -401,6 +389,7 @@ function addCommas(nStr) {
     };
 
     BubbleChart.prototype.display_by_country = function() {
+
       // var years, years_data, years_x;
       // years_x = {
       //   "2001": this.width - (this.width*0.95),
@@ -424,44 +413,62 @@ function addCommas(nStr) {
       //   return d;
       // });
 
+      $('#svg_vis').css('height', 1500);
       var that = this;
-      var sorted_array = that.get_id_val();
+      var sorted_array = that.get_sorted_array();
       this.force
         .gravity(0)
         .friction(0.9)
         .charge(that.defaultCharge)
         .on("tick", function(e){
-          for (var i in sorted_array) {
-
-            that.make_chart(sorted_array[i].id)
-          }
-
+          var y = 0;
           that.circles
             .transition().duration(50).attr("r", function(d) {
               value = d.average;
               id = d.id;
-
               return that.radius_scale(value * 1.6);
             })
-            .each(that.buoyancy(e.alpha))
+            .each( function() {
+              var coordinates = [];
+              var res;
+              //look up bubble id in sorted array, return index of that bubble id -> hierarchy
+              for(var i = 0; i < sorted_array.length; i++){
+                var lookup_string = "bubble_" + sorted_array[i].id;
+                //if bubble_37 === bubble_37
+                if(lookup_string === this.id){
+                  //hierarchy of current bubble in sorted array
+                  res = i;
+                }
+              }
+              //use index in sorted_array to calculate corresponding coordinates
+              var index_of = (that.circles[0]).indexOf(this);
+              coordinates = that.get_coordinates(res, index_of, y)
 
+              // console.log(coordinates[1]);
+              y = coordinates[1];
+              $(this).attr('cx', coordinates[0]);
+              $(this).attr('cy', coordinates[1]);
+
+
+            })
+            .each(that.buoyancy(e.alpha))
         })
         .start();
-
     };
 
-    BubbleChart.prototype.get_id_val = function() {
+    // array: [{id: bubble's id, value: average descending}]
+    BubbleChart.prototype.get_sorted_array = function() {
       var b_arr = [];
       this.circles
         .each(function(d) {
           id = ~~d.id;
           value = parseFloat(d.average);
           b_arr.push({id: id, value: value});
-
         })
-
       return this.sort_by_average(b_arr);
     }
+
+    // descending order
     BubbleChart.prototype.sort_by_average = function(array){
       var b_arr = array;
       b_arr.sort(function(a, b) {
@@ -473,11 +480,8 @@ function addCommas(nStr) {
         }
         return 0;
       });
-
       b_arr = b_arr.reverse();
-
       return b_arr;
-
     };
 
     BubbleChart.prototype.hide_years = function() {
