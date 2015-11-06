@@ -558,6 +558,50 @@
   }
 }
 
+.m-features {
+  overflow: hidden;
+
+  .feature-section > .feature-content {
+    display: flex;
+    min-height: 500px;
+    padding: 30px;
+    @media screen and (min-width: $br-mobile) {
+      padding: 60px;
+    }
+
+    &.-right {
+      justify-content: flex-end;
+    }
+
+    img {
+      // max-width: 100%;
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+  .col {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    &.-c3 {
+      @include col(30);
+    }
+    &.-c4 {
+      @include col(40);
+    }
+    &.-c5 {
+      @include col(50);
+    }
+    &.-c6 {
+      @include col(60);
+    }
+    &.-c7 {
+      @include col(70);
+    }
+  }
+}
+
 
 
 

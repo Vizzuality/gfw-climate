@@ -16,7 +16,7 @@ define([
   // SLIDER
   var SlideView = Backbone.View.extend({
 
-    el: '#main-slider',
+    el: '.main-slider',
 
     events: {
       'click #get-started' : 'getStarted',
