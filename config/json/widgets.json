@@ -6,7 +6,7 @@
     "default": true,
     "tabs": [
       {
-        "position": 1,
+        "position": 3,
         "name": "Net forest conversion",
         "subname": "(FAO FRA 2015)",
         "ipcc" : "(IPCC Approach 1)",
@@ -22,11 +22,10 @@
             "unit": "percentage",
             "unitname": "%"
           }
-        ],
-        "default": true
+        ]
       },
       {
-        "position": 2,
+        "position": 1,
         "name": "Annual gross tree cover loss",
         "subname": "(Hansen/UMD/Google/USGS/NASA)",
         "ipcc" : "(IPCC Approach 3)",
@@ -44,10 +43,11 @@
           }
         ],
         "thresh": 25,
-        "threshunit": "loss"
+        "threshunit": "loss",
+        "default": true
       },
       {
-        "position": 3,
+        "position": 2,
         "name": "Other national data",
         "subname": "(Sources vary)",
         "ipcc" : "(IPCC Approach 2/3)",
@@ -119,7 +119,7 @@
     "default": true,
     "tabs": [
       {
-        "position": 1,
+        "position": 3,
         "name": "Annual net carbon emissions",
         "subname": "(FAO/Federici et al. 2015)",
         "ipcc" : "(IPCC Tier 1)",
@@ -135,11 +135,10 @@
             "unit": "mt-co2",
             "unitname": "Mt CO2"
           }
-        ],
-        "default": true
+        ]
       },
       {
-        "position": 2,
+        "position": 1,
         "name": "Annual gross carbon emissions",
         "subname": "(WHRC/Baccini et al. 2015)",
         "ipcc" : "(IPCC Tier 2)",
@@ -157,10 +156,11 @@
           }
         ],
         "thresh": 25,
-        "threshunit": "loss"
+        "threshunit": "loss",
+        "default": true
       },
       {
-        "position": 3,
+        "position": 2,
         "name": "Other national data",
         "subname": "(Sources vary)",
         "ipcc" : "(IPCC Tier 2)",
