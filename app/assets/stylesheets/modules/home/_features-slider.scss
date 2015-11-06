@@ -1,0 +1,124 @@
+.m-feature-slider {
+
+  &.main-slider {
+    @media (min-width: $br-mobile) {
+      margin: 0 0 60px;
+    }
+
+    @media screen and (max-width: $br-mobile) {
+      height: 425px;
+    }
+  }
+
+  .main-slider-viewport {
+    @media screen and (max-width: $br-mobile) {
+      max-height: 425px !important;
+    }
+  }
+
+  .main-slider-viewport > .slick-dots {
+    top: 30px;
+    right: 50px;
+    bottom: auto;
+  }
+
+  .col > .col-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    padding: 30px;
+    @media screen and (min-width: $br-mobile) {
+      padding: 120px 60px;
+    }
+  }
+
+  .description-container {
+    margin: 0;
+
+    > .title {
+      font-size: 19px;
+      color: $dark;
+      text-transform: uppercase;
+      font-weight: 300;
+      line-height: 24px;
+    }
+
+    > .description {
+      margin: 10px 0 0;
+      font-size: 20px;
+      color: $white;
+      font-weight: 300;
+      line-height: 25px;
+    }
+
+    @media screen and (min-width: $br-mobile) {
+
+      > .description {
+        font-size: 35px;
+        line-height: 40px;
+      }
+    }
+  }
+
+  .profile-list {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    margin: 0 0 -10px 0;
+    transform: translate(0, 50%);
+    width: 100%;
+    text-align: center;
+  }
+
+  .profile-list > .profile {
+    display: inline-block;
+    width: 135px;
+    > .profile-img {
+      cursor: pointer;
+    }
+    > .profile-name {
+      font-size: 14px;
+      color: $dark;
+      line-height: 21px;
+      text-align: center;
+      text-transform: capitalize;
+    }
+  }
+
+  .slide {
+
+    @media screen and (max-width: $br-mobile) {
+      height: 425px;
+    }
+
+    > .slide-container {
+      display: flex;
+      min-height: 620px;
+      padding: 0;
+
+      img {
+        position: absolute;
+        width: 100%;
+      }
+    }
+
+    .slide-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    &.slide0 {
+      .col-container {
+        background: $brown;
+      }
+      .slide-background {
+        background-image: image-url('home/features/slider/slide0.png');
+      }
+    }
+  }
+}

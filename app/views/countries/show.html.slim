@@ -35,14 +35,10 @@
         .header-country__options-country
 
       .container-country__content-country
-
-          section#reports.reports-content
+        section#reports
+          .inner
+            .gridgraphs
+          section#reportIndicators.more-indicators-warning.is-hidden
             .inner
-              / .no-indicators-warning
-              /   h3 There are no indicators
-              /   button.addIndicators.btn.medium.blue add indicators
-              .gridgraphs--container-profile
-            section#reportIndicators.more-indicators-warning.is-hidden
-              .inner
-                h3 Don't see what you're looking for?
-                button.addIndicators.btn.medium.white(data-source="indicators") Customize indicators
+              h3 Don't see what you're looking for?
+              button.addIndicators.btn.medium.white(data-source="indicators") Customize indicators

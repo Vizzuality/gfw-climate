@@ -1,0 +1,94 @@
+
+.feature-section {
+
+  &.-intro {
+    border-top: 1px solid $border;
+
+    > .feature-content {
+
+      .translated-image {
+        width: 150%;
+        transform: translate(10%, 0);
+      }
+    }
+  }
+
+  &.-map {
+    background: image-url('home/features/img-map.png');
+    background-size: cover;
+    > .feature-content {
+      .description-container {
+        padding: 0;
+      }
+
+      .description > span {
+        color: $dark;
+      }
+
+      .description-container > .link-container {
+        @media screen and (max-width: $br-tablet) {
+          flex-wrap: wrap;
+          > .btn:last-child {
+            margin: 15px 0 0;
+          }
+        }
+      }
+    }
+  }
+
+  &.-compare-countries {
+    .description-container {
+      padding: 20px 0 20px 60px;
+    }
+  }
+
+  &.-country-profiles,
+  &.-pantropical {
+    background: rgba($gray, .2);
+  }
+
+  &.-profiles {
+    min-height: 550px;
+    margin: 0;
+    @media screen and (min-width: $br-mobile) {
+      margin: 60px 0 0;
+    }
+  }
+}
+
+.col-container {
+
+  .description-container {
+    margin: 0;
+    padding: 20px 60px 20px 0;
+     @media screen and (min-width: $br-mobile) {
+      margin: 30px 0 0;
+     }
+  }
+
+  .description-container > .title {
+    font-size: 35px;
+    font-weight: 300;
+    color: $dark;
+  }
+
+  .description-container > .description {
+    margin: 20px 0 0;
+    font-size: 19px;
+    line-height: 24px;
+    color: $dark;
+    > span {
+      color: $blue;
+      font-weight: 700;
+    }
+  }
+
+  .description-container > .link-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 0;
+    > .btn:first-child {
+      margin: 0 15px 0 0;
+    }
+  }
+}
