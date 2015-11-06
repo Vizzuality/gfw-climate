@@ -135,8 +135,8 @@
           .col.col6
             a (href="#")
               .icon
-                svg
-                  use (xlink:href="#shape-country" xmlns:xlink="http://www.w3.org/1999/xlink")
+                svg.shape-stay-informed
+                  use (xlink:href="#shape-stay-informed" xmlns:xlink="http://www.w3.org/1999/xlink")
               h3 Stay informed
   .m-features
     .inner
@@ -150,7 +150,7 @@
                   | GFW Climate catalyzes action on climate change by providing 
                   span timely, credible answers 
                   | to questions about carbon emissions from tropical deforestation.
-          .col.-c5
+          .col.-c6
             .translated-image
               = image_tag("home/features/img-info.png")
 
@@ -181,11 +181,13 @@
 
                 .link-container
                   a(href="/countries" class="btn medium blue") Country profiles
-          = image_tag("home/features/img-profiles.png")
+          .col.-c6
+            = image_tag("home/features/img-profiles.png")
 
       section.feature-section.-compare-countries
         .feature-content
-          = image_tag("home/features/img-compare.png")
+          .col.-c6
+            = image_tag("home/features/img-compare.png")
           .col.-c4
             .col-container
               .description-container
@@ -230,7 +232,6 @@
                       .link-container
                         a(href="/compare-countries" class="btn medium white") Learn more
                 .col.-c5
-                  / = image_tag("home/features/slider/slide0.png")
                   .slide-background
 
             li.slide.slide1
@@ -238,16 +239,16 @@
             li.slide.slide3
           ul.profile-list
               li.profile.-country-technician
-                = image_tag("home/features/profiles/profile1.png")
+                = image_tag("home/features/profiles/profile1.png", class: 'profile-img')
                 p.profile-name Country technician
               li.profile.-investor
-                = image_tag("home/features/profiles/profile2b.png")
+                = image_tag("home/features/profiles/profile2b.png", class: 'profile-img')
                 p.profile-name Investor
               li.profile.-policy-maker
-                = image_tag("home/features/profiles/profile3b.png")
+                = image_tag("home/features/profiles/profile3b.png", class: 'profile-img')
                 p.profile-name Policy Maker
               li.profile.-policy-researcher
-                = image_tag("home/features/profiles/profile4b.png")
+                = image_tag("home/features/profiles/profile4b.png", class: 'profile-img')
                 p.profile-name Policy Researcher
             
         

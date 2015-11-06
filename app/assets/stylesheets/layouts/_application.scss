@@ -559,22 +559,31 @@
 }
 
 .m-features {
+  overflow: hidden;
 
-  .feature-content {
+  .feature-section > .feature-content {
     display: flex;
     min-height: 500px;
-    padding: 60px;
+    padding: 30px;
+    @media screen and (min-width: $br-mobile) {
+      padding: 60px;
+    }
+
     &.-right {
       justify-content: flex-end;
     }
-  }
 
-  .feature-content > .col {
-    display: flex;
-    flex-direction: column;
+    img {
+      // max-width: 100%;
+      display: block;
+      width: 100%;
+      height: auto;
+    }
   }
   .col {
     position: relative;
+    display: flex;
+    flex-direction: column;
     &.-c3 {
       @include col(30);
     }
@@ -591,7 +600,6 @@
       @include col(70);
     }
   }
-
 }
 
 

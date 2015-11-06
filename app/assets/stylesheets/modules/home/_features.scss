@@ -1,52 +1,69 @@
 
 .feature-section {
 
-  &:first-child {
+  &.-intro {
     border-top: 1px solid $border;
+
+    > .feature-content {
+
+      .translated-image {
+        width: 150%;
+        transform: translate(10%, 0);
+      }
+    }
   }
+
+  &.-map {
+    background: image-url('home/features/img-map.png');
+    background-size: cover;
+    > .feature-content {
+      .description-container {
+        padding: 0;
+      }
+
+      .description > span {
+        color: $dark;
+      }
+
+      .description-container > .link-container {
+        @media screen and (max-width: $br-tablet) {
+          flex-wrap: wrap;
+          > .btn:last-child {
+            margin: 15px 0 0;
+          }
+        }
+      }
+    }
+  }
+
+  &.-compare-countries {
+    .description-container {
+      padding: 20px 0 20px 60px;
+    }
+  }
+
   &.-country-profiles,
   &.-pantropical {
     background: rgba($gray, .2);
   }
 
   &.-profiles {
-    margin: 60px 0 0;
-  }
-
-  > .feature-content {
-    justify-content: space-between;
-  }
-
-  &.-intro > .feature-content {
-    overflow: hidden;
-    .translated-image {
-      width: 150%;
-      transform: translate(10%, 0);
-      > img {
-        // max-width: 100%;
-      }
+    min-height: 550px;
+    margin: 0;
+    @media screen and (min-width: $br-mobile) {
+      margin: 60px 0 0;
     }
   }
-  &.-country-profiles > .feature-content {}
-  &.-map {
-    background: image-url('home/features/img-map.png');
-    background-size: cover;
-    > .feature-content {
-      .description > span {
-        color: $dark;
-      }
-    }
-  }
-  &.-compare-countries > .feature-content {}
-  &.-pantropical > .feature-content {}
-
 }
 
 .col-container {
 
   .description-container {
-    margin: 30px 0 0;
-    padding: 20px;
+    margin: 0;
+    padding: 20px 60px 20px 0;
+     @media screen and (min-width: $br-mobile) {
+      margin: 30px 0 0;
+     }
   }
 
   .description-container > .title {

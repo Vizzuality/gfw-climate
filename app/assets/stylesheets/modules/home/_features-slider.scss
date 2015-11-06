@@ -5,6 +5,15 @@
       margin: 0 0 60px;
     }
 
+    @media screen and (max-width: $br-mobile) {
+      height: 425px;
+    }
+  }
+
+  .main-slider-viewport {
+    @media screen and (max-width: $br-mobile) {
+      max-height: 425px !important;
+    }
   }
 
   .main-slider-viewport > .slick-dots {
@@ -13,22 +22,14 @@
     bottom: auto;
   }
 
-  .slide > .slide-container {
-    display: flex;
-    min-height: 620px;
-    padding: 0;
-
-    img {
-      position: absolute;
-      width: 100%;
-    }
-  }
-
   .col > .col-container {
     position: absolute;
     top: 0;
     bottom: 0;
-    padding: 120px 60px;
+    padding: 30px;
+    @media screen and (min-width: $br-mobile) {
+      padding: 120px 60px;
+    }
   }
 
   .description-container {
@@ -44,10 +45,18 @@
 
     > .description {
       margin: 10px 0 0;
-      font-size: 35px;
+      font-size: 20px;
       color: $white;
       font-weight: 300;
-      line-height: 40px;
+      line-height: 25px;
+    }
+
+    @media screen and (min-width: $br-mobile) {
+
+      > .description {
+        font-size: 35px;
+        line-height: 40px;
+      }
     }
   }
 
@@ -64,7 +73,9 @@
   .profile-list > .profile {
     display: inline-block;
     width: 135px;
-    cursor: pointer;
+    > .profile-img {
+      cursor: pointer;
+    }
     > .profile-name {
       font-size: 14px;
       color: $dark;
@@ -76,6 +87,21 @@
 
   .slide {
 
+    @media screen and (max-width: $br-mobile) {
+      height: 425px;
+    }
+
+    > .slide-container {
+      display: flex;
+      min-height: 620px;
+      padding: 0;
+
+      img {
+        position: absolute;
+        width: 100%;
+      }
+    }
+
     .slide-background {
       position: absolute;
       top: 0;
@@ -83,6 +109,7 @@
       right: 0;
       bottom: 0;
       background-size: cover;
+      background-position: center;
     }
 
     &.slide0 {
@@ -94,10 +121,4 @@
       }
     }
   }
-
-  .slide0 {
-
-
-  }
-
 }
