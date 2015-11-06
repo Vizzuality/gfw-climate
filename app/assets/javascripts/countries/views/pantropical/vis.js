@@ -91,6 +91,9 @@ function addCommas(nStr) {
                         }
                       };
       this.year_to_compare = undefined;
+      this.years = undefined;
+      this.year_left = undefined;
+      this.year_right = undefined;
       this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
         x: this.width / 2,
@@ -390,7 +393,7 @@ function addCommas(nStr) {
       })(this);
     };
 
-    BubbleChart.prototype.display_by_country = function() {
+    BubbleChart.prototype.display_by_country = function(year) {
 
       // var years, years_data, years_x;
       // years_x = {
@@ -416,7 +419,20 @@ function addCommas(nStr) {
       // });
 
       $('#svg_vis').css('height', 2300);
+      // debugger
+      // this.calculate_average();
+
+      // if(! !!year){
+      //   year
+      // }
+
+      this.years = year;
+
+
+
+
       var that = this;
+
       var sorted_array = that.get_sorted_array();
       this.force
         .gravity(0)
@@ -426,7 +442,25 @@ function addCommas(nStr) {
           var y = 0;
           that.circles
             .transition().duration(50).attr("r", function(d) {
-              value = d.average;
+
+              if (! !!that.years) {
+                that.year_left = 2001;
+                that.year_right = 2001;
+                var value = d.y2001;
+              } else {
+                that.year_left = that.years[0];
+                that.year_right = that.years[1];
+                for (key in d) {
+                  if (key.includes(that.year_left.toString())){
+                    var value_1 = d[key];
+                  } else if (key.includes(that.year_right.toString())){
+                    var value_2 = d[key];
+                  }
+                }
+                var value = that.calculate_average(value_1, value_2, d);
+              }
+
+              value = d.value;
               id = d.id;
               return that.radius_scale(value * 1.6);
             })
@@ -494,6 +528,40 @@ function addCommas(nStr) {
       return b_arr;
     };
 
+    BubbleChart.prototype.calculate_average = function(value_1, value_2, d) {
+      var year_left = this.year_left;
+      var year_right = this.year_right;
+      var diff_years = Math.abs(this.year_right - this.year_left);
+      var years_between = diff_years - 1;
+      var years_total = diff_years + 2;
+      var lookup_years = [];
+
+      //prepare array to look up data
+      lookup_years.push(year_left);
+      for(var i = 0; i < years_between; i++){
+        var sum = i + 1;
+        lookup_years.push(year_left + sum);
+      }
+      lookup_years.push(year_right);
+
+      //look up data
+      var sum_data = 0;
+      var test_keys = [];
+      for (year in lookup_years){
+        for (key in d) {
+          if (key == ("y" + lookup_years[year].toString())){
+            sum_data += parseFloat(d[key]);
+            test_keys.push({k: key, data: d[key]});
+          }
+        }
+      }
+
+      var avg = sum_data/years_total;
+      debugger
+
+      return avg;
+    }
+
     BubbleChart.prototype.hide_years = function() {
       var years;
       return years = this.vis.selectAll(".years").remove();
@@ -546,8 +614,8 @@ function addCommas(nStr) {
       };
     })(this);
     root.display_country = (function(_this) {
-      return function() {
-        return chart.display_by_country();
+      return function(year) {
+        return chart.display_by_country(year);
       };
     })(this);
     root.toggle_view = (function(_this) {
@@ -560,7 +628,7 @@ function addCommas(nStr) {
           case 'change':
             return root.display_change(year);
           case 'country':
-            return root.display_country();
+            return root.display_country(year);
         }
       };
     })(this);

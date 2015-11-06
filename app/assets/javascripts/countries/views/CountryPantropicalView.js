@@ -12,11 +12,14 @@ define([
 
     events: {
       'click #view_selection .btn' : 'switch_view',
-      'click .minusy' : '_change_year'
+      'click .minusy' : '_change_year',
+      'change #year-drop-left' : '_set_year',
+      'change #year-drop-right' : '_set_year'
     },
 
     initialize: function() {
       this.$years = $('#year-picker');
+
     },
 
     switch_view: function(e) {
@@ -26,6 +29,24 @@ define([
       $('#vis').find('.' + $(e.target).attr('id')).show();
       toggle_view($(e.target).attr('id'));
     },
+
+
+    _set_year: function(e){
+      var element = e.target;
+      var element2;
+      if (element.id == "year-drop-left"){
+        element2 = document.getElementById('year-drop-right');
+        this.year_left = parseInt(element.options[element.selectedIndex].value);
+        this.year_right = parseInt(element2.options[element2.selectedIndex].value);
+      }else if (element.id == "year-drop-right"){
+        element2 = document.getElementById('year-drop-left');
+        this.year_right = parseInt(element.options[element.selectedIndex].value);
+        this.year_left = parseInt(element2.options[element2.selectedIndex].value);
+      }
+      var year = [this.year_left, this.year_right];
+      toggle_view('country', year)
+    },
+
     _change_year: function(e) {
       var $year = $(e.target);
       if ($year.hasClass('stop')) return;
