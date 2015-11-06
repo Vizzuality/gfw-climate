@@ -66,7 +66,7 @@
               li.africa Africa
               li.asia South and Southeast Asia
           .vis-tab.change.right-side
-            span#year-picker data-maxyear="2013" data-minyear="2001"
+            span.year-picker#year-picker data-maxyear="2013" data-minyear="2001"
               .minusy.stop ❮
               .y
                 |2001
@@ -79,3 +79,17 @@
               |Other non-NYDF Signatories
             h4
               span.country-big-2 12%
+          .vis-tab.country
+
+            div.select-years
+              |Average:
+              select.year-dropdown#year-drop-left
+                - for i in (2001..2013)
+                  option value="#{i}"
+                    |#{i}
+              |to
+              select.year-dropdown#year-drop-right
+                - for i in (2001..2013)
+                  option value="#{i}"
+                    |#{i}
+

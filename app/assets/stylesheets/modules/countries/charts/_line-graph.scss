@@ -280,7 +280,7 @@
     &.all {
       display: block;
     }
-    #year-picker {
+    .year-picker {
       height: 34px;
       width: 103px;
       border: 1px solid #5b80a0;
@@ -291,7 +291,10 @@
       font-size: 14px;
       color: #555;
       line-height: 31px;
-      margin: 0 0 110px;
+      margin:0;
+      &#year-picker {
+        margin: 0 0 110px;
+      }
       .minusy {
         cursor: pointer;
         font-size: 20px;
@@ -300,6 +303,25 @@
           color: #eaeaea;
           cursor: default;
         }
+      }
+    }
+    .select-years {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      .year-dropdown {
+        height: 34px;
+        width: 103px;
+        border: 1px solid #5b80a0;
+        border-radius: 40px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 14px;
+        color: #555;
+        line-height: 31px;
+        margin:0;
       }
     }
   }
