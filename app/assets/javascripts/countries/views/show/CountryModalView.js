@@ -42,8 +42,6 @@ define([
       this.$el.addClass('source_window--countries')
 
       this._setListeners();
-
-      this._setupModal();
     },
 
     _setListeners: function() {
@@ -162,8 +160,6 @@ define([
           break;
 
         case 'subnational':
-
-          // TO FIX
 
           this.countryModel.fetch().done(function() {
 

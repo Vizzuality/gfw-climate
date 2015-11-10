@@ -9,16 +9,9 @@ define([
       this._super();
       this.view = view;
 
-      this.status = new (Backbone.Model.extend({
-        defaults: {
-          view: 'national',
-          indicators: null,
-          jurisdictions: null,
-          areas: null
-        }
-      }));
+      this.status = new (Backbone.Model.extend());
 
-      // mps.publish('Place/register', [this]);
+      mps.publish('Place/register', [this]);
     },
 
     _subscriptions: [{
@@ -41,7 +34,25 @@ define([
       'View/update': function(view){
         this._setView(view)
       }
+    }, {
+      'Place/go': function(place) {
+        this._onPlaceGo(place.view);
+      }
     }],
+
+    /**
+     * Used by PlaceService to get the current view param.
+     *
+     * @return {object} iso/area params
+     */
+    getPlaceParams: function() {
+      var p = {};
+      return p;
+    },
+
+    _onPlaceGo: function(view) {
+      this._setView(view);
+    },
 
     setIndicators: function(i) {
       this.status.set({
@@ -61,9 +72,9 @@ define([
       });
     },
 
-    _setView: function(view) {
+    _setView: function(v) {
       this.status.set({
-        view: view
+        view: v
       });
     }
 

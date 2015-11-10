@@ -1,7 +1,9 @@
 .gridgraphs {
+
   > .gridgraphs-header {
     overflow: hidden;
     margin: 60px 0 0;
+
     > .btn  {
       float: right;
     }
@@ -12,15 +14,36 @@
     flex-wrap: wrap;
     margin: 25px 0;
     padding: 0;
+
     > .gridgraphs-widget {
       width: 47.5%;
+      border-bottom: 1px solid #e5e5e5;
+      padding-bottom: 80px;
+      margin-bottom: 60px;
+  
+      &:nth-child(2n +1) {
+        position: relative;
+
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: -1px;
+          right: -25%;
+          width: 25%;
+          height: 1px;
+          background-color: #e5e5e5;
+        }
+      }
     }
   }
 
   &.-areas,
   &.-subnational {
+
     > .gridgraphs-content {
       transform: translate(0, -1.05%);
+
       > .box > .title {
         font-size: 32px;
         color: $dark;
