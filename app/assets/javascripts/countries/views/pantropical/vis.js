@@ -94,6 +94,7 @@ function addCommas(nStr) {
       this.years = undefined;
       this.year_left = undefined;
       this.year_right = undefined;
+      this.tmp = [];
       this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
         x: this.width / 2,
@@ -274,28 +275,7 @@ function addCommas(nStr) {
       return this.hide_years();
     };
 
-    //returns an array of the coordinates according to the sorted_array index (bubble_id, starts at 1)
-    //sorted_index, index_of start at 0
-    BubbleChart.prototype.get_coordinates = function(sorted_index, y){
 
-      var dist_x = 100;
-      var dist_y = 150;
-      var offset_x = 200;
-      var offset_y = 0;
-      var col_count = 7;
-
-      var x_position = ((sorted_index % col_count) * dist_x);
-
-      var cx = x_position + offset_x;
-      var cy = y + offset_y;
-
-
-
-      if ((sorted_index % 7) == 0) {
-        cy += dist_y;
-      }
-      return [cx, cy];
-    };
 
     BubbleChart.prototype.move_towards_center = function(alpha) {
       return (function(_this) {
@@ -393,102 +373,64 @@ function addCommas(nStr) {
       })(this);
     };
 
-    BubbleChart.prototype.display_by_country = function(year) {
-
-      // var years, years_data, years_x;
-      // years_x = {
-      //   "2001": this.width - (this.width*0.95),
-      //   "2002": this.width - (this.width*0.85),
-      //   "2003": this.width - (this.width*0.75),
-      //   "2004": this.width - (this.width*0.65),
-      //   "2005": this.width - (this.width*0.55),
-      //   "2006": this.width - (this.width*0.45),
-      //   "2007": this.width - (this.width*0.35),
-      //   "2008": this.width - (this.width*0.25),
-      //   "2009": this.width - (this.width*0.15),
-      //   "2010": this.width - (this.width*0.05)
-      // };
-      // years_data = d3.keys(years_x);
-      // years = this.vis.selectAll(".years").data(years_data);
-      // return years.enter().append("text").attr("class", "years").attr("x", (function(_this) {
-      //   return function(d) {
-      //     return years_x[d];
-      //   };
-      // })(this)).attr("y", 40).attr("text-anchor", "middle").text(function(d) {
-      //   return d;
-      // });
+    BubbleChart.prototype.display_by_country = function(values_array) {
 
       $('#svg_vis').css('height', 2300);
-      // debugger
-      // this.calculate_average();
-
-      // if(! !!year){
-      //   year
-      // }
-
-      this.years = year;
-
-
+      $('#svg_vis').css('display', 'flex');
+      $('#svg_vis').css('height', 2300);
+      $('#svg_vis').css({
+        'height':2300,
+        'display':'flex',
+        'flex-direction':'row',
+        'justify-content':'space-around',
+        'flex-wrap':'wrap',
+        'align-items':'center'
+      });
 
 
       var that = this;
+      var style_string;
 
-      var sorted_array = that.get_sorted_array();
       this.force
         .gravity(0)
         .friction(0.9)
         .charge(that.defaultCharge)
         .on("tick", function(e){
-          var y = 0;
           that.circles
             .transition().duration(50).attr("r", function(d) {
 
-              if (! !!that.years) {
-                that.year_left = 2001;
-                that.year_right = 2001;
-                var value = d.y2001;
-              } else {
-                that.year_left = that.years[0];
-                that.year_right = that.years[1];
-                for (key in d) {
-                  if (key.includes(that.year_left.toString())){
-                    var value_1 = d[key];
-                  } else if (key.includes(that.year_right.toString())){
-                    var value_2 = d[key];
-                  }
+              id = d.id;
+              for (index in values_array){
+                // find corresponding value for this bubble
+                if (values_array[index].id == id) {
+                  var value = values_array[index].value;
+                  break;
                 }
-                var value = that.calculate_average(value_1, value_2, d);
               }
 
-              value = d.value;
-              id = d.id;
               return that.radius_scale(value * 1.6);
             })
-
             .each( function() {
               var coordinates = [];
-              var res_index;
-              //look up bubble id in sorted array, return index of that bubble id
-              // imposes the hierarchy on bubbles
-              for(var i = 0; i < sorted_array.length; i++){
-                var lookup_string = "bubble_" + sorted_array[i].id;
-                //if bubble_37 === bubble_37
-                //easier than getting the id-number out of the string
-                if(lookup_string === this.id){
-                  //hierarchy of current bubble in sorted array
-                  //to know where to paint it
-                  res_index = i;
+
+              // look up current bubble in value_array
+              // use that index to assign order
+              // use order to style
+              for (var i = 0; i < values_array.length; i++){
+                id_search_string = "bubble_" + values_array[i].id;
+                if (this.id == id_search_string) {
+                  style_string = 'order:' + i + ";";
+                  $(this).attr('style', style_string);
+
+                  coordinates = that.get_coordinates(i);
+
+                  $(this).attr('cx', coordinates[0]);
+                  $(this).attr('cy', coordinates[1]);
+
+                  break;
                 }
               }
-              //use each bubble's index in the sorted_array to calculate each bubble's coordinates
-              coordinates = that.get_coordinates(res_index, y)
 
-              //get current y in case it was incremented in get_coordinates()
-              y = coordinates[1];
-
-              //set coordinates of bubble
-              $(this).attr('cx', coordinates[0]);
-              $(this).attr('cy', coordinates[1]);
             })
             // .transition().duration(50).attr("cx", function() { return $(this).attr('cx')})
             // .transition().duration(50).attr("cy", function() { return $(this).attr('cy')})
@@ -497,38 +439,8 @@ function addCommas(nStr) {
         .start();
     };
 
-    // creates an array for ordering: [{id: bubble's id, value: average descending}]
-    BubbleChart.prototype.get_sorted_array = function() {
-      var b_arr = [];
-      this.circles
-        .each(function(d) {
-          id = ~~d.id;
-          value = parseFloat(d.average);
 
-          //stores id and value
-          //we need the id later to know which bubble to paint
-          b_arr.push({id: id, value: value});
-        })
-      return this.sort_by_average(b_arr);
-    }
-
-    // returns array of bubbles in descending order
-    BubbleChart.prototype.sort_by_average = function(array){
-      var b_arr = array;
-      b_arr.sort(function(a, b) {
-        if (a.value > b.value) {
-          return 1;
-        }
-        if (a.value < b.value) {
-          return -1;
-        }
-        return 0;
-      });
-      b_arr = b_arr.reverse();
-      return b_arr;
-    };
-
-    BubbleChart.prototype.calculate_average = function(value_1, value_2, d) {
+    BubbleChart.prototype.calculate_average = function(d) {
       var year_left = this.year_left;
       var year_right = this.year_right;
       var diff_years = Math.abs(this.year_right - this.year_left);
@@ -536,15 +448,17 @@ function addCommas(nStr) {
       var years_total = diff_years + 2;
       var lookup_years = [];
 
-      //prepare array to look up data
+      // push years onto array
+
       lookup_years.push(year_left);
+      // generate years in between
       for(var i = 0; i < years_between; i++){
         var sum = i + 1;
         lookup_years.push(year_left + sum);
       }
       lookup_years.push(year_right);
 
-      //look up data
+      // look up data corresponding to year
       var sum_data = 0;
       var test_keys = [];
       for (year in lookup_years){
@@ -557,10 +471,112 @@ function addCommas(nStr) {
       }
 
       var avg = sum_data/years_total;
-      debugger
 
-      return avg;
-    }
+      return avg.toFixed(6);
+    };
+
+    // returns array of bubbles in descending order
+    // array [{id1, value1}, {id2, value2}, ...]
+    BubbleChart.prototype.sort_desc = function(array){
+      array.sort(function(a, b) {
+        if (a.value > b.value) {
+          return 1;
+        }
+        if (a.value < b.value) {
+          return -1;
+        }
+        return 0;
+      });
+      array = array.reverse();
+      return array;
+    };
+
+    BubbleChart.prototype.set_years = function(year){
+      this.year = year;
+
+      if (! !!this.year) {
+        this.year_left = 2001;
+        this.year_right = 2001;
+      } else {
+        this.year_left = this.year[0];
+        this.year_right = this.year[1];
+      }
+    };
+
+
+    BubbleChart.prototype.get_values_array = function() {
+      var that = this;
+      var values_array = [];
+
+      this.circles.each(function(d) {
+        if (that.year_left == that.year_right) {
+          var year_string = "y" + that.year_left;
+          var value = d[year_string];
+        } else {
+          var value = that.calculate_average(d);
+        }
+        var id = ~~d.id;
+        values_array.push({id: id, value: value});
+      });
+      return this.sort_desc(values_array);
+    };
+
+    // returns an array of the coordinates according to the sorted_array index (bubble_id, starts at 1)
+    // sorted_index, index_of start at 0
+    BubbleChart.prototype.get_coordinates = function(sorted_index){
+      var dist_x = 100;
+      var dist_y = 150;
+      var offset_x = 250;
+      var offset_y = 150;
+      var col_count = 7;
+
+      if (sorted_index < 4){
+        col_count = 4;
+        dist_x = 150;
+        offset_x = 325;
+      }
+
+      var x_position = ((sorted_index % col_count) * dist_x);
+      var y_position = 0;
+
+      if (sorted_index <( 7-3)){
+        y_position = 100;
+      } else if (sorted_index < (14-3)){
+        y_position = 200;
+      } else if (sorted_index < (21-3)){
+        y_position = 300;
+      } else if (sorted_index < (28-3)){
+        y_position = 400;
+      } else if (sorted_index < (35-3)){
+        y_position = 500;
+      } else if (sorted_index < (42-3)){
+        y_position = 600;
+      } else if (sorted_index < (49-3)){
+        y_position = 700;
+      } else if (sorted_index < (56-3)){
+        y_position = 800;
+      } else if (sorted_index < (63-3)){
+        y_position = 900;
+      } else if (sorted_index < (70-3)){
+        y_position = 1000;
+      } else if (sorted_index < (77-3)){
+        y_position = 1100;
+      } else if (sorted_index < (84-3)){
+        y_position = 1200;
+      } else if (sorted_index < (91-3)){
+        y_position = 1300;
+      } else if (sorted_index < (98-3)){
+        y_position = 1400;
+      } else if (sorted_index < (105-3)){
+        y_position = 1500;
+      }
+
+      var cx = x_position + offset_x;
+      var cy = y_position + offset_y;
+
+
+      return [cx, cy];
+    };
 
     BubbleChart.prototype.hide_years = function() {
       var years;
@@ -615,7 +631,9 @@ function addCommas(nStr) {
     })(this);
     root.display_country = (function(_this) {
       return function(year) {
-        return chart.display_by_country(year);
+        chart.set_years(year);
+        var values_array = chart.get_values_array();
+        return chart.display_by_country(values_array);
       };
     })(this);
     root.toggle_view = (function(_this) {
