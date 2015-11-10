@@ -44,7 +44,7 @@ define([
         this.year_left = parseInt(element2.options[element2.selectedIndex].value);
       }
       var year = [this.year_left, this.year_right];
-      toggle_view('country', year)
+      toggle_view('country', year);
     },
 
     _change_year: function(e) {
