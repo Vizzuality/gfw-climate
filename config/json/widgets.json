@@ -298,7 +298,7 @@
   },
   {
     "id": 4,
-    "name": "Biomas s carbon stocks",
+    "name": "Biomass carbon stocks",
     "default_thresh": "25",
     "default": true,
     "tabs": [
@@ -559,7 +559,7 @@
   },
   {
     "id": 5,
-    "name": "Aboveground biomass density",
+    "name": "Tree biomass density",
     "default_thresh": "25",
     "default": true,
     "tabs": [
