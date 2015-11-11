@@ -16,7 +16,7 @@
         "switch" : [
           {
             "unit": "hectares",
-            "unitname": "ha"
+            "unitname": "Ha"
           },
           {
             "unit": "percentage",
@@ -38,7 +38,7 @@
         "switch" : [
           {
             "unit": "hectares",
-            "unitname": "ha"
+            "unitname": "Ha"
           },
           {
             "unit": "percentage",
@@ -57,7 +57,7 @@
         "switch" : [
           {
             "unit": "hectares",
-            "unitname": "ha"
+            "unitname": "Ha"
           },
           {
             "unit": "percentage",
