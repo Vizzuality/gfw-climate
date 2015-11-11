@@ -1,4 +1,3 @@
-
 <h1><a href="/">Global Forest Watch</a></h1>
 <nav id="nav-mobile">
   <form class="mobile-show" action="/search">
@@ -15,28 +14,26 @@
       <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Country profiles</a>
     </li>
     <li>
-      <a <% if controller?("compare") && action?("index") %>class="current"<% end %> href="/compare-countries">Compare countries</a>
+      <a <% if controller?("compare") && action?("index") %>class="current"<% end %> href="/compare-countries">Country Comparisons</a>
     </li>
     <li>
-      <!-- <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="<%= posts_path %>">Blog</a> -->
-      <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="#">Blog</a>
-    </li>
-    <li>
-      <a <% if controller?("static") && action?("data_methods") %>class="current"<% end %> href="#">Data & Methods</a>
-      <ul class="submenu">
-        <li><a href="http://data.globalforestwatch.org/">Open Data Portal</a></li>
-        <li><a href="#">Definitions page</a></li>
-        <li><a href="#">FAQs page</a></li>
-        <li><a href="#">Technical Notes and Publications</a></li>
-      </ul>
+      <a <% if controller?("countries") && action?("pantropical") %>class="current"<% end %> href="/pantropical">Pantropical Overview</a>
     </li>
     <li>
       <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="#">About</a>
       <ul class="submenu">
+        <li>
+          <!-- <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="<%= posts_path %>">Blog</a> -->
+          <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="#">Blog</a>
+        </li>
         <li><a href="#">About GFW Climate</a></li>
         <li><a href="#">Data providers and partners</a></li>
         <li><a href="#">Tutorials</a></li>
         <li><a href="#">Stay informed</a></li>
+        <li><a href="http://data.globalforestwatch.org/">Open Data Portal</a></li>
+        <li><a href="#">Definitions page</a></li>
+        <li><a href="#">FAQs page</a></li>
+        <li><a href="#">Technical Notes and Publications</a></li>
       </ul>
     </li>
   </ul>
