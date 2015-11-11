@@ -402,7 +402,8 @@
 		text-indent: -9999px;
     z-index: 11;
     margin: 0 0 0 15px;
-    @include retina-image('logo-new.svg','logo-new@2x.png');
+    background-image: url("/assets/logo-new.svg");
+    background-size: contain;
     transition: all 0.25s linear;
     &.active{
       opacity: 0;
