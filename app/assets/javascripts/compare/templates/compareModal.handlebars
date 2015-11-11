@@ -52,20 +52,24 @@
         </div>
         {{#if country2}}
           <div class="m-field">
-            <h3>Juristiction (optional)</h3>
-            <ul class="m-field-list compare-jurisdiction">
-              {{#each country2.jurisdictions}}
-                <li class="m-field-list-radio m-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
-              {{/each}}
-            </ul>
-          </div>
-          <div class="m-field">
             <h3>Area of interest (optional)</h3>
             <ul class="m-field-list compare-area">
               {{#each country2.areas}}
                 <li class="m-field-list-radio m-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
               {{/each}}
             </ul>
+          </div>
+          <div class="m-field">
+            <h3>Jurisdiction (optional)</h3>
+            {{#if country2.jurisdictions}}
+              <ul class="m-field-list compare-jurisdiction">
+                {{#each country2.jurisdictions}}
+                  <li class="m-field-list-radio m-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
+                {{/each}}
+              </ul>
+            {{else}}
+              <p>No jurisdictions for this country</p>
+            {{/if}}
           </div>
         {{else}}
           <div class="m-alert">Choose a <span>country</span> to compare</div>
