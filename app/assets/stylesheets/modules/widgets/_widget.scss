@@ -4,7 +4,7 @@
 
   // HEADER
   > .m-widget-header {
-    overflow: hidden;
+    // overflow: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -36,12 +36,22 @@
           border-radius: 50%;
           color: $font-color-1;
 
+          .tooltip1 {
+            font-size: 12px;
+          }
+
           &:hover {
             background: $color-1;
             color: $font-color-2;
             border-color: $color-1;
+
             svg {
               fill: $font-color-2;
+            }
+
+            .tooltip1 {
+              visibility: visible;
+              opacity: 1;
             }
           }
 
