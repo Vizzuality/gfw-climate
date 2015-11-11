@@ -635,7 +635,7 @@ function addCommas(nStr) {
       var content;
       d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
       content = "<span class=\"value\"> " + data.name + "</span><br/>";
-      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (addCommas(data.value)) + "</span><br/>";
+      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.value*100).toFixed(2) + "%</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 
