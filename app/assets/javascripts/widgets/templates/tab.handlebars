@@ -3,7 +3,9 @@
     <div class="switcher">
       <ul class="switcher-track">
         {{#each switch}}
-          <li class="switcher-item" data-unit="{{this.unit}}">{{this.unitname}}</li>
+          <li class="switcher-item" data-unit="{{this.unit}}">{{this.unitname}}
+            <span class="tooltip1 dark">{{this.unitfullname}}</span>
+          </li>
         {{/each}}
       </ul>
       <span>per year</span>

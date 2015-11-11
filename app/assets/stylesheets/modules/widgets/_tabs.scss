@@ -12,6 +12,41 @@
     .canopy-threshold {
       float: right;
     }
+
+    .switcher-item {
+      position: relative;
+
+      .tooltip1 {
+        font-size: 12px;
+        left: 0;
+        transform: translate(0, 10px);
+      }
+
+      &:first-child {
+        .tooltip1 {
+          &:after {
+            left: 0;
+            transform: translate(50%, -50%) rotate(45deg);
+          }
+        }
+      }
+
+      &:nth-child(2) {
+        .tooltip1 {
+          &:after {
+            left: 0;
+            transform: translate(50%, -50%) rotate(45deg);
+          }
+        }
+      }
+      
+      &:hover {
+        .tooltip1 {        
+          visibility: visible;
+          opacity: 1;  
+        }
+      }
+    }
   }
 
   // SUB OPTIONS
