@@ -88,6 +88,7 @@ define([
   'map/views/layers/RaisgLayer',
   'map/views/layers/CarbonStocksLayer',
   'map/views/layers/BiomassLossLayer',
+  'map/views/layers/DrcPrimaryForestLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -185,6 +186,7 @@ define([
   RaisgLayer,
   CarbonstocksLayer,
   BiomassLoss,
+  DrcPrimaryForestLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -457,6 +459,9 @@ define([
     },
     biomass_loss: {
       view: BiomassLoss
+    },
+    cod_primary_forest_wgs: {
+      view: DrcPrimaryForestLayer
     },
     carbon_stocks: {
       view: CarbonstocksLayer
