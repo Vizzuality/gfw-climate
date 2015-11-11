@@ -106,6 +106,7 @@
   padding: 10px;
   white-space: nowrap;
   transform: translate(-50%,10px);
+
   &:after{
     content: "";
     display: block;
@@ -128,6 +129,16 @@
       background: $dark;
       border-top: none;
       border-left: none;
+    }
+  }
+
+  &.last {
+    right: 0;
+    left: auto;
+    transform: translate(15%, 10px);
+
+    &:after {
+      transform: translate(90%,-50%) rotate(45deg);
     }
   }
 
