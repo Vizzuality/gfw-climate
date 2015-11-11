@@ -64,11 +64,7 @@ class Country
       url =  base_countries_path
       url += sql
 
-      timeouts do
-        item_caching(country_iso, "areas_of_interest") do
-          get(url)['rows']
-        end
-      end
+      get(url)['rows']
     end
 
     include Concerns::Cached
