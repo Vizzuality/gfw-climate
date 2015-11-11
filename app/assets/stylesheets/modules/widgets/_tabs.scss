@@ -2,7 +2,7 @@
   // SUP OPTIONS
   .sup-options {
     // overflow: hidden;
-    min-height: 50px;
+    @include clearfix();
     margin: 25px 0 10px 0;
     font-size: 12px;
 
