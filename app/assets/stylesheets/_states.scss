@@ -15,3 +15,11 @@
 .is-no-scroll {
   overflow: hidden;
 }
+
+.is-temporary-disabled {
+  border: 1px solid red;
+
+  a {
+    pointer-events: none;
+  }
+}

@@ -3,9 +3,10 @@
     nav.mobile-hide
       h2
         | Suggestions for getting started
-        #get-started.box-button
+        #get-started.box-button.is-temporary-disabled.source data-source="temporary-disabled"
           .btn.huge.blue click here!
-          ul.tooltip-getstarted.bottom
+          ul.bottom.is-temporary-disabled
+          / ul.tooltip-getstarted.bottom.is-temporary-disabled
             li
               a.gotomap (href="/map" data-dialog="" data-ga="Explore map")
                 | Explore emissions from
@@ -51,18 +52,18 @@
                 span.mobile-hide more info
                 span.mobile-show +
         / p.credits Photo: DIGITAL GLOBE
-      li.slide.slide1
-        a href="http://bit.ly/1I8Mq09?referral=carousel"
-          .inner
-            aside
-              h2 Meeting 2020 goals
-              h3
-                span Tropical countries must
-                span sharply reverse trends
-                span in emissions
-              .link
-                span.mobile-hide more info
-                span.mobile-show +
+      / li.slide.slide1
+      /   a href="http://bit.ly/1I8Mq09?referral=carousel"
+      /     .inner
+      /       aside
+      /         h2 Meeting 2020 goals
+      /         h3
+      /           span Tropical countries must
+      /           span sharply reverse trends
+      /           span in emissions
+      /         .link
+      /           span.mobile-hide more info
+      /           span.mobile-show +
         / p.credits Photo: EIA
       li.slide.slide2
         a href="/map?referral=carousel"
@@ -75,17 +76,17 @@
               .link
                 span.mobile-hide more info
                 span.mobile-show +
-      li.slide.slide3
-        a href="/stories/new?referral=carousel"
-          .inner
-            aside
-              h2 Deforestation hotspots
-              h3
-                span Analyzing trends
-                span across space and time
-              .link
-                span.mobile-hide more info
-                span.mobile-show +
+      / li.slide.slide3
+      /   a href="/stories/new?referral=carousel"
+      /     .inner
+      /       aside
+      /         h2 Deforestation hotspots
+      /         h3
+      /           span Analyzing trends
+      /           span across space and time
+      /         .link
+      /           span.mobile-hide more info
+      /           span.mobile-show +
         p.credits
           a< (href="https://www.flickr.com/photos/ciat/5641590542/in/photolist-9AwCjs-pWuPfP-4Ghbck-dMtz65-hQviys-9AwE53-9AwDnd-9AwEd1-9AtFDi-e11QhV-jc1Q63-9KfN2U-4Ghbgt-de9HfG-eYB1Km-9AwAT7-bj7gMa-e7cxj-9KfN9C-bj7f14-dMtLUY-dMnVDg-9BZPYT-dMo2Wv-9AtJDk-9AwC4G-dMtvWS-bj7h3M-9BZPa2-9AwAsf-bj7f92-bj7eJi-dMnYLM-6tQEqP-6tUM3G-3ePvJ3-akEy6o-dqcX2j-9Bda7P-8UjyyX-9BZPFi-bWww6i-9AtHxr-9AtGP2-48TdKY-8HcXg5-9AtJog-6yn7JD-9AtH2e-dMttcA") Photo: CIAT
       / li.slide.slide3
@@ -121,23 +122,23 @@
       .inner
         .row
           .col.col6
-            a (href="/map")
+            a.is-temporary-disabled.source (href="/map" data-source="temporary-disabled")
               .icon
                 svg
                   use (xlink:href="#shape-world" xmlns:xlink="http://www.w3.org/1999/xlink")
               h3 Explore the map
           .col.col6
-            a (href="/countries")
+            a.is-temporary-disabled.source (href="/countries" data-source="temporary-disabled")
               .icon
                 svg
                   use (xlink:href="#shape-country" xmlns:xlink="http://www.w3.org/1999/xlink")
               h3 Select a country
-          .col.col6
-            a (href="#")
-              .icon
-                svg.shape-stay-informed
-                  use (xlink:href="#shape-stay-informed" xmlns:xlink="http://www.w3.org/1999/xlink")
-              h3 Stay informed
+          / .col.col6
+          /   a (href="#")
+          /     .icon
+          /       svg.shape-stay-informed
+          /         use (xlink:href="#shape-stay-informed" xmlns:xlink="http://www.w3.org/1999/xlink")
+          /     h3 Stay informed
   .m-features
     .inner
       section.feature-section.-intro
@@ -165,7 +166,7 @@
                   span interactive map.
 
                 .link-container
-                  a(href="/map" class="btn medium blue") Explore map
+                  / a(href="/map" class="btn medium blue") Explore map
                   a(href="#" class="btn medium blue is-disabled") Download data
 
       section.feature-section.-country-profiles
@@ -180,7 +181,7 @@
                   | print or share your report with the world.
 
                 .link-container
-                  a(href="/countries" class="btn medium blue") Country profiles
+                  a (href="/countries" class="btn medium blue is-temporary-disabled source" data-source="temporary-disabled") Country profiles
           .col.-c6
             = image_tag("home/features/img-profiles.png")
 
@@ -199,10 +200,10 @@
                   | you can make the decisions that matter.
 
                 .link-container
-                  a(href="/compare-countries" class="btn medium blue") Compare countries
+                  a(href="/compare-countries" class="btn medium blue is-temporary-disabled source" data-source="temporary-disabled") Compare countries
 
       section.feature-section.-pantropical
-        .feature-content.
+        .feature-content
           .col.-c4
             .col-container
               .description-container
@@ -213,7 +214,7 @@
                   | have changed over the 21st century.
 
                 .link-container
-                  a(href="/pantropical" class="btn medium blue") Pantropical overview
+                  a(href="/pantropical" class="btn medium blue is-temporary-disabled source" data-source="temporary-disabled") Pantropical overview
           .col.-c6
             = image_tag("home/features/img-pantropical.png")
 

@@ -103,6 +103,7 @@ define([
       var data_slug = $(e.currentTarget).data('source');
       var data_iframe = $(e.currentTarget).data('iframe');
       (data_iframe) ? this.$sourceWindow.addClass('iframe') : this.$sourceWindow.removeClass('iframe');
+
       this.$content.html($('#' + data_slug).clone());
 
       //Prevent scroll beyond modal window.

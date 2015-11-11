@@ -7,8 +7,9 @@ require([
   'Class',
   'backbone',
   '_string',
-  'home/views/sliderView'
-], function($, _, Class, Backbone, _string, sliderView) {
+  'home/views/sliderView',
+  'views/SourceWindowView'
+], function($, _, Class, Backbone, _string, sliderView, SourceWindowView) {
 
   'use strict';
 
@@ -35,6 +36,7 @@ require([
      * you are not completely sure.
      */
     _initViews: function() {
+      new SourceWindowView();
       new sliderView();
     }
 
