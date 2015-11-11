@@ -56,6 +56,9 @@ define([
       (country1) ? country1.areas = this.areas : null;
       (country2) ? country2.areas = this.areas : null;
       // ***** //
+
+      // console.log(country1);
+      // console.log(country2);
       return {
         countries: this.status.get('countries'),
         country1: country1,
