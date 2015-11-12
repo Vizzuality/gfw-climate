@@ -820,6 +820,34 @@
   },
   {
     "id": 6,
+    "name": "Soil Carbon Density",
+    "default_thresh": "25",
+    "default": true,
+    "_text": "On average there are #{value} tons of carbon per hectare in the soils of #{country}'s forests.",
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Harmonized World Soil Database",
+        "subname": "(FAO/IIASA/ISIRC/ISSCAS/JRC)",
+        "type": "number",
+        "thresh" : 25,
+        "threshunit": "tree cover",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 3,
+        "name": "Forest Soil Carbon Density",
+        "type": "number",
+        "unit": "carbon per hectare",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 7,
     "name": "Emerging hotspots",
     "default_thresh": "25",
     "indicators": [
@@ -832,7 +860,7 @@
     ]
   },
   {
-    "id": 7,
+    "id": 8,
     "name": "Test widget",
     "default_thresh": "25",
     "default": false,
