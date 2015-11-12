@@ -325,7 +325,7 @@ function addCommas(nStr) {
             .each(that.mandatorySort(e.alpha))
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+            .attr("cy", function(d) { return d.y; })
         })
         .start();
     };
@@ -448,6 +448,10 @@ function addCommas(nStr) {
             }
           }
         })
+        .on("mouseenter",function() {
+            d3.event.stopPropagation(); 
+        });
+
       return circles;
     };
 
@@ -456,8 +460,8 @@ function addCommas(nStr) {
       var x_coord = 'x="' + coordinates[0] + '" ';
 
       var y_coord =         'y="' + coordinates[1] + '" ';
-      var y_coord_country = 'y="' + (coordinates[1]+30) + '" ';
-      var y_coord_data =    'y="' + (coordinates[1]+50) + '" ';
+      var y_coord_country = 'y="' + (coordinates[1]+50) + '" ';
+      var y_coord_data =    'y="' + (coordinates[1]+70) + '" ';
 
       var id_country = 'id="' + id + '-country" ';
       var id_data = 'id="' + id + '-data" ';
@@ -469,7 +473,7 @@ function addCommas(nStr) {
               id_country +
               x_coord +
               y_coord_country +
-              'text-anchor="middle">' +
+              'text-anchor="middle" width="150px">' +
               country +
       '</text>' +
 
