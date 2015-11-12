@@ -253,15 +253,16 @@
       },
       {
         "position": 2,
-        "name": "FAO",
-        "type": "number"
-      },
-      {
-        "position": 3,
-        "name": "Compare All",
+        "name": "Other national data",
+        "subname": "(sources vary)",
         "type": "number",
         "thresh" : 25,
         "threshunit": "tree cover"
+      },
+      {
+        "position": 3,
+        "name": "FAO",
+        "type": "number"
       }
     ],
     "indicators": [
@@ -278,14 +279,14 @@
         "name": "FAO",
         "type": "number",
         "unit": "hectares",
-        "tab": 2
+        "tab": 3
       },
       {
         "id": 3,
         "name": "Hansen/Google/UMD",
         "type": "number",
         "unit": "hectares",
-        "tab": 3
+        "tab": 2
       },
       {
         "id": 17,
@@ -323,7 +324,8 @@
       },
       {
         "position": 2,
-        "name": "FAO",
+        "name": "Other national data",
+        "subname": "(Hansen/UMD/Google/USGS/NASA)",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -339,8 +341,19 @@
       },
       {
         "position": 3,
-        "name": "Compare All",
-        "type": "pie"
+        "name": "FAO",
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       }
     ],
     "indicators": [
@@ -400,8 +413,8 @@
         "section": "carbon"
       },
       {
-        "id": 18,
-        "name": "FAO",
+        "id": 57,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -409,8 +422,8 @@
         "direction": "aboveground"
       },
       {
-        "id": 19,
-        "name": "FAO",
+        "id": 58,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -418,8 +431,8 @@
         "direction": "aboveground"
       },
       {
-        "id": 20,
-        "name": "FAO",
+        "id": 59,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -427,8 +440,8 @@
         "direction": "belowground"
       },
       {
-        "id": 20,
-        "name": "FAO",
+        "id": 60,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -436,71 +449,19 @@
         "direction": "belowground"
       },
       {
-        "id": 22,
-        "name": "FAO",
+        "id": 61,
+        "name": "Other national data",
         "type": "total",
         "unit": "number",
         "tab": 2,
         "section": "biomass"
       },
       {
-        "id": 23,
-        "name": "FAO",
+        "id": 62,
+        "name": "Other national data",
         "type": "total",
         "unit": "number",
         "tab": 2,
-        "section": "carbon"
-      },
-      {
-        "id": 4,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "biomass",
-        "direction": "aboveground"
-      },
-      {
-        "id": 5,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "carbon",
-        "direction": "aboveground"
-      },
-      {
-        "id": 6,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "biomass",
-        "direction": "belowground"
-      },
-      {
-        "id": 7,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "carbon",
-        "direction": "belowground"
-      },
-      {
-        "id": 8,
-        "name": "Woods Hole/Baccini",
-        "type": "total",
-        "unit": "number",
-        "tab": 3,
-        "section": "biomass"
-      },
-      {
-        "id": 9,
-        "name": "Woods Hole/Baccini",
-        "type": "total",
-        "unit": "number",
-        "tab": 3,
         "section": "carbon"
       },
       {
@@ -600,7 +561,8 @@
       },
       {
         "position": 3,
-        "name": "Compare All",
+        "name": "Other national data",
+        "name": "Other national data",
         "type": "pie"
       }
     ],
