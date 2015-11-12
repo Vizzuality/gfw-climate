@@ -1,11 +1,12 @@
 // Information icon
-.info-icon{
+.info-icon {
   width: 14px;
   height: 14px;
   border-radius: 50%;
   background-color: #AAA;
   position: relative;
-  &:after{
+
+  &:after {
     content: "";
     position: absolute;
     top: 50%;
@@ -16,7 +17,8 @@
     background: transparent;
     transform: translate(-50%,-50%);
   }
-  svg{
+
+  svg {
     width: 8px;
     height: 8px;
     position: absolute;
@@ -28,18 +30,22 @@
     fill: $white;
   }
 
-  &:hover{
+  &:hover {
     background-color: #777;
   }
-  &.default{
+
+  &.default {
     background-color: #AAA;
+    
     svg{
       fill: $white;
     }
+
     &:hover{
       background-color: #777;
     }
   }
+
   &.green{
     background-color: $blue;
     // box-shadow: 0 0 0 2px $white, 0 0 0 3px $blue;
@@ -106,6 +112,7 @@
   padding: 10px;
   white-space: nowrap;
   transform: translate(-50%,10px);
+
   &:after{
     content: "";
     display: block;
@@ -128,6 +135,16 @@
       background: $dark;
       border-top: none;
       border-left: none;
+    }
+  }
+
+  &.last {
+    right: 0;
+    left: auto;
+    transform: translate(15%, 10px);
+
+    &:after {
+      transform: translate(90%,-50%) rotate(45deg);
     }
   }
 

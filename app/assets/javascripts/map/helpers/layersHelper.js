@@ -86,6 +86,8 @@ define([
   'map/views/layers/ProdesCoverLayer',
   'map/views/layers/PerPermForestLayer',
   'map/views/layers/RaisgLayer',
+  'map/views/layers/CarbonStocksLayer',
+  'map/views/layers/BiomassLossLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -181,6 +183,8 @@ define([
   ProdesCoverLayer,
   PerPermForestLayer,
   RaisgLayer,
+  CarbonstocksLayer,
+  BiomassLoss,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -450,6 +454,12 @@ define([
     },
     raisg: {
       view: RaisgLayer
+    },
+    biomass_loss: {
+      view: BiomassLoss
+    },
+    carbon_stocks: {
+      view: CarbonstocksLayer
     },
     nothing: {
     }

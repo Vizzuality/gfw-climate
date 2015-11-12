@@ -42,7 +42,7 @@ define([
     },
 
     parseData: function() {
-      return this.presenter.model.get('data')
+      return this.presenter.model.get('data');
     },
 
     cacheVars: function() {
