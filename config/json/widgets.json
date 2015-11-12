@@ -523,6 +523,7 @@
     "name": "Tree biomass density",
     "default_thresh": "25",
     "default": true,
+    "_text": "On average there are #{value} tons of #{section} per hectare in #{country}'s forests.",
     "tabs": [
       {
         "position": 1,
@@ -769,6 +770,33 @@
   },
   {
     "id": 7,
+    "name": "Soil Carbon Stocks",
+    "default_thresh": "25",
+    "_text": "There are #{value} teragrams of carbon in the soils of #{country}'s forests.",
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Harmonized World Soil Database",
+        "subname": "(FAO/IIASA/ISIRC/ISSCAS/JRC)",
+        "type": "number",
+        "thresh" : 25,
+        "threshunit": "tree cover",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 36,
+        "name": "Soil Carbon Stocks",
+        "type": "number",
+        "unit": "teragrams of carbon",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 8,
     "name": "Emerging hotspots",
     "default_thresh": "25",
     "indicators": [
@@ -781,7 +809,7 @@
     ]
   },
   {
-    "id": 8,
+    "id": 9,
     "name": "Test widget",
     "default_thresh": "25",
     "default": false,
