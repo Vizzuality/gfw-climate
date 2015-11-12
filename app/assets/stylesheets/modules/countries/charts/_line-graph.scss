@@ -189,6 +189,7 @@
   border:1px solid rgba(200,200,200,0.85);
   text-align:center;
   position: absolute;
+  z-index: 2;
   &:after {
     @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
     right: inherit;
@@ -213,7 +214,6 @@
     font-weight: 400;
     color: #333;
     font-size: 14px;
-    z-index: 0;
     position: relative;
     &.active {
       background-color: white;
@@ -226,6 +226,7 @@
     position: absolute;
     margin: 57px 0 0 50px;
     color: #555;
+    z-index: 0;
     display: none;
     &.nydfs {
       width: 220px
@@ -296,6 +297,8 @@
       margin:0;
       &#year-picker {
         margin: 0 0 110px;
+        position: relative;
+        z-index: 3;
       }
       .minusy {
         cursor: pointer;
@@ -327,4 +330,8 @@
       }
     }
   }
+}
+#svg_vis {
+  position: relative;
+  z-index: 1;
 }
