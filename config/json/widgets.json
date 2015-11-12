@@ -797,6 +797,31 @@
   },
   {
     "id": 8,
+    "name": "Emissions from peat drainage",
+    "default_thresh": "25",
+    "_text": "Each year, drainage of tropical peat for large industrial plantations in #{country} emit #{value} million tons of CO2.",
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Transparent World/IPCC",
+        "subname": "(IPCC Tier 1)",
+        "type": "number",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 45,
+        "name": "Emissions from peat drainage",
+        "type": "number",
+        "unit": "million tons CO2 per year",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 9,
     "name": "Emerging hotspots",
     "default_thresh": "25",
     "indicators": [
@@ -809,7 +834,7 @@
     ]
   },
   {
-    "id": 9,
+    "id": 11,
     "name": "Test widget",
     "default_thresh": "25",
     "default": false,
