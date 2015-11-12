@@ -20,6 +20,7 @@ define([
     },
 
     initialize: function() {
+      console.log('init');
       // Model
       this.model = new SourceWindowModel();
 
@@ -97,6 +98,7 @@ define([
     },
 
     show: function(e) {
+      console.log('yei');
       e && e.preventDefault() && e.stopPropagation();
       this.model.set('hidden', false);
       this.$contentWrapper.animate({ scrollTop: 0 }, 0);
