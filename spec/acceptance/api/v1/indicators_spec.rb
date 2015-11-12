@@ -10,7 +10,7 @@ resource 'Indicators' do
       expect(status).to eq(200)
       indicators = JSON.parse(response_body)['indicators']
 
-      expect(indicators.length).to eq(44)
+      expect(indicators.length).to eq(66)
       expect(indicators[0]['indicator_id']).to eq(1)
       expect(indicators[0]['indicator_group']).to eq('Deforestation')
       expect(indicators[0]['description']).to eq('Tree cover loss per year ({{years}}) at {{threshold}} threshold in units of hectares')
@@ -82,7 +82,7 @@ resource 'Indicators' do
       do_request(id: 3, iso: 'BRA', area: 'pra')
       expect(status).to eq(200)
       value = JSON.parse(response_body)['values'][0]
-      
+
       expect(value['iso']).to eq('BRA')
       expect(value['country_name']).to eq("Brazil")
       expect(value['thresh']).to eq(25)
