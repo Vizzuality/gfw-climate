@@ -298,11 +298,10 @@ function addCommas(nStr) {
       return function(d){
         var targetY = that.centerY;
         var targetX = 0;
-
         if (d.category.includes('non-NYDF'))
           d.category = 'Other non-NYDF Signatory';
-        if ((d.category === that.NYDF)) {
-          targetX = 550
+        if (d.category === that.NYDF) {
+          targetX = 600
         } else {
           targetX = 450
         };
@@ -328,7 +327,6 @@ function addCommas(nStr) {
             .attr("cy", function(d) { return d.y; });
         })
         .start();
-      //return this.display_ny();
     };
 
     BubbleChart.prototype.display_by_change = function(year) {
@@ -355,10 +353,21 @@ function addCommas(nStr) {
             .each(that.mandatorySort(e.alpha))
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+            .attr("cy", function(d) { return d.y; })
+            // .each(function(d) {
+            //   // filter the circles so we only paint BRA. IND and the sums of YESNY and NONY
+            //   var valid_ids = [1,2,103,104];
+            //   if (valid_ids.indexOf(~~d.id) == -1) {
+            //     // we don't want to display that country
+            //     $(this).attr("cx", Math.random() -2000);
+            //     $(this).attr("cy", Math.random() -2000);
+            //   } else {
+            //     $(this).attr("cx", function(d) { return d.x; });
+            //     $(this).attr("cy", function(d) { return d.y; });
+            //   }
+            // });
         })
         .start();
-      //return this.display_ny();
     };
 
     BubbleChart.prototype.move_towards_year = function(alpha) {
