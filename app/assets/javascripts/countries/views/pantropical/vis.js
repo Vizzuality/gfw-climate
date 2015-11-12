@@ -384,12 +384,11 @@ function addCommas(nStr) {
 
     BubbleChart.prototype.display_by_country = function(values_array) {
       $('#svg_vis').css({
-        'height':2500
+        'height':1100
       });
 
       var that = this;
       var style_string;
-      // var COUNT = 0;
 
       var circles = this.generateCircles(values_array)
 
@@ -398,11 +397,10 @@ function addCommas(nStr) {
         .friction(0.9)
         .charge(that.defaultCharge)
         .on("tick", function(e){
-          console.log('hell');
-          circles.each(that.buoyancy(e.alpha))
+          circles.each(that.buoyancy(e.alpha));
         })
         .start();
-
+        
     };
 
     BubbleChart.prototype.generateCircles = function(values_array) {
@@ -411,7 +409,7 @@ function addCommas(nStr) {
       var style_string;
 
       circles
-        .transition().duration(50).attr("r", function(d) {
+        .transition().duration(100).attr("r", function(d) {
           id = d.id;
           for (index in values_array){
             // find corresponding value for this bubble
@@ -480,7 +478,7 @@ function addCommas(nStr) {
               x_coord +
               y_coord_data +
               'text-anchor="middle">' +
-              data +
+              parseFloat(data*100).toFixed(3) + '%' + 
       '</text>';
 
       return label_text;
@@ -572,55 +570,54 @@ function addCommas(nStr) {
     // returns an array of the coordinates according to the sorted_array index (bubble_id, starts at 1)
     // sorted_index, index_of start at 0
     BubbleChart.prototype.get_coordinates = function(sorted_index){
-      var dist_x = 100;
+      var dist_x = 120;
       var dist_y = 50;
       var offset_x = 250;
       var offset_y = 50;
-      var col_count = 7;
+      var col_count = 6;
 
       if (sorted_index < 4){
         // bubbles at index 0, 1, 2, 3 are in line 1
         col_count = 4;
-        dist_x = 150;
+        dist_x = 170;
         offset_x = 325;
       } else {
         // modify current index to push bubbles into line 2
-        sorted_index += 3;
-
+        sorted_index += 2;
       }
 
       var x_position = (((sorted_index) % col_count) * dist_x);
       var y_position = 0;
 
-      if (sorted_index < (7)){
+      if (sorted_index < (col_count)){
         y_position = 150;
-      } else if (sorted_index < (14)){
+      } else if (sorted_index < (2*col_count)){
         y_position = 300;
-      } else if (sorted_index < (21)){
+      } else if (sorted_index < (3*col_count)){
         y_position = 450;
-      } else if (sorted_index < (28)){
+      } else if (sorted_index < (4*col_count)){
         y_position = 600;
-      } else if (sorted_index < (35)){
+      } else if (sorted_index < (5*col_count)){
         y_position = 750;
-      } else if (sorted_index < (42)){
+      } else if (sorted_index < (6*col_count)){
         y_position = 900;
-      } else if (sorted_index < (49)){
+      } else if (sorted_index < (7*col_count)){
         y_position = 1050;
-      } else if (sorted_index < (56)){
+      } else if (sorted_index < (8*col_count)){
         y_position = 1200;
-      } else if (sorted_index < (63)){
+      } else if (sorted_index < (9*col_count)){
         y_position = 1350;
-      } else if (sorted_index < (70)){
+      } else if (sorted_index < (10*col_count)){
         y_position = 1500;
-      } else if (sorted_index < (77)){
+      } else if (sorted_index < (11*col_count)){
         y_position = 1650;
-      } else if (sorted_index < (84)){
+      } else if (sorted_index < (12*col_count)){
         y_position = 1800;
-      } else if (sorted_index < (91)){
+      } else if (sorted_index < (13*col_count)){
         y_position = 1950;
-      } else if (sorted_index < (98)){
+      } else if (sorted_index < (14*col_count)){
         y_position = 2100;
-      } else if (sorted_index < (105)){
+      } else if (sorted_index < (15*col_count)){
         y_position = 2250;
       }
 
