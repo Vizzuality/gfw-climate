@@ -1,8 +1,9 @@
 define([
   'backbone',
+  'handlebars',
   'compare/presenters/CompareGridButtonBoxPresenter',
   'text!compare/templates/compareGridButtonBox.handlebars',
-], function(Backbone, CompareGridButtonBoxPresenter, tpl) {
+], function(Backbone, Handlebars, CompareGridButtonBoxPresenter, tpl) {
 
   var CompareGridButtonBoxView = Backbone.View.extend({
 

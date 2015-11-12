@@ -20,7 +20,7 @@ define([
 
     showIndicatorModal: function() {
       // mps publish an event that makes the indicator modal show
-      console.log("Let's show the indicator modal")
+      mps.publish('CompareWidgetsModal/show');
     }
 
   });

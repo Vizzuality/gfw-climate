@@ -24,7 +24,7 @@
             <h3>Area of interest (optional)</h3>
             <ul class="m-field-list compare-area">
               {{#each country1.areas}}
-                <li class="m-field-list-radio m-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
+                <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
               {{/each}}
             </ul>
           </div>
@@ -33,7 +33,7 @@
             {{#if country1.jurisdictions}}
             <ul class="m-field-list compare-jurisdiction">
               {{#each country1.jurisdictions}}
-                <li class="m-field-list-radio m-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
+                <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
               {{/each}}
             </ul>
             {{else}}
@@ -59,7 +59,7 @@
             <h3>Area of interest (optional)</h3>
             <ul class="m-field-list compare-area">
               {{#each country2.areas}}
-                <li class="m-field-list-radio m-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
+                <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
               {{/each}}
             </ul>
           </div>
@@ -68,7 +68,7 @@
             {{#if country1.jurisdictions}}
             <ul class="m-field-list compare-jurisdiction">
               {{#each country2.jurisdictions}}
-                <li class="m-field-list-radio m-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
+                <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
               {{/each}}
             </ul>
             {{else}}

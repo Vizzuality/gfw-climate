@@ -68,6 +68,10 @@ define([
       mps.publish('Options/delete', [this.model.get('id')]);
     },
 
+    destroy: function() {
+      this.unsubscribe();
+    }
+
   });
 
   return WidgetPresenter;
