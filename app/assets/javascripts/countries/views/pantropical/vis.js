@@ -272,6 +272,19 @@ function addCommas(nStr) {
         };
       })(this));
       this.force.start();
+
+      var that = this;
+      this.circles.on("mouseenter", function(d, i) {
+        var el = d3.select(this);
+        var xpos = ~~el.attr('cx') - 115;
+        var ypos = (el.attr('cy') - d.radius - 37);
+        d3.select("#pantropical_tooltip")
+          .style('top',ypos+"px")
+          .style('left',xpos+"px")
+          .style('display','block');
+        return that.show_details(d, i, this);
+      })
+
       return this.hide_years();
     };
 
@@ -328,6 +341,17 @@ function addCommas(nStr) {
             .attr("cy", function(d) { return d.y; })
         })
         .start();
+
+        this.circles.on("mouseenter", function(d, i) {
+          var el = d3.select(this);
+          var xpos = ~~el.attr('cx') - 115;
+          var ypos = (el.attr('cy') - d.radius - 37);
+          d3.select("#pantropical_tooltip")
+            .style('top',ypos+"px")
+            .style('left',xpos+"px")
+            .style('display','block');
+          return that.show_details(d, i, this);
+        })
     };
 
     BubbleChart.prototype.display_by_change = function(year) {
@@ -369,6 +393,17 @@ function addCommas(nStr) {
             // });
         })
         .start();
+
+        this.circles.on("mouseenter", function(d, i) {
+          var el = d3.select(this);
+          var xpos = ~~el.attr('cx') - 115;
+          var ypos = (el.attr('cy') - d.radius - 37);
+          d3.select("#pantropical_tooltip")
+            .style('top',ypos+"px")
+            .style('left',xpos+"px")
+            .style('display','block');
+          return that.show_details(d, i, this);
+        })
     };
 
     BubbleChart.prototype.move_towards_year = function(alpha) {
