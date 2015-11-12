@@ -379,71 +379,68 @@ function addCommas(nStr) {
 
       var that = this;
       var style_string;
-      var COUNT = 0;
+      // var COUNT = 0;
 
+      var circles = this.generateCircles(values_array)
 
       this.force
         .gravity(0)
         .friction(0.9)
         .charge(that.defaultCharge)
         .on("tick", function(e){
-
-          // if (COUNT !== 0) {
-          //   return;
-          // }
-
-          // COUNT = 1;
-        //   console.log(1);
-          var circles = that.circles;
-
-          circles
-            .transition().duration(50).attr("r", function(d) {
-              id = d.id;
-              for (index in values_array){
-                // find corresponding value for this bubble
-                if (values_array[index].id == id) {
-                  var value = values_array[index].value;
-                  break;
-                }
-              }
-
-              return that.radius_scale(value * 1.6);
-            });
-
-          circles
-            .each( function(d) {
-              var coordinates = [];
-              var label_text = "";
-
-              // look up current bubble in value_array
-              // use that index to assign order
-              // use order to determine coordinates
-              for (var i = 0; i < values_array.length; i++){
-                id_search_string = "bubble_" + values_array[i].id;
-
-                if (this.id == id_search_string) {
-                  style_string = 'order:' + i + ";";
-                  $(this).attr('style', style_string);
-
-                  coordinates = that.get_coordinates(i);
-
-                  $(this).attr('cx', coordinates[0]);
-                  $(this).attr('cy', coordinates[1]);
-
-                  label_text = that.get_label_text(coordinates, this.id, d.name, d.value);
-                  document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
-                  console.log('inserted');
-
-                  break;
-                }
-              }
-
-
-            })
-            .each(that.buoyancy(e.alpha))
+          console.log('hell');
+          circles.each(that.buoyancy(e.alpha))
         })
         .start();
 
+    };
+
+    BubbleChart.prototype.generateCircles = function(values_array) {
+      var that = this;
+      var circles = that.circles;
+      var style_string;
+
+      circles
+        .transition().duration(50).attr("r", function(d) {
+          id = d.id;
+          for (index in values_array){
+            // find corresponding value for this bubble
+            if (values_array[index].id == id) {
+              var value = values_array[index].value;
+              break;
+            }
+          }
+
+          return that.radius_scale(value * 1.6);
+        });
+
+      circles
+        .each( function(d) {
+          var coordinates = [];
+          var label_text = "";
+          // look up current bubble in value_array
+          // use that index to assign order
+          // use order to determine coordinates
+          for (var i = 0; i < values_array.length; i++){
+            id_search_string = "bubble_" + values_array[i].id;
+            
+            if (this.id == id_search_string) {
+              style_string = 'order:' + i + ";";
+              $(this).attr('style', style_string);
+
+              coordinates = that.get_coordinates(i);
+
+              $(this).attr('cx', coordinates[0]);
+              $(this).attr('cy', coordinates[1]);
+
+              label_text = that.get_label_text(coordinates, this.id, d.name, d.value);
+              document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
+
+              break;
+            }
+          }
+        })
+      return circles;
     };
 
     BubbleChart.prototype.get_label_text = function(coordinates, id, country, data) {
