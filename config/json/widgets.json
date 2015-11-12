@@ -545,7 +545,8 @@
       },
       {
         "position": 2,
-        "name": "FAO",
+        "name": "Other national data",
+        "subname": "(Sources vary)",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -561,14 +562,24 @@
       },
       {
         "position": 3,
-        "name": "Other national data",
-        "name": "Other national data",
-        "type": "pie"
+        "name": "FAO",
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       }
     ],
     "indicators": [
       {
-        "id": 4,
+        "id": 10,
         "name": "Woods Hole/Baccini",
         "type": "pie",
         "unit": "percentage",
@@ -578,7 +589,7 @@
         "default": true
       },
       {
-        "id": 5,
+        "id": 11,
         "name": "Woods Hole/Baccini",
         "type": "pie",
         "unit": "percentage",
@@ -587,7 +598,7 @@
         "direction": "aboveground"
       },
       {
-        "id": 6,
+        "id": 38,
         "name": "Woods Hole/Baccini",
         "type": "pie",
         "unit": "percentage",
@@ -597,7 +608,7 @@
         "default": true
       },
       {
-        "id": 7,
+        "id": 39,
         "name": "Woods Hole/Baccini",
         "type": "pie",
         "unit": "percentage",
@@ -623,8 +634,8 @@
         "section": "carbon"
       },
       {
-        "id": 18,
-        "name": "FAO",
+        "id": 63,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -632,8 +643,8 @@
         "direction": "aboveground"
       },
       {
-        "id": 19,
-        "name": "FAO",
+        "id": 64,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -641,8 +652,8 @@
         "direction": "aboveground"
       },
       {
-        "id": 20,
-        "name": "FAO",
+        "id": 65,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -650,8 +661,8 @@
         "direction": "belowground"
       },
       {
-        "id": 20,
-        "name": "FAO",
+        "id": 66,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -660,7 +671,7 @@
       },
       {
         "id": 22,
-        "name": "FAO",
+        "name": "Other national data",
         "type": "total",
         "unit": "number",
         "tab": 2,
@@ -668,66 +679,14 @@
       },
       {
         "id": 23,
-        "name": "FAO",
+        "name": "Other national data",
         "type": "total",
         "unit": "number",
         "tab": 2,
         "section": "carbon"
       },
       {
-        "id": 4,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "biomass",
-        "direction": "aboveground"
-      },
-      {
-        "id": 5,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "carbon",
-        "direction": "aboveground"
-      },
-      {
-        "id": 6,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "biomass",
-        "direction": "belowground"
-      },
-      {
-        "id": 7,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "carbon",
-        "direction": "belowground"
-      },
-      {
-        "id": 8,
-        "name": "Woods Hole/Baccini",
-        "type": "total",
-        "unit": "number",
-        "tab": 3,
-        "section": "biomass"
-      },
-      {
-        "id": 9,
-        "name": "Woods Hole/Baccini",
-        "type": "total",
-        "unit": "number",
-        "tab": 3,
-        "section": "carbon"
-      },
-      {
-        "id": 18,
+        "id": 24,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -736,7 +695,7 @@
         "direction": "aboveground"
       },
       {
-        "id": 19,
+        "id": 25,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -745,7 +704,7 @@
         "direction": "aboveground"
       },
       {
-        "id": 20,
+        "id": 26,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -754,7 +713,7 @@
         "direction": "belowground"
       },
       {
-        "id": 21,
+        "id": 27,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
