@@ -173,41 +173,42 @@ function addCommas(nStr) {
     BubbleChart.prototype.create_nodes = function() {
       this.data.forEach((function(_this) {
         return function(d) {
-          if (d.Average == 0) return;
-          var node;
-          node = {
-            id: d.id,
-            radius: _this.radius_scale(d.Average * 1.6),
-            value: d.Average,
-            name: d.Country,
-            org: d.organization,
-            group: d.Continent,
+          if (parseFloat(d.Average).toFixed(3) > 0.003) {
+            var node;
+            node = {
+              id: d.id,
+              radius: _this.radius_scale(d.Average * 1.6),
+              value: d.Average,
+              name: d.Country,
+              org: d.organization,
+              group: d.Continent,
 
-            year: d.start_year,
-            y2001: d.y2001,
-            y2002: d.y2002,
-            y2003: d.y2003,
-            y2004: d.y2004,
-            y2005: d.y2005,
-            y2006: d.y2006,
-            y2007: d.y2007,
-            y2008: d.y2008,
-            y2009: d.y2009,
-            y2010: d.y2010,
-            y2011: d.y2011,
-            y2012: d.y2012,
-            y2013: d.y2013,
-            continent: d.Continent,
-            country: d.Country,
-            category: d.Category,
-            fips_cntry: d.FIPS_CNTRY,
-            average: d.Average,
+              year: d.start_year,
+              y2001: d.y2001,
+              y2002: d.y2002,
+              y2003: d.y2003,
+              y2004: d.y2004,
+              y2005: d.y2005,
+              y2006: d.y2006,
+              y2007: d.y2007,
+              y2008: d.y2008,
+              y2009: d.y2009,
+              y2010: d.y2010,
+              y2011: d.y2011,
+              y2012: d.y2012,
+              y2013: d.y2013,
+              continent: d.Continent,
+              country: d.Country,
+              category: d.Category,
+              fips_cntry: d.FIPS_CNTRY,
+              average: d.Average,
 
-            x: Math.random() * 900,
-            y: Math.random() * 800
-          };
+              x: Math.random() * 900,
+              y: Math.random() * 800
+            };
 
-          return _this.nodes.push(node);
+            return _this.nodes.push(node);
+          } 
         };
       })(this));
       return this.nodes.sort(function(a, b) {
@@ -644,7 +645,7 @@ function addCommas(nStr) {
       var content;
       d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
       content = "<span class=\"value\"> " + data.name + "</span><br/>";
-      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.value*100).toFixed(2) + "%</span><br/>";
+      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.value*100).toFixed(3) + "%</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 
