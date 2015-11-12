@@ -35,8 +35,8 @@ define([
         this._setView(view)
       }
     }, {
-      'Place/go': function(place) {
-        this._onPlaceGo(place.view);
+      'Place/go': function(params) {
+        this._onPlaceGo(params);
       }
     }],
 
@@ -50,8 +50,11 @@ define([
       return p;
     },
 
-    _onPlaceGo: function(view) {
-      this._setView(view);
+    _onPlaceGo: function(params) {
+      this._setView(params.view);
+      this._setOptions(params.options);
+
+      this.view.start();
     },
 
     setIndicators: function(i) {
@@ -75,6 +78,12 @@ define([
     _setView: function(v) {
       this.status.set({
         view: v
+      });
+    },
+
+    _setOptions: function(o) {
+      this.status.set({
+        options: o
       });
     }
 

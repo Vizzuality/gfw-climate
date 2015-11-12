@@ -35,11 +35,9 @@ define([
     },
 
     _toggleWarnings: function() {
-      var view = this.presenter.status.get('view'),
-        areas = this.presenter.status.get('areas'),
-        jurisdictions = this.presenter.status.get('jurisdictions');
+      var widgets = this.presenter.status.get('options')['widgets'];
 
-      if (view === 'national' || areas || jurisdictions) {
+      if (_.keys(widgets).length > 0) {
         this.$noIndicatorsWarning.addClass('is-hidden');
         this.$moreIndicatorsWarning.removeClass('is-hidden');
       } else {
@@ -54,8 +52,7 @@ define([
 
     render: function() {
 
-      var subview,
-        view = this.presenter.status.get('view');
+      var view = this.presenter.status.get('view');
       var options = {
         parent: this.$el.find('.reports-grid')
       };
@@ -66,31 +63,26 @@ define([
           _.extend(options, {
             status: this.presenter.status.get('options')
           });
+
           new NationalView(options);
+
           break;
+
         case 'subnational':
-            var opts = $.extend(true, {}, this.presenter.status.get('options'));
-            delete opts['areas'];
-            delete opts['jurisdictions'];
-            delete opts['view'];
 
           _.extend(options, {
-            widgets: opts,
+            widgets: this.presenter.status.get('options')['widgets'],
             jurisdictions: this.presenter.status.get('options')['jurisdictions']
           });
 
           new SubNationalView(options);
+
           break;
 
         case 'areas-interest':
 
-          var opts = $.extend(true, {}, this.presenter.status.get('options'));
-            delete opts['areas'];
-            delete opts['jurisdictions'];
-            delete opts['view'];
-
           _.extend(options, {
-            widgets: opts,
+            widgets: this.presenter.status.get('options')['widgets'],
             areas: this.presenter.status.get('options')['areas']
           });
 

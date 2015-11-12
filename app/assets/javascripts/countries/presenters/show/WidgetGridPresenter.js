@@ -211,7 +211,6 @@ define([
     },
 
     _loadCustomizedOptions: function(params) {
-
       this.status.set({
         country: sessionStorage.getItem('countryIso'),
         jurisdictions: params.jurisdictions ? params.jurisdictions :  this.getJurisdictions(params),
@@ -237,11 +236,16 @@ define([
     },
 
     _onOptionsUpdate: function(id,slug,wstatus) {
-      var options = _.clone(this.status.get('options'));
+      var options = _.clone(this.status.get('options').widgets);
       options[slug][id][0] = wstatus;
 
+      var x = {};
+      x[slug] = options[slug];
+
+
       // Set and publish
-      this.status.set('options', options);
+      // this.status.set('options', options);
+      _.extend(this.status.get('options'), x);
       mps.publish('Place/update');
     },
 
@@ -314,7 +318,7 @@ define([
 
       }
 
-      return r;
+      return {widgets: r};
     },
 
     getTabsOptions: function(tabs) {

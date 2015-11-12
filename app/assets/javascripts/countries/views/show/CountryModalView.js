@@ -6,10 +6,11 @@ define([
   'handlebars',
   'views/SourceWindowView',
   'countries/models/CountryModel',
+  'widgets/collections/WidgetCollection',
   'countries/presenters/show/CountryModalPresenter',
   'text!countries/templates/reports-modal.handlebars'
 ], function($, mps, Backbone, _, Handlebars, SourceWindowView,
-  CountryModel, CountryModalPresenter, indicatorTemplate) {
+  CountryModel, WidgetCollection, CountryModalPresenter, indicatorTemplate) {
 
   'use strict';
 
@@ -35,9 +36,7 @@ define([
       var iso = sessionStorage.getItem('countryIso');
 
       this.countryModel = new CountryModel({id: iso});
-
-
-      this.enabledIndicators = [];
+      this.widgetCollection = new WidgetCollection();
 
       this.$el.addClass('source_window--countries')
 
@@ -46,6 +45,44 @@ define([
 
     _setListeners: function() {
       this.presenter.status.on('change:view', this._setupModal, this);
+    },
+
+    start: function() {
+      this.widgetCollection.fetch().done(function(){
+        this._setupModal();
+      }.bind(this));
+    },
+
+    setInitialParams: function() {
+
+      if (!this.presenter.status.get('options')) {
+        return;
+      }
+
+      var opts = this.presenter.status.get('options');
+
+      // Jurisdictions
+      if (opts.jurisdictions) {
+
+        var jurisdictions = opts.jurisdictions;
+
+        jurisdictions.forEach(function(j) {
+          $('#jurisdictions-list li#' + j.idNumber).addClass('is-selected');
+        });
+      }
+
+      // Areas
+      if (opts.areas) {
+
+        var areas = opts.areas;
+
+        areas.forEach(function(a) {
+          $('#areas-list li#' + a.idNumber).addClass('is-selected');
+        });
+      }
+
+      // Indicators
+
     },
 
     show: function(e) {
@@ -143,7 +180,14 @@ define([
       }]);
 
       this.hide();
+      this._resetPosition();
     },
+
+    _resetPosition: function() {
+      this.$el.find('.page1').toggleClass('is-hidden');
+      this.$el.find('.page2').toggleClass('is-hidden');
+    },
+
 
     _setupModal: function() {
       var view = this.presenter.status.get('view');
@@ -152,7 +196,8 @@ define([
 
         case 'national':
           this.setup = {
-            isNational: true
+            isNational: true,
+            indicators: this.widgetCollection.toJSON()
           };
 
           this.render();
@@ -165,7 +210,8 @@ define([
 
             this.setup = {
               isJurisdictions: true,
-              jurisdictions: this.countryModel.get('jurisdictions')
+              jurisdictions: this.countryModel.get('jurisdictions'),
+              indicators: this.widgetCollection.toJSON()
             };
 
             this.render();
@@ -177,7 +223,8 @@ define([
         case 'areas-interest':
 
           this.setup = {
-            isAreas: true
+            isAreas: true,
+            indicators: this.widgetCollection.toJSON()
           };
 
           this.render();
@@ -196,6 +243,9 @@ define([
       this.$el.html(this.template({
         data: this.setup
       }));
+
+
+      this.setInitialParams();
     }
 
   });
