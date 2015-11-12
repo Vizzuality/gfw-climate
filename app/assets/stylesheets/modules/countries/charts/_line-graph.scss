@@ -213,6 +213,8 @@
     font-weight: 400;
     color: #333;
     font-size: 14px;
+    z-index: 0;
+    position: relative;
     &.active {
       background-color: white;
     }
@@ -231,7 +233,7 @@
     &.right-side {
       right: 0;
       margin: 57px 50px 0 0;
-      width: 250px;
+      width: 190px;
     }
     h4 {
       font-size: 18px;
