@@ -173,41 +173,42 @@ function addCommas(nStr) {
     BubbleChart.prototype.create_nodes = function() {
       this.data.forEach((function(_this) {
         return function(d) {
-          if (d.Average == 0) return;
-          var node;
-          node = {
-            id: d.id,
-            radius: _this.radius_scale(d.Average * 1.6),
-            value: d.Average,
-            name: d.Country,
-            org: d.organization,
-            group: d.Continent,
+          if (parseFloat(d.Average).toFixed(3) > 0.003) {
+            var node;
+            node = {
+              id: d.id,
+              radius: _this.radius_scale(d.Average * 1.6),
+              value: d.Average,
+              name: d.Country,
+              org: d.organization,
+              group: d.Continent,
 
-            year: d.start_year,
-            y2001: d.y2001,
-            y2002: d.y2002,
-            y2003: d.y2003,
-            y2004: d.y2004,
-            y2005: d.y2005,
-            y2006: d.y2006,
-            y2007: d.y2007,
-            y2008: d.y2008,
-            y2009: d.y2009,
-            y2010: d.y2010,
-            y2011: d.y2011,
-            y2012: d.y2012,
-            y2013: d.y2013,
-            continent: d.Continent,
-            country: d.Country,
-            category: d.Category,
-            fips_cntry: d.FIPS_CNTRY,
-            average: d.Average,
+              year: d.start_year,
+              y2001: d.y2001,
+              y2002: d.y2002,
+              y2003: d.y2003,
+              y2004: d.y2004,
+              y2005: d.y2005,
+              y2006: d.y2006,
+              y2007: d.y2007,
+              y2008: d.y2008,
+              y2009: d.y2009,
+              y2010: d.y2010,
+              y2011: d.y2011,
+              y2012: d.y2012,
+              y2013: d.y2013,
+              continent: d.Continent,
+              country: d.Country,
+              category: d.Category,
+              fips_cntry: d.FIPS_CNTRY,
+              average: d.Average,
 
-            x: Math.random() * 900,
-            y: Math.random() * 800
-          };
+              x: Math.random() * 900,
+              y: Math.random() * 800
+            };
 
-          return _this.nodes.push(node);
+            return _this.nodes.push(node);
+          } 
         };
       })(this));
       return this.nodes.sort(function(a, b) {
@@ -298,11 +299,10 @@ function addCommas(nStr) {
       return function(d){
         var targetY = that.centerY;
         var targetX = 0;
-
         if (d.category.includes('non-NYDF'))
           d.category = 'Other non-NYDF Signatory';
-        if ((d.category === that.NYDF)) {
-          targetX = 550
+        if (d.category === that.NYDF) {
+          targetX = 600
         } else {
           targetX = 450
         };
@@ -328,7 +328,6 @@ function addCommas(nStr) {
             .attr("cy", function(d) { return d.y; });
         })
         .start();
-      //return this.display_ny();
     };
 
     BubbleChart.prototype.display_by_change = function(year) {
@@ -355,10 +354,21 @@ function addCommas(nStr) {
             .each(that.mandatorySort(e.alpha))
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+            .attr("cy", function(d) { return d.y; })
+            // .each(function(d) {
+            //   // filter the circles so we only paint BRA. IND and the sums of YESNY and NONY
+            //   var valid_ids = [1,2,103,104];
+            //   if (valid_ids.indexOf(~~d.id) == -1) {
+            //     // we don't want to display that country
+            //     $(this).attr("cx", Math.random() -2000);
+            //     $(this).attr("cy", Math.random() -2000);
+            //   } else {
+            //     $(this).attr("cx", function(d) { return d.x; });
+            //     $(this).attr("cy", function(d) { return d.y; });
+            //   }
+            // });
         })
         .start();
-      //return this.display_ny();
     };
 
     BubbleChart.prototype.move_towards_year = function(alpha) {
@@ -632,7 +642,7 @@ function addCommas(nStr) {
       var content;
       d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
       content = "<span class=\"value\"> " + data.name + "</span><br/>";
-      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.value*100).toFixed(2) + "%</span><br/>";
+      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.value*100).toFixed(3) + "%</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 

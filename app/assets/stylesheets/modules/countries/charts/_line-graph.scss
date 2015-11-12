@@ -189,6 +189,7 @@
   border:1px solid rgba(200,200,200,0.85);
   text-align:center;
   position: absolute;
+  z-index: 2;
   &:after {
     @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
     right: inherit;
@@ -213,6 +214,7 @@
     font-weight: 400;
     color: #333;
     font-size: 14px;
+    position: relative;
     &.active {
       background-color: white;
     }
@@ -231,7 +233,7 @@
     &.right-side {
       right: 0;
       margin: 57px 50px 0 0;
-      width: 250px;
+      width: 190px;
     }
     h4 {
       font-size: 18px;
@@ -294,6 +296,8 @@
       margin:0;
       &#year-picker {
         margin: 0 0 110px;
+        position: relative;
+        z-index: 3;
       }
       .minusy {
         cursor: pointer;
@@ -325,4 +329,8 @@
       }
     }
   }
+}
+#svg_vis {
+  position: relative;
+  z-index: 1;
 }
