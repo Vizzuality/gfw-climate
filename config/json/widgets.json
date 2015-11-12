@@ -836,12 +836,21 @@
     "name": "Test widget",
     "default_thresh": "25",
     "default": false,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Testing",
+        "type": "test",
+        "default": true
+      }
+    ],
     "indicators": [
       {
         "id": 14,
         "name": "Test indicator",
         "type": "line",
         "unit": "percentage",
+        "tab" : 1,
         "default": true
       }
     ]

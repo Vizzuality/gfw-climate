@@ -29,7 +29,7 @@ define([
       this.widgets = [];
       this.promises = [];
 
-      var widgetsIds = this.presenter.status.get('widgets');
+      var widgetsIds = this.presenter.status.get('widgetsActive');
       var data = this.presenter.status.get('data');
 
       // Loop each widget and get data of each compare
@@ -71,7 +71,7 @@ define([
 
     parseData: function() {
       return {
-        widgets: this.presenter.status.get('widgets')
+        widgets: this.presenter.status.get('widgetsActive')
       };
     },
 

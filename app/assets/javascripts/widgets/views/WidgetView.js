@@ -110,9 +110,12 @@ define([
       if (!!this.tab) {
         this.tab.destroy();
       }
+      this.presenter.destroy();
       this.undelegateEvents();
       this.$el.removeData().unbind();
       this.$el.remove();
+      this.remove();
+      Backbone.View.prototype.remove.call(this);
     }
 
   });
