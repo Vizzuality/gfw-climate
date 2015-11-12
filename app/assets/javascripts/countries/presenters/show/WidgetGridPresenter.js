@@ -57,7 +57,6 @@ define([
             });
 
             this.view.start();
-            this.view._toggleWarnings();
           }
 
           this.widgetCollection.fetch({default: true}).done(callback.bind(this));
@@ -73,10 +72,7 @@ define([
             options: {}
           });
           this.view.start();
-          this.view._toggleWarnings();
         }
-
-
       }
     }, {
       'Grid/update': function(params) {
@@ -88,13 +84,12 @@ define([
             view: params.view,
             jurisdictions: params.jurisdictions,
             options: this.getOptions(p, this.widgetCollection.toJSON())
-          })
+          });
 
           this.view.start();
         };
 
         this.widgetCollection.fetch({default: true}).done(callback.bind(this));
-
       }
     }],
 
@@ -114,9 +109,10 @@ define([
 
       p.options = this.status.get('options');
 
+      p.options.areas =  this.status.get('jurisdictions') ? null : this.status.get('areas');
+      p.options.jurisdictions = this.status.get('areas') ? null : this.status.get('jurisdictions');
+
       _.extend(p.options, {
-        jurisdictions: this.status.get('jurisdictions'),
-        areas: this.status.get('areas'),
         view: this.status.get('view')
       });
 
@@ -237,7 +233,7 @@ define([
     _updateView: function(view) {
       this.status.set({
         view: view
-      });
+      }, {silent: true});
     },
 
     _onOptionsUpdate: function(id,slug,wstatus) {

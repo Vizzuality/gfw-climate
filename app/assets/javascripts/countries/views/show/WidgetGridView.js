@@ -26,7 +26,6 @@ define([
     },
 
     start: function() {
-
       this.render();
     },
 
@@ -36,19 +35,15 @@ define([
     },
 
     _toggleWarnings: function() {
-      var view = this.presenter.status.get('view');
+      var view = this.presenter.status.get('view'),
+        areas = this.presenter.status.get('areas'),
+        jurisdictions = this.presenter.status.get('jurisdictions');
 
-      if (view === 'national') {
+      if (view === 'national' || areas || jurisdictions) {
         this.$noIndicatorsWarning.addClass('is-hidden');
         this.$moreIndicatorsWarning.removeClass('is-hidden');
-      }
-      else {
-
-        if(view === 'subnational' && !this.presenter.status.get('jurisdictions') ||
-          view === 'areas-interest' && !this.presenter.status.get('areas')) {
-
-          this.$moreIndicatorsWarning.addClass('is-hidden');
-        }
+      } else {
+        this.$moreIndicatorsWarning.addClass('is-hidden');
       }
     },
 
@@ -102,6 +97,8 @@ define([
           new AreasView(options);
           break;
       }
+
+      this._toggleWarnings();
     }
 
   });
