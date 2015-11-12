@@ -16,7 +16,7 @@ define([
 
     events: {
       'click .source' : 'show',
-      'click .close': 'hide'
+      'click .close-modal': 'hide'
     },
 
     initialize: function(options) {

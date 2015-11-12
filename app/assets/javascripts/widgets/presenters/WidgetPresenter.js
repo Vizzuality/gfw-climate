@@ -65,7 +65,7 @@ define([
     },
 
     deleteWidget: function() {
-      mps.publish('Options/delete', [this.model.get('id')]);
+      mps.publish('Widgets/delete', [this.model.get('id')]);
     },
 
     destroy: function() {

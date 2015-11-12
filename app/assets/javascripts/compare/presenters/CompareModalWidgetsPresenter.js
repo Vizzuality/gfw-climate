@@ -45,7 +45,7 @@ define([
     changeActiveWidgets: function(widgetId,remove) {
       var widgets = _.clone(this.status.get('widgetsActive'));
       (remove) ? widgets = _.without(widgets,widgetId.toString()) : widgets.push(widgetId.toString());
-      this.status.set('widgetsActive', widgets);
+      this.status.set('widgetsActive', widgets.sort());
       this.view.setWidgetsStatus();
     },
 
