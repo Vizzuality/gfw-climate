@@ -191,7 +191,7 @@ define([
               className: 'is-number',
               model: {
                 id: indicator.id,
-                template: 'umd',
+                template: t.template,
                 type: 'number',
               },
               data: {

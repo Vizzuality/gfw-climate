@@ -27,6 +27,7 @@ def tabs
       threshunit:    tab['threshunit'],
       switch:        tab['switch'],
       sectionswitch: tab['sectionswitch'],
+      template:      tab['template'],
       default:       tab['default']
     }
   end rescue nil

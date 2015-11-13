@@ -4,19 +4,30 @@ define([
   'handlebars',
   'widgets/views/IndicatorView',
   'widgets/models/IndicatorModel',
-  'text!widgets/templates/indicators/number/number-umd.handlebars',
-  'text!widgets/templates/indicators/number/number-fao.handlebars',
+  'text!widgets/templates/indicators/number/forest-area-umd.handlebars',
+  'text!widgets/templates/indicators/number/forest-area-national.handlebars',
+  'text!widgets/templates/indicators/number/forest-area-fao.handlebars',
+  'text!widgets/templates/indicators/number/soil-carbon-density.handlebars',
+  'text!widgets/templates/indicators/number/soil-carbon-stocks.handlebars',
+  'text!widgets/templates/indicators/number/emissions-peat-drainage.handlebars',
+  'text!widgets/templates/indicators/number/deforestation-emissions.handlebars',
   'text!widgets/templates/indicators/no-data.handlebars',
-], function(d3, _, Handleabars, IndicatorView, IndicatorModel, umdTpl, faoTpl, noDataTpl) {
+], function(d3, _, Handleabars, IndicatorView, IndicatorModel,
+  forestAreaUmdTpl, forestAreaNationalTpl, forestAreaFaoTpl, soilCarbonDensityTpl, soilCarbonStocksTpl, emissionsPeatDrainageTpl, deforestationEmissionsTpl, noDataTpl) {
 
   'use strict';
 
   var MapIndicator = IndicatorView.extend({
 
     templates: {
-      umd: Handlebars.compile(umdTpl),
-      fao: Handlebars.compile(faoTpl),
-      nodata: Handlebars.compile(noDataTpl)
+      "forest-area-umd": Handlebars.compile(forestAreaUmdTpl),
+      "forest-area-national": Handlebars.compile(forestAreaNationalTpl),
+      "forest-area-fao" : Handlebars.compile(forestAreaFaoTpl),
+      "soil-carbon-density" : Handlebars.compile(soilCarbonDensityTpl),
+      "soil-carbon-stocks" : Handlebars.compile(soilCarbonStocksTpl),
+      "emissions-peat-drainage" : Handlebars.compile(emissionsPeatDrainageTpl),
+      "deforestation-emissions" : Handlebars.compile(deforestationEmissionsTpl),
+      "nodata" : Handlebars.compile(noDataTpl)
     },
 
     events: function() {
@@ -50,7 +61,7 @@ define([
     parseData: function() {
       var data = this.model.get('data')[0];
       var parseValues = d3.format(".3s");
-      var valueString = parseValues(data.value) + ' hectares';
+      var valueString = parseValues(data.value);
       return {
         country_name: data.country_name,
         valueString: valueString
