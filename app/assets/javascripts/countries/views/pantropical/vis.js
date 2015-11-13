@@ -722,6 +722,7 @@ function addCommas(nStr) {
     root.cache_vars = (function(_this) {
       return function() {
         root.$pantropicalVis = $('.pantropical-vis');
+        root.$visContainer = $('#svg_vis');
       };
     })(this);
     root.display_all = (function(_this) {
@@ -749,8 +750,8 @@ function addCommas(nStr) {
 
     root.remove_labels = (function(_this) {
       return function() {
-        $('#svg_vis .country-label').remove();
-        $('#svg_vis .data-label').remove();
+        root.$visContainer.find('.country-label').remove();
+        root.$visContainer.find('.data-label').remove();
       };
     })(this);
 
