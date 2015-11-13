@@ -14,9 +14,6 @@ define([
     },
 
     parse: function(d) {
-      if (this.get('type') == 'line') {
-        d.values.shift();
-      }
       return { data : d.values };
     }
 
