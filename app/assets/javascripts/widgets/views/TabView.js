@@ -136,6 +136,8 @@ define([
       switch(t.type) {
         case 'line':
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: t.unit});
+          var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit});
+          console.log(indicators);
           if (!!indicator) {
             this.indicator = new LineChartIndicator({
               el: this.$graphContainer,
@@ -143,6 +145,7 @@ define([
               className: 'is-line',
               model: {
                 id: indicator.id,
+                indicators: indicators,
                 unit: t.unit,
                 start_date: t.start_date,
                 end_date: t.end_date,
