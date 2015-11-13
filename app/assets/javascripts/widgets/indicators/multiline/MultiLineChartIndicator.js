@@ -5,10 +5,10 @@ define([
   'handlebars',
   'widgets/models/IndicatorModel',
   'widgets/views/IndicatorView',
-  'widgets/indicators/line/LineChart',
+  'widgets/indicators/multiline/MultiLineChart',
   'text!widgets/templates/indicators/line/linechart.handlebars',
   'text!widgets/templates/indicators/no-data.handlebars',
-], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, LineChart, Tpl, noDataTpl) {
+], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, MultiLineChart, Tpl, noDataTpl) {
 
   'use strict';
 
@@ -85,32 +85,26 @@ define([
           return null;
         }, this )))
       }.bind(this));
+      // Set range
+      var rangeX = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.year;}).year})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.year;}).year})) ] ;
+      var rangeY = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
+      // var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
+      this.chart = new MultiLineChart({
+        id: this.model.get('id'),
+        el: $graphContainer,
+        unit: this.model.get('unit'),
+        data: data,
+        rangeX: rangeX,
+        rangeY: rangeY,
+        slug: this.model.get('slug'),
+        slug_compare: this.model.get('slug_compare'),
+        sizing: {top: 10, right: 10, bottom: 20, left: 0},
+        innerPadding: { top: 10, right: 10, bottom: 20, left: 50 },
+        keys: keys
+      });
+      this.chart.render();
+      // this.changeAverage(data);
 
-      console.log(data);
-      // if (!!data.length) {
-      //   // Set range
-      //   var arr = (this.model.get('location_compare')) ? _.union(this.model.get('data'), this.modelCompare.get('data')) : this.model.get('data');
-      //   var range = [0, _.max(arr, function(o){return o.value;}).value];
-      //   console.log(data);
-      //   // var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
-      //   this.chart = new LineChart({
-      //     id: this.model.get('id'),
-      //     el: $graphContainer,
-      //     unit: this.model.get('unit'),
-      //     data: data,
-      //     range: range,
-      //     slug: this.model.get('slug'),
-      //     slug_compare: this.model.get('slug_compare'),
-      //     sizing: {top: 10, right: 10, bottom: 20, left: 0},
-      //     innerPadding: { top: 10, right: 10, bottom: 20, left: 50 },
-      //     keys: keys
-      //   });
-      //   this.chart.render();
-      //   this.changeAverage(data);
-
-      // } else {
-      //   this.$el.html(this.noDataTemplate({ classname: 'line'}));
-      // }
     },
 
     changeAverage: function(data) {
