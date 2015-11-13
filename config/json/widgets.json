@@ -2,6 +2,9 @@
   {
     "id": 1,
     "name": "Deforestation rate",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "line",
     "default_thresh": "25",
     "default": true,
     "tabs": [
@@ -121,6 +124,9 @@
   {
     "id": 2,
     "name": "Carbon emissions",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "line",
     "default_thresh": "25",
     "default": true,
     "tabs": [
@@ -240,6 +246,9 @@
   {
     "id": 3,
     "name": "Forest area 2000",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "number",
     "default_thresh": "25",
     "default": true,
     "tabs": [
@@ -300,6 +309,9 @@
   {
     "id": 4,
     "name": "Biomass carbon stocks",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "pie",
     "default_thresh": "25",
     "default": true,
     "tabs": [
@@ -521,6 +533,9 @@
   {
     "id": 5,
     "name": "Tree biomass density",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "pie",
     "default_thresh": "25",
     "default": true,
     "_text": "On average there are #{value} tons of #{section} per hectare in #{country}'s forests.",
@@ -743,6 +758,9 @@
   {
     "id": 6,
     "name": "Soil Carbon Density",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "number",
     "default_thresh": "25",
     "default": true,
     "_text": "On average there are #{value} tons of carbon per hectare in the soils of #{country}'s forests.",
@@ -771,6 +789,9 @@
   {
     "id": 7,
     "name": "Soil Carbon Stocks",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "number",
     "default_thresh": "25",
     "default": false,
     "_text": "There are #{value} teragrams of carbon in the soils of #{country}'s forests.",
@@ -799,6 +820,9 @@
   {
     "id": 8,
     "name": "Emissions from peat drainage",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "number",
     "default_thresh": "25",
     "default": false,
     "_text": "Each year, drainage of tropical peat for large industrial plantations in #{country} emit #{value} million tons of CO2.",
@@ -826,7 +850,8 @@
     "id": 9,
     "name": "Top 5 crops expanding in the area",
     "type_slug": "policy-and-drivers",
-    "type": "Policy and drivers",
+    "type": "Policy and Drivers",
+    "type_chart": "text",
     "default_thresh": "25",
     "default": false,
     "tabs": [
@@ -854,7 +879,8 @@
     "id": 10,
     "name": "Drivers of deforestation and degradation",
     "type_slug": "policy-and-drivers",
-    "type": "Policy and drivers",
+    "type": "Policy and Drivers",
+    "type_chart": "text",
     "default_thresh": "25",
     "default": false,
     "tabs": [
@@ -880,7 +906,8 @@
     "id": 11,
     "name": "National deforestation against fossil fuels emissions",
     "type_slug": "policy-and-drivers",
-    "type": "Policy and drivers",
+    "type": "Policy and Drivers",
+    "type_chart": "number",
     "default_thresh": "25",
     "default": false,
     "_text": "#{Country}'s deforestation emissions are #{value}% of its fossil fuels emissions.",
@@ -907,7 +934,8 @@
     "id": 12,
     "name": "Human population trends",
     "type_slug": "policy-and-drivers",
-    "type": "Policy and drivers",
+    "type": "Policy and Drivers",
+    "type_chart": "line",
     "default_thresh": "25",
     "default": false,
     "tabs": [
@@ -944,7 +972,8 @@
     "id": 13,
     "name": "Value of Primary Agricultural Export Commodity",
     "type_slug": "policy-and-drivers",
-    "type": "Policy and drivers",
+    "type": "Policy and Drivers",
+    "type_chart": "line",
     "default_thresh": "25",
     "default": false,
     "tabs": [
@@ -980,6 +1009,8 @@
     "id": 14,
     "name": "Value of Primary Wood Product Export Commodity",
     "type": "Policy and Drivers",
+    "type_slug": "policy-and-drivers",
+    "type_chart": "line",
     "default_thresh": "25",
     "default": false,
     "tabs": [
