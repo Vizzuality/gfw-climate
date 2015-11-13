@@ -772,6 +772,7 @@
     "id": 7,
     "name": "Soil Carbon Stocks",
     "default_thresh": "25",
+    "default": false,
     "_text": "There are #{value} teragrams of carbon in the soils of #{country}'s forests.",
     "tabs": [
       {
@@ -799,6 +800,7 @@
     "id": 8,
     "name": "Emissions from peat drainage",
     "default_thresh": "25",
+    "default": false,
     "_text": "Each year, drainage of tropical peat for large industrial plantations in #{country} emit #{value} million tons of CO2.",
     "tabs": [
       {
@@ -826,6 +828,7 @@
     "type_slug": "policy-and-drivers",
     "type": "Policy and drivers",
     "default_thresh": "25",
+    "default": false,
     "tabs": [
       {
         "position": 1,
@@ -853,6 +856,7 @@
     "type_slug": "policy-and-drivers",
     "type": "Policy and drivers",
     "default_thresh": "25",
+    "default": false,
     "tabs": [
       {
         "position": 1,
@@ -878,6 +882,7 @@
     "type_slug": "policy-and-drivers",
     "type": "Policy and drivers",
     "default_thresh": "25",
+    "default": false,
     "_text": "#{Country}'s deforestation emissions are #{value}% of its fossil fuels emissions.",
     "tabs": [
       {
@@ -904,6 +909,7 @@
     "type_slug": "policy-and-drivers",
     "type": "Policy and drivers",
     "default_thresh": "25",
+    "default": false,
     "tabs": [
       {
         "position": 1,
@@ -940,6 +946,7 @@
     "type_slug": "policy-and-drivers",
     "type": "Policy and drivers",
     "default_thresh": "25",
+    "default": false,
     "tabs": [
       {
         "position": 1,
@@ -974,6 +981,7 @@
     "name": "Value of Primary Wood Product Export Commodity",
     "type": "Policy and Drivers",
     "default_thresh": "25",
+    "default": false,
     "tabs": [
       {
         "position": 1,
