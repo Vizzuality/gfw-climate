@@ -772,6 +772,7 @@
     "id": 7,
     "name": "Soil Carbon Stocks",
     "default_thresh": "25",
+    "default": false,
     "_text": "There are #{value} teragrams of carbon in the soils of #{country}'s forests.",
     "tabs": [
       {
@@ -799,6 +800,7 @@
     "id": 8,
     "name": "Emissions from peat drainage",
     "default_thresh": "25",
+    "default": false,
     "_text": "Each year, drainage of tropical peat for large industrial plantations in #{country} emit #{value} million tons of CO2.",
     "tabs": [
       {
@@ -822,37 +824,189 @@
   },
   {
     "id": 9,
-    "name": "Emerging hotspots",
-    "default_thresh": "25",
-    "indicators": [
-      {
-        "id": 4,
-        "name": "Emerging hotspots",
-        "type": "map",
-        "unit": "number"
-      }
-    ]
-  },
-  {
-    "id": 11,
-    "name": "Test widget",
+    "name": "Top 5 crops expanding in the area",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
     "default_thresh": "25",
     "default": false,
     "tabs": [
       {
         "position": 1,
-        "name": "Testing",
-        "type": "test",
+        "name": "FAO STAT",
+        "subname": "(2001-2012)",
+        "type": "text",
         "default": true
       }
     ],
     "indicators": [
       {
-        "id": 14,
-        "name": "Test indicator",
+        "id": 42,
+        "conditional_indicator": 41,
+        "name": "Top 5 crops expanding in the area",
+        "type": "text",
+        "alternative_text": "According to this data agriculture did not expand in the country between 2001-2012.",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Drivers of deforestation and degradation",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
+    "default_thresh": "25",
+    "default": false,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Worldbank Forest Carbon Partnership Facility",
+        "subname": "(REDD+ Readiness Preparation Proposals)",
+        "type": "text",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 40,
+        "name": "Worldbank Forest Carbon Partnership Facility",
+        "type": "text",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "National deforestation against fossil fuels emissions",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
+    "default_thresh": "25",
+    "default": false,
+    "_text": "#{Country}'s deforestation emissions are #{value}% of its fossil fuels emissions.",
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Deforestation Emissions/Fossil Fuel Emissions",
+        "subname": "(Zarin et al. 2015/CAIT)",
+        "type": "number",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 51,
+        "name": "Deforestation Emissions/Fossil Fuel Emissions",
+        "type": "number",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Human population trends",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
+    "default_thresh": "25",
+    "default": false,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Worldbank",
+        "subname": "World Development Indicators",
         "type": "line",
-        "unit": "percentage",
-        "tab" : 1,
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
+        "rangetype" : "year",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 43,
+        "name": "Urban",
+        "type": "line",
+        "unit": "percent",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 44,
+        "name": "Rural",
+        "type": "line",
+        "unit": "percent",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Value of Primary Agricultural Export Commodity",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
+    "default_thresh": "25",
+    "default": false,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "FAO STAT",
+        "subname": "(2001-2013)",
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013],
+        "rangetype" : "year",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 52,
+        "name": "FAO STAT",
+        "type": "line",
+        "unit": "percent",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": -1,
+        "name": "Title",
+        "type": "graph-title",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "Value of Primary Wood Product Export Commodity",
+    "type": "Policy and Drivers",
+    "default_thresh": "25",
+    "default": false,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "FAO STAT",
+        "subname": "(2001-2013)",
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013],
+        "rangetype" : "year",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": -1,
+        "name": "FAO STAT",
+        "type": "line",
+        "unit": "percent",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": -1,
+        "name": "Title",
+        "type": "graph-title",
+        "tab": 1,
         "default": true
       }
     ]
