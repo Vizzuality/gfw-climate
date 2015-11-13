@@ -4,6 +4,9 @@ node :widget do
   {
     id:         @widget.id,
     name:       @widget.name,
+    type:       @widget.type,
+    type_slug:  @widget.type_slug,
+    type_chart: @widget.type_chart,
     tabs:       tabs,
     indicators: indicators
   }

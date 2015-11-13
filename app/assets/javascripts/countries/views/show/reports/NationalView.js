@@ -14,7 +14,7 @@ define([
     initialize: function(options) {
       this.parent = options.parent;
 
-      this.widgets = options.status;
+      this.widgets = options.status.widgets;
       this._setupGrid();
     },
 

@@ -6,10 +6,11 @@ define([
   'handlebars',
   'views/SourceWindowView',
   'countries/models/CountryModel',
+  'widgets/collections/WidgetCollection',
   'countries/presenters/show/CountryModalPresenter',
   'text!countries/templates/reports-modal.handlebars'
 ], function($, mps, Backbone, _, Handlebars, SourceWindowView,
-  CountryModel, CountryModalPresenter, indicatorTemplate) {
+  CountryModel, WidgetCollection, CountryModalPresenter, indicatorTemplate) {
 
   'use strict';
 
@@ -35,17 +36,63 @@ define([
       var iso = sessionStorage.getItem('countryIso');
 
       this.countryModel = new CountryModel({id: iso});
+      this.widgetCollection = new WidgetCollection();
 
-
-      this.enabledIndicators = [];
-
-      this.$el.addClass('source_window--countries')
+      this.$el.addClass('source_window--countries');
 
       this._setListeners();
     },
 
     _setListeners: function() {
-      this.presenter.status.on('change:view', this._setupModal, this);
+      this.presenter.status.on('change:view', this.start, this);
+    },
+
+    start: function() {
+      this.widgetCollection.fetch().done(function(){
+        this._setupModal();
+      }.bind(this));
+    },
+
+    _cleanIndicators: function() {
+      $('.indicators-group li').removeClass('is-selected');
+    },
+
+    setInitialParams: function() {
+
+      if (!this.presenter.status.get('options')) {
+        return;
+      }
+
+      var opts = this.presenter.status.get('options');
+
+      // Jurisdictions
+      if (opts.jurisdictions) {
+        var jurisdictions = opts.jurisdictions;
+
+        jurisdictions.forEach(function(j) {
+          $('#jurisdictions-list li#' + j.idNumber).addClass('is-selected');
+        });
+      }
+
+      // Areas
+      if (opts.areas) {
+        var areas = opts.areas;
+
+        areas.forEach(function(a) {
+          $('#areas-list li#' + a.idNumber).addClass('is-selected');
+        });
+      }
+
+      // Indicators
+      if (opts.widgets) {
+        var key = Object.keys(opts.widgets),
+          indicators = opts.widgets[key[0]];
+
+        _.map(indicators, function(i) {
+          $('.indicators-group li#' + i[0].id).addClass('is-selected');
+        })
+      };
+
     },
 
     show: function(e) {
@@ -143,16 +190,34 @@ define([
       }]);
 
       this.hide();
+      this._resetPosition();
     },
+
+    _resetPosition: function() {
+      var view = this.presenter.status.get('view');
+
+      if(view !== 'national') {
+        this.$el.find('.page1').removeClass('is-hidden');
+        this.$el.find('.page2').toggleClass('is-hidden');
+      } else {
+        this.$el.find('.page1').addClass('is-hidden');
+        this.$el.find('.page2').removeClass('is-hidden');
+      }
+    },
+
 
     _setupModal: function() {
       var view = this.presenter.status.get('view');
 
+      var indicatorsByGroup = _.groupBy(this.widgetCollection.toJSON(), 'type');
+
       switch(view) {
 
         case 'national':
+
           this.setup = {
-            isNational: true
+            isNational: true,
+            indicators: indicatorsByGroup
           };
 
           this.render();
@@ -162,10 +227,11 @@ define([
         case 'subnational':
 
           this.countryModel.fetch().done(function() {
-
             this.setup = {
-              isJurisdictions: true,
-              jurisdictions: this.countryModel.get('jurisdictions')
+              jurisdictions: this.countryModel.get('jurisdictions'),
+              indicators: {
+                'Forest and Carbon Data':  indicatorsByGroup['Forest and Carbon Data']
+              }
             };
 
             this.render();
@@ -176,11 +242,18 @@ define([
 
         case 'areas-interest':
 
-          this.setup = {
-            isAreas: true
-          };
+          this.countryModel.fetch().done(function() {
 
-          this.render();
+            this.setup = {
+              areas: this.countryModel.get('areas_of_interest'),
+              indicators: {
+                'Forest and Carbon Data':  indicatorsByGroup['Forest and Carbon Data']
+              },
+            };
+
+            this.render();
+
+          }.bind(this));
 
           break;
       }
@@ -193,9 +266,14 @@ define([
 
     render: function() {
 
+      this._resetPosition();
+      this._cleanIndicators();
+
       this.$el.html(this.template({
         data: this.setup
       }));
+
+      this.setInitialParams();
     }
 
   });
