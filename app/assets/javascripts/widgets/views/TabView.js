@@ -42,7 +42,7 @@ define([
     },
 
     parseData: function() {
-      return this.presenter.model.get('data')
+      return this.presenter.model.get('data');
     },
 
     cacheVars: function() {
@@ -136,64 +136,70 @@ define([
       switch(t.type) {
         case 'line':
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: t.unit});
-          this.indicator = new LineChartIndicator({
-            el: this.$graphContainer,
-            tab: this,
-            className: 'is-line',
-            model: {
-              id: indicator.id,
-              unit: t.unit,
-              start_date: t.start_date,
-              end_date: t.end_date,
-              type: 'line',
-              slug: this.presenter.model.get('slug'),
-              // Compare model params
-              location_compare: this.presenter.model.get('location_compare'),
-              slug_compare: this.presenter.model.get('slug_compare'),
-            },
-            data: {
-              location: this.presenter.model.get('location'),
-              thresh: t.thresh,
-            }
-          });
+          if (!!indicator) {
+            this.indicator = new LineChartIndicator({
+              el: this.$graphContainer,
+              tab: this,
+              className: 'is-line',
+              model: {
+                id: indicator.id,
+                unit: t.unit,
+                start_date: t.start_date,
+                end_date: t.end_date,
+                type: 'line',
+                slug: this.presenter.model.get('slug'),
+                // Compare model params
+                location_compare: this.presenter.model.get('location_compare'),
+                slug_compare: this.presenter.model.get('slug_compare'),
+              },
+              data: {
+                location: this.presenter.model.get('location'),
+                thresh: t.thresh,
+              }
+            });
+          }
           break;
 
         case 'pie':
           var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
-          this.indicator = new PieChartIndicator({
-            el: this.$graphContainer,
-            tab: this,
-            className: 'is-pie',
-            model: {
-              indicators: indicators,
-              section: t.section,
-              sectionswitch: this.presenter.model.get('data').sectionswitch,
-              template: 'biomass-carbon',
-              type: 'pie',
-            },
-            data: {
-              location: this.presenter.model.get('location'),
-              thresh: t.thresh,
-            }
-          });
+          if (!!indicators.length) {
+            this.indicator = new PieChartIndicator({
+              el: this.$graphContainer,
+              tab: this,
+              className: 'is-pie',
+              model: {
+                indicators: indicators,
+                section: t.section,
+                sectionswitch: this.presenter.model.get('data').sectionswitch,
+                template: 'biomass-carbon',
+                type: 'pie',
+              },
+              data: {
+                location: this.presenter.model.get('location'),
+                thresh: t.thresh,
+              }
+            });
+          }
           break;
 
         case 'number':
-          var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: t.position})
-          this.indicator = new NumberChartIndicator({
-            el: this.$graphContainer,
-            tab: this,
-            className: 'is-number',
-            model: {
-              id: indicator.id,
-              template: 'umd',
-              type: 'number',
-            },
-            data: {
-              location: this.presenter.model.get('location'),
-              thresh: t.thresh,
-            }
-          });
+          var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: t.position});
+          if (!!indicator) {
+            this.indicator = new NumberChartIndicator({
+              el: this.$graphContainer,
+              tab: this,
+              className: 'is-number',
+              model: {
+                id: indicator.id,
+                template: 'umd',
+                type: 'number',
+              },
+              data: {
+                location: this.presenter.model.get('location'),
+                thresh: t.thresh,
+              }
+            });
+          }
           break;
 
       };

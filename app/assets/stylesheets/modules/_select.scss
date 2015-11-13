@@ -266,9 +266,26 @@
   color: $font-color-3;
   cursor: pointer;
   position: relative;
+
   > span {
     text-decoration: underline;
+    display: inline-block;
+    padding-right: 20px;
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 37%;
+      right: 3px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 2px solid $color-1;
+      border-right: 2px solid $color-1;
+      transform: rotate(45deg);
+    }
   }
+
   select {
     cursor: pointer;
     appearance: none;
