@@ -35,7 +35,7 @@ define([
       this.$htmlbody = $('html, body');
       this.$window = $(window);
       this.$document = $(document);
-      this.$sourceWindow = (!!options.sourceWindow) ? $(options.sourceWindow) : $('#window');
+      this.$sourceWindow = (!!options && !!options.sourceWindow) ? $(options.sourceWindow) : $('#window');
       this.$backdrop = $('#backdrop');
       this.mobile = (this.$window.width() > 850) ? false : true;
       this.$content = this.$sourceWindow.find('.content');
