@@ -490,7 +490,7 @@ function addCommas(nStr) {
               $(this).attr('cx', coordinates[0]);
               $(this).attr('cy', coordinates[1]);
 
-              label_text = that.get_label_text(coordinates, this.id, d.name, d.value);
+              label_text = that.get_label_text(coordinates, this.id, d.name, d.value, d.radius);
               document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
 
               break;
@@ -504,7 +504,7 @@ function addCommas(nStr) {
       return circles;
     };
 
-    BubbleChart.prototype.get_label_text = function(coordinates, id, country, data) {
+    BubbleChart.prototype.get_label_text = function(coordinates, id, country, data, radius) {
 
       var x_coord = 'x="' + coordinates[0] + '" ';
 
@@ -515,7 +515,10 @@ function addCommas(nStr) {
       var id_country = 'id="' + id + '-country" ';
       var id_data = 'id="' + id + '-data" ';
 
-
+      if ( radius > 100 ) {
+        var y_coord_country = 'y="' + (coordinates[1]) + '" ';
+        var y_coord_data =    'y="' + (coordinates[1]+20) + '" ';
+      }
 
       var label_text =
       '<text  class="country-label" ' +
