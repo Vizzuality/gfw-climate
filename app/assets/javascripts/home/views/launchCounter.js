@@ -21,7 +21,7 @@ define([
     },
 
     getFinalDate: function() {
-      var date = '01 01 2016'
+      var date = '12 01 2015'
       return new Date(date);
     },
 
