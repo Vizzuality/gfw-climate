@@ -1,4 +1,4 @@
-#latin_decrease_current {raster-opacity:1;
+#cod_primary_forest_wgs {raster-opacity:1;
   raster-scaling:near;
   raster-colorizer-default-mode:discrete;
   raster-colorizer-default-color:  transparent;
