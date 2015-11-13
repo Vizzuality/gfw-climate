@@ -15,8 +15,6 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    areas : [{ name: 'Tree plantations',id: 1,},{ name: 'Protected areas',id: 2,},{ name: 'Primary forests',id: 3,},{ name: 'Moratorium areas',id: 4,},{ name: 'Mining concessions',id: 5,},{ name: 'Logging concessions',id: 6,},{ name: 'Plantation concessions',id: 7,},{ name: 'Key biodiversity areas',id: 8,}],
-
     events: function() {
       return _.extend({}, SourceWindowView.prototype.events, {
         'click .m-modal--tablink' : 'changeTab',
@@ -49,19 +47,10 @@ define([
     },
 
     parseData: function() {
-      // Ooops!!! This should be served by the API //
-      var country1  = this.status.get('country1');
-      var country2  = this.status.get('country2');
-      (country1) ? country1.areas = this.areas : null;
-      (country2) ? country2.areas = this.areas : null;
-      // ***** //
-
-      // console.log(country1);
-      // console.log(country2);
       return {
         countries: this.status.get('countries'),
-        country1: country1,
-        country2: country2,
+        country1: this.status.get('country1'),
+        country2: this.status.get('country2'),
       };
     },
 
