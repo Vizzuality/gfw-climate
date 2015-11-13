@@ -12,7 +12,8 @@ var LineChart = function(options) {
   this.options = options;
   this.data = options.data;
   this.unit = options.unit
-  this.range = options.range;
+  this.rangeX = options.rangeX;
+  this.rangeY = options.rangeY;
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
@@ -57,13 +58,11 @@ LineChart.prototype._createScales = function() {
   this.yKey = this.options.keys.y;
 
   this.x = d3.time.scale().range([this.options.innerPadding.left, this.width - this.options.innerPadding.right]);
-  this.x.domain(d3.extent(this.data.map(function(d) {
-    return d[self.xKey];
-  })));
+  this.x.domain(this.rangeX);
 
   // this.y = d3.scale.linear().range([this.height,this.options.innerPadding.top]);
   this.y = d3.scale.linear().range([this.height - this.options.innerPadding.bottom,this.options.innerPadding.top]);
-  this.y.domain(this.range);
+  this.y.domain(this.rangeY);
 
   this.line = d3.svg.line()
     .interpolate('linear')
@@ -82,7 +81,7 @@ LineChart.prototype._createDefs = function() {
     .attr("height", this.height);
 };
 
-LineChart.prototype._drawAxes = function(group) {
+LineChart.prototype._drawAxes = function(group, data) {
   var self = this;
   var tickFormatY = (this.unit != 'percentage') ? "s" : ".2f";
   this.xAxis = d3.svg.axis()
@@ -112,19 +111,19 @@ LineChart.prototype._drawAxes = function(group) {
       .style("text-anchor", "start");
 };
 
-LineChart.prototype._drawLine = function(group) {
+LineChart.prototype._drawLine = function(group, data) {
   var self = this;
-  group.append("path")
-    .datum(this.data)
-    .attr("transform", "translate(0,"+ -this.sizing.top +")")
-    .attr("class", "line")
-    .attr("d", self.line);
+    group.append("path")
+      .datum(data)
+      .attr("transform", "translate(0,"+ -self.sizing.top +")")
+      .attr("class", "line")
+      .attr("d", self.line);
 };
 
-LineChart.prototype._drawTicks = function() {
+LineChart.prototype._drawTicks = function(data) {
   var self = this;
   this.svg.selectAll('circle.dot')
-  .data(this.data)
+  .data(data)
   .enter().append('circle')
     .attr('class', 'dot')
     .attr('r', 5)
@@ -233,18 +232,22 @@ LineChart.prototype.setListeners = function() {
 
 
 LineChart.prototype.render = function() {
-  if (!!this.data.length && !!this.svg) {
-    var group = this.svg.append("g")
-      .attr("class", "focus")
-      .attr("width", this.width)
-      .attr("height", this.height)
-      .attr("transform",
-        "translate(" + this.sizing.left + "," + this.sizing.top + ")");
+  var self = this;
+  if (!!this.svg) {
+    _.each(this.data, function(d){
+      var group = self.svg.append("g")
+        .attr("class", "focus")
+        .attr("width", self.width)
+        .attr("height", self.height)
+        .attr("transform",
+          "translate(" + self.sizing.left + "," + self.sizing.top + ")");
 
-    this._drawAxes(group);
-    this._drawLine(group);
-    this._drawTicks();
-    this._drawTooltip();
+      self._drawAxes(group,d);
+      self._drawLine(group,d);
+      self._drawTicks(d);
+      self._drawTooltip(d);
+
+    })
   }
 };
 
