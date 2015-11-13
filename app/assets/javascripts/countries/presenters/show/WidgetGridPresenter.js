@@ -53,7 +53,7 @@ define([
               jurisdictions: null,
               areas: null,
               view: view,
-              options: this.getOptions(p, this.widgetCollection.toJSON())
+              options: this.getOptions(null, p)
             });
 
             this.view.start();
@@ -83,7 +83,7 @@ define([
             areas: params.areas,
             view: params.view,
             jurisdictions: params.jurisdictions,
-            options: this.getOptions(p, this.widgetCollection.toJSON())
+            options: this.getOptions(p.options.indicators, p)
           });
 
           this.view.start();
@@ -141,6 +141,7 @@ define([
           if (params.options) {
             this._loadCustomizedOptions(params);
           } else {
+
             this.status.set({
               country: params.country.iso,
               view: params.view,
@@ -199,7 +200,7 @@ define([
           jurisdictions: null,
           areas: null,
           view: params.view,
-          options: this.getOptions(params, this.widgetCollection.toJSON())
+          options: this.getOptions(null, params)
         });
 
         this.view.start();
@@ -273,10 +274,17 @@ define([
       return areas;
     },
 
-    getOptions: function(params, defaultWidgets) {
+    getOptions: function(widgets, params) {
 
-      // This should be removed to a dinamic var
-      var activeWidgets = [1, 2, 3, 4, 5];
+      var defaultWidgets = this.widgetCollection.toJSON(),
+        activeWidgets;
+
+      if (!widgets) {
+        activeWidgets = [1, 2, 3, 4, 5];
+      } else {
+        activeWidgets = widgets;
+      }
+
       var w = _.groupBy(_.compact(_.map(defaultWidgets,_.bind(function(w){
         if (_.contains(activeWidgets, w.id)) {
           return {

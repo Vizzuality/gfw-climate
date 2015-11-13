@@ -38,19 +38,23 @@ define([
       this.countryModel = new CountryModel({id: iso});
       this.widgetCollection = new WidgetCollection();
 
-      this.$el.addClass('source_window--countries')
+      this.$el.addClass('source_window--countries');
 
       this._setListeners();
     },
 
     _setListeners: function() {
-      this.presenter.status.on('change:view', this._setupModal, this);
+      this.presenter.status.on('change:view', this.start, this);
     },
 
     start: function() {
       this.widgetCollection.fetch().done(function(){
         this._setupModal();
       }.bind(this));
+    },
+
+    _cleanIndicators: function() {
+      $('.indicators-group li').removeClass('is-selected');
     },
 
     setInitialParams: function() {
@@ -63,7 +67,6 @@ define([
 
       // Jurisdictions
       if (opts.jurisdictions) {
-
         var jurisdictions = opts.jurisdictions;
 
         jurisdictions.forEach(function(j) {
@@ -73,7 +76,6 @@ define([
 
       // Areas
       if (opts.areas) {
-
         var areas = opts.areas;
 
         areas.forEach(function(a) {
@@ -82,6 +84,14 @@ define([
       }
 
       // Indicators
+      if (opts.widgets) {
+        var key = Object.keys(opts.widgets),
+          indicators = opts.widgets[key[0]];
+
+        _.map(indicators, function(i) {
+          $('.indicators-group li#' + i[0].id).addClass('is-selected');
+        })
+      };
 
     },
 
@@ -184,8 +194,15 @@ define([
     },
 
     _resetPosition: function() {
-      this.$el.find('.page1').toggleClass('is-hidden');
-      this.$el.find('.page2').toggleClass('is-hidden');
+      var view = this.presenter.status.get('view');
+
+      if(view !== 'national') {
+        this.$el.find('.page1').removeClass('is-hidden');
+        this.$el.find('.page2').toggleClass('is-hidden');
+      } else {
+        this.$el.find('.page1').addClass('is-hidden');
+        this.$el.find('.page2').removeClass('is-hidden');
+      }
     },
 
 
@@ -207,9 +224,7 @@ define([
         case 'subnational':
 
           this.countryModel.fetch().done(function() {
-
             this.setup = {
-              isJurisdictions: true,
               jurisdictions: this.countryModel.get('jurisdictions'),
               indicators: this.widgetCollection.toJSON()
             };
@@ -222,12 +237,16 @@ define([
 
         case 'areas-interest':
 
-          this.setup = {
-            isAreas: true,
-            indicators: this.widgetCollection.toJSON()
-          };
+          this.countryModel.fetch().done(function() {
 
-          this.render();
+            this.setup = {
+              indicators: this.widgetCollection.toJSON(),
+              areas: this.countryModel.get('areas_of_interest')
+            };
+
+            this.render();
+
+          }.bind(this));
 
           break;
       }
@@ -240,10 +259,12 @@ define([
 
     render: function() {
 
+      this._resetPosition();
+      this._cleanIndicators();
+
       this.$el.html(this.template({
         data: this.setup
       }));
-
 
       this.setInitialParams();
     }

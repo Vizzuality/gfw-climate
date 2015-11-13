@@ -23,16 +23,9 @@ define([
         this.view.hide();
       }
     }, {
-      'Modal/addIndicator': function(indicator) {
-        this._onAddIndicator(indicator);
-      }
-    }, {
-      'Modal/removeIndicator': function(indicator) {
-        this._onRemoveIndicator(indicator);
-      }
-    }, {
       'View/update': function(view){
         this._setView(view)
+        this._resetIndicators();
       }
     }, {
       'Place/go': function(params) {
@@ -50,11 +43,17 @@ define([
       return p;
     },
 
+    _resetIndicators: function() {
+      this.status.set({
+        options: {
+          widgets: {}
+        }
+      });
+    },
+
     _onPlaceGo: function(params) {
       this._setView(params.view);
       this._setOptions(params.options);
-
-      this.view.start();
     },
 
     setIndicators: function(i) {

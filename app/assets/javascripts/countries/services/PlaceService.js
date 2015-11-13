@@ -163,7 +163,7 @@ define([
       if (params && this.params.options) {
         this.params.options.areas = params.options.areas;
         this.params.options.jurisdictions = params.options.jurisdictions;
-        // this.params.options.widgets = {};
+        this.params.options.widgets = params.options.widgets ? params.options.widgets : null;
       }
 
       var p = _.extendNonNull({}, this.params, params);

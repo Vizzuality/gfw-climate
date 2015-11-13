@@ -23,7 +23,6 @@ define([
     },
 
     _setupGrid: function() {
-
       var promises = [],
         widgetsArray = [],
         iso = sessionStorage.getItem('countryIso');
@@ -32,6 +31,8 @@ define([
 
         _.map(j, function(w) {
 
+          var currentJurisdiction = _.findWhere(this.jurisdictions, {id: key});
+
           var deferred = $.Deferred();
           var newWidget = new WidgetView({
             model: {
@@ -39,7 +40,7 @@ define([
               slug: key,
               location: {
                 iso: iso,
-                jurisdiction: 0,
+                jurisdiction: currentJurisdiction.idNumber,
                 area: 0
               },
             },
