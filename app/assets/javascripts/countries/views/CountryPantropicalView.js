@@ -19,7 +19,8 @@ define([
 
     initialize: function() {
       this.$years = $('#year-picker');
-
+      //I can't find who is giving display:block to country tab...
+      $('#vis').find('.country').hide();
     },
 
     switch_view: function(e) {

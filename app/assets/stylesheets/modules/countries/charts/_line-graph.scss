@@ -242,26 +242,38 @@
     margin: 57px 0 0 50px;
     color: #555;
     display: none;
+    width: 300px;
+
     &.nydfs {
       width: 220px
     }
+
     &.right-side {
       right: 0;
       margin: 57px 50px 0 0;
       width: 190px;
     }
+
+    &.country {
+      left: 50%;
+      transform: translatex(-50%);
+      z-index: 1000;
+    }
+
     h4 {
       font-size: 18px;
     }
+
     h5 {
       margin: 22px 0;
     }
-    width: 300px;
+
     p,li {
       font-size: 14px;
       line-height: 21px;
       margin: 21px 0;
     }
+
     li {
       margin: 4px 0;
       &:before {
@@ -329,18 +341,22 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
+
       .year-dropdown {
-        height: 34px;
-        width: 103px;
-        border: 1px solid #5b80a0;
+        display: blocK;
+        appearance: none;
+        // height: 34px;
+        // width: 103px;
+        padding: 0 10px;
+        border: 1px solid $color-1;
         border-radius: 40px;
         display: flex;
-        justify-content: space-around;
-        align-items: center;
+        // justify-content: space-around;
+        // align-items: center;
         font-size: 14px;
         color: #555;
         line-height: 31px;
-        margin:0;
+        margin: 0 10px;
       }
     }
   }

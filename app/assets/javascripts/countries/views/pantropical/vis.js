@@ -509,13 +509,13 @@ function addCommas(nStr) {
       var x_coord = 'x="' + coordinates[0] + '" ';
 
       var y_coord =         'y="' + coordinates[1] + '" ';
-      var y_coord_country = 'y="' + (coordinates[1]+50) + '" ';
-      var y_coord_data =    'y="' + (coordinates[1]+70) + '" ';
+      var y_coord_country = 'y="' + (coordinates[1]+55) + '" ';
+      var y_coord_data =    'y="' + (coordinates[1]+75) + '" ';
 
       var id_country = 'id="' + id + '-country" ';
       var id_data = 'id="' + id + '-data" ';
 
-      if ( radius > 100 ) {
+      if ( radius > 45 ) {
         var y_coord_country = 'y="' + (coordinates[1]) + '" ';
         var y_coord_data =    'y="' + (coordinates[1]+20) + '" ';
       }
