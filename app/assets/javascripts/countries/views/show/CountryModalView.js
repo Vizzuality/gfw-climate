@@ -209,9 +209,7 @@ define([
     _setupModal: function() {
       var view = this.presenter.status.get('view');
 
-
       var indicatorsByGroup = _.groupBy(this.widgetCollection.toJSON(), 'type');
-      console.log(indicatorsByGroup);
 
       switch(view) {
 
