@@ -1,6 +1,6 @@
 collection @widgets, root: 'widgets'
 
-attributes :id, :name, :default
+attributes :id, :name, :type_slug, :default
 
 node(:data)       { |widget| widget.data_url('widgets', widget.id, @default_filter) }
 node(:tabs)       { |widget| default_tabs(widget)                                   }
