@@ -34,48 +34,6 @@ define([
     },
 
     fetchIndicator: function(data) {
-      // NEW
-      var status = {
-        promises: []
-      };
-      _.each(this.model.get('indicators'), _.bind(function(i) {
-        var deferred = $.Deferred();
-        new IndicatorModel({id: i.id})
-            .fetch({
-              data:this.setFetchParams(data)
-            })
-            .done(function(data){
-              deferred.resolve(data);
-            });
-        status.promises.push(deferred);
-      }, this))
-      // Promises of each country resolved
-      $.when.apply(null, status.promises).then(_.bind(function() {
-        this.$el.removeClass('is-loading');
-        var args = Array.prototype.slice.call(arguments);
-        var values = _.compact(_.map(args, function(i){
-          return i.values[0];
-        }));
-
-        if (!!values.length) {
-          values = _.groupBy(values,'indicator_id');
-          console.log(values);
-          // var data = _.map(this.model.get('indicators'), function(i){
-          //   i.country_name = values[i.id][0].country_name
-          //   i.data = values[i.id];
-          //   return i;
-          // })
-          // this.model.set('data', data);
-          // this.render();
-        } else {
-          // this.$el.html(this.noDataTemplate({ classname: 'pie' }));
-        }
-      }, this ));
-
-
-
-
-      // OLD
       this.$el.addClass('is-loading');
       // Fetch both models if compare exists
       if (this.model.get('location_compare')) {
@@ -120,7 +78,6 @@ define([
         // Set range
         var arr = (this.model.get('location_compare')) ? _.union(this.model.get('data'), this.modelCompare.get('data')) : this.model.get('data');
         var range = [0, _.max(arr, function(o){return o.value;}).value];
-        console.log(data);
         // var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
         this.chart = new LineChart({
           id: this.model.get('id'),

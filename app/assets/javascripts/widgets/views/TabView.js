@@ -4,10 +4,11 @@ define([
   'widgets/presenters/TabPresenter',
   'text!widgets/templates/tab.handlebars',
   'widgets/indicators/line/LineChartIndicator',
+  'widgets/indicators/multiline/MultiLineChartIndicator',
   'widgets/indicators/map/MapIndicator',
   'widgets/indicators/pie/PieChartIndicator',
   'widgets/indicators/number/NumberChartIndicator',
-], function(Backbone, Handlebars, TabPresenter, tpl, LineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator) {
+], function(Backbone, Handlebars, TabPresenter, tpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator) {
 
   'use strict';
 
@@ -137,7 +138,6 @@ define([
         case 'line':
           var indicator = _.findWhere(this.presenter.model.get('indicators'),{ unit: t.unit});
           var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit});
-          console.log(indicators);
           if (!!indicator) {
             this.indicator = new LineChartIndicator({
               el: this.$graphContainer,
@@ -154,6 +154,32 @@ define([
                 // Compare model params
                 location_compare: this.presenter.model.get('location_compare'),
                 slug_compare: this.presenter.model.get('slug_compare'),
+              },
+              data: {
+                location: this.presenter.model.get('location'),
+                thresh: t.thresh,
+              }
+            });
+          }
+          break;
+
+        case 'multiline':
+          var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit});
+          if (!!indicators.length) {
+            this.indicator = new MultiLineChartIndicator({
+              el: this.$graphContainer,
+              tab: this,
+              className: 'is-multiline',
+              model: {
+                indicators: indicators,
+                unit: t.unit,
+                start_date: t.start_date,
+                end_date: t.end_date,
+                type: 'line',
+                slug: this.presenter.model.get('slug'),
+                // // Compare model params
+                // location_compare: this.presenter.model.get('location_compare'),
+                // slug_compare: this.presenter.model.get('slug_compare'),
               },
               data: {
                 location: this.presenter.model.get('location'),
