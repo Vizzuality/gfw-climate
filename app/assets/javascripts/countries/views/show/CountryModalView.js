@@ -59,7 +59,18 @@ define([
 
     setInitialParams: function() {
 
-      if (!this.presenter.status.get('options')) {
+      if (!this.presenter.status.get('options') || !this.presenter.status.get('options')['widgets']) {
+
+        if (this.presenter.status.get('view') !== 'national') {
+          return;
+        }
+
+        var defaultIndicators = [1,2,3,4,5];
+
+        defaultIndicators.forEach(function(ind) {
+          $('.indicators-group li#' + ind).addClass('is-selected');
+        });
+
         return;
       }
 
@@ -91,8 +102,7 @@ define([
         _.map(indicators, function(i) {
           $('.indicators-group li#' + i[0].id).addClass('is-selected');
         })
-      };
-
+      }
     },
 
     show: function(e) {
