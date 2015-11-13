@@ -521,7 +521,6 @@ function addCommas(nStr) {
       '</text>';
 
       return label_text;
-
     }
 
 
@@ -727,8 +726,17 @@ function addCommas(nStr) {
         return chart.display_by_country(values_array);
       };
     })(this);
+
+    root.remove_labels = (function(_this) {
+      return function() {
+        $('.country-label').remove();
+        $('.data-label').remove();
+      };
+    })(this);
+
     root.toggle_view = (function(_this) {
       return function(view_type, year) {
+        root.remove_labels();
         switch (view_type) {
           case 'nydfs':
             return root.display_ny();
