@@ -219,7 +219,22 @@
       background-color: white;
     }
   }
+
+  &.is-loading {
+    pointer-events: none;
+
+    &:after {
+      top: 30%;
+      z-index: 5;
+    }
+
+    &:before {
+      z-index: 4;
+      background-color: $white;
+    }
+  }
 }
+
 #vis {
   min-height: 525px;
   .vis-tab {

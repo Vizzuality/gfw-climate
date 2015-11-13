@@ -259,16 +259,23 @@ function addCommas(nStr) {
     };
 
     BubbleChart.prototype.display_group_all = function() {
-      this.force.gravity(this.layout_gravity).charge(this.charge).friction(0.9).on("tick", (function(_this) {
-        return function(e) {
-          _this.circles.transition().duration(50).attr("r", function(d) {
-              return _this.radius_scale(d.value * 1.6);
-            })
-          return _this.circles.each(_this.move_towards_center(e.alpha)).attr("cx", function(d) {
-            return d.x;
-          }).attr("cy", function(d) {
-            return d.y;
-          });
+      this
+        .force
+        .gravity(this.layout_gravity)
+        .charge(this.charge).friction(0.9)
+        .on("end", function(e) {
+          root.$pantropicalVis.removeClass('is-loading');
+        })
+        .on("tick", (function(_this) {
+          return function(e) {
+            _this.circles.transition().duration(50).attr("r", function(d) {
+                return _this.radius_scale(d.value * 1.6);
+              })
+            return _this.circles.each(_this.move_towards_center(e.alpha)).attr("cx", function(d) {
+              return d.x;
+            }).attr("cy", function(d) {
+              return d.y;
+            });
         };
       })(this));
       this.force.start();
@@ -288,8 +295,6 @@ function addCommas(nStr) {
       return this.hide_years();
     };
 
-
-
     BubbleChart.prototype.move_towards_center = function(alpha) {
       return (function(_this) {
         return function(d) {
@@ -302,8 +307,8 @@ function addCommas(nStr) {
     BubbleChart.prototype.buoyancy = function(alpha) {
       var that = this;
       return function(d) {
-          var targetY = that.centerY
-          d.y = d.y + (targetY - d.y) * (that.defaultGravity) * alpha * alpha * alpha * 100
+        var targetY = that.centerY
+        d.y = d.y + (targetY - d.y) * (that.defaultGravity) * alpha * alpha * alpha * 100;
       };
     };
 
@@ -339,6 +344,9 @@ function addCommas(nStr) {
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; })
+        })
+        .on("end", function(e) {
+          root.$pantropicalVis.removeClass('is-loading');
         })
         .start();
 
@@ -392,6 +400,9 @@ function addCommas(nStr) {
             //   }
             // });
         })
+        .on("end", function(e) {
+          root.$pantropicalVis.removeClass('is-loading');
+        })
         .start();
 
         this.circles.on("mouseenter", function(d, i) {
@@ -433,6 +444,9 @@ function addCommas(nStr) {
         .charge(that.defaultCharge)
         .on("tick", function(e){
           circles.each(that.buoyancy(e.alpha));
+        })
+        .on("end", function(e) {
+          root.$pantropicalVis.removeClass('is-loading');
         })
         .start();
         
@@ -702,8 +716,14 @@ function addCommas(nStr) {
     render_vis = function(csv) {
       chart = new BubbleChart(csv);
       chart.start();
+      root.cache_vars();
       return root.display_all();
     };
+    root.cache_vars = (function(_this) {
+      return function() {
+        root.$pantropicalVis = $('.pantropical-vis');
+      };
+    })(this);
     root.display_all = (function(_this) {
       return function() {
         return chart.display_group_all();
@@ -729,14 +749,21 @@ function addCommas(nStr) {
 
     root.remove_labels = (function(_this) {
       return function() {
-        $('.country-label').remove();
-        $('.data-label').remove();
+        $('#svg_vis .country-label').remove();
+        $('#svg_vis .data-label').remove();
+      };
+    })(this);
+
+    root.set_loading = (function(_this) {
+      return function() {
+        root.$pantropicalVis.addClass('is-loading');
       };
     })(this);
 
     root.toggle_view = (function(_this) {
       return function(view_type, year) {
         root.remove_labels();
+        root.set_loading();
         switch (view_type) {
           case 'nydfs':
             return root.display_ny();
