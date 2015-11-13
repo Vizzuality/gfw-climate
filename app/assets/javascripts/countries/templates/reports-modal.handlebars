@@ -12,27 +12,16 @@
         <div class="item-list">
           {{#if data.indicators}}
             <div class="indicators-group">
-              <h3>Forest and Carbon Data</h3>
-              <ul>
-                {{#each data.indicators}}
-                  <li id="{{id}}" class="item"><span class="item__name">{{name}} <svg class="icon-chart-bars"><use xlink:href="#icon-chart-bars"></use></svg></span></li>
+              {{#each data.indicators}}
+                <h3>{{@key}}</h3>
+                <ul>
+                {{#each this}}
+                  <li id="{{id}}" class="item">
+                    <span class="item__name">{{name}}<svg class="icon-chart-{{type_chart}}"><use xlink:href="#icon-chart-{{type_chart}}"></use></svg></span>
+                  </li>
                 {{/each}}
-              </ul>
-            </div>
-          {{/if}}
-
-          {{!-- Data from API in future --}}
-          {{#if data.isNational}}
-            <div class="indicators-group">
-              <h3>Policy and Drivers</h3>
-              <ul>
-                <li id="9" class="item"><span class="item__name">top 5 crops expanding in area</span></li>
-                <li id="11" class="item"><span class="item__name">drivers of deforestation and degradation</span></li>
-                <li id="12" class="item"><span class="item__name">national deforestation vs. fossil fuel emissions</span></li>
-                <li id="14" class="item"><span class="item__name">human population trends</span></li>
-                <li id="15" class="item"><span class="item__name">net export value of top agricultural commodity</span></li>
-                <li id="16" class="item"><span class="item__name">net export value of top wood product commodity</span></li>
-              </ul>
+                <ul>
+              {{/each}}
             </div>
           {{/if}}
         </div>

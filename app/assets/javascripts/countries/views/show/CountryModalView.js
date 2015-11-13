@@ -209,12 +209,17 @@ define([
     _setupModal: function() {
       var view = this.presenter.status.get('view');
 
+
+      var indicatorsByGroup = _.groupBy(this.widgetCollection.toJSON(), 'type');
+      console.log(indicatorsByGroup);
+
       switch(view) {
 
         case 'national':
+
           this.setup = {
             isNational: true,
-            indicators: this.widgetCollection.toJSON()
+            indicators: indicatorsByGroup
           };
 
           this.render();
@@ -226,7 +231,9 @@ define([
           this.countryModel.fetch().done(function() {
             this.setup = {
               jurisdictions: this.countryModel.get('jurisdictions'),
-              indicators: this.widgetCollection.toJSON()
+              indicators: {
+                'Forest and Carbon Data':  indicatorsByGroup['Forest and Carbon Data']
+              }
             };
 
             this.render();
@@ -240,8 +247,10 @@ define([
           this.countryModel.fetch().done(function() {
 
             this.setup = {
-              indicators: this.widgetCollection.toJSON(),
-              areas: this.countryModel.get('areas_of_interest')
+              areas: this.countryModel.get('areas_of_interest'),
+              indicators: {
+                'Forest and Carbon Data':  indicatorsByGroup['Forest and Carbon Data']
+              },
             };
 
             this.render();
