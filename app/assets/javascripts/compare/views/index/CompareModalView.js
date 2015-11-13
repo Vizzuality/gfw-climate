@@ -15,15 +15,13 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    el: '.source_window',
-
     areas : [{ name: 'Tree plantations',id: 1,},{ name: 'Protected areas',id: 2,},{ name: 'Primary forests',id: 3,},{ name: 'Moratorium areas',id: 4,},{ name: 'Mining concessions',id: 5,},{ name: 'Logging concessions',id: 6,},{ name: 'Plantation concessions',id: 7,},{ name: 'Key biodiversity areas',id: 8,}],
 
     events: function() {
       return _.extend({}, SourceWindowView.prototype.events, {
         'click .m-modal--tablink' : 'changeTab',
-        'click .m-field-list-radio-jurisdiction' : 'changeJurisdiction',
-        'click .m-field-list-radio-area' : 'changeArea',
+        'click .js-field-list-radio-jurisdiction' : 'changeJurisdiction',
+        'click .js-field-list-radio-area' : 'changeArea',
         'click #btnModalContinue' : 'continue',
         'change .chosen-select' : 'changeIso',
       });
@@ -31,8 +29,9 @@ define([
 
     initialize: function() {
       // Inits
-      this.constructor.__super__.initialize.apply(this);
-      this.$el.addClass('is-huge');
+      this.constructor.__super__.initialize.apply(this,[{ sourceWindow: '.source_window_compare'}]);
+
+      this.$sourceWindow.addClass('is-huge');
       // Presenter & status
       this.presenter = new CompareModalPresenter(this);
       this.status = this.presenter.status;
@@ -44,7 +43,7 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template(this.parseData()));
+      this.$sourceWindow.html(this.template(this.parseData()));
       this.cacheVars();
       this.inits();
     },
@@ -69,7 +68,7 @@ define([
     cacheVars: function() {
       this.$wrapper = $('.content-wrapper');
       this.$selects = $('.chosen-select');
-      this.$radios = $('.m-field-list-radio');
+      this.$radios = $('.js-field-list-radio');
       this.$tablinks = $('.m-modal--tablink');
       this.$tabs = $('.m-modal--tab');
     },
@@ -148,7 +147,7 @@ define([
 
       // Tablinks
       this.$tablinks.removeClass('is-active');
-      this.$el.find('.m-modal--tablink[data-tab='+tab+']').addClass('is-active');
+      this.$sourceWindow.find('.m-modal--tablink[data-tab='+tab+']').addClass('is-active');
 
       // Tabs
       this.$tabs.removeClass('is-active');
@@ -165,7 +164,7 @@ define([
             $selectChosen = $('#selection'+who).find('.chosen-container'),
             $areas = $('#selection'+who).find('.compare-area'),
             $jurisdictions = $('#selection'+who).find('.compare-jurisdiction'),
-            $radios = $('#selection'+who).find('.m-field-list-radio');
+            $radios = $('#selection'+who).find('.js-field-list-radio');
 
         // Set selects
         $select.toggleClass('with-selection',!!compare.iso);

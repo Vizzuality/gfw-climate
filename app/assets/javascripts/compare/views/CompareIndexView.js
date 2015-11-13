@@ -4,7 +4,9 @@ define([
   'compare/views/index/CompareGridView',
   'compare/views/index/CompareModalView',
   'compare/views/index/CompareFixedHeaderView',
-], function(Backbone, CompareSelectorsView, CompareGridView, CompareModalView, CompareFixedHeaderView) {
+  'compare/views/index/CompareGridButtonBoxView',
+  'compare/views/index/CompareWidgetsModalView',
+], function(Backbone, CompareSelectorsView, CompareGridView, CompareModalView, CompareFixedHeaderView, CompareGridButtonBoxView, CompareWidgetsModalView) {
 
   var CompareIndexView = Backbone.View.extend({
 
@@ -13,6 +15,8 @@ define([
       new CompareGridView();
       new CompareModalView();
       new CompareFixedHeaderView();
+      new CompareGridButtonBoxView();
+      new CompareWidgetsModalView();
     }
 
   });

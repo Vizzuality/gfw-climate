@@ -253,15 +253,16 @@
       },
       {
         "position": 2,
-        "name": "FAO",
-        "type": "number"
-      },
-      {
-        "position": 3,
-        "name": "Compare All",
+        "name": "Other national data",
+        "subname": "(sources vary)",
         "type": "number",
         "thresh" : 25,
         "threshunit": "tree cover"
+      },
+      {
+        "position": 3,
+        "name": "FAO",
+        "type": "number"
       }
     ],
     "indicators": [
@@ -278,14 +279,14 @@
         "name": "FAO",
         "type": "number",
         "unit": "hectares",
-        "tab": 2
+        "tab": 3
       },
       {
         "id": 3,
         "name": "Hansen/Google/UMD",
         "type": "number",
         "unit": "hectares",
-        "tab": 3
+        "tab": 2
       },
       {
         "id": 17,
@@ -323,7 +324,8 @@
       },
       {
         "position": 2,
-        "name": "FAO",
+        "name": "Other national data",
+        "subname": "(Hansen/UMD/Google/USGS/NASA)",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -339,8 +341,19 @@
       },
       {
         "position": 3,
-        "name": "Compare All",
-        "type": "pie"
+        "name": "FAO",
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       }
     ],
     "indicators": [
@@ -400,8 +413,8 @@
         "section": "carbon"
       },
       {
-        "id": 18,
-        "name": "FAO",
+        "id": 57,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -409,8 +422,8 @@
         "direction": "aboveground"
       },
       {
-        "id": 19,
-        "name": "FAO",
+        "id": 58,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -418,8 +431,8 @@
         "direction": "aboveground"
       },
       {
-        "id": 20,
-        "name": "FAO",
+        "id": 59,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -427,8 +440,8 @@
         "direction": "belowground"
       },
       {
-        "id": 20,
-        "name": "FAO",
+        "id": 60,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -436,71 +449,19 @@
         "direction": "belowground"
       },
       {
-        "id": 22,
-        "name": "FAO",
+        "id": 61,
+        "name": "Other national data",
         "type": "total",
         "unit": "number",
         "tab": 2,
         "section": "biomass"
       },
       {
-        "id": 23,
-        "name": "FAO",
+        "id": 62,
+        "name": "Other national data",
         "type": "total",
         "unit": "number",
         "tab": 2,
-        "section": "carbon"
-      },
-      {
-        "id": 4,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "biomass",
-        "direction": "aboveground"
-      },
-      {
-        "id": 5,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "carbon",
-        "direction": "aboveground"
-      },
-      {
-        "id": 6,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "biomass",
-        "direction": "belowground"
-      },
-      {
-        "id": 7,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "carbon",
-        "direction": "belowground"
-      },
-      {
-        "id": 8,
-        "name": "Woods Hole/Baccini",
-        "type": "total",
-        "unit": "number",
-        "tab": 3,
-        "section": "biomass"
-      },
-      {
-        "id": 9,
-        "name": "Woods Hole/Baccini",
-        "type": "total",
-        "unit": "number",
-        "tab": 3,
         "section": "carbon"
       },
       {
@@ -562,6 +523,7 @@
     "name": "Tree biomass density",
     "default_thresh": "25",
     "default": true,
+    "_text": "On average there are #{value} tons of #{section} per hectare in #{country}'s forests.",
     "tabs": [
       {
         "position": 1,
@@ -584,7 +546,8 @@
       },
       {
         "position": 2,
-        "name": "FAO",
+        "name": "Other national data",
+        "subname": "(Sources vary)",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -600,13 +563,24 @@
       },
       {
         "position": 3,
-        "name": "Compare All",
-        "type": "pie"
+        "name": "FAO",
+        "type": "pie",
+        "section" : "biomass",
+        "sectionswitch" : [
+          {
+            "unit": "biomass",
+            "unitname": "biomass"
+          },
+          {
+            "unit": "carbon",
+            "unitname": "carbon"
+          }
+        ]
       }
     ],
     "indicators": [
       {
-        "id": 4,
+        "id": 10,
         "name": "Woods Hole/Baccini",
         "type": "pie",
         "unit": "percentage",
@@ -616,7 +590,7 @@
         "default": true
       },
       {
-        "id": 5,
+        "id": 11,
         "name": "Woods Hole/Baccini",
         "type": "pie",
         "unit": "percentage",
@@ -625,7 +599,7 @@
         "direction": "aboveground"
       },
       {
-        "id": 6,
+        "id": 38,
         "name": "Woods Hole/Baccini",
         "type": "pie",
         "unit": "percentage",
@@ -635,7 +609,7 @@
         "default": true
       },
       {
-        "id": 7,
+        "id": 39,
         "name": "Woods Hole/Baccini",
         "type": "pie",
         "unit": "percentage",
@@ -661,8 +635,8 @@
         "section": "carbon"
       },
       {
-        "id": 18,
-        "name": "FAO",
+        "id": 63,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -670,8 +644,8 @@
         "direction": "aboveground"
       },
       {
-        "id": 19,
-        "name": "FAO",
+        "id": 64,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -679,8 +653,8 @@
         "direction": "aboveground"
       },
       {
-        "id": 20,
-        "name": "FAO",
+        "id": 65,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -688,8 +662,8 @@
         "direction": "belowground"
       },
       {
-        "id": 20,
-        "name": "FAO",
+        "id": 66,
+        "name": "Other national data",
         "type": "pie",
         "unit": "percentage",
         "tab": 2,
@@ -698,7 +672,7 @@
       },
       {
         "id": 22,
-        "name": "FAO",
+        "name": "Other national data",
         "type": "total",
         "unit": "number",
         "tab": 2,
@@ -706,66 +680,14 @@
       },
       {
         "id": 23,
-        "name": "FAO",
+        "name": "Other national data",
         "type": "total",
         "unit": "number",
         "tab": 2,
         "section": "carbon"
       },
       {
-        "id": 4,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "biomass",
-        "direction": "aboveground"
-      },
-      {
-        "id": 5,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "carbon",
-        "direction": "aboveground"
-      },
-      {
-        "id": 6,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "biomass",
-        "direction": "belowground"
-      },
-      {
-        "id": 7,
-        "name": "Woods Hole/Baccini",
-        "type": "pie",
-        "unit": "percentage",
-        "tab": 3,
-        "section": "carbon",
-        "direction": "belowground"
-      },
-      {
-        "id": 8,
-        "name": "Woods Hole/Baccini",
-        "type": "total",
-        "unit": "number",
-        "tab": 3,
-        "section": "biomass"
-      },
-      {
-        "id": 9,
-        "name": "Woods Hole/Baccini",
-        "type": "total",
-        "unit": "number",
-        "tab": 3,
-        "section": "carbon"
-      },
-      {
-        "id": 18,
+        "id": 24,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -774,7 +696,7 @@
         "direction": "aboveground"
       },
       {
-        "id": 19,
+        "id": 25,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -783,7 +705,7 @@
         "direction": "aboveground"
       },
       {
-        "id": 20,
+        "id": 26,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -792,7 +714,7 @@
         "direction": "belowground"
       },
       {
-        "id": 21,
+        "id": 27,
         "name": "FAO",
         "type": "pie",
         "unit": "percentage",
@@ -820,6 +742,86 @@
   },
   {
     "id": 6,
+    "name": "Soil Carbon Density",
+    "default_thresh": "25",
+    "default": true,
+    "_text": "On average there are #{value} tons of carbon per hectare in the soils of #{country}'s forests.",
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Harmonized World Soil Database",
+        "subname": "(FAO/IIASA/ISIRC/ISSCAS/JRC)",
+        "type": "number",
+        "thresh" : 25,
+        "threshunit": "tree cover",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 3,
+        "name": "Forest Soil Carbon Density",
+        "type": "number",
+        "unit": "carbon per hectare",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Soil Carbon Stocks",
+    "default_thresh": "25",
+    "_text": "There are #{value} teragrams of carbon in the soils of #{country}'s forests.",
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Harmonized World Soil Database",
+        "subname": "(FAO/IIASA/ISIRC/ISSCAS/JRC)",
+        "type": "number",
+        "thresh" : 25,
+        "threshunit": "tree cover",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 36,
+        "name": "Soil Carbon Stocks",
+        "type": "number",
+        "unit": "teragrams of carbon",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Emissions from peat drainage",
+    "default_thresh": "25",
+    "_text": "Each year, drainage of tropical peat for large industrial plantations in #{country} emit #{value} million tons of CO2.",
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Transparent World/IPCC",
+        "subname": "(IPCC Tier 1)",
+        "type": "number",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 45,
+        "name": "Emissions from peat drainage",
+        "type": "number",
+        "unit": "million tons CO2 per year",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 9,
     "name": "Emerging hotspots",
     "default_thresh": "25",
     "indicators": [
@@ -832,16 +834,25 @@
     ]
   },
   {
-    "id": 7,
+    "id": 11,
     "name": "Test widget",
     "default_thresh": "25",
     "default": false,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Testing",
+        "type": "test",
+        "default": true
+      }
+    ],
     "indicators": [
       {
         "id": 14,
         "name": "Test indicator",
         "type": "line",
         "unit": "percentage",
+        "tab" : 1,
         "default": true
       }
     ]
