@@ -53,11 +53,10 @@ define([
               jurisdictions: null,
               areas: null,
               view: view,
-              options: this.getOptions(p, this.widgetCollection.toJSON())
+              options: this.getOptions(null, p)
             });
 
             this.view.start();
-            this.view._toggleWarnings();
           }
 
           this.widgetCollection.fetch({default: true}).done(callback.bind(this));
@@ -73,10 +72,7 @@ define([
             options: {}
           });
           this.view.start();
-          this.view._toggleWarnings();
         }
-
-
       }
     }, {
       'Grid/update': function(params) {
@@ -87,14 +83,13 @@ define([
             areas: params.areas,
             view: params.view,
             jurisdictions: params.jurisdictions,
-            options: this.getOptions(p, this.widgetCollection.toJSON())
-          })
+            options: this.getOptions(p.options.indicators, p)
+          });
 
           this.view.start();
         };
 
         this.widgetCollection.fetch({default: true}).done(callback.bind(this));
-
       }
     }],
 
@@ -114,9 +109,10 @@ define([
 
       p.options = this.status.get('options');
 
+      p.options.areas =  this.status.get('jurisdictions') ? null : this.status.get('areas');
+      p.options.jurisdictions = this.status.get('areas') ? null : this.status.get('jurisdictions');
+
       _.extend(p.options, {
-        jurisdictions: this.status.get('jurisdictions'),
-        areas: this.status.get('areas'),
         view: this.status.get('view')
       });
 
@@ -145,6 +141,7 @@ define([
           if (params.options) {
             this._loadCustomizedOptions(params);
           } else {
+
             this.status.set({
               country: params.country.iso,
               view: params.view,
@@ -203,7 +200,7 @@ define([
           jurisdictions: null,
           areas: null,
           view: params.view,
-          options: this.getOptions(params, this.widgetCollection.toJSON())
+          options: this.getOptions(null, params)
         });
 
         this.view.start();
@@ -215,7 +212,6 @@ define([
     },
 
     _loadCustomizedOptions: function(params) {
-
       this.status.set({
         country: sessionStorage.getItem('countryIso'),
         jurisdictions: params.jurisdictions ? params.jurisdictions :  this.getJurisdictions(params),
@@ -237,15 +233,20 @@ define([
     _updateView: function(view) {
       this.status.set({
         view: view
-      });
+      }, {silent: true});
     },
 
     _onOptionsUpdate: function(id,slug,wstatus) {
-      var options = _.clone(this.status.get('options'));
+      var options = _.clone(this.status.get('options').widgets);
       options[slug][id][0] = wstatus;
 
+      var x = {};
+      x[slug] = options[slug];
+
+
       // Set and publish
-      this.status.set('options', options);
+      // this.status.set('options', options);
+      _.extend(this.status.get('options'), x);
       mps.publish('Place/update');
     },
 
@@ -273,10 +274,17 @@ define([
       return areas;
     },
 
-    getOptions: function(params, defaultWidgets) {
+    getOptions: function(widgets, params) {
 
-      // This should be removed to a dinamic var
-      var activeWidgets = [1, 2, 3, 4, 5];
+      var defaultWidgets = this.widgetCollection.toJSON(),
+        activeWidgets;
+
+      if (!widgets) {
+        activeWidgets = [1, 2, 3, 4, 5];
+      } else {
+        activeWidgets = widgets;
+      }
+
       var w = _.groupBy(_.compact(_.map(defaultWidgets,_.bind(function(w){
         if (_.contains(activeWidgets, w.id)) {
           return {
@@ -318,7 +326,7 @@ define([
 
       }
 
-      return r;
+      return {widgets: r};
     },
 
     getTabsOptions: function(tabs) {
