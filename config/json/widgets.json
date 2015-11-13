@@ -823,6 +823,8 @@
   {
     "id": 9,
     "name": "Top 5 crops expanding in the area",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
     "default_thresh": "25",
     "tabs": [
       {
@@ -848,7 +850,8 @@
   {
     "id": 10,
     "name": "Drivers of deforestation and degradation",
-    "type": "Policy and Drivers",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
     "default_thresh": "25",
     "tabs": [
       {
@@ -862,7 +865,7 @@
     "indicators": [
       {
         "id": 40,
-        "name": "Top 5 crops expanding in the area",
+        "name": "Worldbank Forest Carbon Partnership Facility",
         "type": "text",
         "tab": 1,
         "default": true
@@ -872,7 +875,8 @@
   {
     "id": 11,
     "name": "National deforestation against fossil fuels emissions",
-    "type": "Policy and Drivers",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
     "default_thresh": "25",
     "_text": "#{Country}'s deforestation emissions are #{value}% of its fossil fuels emissions.",
     "tabs": [
@@ -897,7 +901,8 @@
   {
     "id": 12,
     "name": "Human population trends",
-    "type": "Policy and Drivers",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
     "default_thresh": "25",
     "tabs": [
       {
@@ -932,7 +937,8 @@
   {
     "id": 13,
     "name": "Value of Primary Agricultural Export Commodity",
-    "type": "Policy and Drivers",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and drivers",
     "default_thresh": "25",
     "tabs": [
       {
@@ -955,7 +961,7 @@
         "default": true
       },
       {
-        "id": 52,
+        "id": -1,
         "name": "Title",
         "type": "graph-title",
         "tab": 1,
