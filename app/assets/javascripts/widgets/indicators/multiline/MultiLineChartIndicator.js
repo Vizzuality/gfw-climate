@@ -85,10 +85,11 @@ define([
           return null;
         }, this )))
       }.bind(this));
+
       // Set range
       var rangeX = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.year;}).year})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.year;}).year})) ] ;
       var rangeY = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
-      // var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
+
       this.chart = new MultiLineChart({
         id: this.model.get('id'),
         el: $graphContainer,
@@ -99,7 +100,7 @@ define([
         slug: this.model.get('slug'),
         slug_compare: this.model.get('slug_compare'),
         sizing: {top: 10, right: 10, bottom: 20, left: 0},
-        innerPadding: { top: 10, right: 10, bottom: 20, left: 50 },
+        innerPadding: { top: 15, right: 10, bottom: 20, left: 50 },
         keys: keys
       });
       this.chart.render();

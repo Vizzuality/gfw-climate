@@ -4,8 +4,10 @@ define([
  'underscore',
  'mps',
  'widgets/indicators/line/line_chart_context',
- 'widgets/indicators/line/line_chart_interactionHandler'
-], function($, d3, _, mps, LineChartContext, LineChartInteractionHandler ){
+ 'widgets/indicators/line/line_chart_interactionHandler',
+ 'text!widgets/templates/indicators/line/linechart-tooltip.handlebars'
+
+], function($, d3, _, mps, LineChartContext, LineChartInteractionHandler, tooltipTpl){
 
 var LineChart = function(options) {
   this.svg;
@@ -13,6 +15,9 @@ var LineChart = function(options) {
   this.data = options.data;
   this.unit = options.unit
   this.range = options.range;
+  this.templateTooltip = Handlebars.compile(tooltipTpl);
+
+  this.color = ['#5B80A0','#bebcc2','#E98300'];
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
@@ -171,6 +176,7 @@ LineChart.prototype._drawTooltip = function() {
 LineChart.prototype.setTooltip = function(x0,is_reflect) {
   var self = this;
   var data = this.data;
+  var info = [];
   var formatDate = d3.time.format("%Y");
   var bisectDate = d3.bisector(function(d) { return d.year; }).left;
   var x0 = x0,
@@ -183,7 +189,7 @@ LineChart.prototype.setTooltip = function(x0,is_reflect) {
     var format = (self.unit != 'percentage') ? ".3s" : ".2f",
         xyear = self.x(d.year),
         year = formatDate(d.year),
-        value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value) +' %';
+        value = d3.format(format)(d.value);
     // Positioner
     self.positioner
       .style('visibility', 'visible')
@@ -194,9 +200,13 @@ LineChart.prototype.setTooltip = function(x0,is_reflect) {
     self.tooltip.transition()
       .duration(125)
       .style('visibility', 'visible');
+
+    info.push({ color: self.color[0], value: value, year: year })
+
     self.tooltip
       .classed("is-reflect", is_reflect)
-      .html('<span class="data">' + year + '</span>' + value )
+      // .html('<span class="date">' + year + '</span>' + value )
+      .html(this.templateTooltip({ unit: self.unit, year: info[0].year, tootip_info: info }))
       .style('left', (($(self.positioner[0]).offset().left)) + 'px')
       .style('top', (d3.event.pageY) + 'px');
 

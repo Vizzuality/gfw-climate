@@ -2,10 +2,12 @@ define([
  'jquery',
  'd3',
  'underscore',
+ 'handlebars',
  'mps',
  'widgets/indicators/line/line_chart_context',
- 'widgets/indicators/line/line_chart_interactionHandler'
-], function($, d3, _, mps, LineChartContext, LineChartInteractionHandler ){
+ 'widgets/indicators/line/line_chart_interactionHandler',
+ 'text!widgets/templates/indicators/line/linechart-tooltip.handlebars'
+], function($, d3, _, Handlebars, mps, LineChartContext, LineChartInteractionHandler, tooltipTpl){
 
 var LineChart = function(options) {
   this.svg;
@@ -14,10 +16,13 @@ var LineChart = function(options) {
   this.unit = options.unit
   this.rangeX = options.rangeX;
   this.rangeY = options.rangeY;
+  this.templateTooltip = Handlebars.compile(tooltipTpl);
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
   this.namespace = new Date().valueOf().toString();
+
+  this.color = ['#5B80A0','#bebcc2','#E98300'];
 
   this.parentWidth = $(this.options.el).outerWidth();
   this.parentHeight = $(this.options.el).outerHeight();
@@ -81,7 +86,8 @@ LineChart.prototype._createDefs = function() {
     .attr("height", this.height);
 };
 
-LineChart.prototype._drawAxes = function(group, data) {
+
+LineChart.prototype._drawAxes = function() {
   var self = this;
   var tickFormatY = (this.unit != 'percentage') ? "s" : ".2f";
   this.xAxis = d3.svg.axis()
@@ -97,12 +103,12 @@ LineChart.prototype._drawAxes = function(group, data) {
                  .orient("left")
                  .tickFormat(d3.format(tickFormatY));
 
-  group.append("g")
+  this.svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + (this.height - this.sizing.top) + ")")
     .call(this.xAxis);
 
-  group.append("g")
+  this.svg.append("g")
       .attr("class", "y axis")
       .call(this.yAxis)
     .selectAll("text")
@@ -111,29 +117,33 @@ LineChart.prototype._drawAxes = function(group, data) {
       .style("text-anchor", "start");
 };
 
-LineChart.prototype._drawLine = function(group, data) {
+LineChart.prototype._drawLine = function(group, data, i) {
   var self = this;
     group.append("path")
       .datum(data)
-      .attr("transform", "translate(0,"+ -self.sizing.top +")")
+      .attr("transform", "translate(0,"+ (-self.sizing.top -self.innerPadding.top + 5) +")")
       .attr("class", "line")
-      .attr("d", self.line);
+      .style('stroke',self.color[i])
+      .attr("d", self.line)
+      // .style("stroke", function(d) { return self.color(d.name); })
 };
 
-LineChart.prototype._drawTicks = function(data) {
+LineChart.prototype._drawTicks = function(group, data, i) {
   var self = this;
-  this.svg.selectAll('circle.dot')
-  .data(data)
-  .enter().append('circle')
-    .attr('class', 'dot')
-    .attr('r', 5)
-    .attr('cx', function(d) { return self.x(d[self.xKey]);})
-    .attr('cy', function(d) { return self.y(d[self.yKey]);});
+  group.selectAll('circle.dot')
+    .data(data)
+    .enter().append('circle')
+      .attr('class', 'dot')
+      .attr('r', 5)
+      .attr('cx', function(d) { return self.x(d[self.xKey]);})
+      .attr('cy', function(d) { return self.y(d[self.yKey]) -self.sizing.top -self.innerPadding.top + 5;})
+      .style('fill',self.color[i])
 };
 
 
 LineChart.prototype._drawTooltip = function() {
   var self = this;
+  var data = data;
 
   // Tooltip
   this.tooltip = d3.select('body').append('div')
@@ -169,37 +179,42 @@ LineChart.prototype._drawTooltip = function() {
 
 LineChart.prototype.setTooltip = function(x0,is_reflect) {
   var self = this;
-  var data = this.data;
+  var datum = self.data;
+  var info = [];
+  var x0 = x0;
   var formatDate = d3.time.format("%Y");
   var bisectDate = d3.bisector(function(d) { return d.year; }).left;
-  var x0 = x0,
-      i  = bisectDate(self.data, x0, 1),
-      d0 = data[i - 1],
-      d1 = data[i],
-      d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
+  _.each(datum, function(data,ix){
+    var i  = bisectDate(data, x0, 1),
+        d0 = data[i - 1],
+        d1 = data[i],
+        d = (d0 && d1 && (x0 - d0.year > d1.year - x0)) ? d1 : d0;
+    if (!!d) {
+      var format = (self.unit != 'percentage') ? ".3s" : ".2f",
+          xyear = self.x(d.year),
+          year = formatDate(d.year),
+          value = d3.format(format)(d.value);
+      // Positioner
+      self.positioner
+        .style('visibility', 'visible')
+        .attr('x1', xyear + self.sizing.left)
+        .attr('x2', xyear + self.sizing.left)
 
-  if (!!d) {
-    var format = (self.unit != 'percentage') ? ".3s" : ".2f",
-        xyear = self.x(d.year),
-        year = formatDate(d.year),
-        value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value) +' %';
-    // Positioner
-    self.positioner
-      .style('visibility', 'visible')
-      .attr('x1', xyear + self.sizing.left)
-      .attr('x2', xyear + self.sizing.left)
+      // Tooltip
+      self.tooltip.transition()
+        .duration(125)
+        .style('visibility', 'visible');
 
-    // Tooltip
-    self.tooltip.transition()
-      .duration(125)
-      .style('visibility', 'visible');
-    self.tooltip
-      .classed("is-reflect", is_reflect)
-      .html('<span class="data">' + year + '</span>' + value )
-      .style('left', (($(self.positioner[0]).offset().left)) + 'px')
-      .style('top', (d3.event.pageY) + 'px');
+      info.push({ color: self.color[ix], value: value, year: year })
+    }
+  });
+  self.tooltip
+    .classed("is-reflect", is_reflect)
+    // .html('<span class="data">' + info[0].year + '</span>' + info[0].value )
+    .html(this.templateTooltip({ year: info[0].year, unit: self.unit, tootip_info: info }))
 
-  }
+    .style('left', (($(self.positioner[0]).offset().left)) + 'px')
+    .style('top', (d3.event.pageY) + 'px');
 };
 
 LineChart.prototype.setListeners = function() {
@@ -234,7 +249,7 @@ LineChart.prototype.setListeners = function() {
 LineChart.prototype.render = function() {
   var self = this;
   if (!!this.svg) {
-    _.each(this.data, function(d){
+    _.each(this.data, function(d, i){
       var group = self.svg.append("g")
         .attr("class", "focus")
         .attr("width", self.width)
@@ -242,12 +257,12 @@ LineChart.prototype.render = function() {
         .attr("transform",
           "translate(" + self.sizing.left + "," + self.sizing.top + ")");
 
-      self._drawAxes(group,d);
-      self._drawLine(group,d);
-      self._drawTicks(d);
-      self._drawTooltip(d);
+      self._drawLine(group,d,i);
+      self._drawTicks(group,d,i);
 
     })
+    self._drawAxes();
+    self._drawTooltip();
   }
 };
 
