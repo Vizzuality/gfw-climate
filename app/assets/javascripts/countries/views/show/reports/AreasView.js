@@ -33,6 +33,8 @@ define([
 
         _.map(j, function(w) {
 
+          var currentArea = _.findWhere(this.areas, {id: key});
+
           var deferred = $.Deferred();
           var newWidget = new WidgetView({
             model: {
@@ -41,12 +43,14 @@ define([
               location: {
                 iso: iso,
                 jurisdiction: 0,
-                area: 0
+                area: currentArea.idNumber
               },
             },
             className: 'gridgraphs-widget',
             status: this.widgets[key][w[0].id][0]
           });
+
+          // console.log(newWidget)
 
           newWidget._loadMetaData(function() {
             deferred.resolve();
