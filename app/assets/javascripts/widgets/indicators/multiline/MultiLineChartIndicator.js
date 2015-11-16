@@ -7,14 +7,16 @@ define([
   'widgets/views/IndicatorView',
   'widgets/indicators/multiline/MultiLineChart',
   'text!widgets/templates/indicators/line/linechart.handlebars',
+  'text!widgets/templates/indicators/line/linechart-legend.handlebars',
   'text!widgets/templates/indicators/no-data.handlebars',
-], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, MultiLineChart, Tpl, noDataTpl) {
+], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, MultiLineChart, Tpl, legendTpl, noDataTpl) {
 
   'use strict';
 
   var LineChartIndicator = IndicatorView.extend({
 
     template: Handlebars.compile(Tpl),
+    legendTemplate: Handlebars.compile(legendTpl),
     noDataTemplate: Handlebars.compile(noDataTpl),
 
     events: function() {
@@ -67,7 +69,12 @@ define([
 
     render: function() {
       this.$el.html(this.template());
+      this.cacheVars();
       this._drawGraph();
+    },
+
+    cacheVars: function() {
+      this.$legend = this.$el.find('.linechart-legend');
     },
 
     _drawGraph: function() {
@@ -90,13 +97,15 @@ define([
       var rangeX = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.year;}).year})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.year;}).year})) ] ;
       var rangeY = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
 
+      // Initialize Line Chart
       this.chart = new MultiLineChart({
         parent: this,
-        id: this.model.get('id'),
         el: $graphContainer,
+        id: this.model.get('id'),
+        data: data,
+        indicators: this.model.get('indicators'),
         unit: this.model.get('unit'),
         unitname: this.model.get('unitname'),
-        data: data,
         rangeX: rangeX,
         rangeY: rangeY,
         slug: this.model.get('slug'),
@@ -108,8 +117,12 @@ define([
       this.chart.render();
     },
 
-    changeAverage: function(averages) {
+    _drawAverage: function(averages) {
       this.tab.setAverage(averages);
+    },
+
+    _drawLegend: function(legend) {
+      this.$legend.html(this.legendTemplate({ legend: legend }));
     },
 
     between: function(num, a, b, inclusive) {

@@ -14,6 +14,7 @@ var LineChart = function(options) {
   this.options = options;
   this.parent = options.parent;
   this.data = options.data;
+  this.indicators = options.indicators;
   this.unit = options.unit
   this.unitname = options.unitname;
   this.rangeX = options.rangeX;
@@ -167,10 +168,20 @@ LineChart.prototype._drawAverages = function() {
     return { average: txtaverage , color: self.color[i] };
   });
   // Publish average to its parent (MultiLineChartIndicator)
-  self.parent.changeAverage(averages);
+  self.parent._drawAverage(averages);
 };
 
 
+LineChart.prototype._drawLegend = function() {
+  var self = this;
+  var legend = _.map(self.indicators,function(indicator,i){
+    return {
+      name: indicator.name,
+      color: self.color[i]
+    }
+  })
+  self.parent._drawLegend(legend);
+};
 
 LineChart.prototype._drawTooltip = function() {
   var self = this;
@@ -295,6 +306,7 @@ LineChart.prototype.render = function() {
     self._drawAxes();
     self._drawTooltip();
     self._drawAverages();
+    self._drawLegend();
   }
 };
 

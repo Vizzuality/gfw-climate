@@ -55,15 +55,15 @@
   margin: 0px 0 0 10px;
   .tab-average--item {
     position: relative;
-    padding: 3px 0 0 15px;
+    padding: 3px 0 0 22px;
     > span {
       display: block;
       position: absolute;
       top: 50%;
       left: 0;
       transform: translate(0,-50%);
-      width: 8px;
-      height: 8px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
     }
   }
