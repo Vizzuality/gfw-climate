@@ -94,6 +94,7 @@ define([
         id: this.model.get('id'),
         el: $graphContainer,
         unit: this.model.get('unit'),
+        unitname: this.model.get('unitname'),
         data: data,
         rangeX: rangeX,
         rangeY: rangeY,
