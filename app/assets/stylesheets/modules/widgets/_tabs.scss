@@ -42,11 +42,11 @@
           }
         }
       }
-      
+
       &:hover {
-        .tooltip1 {        
+        .tooltip1 {
           visibility: visible;
-          opacity: 1;  
+          opacity: 1;
         }
       }
     }
@@ -58,6 +58,8 @@
     padding-top: 20px;
     font-size: 12px;
     border-top: 1px solid $border;
+    display: flex;
+    align-items: flex-start;
   }
 
 

@@ -91,6 +91,7 @@ define([
       var rangeY = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
 
       this.chart = new MultiLineChart({
+        parent: this,
         id: this.model.get('id'),
         el: $graphContainer,
         unit: this.model.get('unit'),
@@ -105,15 +106,10 @@ define([
         keys: keys
       });
       this.chart.render();
-      // this.changeAverage(data);
-
     },
 
-    changeAverage: function(data) {
-      var average = _.reduce(data, function(memo, num) {
-        return memo + num.value;
-      }, 0) / data.length;
-      this.tab.setAverage(average);
+    changeAverage: function(averages) {
+      this.tab.setAverage(averages);
     },
 
     between: function(num, a, b, inclusive) {

@@ -12,6 +12,7 @@ define([
 var LineChart = function(options) {
   this.svg;
   this.options = options;
+  this.parent = options.parent;
   this.data = options.data;
   this.unit = options.unit
   this.unitname = options.unitname;
@@ -124,9 +125,8 @@ LineChart.prototype._drawLine = function(group, data, i) {
       .datum(data)
       .attr("transform", "translate(0,"+ (-self.sizing.top -self.innerPadding.top + 5) +")")
       .attr("class", "line")
-      .style('stroke',self.color[i])
       .attr("d", self.line)
-      // .style("stroke", function(d) { return self.color(d.name); })
+      .style('stroke',self.color[i])
 };
 
 LineChart.prototype._drawTicks = function(group, data, i) {
@@ -140,6 +140,36 @@ LineChart.prototype._drawTicks = function(group, data, i) {
       .attr('cy', function(d) { return self.y(d[self.yKey]) -self.sizing.top -self.innerPadding.top + 5;})
       .style('fill',self.color[i])
 };
+
+
+LineChart.prototype._drawAverages = function() {
+  var self = this;
+  var averages = _.map(self.data, function(d,i){
+    var txtaverage;
+    var average = _.reduce(d, function(memo, num) {
+      return memo + num.value;
+    }, 0) / d.length;
+
+    switch(self.unit) {
+      case 'hectares':
+        txtaverage = d3.format(",.0f")(average) + ' '+ self.unitname;
+      break;
+      case 'percentage':
+        txtaverage = d3.format(".2f")(average) + ' '+ self.unitname;
+      break;
+      case 'tg-c':
+        txtaverage = d3.format(",.2f")(average) + ' '+ self.unitname;
+      break;
+      case 'mt-co2':
+        txtaverage = d3.format(",.2f")(average) + ' '+ self.unitname;
+      break
+    }
+    return { average: txtaverage , color: self.color[i] };
+  });
+  // Publish average to its parent (MultiLineChartIndicator)
+  self.parent.changeAverage(averages);
+};
+
 
 
 LineChart.prototype._drawTooltip = function() {
@@ -264,6 +294,7 @@ LineChart.prototype.render = function() {
     })
     self._drawAxes();
     self._drawTooltip();
+    self._drawAverages();
   }
 };
 
