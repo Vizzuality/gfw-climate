@@ -50,8 +50,6 @@ define([
             status: this.widgets[key][w[0].id][0]
           });
 
-          // console.log(newWidget)
-
           newWidget._loadMetaData(function() {
             deferred.resolve();
           });
