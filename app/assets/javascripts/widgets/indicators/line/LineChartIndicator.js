@@ -80,6 +80,7 @@ define([
         var range = [0, _.max(arr, function(o){return o.value;}).value];
         // var range = [_.min(arr, function(o){return o.value;}).value, _.max(arr, function(o){return o.value;}).value];
         this.chart = new LineChart({
+          parent: this,
           id: this.model.get('id'),
           el: $graphContainer,
           unit: this.model.get('unit'),
@@ -93,18 +94,14 @@ define([
           keys: keys
         });
         this.chart.render();
-        this.changeAverage(data);
 
       } else {
         this.$el.html(this.noDataTemplate({ classname: 'line'}));
       }
     },
 
-    changeAverage: function(data) {
-      var average = _.reduce(data, function(memo, num) {
-        return memo + num.value;
-      }, 0) / data.length;
-      this.tab.setAverage(average);
+    changeAverage: function(averages) {
+      this.tab.setAverage(averages);
     },
 
     between: function(num, a, b, inclusive) {

@@ -48,11 +48,27 @@
   select {
     margin: 0 4px;
   }
-  .tab-average {
-    font-size: 19px;
-    margin: 3px 0 0 10px;
+}
+
+.tab-average {
+  font-size: 19px;
+  margin: 0px 0 0 10px;
+  .tab-average--item {
+    position: relative;
+    padding: 3px 0 0 15px;
+    > span {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate(0,-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
   }
 }
+
 
 
 

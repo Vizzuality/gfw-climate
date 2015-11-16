@@ -3,18 +3,20 @@ define([
   'handlebars',
   'widgets/presenters/TabPresenter',
   'text!widgets/templates/tab.handlebars',
+  'text!widgets/templates/indicators/line/linechart-averages.handlebars',
   'widgets/indicators/line/LineChartIndicator',
   'widgets/indicators/multiline/MultiLineChartIndicator',
   'widgets/indicators/map/MapIndicator',
   'widgets/indicators/pie/PieChartIndicator',
   'widgets/indicators/number/NumberChartIndicator',
-], function(Backbone, Handlebars, TabPresenter, tpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator) {
+], function(Backbone, Handlebars, TabPresenter, tpl, averageTpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator) {
 
   'use strict';
 
   var TabView = Backbone.View.extend({
 
     template: Handlebars.compile(tpl),
+    templateAverage: Handlebars.compile(averageTpl),
 
     events: {
       'change .threshold' : 'changeThreshold',
@@ -111,24 +113,8 @@ define([
     },
 
     // SETTERS: average
-    setAverage: function(average) {
-      var t = this.presenter.status.get('tabs');
-      var txt = '';
-      switch(t.unit) {
-        case 'hectares':
-          txt = d3.format(",.0f")(average) + ' ha';
-        break;
-        case 'percentage':
-          txt = d3.format(".2f")(average) + ' %';
-        break;
-        case 'tg-c':
-          txt = d3.format(",.2f")(average) + ' tg-c';
-        break;
-        case 'mt-co2':
-          txt = d3.format(",.2f")(average) + ' mt-co2';
-        break
-      }
-      this.$average.html(txt);
+    setAverage: function(averages) {
+      this.$average.html(this.templateAverage({averages: averages}));
     },
 
     // SETTERS: indicator
