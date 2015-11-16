@@ -67,7 +67,7 @@ define([
         if (d && d.year && Number(d.year !== 0) && this.between(d.year,this.model.get('start_date'),this.model.get('end_date'),true)) {
           return {
             year: parseDate(d.year.toString()),
-            value: (!isNaN(d.value)) ? d.value : 0
+            value: (!isNaN(d.value)) ? d.value : null
           };
         }
         return null;
@@ -83,6 +83,7 @@ define([
           id: this.model.get('id'),
           el: $graphContainer,
           unit: this.model.get('unit'),
+          unitname: this.model.get('unitname'),
           data: data,
           range: range,
           slug: this.model.get('slug'),

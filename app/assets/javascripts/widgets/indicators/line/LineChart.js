@@ -13,7 +13,8 @@ var LineChart = function(options) {
   this.svg;
   this.options = options;
   this.data = options.data;
-  this.unit = options.unit
+  this.unit = options.unit;
+  this.unitname = options.unitname;
   this.range = options.range;
   this.templateTooltip = Handlebars.compile(tooltipTpl);
 
@@ -189,7 +190,7 @@ LineChart.prototype.setTooltip = function(x0,is_reflect) {
     var format = (self.unit != 'percentage') ? ".3s" : ".2f",
         xyear = self.x(d.year),
         year = formatDate(d.year),
-        value = d3.format(format)(d.value);
+        value = d3.format(format)(d.value) + ' ' + self.unitname;
     // Positioner
     self.positioner
       .style('visibility', 'visible')
@@ -206,7 +207,7 @@ LineChart.prototype.setTooltip = function(x0,is_reflect) {
     self.tooltip
       .classed("is-reflect", is_reflect)
       // .html('<span class="date">' + year + '</span>' + value )
-      .html(this.templateTooltip({ unit: self.unit, year: info[0].year, tootip_info: info }))
+      .html(this.templateTooltip({ year: info[0].year, tootip_info: info }))
       .style('left', (($(self.positioner[0]).offset().left)) + 'px')
       .style('top', (d3.event.pageY) + 'px');
 
