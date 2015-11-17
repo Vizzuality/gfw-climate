@@ -159,9 +159,16 @@ define([
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
+
+      if (params && this.params.options) {
+        this.params.options.areas = params.options.areas;
+        this.params.options.jurisdictions = params.options.jurisdictions;
+        this.params.options.widgets = params.options.widgets ? params.options.widgets : null;
+      }
+
       var p = _.extendNonNull({}, this.params, params);
 
-      p.country = p.country.iso ? p.country.iso : null;
+      p.country = p.country.iso;
       p.view = p.options.view;
       p.options = p.options ? btoa(JSON.stringify(p.options)) : null;
 

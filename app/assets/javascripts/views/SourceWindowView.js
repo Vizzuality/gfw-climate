@@ -16,27 +16,26 @@ define([
 
     events: {
       'click .source' : 'show',
-      'click .close': 'hide'
+      'click .close-modal': 'hide'
     },
 
-    initialize: function() {
-      console.log('init');
+    initialize: function(options) {
       // Model
       this.model = new SourceWindowModel();
 
       // Cache
-      this._initVars();
+      this._initVars(options);
 
       // Init
       // this.render();
       this.model.on("change:hidden", this._toggle, this);
     },
 
-    _initVars: function() {
+    _initVars: function(options) {
       this.$htmlbody = $('html, body');
       this.$window = $(window);
       this.$document = $(document);
-      this.$sourceWindow = $('#window');
+      this.$sourceWindow = (!!options && !!options.sourceWindow) ? $(options.sourceWindow) : $('#window');
       this.$backdrop = $('#backdrop');
       this.mobile = (this.$window.width() > 850) ? false : true;
       this.$content = this.$sourceWindow.find('.content');
@@ -111,7 +110,7 @@ define([
       //Prevent scroll beyond modal window.
       this.$body.addClass('is-no-scroll');
       this.$html.addClass('is-no-scroll');
-      
+
       return this;
     }
 

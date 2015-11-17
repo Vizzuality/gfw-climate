@@ -11,7 +11,6 @@ define([
     el: '.gridgraphs',
 
     initialize: function(options) {
-
       this.jurisdictions = options.jurisdictions;
       this.parent = options.parent;
       this.widgets = options.widgets;
@@ -24,16 +23,15 @@ define([
     },
 
     _setupGrid: function() {
-
       var promises = [],
         widgetsArray = [],
         iso = sessionStorage.getItem('countryIso');
-
 
       _.map(this.widgets, function(j, key) {
 
         _.map(j, function(w) {
 
+          var currentJurisdiction = _.findWhere(this.jurisdictions, {id: key});
 
           var deferred = $.Deferred();
           var newWidget = new WidgetView({
@@ -42,7 +40,7 @@ define([
               slug: key,
               location: {
                 iso: iso,
-                jurisdiction: 0,
+                jurisdiction: currentJurisdiction.idNumber,
                 area: 0
               },
             },
@@ -92,7 +90,6 @@ define([
 
         }.bind(this));
 
-
         _.each(data, _.bind(function(d) {
 
           _.each(d.widgets, (function(w) {
@@ -115,8 +112,6 @@ define([
       }
 
       this.parent.append(this.$el);
-
-      // return this;
     },
 
     parseData: function() {
