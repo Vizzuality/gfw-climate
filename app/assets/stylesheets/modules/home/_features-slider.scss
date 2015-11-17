@@ -95,10 +95,15 @@
       height: 425px;
     }
 
+
     > .slide-container {
       display: flex;
       min-height: 425px !important;
       padding: 0;
+
+      @media (min-width: 850px) {
+        min-height: 620px !important;
+      }
 
       img {
         position: absolute;
