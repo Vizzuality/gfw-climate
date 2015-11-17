@@ -47,14 +47,14 @@ class Indicator
 
     def show_query(indicator_id, iso, id_1, area, thresh_value)
       filter =  "indicator_id = '#{indicator_id}'"
-      filter += "AND iso = UPPER('#{iso}') 
-                 AND sub_nat_id IS NULL 
-                 AND boundary = 'admin'"    if iso.present? && id_1.blank? && area.blank? 
-      filter += "AND iso = UPPER('#{iso}') 
-                 AND sub_nat_id IS NULL 
-                 AND boundary = 'pra'"      if iso.present? && area.present?
-      filter += "AND iso = UPPER('#{iso}') 
-                 AND sub_nat_id = '#{id_1}' 
+      filter += "AND iso = UPPER('#{iso}')
+                 AND sub_nat_id IS NULL
+                 AND boundary = 'admin'"    if iso.present? && id_1.blank? && area.blank?
+      filter += "AND iso = UPPER('#{iso}')
+                 AND sub_nat_id IS NULL
+                 AND boundary_id = #{area}"      if iso.present? && area.present?
+      filter += "AND iso = UPPER('#{iso}')
+                 AND sub_nat_id = '#{id_1}'
                  AND boundary = 'admin'"    if iso.present? && id_1.present?
 
       filter += "AND threshold = '#{thresh_value}'"

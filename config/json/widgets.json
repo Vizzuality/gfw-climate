@@ -258,6 +258,7 @@
         "type": "number",
         "thresh" : 25,
         "threshunit": "tree cover",
+        "template" : "forest-area-umd",
         "default": true
       },
       {
@@ -266,12 +267,14 @@
         "subname": "(sources vary)",
         "type": "number",
         "thresh" : 25,
-        "threshunit": "tree cover"
+        "threshunit": "tree cover",
+        "template" : "forest-area-national"
       },
       {
         "position": 3,
         "name": "FAO",
-        "type": "number"
+        "type": "number",
+        "template" : "forest-area-fao"
       }
     ],
     "indicators": [
@@ -763,7 +766,6 @@
     "type_chart": "number",
     "default_thresh": "25",
     "default": true,
-    "_text": "On average there are #{value} tons of carbon per hectare in the soils of #{country}'s forests.",
     "tabs": [
       {
         "position": 1,
@@ -772,6 +774,7 @@
         "type": "number",
         "thresh" : 25,
         "threshunit": "tree cover",
+        "template" : "soil-carbon-density",
         "default": true
       }
     ],
@@ -794,7 +797,6 @@
     "type_chart": "number",
     "default_thresh": "25",
     "default": false,
-    "_text": "There are #{value} teragrams of carbon in the soils of #{country}'s forests.",
     "tabs": [
       {
         "position": 1,
@@ -803,6 +805,7 @@
         "type": "number",
         "thresh" : 25,
         "threshunit": "tree cover",
+        "template" : "soil-carbon-stocks",
         "default": true
       }
     ],
@@ -825,13 +828,13 @@
     "type_chart": "number",
     "default_thresh": "25",
     "default": false,
-    "_text": "Each year, drainage of tropical peat for large industrial plantations in #{country} emit #{value} million tons of CO2.",
     "tabs": [
       {
         "position": 1,
         "name": "Transparent World/IPCC",
         "subname": "(IPCC Tier 1)",
         "type": "number",
+        "template" : "emissions-peat-drainage",
         "default": true
       }
     ],
@@ -910,13 +913,13 @@
     "type_chart": "number",
     "default_thresh": "25",
     "default": false,
-    "_text": "#{Country}'s deforestation emissions are #{value}% of its fossil fuels emissions.",
     "tabs": [
       {
         "position": 1,
         "name": "Deforestation Emissions/Fossil Fuel Emissions",
         "subname": "(Zarin et al. 2015/CAIT)",
         "type": "number",
+        "template" : "deforestation-emissions",
         "default": true
       }
     ],

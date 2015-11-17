@@ -16,7 +16,7 @@
                 <h3>{{@key}}</h3>
                 <ul>
                 {{#each this}}
-                  <li id="{{id}}" class="item">
+                  <li data-id="{{id}}" class="item">
                     <span class="item__name">{{name}}<svg class="icon-chart-{{type_chart}}"><use xlink:href="#icon-chart-{{type_chart}}"></use></svg></span>
                   </li>
                 {{/each}}
@@ -58,7 +58,7 @@
           <div class="jurisdictions-group">
             <ul id="jurisdictions-list">
               {{#each data.jurisdictions}}
-                <li id="{{id}}" class="item" data-name="{{name}}"><span class="item__name jurisdiction">{{name}}
+                <li data-id="{{id}}" class="item" data-name="{{name}}"><span class="item__name jurisdiction">{{name}}
                   <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
                 </li>
               {{/each}}
@@ -83,7 +83,7 @@
           <div class="areas-group">
             <ul id="areas-list">
               {{#each data.areas}}
-                <li id="{{id}}" data-name="{{name}}" class="item"><span class="item__name">{{name}}
+                <li data-id="{{id}}" data-name="{{name}}" class="item"><span class="item__name">{{name}}
                   <div class="checkbox"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg></div></span>
                 </li>
               {{/each}}
