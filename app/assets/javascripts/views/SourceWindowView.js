@@ -97,7 +97,6 @@ define([
     },
 
     show: function(e) {
-      console.log('yei');
       e && e.preventDefault() && e.stopPropagation();
       this.model.set('hidden', false);
       this.$contentWrapper.animate({ scrollTop: 0 }, 0);
@@ -110,6 +109,10 @@ define([
       //Prevent scroll beyond modal window.
       this.$body.addClass('is-no-scroll');
       this.$html.addClass('is-no-scroll');
+
+      if ( $(e.currentTarget).hasClass('is-temporary-disabled') ) {
+        this.$sourceWindow.addClass('launching-soon');
+      }
 
       return this;
     }
