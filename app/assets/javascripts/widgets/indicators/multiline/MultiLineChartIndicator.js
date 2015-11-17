@@ -28,43 +28,62 @@ define([
 
       this.tab = setup.tab;
       this.model = new IndicatorModel(setup.model);
+
       // Create model for compare indicator
       if(this.model.get('location_compare')) {
         this.modelCompare = new IndicatorModel(setup.model);
+        var params = setup.data;
+        var paramsCompare = _.extend({},params,{ location: this.model.get('location_compare')});
+        $.when(
+          this.fetchIndicator(setup.data, this.model),
+          this.fetchIndicator(paramsCompare, this.modelCompare))
+        .done(_.bind(function () {
+          this.render();
+        }, this));
+      } else {
+        $.when(
+          this.fetchIndicator(setup.data, this.model))
+        .done(_.bind(function () {
+          this.render();
+        }, this));
       }
-      this.fetchIndicator(setup.data);
     },
 
-    fetchIndicator: function(data) {
+    fetchIndicator: function(params, model) {
       // NEW
+      var r = $.Deferred();
       var status = {
         promises: []
       };
-      _.each(this.model.get('indicators'), _.bind(function(i) {
+      _.each(model.get('indicators'), _.bind(function(i) {
         var deferred = $.Deferred();
         new IndicatorModel({id: i.id})
             .fetch({
-              data:this.setFetchParams(data)
+              data:this.setFetchParams(params)
             })
             .done(function(data){
               deferred.resolve(data);
             });
         status.promises.push(deferred);
-      }, this))
+      }, this));
+
       // Promises of each country resolved
       $.when.apply(null, status.promises).then(_.bind(function() {
         this.$el.removeClass('is-loading');
+
         var args = Array.prototype.slice.call(arguments);
         var values = _.groupBy(_.flatten(_.compact(_.map(args, function(i){
           return i.values;
         }))), 'indicator_id');
-        var data = _.map(this.model.get('indicators'), function(i){
+        var data = _.map(model.get('indicators'), function(i){
           i.data = values[i.id];
           return i;
         });
-        this.model.set('data', data);
-        this.render();
+        model.set('data', data);
+        r.resolve();
       }, this ));
+
+      return r;
     },
 
     render: function() {
@@ -78,25 +97,23 @@ define([
     },
 
     _drawGraph: function() {
-      var keys = { x: 'year', y: 'value' };
-      var parseDate = d3.time.format("%Y").parse;
       var $graphContainer = this.$el.find('.linechart-graph')[0];
-      var data = _.map(this.model.get('data'), function(l) {
-        return _.compact(_.map(l.data,_.bind(function(d){
-          if (d && d.year && Number(d.year !== 0) && this.between(d.year,this.model.get('start_date'),this.model.get('end_date'),true)) {
-            return {
-              year: parseDate(d.year.toString()),
-              value: (!isNaN(d.value)) ? d.value : 0
-            };
-          }
-          return null;
-        }, this )))
-      }.bind(this));
-
       // Set range
-      var rangeX = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.year;}).year})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.year;}).year})) ] ;
-      var rangeY = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
+      if (!!this.model.get('location_compare')) {
+        var data = this.getData(this.model);
+        var dataCompare = this.getData(this.modelCompare);
+        console.log(dataCompare);
+        var rangedata = data.concat(dataCompare);
+        console.log(rangedata);
+        var rangeX = [_.min(_.map(rangedata, function(d) { return _.min(d, function(o){return o.year;}).year})), _.max(_.map(rangedata, function(d) { return _.max(d, function(o){return o.year;}).year})) ] ;
+        var rangeY = [_.min(_.map(rangedata, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(rangedata, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
+      } else {
+        var data = this.getData(this.model);
+        var rangeX = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.year;}).year})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.year;}).year})) ] ;
+        var rangeY = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
+      }
 
+      console.log(data);
       // Initialize Line Chart
       this.chart = new MultiLineChart({
         parent: this,
@@ -112,7 +129,7 @@ define([
         slug_compare: this.model.get('slug_compare'),
         sizing: {top: 10, right: 10, bottom: 20, left: 0},
         innerPadding: { top: 15, right: 10, bottom: 20, left: 50 },
-        keys: keys
+        keys: { x: 'year', y: 'value' }
       });
       this.chart.render();
     },
@@ -123,6 +140,21 @@ define([
 
     _drawLegend: function(legend) {
       this.$legend.html(this.legendTemplate({ legend: legend }));
+    },
+
+    getData: function(model) {
+      var parseDate = d3.time.format("%Y").parse;
+      return _.map(model.get('data'), function(l) {
+        return _.compact(_.map(l.data,_.bind(function(d){
+          if (d && d.year && Number(d.year !== 0) && this.between(d.year,model.get('start_date'),model.get('end_date'),true)) {
+            return {
+              year: parseDate(d.year.toString()),
+              value: (!isNaN(d.value)) ? d.value : 0
+            };
+          }
+          return null;
+        }, this )))
+      }.bind(this));
     },
 
     between: function(num, a, b, inclusive) {
