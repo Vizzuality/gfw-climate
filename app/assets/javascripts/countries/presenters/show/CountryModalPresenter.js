@@ -46,7 +46,7 @@ define([
     _resetIndicators: function() {
       this.status.set({
         options: {
-          widgets: {}
+          widgets: null
         }
       });
     },
