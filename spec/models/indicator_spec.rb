@@ -15,7 +15,7 @@ RSpec.describe Indicator, type: :model do
 
     it "Find indicator by id" do
       indicator = Indicator.find_indicator(id: 1)
-      expect(indicator[0]['year']).to eq 0
+      expect(indicator[0]['year']).to eq 2001
     end
 
     it "Find indicator by iso and id" do
