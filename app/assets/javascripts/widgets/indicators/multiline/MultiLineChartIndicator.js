@@ -13,7 +13,7 @@ define([
 
   'use strict';
 
-  var LineChartIndicator = IndicatorView.extend({
+  var MultiLineChartIndicator = IndicatorView.extend({
 
     template: Handlebars.compile(Tpl),
     legendTemplate: Handlebars.compile(legendTpl),
@@ -51,12 +51,12 @@ define([
 
     fetchIndicator: function(params, model) {
       // NEW
-      var r = $.Deferred();
+      var r = new $.Deferred();
       var status = {
         promises: []
       };
       _.each(model.get('indicators'), _.bind(function(i) {
-        var deferred = $.Deferred();
+        var deferred = new $.Deferred();
         new IndicatorModel({id: i.id})
             .fetch({
               data:this.setFetchParams(params)
@@ -64,7 +64,7 @@ define([
             .done(function(data){
               deferred.resolve(data);
             });
-        status.promises.push(deferred);
+        status.promises.push(deferred.promise());
       }, this));
 
       // Promises of each country resolved
@@ -83,7 +83,7 @@ define([
         r.resolve();
       }, this ));
 
-      return r;
+      return r.promise();
     },
 
     render: function() {
@@ -99,12 +99,10 @@ define([
     _drawGraph: function() {
       var $graphContainer = this.$el.find('.linechart-graph')[0];
       // Set range
-      if (!!this.model.get('location_compare')) {
+      if (this.model.get('location_compare')) {
         var data = this.getData(this.model);
         var dataCompare = this.getData(this.modelCompare);
-        console.log(dataCompare);
         var rangedata = data.concat(dataCompare);
-        console.log(rangedata);
         var rangeX = [_.min(_.map(rangedata, function(d) { return _.min(d, function(o){return o.year;}).year})), _.max(_.map(rangedata, function(d) { return _.max(d, function(o){return o.year;}).year})) ] ;
         var rangeY = [_.min(_.map(rangedata, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(rangedata, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
       } else {
@@ -176,6 +174,6 @@ define([
 
   });
 
-  return LineChartIndicator;
+  return MultiLineChartIndicator;
 
 });
