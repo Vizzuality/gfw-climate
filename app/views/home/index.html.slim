@@ -1,10 +1,10 @@
 .layout-content
   section#main-slider.main-slider
-    / nav.mobile-hide
-    /   h2
-    /     | Suggestions for getting started
-    /     #get-started.box-button
-    /       .btn.huge.blue click here!
+    nav.mobile-hide.is-temporary-disabled.source data-source="temporary-disabled"
+      h2
+        | Suggestions for getting started
+        #get-started.box-button
+          .btn.huge.blue.is-temporary-disabled.source data-source="temporary-disabled" click here!
     /       ul.tooltip-getstarted.bottom
     /         li
     /           a.gotomap (href="/map" data-dialog="" data-ga="Explore map")
@@ -37,12 +37,13 @@
     /               | Know more about our
     /               strong  data and methods
     /               i.img.report-story
-
-    nav.mobile-hide
-      h2
-        | Lauching in 
-        span#countdown 
-        |  days
+    
+    //Counter
+    / nav.mobile-hide
+    /   h2
+    /     | Lauching in 
+    /     span#countdown 
+    /     |  days
 
     ul.main-slider-viewport
       li.slide.slide0.current
