@@ -855,7 +855,7 @@
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "text",
-    "default_thresh": "25",
+    "default_thresh": "0",
     "default": false,
     "tabs": [
       {
@@ -884,7 +884,7 @@
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "text",
-    "default_thresh": "25",
+    "default_thresh": "0",
     "default": false,
     "tabs": [
       {
@@ -911,7 +911,7 @@
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "number",
-    "default_thresh": "25",
+    "default_thresh": "0",
     "default": false,
     "tabs": [
       {
@@ -984,7 +984,7 @@
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "line",
-    "default_thresh": "25",
+    "default_thresh": "0",
     "default": false,
     "tabs": [
       {
@@ -1021,7 +1021,7 @@
     "type": "Policy and Drivers",
     "type_slug": "policy-and-drivers",
     "type_chart": "line",
-    "default_thresh": "25",
+    "default_thresh": "0",
     "default": false,
     "tabs": [
       {
