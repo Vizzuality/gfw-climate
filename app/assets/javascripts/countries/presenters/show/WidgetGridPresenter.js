@@ -15,7 +15,11 @@ define([
 
       this.widgetCollection = new WidgetCollection()
 
-      this.status = new (Backbone.Model.extend());
+      this.status = new (Backbone.Model.extend({
+        defaults: {
+          globalThresh: 30
+        }
+      }));
 
       this._setListeners();
 
@@ -330,17 +334,18 @@ define([
     },
 
     getTabsOptions: function(tabs) {
-      return _.map(tabs, function(t){
+      return _.map(tabs, _.bind(function(t){
         return {
           type: t.type,
           position: t.position,
           unit: (t.switch) ? t['switch'][0]['unit'] : null,
           start_date: (t.range) ? t['range'][0] : null,
           end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-          thresh: (t.thresh) ? t['thresh'] : 0,
+          thresh: (t.thresh) ? this.status.get('globalThresh') : 0,
           section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
+          template: (t.template) ? t['template'] : null,
         }
-      })[0];
+      }, this))[0];
     },
 
     getIndicatorOptions: function(indicators) {
