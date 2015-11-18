@@ -35,23 +35,11 @@ define([
       var params = _.extend({},setup.data,{});
       var paramsCompare = _.extend({},setup.data,{ location: this.model.get('location_compare')});
 
-      if(this.model.get('location_compare')) {
-        $.when.apply(null, [
-          this.fetchIndicator(params, 'data',this.model.get('slug')),
-          this.fetchIndicator(paramsCompare, 'data_compare',this.model.get('slug_compare'))
-        ]).then(_.bind(function() {
-          this.$el.removeClass('is-loading');
-          this.render();
-        }, this));
-      } else {
-        // If we don't need to compare it to other similar graph
-        $.when.apply(null, [
-          this.fetchIndicator(paramsCompare, this.model),
-        ]).then(_.bind(function() {
-          this.$el.removeClass('is-loading');
-          this.render();
-        }, this));
-      }
+      $.when.apply(null, this.getPromises(params,paramsCompare)).then(_.bind(function() {
+        this.$el.removeClass('is-loading');
+        this.render();
+      }, this));
+
     },
 
     fetchIndicator: function(params, type, slug) {
@@ -97,14 +85,14 @@ define([
       var $graphContainer = this.$el.find('.linechart-graph')[0];
       // Set range
       if (this.model.get('location_compare')) {
-        var data = this.getData('data');
-        var dataCompare = this.getData('data_compare');
-        var rangeX = this.getRangeX(data,dataCompare);
-        var rangeY = this.getRangeY(data,dataCompare);
+        var data = this.getData('data'),
+            dataCompare = this.getData('data_compare'),
+            rangeX = this.getRangeX(data,dataCompare),
+            rangeY = this.getRangeY(data,dataCompare);
       } else {
-        var data = this.getData('data');
-        var rangeX = this.getRangeX(data);
-        var rangeY = this.getRangeY(data);
+        var data = this.getData('data'),
+            rangeX = this.getRangeX(data),
+            rangeY = this.getRangeY(data);
       }
 
       // Initialize Line Chart
@@ -133,6 +121,18 @@ define([
 
     _drawLegend: function(legend) {
       this.$legend.html(this.legendTemplate({ legend: legend }));
+    },
+
+    // Helpers for parse data
+    getPromises: function(params,paramsCompare) {
+      var slug = this.model.get('slug');
+      var slug_compare = this.model.get('slug_compare');
+      if(!!this.model.get('location_compare')) {
+        return [this.fetchIndicator(params, 'data',slug),this.fetchIndicator(paramsCompare, 'data_compare',slug_compare)]
+      } else {
+        return [this.fetchIndicator(params, 'data',slug)]
+      }
+
     },
 
     // Helpers for parse data
