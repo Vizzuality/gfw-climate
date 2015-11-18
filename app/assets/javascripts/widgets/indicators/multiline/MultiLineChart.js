@@ -265,22 +265,22 @@ LineChart.prototype.setListeners = function() {
   var data = this.data;
   var self = this;
 
-  mps.subscribe('LineChart/mouseout'+this.options.slug+this.options.id,function(){
-    if (!!self.svg) {
-      self.positioner
-        .classed("is-reflect", false)
-        .style("visibility", "hidden");
-      self.tooltip
-        .classed("is-reflect", false)
-        .style("visibility", "hidden");
-    }
-  });
+  // mps.subscribe('LineChart/mouseout'+this.options.slug+this.options.id,function(){
+  //   if (!!self.svg) {
+  //     self.positioner
+  //       .classed("is-reflect", false)
+  //       .style("visibility", "hidden");
+  //     self.tooltip
+  //       .classed("is-reflect", false)
+  //       .style("visibility", "hidden");
+  //   }
+  // });
 
-  mps.subscribe('LineChart/mousemove'+this.options.slug+this.options.id,function(x0){
-    if (!!self.svg) {
-      self.setTooltip(x0,true);
-    }
-  });
+  // mps.subscribe('LineChart/mousemove'+this.options.slug+this.options.id,function(x0){
+  //   if (!!self.svg) {
+  //     self.setTooltip(x0,true);
+  //   }
+  // });
 };
 
 

@@ -27,35 +27,41 @@ define([
       this.constructor.__super__.initialize.apply(this, [setup]);
 
       this.tab = setup.tab;
-      this.model = new IndicatorModel(setup.model);
 
-      // Create model for compare indicator
+      // CeateModel
+      this.model = new (Backbone.Model.extend({ defaults: setup.model}));
+
+      // Set Params
+      var params = _.extend({},setup.data,{});
+      var paramsCompare = _.extend({},setup.data,{ location: this.model.get('location_compare')});
+
       if(this.model.get('location_compare')) {
-        this.modelCompare = new IndicatorModel(setup.model);
-        var params = setup.data;
-        var paramsCompare = _.extend({},params,{ location: this.model.get('location_compare')});
-        $.when(
-          this.fetchIndicator(setup.data, this.model),
-          this.fetchIndicator(paramsCompare, this.modelCompare))
-        .done(_.bind(function () {
+        $.when.apply(null, [
+          this.fetchIndicator(params, 'data',this.model.get('slug')),
+          this.fetchIndicator(paramsCompare, 'data_compare',this.model.get('slug_compare'))
+        ]).then(_.bind(function() {
+          this.$el.removeClass('is-loading');
           this.render();
         }, this));
       } else {
-        $.when(
-          this.fetchIndicator(setup.data, this.model))
-        .done(_.bind(function () {
+        // If we don't need to compare it to other similar graph
+        $.when.apply(null, [
+          this.fetchIndicator(paramsCompare, this.model),
+        ]).then(_.bind(function() {
+          this.$el.removeClass('is-loading');
           this.render();
         }, this));
       }
     },
 
-    fetchIndicator: function(params, model) {
-      // NEW
+    fetchIndicator: function(params, type, slug) {
       var r = new $.Deferred();
       var status = {
         promises: []
       };
-      _.each(model.get('indicators'), _.bind(function(i) {
+
+      // Fetch all the indicators of this tab
+      _.each(this.model.get('indicators'), _.bind(function(i) {
         var deferred = new $.Deferred();
         new IndicatorModel({id: i.id})
             .fetch({
@@ -67,19 +73,10 @@ define([
         status.promises.push(deferred.promise());
       }, this));
 
-      // Promises of each country resolved
+      // Fetch indicators complete!!
       $.when.apply(null, status.promises).then(_.bind(function() {
-        this.$el.removeClass('is-loading');
-
-        var args = Array.prototype.slice.call(arguments);
-        var values = _.groupBy(_.flatten(_.compact(_.map(args, function(i){
-          return i.values;
-        }))), 'indicator_id');
-        var data = _.map(model.get('indicators'), function(i){
-          i.data = values[i.id];
-          return i;
-        });
-        model.set('data', data);
+        var values = _.groupBy(_.flatten(_.pluck(Array.prototype.slice.call(arguments),'values')),'indicator_id');
+        this.model.set(type, values);
         r.resolve();
       }, this ));
 
@@ -100,18 +97,16 @@ define([
       var $graphContainer = this.$el.find('.linechart-graph')[0];
       // Set range
       if (this.model.get('location_compare')) {
-        var data = this.getData(this.model);
-        var dataCompare = this.getData(this.modelCompare);
-        var rangedata = data.concat(dataCompare);
-        var rangeX = [_.min(_.map(rangedata, function(d) { return _.min(d, function(o){return o.year;}).year})), _.max(_.map(rangedata, function(d) { return _.max(d, function(o){return o.year;}).year})) ] ;
-        var rangeY = [_.min(_.map(rangedata, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(rangedata, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
+        var data = this.getData('data');
+        var dataCompare = this.getData('data_compare');
+        var rangeX = this.getRangeX(data,dataCompare);
+        var rangeY = this.getRangeY(data,dataCompare);
       } else {
-        var data = this.getData(this.model);
-        var rangeX = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.year;}).year})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.year;}).year})) ] ;
-        var rangeY = [_.min(_.map(data, function(d) { return _.min(d, function(o){return o.value;}).value})), _.max(_.map(data, function(d) { return _.max(d, function(o){return o.value;}).value})) ] ;
+        var data = this.getData('data');
+        var rangeX = this.getRangeX(data);
+        var rangeY = this.getRangeY(data);
       }
 
-      console.log(data);
       // Initialize Line Chart
       this.chart = new MultiLineChart({
         parent: this,
@@ -140,19 +135,34 @@ define([
       this.$legend.html(this.legendTemplate({ legend: legend }));
     },
 
-    getData: function(model) {
+    // Helpers for parse data
+    getData: function(type) {
       var parseDate = d3.time.format("%Y").parse;
-      return _.map(model.get('data'), function(l) {
-        return _.compact(_.map(l.data,_.bind(function(d){
-          if (d && d.year && Number(d.year !== 0) && this.between(d.year,model.get('start_date'),model.get('end_date'),true)) {
+      return _.map(this.model.get(type), _.bind(function(indicator_values) {
+        return _.compact(_.map(indicator_values, _.bind(function(d){
+          if (d && d.year && Number(d.year !== 0) && this.between(d.year,this.model.get('start_date'),this.model.get('end_date'),true)){
             return {
               year: parseDate(d.year.toString()),
               value: (!isNaN(d.value)) ? d.value : 0
             };
           }
           return null;
-        }, this )))
-      }.bind(this));
+        }, this )));
+      }, this ));
+    },
+
+    // get the range of years;
+    getRangeX: function() {
+      var values = _.flatten(_.union(Array.prototype.slice.call(arguments)));
+      return [_.min(values, function(o){return o.year;}).year,
+              _.max(values, function(o){return o.year;}).year];
+    },
+
+    // get the range of years;
+    getRangeY: function() {
+      var values = _.flatten(_.union(Array.prototype.slice.call(arguments)));
+      return [_.min(values, function(o){return o.value;}).value,
+              _.max(values, function(o){return o.value;}).value];
     },
 
     between: function(num, a, b, inclusive) {
