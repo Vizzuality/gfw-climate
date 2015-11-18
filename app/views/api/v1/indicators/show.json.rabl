@@ -14,6 +14,7 @@ node do |value|
     the_geom_webmercator: value['the_geom_webmercator'],
     country_name:         value['admin0_name'],
     year:                 value['year'],
-    value:                value['value']
+    value:                value['value'],
+    text_value:           value['text_value']
   }
 end
