@@ -33,6 +33,7 @@ $height: auto;
     }
 
     span {
+      display: block;
       font-size: 35px;
       text-transform: uppercase;
     }
@@ -46,7 +47,7 @@ $height: auto;
       overflow: visible;
       .content a:not(.btn) {
           color: $black;
-          
+
         &:hover {
           color: $black;
         }
