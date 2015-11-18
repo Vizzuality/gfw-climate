@@ -266,3 +266,31 @@
     }
   }
 }
+
+
+.linechart-legend {
+  margin: 0 0 0 30px;
+  > ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > li{
+      position: relative;
+      padding: 3px 0 0 22px;
+      margin: 0 0 0 20px;
+      &:first-child {
+        margin: 0;
+      }
+      > span {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translate(0,-50%);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
