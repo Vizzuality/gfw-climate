@@ -59,7 +59,18 @@ define([
 
     setInitialParams: function() {
 
-      if (!this.presenter.status.get('options')) {
+      if (!this.presenter.status.get('options') || !this.presenter.status.get('options')['widgets']) {
+
+        if (this.presenter.status.get('view') !== 'national') {
+          return;
+        }
+
+        var defaultIndicators = [1,2,3,4,5];
+
+        defaultIndicators.forEach(function(ind) {
+          $(".indicators-group li[data-id='" + ind + "']").addClass('is-selected');
+        });
+
         return;
       }
 
@@ -70,7 +81,7 @@ define([
         var jurisdictions = opts.jurisdictions;
 
         jurisdictions.forEach(function(j) {
-          $('#jurisdictions-list li#' + j.idNumber).addClass('is-selected');
+          $("#jurisdictions-list li[data-id='" + j.idNumber + "']").addClass('is-selected');
         });
       }
 
@@ -79,7 +90,7 @@ define([
         var areas = opts.areas;
 
         areas.forEach(function(a) {
-          $('#areas-list li#' + a.idNumber).addClass('is-selected');
+          $("#areas-list li[data-id='" + a.idNumber + "']").addClass('is-selected');
         });
       }
 
@@ -89,10 +100,9 @@ define([
           indicators = opts.widgets[key[0]];
 
         _.map(indicators, function(i) {
-          $('.indicators-group li#' + i[0].id).addClass('is-selected');
+          $(".indicators-group li[data-id='" + i[0].id + "']").addClass('is-selected');
         })
-      };
-
+      }
     },
 
     show: function(e) {
@@ -127,7 +137,7 @@ define([
         indicators = [];
 
       _.map(items, function(i) {
-        indicators.push(~~i.getAttribute('id'));
+        indicators.push(~~$(i).data('id') );
       });
 
       this.presenter.setIndicators(indicators);
@@ -141,8 +151,8 @@ define([
 
       _.map(items, function(i) {
         jurisdictions.push({
-          id: iso + i.getAttribute('id') + '0',
-          idNumber: ~~i.getAttribute('id'),
+          id: iso + $(i).data('id') + '0',
+          idNumber: ~~$(i).data('id'),
           name: $(i).data('name')
         });
       });
@@ -159,8 +169,8 @@ define([
 
       _.map(items, function(i) {
         areas.push({
-          id: iso + i.getAttribute('id') + '0',
-          idNumber: ~~i.getAttribute('id'),
+          id: iso + $(i).data('id') + '0',
+          idNumber: ~~$(i).data('id'),
           name: $(i).data('name')
         });
       });
