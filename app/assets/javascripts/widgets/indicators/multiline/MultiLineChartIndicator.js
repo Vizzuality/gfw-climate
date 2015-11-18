@@ -44,9 +44,7 @@ define([
 
     fetchIndicator: function(params, type, slug) {
       var r = new $.Deferred();
-      var status = {
-        promises: []
-      };
+      var promises = [];
 
       // Fetch all the indicators of this tab
       _.each(this.model.get('indicators'), _.bind(function(i) {
@@ -58,11 +56,11 @@ define([
             .done(function(data){
               deferred.resolve(data);
             });
-        status.promises.push(deferred.promise());
+        promises.push(deferred.promise());
       }, this));
 
       // Fetch indicators complete!!
-      $.when.apply(null, status.promises).then(_.bind(function() {
+      $.when.apply(null, promises).then(_.bind(function() {
         var values = _.groupBy(_.flatten(_.pluck(Array.prototype.slice.call(arguments),'values')),'indicator_id');
         this.model.set(type, values);
         r.resolve();
@@ -94,12 +92,11 @@ define([
             rangeX = this.getRangeX(data),
             rangeY = this.getRangeY(data);
       }
-
       // Initialize Line Chart
       this.chart = new MultiLineChart({
         parent: this,
         el: $graphContainer,
-        id: this.model.get('id'),
+        id: _.pluck(this.model.get('indicators'), 'id').join(''),
         data: data,
         indicators: this.model.get('indicators'),
         unit: this.model.get('unit'),
