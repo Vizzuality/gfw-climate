@@ -636,7 +636,7 @@
         "direction": "belowground"
       },
       {
-        "id": 8,
+        "id": 67,
         "name": "Woods Hole/Baccini",
         "type": "total",
         "unit": "number",
@@ -645,7 +645,7 @@
         "default": true
       },
       {
-        "id": 9,
+        "id": 68,
         "name": "Woods Hole/Baccini",
         "type": "total",
         "unit": "number",
@@ -689,7 +689,7 @@
         "direction": "belowground"
       },
       {
-        "id": 22,
+        "id": 69,
         "name": "Other national data",
         "type": "total",
         "unit": "number",
@@ -697,7 +697,7 @@
         "section": "biomass"
       },
       {
-        "id": 23,
+        "id": 70,
         "name": "Other national data",
         "type": "total",
         "unit": "number",
@@ -741,7 +741,7 @@
         "direction": "belowground"
       },
       {
-        "id": 22,
+        "id": 71,
         "name": "FAO",
         "type": "total",
         "unit": "number",
@@ -749,7 +749,7 @@
         "section": "biomass"
       },
       {
-        "id": 23,
+        "id": 72,
         "name": "FAO",
         "type": "total",
         "unit": "number",
