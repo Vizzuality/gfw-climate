@@ -3,8 +3,8 @@
     nav.mobile-hide.is-temporary-disabled.source data-source="temporary-disabled"
       h2
         | Suggestions for getting started
-        #get-started.box-button
-          .btn.huge.blue.is-temporary-disabled.source data-source="temporary-disabled" click here!
+        #get-started.box-button.no-pointer-events
+          .btn.huge.blue click here!
     /       ul.tooltip-getstarted.bottom
     /         li
     /           a.gotomap (href="/map" data-dialog="" data-ga="Explore map")
@@ -176,7 +176,8 @@
 
                 .link-container
                   / a(href="/map" class="btn medium blue") Explore map
-                  a(href="#" class="btn medium blue is-disabled") Download data
+                  a(href="#" class="btn medium blue is-temporary-disabled source" data-source="temporary-disabled") Download data
+                  
 
       section.feature-section.-country-profiles
         .feature-content
