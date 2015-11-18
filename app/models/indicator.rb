@@ -46,7 +46,7 @@ class Indicator
     end
 
     def show_query(indicator_id, iso, id_1, area, thresh_value)
-      filter =  "indicator_id = '#{indicator_id}'"
+      filter =  "indicator_id = '#{indicator_id}' AND (value IS NOT NULL OR text_value IS NOT NULL)"
       filter += "AND iso = UPPER('#{iso}')
                  AND sub_nat_id IS NULL
                  AND boundary = 'admin'"    if iso.present? && id_1.blank? && area.blank?
