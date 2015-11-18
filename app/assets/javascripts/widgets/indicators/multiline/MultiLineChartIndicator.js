@@ -122,6 +122,7 @@ define([
 
     // Helpers for parse data
     getPromises: function(params,paramsCompare) {
+      this.$el.addClass('is-loading');
       var slug = this.model.get('slug');
       var slug_compare = this.model.get('slug_compare');
       if(!!this.model.get('location_compare')) {
@@ -174,10 +175,6 @@ define([
        this.chart = null;
       }
     },
-
-    resize: function(){
-      console.log('hello');
-    }
 
   });
 

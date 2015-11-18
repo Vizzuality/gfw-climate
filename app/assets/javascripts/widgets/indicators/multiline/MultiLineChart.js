@@ -250,13 +250,15 @@ LineChart.prototype.setTooltip = function(x0,is_reflect) {
       info.push({ color: self.color[ix], value: value, year: year })
     }
   });
-  self.tooltip
-    .classed("is-reflect", is_reflect)
-    // .html('<span class="data">' + info[0].year + '</span>' + info[0].value )
-    .html(this.templateTooltip({ year: info[0].year, tootip_info: info }))
+  if(!!info.length) {
+    self.tooltip
+      .classed("is-reflect", is_reflect)
+      // .html('<span class="data">' + info[0].year + '</span>' + info[0].value )
+      .html(this.templateTooltip({ year: info[0].year, tootip_info: info }))
 
-    .style('left', (($(self.positioner[0]).offset().left)) + 'px')
-    .style('top', (d3.event.pageY) + 'px');
+      .style('left', (($(self.positioner[0]).offset().left)) + 'px')
+      .style('top', (d3.event.pageY) + 'px');
+  }
 };
 
 LineChart.prototype.setListeners = function() {
