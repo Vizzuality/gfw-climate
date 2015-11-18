@@ -6,7 +6,7 @@ RSpec.describe Jurisdiction, type: :model do
 
     it "Find jurisdiction by country and id" do
       jurisdiction = Jurisdiction.find_jurisdiction(id: 'aus', id_1: 1)
-      expect(jurisdiction['name_1']).to eq('Ashmore and Cartier Islands')
+      expect(jurisdiction['name_1']).to eq('nil')
     end
 
   end
