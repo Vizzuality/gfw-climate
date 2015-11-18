@@ -13,7 +13,8 @@ define([
     status: new (Backbone.Model.extend({
       defaults: {
         name: 'compare-countries',
-        widgetsActive: ["1","2","3","4","5"]
+        widgetsActive: ["1","2","3","4","5"],
+        globalThresh: 30
       }
     })),
 
@@ -57,7 +58,11 @@ define([
 
       'Widgets/change': function(widgetsActive) {
         this._onWidgetsChange(widgetsActive);
-      }
+      },
+
+      'Threshold/change': function(thresh) {
+        this.status.set('globalThresh', thresh);
+      },
 
     }],
 
@@ -75,7 +80,7 @@ define([
 
     _onOptionsUpdate: function(id,slug,wstatus) {
       var options = _.clone(this.status.get('options'));
-      if (!!options[slug]) {
+      if (!!options[slug] && !!options[slug][id]) {
         options[slug][id][0] = wstatus;
         // Set and publish
         this.status.set('options', options);
@@ -216,18 +221,18 @@ define([
       // CAREFUL: if you add anything new to the widgets.json
       //          remember to add it inside CompareGridPresenter (getTabsOptions function) and inside widgetPresenter (changeTab function)
       // ******
-      return _.map(tabs, function(t){
+      return _.map(tabs, _.bind(function(t){
         return {
           type: t.type,
           position: t.position,
           unit: (t.switch) ? t['switch'][0]['unit'] : null,
           start_date: (t.range) ? t['range'][0] : null,
           end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-          thresh: (t.thresh) ? t['thresh'] : 0,
+          thresh: (t.thresh) ? this.status.get('globalThresh') : 0,
           section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
           template: (t.template) ? t['template'] : null,
         }
-      })[0];
+      }, this ))[0];
     },
 
     getIndicatorOptions: function(indicators) {
