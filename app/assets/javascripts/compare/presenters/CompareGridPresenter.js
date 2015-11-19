@@ -13,7 +13,7 @@ define([
     status: new (Backbone.Model.extend({
       defaults: {
         name: 'compare-countries',
-        widgetsActive: ["1","2","3","4","5"],
+        widgetsActive: [1,2,3,4,5],
         globalThresh: 30
       }
     })),
@@ -90,7 +90,7 @@ define([
 
     _onWidgetsDelete: function(id) {
       var widgetsActive = _.clone(this.status.get('widgetsActive'));
-      widgetsActive = _.without(widgetsActive,id.toString());
+      widgetsActive = _.without(widgetsActive,id);
       this.status.set('widgetsActive', widgetsActive);
       this.status.set('options', this.getOptions());
       mps.publish('Place/update');
@@ -121,7 +121,7 @@ define([
     setActiveWidgets: function() {
       var widgetIds = _.map(this.status.get('options'),function(c){
         return _.map(c, function(w,k){
-          return k.toString();
+          return Number(k);
         })
       });
       this.status.set('widgetsActive',widgetIds[0]);
@@ -159,10 +159,6 @@ define([
 
 
     // COMPARE EVENTS
-    render: function() {
-      this.view.render();
-    },
-
     changeCompare: function() {
       var compare1 = this.objToSlug(this.status.get('compare1'),'+');
       var compare2 = this.objToSlug(this.status.get('compare2'),'+');
@@ -185,7 +181,7 @@ define([
         return c;
       });
       this.status.set('data', data);
-      this.render();
+      this.view.render();
       mps.publish('Widgets/update',[this.status.get('widgetsActive')]);
     },
 
@@ -200,7 +196,7 @@ define([
       var compare1 = (params) ? params.compare1 : this.status.get('compare1');
       var compare2 = (params) ? params.compare2 : this.status.get('compare2');
       var widgets = _.filter(this.status.get('widgets'), _.bind(function(w){
-        return _.contains(this.status.get('widgetsActive'),w.id.toString());
+        return _.contains(this.status.get('widgetsActive'),w.id);
       }, this ));
 
       // Get the current options
