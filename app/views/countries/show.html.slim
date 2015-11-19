@@ -24,15 +24,16 @@
               h1 #{@name}
             .header-country__preview-country
               div (id="figure-#{@iso}")
-            / .country-description Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque facilis laboriosam mollitia eos recusandae quibusdam,
-            /   |dicta architecto eligendi itaque aperiam saepe nobis explicabo totam atque deserunt pariatur, ex, officiis illum.
-            / button#customizeReports.btn.medium.blue.btn-customize-report customize report
         .display-tabs
           ul
             li (data-display="national") National data
             li (data-display="subnational") Subnational data
             li (data-display="areas-interest") Areas of interest
         .header-country__options-country
+
+      .l-cutpoint#offsetTop
+
+      .m-fixed-header#fixedHeaderView
 
       .container-country__content-country
         section#reports
@@ -42,3 +43,5 @@
             .inner
               h3 Don't see what you're looking for?
               button.addIndicators.btn.medium.white(data-source="indicators") Customize indicators
+
+      .l-cutpoint#offsetBottom

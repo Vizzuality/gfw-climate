@@ -7,9 +7,9 @@ define([
   'underscore',
   'handlebars',
   'mps',
-  'compare/presenters/CompareFixedHeaderPresenter',
-  'text!compare/templates/compareFixedHeader.handlebars'
-], function($, Backbone, _, Handlebars, mps, CompareFixedHeaderPresenter, tpl) {
+  'countries/presenters/show/FixedHeaderPresenter',
+  'text!countries/templates/fixedHeader.handlebars'
+], function($, Backbone, _, Handlebars, mps, fixedHeaderPresenter, tpl) {
 
   'use strict';
 
@@ -22,7 +22,7 @@ define([
     events: {},
 
     initialize: function() {
-      this.presenter = new CompareFixedHeaderPresenter(this);
+      this.presenter = new fixedHeaderPresenter(this);
       this.status = this.presenter.status;
       //CACHE
       this.$window = $(window);
@@ -49,7 +49,6 @@ define([
     },
 
     scrollDocument: function(e){
-      console.log('scroll')
       var scrollTop = this.$document.scrollTop();
       this.calculateOffsets();
       if (scrollTop > this.offsetTop) {
@@ -70,20 +69,20 @@ define([
     },
 
     _parseData: function() {
-      var country1 = this.status.get('country1').toJSON();
-      var country2 = this.status.get('country2').toJSON();
+      // var country1 = this.status.get('country1').toJSON();
+      // var country2 = this.status.get('country2').toJSON();
 
-      var select1 = {
-        tab: '1',
-        name: this.setName(country1,1),
-      };
+      // var select1 = {
+      //   tab: '1',
+      //   name: this.setName(country1,1),
+      // };
 
-      var select2 = {
-        tab: '2',
-        name: this.setName(country2,2),
-      };
+      // var select2 = {
+      //   tab: '2',
+      //   name: this.setName(country2,2),
+      // };
 
-      return { selection: [select1, select2] };
+      // return { selection: [select1, select2] };
     },
 
     setName: function(country,tab) {
