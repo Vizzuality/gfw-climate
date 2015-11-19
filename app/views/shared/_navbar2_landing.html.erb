@@ -6,8 +6,8 @@
   </form>
   <div id="google_translate_element_box2"></div>
   <div id="mobileMenu"></div>
-  <% disabled_class = controller_name == "home" ? "is-temporary-disabled" : "" %>
-  <% disabled_data_source = controller_name == "home" ? "temporary-disabled" : "" %>
+  <% disabled_class = ENV["DISABLE_LINKS"] == "true" ? "is-temporary-disabled" : "" %>
+  <% disabled_data_source = ENV["DISABLE_LINKS"] == "true" ? "temporary-disabled" : "" %>
   <ul class="mobile-hide">
     <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>">
       <a <% if controller?("map") && action?("index") %>class="current"<% end %> href="/map">Map</a>
