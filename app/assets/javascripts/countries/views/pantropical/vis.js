@@ -453,7 +453,6 @@ function addCommas(nStr) {
     };
 
     BubbleChart.prototype.generateCircles = function(values_array) {
-      root.remove_labels();
       var that = this;
       var circles = that.circles;
       var style_string;
@@ -491,7 +490,9 @@ function addCommas(nStr) {
               $(this).attr('cx', coordinates[0]);
               $(this).attr('cy', coordinates[1]);
 
-              label_text = that.get_label_text(coordinates, this.id, d.name, d.value, d.radius);
+              var value = values_array[i].value;
+
+              label_text = that.get_label_text(coordinates, this.id, d.name, value, d.radius);
               document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
 
               break;
@@ -506,7 +507,6 @@ function addCommas(nStr) {
     };
 
     BubbleChart.prototype.get_label_text = function(coordinates, id, country, data, radius) {
-
       var x_coord = 'x="' + coordinates[0] + '" ';
 
       var y_coord =         'y="' + coordinates[1] + '" ';
