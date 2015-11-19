@@ -79,7 +79,15 @@
     "indicators": [
       {
         "id": 1,
-        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
+        "name": "Gross tree cover loss",
+        "type": "line",
+        "unit": "hectares",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 1000,
+        "name": "Tree cover loss in primary forest",
         "type": "line",
         "unit": "hectares",
         "tab": 1,
@@ -87,7 +95,14 @@
       },
       {
         "id": 2,
-        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
+        "name": "Gross tree cover loss",
+        "type": "line",
+        "unit": "percentage",
+        "tab": 1
+      },
+      {
+        "id": 1001,
+        "name": "Tree cover loss in primary forest",
         "type": "line",
         "unit": "percentage",
         "tab": 1
@@ -216,7 +231,15 @@
       },
       {
         "id": 13,
-        "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
+        "name": "Gross carbon emissions",
+        "type": "line",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 1003,
+        "name": "Carbon emissions from primary forest",
         "type": "line",
         "unit": "tg-c",
         "tab": 1,
@@ -224,7 +247,14 @@
       },
       {
         "id": 14,
-        "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
+        "name": "Gross carbon emissions",
+        "type": "line",
+        "unit": "mt-co2",
+        "tab": 1
+      },
+      {
+        "id": 1004,
+        "name": "Carbon emissions from primary forest",
         "type": "line",
         "unit": "mt-co2",
         "tab": 1
