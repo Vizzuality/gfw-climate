@@ -338,6 +338,7 @@
         ],
         "thresh": 25,
         "threshunit": "biomass/carbon",
+        "template" : "biomass-carbon-stocks",
         "default": true
       },
       {
@@ -355,7 +356,8 @@
             "unit": "carbon",
             "unitname": "carbon"
           }
-        ]
+        ],
+        "template" : "biomass-carbon-stocks"
       },
       {
         "position": 3,
@@ -372,6 +374,7 @@
             "unitname": "carbon"
           }
         ],
+        "template" : "biomass-carbon-stocks",
         "note" : "10% canopy density by default"
       }
     ],
@@ -564,6 +567,7 @@
         ],
         "thresh": 25,
         "threshunit": "biomass/carbon",
+        "template" : "biomass-density",
         "default": true
       },
       {
@@ -581,7 +585,8 @@
             "unit": "carbon",
             "unitname": "carbon"
           }
-        ]
+        ],
+        "template" : "biomass-density"
       },
       {
         "position": 3,
@@ -598,6 +603,7 @@
             "unitname": "carbon"
           }
         ],
+        "template" : "biomass-density",
         "note" : "10% canopy density by default"
       }
     ],
