@@ -28,6 +28,7 @@ def tabs
       switch:        tab['switch'],
       sectionswitch: tab['sectionswitch'],
       template:      tab['template'],
+      note:          tab['note'],
       default:       tab['default']
     }
   end rescue nil

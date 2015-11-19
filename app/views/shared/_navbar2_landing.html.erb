@@ -13,7 +13,7 @@
       <a <% if controller?("map") && action?("index") %>class="current"<% end %> href="/map">Map</a>
     </li>
     <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>">
-      <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Country profiles</a>
+      <a <% if controller?("countries") && action?("index") || action?("show") %>class="current"<% end %> href="/countries">Country profiles</a>
     </li>
     <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>">
       <a <% if controller?("compare") && action?("index") %>class="current"<% end %> href="/compare-countries">Country Comparisons</a>

@@ -195,6 +195,7 @@ define([
     },
 
     destroy: function() {
+      this.presenter.destroy();
       if (!!this.indicator) {
         this.indicator.destroy();
       }
