@@ -1,6 +1,5 @@
 define([
   'backbone',
-  'countries/presenters/CountryShowPresenter',
   'countries/views/show/CountryShowHeaderView',
   'countries/views/show/FixedHeaderView',
   'countries/views/show/TabsView',
@@ -14,10 +13,6 @@ define([
   var CountryShowView = Backbone.View.extend({
 
     initialize: function() {
-      // Status
-      new CountryShowPresenter(this);
-
-      // Children Views
       new CountryShowHeaderView();
       new CountryModalView();
       new FixedHeaderView();

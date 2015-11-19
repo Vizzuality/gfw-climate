@@ -11,8 +11,9 @@ define([
     el: '.gridgraphs',
 
     initialize: function(options) {
-      this.areas = options.areas;
-      this.parent = options.parent;
+      this.iso     = options.country;
+      this.areas   = options.areas;
+      this.parent  = options.parent;
       this.widgets = options.widgets;
 
       if (!this.areas || !this.widgets) {
@@ -25,9 +26,7 @@ define([
     _setupGrid: function() {
 
       var promises = [],
-        widgetsArray = [],
-        iso = sessionStorage.getItem('countryIso');
-
+        widgetsArray = [];
 
       _.map(this.widgets, function(j, key) {
 
@@ -41,7 +40,7 @@ define([
               id: w[0].id,
               slug: key,
               location: {
-                iso: iso,
+                iso: this.iso,
                 jurisdiction: 0,
                 area: currentArea.idNumber
               },
