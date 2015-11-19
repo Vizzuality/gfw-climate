@@ -453,6 +453,7 @@ function addCommas(nStr) {
     };
 
     BubbleChart.prototype.generateCircles = function(values_array) {
+      root.remove_labels();
       var that = this;
       var circles = that.circles;
       var style_string;

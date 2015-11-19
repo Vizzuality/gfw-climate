@@ -49,9 +49,11 @@ html
     == render 'shared/modal'
     == render 'shared/notifications'
 
+    = render 'shared/sources_landing'
+
     = javascript_include_tag \
       "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA&v=3.12",
-      "http://libs.cartocdn.com/cartodb.js/v3/3.13.6/cartodb.js",
+      "http://libs.cartocdn.com/cartodb.js/v3/3.15.8/cartodb.js",
       "/assets/cartodbGFW.js"
     script src="//www.google-analytics.com/cx/api.js"
 

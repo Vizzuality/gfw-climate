@@ -6,10 +6,11 @@ define([
   'handlebars',
   'views/SourceWindowView',
   'countries/models/CountryModel',
+  'widgets/collections/WidgetCollection',
   'countries/presenters/show/CountryModalPresenter',
   'text!countries/templates/reports-modal.handlebars'
 ], function($, mps, Backbone, _, Handlebars, SourceWindowView,
-  CountryModel, CountryModalPresenter, indicatorTemplate) {
+  CountryModel, WidgetCollection, CountryModalPresenter, indicatorTemplate) {
 
   'use strict';
 
@@ -31,23 +32,76 @@ define([
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
       this.presenter = new CountryModalPresenter(this);
-
-      var iso = sessionStorage.getItem('countryIso');
-
-      this.countryModel = new CountryModel({id: iso});
-
-
-      this.enabledIndicators = [];
-
-      this.$el.addClass('source_window--countries')
+      this.widgetCollection = new WidgetCollection();
 
       this._setListeners();
-
-      this._setupModal();
     },
 
     _setListeners: function() {
-      this.presenter.status.on('change:view', this._setupModal, this);
+      this.presenter.status.on('change:view', this.start, this);
+    },
+
+    start: function() {
+      this.countryModel = new CountryModel({
+        iso: this.presenter.status.get('country')
+      });
+
+      this.widgetCollection.fetch().done(function(){
+
+        this._setupModal();
+      }.bind(this));
+    },
+
+    _cleanIndicators: function() {
+      $('.indicators-group li').removeClass('is-selected');
+    },
+
+    setInitialParams: function() {
+
+      if (!this.presenter.status.get('options') || !this.presenter.status.get('options')['widgets']) {
+
+        if (this.presenter.status.get('view') !== 'national') {
+          return;
+        }
+
+        var defaultIndicators = [1,2,3,4,5];
+
+        defaultIndicators.forEach(function(ind) {
+          $(".indicators-group li[data-id='" + ind + "']").addClass('is-selected');
+        });
+
+        return;
+      }
+
+      var opts = this.presenter.status.get('options');
+
+      // Jurisdictions
+      if (opts.jurisdictions) {
+        var jurisdictions = opts.jurisdictions;
+
+        jurisdictions.forEach(function(j) {
+          $("#jurisdictions-list li[data-id='" + j.idNumber + "']").addClass('is-selected');
+        });
+      }
+
+      // Areas
+      if (opts.areas) {
+        var areas = opts.areas;
+
+        areas.forEach(function(a) {
+          $("#areas-list li[data-id='" + a.idNumber + "']").addClass('is-selected');
+        });
+      }
+
+      // Indicators
+      if (opts.widgets) {
+        var key = Object.keys(opts.widgets),
+          indicators = opts.widgets[key[0]];
+
+        _.map(indicators, function(i) {
+          $(".indicators-group li[data-id='" + i[0].id + "']").addClass('is-selected');
+        })
+      }
     },
 
     show: function(e) {
@@ -82,7 +136,7 @@ define([
         indicators = [];
 
       _.map(items, function(i) {
-        indicators.push(~~i.getAttribute('id'));
+        indicators.push(~~$(i).data('id') );
       });
 
       this.presenter.setIndicators(indicators);
@@ -96,8 +150,8 @@ define([
 
       _.map(items, function(i) {
         jurisdictions.push({
-          id: iso + i.getAttribute('id') + '0',
-          idNumber: ~~i.getAttribute('id'),
+          id: iso + $(i).data('id') + '0',
+          idNumber: ~~$(i).data('id'),
           name: $(i).data('name')
         });
       });
@@ -114,8 +168,8 @@ define([
 
       _.map(items, function(i) {
         areas.push({
-          id: iso + i.getAttribute('id') + '0',
-          idNumber: ~~i.getAttribute('id'),
+          id: iso + $(i).data('id') + '0',
+          idNumber: ~~$(i).data('id'),
           name: $(i).data('name')
         });
       });
@@ -145,16 +199,34 @@ define([
       }]);
 
       this.hide();
+      this._resetPosition();
     },
+
+    _resetPosition: function() {
+      var view = this.presenter.status.get('view');
+
+      if(view !== 'national') {
+        this.$el.find('.page1').removeClass('is-hidden');
+        this.$el.find('.page2').toggleClass('is-hidden');
+      } else {
+        this.$el.find('.page1').addClass('is-hidden');
+        this.$el.find('.page2').removeClass('is-hidden');
+      }
+    },
+
 
     _setupModal: function() {
       var view = this.presenter.status.get('view');
 
+      var indicatorsByGroup = _.groupBy(this.widgetCollection.toJSON(), 'type');
+
       switch(view) {
 
         case 'national':
+
           this.setup = {
-            isNational: true
+            isNational: true,
+            indicators: indicatorsByGroup
           };
 
           this.render();
@@ -163,13 +235,12 @@ define([
 
         case 'subnational':
 
-          // TO FIX
-
           this.countryModel.fetch().done(function() {
-
             this.setup = {
-              isJurisdictions: true,
-              jurisdictions: this.countryModel.get('jurisdictions')
+              jurisdictions: this.countryModel.get('jurisdictions'),
+              indicators: {
+                'Forest and Carbon Data':  indicatorsByGroup['Forest and Carbon Data']
+              }
             };
 
             this.render();
@@ -180,11 +251,18 @@ define([
 
         case 'areas-interest':
 
-          this.setup = {
-            isAreas: true
-          };
+          this.countryModel.fetch().done(function() {
 
-          this.render();
+            this.setup = {
+              areas: this.countryModel.get('areas_of_interest'),
+              indicators: {
+                'Forest and Carbon Data':  indicatorsByGroup['Forest and Carbon Data']
+              },
+            };
+
+            this.render();
+
+          }.bind(this));
 
           break;
       }
@@ -197,9 +275,16 @@ define([
 
     render: function() {
 
+      this.$el.addClass('source_window--countries');
+
+      this._resetPosition();
+      this._cleanIndicators();
+
       this.$el.html(this.template({
         data: this.setup
       }));
+
+      this.setInitialParams();
     }
 
   });

@@ -30,9 +30,6 @@ html
     = render 'shared/icons'
     = render 'shared/svg_icons'
     = render 'shared/svg_icons_countries'
-    / = render 'shared/svg_icons_map'
-    / = render 'shared/svg_icons_applications'
-    / = render 'shared/svg_icons_layers'
 
     = render "shared/header"
 
@@ -42,6 +39,8 @@ html
 
     = render 'shared/modal'
     = render 'shared/notifications'
+
+    = render 'shared/sources_landing'
 
     = requirejs_include_tag "compare"
     = render "shared/js_footer"

@@ -114,8 +114,6 @@ define([
         this._getPresenterParams(this._presenters));
 
       route = this._getRoute(params);
-      console.log(this.router);
-      console.log(route);
       this.router.navigateTo(route, {silent: true});
     },
 

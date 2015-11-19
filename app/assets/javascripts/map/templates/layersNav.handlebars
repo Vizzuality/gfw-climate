@@ -71,17 +71,21 @@
     <li class="carbon-loss">
       <span class="category-name">CARBON LOSS <i id="people-category-num" class="category-num"></i></span>
 
-      {{!-- <div class="layers-nav">
+      <div class="layers-nav">
         <div class="layers-nav-header">
           <div class="category-icon"><svg><use xlink:href="#icon-layer-people"></use></svg></div>
-          <span class="category-name">PEOPLE</span>
+          <span class="category-name">CARBON LOSS</span>
         </div>
         <ul class="layers-list">
-          <li class="layer" data-layer="resource_rights">
+          <li class="layer" data-layer="biomass_loss">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Resource rights (select countries)<a href='#' data-source='resource_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Biomass Loss<a href='#' data-source='biomass_loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-          <li class="layer" data-layer="land_rights">
+          <li class="layer" data-layer="carbon_stocks">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Carbon stocks<a href='#' data-source='carbon_stocks' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
+{{!--           <li class="layer" data-layer="land_rights">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Land rights (select countries)<a href='#' data-source='land_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
@@ -92,9 +96,9 @@
           <li class="layer" data-layer="raisg">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">RAISG Indigenous Territories<a href='#' data-source='raisg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
+          </li> --}}
         </ul>
-      </div> --}}
+      </div>
     </li>
 
     {{!-- CARBON DENSITY --}}
@@ -197,17 +201,8 @@
           </li> --}}
           <li class="layer" data-layer="ifl_2013_deg">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Intact Forest Landscapes (2013)<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">
-              <label data-layer="ifl_2000" class="layer wrapped">
-                <span></span>
-                <input type="radio" />2000
-              </label>
-              <label data-layer="ifl_2013_deg" class="layer wrapped">
-                <span></span>
-                <input type="radio" />2013
-              </label>
-            </span>
+            <span class="layer-title">Intact Forest Landscapes<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2000/2013)</span>
           </li>
           <li class="wrapped-layer" data-color="#D67828">
             <span class="onoffswitch"><span></span></span>
@@ -222,6 +217,11 @@
                 <input type="radio">by species
               </label>
             </span>
+          </li>
+          <li class="layer" data-layer="cod_primary_forest_wgs">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Democratic Republic of the Congo primary forests<a href='#' data-source='cod_primary_forest_wgs' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">(2000)</span>
           </li>
          {{!--  <li class="layer" data-layer="pantropical">
             <span class="onoffswitch"><span></span></span>

@@ -4,15 +4,22 @@ define([
  'underscore',
  'mps',
  'widgets/indicators/line/line_chart_context',
- 'widgets/indicators/line/line_chart_interactionHandler'
-], function($, d3, _, mps, LineChartContext, LineChartInteractionHandler ){
+ 'widgets/indicators/line/line_chart_interactionHandler',
+ 'text!widgets/templates/indicators/line/linechart-tooltip.handlebars'
+
+], function($, d3, _, mps, LineChartContext, LineChartInteractionHandler, tooltipTpl){
 
 var LineChart = function(options) {
   this.svg;
   this.options = options;
+  this.parent = options.parent;
   this.data = options.data;
-  this.unit = options.unit
+  this.unit = options.unit;
+  this.unitname = options.unitname;
   this.range = options.range;
+  this.templateTooltip = Handlebars.compile(tooltipTpl);
+
+  this.color = ['#5B80A0','#bebcc2','#E98300'];
 
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
@@ -132,6 +139,31 @@ LineChart.prototype._drawTicks = function() {
     .attr('cy', function(d) { return self.y(d[self.yKey]);});
 };
 
+LineChart.prototype._drawAverages = function() {
+  var self = this;
+
+  var txtaverage;
+  var average = _.reduce(self.data, function(memo, num) {
+    return memo + num.value;
+  }, 0) / self.data.length;
+
+  switch(self.unit) {
+    case 'hectares':
+      txtaverage = d3.format(",.0f")(average) + ' '+ self.unitname;
+    break;
+    case 'percentage':
+      txtaverage = d3.format(".2f")(average) + ' '+ self.unitname;
+    break;
+    case 'tg-c':
+      txtaverage = d3.format(",.2f")(average) + ' '+ self.unitname;
+    break;
+    case 'mt-co2':
+      txtaverage = d3.format(",.2f")(average) + ' '+ self.unitname;
+    break
+  }
+  // Publish average to its parent (MultiLineChartIndicator)
+  self.parent.changeAverage([{ average: txtaverage, color: self.color[0] }]);
+};
 
 LineChart.prototype._drawTooltip = function() {
   var self = this;
@@ -171,6 +203,7 @@ LineChart.prototype._drawTooltip = function() {
 LineChart.prototype.setTooltip = function(x0,is_reflect) {
   var self = this;
   var data = this.data;
+  var info = [];
   var formatDate = d3.time.format("%Y");
   var bisectDate = d3.bisector(function(d) { return d.year; }).left;
   var x0 = x0,
@@ -183,7 +216,7 @@ LineChart.prototype.setTooltip = function(x0,is_reflect) {
     var format = (self.unit != 'percentage') ? ".3s" : ".2f",
         xyear = self.x(d.year),
         year = formatDate(d.year),
-        value = (self.unit != 'percentage') ? d3.format(format)(d.value)+' '+ self.unit : d3.format(format)(d.value);
+        value = d3.format(format)(d.value) + ' ' + self.unitname;
     // Positioner
     self.positioner
       .style('visibility', 'visible')
@@ -194,9 +227,13 @@ LineChart.prototype.setTooltip = function(x0,is_reflect) {
     self.tooltip.transition()
       .duration(125)
       .style('visibility', 'visible');
+
+    info.push({ color: self.color[0], value: value, year: year })
+
     self.tooltip
       .classed("is-reflect", is_reflect)
-      .html('<span class="data">' + year + '</span>' + value )
+      // .html('<span class="date">' + year + '</span>' + value )
+      .html(this.templateTooltip({ year: info[0].year, tootip_info: info }))
       .style('left', (($(self.positioner[0]).offset().left)) + 'px')
       .style('top', (d3.event.pageY) + 'px');
 
@@ -245,6 +282,7 @@ LineChart.prototype.render = function() {
     this._drawLine(group);
     this._drawTicks();
     this._drawTooltip();
+    this._drawAverages();
   }
 };
 

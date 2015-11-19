@@ -9,16 +9,9 @@ define([
       this._super();
       this.view = view;
 
-      this.status = new (Backbone.Model.extend({
-        defaults: {
-          view: 'national',
-          indicators: null,
-          jurisdictions: null,
-          areas: null
-        }
-      }));
+      this.status = new (Backbone.Model.extend());
 
-      // mps.publish('Place/register', [this]);
+      mps.publish('Place/register', [this]);
     },
 
     _subscriptions: [{
@@ -30,18 +23,45 @@ define([
         this.view.hide();
       }
     }, {
-      'Modal/addIndicator': function(indicator) {
-        this._onAddIndicator(indicator);
-      }
-    }, {
-      'Modal/removeIndicator': function(indicator) {
-        this._onRemoveIndicator(indicator);
-      }
-    }, {
       'View/update': function(view){
         this._setView(view)
+        this._resetIndicators();
+      }
+    }, {
+      'Place/go': function(params) {
+        this._onPlaceGo(params);
       }
     }],
+
+    /**
+     * Used by PlaceService to get the current view param.
+     *
+     * @return {object} iso/area params
+     */
+    getPlaceParams: function() {
+      var p = {};
+      return p;
+    },
+
+    _resetIndicators: function() {
+      this.status.set({
+        options: {
+          widgets: null
+        }
+      });
+    },
+
+    _onPlaceGo: function(params) {
+      this._setCountry(params.country);
+      this._setView(params.view);
+      this._setOptions(params.options);
+    },
+
+    _setCountry: function(c) {
+      this.status.set({
+        country: c.iso
+      });
+    },
 
     setIndicators: function(i) {
       this.status.set({
@@ -61,9 +81,15 @@ define([
       });
     },
 
-    _setView: function(view) {
+    _setView: function(v) {
       this.status.set({
-        view: view
+        view: v
+      });
+    },
+
+    _setOptions: function(o) {
+      this.status.set({
+        options: o
       });
     }
 

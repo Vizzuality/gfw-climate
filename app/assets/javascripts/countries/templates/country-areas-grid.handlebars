@@ -1,21 +1,15 @@
-<div class="areas-grid">
-
+<div class="gridgraphs-header">
   <button class="btn medium blue addIndicators">customize report</button>
+</div>
 
-  <div class="areas-grid__content">
+<div class="gridgraphs-content">
 
-    {{#each areas}}
+  {{#each areas}}
 
-      <div id="box-areas-{{this.id}}">
-
-        <h2>{{this.name}}</h2>
-
-        <div class="gridgraphs--container-profile"></div>
-
-      </div>
-
-    {{/each}}
-
-  </div>
+    <div class="box" id="box-areas-{{this.id}}">
+      <h2 class="title">{{this.name}}</h2>
+      <div class="gridgraphs-container"></div>
+    </div>
+  {{/each}}
 
 </div>

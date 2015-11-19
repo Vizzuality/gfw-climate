@@ -22,7 +22,7 @@ define([
      */
     _subscriptions: [{
       'Place/go': function(place) {
-        this._onPlaceGo(place);
+        // this._onPlaceGo(place);
       }
     }],
 

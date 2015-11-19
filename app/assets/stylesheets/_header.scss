@@ -402,7 +402,8 @@
 		text-indent: -9999px;
     z-index: 11;
     margin: 0 0 0 15px;
-    @include retina-image('logo-new.svg','logo-new@2x.png');
+    background-image: url("/assets/logo-new.svg");
+    background-size: contain;
     transition: all 0.25s linear;
     &.active{
       opacity: 0;
@@ -570,14 +571,13 @@
           position: absolute;
           top: 0;
           left: 50%;
-          min-width: 150px;
           padding: 56px 0 0;
           box-shadow: 0 1px 3px rgba(#000,0.25);
           visibility: hidden;
           opacity: 0;
           transform: translate(-50%,0px);
           transition: all 0.15s $easeInOutCubic;
-          min-width: 0;
+          min-width: 100px;
 					li {
             border-top: 1px solid rgba(0,0,0,0.07);
             @for $i from 1 through 10 {

@@ -8,11 +8,12 @@ define([
 
   var AreasView = Backbone.View.extend({
 
-    el: '.gridgraphs--container-profile',
+    el: '.gridgraphs',
 
     initialize: function(options) {
-      this.areas = options.areas;
-      this.parent = options.parent;
+      this.iso     = options.country;
+      this.areas   = options.areas;
+      this.parent  = options.parent;
       this.widgets = options.widgets;
 
       if (!this.areas || !this.widgets) {
@@ -25,13 +26,13 @@ define([
     _setupGrid: function() {
 
       var promises = [],
-        widgetsArray = [],
-        iso = sessionStorage.getItem('countryIso');
-
+        widgetsArray = [];
 
       _.map(this.widgets, function(j, key) {
 
         _.map(j, function(w) {
+
+          var currentArea = _.findWhere(this.areas, {id: key});
 
           var deferred = $.Deferred();
           var newWidget = new WidgetView({
@@ -39,12 +40,12 @@ define([
               id: w[0].id,
               slug: key,
               location: {
-                iso: iso,
+                iso: this.iso,
                 jurisdiction: 0,
-                area: 0
+                area: currentArea.idNumber
               },
             },
-            className: 'gridgraphs--widget',
+            className: 'gridgraphs-widget',
             status: this.widgets[key][w[0].id][0]
           });
 
@@ -66,6 +67,9 @@ define([
 
     render: function(widgetsArray) {
       this.$el.html('');
+
+      this.$el.removeClass();
+      this.$el.addClass('gridgraphs -areas')
 
 
       if (this.areas && this.areas.length > 0) {
@@ -91,7 +95,7 @@ define([
         _.each(data, _.bind(function(d) {
 
           _.each(d.widgets, (function(w) {
-            $('#box-areas-' + d.areas.id+ ' .gridgraphs--container-profile').append(w.render().el);
+            $('#box-areas-' + d.areas.id+ ' .gridgraphs-container').append(w.render().el);
           }));
 
         }, this));

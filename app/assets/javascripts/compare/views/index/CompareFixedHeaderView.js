@@ -21,8 +21,6 @@ define([
 
     events: {},
 
-    areasOfInterest: [{ name: 'Tree plantations',id: 1,},{ name: 'Protected areas',id: 2,},{ name: 'Primary forests',id: 3,},{ name: 'Moratorium areas',id: 4,},{ name: 'Mining concessions',id: 5,},{ name: 'Logging concessions',id: 6,},{ name: 'Plantation concessions',id: 7,},{ name: 'Key biodiversity areas',id: 8,}],
-
     initialize: function() {
       this.presenter = new CompareFixedHeaderPresenter(this);
       this.status = this.presenter.status;
@@ -93,7 +91,7 @@ define([
       if (!!jurisdiction) {
         return _.findWhere(country.jurisdictions, {id: jurisdiction}).name +' in ' + country.name;
       } else if (!!area) {
-        return _.findWhere(this.areasOfInterest, {id: area }).name +' in ' + country.name;
+        return _.findWhere(country.areas_of_interest, {id: area }).name +' in ' + country.name;
       } else {
         return country.name;
       }

@@ -28,10 +28,14 @@ define([
         if (this.model.get('id') == id && this.model.get('slug') == slug_compare) {
           this.status.set(status);
         }
-      }
+      },
     }],
 
     changeTab: function(position) {
+      // ******
+      // CAREFUL: if you add anything new to the widgets.json
+      //          remember to add it inside CompareGridPresenter (getTabsOptions function) and inside widgetPresenter (changeTab function)
+      // ******
       var tabs = _.clone(this.status.get('tabs'));
       var t = _.findWhere(this.model.get('tabs'), { position: position });
       tabs = {
@@ -42,6 +46,7 @@ define([
         end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
         thresh: (t.thresh) ? t['thresh'] : 0,
         section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
+        template: (t.template) ? t['template'] : null,
       }
       this.status.set('tabs',tabs);
     },
@@ -55,6 +60,7 @@ define([
       this.publish();
     },
 
+
     publish: function() {
       // Duplicate events, be careful and check it later
       mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
@@ -62,6 +68,14 @@ define([
         mps.publish('Compare/reflection', [this.model.get('id'),this.model.get('slug_compare'),this.status.toJSON()]);
       }
     },
+
+    deleteWidget: function() {
+      mps.publish('Widgets/delete', [this.model.get('id')]);
+    },
+
+    destroy: function() {
+      this.unsubscribe();
+    }
 
   });
 

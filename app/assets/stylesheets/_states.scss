@@ -11,3 +11,19 @@
   @include spinner (40px, 5px, $color-1);
   pointer-events: none;
 }
+
+.is-no-scroll {
+  overflow: hidden;
+}
+
+.is-temporary-disabled {
+  // border: 1px solid red;
+
+  a {
+    pointer-events: none;
+  }
+}
+
+.no-pointer-events {
+  pointer-events: none;
+}

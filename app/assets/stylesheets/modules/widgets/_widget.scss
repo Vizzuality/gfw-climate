@@ -1,0 +1,135 @@
+.m-widget {
+  min-height: 250px;
+  color: $dark;
+
+  // HEADER
+  > .m-widget-header {
+    // overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    // NAME
+    > .name {
+      float: left;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: rgba(0,0,0, .5);
+      font-weight: 500;
+    }
+
+    // OPTIONS
+    > .options {
+      display: flex;
+      float: right;
+
+      > li{
+        margin: 0 3px;
+
+        > .btn-action {
+          position: relative;
+          display: inline-block;
+          width: 18px;
+          height: 18px;
+
+          border: 1px $color-3 solid;
+          border-radius: 50%;
+          color: $font-color-1;
+
+          .tooltip1 {
+            font-size: 12px;
+          }
+
+          &:hover {
+            background: $color-1;
+            color: $font-color-2;
+            border-color: $color-1;
+
+            svg {
+              fill: $font-color-2;
+            }
+
+            .tooltip1 {
+              visibility: visible;
+              opacity: 1;
+            }
+          }
+
+          svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            fill: $color-3;
+          }
+
+          &.-text {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            width: auto;
+            font-size: 10px;
+            padding: 0 5px 0 14px;
+            border-radius: 8px;
+
+            svg {
+              left: 0px;
+              transform: translate(2px, -50%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // CONTENT
+  > .m-widget-content {
+    margin-top: 25px;
+
+    .tab-ul {
+      display: flex;
+      justify-content: space-around;
+
+      .tab-li {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 69px;
+        padding: 15px;
+        font-size: 12px;
+        text-align: center;
+        background-color: #f2f2f3;
+        border: 1px solid $border;
+        border-right: 0;
+        cursor: pointer;
+        &:last-child {
+          border-right: 1px solid $border;
+        }
+        &.-selected {
+          color: $black;
+          background: $white;
+          border-bottom: 1px solid transparent;
+        }
+
+        span {
+          display: block;
+          width: 100%;
+        }
+        .subname,.ipcc {
+          color: #777;
+        }
+        .subname {
+          font-size: 10px;
+        }
+        .ipcc {
+          font-size: 9px;
+        }
+      }
+    }
+  }
+}

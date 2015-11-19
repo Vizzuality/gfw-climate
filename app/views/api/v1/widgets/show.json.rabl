@@ -4,6 +4,9 @@ node :widget do
   {
     id:         @widget.id,
     name:       @widget.name,
+    type:       @widget.type,
+    type_slug:  @widget.type_slug,
+    type_chart: @widget.type_chart,
     tabs:       tabs,
     indicators: indicators
   }
@@ -24,6 +27,8 @@ def tabs
       threshunit:    tab['threshunit'],
       switch:        tab['switch'],
       sectionswitch: tab['sectionswitch'],
+      template:      tab['template'],
+      note:          tab['note'],
       default:       tab['default']
     }
   end rescue nil

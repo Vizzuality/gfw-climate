@@ -8,13 +8,13 @@ define([
 
   var SubNationalView = Backbone.View.extend({
 
-    el: '.gridgraphs--container-profile',
+    el: '.gridgraphs',
 
     initialize: function(options) {
-
+      this.iso           = options.country;
       this.jurisdictions = options.jurisdictions;
-      this.parent = options.parent;
-      this.widgets = options.widgets;
+      this.parent        = options.parent;
+      this.widgets       = options.widgets;
 
       if (!this.jurisdictions || !this.widgets) {
         this.render();
@@ -24,16 +24,14 @@ define([
     },
 
     _setupGrid: function() {
-
       var promises = [],
-        widgetsArray = [],
-        iso = sessionStorage.getItem('countryIso');
-
+        widgetsArray = [];
 
       _.map(this.widgets, function(j, key) {
 
         _.map(j, function(w) {
 
+          var currentJurisdiction = _.findWhere(this.jurisdictions, {id: key});
 
           var deferred = $.Deferred();
           var newWidget = new WidgetView({
@@ -41,12 +39,12 @@ define([
               id: w[0].id,
               slug: key,
               location: {
-                iso: iso,
-                jurisdiction: 0,
+                iso: this.iso,
+                jurisdiction: currentJurisdiction.idNumber,
                 area: 0
               },
             },
-            className: 'gridgraphs--widget',
+            className: 'gridgraphs-widget',
             status: this.widgets[key][w[0].id][0]
           });
 
@@ -69,6 +67,9 @@ define([
     render: function(widgetsArray) {
       this.$el.html('');
 
+      this.$el.removeClass();
+      this.$el.addClass('gridgraphs -subnational');
+
       if (this.jurisdictions && this.jurisdictions.length > 0) {
 
         this.template = Handlebars.compile(tpl);
@@ -89,11 +90,10 @@ define([
 
         }.bind(this));
 
-
         _.each(data, _.bind(function(d) {
 
           _.each(d.widgets, (function(w) {
-            $('#box-jurisdictions-' + d.jurisdiction.id+ ' .gridgraphs--container-profile').append(w.render().el);
+            $('#box-jurisdictions-' + d.jurisdiction.id+ ' .gridgraphs-container').append(w.render().el);
           }));
 
         }, this));
@@ -112,8 +112,6 @@ define([
       }
 
       this.parent.append(this.$el);
-
-      // return this;
     },
 
     parseData: function() {

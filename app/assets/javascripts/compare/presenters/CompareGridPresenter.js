@@ -12,7 +12,9 @@ define([
 
     status: new (Backbone.Model.extend({
       defaults: {
-        name: 'compare-countries'
+        name: 'compare-countries',
+        widgetsActive: [1,2,3,4,5],
+        globalThresh: 30
       }
     })),
 
@@ -20,12 +22,7 @@ define([
       this._super();
       this.view = view;
       this.service = CompareService;
-      this.setListeners();
       mps.publish('Place/register', [this]);
-    },
-
-    setListeners: function() {
-      this.status.on('change:data', this.changeData, this);
     },
 
     /**
@@ -53,27 +50,37 @@ define([
 
       'Options/updated': function(id,slug,wstatus) {
         this._onOptionsUpdate(id,slug,wstatus);
-      }
+      },
+
+      'Widgets/delete': function(id) {
+        this._onWidgetsDelete(id);
+      },
+
+      'Widgets/change': function(widgetsActive) {
+        this._onWidgetsChange(widgetsActive);
+      },
+
+      'Threshold/change': function(thresh) {
+        this.status.set('globalThresh', thresh);
+      },
 
     }],
 
     /**
-     *
+     * MPS subscription callbacks
     */
     _onPlaceGo: function(params) {
-      this.setParams(params);
+      this.setWidgets(params);
     },
-
 
     _onCompareUpdate: function(params) {
       var params = _.extend({}, this.status.attributes, params);
-      this.setParams(params);
+      this.setWidgets(params);
     },
-
 
     _onOptionsUpdate: function(id,slug,wstatus) {
       var options = _.clone(this.status.get('options'));
-      if (!!options[slug]) {
+      if (!!options[slug] && !!options[slug][id]) {
         options[slug][id][0] = wstatus;
         // Set and publish
         this.status.set('options', options);
@@ -81,16 +88,51 @@ define([
       }
     },
 
+    _onWidgetsDelete: function(id) {
+      var widgetsActive = _.clone(this.status.get('widgetsActive'));
+      widgetsActive = _.without(widgetsActive,id);
+      this.status.set('widgetsActive', widgetsActive);
+      this.status.set('options', this.getOptions());
+      mps.publish('Place/update');
+      this.changeCompare();
+    },
+
+    _onWidgetsChange: function(widgetsActive) {
+      this.status.set('widgetsActive', widgetsActive);
+      this.status.set('options', this.getOptions());
+      mps.publish('Place/update');
+      this.changeCompare();
+    },
+
+    // SETTERS
+    setWidgets: function(params) {
+      if (! !!this.status.get('widgets')) {
+        new WidgetCollection()
+          .fetch()
+          .done(_.bind(function(response){
+            this.status.set('widgets', response.widgets);
+            this.setParams(params);
+          }, this ));
+      } else {
+        this.setParams(params);
+      }
+    },
+
+    setActiveWidgets: function() {
+      var widgetIds = _.map(this.status.get('options'),function(c){
+        return _.map(c, function(w,k){
+          return Number(k);
+        })
+      });
+      this.status.set('widgetsActive',widgetIds[0]);
+    },
+
     setParams: function(params) {
       if (!!params.compare1 && !!params.compare2) {
         if (! !!params.options) {
-          // Fetching data
-          new WidgetCollection()
-            .fetch({data: {default: true}})
-            .done(_.bind(function(widgets){
-              params.options = this.getOptions(params, widgets);
-              this.setModels(params);
-            }, this ));
+
+          params.options = this.getOptions(params);
+          this.setModels(params);
         } else {
           if ((!!this.oldCompare1 && this.oldCompare1 != params.compare1) || (!!this.oldCompare2 && this.oldCompare2 != params.compare2)) {
             params.options = this.moveOptions(params);
@@ -102,23 +144,21 @@ define([
       }
     },
 
-    // SETTER
     setModels: function(params) {
       this.status.set('options', params.options);
-      // this.status.set('widgets', this.getWidgets());
       this.status.set('compare1', params.compare1);
       this.status.set('compare2', params.compare2);
       this.oldCompare1 = params.compare1;
       this.oldCompare2 = params.compare2;
       mps.publish('Place/update');
+      this.setActiveWidgets();
       this.changeCompare();
     },
 
-    // COMPARE EVENTS
-    changeData: function() {
-      this.view.render();
-    },
 
+
+
+    // COMPARE EVENTS
     changeCompare: function() {
       var compare1 = this.objToSlug(this.status.get('compare1'),'+');
       var compare2 = this.objToSlug(this.status.get('compare2'),'+');
@@ -133,7 +173,7 @@ define([
     },
 
     successCompare: function(data) {
-      var activeWidgets = this.getWidgets();
+      var activeWidgets = this.status.get('widgetsActive');
       var data = _.map(data.countries, function(c){
         c.widgets = _.compact(_.map(c.widgets, function(w){
           return (_.contains(activeWidgets, w.id)) ? w : null;
@@ -141,6 +181,8 @@ define([
         return c;
       });
       this.status.set('data', data);
+      this.view.render();
+      mps.publish('Widgets/update',[this.status.get('widgetsActive')]);
     },
 
     errorCompare: function() {
@@ -148,51 +190,53 @@ define([
       console.log(arguments);
     },
 
-
-    // HELPERS
-    getWidgets: function() {
-      var widgetIds = _.map(this.status.get('options'),function(c){
-        return _.map(c, function(w,k){
-          return k;
-        })
-      });
-      this.status.set('widgets',widgetIds[0]);
-      return widgetIds[0];
-    },
-
     // SET OPTIONS PARAMS
-    getOptions: function(params, widgets) {
+
+    getOptions: function(params) {
+      var compare1 = (params) ? params.compare1 : this.status.get('compare1');
+      var compare2 = (params) ? params.compare2 : this.status.get('compare2');
+      var widgets = _.filter(this.status.get('widgets'), _.bind(function(w){
+        return _.contains(this.status.get('widgetsActive'),w.id);
+      }, this ));
+
       // Get the current options
-      var w = _.groupBy(_.map(widgets.widgets,_.bind(function(w){
+      var w = _.groupBy(_.map(widgets,_.bind(function(w){
         return {
           id: w.id,
           tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null
         };
       }, this)), 'id');
-      // Is there a better way to do this??
       var r = {};
-      r[this.objToSlug(params.compare1,'')] = w;
-      r[this.objToSlug(params.compare2,'')] = w;
+      r[this.objToSlug(compare1,'')] = w;
+      r[this.objToSlug(compare2,'')] = w;
       return r;
     },
+
     getTabsOptions: function(tabs) {
-      return _.map(tabs, function(t){
+      // ******
+      // CAREFUL: if you add anything new to the widgets.json
+      //          remember to add it inside CompareGridPresenter (getTabsOptions function) and inside widgetPresenter (changeTab function)
+      // ******
+      return _.map(tabs, _.bind(function(t){
         return {
           type: t.type,
           position: t.position,
           unit: (t.switch) ? t['switch'][0]['unit'] : null,
           start_date: (t.range) ? t['range'][0] : null,
           end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-          thresh: (t.thresh) ? t['thresh'] : 0,
+          thresh: (t.thresh) ? this.status.get('globalThresh') : 0,
           section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
+          template: (t.template) ? t['template'] : null,
         }
-      })[0];
+      }, this ))[0];
     },
+
     getIndicatorOptions: function(indicators) {
       return _.map(indicators,function(i){
         return i.id;
       });
     },
+
     moveOptions: function(params) {
       var r = {};
       var options = _.map(params.options, function(opt,key){
@@ -203,6 +247,7 @@ define([
       return r;
     },
 
+    // HELPERS
     objToSlug: function(obj,join) {
       var arr_temp = [];
       arr_temp[0] = obj['iso'];

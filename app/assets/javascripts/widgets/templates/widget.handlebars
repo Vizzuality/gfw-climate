@@ -1,26 +1,43 @@
 {{!-- Cambiar id numérico por widget-id --}}
-<section class="country-widget">
-  <div class="country-widget__header">
-    <h2 class="country-widget__name">{{this.name}}</h2>
-    <div class="options">
-      <a class="close" href="#">Delete
-        <svg>
-          <use xlink:href="#shape-close"></use>
-        </svg>
-      </a>
-      <a class="info" href="#">
-        <svg>
-          <use xlink:href="#shape-info"></use>
-        </svg>
-      </a>
-      <a class="share" href="#">
-        <svg>
-          <use xlink:href="#shape-share"></use>
-        </svg>
-      </a>
-    </div>
-  </div>
-  <div class="country-widget__content">
+<section class="m-widget">
+  <header class="m-widget-header">
+    <h2 class="name">{{this.name}}</h2>
+    <ul class="options">
+      <li>
+        <a class="btn-action -text close" href="#">Delete
+          <svg>
+            <use xlink:href="#shape-close"></use>
+          </svg>
+
+        </a>
+      </li>
+      <li>
+        <a class="btn-action info" href="#">
+          <svg>
+            <use xlink:href="#shape-info"></use>
+          </svg>
+          <span class="tooltip1 dark">More info</span>
+        </a>
+      </li>
+      <li>
+        <a class="btn-action share" href="#">
+          <svg>
+            <use xlink:href="#shape-share"></use>
+          </svg>
+          <span class="tooltip1 dark">Share</span>
+        </a>
+      </li>
+      <li>
+        <a class="btn-action download" href="#">
+          <svg>
+            <use xlink:href="#shape-download-arrow"></use>
+          </svg>
+          <span class="tooltip1 dark last">Download</span>
+        </a>
+      </li>
+    </ul>
+  </header>
+  <div class="m-widget-content">
 
     {{#if this.tabs}}
       <ul class="tab-ul">
@@ -32,7 +49,7 @@
         </li>
       {{/each}}
       </ul>
-      <div class="tab-content"></div>
+      <div class="m-tab tab-content"></div>
     {{/if}}
   </div>
 </section>

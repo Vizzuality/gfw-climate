@@ -15,7 +15,11 @@ define([
 
       this.widgetCollection = new WidgetCollection()
 
-      this.status = new (Backbone.Model.extend());
+      this.status = new (Backbone.Model.extend({
+        defaults: {
+          globalThresh: 30
+        }
+      }));
 
       this._setListeners();
 
@@ -49,15 +53,14 @@ define([
 
           var callback = function() {
             this.status.set({
-              country: sessionStorage.getItem('countryIso'),
+              country: this.status.get('country'),
               jurisdictions: null,
               areas: null,
               view: view,
-              options: this.getOptions(p, this.widgetCollection.toJSON())
+              options: this.getOptions(null, p)
             });
 
             this.view.start();
-            this.view._toggleWarnings();
           }
 
           this.widgetCollection.fetch({default: true}).done(callback.bind(this));
@@ -66,17 +69,14 @@ define([
         if (view === 'subnational' || view === 'areas-interest') {
 
           this.status.set({
-            country: sessionStorage.getItem('countryIso'),
+            country: this.status.get('country'),
             jurisdictions: null,
             areas: null,
             view: view,
             options: {}
           });
           this.view.start();
-          this.view._toggleWarnings();
         }
-
-
       }
     }, {
       'Grid/update': function(params) {
@@ -87,14 +87,13 @@ define([
             areas: params.areas,
             view: params.view,
             jurisdictions: params.jurisdictions,
-            options: this.getOptions(p, this.widgetCollection.toJSON())
-          })
+            options: this.getOptions(p.options.indicators, p)
+          });
 
           this.view.start();
         };
 
         this.widgetCollection.fetch({default: true}).done(callback.bind(this));
-
       }
     }],
 
@@ -114,9 +113,10 @@ define([
 
       p.options = this.status.get('options');
 
+      p.options.areas =  this.status.get('jurisdictions') ? null : this.status.get('areas');
+      p.options.jurisdictions = this.status.get('areas') ? null : this.status.get('jurisdictions');
+
       _.extend(p.options, {
-        jurisdictions: this.status.get('jurisdictions'),
-        areas: this.status.get('areas'),
         view: this.status.get('view')
       });
 
@@ -131,7 +131,6 @@ define([
     _onPlaceGo: function(params) {
       switch(params.view) {
         case 'national':
-
           if (params.options) {
             this._loadCustomizedOptions(params);
           } else {
@@ -145,6 +144,7 @@ define([
           if (params.options) {
             this._loadCustomizedOptions(params);
           } else {
+
             this.status.set({
               country: params.country.iso,
               view: params.view,
@@ -195,38 +195,32 @@ define([
      */
 
     _loadDefaultOptions: function(params) {
-
       var callback = function() {
-
         this.status.set({
-          country: sessionStorage.getItem('countryIso'),
+          country: params.country.iso,
           jurisdictions: null,
           areas: null,
           view: params.view,
-          options: this.getOptions(params, this.widgetCollection.toJSON())
+          options: this.getOptions(null, params)
         });
 
         this.view.start();
         mps.publish('Tab/update', [this.status.get('view')])
-
       };
 
       this.widgetCollection.fetch({default: true}).done(callback.bind(this));
     },
 
     _loadCustomizedOptions: function(params) {
-
       this.status.set({
-        country: sessionStorage.getItem('countryIso'),
+        country: params.country.iso,
         jurisdictions: params.jurisdictions ? params.jurisdictions :  this.getJurisdictions(params),
         areas: params.areas ? params.areas : this.getAreas(params),
         options: params.options,
         view: params.view
       });
 
-
       this.view.start();
-      // mps.publish('Tab/update', [this.status.get('view')]);
 
       mps.publish('Tab/update', [{
         view: this.status.get('view'),
@@ -237,15 +231,20 @@ define([
     _updateView: function(view) {
       this.status.set({
         view: view
-      });
+      }, {silent: true});
     },
 
     _onOptionsUpdate: function(id,slug,wstatus) {
-      var options = _.clone(this.status.get('options'));
+      var options = _.clone(this.status.get('options').widgets);
       options[slug][id][0] = wstatus;
 
+      var x = {};
+      x[slug] = options[slug];
+
+
       // Set and publish
-      this.status.set('options', options);
+      // this.status.set('options', options);
+      _.extend(this.status.get('options'), x);
       mps.publish('Place/update');
     },
 
@@ -273,10 +272,17 @@ define([
       return areas;
     },
 
-    getOptions: function(params, defaultWidgets) {
+    getOptions: function(widgets, params) {
 
-      // This should be removed to a dinamic var
-      var activeWidgets = [1, 2, 3, 4, 5];
+      var defaultWidgets = this.widgetCollection.toJSON(),
+        activeWidgets;
+
+      if (!widgets) {
+        activeWidgets = [1, 2, 3, 4, 5];
+      } else {
+        activeWidgets = widgets;
+      }
+
       var w = _.groupBy(_.compact(_.map(defaultWidgets,_.bind(function(w){
         if (_.contains(activeWidgets, w.id)) {
           return {
@@ -293,7 +299,9 @@ define([
       switch(params.view) {
 
         case 'national':
-            r[this.objToSlug(sessionStorage.getItem('countryIso'), '')] = w;
+
+            var iso = !!params['country'] ? params.country.iso : this.status.get('country');
+            r[this.objToSlug(iso, '')] = w;
           break;
 
         case 'subnational':
@@ -318,21 +326,22 @@ define([
 
       }
 
-      return r;
+      return {widgets: r};
     },
 
     getTabsOptions: function(tabs) {
-      return _.map(tabs, function(t){
+      return _.map(tabs, _.bind(function(t){
         return {
           type: t.type,
           position: t.position,
           unit: (t.switch) ? t['switch'][0]['unit'] : null,
           start_date: (t.range) ? t['range'][0] : null,
           end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-          thresh: (t.thresh) ? t['thresh'] : 0,
+          thresh: (t.thresh) ? this.status.get('globalThresh') : 0,
           section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
+          template: (t.template) ? t['template'] : null,
         }
-      })[0];
+      }, this))[0];
     },
 
     getIndicatorOptions: function(indicators) {

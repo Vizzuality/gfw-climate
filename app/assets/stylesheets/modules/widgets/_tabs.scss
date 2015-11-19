@@ -1,0 +1,104 @@
+.m-tab {
+  // SUP OPTIONS
+  .sup-options {
+    // overflow: hidden;
+    @include clearfix();
+    margin: 25px 0 10px 0;
+    font-size: 12px;
+
+    .switcher {
+      float: left;
+    }
+
+    .canopy-threshold {
+      float: right;
+      > span {
+        line-height: 20px;
+      }
+    }
+
+    .switcher-item {
+      position: relative;
+
+      .tooltip1 {
+        font-size: 12px;
+        left: 0;
+        transform: translate(0, 10px);
+      }
+
+      &:first-child {
+        .tooltip1 {
+
+          &:after {
+            left: 0;
+            transform: translate(50%, -50%) rotate(45deg);
+          }
+        }
+      }
+
+      &:nth-child(2) {
+
+        .tooltip1 {
+          &:after {
+            left: 0;
+            transform: translate(50%, -50%) rotate(45deg);
+          }
+        }
+      }
+
+      &:hover {
+        .tooltip1 {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  // SUB OPTIONS
+  .sub-options {
+    margin-top: 20px;
+    padding-top: 20px;
+    font-size: 12px;
+    border-top: 1px solid $border;
+    display: flex;
+    align-items: flex-start;
+  }
+
+
+  // GRAPH OR INDICATOR CONTENT
+  .tab-graph {
+    position: relative;
+
+    &.is-line {
+      min-height: 300px;
+    }
+
+    &.is-pie {
+      min-height: 200px;
+    }
+
+    &.is-number {
+      min-height: 120px;
+    }
+
+    .tab-graph--no-data {
+
+      div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        h3 {
+          text-transform: uppercase;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+}
