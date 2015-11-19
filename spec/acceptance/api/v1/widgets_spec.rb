@@ -72,7 +72,7 @@ resource 'Widgets' do
       expect(widget['tabs'][0]['switch'].length).to be >= 1      
       expect(widget['tabs'][0]['switch'][0]['unit']).to eq('hectares')
       expect(widget['indicators'][0]['data']).to eq('/api/indicators/1/aus')
-      expect(widget['indicators'][2]['data']).to eq('/api/indicators/15/aus')
+      expect(widget['indicators'][2]['data']).to eq('/api/indicators/2/aus')
       expect(widget['indicators'][0]['tab']).to eq(1)
       expect(widget['indicators'][0]['default']).to eq(true)
     end
@@ -82,7 +82,7 @@ resource 'Widgets' do
       widget = JSON.parse(response_body)['widget']
 
       expect(widget['indicators'][0]['data']).to eq('/api/indicators/1/aus/1')
-      expect(widget['indicators'][2]['data']).to eq('/api/indicators/15/aus/1')
+      expect(widget['indicators'][2]['data']).to eq('/api/indicators/2/aus/1')
     end
 
     example_request "Getting a specific widget by id for a juridiction and thresh", id: 1, iso: 'aus', id_1: 1, thresh: 15 do
@@ -91,7 +91,7 @@ resource 'Widgets' do
 
       expect(widget['tabs'][2]['position']).to eq(3)
       expect(widget['indicators'][0]['data']).to eq('/api/indicators/1/aus/1?thresh=15')
-      expect(widget['indicators'][2]['data']).to eq('/api/indicators/15/aus/1?thresh=15')
+      expect(widget['indicators'][2]['data']).to eq('/api/indicators/2/aus/1?thresh=15')
     end
   end
 
