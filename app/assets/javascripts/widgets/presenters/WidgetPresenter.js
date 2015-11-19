@@ -35,7 +35,11 @@ define([
           tabs.lock = lock;
           this.status.set('tabs', tabs);
         }
-      }
+      },
+      'Threshold/change': function(thresh) {
+        this.thresh = thresh;
+      },
+
     }],
 
     changeTab: function(position) {
@@ -52,7 +56,7 @@ define([
         unit: (t.switch) ? t['switch'][0]['unit'] : null,
         start_date: (t.range) ? t['range'][0] : null,
         end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-        thresh: (t.thresh) ? t['thresh'] : 0,
+        thresh: (t.thresh) ? this.thresh : 0,
         section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
         template: (t.template) ? t['template'] : null,
         lock: (this.status.get('tabs').lock != null && this.status.get('tabs').lock != undefined) ? this.status.get('tabs').lock : true,
