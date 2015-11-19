@@ -1,9 +1,10 @@
 define([
   'mps',
   'underscore',
+  'countries/models/CountryModel',
   'countries/presenters/PresenterClass',
   'widgets/collections/WidgetCollection'
-], function(mps, _, PresenterClass, WidgetCollection) {
+], function(mps, _, CountryModel, PresenterClass, WidgetCollection) {
 
   'use strict';
 
@@ -13,6 +14,7 @@ define([
       this.view = view;
       this._super();
 
+      this.CountryModel = CountryModel;
       this.widgetCollection = new WidgetCollection()
 
       this.status = new (Backbone.Model.extend({
@@ -53,7 +55,7 @@ define([
 
           var callback = function() {
             this.status.set({
-              country: sessionStorage.getItem('countryIso'),
+              country: this.status.get('country'),
               jurisdictions: null,
               areas: null,
               view: view,
@@ -69,7 +71,7 @@ define([
         if (view === 'subnational' || view === 'areas-interest') {
 
           this.status.set({
-            country: sessionStorage.getItem('countryIso'),
+            country: this.status.get('country'),
             jurisdictions: null,
             areas: null,
             view: view,
@@ -131,7 +133,6 @@ define([
     _onPlaceGo: function(params) {
       switch(params.view) {
         case 'national':
-
           if (params.options) {
             this._loadCustomizedOptions(params);
           } else {
@@ -196,11 +197,9 @@ define([
      */
 
     _loadDefaultOptions: function(params) {
-
       var callback = function() {
-
         this.status.set({
-          country: sessionStorage.getItem('countryIso'),
+          country: params.country.iso,
           jurisdictions: null,
           areas: null,
           view: params.view,
@@ -209,7 +208,6 @@ define([
 
         this.view.start();
         mps.publish('Tab/update', [this.status.get('view')])
-
       };
 
       this.widgetCollection.fetch({default: true}).done(callback.bind(this));
@@ -217,16 +215,14 @@ define([
 
     _loadCustomizedOptions: function(params) {
       this.status.set({
-        country: sessionStorage.getItem('countryIso'),
+        country: params.country.iso,
         jurisdictions: params.jurisdictions ? params.jurisdictions :  this.getJurisdictions(params),
         areas: params.areas ? params.areas : this.getAreas(params),
         options: params.options,
         view: params.view
       });
 
-
       this.view.start();
-      // mps.publish('Tab/update', [this.status.get('view')]);
 
       mps.publish('Tab/update', [{
         view: this.status.get('view'),
@@ -305,7 +301,9 @@ define([
       switch(params.view) {
 
         case 'national':
-            r[this.objToSlug(sessionStorage.getItem('countryIso'), '')] = w;
+
+            var iso = !!params['country'] ? params.country.iso : this.status.get('country');
+            r[this.objToSlug(iso, '')] = w;
           break;
 
         case 'subnational':
