@@ -8,9 +8,8 @@ define([
 
     url: '/api/countries/',
 
-
-    initialize: function(options) {
-      this.url += options.id;
+    initialize: function(setup) {
+      this.url += setup.iso;
     },
 
     parse: function(data) {
