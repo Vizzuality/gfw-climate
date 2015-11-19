@@ -9,6 +9,10 @@ define([
 
     el: '#compareGridView',
 
+    events: {
+      'click .lock-mode' : 'toggleLock'
+    },
+
     template: Handlebars.compile(tpl),
 
     initialize:function() {
@@ -73,6 +77,13 @@ define([
       return {
         widgets: this.presenter.status.get('widgetsActive')
       };
+    },
+
+    // Events
+    toggleLock: function(e) {
+      var is_locked = $(e.currentTarget).hasClass('is-locked');
+      $(e.currentTarget).toggleClass('is-locked', !is_locked);
+      this.presenter.toggleLock($(e.currentTarget).data('id'), is_locked);
     },
 
     destroy: function() {

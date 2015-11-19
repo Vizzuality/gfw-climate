@@ -216,6 +216,7 @@ define([
       // ******
       // CAREFUL: if you add anything new to the widgets.json
       //          remember to add it inside CompareGridPresenter (getTabsOptions function) and inside widgetPresenter (changeTab function)
+      //          You must add it to views/api/v1/widgets/show.json.rabl (If you don't, the API won't send the new parameter)
       // ******
       return _.map(tabs, _.bind(function(t){
         return {
@@ -227,6 +228,7 @@ define([
           thresh: (t.thresh) ? this.status.get('globalThresh') : 0,
           section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
           template: (t.template) ? t['template'] : null,
+          lock: (t.lock != null && t.lock != undefined) ? t['lock'] : true,
         }
       }, this ))[0];
     },
@@ -245,6 +247,11 @@ define([
       r[this.objToSlug(params.compare1,'')] = options[0];
       r[this.objToSlug(params.compare2,'')] = options[1];
       return r;
+    },
+
+    // LOCK MODE
+    toggleLock: function(id, lock) {
+      mps.publish('Lock/toggle', [id,lock]);
     },
 
     // HELPERS
