@@ -1,10 +1,9 @@
 define([
   'mps',
   'underscore',
-  'countries/models/CountryModel',
   'countries/presenters/PresenterClass',
   'widgets/collections/WidgetCollection'
-], function(mps, _, CountryModel, PresenterClass, WidgetCollection) {
+], function(mps, _, PresenterClass, WidgetCollection) {
 
   'use strict';
 
@@ -14,7 +13,6 @@ define([
       this.view = view;
       this._super();
 
-      this.CountryModel = CountryModel;
       this.widgetCollection = new WidgetCollection()
 
       this.status = new (Backbone.Model.extend({

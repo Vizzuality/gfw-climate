@@ -1,11 +1,10 @@
 define([
   'backbone',
-  'countries/models/CountryModel',
   'countries/views/show/CountryShowHeaderView',
   'countries/views/show/TabsView',
   'countries/views/show/CountryModalView',
   'countries/views/show/WidgetGridView'
-], function(Backbone, CountryModel, CountryShowHeaderView,
+], function(Backbone, CountryShowHeaderView,
   TabsView, CountryModalView, WidgetGridView) {
 
   'use strict';
