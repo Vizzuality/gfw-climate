@@ -492,7 +492,7 @@ function addCommas(nStr) {
 
               var value = values_array[i].value;
 
-              label_text = that.get_label_text(coordinates, this.id, d.name, value, d.radius);
+              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, d.radius);
               document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
 
               break;
@@ -506,12 +506,12 @@ function addCommas(nStr) {
       return circles;
     };
 
-    BubbleChart.prototype.get_label_text = function(coordinates, id, country, data, radius) {
+    BubbleChart.prototype.get_label_text = function(order, coordinates, id, country, data, radius) {
       var x_coord = 'x="' + coordinates[0] + '" ';
 
       var y_coord =         'y="' + coordinates[1] + '" ';
-      var y_coord_country = 'y="' + (coordinates[1]+60) + '" ';
-      var y_coord_data =    'y="' + (coordinates[1]+80) + '" ';
+      var y_coord_country = 'y="' + (coordinates[1]+45) + '" ';
+      var y_coord_data =    'y="' + (coordinates[1]+65) + '" ';
 
       var id_country = 'id="' + id + '-country" ';
       var id_data = 'id="' + id + '-data" ';
@@ -519,6 +519,11 @@ function addCommas(nStr) {
       if ( radius > 50 ) {
         var y_coord_country = 'y="' + (coordinates[1]) + '" ';
         var y_coord_data =    'y="' + (coordinates[1]+20) + '" ';
+      }
+
+      if ( order === 1 || order === 2 || order === 3 ) {
+        var y_coord_country = 'y="' + (coordinates[1]+60) + '" ';
+        var y_coord_data =    'y="' + (coordinates[1]+80) + '" ';
       }
 
       var label_text =
