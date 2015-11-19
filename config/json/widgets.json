@@ -73,7 +73,7 @@
             "unitfullname": "percentage"
           }
         ],
-        "note" : "10% canopy density by default"
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
@@ -196,7 +196,7 @@
             "unitfullname": "Mega ton of Carbon dioxide"
           }
         ],
-        "note" : "10% canopy density by default"
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
@@ -277,7 +277,7 @@
         "name": "FAO",
         "type": "number",
         "template" : "forest-area-fao",
-        "note" : "10% canopy density by default"
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
@@ -372,7 +372,7 @@
             "unitname": "carbon"
           }
         ],
-        "note" : "10% canopy density by default"
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
@@ -598,7 +598,7 @@
             "unitname": "carbon"
           }
         ],
-        "note" : "10% canopy density by default"
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
