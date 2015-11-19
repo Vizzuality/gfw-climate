@@ -92,24 +92,28 @@ define([
             rangeX = this.getRangeX(data),
             rangeY = this.getRangeY(data);
       }
-      // Initialize Line Chart
-      this.chart = new MultiLineChart({
-        parent: this,
-        el: $graphContainer,
-        id: _.pluck(this.model.get('indicators'), 'id').join(''),
-        data: data,
-        indicators: this.model.get('indicators'),
-        unit: this.model.get('unit'),
-        unitname: this.model.get('unitname'),
-        rangeX: rangeX,
-        rangeY: rangeY,
-        slug: this.model.get('slug'),
-        slug_compare: this.model.get('slug_compare'),
-        sizing: {top: 10, right: 10, bottom: 20, left: 0},
-        innerPadding: { top: 15, right: 10, bottom: 20, left: 50 },
-        keys: { x: 'year', y: 'value' }
-      });
-      this.chart.render();
+      if (this.getDataLength(data)) {
+        // Initialize Line Chart
+        this.chart = new MultiLineChart({
+          parent: this,
+          el: $graphContainer,
+          id: _.pluck(this.model.get('indicators'), 'id').join(''),
+          data: data,
+          indicators: this.model.get('indicators'),
+          unit: this.model.get('unit'),
+          unitname: this.model.get('unitname'),
+          rangeX: rangeX,
+          rangeY: rangeY,
+          slug: this.model.get('slug'),
+          slug_compare: this.model.get('slug_compare'),
+          sizing: {top: 10, right: 10, bottom: 20, left: 0},
+          innerPadding: { top: 15, right: 10, bottom: 20, left: 50 },
+          keys: { x: 'year', y: 'value' }
+        });
+        this.chart.render();
+      } else {
+        this.$el.html(this.noDataTemplate({ classname: 'line'}));
+      }
     },
 
     _drawAverage: function(averages) {
@@ -161,6 +165,10 @@ define([
       var values = _.flatten(_.union(Array.prototype.slice.call(arguments)));
       return [_.min(values, function(o){return o.value;}).value,
               _.max(values, function(o){return o.value;}).value];
+    },
+
+    getDataLength: function() {
+      return !!_.flatten(_.union(Array.prototype.slice.call(arguments))).length;
     },
 
     between: function(num, a, b, inclusive) {

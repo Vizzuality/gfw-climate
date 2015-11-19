@@ -12,6 +12,9 @@
 
     .canopy-threshold {
       float: right;
+      > span {
+        line-height: 20px;
+      }
     }
 
     .switcher-item {
