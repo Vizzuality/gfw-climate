@@ -319,6 +319,11 @@
         color: #555;
         line-height: 31px;
         margin: 0 10px;
+
+        & .is-disabled {
+          pointer-events: none;
+          color: $color-3;
+        }
       }
     }
   }

@@ -467,7 +467,7 @@ function addCommas(nStr) {
               break;
             }
           }
-
+          
           return that.radius_scale(value * 1.6);
         });
 
@@ -491,8 +491,9 @@ function addCommas(nStr) {
               $(this).attr('cy', coordinates[1]);
 
               var value = values_array[i].value;
+              var radius = that.radius_scale(value * 1.6);
 
-              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, d.radius);
+              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, radius);
               document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
 
               break;
@@ -516,14 +517,15 @@ function addCommas(nStr) {
       var id_country = 'id="' + id + '-country" ';
       var id_data = 'id="' + id + '-data" ';
 
-      if ( radius > 50 ) {
-        var y_coord_country = 'y="' + (coordinates[1]) + '" ';
-        var y_coord_data =    'y="' + (coordinates[1]+20) + '" ';
-      }
 
-      if ( order === 1 || order === 2 || order === 3 ) {
+      if ( order === 1 && radius < 47.5 || order === 2 && radius < 47.5 || order === 3 && radius < 47.5) {
         var y_coord_country = 'y="' + (coordinates[1]+60) + '" ';
         var y_coord_data =    'y="' + (coordinates[1]+80) + '" ';
+      } 
+
+      if ( radius > 47.5 ) {
+        var y_coord_country = 'y="' + (coordinates[1]) + '" ';
+        var y_coord_data =    'y="' + (coordinates[1]+20) + '" ';
       }
 
       var label_text =

@@ -39,13 +39,60 @@ define([
         element2 = document.getElementById('year-drop-right');
         this.year_left = parseInt(element.options[element.selectedIndex].value);
         this.year_right = parseInt(element2.options[element2.selectedIndex].value);
+        this._hideYears(element.id);
       }else if (element.id == "year-drop-right"){
         element2 = document.getElementById('year-drop-left');
         this.year_right = parseInt(element.options[element.selectedIndex].value);
         this.year_left = parseInt(element2.options[element2.selectedIndex].value);
+        this._hideYears(element.id);
       }
       var year = [this.year_left, this.year_right];
       toggle_view('country', year);
+    },
+
+    _hideYears: function(elementID) {
+      var $opositeSelector;
+      var selectedYear;
+      var condition;
+      var value;
+      var options;
+      var self = this;
+
+      if (elementID == "year-drop-left") {
+        $opositeSelector = $('#year-drop-right');
+        options = $opositeSelector.find('option');
+
+        $.each(options, function() {
+          value = this.value;
+  
+          if (value < self.year_left) {
+            $(this).addClass('is-disabled');
+            $(this).attr('disabled', true);
+
+            // $opositeSelector.val(self.year_left)
+          } else {
+            $(this).removeClass('is-disabled');
+            $(this).attr('disabled', false); 
+          }
+        })
+
+      } else {
+        $opositeSelector = $('#year-drop-left');
+        options = $opositeSelector.find('option');
+
+        $.each(options, function() {
+          value = this.value;
+          if (value > self.year_right) {
+            $(this).addClass('is-disabled');
+            $(this).attr('disabled', true);
+
+            // $opositeSelector.val(self.year_right)
+          } else {
+            $(this).removeClass('is-disabled');
+            $(this).attr('disabled', false); 
+          }
+        })
+      }
     },
 
     _change_year: function(e) {
