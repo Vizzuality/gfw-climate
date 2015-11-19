@@ -4,10 +4,8 @@ define([
  'underscore',
  'handlebars',
  'mps',
- 'widgets/indicators/line/line_chart_context',
- 'widgets/indicators/line/line_chart_interactionHandler',
  'text!widgets/templates/indicators/line/linechart-tooltip.handlebars'
-], function($, d3, _, Handlebars, mps, LineChartContext, LineChartInteractionHandler, tooltipTpl){
+], function($, d3, _, Handlebars, mps, tooltipTpl){
 
 var LineChart = function(options) {
   this.svg;
@@ -50,6 +48,7 @@ LineChart.prototype.offResize = function() {
 LineChart.prototype.resize = function() {
   this.offResize();
   $(this.options.el).find('svg').remove();
+  this.destroy();
   new LineChart(this.options).render();
 };
 

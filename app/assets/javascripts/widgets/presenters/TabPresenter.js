@@ -26,7 +26,7 @@ define([
     _subscriptions: [{
       'Threshold/change': function(thresh) {
         var tabs = _.clone(this.status.get('tabs'));
-        tabs.thresh = thresh;
+        tabs.thresh = (tabs.thresh) ? thresh : 0;
         this.status.set('tabs', tabs);
       },
     }],
