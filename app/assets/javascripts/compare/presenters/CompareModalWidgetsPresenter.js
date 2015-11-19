@@ -20,8 +20,8 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Widgets/update': function(widgets) {
-        this.status.set('widgetsActive',widgets);
+      'Widgets/update': function(widgetsActive) {
+        this.status.set('widgetsActive',widgetsActive);
         if (!!this.status.get('widgets')) {
           this.view.render();
           this.view.setWidgetsStatus();
@@ -44,8 +44,8 @@ define([
 
     changeActiveWidgets: function(widgetId,remove) {
       var widgets = _.clone(this.status.get('widgetsActive'));
-      (remove) ? widgets = _.without(widgets,widgetId.toString()) : widgets.push(widgetId.toString());
-      this.status.set('widgetsActive', widgets.sort());
+      (remove) ? widgets = _.without(widgets,widgetId) : widgets.push(widgetId);
+      this.status.set('widgetsActive', widgets.sort(function(a, b){return a-b}));
       this.view.setWidgetsStatus();
     },
 
