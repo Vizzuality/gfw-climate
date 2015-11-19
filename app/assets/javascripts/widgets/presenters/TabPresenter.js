@@ -23,15 +23,21 @@ define([
       this._setListeners();
     },
 
+    _subscriptions: [{
+      'Threshold/change': function(thresh) {
+        var tabs = _.clone(this.status.get('tabs'));
+        tabs.thresh = thresh;
+        this.status.set('tabs', tabs);
+      },
+    }],
+
     _setListeners: function() {
       this.status.on('change', this.publish, this);
     },
 
     // THRESHOLD
     changeThreshold: function(thresh) {
-      var tabs = _.clone(this.status.get('tabs'));
-      tabs.thresh = (~~thresh);
-      this.status.set('tabs', tabs);
+      mps.publish('Threshold/change', [~~thresh]);
     },
 
     changeUnit: function(unit) {
@@ -61,6 +67,10 @@ define([
     // PUBLISH the current status of this tab
     publish: function() {
       this.view.widget.changeStatus(this.status.toJSON());
+    },
+
+    destroy: function() {
+      this.unsubscribe();
     }
 
   });

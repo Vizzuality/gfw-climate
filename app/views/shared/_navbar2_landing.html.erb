@@ -6,34 +6,38 @@
   </form>
   <div id="google_translate_element_box2"></div>
   <div id="mobileMenu"></div>
+  <% disabled_class = controller_name == "home" ? "is-temporary-disabled" : "" %>
+  <% disabled_data_source = controller_name == "home" ? "temporary-disabled" : "" %>
   <ul class="mobile-hide">
-    <li>
+    <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>">
       <a <% if controller?("map") && action?("index") %>class="current"<% end %> href="/map">Map</a>
     </li>
-    <li>
-      <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Country profiles</a>
+    <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>">
+      <a <% if controller?("countries") && action?("index") || action?("show") %>class="current"<% end %> href="/countries">Country profiles</a>
     </li>
-    <li>
+    <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>">
       <a <% if controller?("compare") && action?("index") %>class="current"<% end %> href="/compare-countries">Country Comparisons</a>
     </li>
-    <li>
+    <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>">
       <a <% if controller?("countries") && action?("pantropical") %>class="current"<% end %> href="/pantropical">Pantropical Overview</a>
     </li>
-    <li>
+    <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>">
       <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="#">About</a>
       <ul class="submenu">
         <li>
           <!-- <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="<%= posts_path %>">Blog</a> -->
           <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="#">Blog</a>
         </li>
-        <li><a href="#">About GFW Climate</a></li>
-        <li><a href="#">Data providers and partners</a></li>
-        <li><a href="#">Tutorials</a></li>
-        <li><a href="#">Stay informed</a></li>
-        <li><a href="http://data.globalforestwatch.org/">Open Data Portal</a></li>
-        <li><a href="#">Definitions page</a></li>
-        <li><a href="#">FAQs page</a></li>
-        <li><a href="#">Technical Notes and Publications</a></li>
+        <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>"><a href="#">About GFW Climate</a></li>
+        <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>"><a href="#">Data providers and partners</a></li>
+        <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>"><a href="#">Tutorials</a></li>
+        <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>">
+          <a href="http://www.globalforestwatch.org/getinvolved/provide-feedback">Submit Feedback</a>
+        </li>
+        <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>"><a href="http://data.globalforestwatch.org/">Open Data Portal</a></li>
+        <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>"><a href="#">Definitions page</a></li>
+        <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>"><a href="#">FAQs page</a></li>
+        <li class="<%= disabled_class %> source" data-source="<%= disabled_data_source %>"><a href="#">Technical Notes and Publications</a></li>
       </ul>
     </li>
   </ul>

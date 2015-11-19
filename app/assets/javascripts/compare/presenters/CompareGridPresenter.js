@@ -13,7 +13,8 @@ define([
     status: new (Backbone.Model.extend({
       defaults: {
         name: 'compare-countries',
-        widgetsActive: ["1","2","3","4","5"]
+        widgetsActive: [1,2,3,4,5],
+        globalThresh: 30
       }
     })),
 
@@ -57,7 +58,11 @@ define([
 
       'Widgets/change': function(widgetsActive) {
         this._onWidgetsChange(widgetsActive);
-      }
+      },
+
+      'Threshold/change': function(thresh) {
+        this.status.set('globalThresh', thresh);
+      },
 
     }],
 
@@ -75,7 +80,7 @@ define([
 
     _onOptionsUpdate: function(id,slug,wstatus) {
       var options = _.clone(this.status.get('options'));
-      if (!!options[slug]) {
+      if (!!options[slug] && !!options[slug][id]) {
         options[slug][id][0] = wstatus;
         // Set and publish
         this.status.set('options', options);
@@ -85,7 +90,7 @@ define([
 
     _onWidgetsDelete: function(id) {
       var widgetsActive = _.clone(this.status.get('widgetsActive'));
-      widgetsActive = _.without(widgetsActive,id.toString());
+      widgetsActive = _.without(widgetsActive,id);
       this.status.set('widgetsActive', widgetsActive);
       this.status.set('options', this.getOptions());
       mps.publish('Place/update');
@@ -116,7 +121,7 @@ define([
     setActiveWidgets: function() {
       var widgetIds = _.map(this.status.get('options'),function(c){
         return _.map(c, function(w,k){
-          return k.toString();
+          return Number(k);
         })
       });
       this.status.set('widgetsActive',widgetIds[0]);
@@ -154,10 +159,6 @@ define([
 
 
     // COMPARE EVENTS
-    render: function() {
-      this.view.render();
-    },
-
     changeCompare: function() {
       var compare1 = this.objToSlug(this.status.get('compare1'),'+');
       var compare2 = this.objToSlug(this.status.get('compare2'),'+');
@@ -180,7 +181,7 @@ define([
         return c;
       });
       this.status.set('data', data);
-      this.render();
+      this.view.render();
       mps.publish('Widgets/update',[this.status.get('widgetsActive')]);
     },
 
@@ -195,7 +196,7 @@ define([
       var compare1 = (params) ? params.compare1 : this.status.get('compare1');
       var compare2 = (params) ? params.compare2 : this.status.get('compare2');
       var widgets = _.filter(this.status.get('widgets'), _.bind(function(w){
-        return _.contains(this.status.get('widgetsActive'),w.id.toString());
+        return _.contains(this.status.get('widgetsActive'),w.id);
       }, this ));
 
       // Get the current options
@@ -216,18 +217,18 @@ define([
       // CAREFUL: if you add anything new to the widgets.json
       //          remember to add it inside CompareGridPresenter (getTabsOptions function) and inside widgetPresenter (changeTab function)
       // ******
-      return _.map(tabs, function(t){
+      return _.map(tabs, _.bind(function(t){
         return {
           type: t.type,
           position: t.position,
           unit: (t.switch) ? t['switch'][0]['unit'] : null,
           start_date: (t.range) ? t['range'][0] : null,
           end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-          thresh: (t.thresh) ? t['thresh'] : 0,
+          thresh: (t.thresh) ? this.status.get('globalThresh') : 0,
           section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
           template: (t.template) ? t['template'] : null,
         }
-      })[0];
+      }, this ))[0];
     },
 
     getIndicatorOptions: function(indicators) {

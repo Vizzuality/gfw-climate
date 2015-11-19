@@ -17,13 +17,16 @@ define([
     //the order will be Grump, forest cover,Conservation, Forest Use, and People layers and finally  Forest Change layers
     layerOrder: [
       "grump2000",
-      //FOREST COVER
+      //LAND COVER
       "forest2000",
+      "cod_primary_forest_wgs",
       "WMSLayer",
       "global_land_cover",
       "us_land_cover",
       "us_land_cover_change",
       "colombia_forest_change",
+      "plantations_by_type",
+      "plantations_by_species",
       "intact_forest",
       "pantropical",
       "idn_primary",

@@ -72,13 +72,22 @@
             "unitname": "%",
             "unitfullname": "percentage"
           }
-        ]
+        ],
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
       {
         "id": 1,
-        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
+        "name": "Gross tree cover loss",
+        "type": "line",
+        "unit": "hectares",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 1000,
+        "name": "Tree cover loss in primary forest",
         "type": "line",
         "unit": "hectares",
         "tab": 1,
@@ -86,7 +95,14 @@
       },
       {
         "id": 2,
-        "name": "Hansen / UMD / Google / USGS / NASA (IPCC Approach 3)",
+        "name": "Gross tree cover loss",
+        "type": "line",
+        "unit": "percentage",
+        "tab": 1
+      },
+      {
+        "id": 1001,
+        "name": "Tree cover loss in primary forest",
         "type": "line",
         "unit": "percentage",
         "tab": 1
@@ -194,7 +210,8 @@
             "unitname": "Mt CO2",
             "unitfullname": "Mega ton of Carbon dioxide"
           }
-        ]
+        ],
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
@@ -214,7 +231,15 @@
       },
       {
         "id": 13,
-        "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
+        "name": "Gross carbon emissions",
+        "type": "line",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 1002,
+        "name": "Carbon emissions from primary forest",
         "type": "line",
         "unit": "tg-c",
         "tab": 1,
@@ -222,7 +247,14 @@
       },
       {
         "id": 14,
-        "name": "Baccini/WHRC/WRI (IPCC Tier 1/2)",
+        "name": "Gross carbon emissions",
+        "type": "line",
+        "unit": "mt-co2",
+        "tab": 1
+      },
+      {
+        "id": 1003,
+        "name": "Carbon emissions from primary forest",
         "type": "line",
         "unit": "mt-co2",
         "tab": 1
@@ -274,7 +306,8 @@
         "position": 3,
         "name": "FAO",
         "type": "number",
-        "template" : "forest-area-fao"
+        "template" : "forest-area-fao",
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
@@ -335,6 +368,7 @@
         ],
         "thresh": 25,
         "threshunit": "biomass/carbon",
+        "template" : "biomass-carbon-stocks",
         "default": true
       },
       {
@@ -352,7 +386,8 @@
             "unit": "carbon",
             "unitname": "carbon"
           }
-        ]
+        ],
+        "template" : "biomass-carbon-stocks"
       },
       {
         "position": 3,
@@ -368,7 +403,9 @@
             "unit": "carbon",
             "unitname": "carbon"
           }
-        ]
+        ],
+        "template" : "biomass-carbon-stocks",
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
@@ -560,6 +597,7 @@
         ],
         "thresh": 25,
         "threshunit": "biomass/carbon",
+        "template" : "biomass-density",
         "default": true
       },
       {
@@ -577,7 +615,8 @@
             "unit": "carbon",
             "unitname": "carbon"
           }
-        ]
+        ],
+        "template" : "biomass-density"
       },
       {
         "position": 3,
@@ -593,7 +632,9 @@
             "unit": "carbon",
             "unitname": "carbon"
           }
-        ]
+        ],
+        "template" : "biomass-density",
+        "note" : "FAO uses a 10% canopy density by default"
       }
     ],
     "indicators": [
@@ -636,7 +677,7 @@
         "direction": "belowground"
       },
       {
-        "id": 8,
+        "id": 67,
         "name": "Woods Hole/Baccini",
         "type": "total",
         "unit": "number",
@@ -645,7 +686,7 @@
         "default": true
       },
       {
-        "id": 9,
+        "id": 68,
         "name": "Woods Hole/Baccini",
         "type": "total",
         "unit": "number",
@@ -689,7 +730,7 @@
         "direction": "belowground"
       },
       {
-        "id": 22,
+        "id": 69,
         "name": "Other national data",
         "type": "total",
         "unit": "number",
@@ -697,7 +738,7 @@
         "section": "biomass"
       },
       {
-        "id": 23,
+        "id": 70,
         "name": "Other national data",
         "type": "total",
         "unit": "number",
@@ -741,7 +782,7 @@
         "direction": "belowground"
       },
       {
-        "id": 22,
+        "id": 71,
         "name": "FAO",
         "type": "total",
         "unit": "number",
@@ -749,7 +790,7 @@
         "section": "biomass"
       },
       {
-        "id": 23,
+        "id": 72,
         "name": "FAO",
         "type": "total",
         "unit": "number",

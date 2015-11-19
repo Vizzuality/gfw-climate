@@ -26,13 +26,17 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    width: 100%;
     padding: 30px;
     @media screen and (min-width: $br-mobile) {
-      padding: 120px 60px;
+      // padding: 120px 60px;
     }
   }
 
   .description-container {
+    position: absolute;
+    top: 50%;
+    transform: translatey(-50%);
     margin: 0;
 
     > .title {
@@ -91,10 +95,15 @@
       height: 425px;
     }
 
+
     > .slide-container {
       display: flex;
-      min-height: 620px;
+      min-height: 425px !important;
       padding: 0;
+
+      @media (min-width: 850px) {
+        min-height: 620px !important;
+      }
 
       img {
         position: absolute;
