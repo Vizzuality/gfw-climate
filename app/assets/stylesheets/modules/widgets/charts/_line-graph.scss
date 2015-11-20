@@ -304,12 +304,29 @@
       justify-content: center;
       align-items: center;
 
+      .select-wrapper {
+        position: relative;
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 44%;
+          right: 25px;
+          height: 8px;
+          width: 8px;
+          border-right: 2px solid $black;
+          border-bottom: 2px solid $black;
+          transform: rotate(45deg) translatey(-50%);
+          pointer-events: none;
+        }
+      }
+
       .year-dropdown {
         display: blocK;
         appearance: none;
         // height: 34px;
         // width: 103px;
-        padding: 0 10px;
+        padding: 0 30px 0 10px;
         border: 1px solid $color-1;
         border-radius: 40px;
         display: flex;

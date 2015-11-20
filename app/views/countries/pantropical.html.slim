@@ -83,13 +83,15 @@
           .vis-tab.country
             div.select-years
               |Average:
-              select.year-dropdown#year-drop-left
-                - for i in (2001..2013)
-                  option value="#{i}"
-                    |#{i}
+              .select-wrapper
+                select.year-dropdown#year-drop-left
+                  - for i in (2001..2013)
+                    option value="#{i}"
+                      |#{i}
               |to
-              select.year-dropdown#year-drop-right
-                - for i in (2001..2013)
-                  option value="#{i}"
-                    |#{i}
+              .select-wrapper
+                select.year-dropdown#year-drop-right
+                  - for i in (2001..2013)
+                    option value="#{i}"
+                      |#{i}
 
