@@ -786,9 +786,11 @@ function addCommas(nStr) {
     })(this);
 
     root.toggle_view = (function(_this) {
-      return function(view_type, year) {
+      return function(view_type, year, noSpinner) {
         root.remove_labels();
-        root.set_loading();
+        if (!noSpinner) {
+          root.set_loading();
+        }
         switch (view_type) {
           case 'nydfs':
             return root.display_ny();

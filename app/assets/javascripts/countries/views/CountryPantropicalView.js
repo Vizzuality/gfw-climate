@@ -13,17 +13,23 @@ define([
 
     events: {
       'click #view_selection .btn' : 'switch_view',
+      // 'click .minusy' : '_change_year',
+      'input #year-picker' : '_change_year',
       'click .minusy' : '_change_year',
       'change #year-drop-left' : '_set_year',
       'change #year-drop-right' : '_set_year',
       'click .btn-submit' : '_submityears',
-      'click .link' : '_goto'
     },
 
     initialize: function() {
-      this.$years = $('#year-picker');
       //I can't find who is giving display:block to country tab...
       $('#vis').find('.country').hide();
+      this._cacheVars();
+    },
+
+    _cacheVars: function() {
+      this.$years = $('#year-picker');
+      this.$yearsPickerLabel = $('#year-picker-label');
     },
 
     switch_view: function(e) {
@@ -109,30 +115,27 @@ define([
       }
     },
 
-    _goto: function(argument) {
-      console.log('hola');
+    _change_year: function(e) {
+      var year = e.currentTarget.value;
+  
+      this.$yearsPickerLabel.val(year);
+      this._setLabelPosition(year);
+
+      toggle_view('change', year, true)
     },
 
-    _change_year: function(e) {
-      var $year = $(e.target);
-      if ($year.hasClass('stop')) return;
+    _setLabelPosition: function(year) {
+      var width = this.$years.width();
+      var newPlace;
 
-      var current_y = ~~this.$years.find('.y').text();
-      this.$years.find('.stop').removeClass('stop');
-      if ($year.hasClass('plusy')) {
-        //going a year on the FUTURE, MARTY
-        this.$years.find('.y').text(current_y + 1);
-        if (current_y + 1 >= ~~this.$years.data('maxyear')) {
-          this.$years.find('.plusy').addClass('stop');
-        }
-      } else {
-        //going a year on the past
-        this.$years.find('.y').text(current_y - 1);
-        if (current_y - 1 <= ~~this.$years.data('minyear')) {
-          this.$years.find('.minusy').first().addClass('stop');
-        }
-      }
-      toggle_view('change', ~~this.$years.find('.y').text())
+      // Figure out placement percentage between left and right of input
+      var newPoint = (year - this.$years.attr("min")) / (this.$years.attr("max") - this.$years.attr("min"));
+
+      if (newPoint < 0) { newPlace = 0; }
+         else if (newPoint > 1) { newPlace = width; }
+         else { newPlace = width * newPoint; }
+
+      this.$yearsPickerLabel.css({ left: newPlace });
     },
 
     _renderChangeComponents: function() {
