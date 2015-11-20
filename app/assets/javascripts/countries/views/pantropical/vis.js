@@ -91,6 +91,9 @@ function addCommas(nStr) {
                         }
                       };
       this.year_to_compare = undefined;
+      this.years = undefined;
+      this.year_left = undefined;
+      this.year_right = undefined;
       this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
         x: this.width / 2,
@@ -170,41 +173,43 @@ function addCommas(nStr) {
     BubbleChart.prototype.create_nodes = function() {
       this.data.forEach((function(_this) {
         return function(d) {
-          if (d.Average == 0) return;
-          var node;
-          node = {
-            id: d.id,
-            radius: _this.radius_scale(d.Average * 1.6),
-            value: d.Average,
-            name: d.Country,
-            org: d.organization,
-            group: d.Continent,
+          if (parseFloat(d.Average).toFixed(3) > 0.003) {
+            var node;
+            node = {
+              id: d.id,
+              radius: _this.radius_scale(d.Average * 1.6),
+              value: d.Average,
+              name: d.Country,
+              org: d.organization,
+              group: d.Continent,
+              iso: d.FIPS_CNTRY,
 
-            year: d.start_year,
-            y2001: d.y2001,
-            y2002: d.y2002,
-            y2003: d.y2003,
-            y2004: d.y2004,
-            y2005: d.y2005,
-            y2006: d.y2006,
-            y2007: d.y2007,
-            y2008: d.y2008,
-            y2009: d.y2009,
-            y2010: d.y2010,
-            y2011: d.y2011,
-            y2012: d.y2012,
-            y2013: d.y2013,
-            continent: d.Continent,
-            country: d.Country,
-            category: d.Category,
-            fips_cntry: d.FIPS_CNTRY,
-            average: d.Average,
+              year: d.start_year,
+              y2001: d.y2001,
+              y2002: d.y2002,
+              y2003: d.y2003,
+              y2004: d.y2004,
+              y2005: d.y2005,
+              y2006: d.y2006,
+              y2007: d.y2007,
+              y2008: d.y2008,
+              y2009: d.y2009,
+              y2010: d.y2010,
+              y2011: d.y2011,
+              y2012: d.y2012,
+              y2013: d.y2013,
+              continent: d.Continent,
+              country: d.Country,
+              category: d.Category,
+              fips_cntry: d.FIPS_CNTRY,
+              average: d.Average,
 
-            x: Math.random() * 900,
-            y: Math.random() * 800
-          };
+              x: Math.random() * 900,
+              y: Math.random() * 800
+            };
 
-          return _this.nodes.push(node);
+            return _this.nodes.push(node);
+          } 
         };
       })(this));
       return this.nodes.sort(function(a, b) {
@@ -255,19 +260,39 @@ function addCommas(nStr) {
     };
 
     BubbleChart.prototype.display_group_all = function() {
-      this.force.gravity(this.layout_gravity).charge(this.charge).friction(0.9).on("tick", (function(_this) {
-        return function(e) {
-          _this.circles.transition().duration(50).attr("r", function(d) {
-              return _this.radius_scale(d.value * 1.6);
-            })
-          return _this.circles.each(_this.move_towards_center(e.alpha)).attr("cx", function(d) {
-            return d.x;
-          }).attr("cy", function(d) {
-            return d.y;
-          });
+      this
+        .force
+        .gravity(this.layout_gravity)
+        .charge(this.charge).friction(0.9)
+        .on("end", function(e) {
+          root.$pantropicalVis.removeClass('is-loading');
+        })
+        .on("tick", (function(_this) {
+          return function(e) {
+            _this.circles.transition().duration(50).attr("r", function(d) {
+                return _this.radius_scale(d.value * 1.6);
+              })
+            return _this.circles.each(_this.move_towards_center(e.alpha)).attr("cx", function(d) {
+              return d.x;
+            }).attr("cy", function(d) {
+              return d.y;
+            });
         };
       })(this));
       this.force.start();
+
+      var that = this;
+      this.circles.on("mouseenter", function(d, i) {
+        var el = d3.select(this);
+        var xpos = ~~el.attr('cx') - 115;
+        var ypos = (el.attr('cy') - d.radius - 37);
+        d3.select("#pantropical_tooltip")
+          .style('top',ypos+"px")
+          .style('left',xpos+"px")
+          .style('display','block');
+        return that.show_details(d, i, this);
+      })
+
       return this.hide_years();
     };
 
@@ -283,8 +308,8 @@ function addCommas(nStr) {
     BubbleChart.prototype.buoyancy = function(alpha) {
       var that = this;
       return function(d) {
-          var targetY = that.centerY
-          d.y = d.y + (targetY - d.y) * (that.defaultGravity) * alpha * alpha * alpha * 100
+        var targetY = that.centerY
+        d.y = d.y + (targetY - d.y) * (that.defaultGravity) * alpha * alpha * alpha * 100;
       };
     };
 
@@ -293,18 +318,13 @@ function addCommas(nStr) {
       return function(d){
         var targetY = that.centerY;
         var targetX = 0;
-
         if (d.category.includes('non-NYDF'))
           d.category = 'Other non-NYDF Signatory';
-        if ((d.category === that.NYDF)) {
-          targetX = 550
+        if (d.category === that.NYDF) {
+          targetX = 600
         } else {
           targetX = 450
         };
-
-
-
-
         d.y = d.y + (targetY - d.y) * (that.defaultGravity) * alpha * 1.1
         d.x = d.x + (targetX - d.x) * (that.defaultGravity) * alpha * 1.1
       };
@@ -324,10 +344,23 @@ function addCommas(nStr) {
             .each(that.mandatorySort(e.alpha))
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+            .attr("cy", function(d) { return d.y; })
+        })
+        .on("end", function(e) {
+          root.$pantropicalVis.removeClass('is-loading');
         })
         .start();
-      //return this.display_ny();
+
+        this.circles.on("mouseenter", function(d, i) {
+          var el = d3.select(this);
+          var xpos = ~~el.attr('cx') - 115;
+          var ypos = (el.attr('cy') - d.radius - 37);
+          d3.select("#pantropical_tooltip")
+            .style('top',ypos+"px")
+            .style('left',xpos+"px")
+            .style('display','block');
+          return that.show_details(d, i, this);
+        })
     };
 
     BubbleChart.prototype.display_by_change = function(year) {
@@ -354,11 +387,35 @@ function addCommas(nStr) {
             .each(that.mandatorySort(e.alpha))
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+            .attr("cy", function(d) { return d.y; })
+            // .each(function(d) {
+            //   // filter the circles so we only paint BRA. IND and the sums of YESNY and NONY
+            //   var valid_ids = [1,2,103,104];
+            //   if (valid_ids.indexOf(~~d.id) == -1) {
+            //     // we don't want to display that country
+            //     $(this).attr("cx", Math.random() -2000);
+            //     $(this).attr("cy", Math.random() -2000);
+            //   } else {
+            //     $(this).attr("cx", function(d) { return d.x; });
+            //     $(this).attr("cy", function(d) { return d.y; });
+            //   }
+            // });
+        })
+        .on("end", function(e) {
+          root.$pantropicalVis.removeClass('is-loading');
         })
         .start();
-      //return this.display_ny();
 
+        this.circles.on("mouseenter", function(d, i) {
+          var el = d3.select(this);
+          var xpos = ~~el.attr('cx') - 115;
+          var ypos = (el.attr('cy') - d.radius - 37);
+          d3.select("#pantropical_tooltip")
+            .style('top',ypos+"px")
+            .style('left',xpos+"px")
+            .style('display','block');
+          return that.show_details(d, i, this);
+        })
     };
 
     BubbleChart.prototype.move_towards_year = function(alpha) {
@@ -372,29 +429,281 @@ function addCommas(nStr) {
       })(this);
     };
 
-    BubbleChart.prototype.display_by_country = function() {
-      var years, years_data, years_x;
-      years_x = {
-        "2001": this.width - (this.width*0.95),
-        "2002": this.width - (this.width*0.85),
-        "2003": this.width - (this.width*0.75),
-        "2004": this.width - (this.width*0.65),
-        "2005": this.width - (this.width*0.55),
-        "2006": this.width - (this.width*0.45),
-        "2007": this.width - (this.width*0.35),
-        "2008": this.width - (this.width*0.25),
-        "2009": this.width - (this.width*0.15),
-        "2010": this.width - (this.width*0.05)
-      };
-      years_data = d3.keys(years_x);
-      years = this.vis.selectAll(".years").data(years_data);
-      return years.enter().append("text").attr("class", "years").attr("x", (function(_this) {
-        return function(d) {
-          return years_x[d];
-        };
-      })(this)).attr("y", 40).attr("text-anchor", "middle").text(function(d) {
-        return d;
+    BubbleChart.prototype.display_by_country = function(values_array) {
+      $('#svg_vis').css({
+        'height':1100
       });
+
+      var that = this;
+      var style_string;
+
+      var circles = this.generateCircles(values_array)
+
+      this.force
+        .gravity(0)
+        .friction(0.9)
+        .charge(that.defaultCharge)
+        .on("tick", function(e){
+          circles.each(that.buoyancy(e.alpha));
+        })
+        .on("end", function(e) {
+          root.$pantropicalVis.removeClass('is-loading');
+        })
+        .start();
+        
+    };
+
+    BubbleChart.prototype.generateCircles = function(values_array) {
+      var that = this;
+      var circles = that.circles;
+      var style_string;
+
+      circles
+        .transition().duration(100).attr("r", function(d) {
+          id = d.id;
+          for (index in values_array){
+            // find corresponding value for this bubble
+            if (values_array[index].id == id) {
+              var value = values_array[index].value;
+              break;
+            }
+          }
+          
+          return that.radius_scale(value * 1.6);
+        });
+
+      circles
+        .each( function(d) {
+          var coordinates = [];
+          var label_text = "";
+          // look up current bubble in value_array
+          // use that index to assign order
+          // use order to determine coordinates
+          for (var i = 0; i < values_array.length; i++){
+            id_search_string = "bubble_" + values_array[i].id;
+            
+            if (this.id == id_search_string) {
+              style_string = 'order:' + i + ";";
+              $(this).attr('style', style_string);
+
+              coordinates = that.get_coordinates(i);
+
+              $(this).attr('cx', coordinates[0]);
+              $(this).attr('cy', coordinates[1]);
+              $(this).attr('data-url', '/countries/' + d.iso);
+
+              var value = values_array[i].value;
+              var radius = that.radius_scale(value * 1.6);
+
+              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, radius);
+              document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
+
+              break;
+            }
+          }
+        })
+        .on('click', function(e) {
+          // var url = $(this).data('url');
+          // window.location.href = url;
+        })
+        .on("mouseenter",function() {
+            d3.event.stopPropagation(); 
+        });
+
+      return circles;
+    };
+
+    BubbleChart.prototype.get_label_text = function(order, coordinates, id, country, data, radius) {
+      var x_coord = 'x="' + coordinates[0] + '" ';
+
+      var y_coord =         'y="' + coordinates[1] + '" ';
+      var y_coord_country = 'y="' + (coordinates[1]+45) + '" ';
+      var y_coord_data =    'y="' + (coordinates[1]+65) + '" ';
+
+      var id_country = 'id="' + id + '-country" ';
+      var id_data = 'id="' + id + '-data" ';
+
+
+      if ( order === 1 && radius < 47.5 || order === 2 && radius < 47.5 || order === 3 && radius < 47.5) {
+        var y_coord_country = 'y="' + (coordinates[1]+60) + '" ';
+        var y_coord_data =    'y="' + (coordinates[1]+80) + '" ';
+      } 
+
+      if ( radius > 47.5 ) {
+        var y_coord_country = 'y="' + (coordinates[1]) + '" ';
+        var y_coord_data =    'y="' + (coordinates[1]+20) + '" ';
+      }
+
+      var label_text =
+      '<text class="country-label" ' +
+              id_country +
+              x_coord +
+              y_coord_country +
+              'text-anchor="middle" width="150px">' +
+              country +
+      '</text>' +
+
+      '<text  class="data-label"' +
+              id_data +
+              x_coord +
+              y_coord_data +
+              'text-anchor="middle">' +
+              parseFloat(data*100).toFixed(3) + '%' + 
+      '</text>';
+
+      return label_text;
+    }
+
+    BubbleChart.prototype.calculate_average = function(d) {
+      var year_left = this.year_left;
+      var year_right = this.year_right;
+      var diff_years = Math.abs(this.year_right - this.year_left);
+      var years_between = diff_years - 1;
+      var years_total = diff_years + 2;
+      var lookup_years = [];
+
+      // push years onto array
+
+      lookup_years.push(year_left);
+      // generate years in between
+      for(var i = 0; i < years_between; i++){
+        var sum = i + 1;
+        lookup_years.push(year_left + sum);
+      }
+      lookup_years.push(year_right);
+
+      // look up data corresponding to year
+      var sum_data = 0;
+      for (year in lookup_years){
+        for (key in d) {
+          if (key == ("y" + lookup_years[year].toString())){
+            sum_data += parseFloat(d[key]);
+          }
+        }
+      }
+
+      var avg = sum_data/years_total;
+
+      return avg.toFixed(6);
+    };
+
+    // returns array of bubbles in descending order
+    // array [{id1, value1}, {id2, value2}, ...]
+    BubbleChart.prototype.sort_desc = function(array){
+
+      array.sort(function(a, b) {
+        if (a.value > b.value) {
+          return 1;
+        }
+        if (a.value < b.value) {
+          return -1;
+        }
+        return 0;
+      });
+      array = array.reverse();
+
+      return array;
+    };
+
+    BubbleChart.prototype.set_years = function(year){
+      this.year = year;
+
+      if (! !!this.year) {
+        this.year_left = 2001;
+        this.year_right = 2001;
+      } else {
+        this.year_left = this.year[0];
+        this.year_right = this.year[1];
+      }
+    };
+
+
+    BubbleChart.prototype.get_values_array = function() {
+      var that = this;
+      var values_array = [];
+
+      this.circles.each(function(d) {
+        if (that.year_left == that.year_right) {
+          var year_string = "y" + that.year_left;
+          var value = d[year_string];
+        } else {
+          var value = that.calculate_average(d);
+        }
+        var id = ~~d.id;
+        values_array.push({id: id, value: value});
+      });
+      return this.sort_desc(values_array);
+    };
+
+    // returns an array of the coordinates according to the sorted_array index (bubble_id, starts at 1)
+    // sorted_index, index_of start at 0
+    BubbleChart.prototype.get_coordinates = function(sorted_index){
+      var dist_x = 125;
+      var dist_y = 55;
+      var offset_x = 150;
+      var offset_y = 50;
+      var col_count = 6;
+
+      if (sorted_index < 4){
+        // bubbles at index 0, 1, 2, 3 are in line 1
+        col_count = 4;
+        dist_x = 170;
+        offset_x = 275;
+      } else {
+        // modify current index to push bubbles into line 2
+        sorted_index += 2;
+      }
+
+      if (sorted_index === 0 ) {
+        offset_x = 225
+      }
+      
+      if (sorted_index === 3 ) {
+        offset_x = 260
+      }
+
+      var x_position = (((sorted_index) % col_count) * dist_x);
+      var y_position = 0;
+
+      if (sorted_index < (col_count)){
+        y_position = 150;
+      } else if (sorted_index < (2*col_count)){
+        y_position = 300;
+      } else if (sorted_index < (3*col_count)){
+        y_position = 450;
+      } else if (sorted_index < (4*col_count)){
+        y_position = 600;
+      } else if (sorted_index < (5*col_count)){
+        y_position = 750;
+      } else if (sorted_index < (6*col_count)){
+        y_position = 900;
+      } else if (sorted_index < (7*col_count)){
+        y_position = 1050;
+      } else if (sorted_index < (8*col_count)){
+        y_position = 1200;
+      } else if (sorted_index < (9*col_count)){
+        y_position = 1350;
+      } else if (sorted_index < (10*col_count)){
+        y_position = 1500;
+      } else if (sorted_index < (11*col_count)){
+        y_position = 1650;
+      } else if (sorted_index < (12*col_count)){
+        y_position = 1800;
+      } else if (sorted_index < (13*col_count)){
+        y_position = 1950;
+      } else if (sorted_index < (14*col_count)){
+        y_position = 2100;
+      } else if (sorted_index < (15*col_count)){
+        y_position = 2250;
+      }
+
+      y_position += dist_y;
+
+      var cx = x_position + offset_x;
+      var cy = y_position + offset_y;
+
+
+      return [cx, cy];
     };
 
     BubbleChart.prototype.hide_years = function() {
@@ -406,7 +715,7 @@ function addCommas(nStr) {
       var content;
       d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
       content = "<span class=\"value\"> " + data.name + "</span><br/>";
-      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (addCommas(data.value)) + "</span><br/>";
+      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.value*100).toFixed(3) + "%</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 
@@ -431,8 +740,15 @@ function addCommas(nStr) {
     render_vis = function(csv) {
       chart = new BubbleChart(csv);
       chart.start();
+      root.cache_vars();
       return root.display_all();
     };
+    root.cache_vars = (function(_this) {
+      return function() {
+        root.$pantropicalVis = $('.pantropical-vis');
+        root.$visContainer = $('#svg_vis');
+      };
+    })(this);
     root.display_all = (function(_this) {
       return function() {
         return chart.display_group_all();
@@ -449,12 +765,30 @@ function addCommas(nStr) {
       };
     })(this);
     root.display_country = (function(_this) {
-      return function() {
-        return chart.display_by_country();
+      return function(year) {
+        chart.set_years(year);
+        var values_array = chart.get_values_array();
+        return chart.display_by_country(values_array);
       };
     })(this);
+
+    root.remove_labels = (function(_this) {
+      return function() {
+        root.$visContainer.find('.country-label').remove();
+        root.$visContainer.find('.data-label').remove();
+      };
+    })(this);
+
+    root.set_loading = (function(_this) {
+      return function() {
+        root.$pantropicalVis.addClass('is-loading');
+      };
+    })(this);
+
     root.toggle_view = (function(_this) {
       return function(view_type, year) {
+        root.remove_labels();
+        root.set_loading();
         switch (view_type) {
           case 'nydfs':
             return root.display_ny();
@@ -463,7 +797,7 @@ function addCommas(nStr) {
           case 'change':
             return root.display_change(year);
           case 'country':
-            return root.display_country();
+            return root.display_country(year);
         }
       };
     })(this);
