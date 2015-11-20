@@ -177,7 +177,9 @@ LineChart.prototype._drawLegend = function() {
   var legend = _.map(self.indicators,function(indicator,i){
     return {
       name: indicator.name,
-      color: self.color[i]
+      color: self.color[i],
+      // We need to ensure that the data is in order
+      visible: !!self.data[i]
     }
   })
   self.parent._drawLegend(legend);
