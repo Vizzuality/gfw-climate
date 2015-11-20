@@ -25,9 +25,16 @@ define([
       $('#view_selection').find('.btn').removeClass('active');
       $(e.target).addClass('active');
       $('#vis').find('.' + $(e.target).attr('id')).show();
-      toggle_view($(e.target).attr('id'));
 
-      new PantropicalTotalEmissionsView();
+      var viewId = $(e.target).attr('id');
+      toggle_view(viewId);
+
+      if(viewId === 'change') {
+        $('#vis').addClass(viewId);
+        var totalEmissionsChart = new PantropicalTotalEmissionsView();
+      } else {
+        $('#vis').removeClass();
+      }
     },
     _change_year: function(e) {
       var $year = $(e.target);

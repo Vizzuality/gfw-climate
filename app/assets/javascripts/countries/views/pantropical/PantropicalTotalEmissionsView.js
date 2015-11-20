@@ -8,17 +8,16 @@ define([
 
   var TotalEmissionsView = Backbone.View.extend({
 
+    el: '#totalEmissionsChart',
+
     initialize: function() {
       this.render();
     },
 
     render: function() {
       var self = this;
-      $('#totalEmissionsChart').css({
-        width: '100%',
-        height: '400px',
-        backgroundColor: '#fff'
-      });
+      
+      this.$el.html('');
 
       d3.csv('/patropical_total_emissions.csv', function(data){
         self._parseData(data);
