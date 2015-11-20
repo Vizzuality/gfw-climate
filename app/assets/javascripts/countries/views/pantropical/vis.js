@@ -503,8 +503,8 @@ function addCommas(nStr) {
           }
         })
         .on('click', function(e) {
-          // var url = $(this).data('url');
-          // window.location.href = url;
+          var url = $(this).data('url');
+          window.location.href = url;
         })
         .on("mouseenter",function() {
             d3.event.stopPropagation(); 
@@ -803,7 +803,7 @@ function addCommas(nStr) {
         }
       };
     })(this);
-    return d3.csv("/pantropicalTESTING.csv", render_vis);
+    return d3.csv("/pantropicalTESTING_isos.csv", render_vis);
   });
 
 }).call(this);
