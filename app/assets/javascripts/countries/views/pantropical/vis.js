@@ -503,8 +503,8 @@ function addCommas(nStr) {
           }
         })
         .on('click', function(e) {
-          var url = $(this).data('url');
-          window.location.href = url;
+          // var url = $(this).data('url');
+          // window.location.href = url;
         })
         .on("mouseenter",function() {
             d3.event.stopPropagation(); 
