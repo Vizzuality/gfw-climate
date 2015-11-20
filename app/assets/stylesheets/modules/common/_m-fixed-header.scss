@@ -19,6 +19,7 @@
     max-width: 1600px;
     margin: 0 auto;
     background: $extra-light-grey;
+    overflow: hidden;
   }
 
   ul {
@@ -28,6 +29,18 @@
       width: 47.5%;
       padding: 10px 0;
       text-transform: uppercase;
+    }
+
+    &.-country {
+      display: inline-block;
+      height: 36px;
+
+      transform: translate(0, 0);
+      transition: .2s all ease;
+      li {
+        float: left;
+        width: 100%;
+      }
     }
   }
 }

@@ -5,7 +5,7 @@ define([
   'countries/views/show/TabsView',
   'countries/views/show/CountryModalView',
   'countries/views/show/WidgetGridView'
-], function(Backbone, CountryShowPresenter, FixedHeaderView,
+], function(Backbone, FixedHeaderView,
   CountryShowHeaderView, TabsView, CountryModalView, WidgetGridView) {
 
   'use strict';

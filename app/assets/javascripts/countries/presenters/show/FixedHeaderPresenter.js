@@ -27,6 +27,9 @@ define([
       },
       'Country/update': function(params) {
         this._onPlaceGo(params);
+      },
+      'Grid/ready': function() {
+        this.view.getCutPoints()
       }
     }],
 
@@ -36,37 +39,20 @@ define([
     * @param  {Object} place PlaceService's place object
     */
     _onPlaceGo: function(params) {
-      // var country1;
-      // var country2;
-      // // Only render if compare params exists and they are different from the ones saved
-      // if ((!!params.compare1 && !!params.compare2) && (this.status.get('compare1') != params.compare1 || this.status.get('compare2') != params.compare2)) {
-
-      //   var complete = _.invoke([
-      //     country1 = new CountryModel({ id: params.compare1.iso }),
-      //     country2 = new CountryModel({ id: params.compare2.iso }),
-      //   ], 'fetch');
-
-      console.log(params.country.iso)
-
+      // Check if the incoming params are the same as current ones before render!
       var country = new CountryModel({iso: params.country.iso});
 
       country.fetch().done(function() {
         this.status.set('country', params);
         this.view.render();
-      });
-
-
-      //   $.when.apply($, complete).done(function() {
-      //     this.status.set('compare1', params.compare1);
-      //     this.status.set('compare2', params.compare2);
-
-      //     this.status.set('country1', country1);
-      //     this.status.set('country2', country2);
-
-      //     this.view.render();
-      //   }.bind(this));
-      // }
+      }.bind(this));
     },
+
+    setName: function(d) {
+      this.status.set({
+        dataName: d
+      });
+    }
 
 
   });

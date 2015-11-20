@@ -1,10 +1,11 @@
 define([
+  'mps',
   'backbone',
   'handlebars',
   'widgets/views/WidgetView',
   'text!countries/templates/country-subnational-grid.handlebars',
   'text!countries/templates/no-indicators.handlebars'
-], function(Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
+], function(mps, Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
 
   var SubNationalView = Backbone.View.extend({
 
@@ -112,6 +113,7 @@ define([
       }
 
       this.parent.append(this.$el);
+      mps.publish('Grid/ready', []);
     },
 
     parseData: function() {

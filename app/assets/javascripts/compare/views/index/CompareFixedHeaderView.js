@@ -49,7 +49,6 @@ define([
     },
 
     scrollDocument: function(e){
-      console.log('scroll')
       var scrollTop = this.$document.scrollTop();
       this.calculateOffsets();
       if (scrollTop > this.offsetTop) {

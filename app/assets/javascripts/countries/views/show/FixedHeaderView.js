@@ -13,9 +13,9 @@ define([
 
   'use strict';
 
-  var CompareFixedHeaderView = Backbone.View.extend({
+  var FixedHeaderView = Backbone.View.extend({
 
-    el: '#compareFixedHeaderView',
+    el: '#fixedHeaderView',
 
     template: Handlebars.compile(tpl),
 
@@ -31,7 +31,7 @@ define([
       this.$offsetTop = $('#offsetTop');
       this.$offsetBottom = $('#offsetBottom');
 
-      // //INITS
+      //INITS
       this.calculateOffsets();
       this.scrollDocument();
 
@@ -41,6 +41,25 @@ define([
     setListeners: function(){
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
+
+      this.status.on('change:dataName', this.onChangeName, this);
+    },
+
+    onChangeName:function() {
+      var id = this.status.get('dataName').id,
+        index = $('#' + id).data('index'),
+        items = $('.-country li').length,
+        parentHeight = $('.-country').height() * items,
+        totalPercentage,
+        translate,
+
+      totalPercentage = (100 / items) * index;
+      translate = -Math.abs((parentHeight * totalPercentage) / 100);
+
+      $('.-country').css({
+        transform: 'translate(0, ' + translate  + 'px)'
+      });
+
     },
 
     calculateOffsets: function(){
@@ -48,9 +67,48 @@ define([
       this.offsetBottom = this.$offsetBottom.offset().top - this.$el.height();
     },
 
+
+    // Fix to trigger this function after grid render
+    getCutPoints: function() {
+
+      var boxes = document.getElementsByClassName('box'),
+        points = [];
+
+      _.each(boxes, function(b) {
+        var id = b.getAttribute('id').split('-')[2];
+
+        points.push({
+          id: id,
+          cutpoint: $(b).offset().top
+        });
+      });
+
+      this.cutPoints = points;
+      console.log(this.cutPoints);
+    },
+
+    _checkPosition:function(y) {
+
+      if (this.cutPoints) {
+        if(y > this.cutPoints[4].cutpoint) {
+          this.presenter.setName(this.cutPoints[4]);
+        } else if(y > this.cutPoints[3].cutpoint) {
+          this.presenter.setName(this.cutPoints[3]);
+        } else if(y > this.cutPoints[2].cutpoint) {
+          this.presenter.setName(this.cutPoints[2]);
+        } else if(y > this.cutPoints[1].cutpoint) {
+          this.presenter.setName(this.cutPoints[1]);
+        } else if(y > this.cutPoints[0].cutpoint) {
+           this.presenter.setName(this.cutPoints[0]);
+        }
+      }
+    },
+
+
     scrollDocument: function(e){
       var scrollTop = this.$document.scrollTop();
       this.calculateOffsets();
+      this._checkPosition(scrollTop);
       if (scrollTop > this.offsetTop) {
         this.$offsetTop.css({'padding-top': this.$el.height()});
         if(scrollTop < this.offsetBottom) {
@@ -66,40 +124,24 @@ define([
 
     render: function() {
       this.$el.html(this.template(this._parseData()));
+      this.$el.find('ul').addClass('-country');
     },
 
     _parseData: function() {
-      // var country1 = this.status.get('country1').toJSON();
-      // var country2 = this.status.get('country2').toJSON();
+      var country = this.status.get('country');
 
-      // var select1 = {
-      //   tab: '1',
-      //   name: this.setName(country1,1),
-      // };
+      var data = {
+        tab: '1',
+        name:  _.map(country.options.jurisdictions, function(j) {
+            return _.pick(j, 'name', 'id')
+        })
+      };
 
-      // var select2 = {
-      //   tab: '2',
-      //   name: this.setName(country2,2),
-      // };
-
-      // return { selection: [select1, select2] };
-    },
-
-    setName: function(country,tab) {
-      var jurisdiction = ~~this.status.get('compare'+tab).jurisdiction;
-      var area = ~~this.status.get('compare'+tab).area;
-      if (!!jurisdiction) {
-        return _.findWhere(country.jurisdictions, {id: jurisdiction}).name +' in ' + country.name;
-      } else if (!!area) {
-        return _.findWhere(country.areas_of_interest, {id: area }).name +' in ' + country.name;
-      } else {
-        return country.name;
-      }
-    },
-
+      return {country: data};
+    }
 
   });
 
-  return CompareFixedHeaderView;
+  return FixedHeaderView;
 
 });
