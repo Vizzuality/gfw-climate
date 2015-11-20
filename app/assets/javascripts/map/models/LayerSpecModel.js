@@ -33,6 +33,7 @@ define([
       "ifl_2013_deg",
       "ifl_2000",
       "mangrove",
+      "idn_peat_lands",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -92,7 +93,8 @@ define([
       "infoamazonia",
       "mongabay",
       "user_stories",
-      // FOREST CHANGE
+      // Carbon density
+      "hwsd",
       "terraicanvas_cover",
       "forma_cover",
       "imazon_cover",
