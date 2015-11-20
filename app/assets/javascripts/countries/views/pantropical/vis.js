@@ -358,6 +358,7 @@ function addCommas(nStr) {
         })
         .start();
       //return this.display_ny();
+
     };
 
     BubbleChart.prototype.move_towards_year = function(alpha) {
