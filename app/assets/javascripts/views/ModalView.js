@@ -83,7 +83,12 @@ define([
       return this;
     },
 
-    show: function(cloneId) {
+    show: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
+      this.model.set('hidden', false);
+    },
+
+    showBySource: function(cloneId) {
       // this.$el.toggleClass('iframe', !!$(e.currentTarget).data('iframe'));
       this.$content.html($('#' + cloneId).clone());
       this.$contentWrapper.animate({ scrollTop: 0 }, 0);

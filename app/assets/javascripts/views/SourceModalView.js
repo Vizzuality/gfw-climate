@@ -36,7 +36,7 @@ define([
 
     sourceClick: function(e) {
       e && e.preventDefault() && e.stopPropagation();
-      this.show($(e.currentTarget).data('source'));
+      this.showBySource($(e.currentTarget).data('source'));
     }
 
   });

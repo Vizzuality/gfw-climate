@@ -1,101 +1,112 @@
-<a class="close-modal" href="#"><svg><use xlink:href="#shape-close"></use></svg></a>
-<header class="m-compare-header">
-  <span class="gradient"></span>
-  <ul>
-    <li class="m-modal--tablink is-active" data-tab="1">Selection A</li>
-    <li class="m-modal--tablink" data-tab="2">Selection B</li>
-  </ul>
-</header>
-<div class="content-wrapper">
-  <div class="m-compare-modal">
-    <ul class="m-modal--tabscontent">
-      <li id="selection1" class="m-modal--tab is-active">
-        <div class="m-field m-select">
-          <h3>Country</h3>
-          <select id="compare-select1" class="chosen-select">
-            <option value="">Select a country</option>
-            {{#each countries}}
-              <option value="{{this.iso}}">{{this.name}}</option>
-            {{/each}}
-          </select>
-        </div>
-        {{#if country1}}
-          <div class="m-field">
-            <h3>Area of interest (optional)</h3>
-            {{#if country1.areas_of_interest}}
-            <ul class="m-field-list compare-area">
-              {{#each country1.areas_of_interest}}
-                <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
-              {{/each}}
-            </ul>
+{{!-- BACKDROP --}}
+<div class="modal-backdrop"></div>
+{{!-- WINDOW --}}
+<div class="modal-window">
+  <a href="#" class="modal-close">
+    <svg><use xlink:href="#shape-close"></use></svg>
+  </a>
+  <header class="m-compare-header">
+    <span class="gradient"></span>
+    <ul>
+      <li class="m-modal--tablink js-modal-tablink is-active" data-tab="1">Selection A</li>
+      <li class="m-modal--tablink js-modal-tablink" data-tab="2">Selection B</li>
+    </ul>
+  </header>
+  <div class="modal-wrapper scroll-dark">
+    <div class="modal-content">
+      <div class="m-compare-modal">
+        <ul class="m-modal--tabscontent">
+          <li id="selection1" class="m-modal--tab js-modal-tab is-active">
+            <div class="m-field m-select">
+              <h3>Country</h3>
+              <select id="compare-select1" class="chosen-select js-chosen-select">
+                <option value="">Select a country</option>
+                {{#each countries}}
+                  <option value="{{this.iso}}">{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+            {{#if country1}}
+              <div class="m-field">
+                <h3>Area of interest (optional)</h3>
+                {{#if country1.areas_of_interest}}
+                <ul class="m-field-list compare-area">
+                  {{#each country1.areas_of_interest}}
+                    <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
+                  {{/each}}
+                </ul>
+                {{else}}
+                <p>No areas of interest for this country</p>
+                {{/if}}
+              </div>
+              <div class="m-field">
+                <h3>Jurisdiction (optional)</h3>
+                {{#if country1.jurisdictions}}
+                <ul class="m-field-list compare-jurisdiction">
+                  {{#each country1.jurisdictions}}
+                    <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
+                  {{/each}}
+                </ul>
+                {{else}}
+                <p>No jurisdiction for this country</p>
+                {{/if}}
+              </div>
             {{else}}
-            <p>No areas of interest for this country</p>
+              <div class="m-alert">Choose a <span>country</span> to compare</div>
             {{/if}}
-          </div>
-          <div class="m-field">
-            <h3>Jurisdiction (optional)</h3>
-            {{#if country1.jurisdictions}}
-            <ul class="m-field-list compare-jurisdiction">
-              {{#each country1.jurisdictions}}
-                <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
-              {{/each}}
-            </ul>
+          </li>
+          <li id="selection2" class="m-modal--tab js-modal-tab">
+            <div class="m-field m-select">
+              <h3>Country</h3>
+              <select id="compare-select2" class="chosen-select js-chosen-select">
+                <option value="">Select a country</option>
+                {{#each countries}}
+                  <option value="{{this.iso}}">{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+            {{#if country2}}
+              <div class="m-field">
+                <h3>Area of interest (optional)</h3>
+                {{#if country2.areas_of_interest}}
+                <ul class="m-field-list compare-area">
+                  {{#each country2.areas_of_interest}}
+                    <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
+                  {{/each}}
+                </ul>
+                {{else}}
+                <p>No areas of interest for this country</p>
+                {{/if}}
+              </div>
+              <div class="m-field">
+                <h3>Jurisdiction (optional)</h3>
+                {{#if country2.jurisdictions}}
+                <ul class="m-field-list compare-jurisdiction">
+                  {{#each country2.jurisdictions}}
+                    <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
+                  {{/each}}
+                </ul>
+                {{else}}
+                <p>No jurisdiction for this country</p>
+                {{/if}}
+              </div>
             {{else}}
-            <p>No jurisdiction for this country</p>
+              <div class="m-alert">Choose a <span>country</span> to compare</div>
             {{/if}}
-          </div>
-        {{else}}
-          <div class="m-alert">Choose a <span>country</span> to compare</div>
-        {{/if}}
-      </li>
-      <li id="selection2" class="m-modal--tab">
-        <div class="m-field m-select">
-          <h3>Country</h3>
-          <select id="compare-select2" class="chosen-select">
-            <option value="">Select a country</option>
-            {{#each countries}}
-              <option value="{{this.iso}}">{{this.name}}</option>
-            {{/each}}
-          </select>
-        </div>
-        {{#if country2}}
-          <div class="m-field">
-            <h3>Area of interest (optional)</h3>
-            {{#if country2.areas_of_interest}}
-            <ul class="m-field-list compare-area">
-              {{#each country2.areas_of_interest}}
-                <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-area" data-id="{{id}}">{{this.name}}</li>
-              {{/each}}
-            </ul>
-            {{else}}
-            <p>No areas of interest for this country</p>
-            {{/if}}
-          </div>
-          <div class="m-field">
-            <h3>Jurisdiction (optional)</h3>
-            {{#if country2.jurisdictions}}
-            <ul class="m-field-list compare-jurisdiction">
-              {{#each country2.jurisdictions}}
-                <li class="m-field-list-item is-radio js-field-list-radio js-field-list-radio-jurisdiction" data-id="{{id}}">{{this.name}}</li>
-              {{/each}}
-            </ul>
-            {{else}}
-            <p>No jurisdiction for this country</p>
-            {{/if}}
-          </div>
-        {{else}}
-          <div class="m-alert">Choose a <span>country</span> to compare</div>
-        {{/if}}
 
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer class="m-compare-footer">
+    <span class="gradient"></span>
+    <ul class="m-btncontainer is-center">
+      <li>
+        <button class="btn blue medium uppercase js-btn-continue">Continue</button>
       </li>
     </ul>
-  </div>
+  </footer>
 </div>
-<footer class="m-compare-footer">
-  <span class="gradient"></span>
-  <ul class="m-btncontainer is-center">
-    <li>
-      <button id="btnModalContinue" class="btn blue medium uppercase">Continue</button>
-    </li>
-  </ul>
-</footer>
+
+

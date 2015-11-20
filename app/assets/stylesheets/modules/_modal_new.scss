@@ -27,6 +27,18 @@ $height: auto;
     }
   }
 
+  &.is-huge {
+    .modal-window {
+      width: 820px;
+      height: 80%;
+      .modal-wrapper {
+        padding: 0;
+        max-height: none;
+      }
+    }
+  }
+
+
   .modal-backdrop {
     position: absolute;
     top: 0;
@@ -91,7 +103,7 @@ $height: auto;
   box-shadow: $shadow1;
 
   // GRADIENTS
-  &:before, &:after{
+  &:before, &:after {
     content: "";
     position: absolute;
     height: 20px;
@@ -99,12 +111,12 @@ $height: auto;
     left: 0;
   }
 
-  &:before{
+  &:before {
     top: 0;
     @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
   }
 
-  &:after{
+  &:after {
     bottom: 0;
     @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
   }
@@ -145,7 +157,7 @@ $height: auto;
 
       li { list-style: none;}
 
-      a:not(.btn){
+      p a:not(.btn){
         color: $blue;
         &:hover{
           color: darken($blue,5%);
@@ -161,7 +173,7 @@ $height: auto;
 
 // It would be nice if we can refactor this code... I don't want to be mad, but it's shit.
 // The names are no-sense
-.modal-content{
+.modal-content {
   // TABLE
   .sources_row {
     display: table;
