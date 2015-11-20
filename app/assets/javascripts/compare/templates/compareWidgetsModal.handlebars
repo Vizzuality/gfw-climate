@@ -1,23 +1,33 @@
-<a class="close-modal" href="#"><svg><use xlink:href="#shape-close"></use></svg></a>
-<div class="content-wrapper">
-  <div class="m-compare-modal">
-    <div class="m-modal--tab is-active">
-      <div class="m-field">
-        <h3>Indicators</h3>
-        <ul class="m-field-list compare-area">
-          {{#each widgets}}
-            <li class="m-field-list-item is-checkbox js-field-list-checkbox-widget" data-id="{{this.id}}"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg>{{this.name}}</li>
-          {{/each}}
-        </ul>
+{{!-- BACKDROP --}}
+<div class="modal-backdrop"></div>
+{{!-- WINDOW --}}
+<div class="modal-window">
+  <a href="#" class="modal-close">
+    <svg><use xlink:href="#shape-close"></use></svg>
+  </a>
+  <div class="modal-wrapper scroll-dark">
+    <div class="modal-content">
+      <div class="m-compare-modal">
+        <div class="m-modal--tab is-active">
+          <div class="m-field">
+            <h3>Indicators</h3>
+            <ul class="m-field-list compare-area">
+              {{#each widgets}}
+                <li class="m-field-list-item is-checkbox js-field-list-checkbox-widget" data-id="{{this.id}}"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg>{{this.name}}</li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <footer class="m-compare-footer">
+    <span class="gradient"></span>
+    <ul class="m-btncontainer is-center">
+      <li>
+        <button class="btn blue medium uppercase js-btn-continue">Continue</button>
+      </li>
+    </ul>
+  </footer>
 </div>
-<footer class="m-compare-footer">
-  <span class="gradient"></span>
-  <ul class="m-btncontainer is-center">
-    <li>
-      <button id="btnModalWidgetsContinue" class="btn blue medium uppercase">Continue</button>
-    </li>
-  </ul>
-</footer>
+

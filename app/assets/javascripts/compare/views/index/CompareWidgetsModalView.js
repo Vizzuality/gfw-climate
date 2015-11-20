@@ -3,38 +3,45 @@ define([
   'backbone',
   'underscore',
   'handlebars',
-  'views/SourceWindowView',
+  'views/ModalView',
   'compare/presenters/CompareModalWidgetsPresenter',
   'text!compare/templates/compareWidgetsModal.handlebars'
-], function($, Backbone, _, Handlebars, SourceWindowView, CompareModalWidgetsPresenter, tpl) {
+], function($, Backbone, _, Handlebars, ModalView, CompareModalWidgetsPresenter, tpl) {
 
   'use strict';
 
-  var CountryWidgetsModalView = SourceWindowView.extend({
+  var CountryWidgetsModalView = ModalView.extend({
+
+    id: 'compareWidgetsModal',
+
+    className: 'modal is-huge',
 
     template: Handlebars.compile(tpl),
 
     events: function() {
-      return _.extend({}, SourceWindowView.prototype.events, {
+      return _.extend({}, ModalView.prototype.events, {
         'click .js-field-list-checkbox-widget' : 'changeWidgets',
-        'click #btnModalWidgetsContinue' : 'hide',
+        'click .js-btn-continue' : 'hide',
       });
     },
 
     initialize: function() {
       // Inits
-      this.constructor.__super__.initialize.apply(this,[{ sourceWindow: '.source_window_widgets'}]);
-      this.$sourceWindow.addClass('is-huge');
+      this.constructor.__super__.initialize.apply(this);
       // Presenter & status
       this.presenter = new CompareModalWidgetsPresenter(this);
       this.status = this.presenter.status;
+
+      this.render();
+      this.$body.append(this.el);
     },
 
     setListeners: function() {
     },
 
     render: function() {
-      this.$sourceWindow.html(this.template(this.parseData()));
+      this.$el.html(this.template(this.parseData()));
+      this._initVars();
       this.cacheVars();
     },
 
@@ -45,8 +52,7 @@ define([
     },
 
     cacheVars: function() {
-      this.$wrapper = this.$sourceWindow.find('.content-wrapper');
-      this.$checkboxes = this.$sourceWindow.find('.js-field-list-checkbox-widget');
+      this.$checkboxes = this.$el.find('.js-field-list-checkbox-widget');
     },
 
     setWidgetsStatus: function() {
@@ -54,17 +60,6 @@ define([
         var is_active = _.contains(this.status.get('widgetsActive'),$(el).data('id'));
         $(el).toggleClass('is-active', is_active);
       }, this ));
-    },
-
-    /*
-      MODAL: Modal events (extends from 'SourceWindow Class')
-      - show
-      - hide
-    */
-    show: function(e) {
-      e && e.preventDefault() && e.stopPropagation();
-      this.model.set('hidden', false);
-      this.$htmlbody.addClass('active');
     },
 
     hide: function(e) {
