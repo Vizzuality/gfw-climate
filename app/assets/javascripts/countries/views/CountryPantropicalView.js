@@ -14,7 +14,9 @@ define([
       'click #view_selection .btn' : 'switch_view',
       'click .minusy' : '_change_year',
       'change #year-drop-left' : '_set_year',
-      'change #year-drop-right' : '_set_year'
+      'change #year-drop-right' : '_set_year',
+      'click .btn-submit' : '_submityears',
+      'click .link' : '_goto'
     },
 
     initialize: function() {
@@ -31,6 +33,9 @@ define([
       toggle_view($(e.target).attr('id'));
     },
 
+    _submityears: function() {
+      toggle_view('country', this.year);
+    },
 
     _set_year: function(e){
       var element = e.target;
@@ -46,8 +51,7 @@ define([
         this.year_left = parseInt(element2.options[element2.selectedIndex].value);
         this._hideYears(element.id);
       }
-      var year = [this.year_left, this.year_right];
-      toggle_view('country', year);
+      this.year = [this.year_left, this.year_right];
     },
 
     _hideYears: function(elementID) {
@@ -93,6 +97,10 @@ define([
           }
         })
       }
+    },
+
+    _goto: function(argument) {
+      console.log('hola');
     },
 
     _change_year: function(e) {

@@ -101,8 +101,9 @@
     }
   }
   &.blue {
-    color: $white;
-    background: $blue;
+    //importants due to pantropical items
+    color: $white !important;
+    background: $blue !important;
     &:hover {
       background: darken($blue,10%);
     }
@@ -137,6 +138,8 @@
 
   &.rounded {
     border-radius: 40px !important;
+    // background-color: $color-1;
+    // color: $white !important;
   }
 
   &.disabled{

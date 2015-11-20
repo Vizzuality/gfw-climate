@@ -65,6 +65,7 @@ function addCommas(nStr) {
 
   BubbleChart = (function() {
     function BubbleChart(data) {
+      console.log(data);
       this.hide_details = __bind(this.hide_details, this);
       this.show_details = __bind(this.show_details, this);
       this.hide_years = __bind(this.hide_years, this);
@@ -182,6 +183,7 @@ function addCommas(nStr) {
               name: d.Country,
               org: d.organization,
               group: d.Continent,
+              iso: d.FIPS_CNTRY,
 
               year: d.start_year,
               y2001: d.y2001,
@@ -489,7 +491,8 @@ function addCommas(nStr) {
 
               $(this).attr('cx', coordinates[0]);
               $(this).attr('cy', coordinates[1]);
-
+              $(this).attr('data-url', '/countries/' + d.iso);
+              
               var value = values_array[i].value;
               var radius = that.radius_scale(value * 1.6);
 
@@ -499,6 +502,10 @@ function addCommas(nStr) {
               break;
             }
           }
+        })
+        .on('click', function(e) {
+          var url = $(this).data('url');
+          window.location.href = url;
         })
         .on("mouseenter",function() {
             d3.event.stopPropagation(); 
@@ -529,7 +536,7 @@ function addCommas(nStr) {
       }
 
       var label_text =
-      '<text  class="country-label" ' +
+      '<text class="country-label" ' +
               id_country +
               x_coord +
               y_coord_country +
@@ -547,7 +554,6 @@ function addCommas(nStr) {
 
       return label_text;
     }
-
 
     BubbleChart.prototype.calculate_average = function(d) {
       var year_left = this.year_left;
