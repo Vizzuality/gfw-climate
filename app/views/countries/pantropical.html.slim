@@ -1,7 +1,7 @@
 .layout-content
   section#countryListView.section.country-profiles
     .inner
-      h2.title-section Carbon Emissions for Tropical Deforestation
+      h2.title-section Carbon Emissions from Tropical Deforestation
     .inner.pantropical-title
       h3
         |Explore how country contributions have changed over the 21st century.
@@ -15,11 +15,12 @@
         #vis
           .vis-tab.all
             h4
-              |Where 2,273 Gt CO<sub>2</sub> yr<sup>-1</sup> were emitted
+              |Where 2,269Gt CO<sub>2</sub> yr<sup>-1</sup> were emitted
             p
-              |Zarin et al. (2015) estimates that average carbon emissions from tropical deforestation between 2001 and 2013 were 2,273 Mt CO<sub>2</sub> yr<sup>-1</sup>.
+              |(2015) estimates that average carbon emissions from tropical deforestation between 2001 and 2013 were 2,269Mt CO<sub>2</sub> yr<sup>-1</sup>.
             p
               |Circles are sized according to the proportion of total carbon emissions emitted from each country between 2001 and 2013.
+            p.quote * Zarin et al. in press
             h4
               |Color shows continent
             ul
@@ -66,11 +67,12 @@
               li.africa Africa
               li.asia South and Southeast Asia
           .vis-tab.change.right-side
-            span.year-picker#year-picker data-maxyear="2013" data-minyear="2001"
-              .minusy.stop ❮
-              .y
-                |2001
-              .minusy.plusy ❯
+            / span#year-picker data-maxyear="2013" data-minyear="2001"
+            /   .minusy.stop ❮
+            /   .y
+            /     |2001
+            /   .minusy.plusy ❯
+  
             p.small-figures
               |Indonesia
             h4
@@ -79,7 +81,17 @@
               |Other non-NYDF Signatories
             h4
               span.country-big-2 12%
-              
+
+            div.year-range
+              span year:
+              input#year-picker name="year-picker" type="range" min="2001" max="2013" step="1" value="2001"
+              output#year-picker-label for="year-picker" 2001
+
+          .vis-tab.change.bottom-chart
+            h4
+              |Total emissions
+            #totalEmissionsChart.graph
+
           .vis-tab.country
             div.select-years
               |Average:
@@ -94,6 +106,7 @@
                   - for i in (2001..2013)
                     option value="#{i}"
                       |#{i}
-              
-              button.btn-submit.btn.small.blue.rounded submit years
+
+              button.btn-submit.btn.small.blue.rounded Apply
+
 

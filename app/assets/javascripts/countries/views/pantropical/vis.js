@@ -503,8 +503,8 @@ function addCommas(nStr) {
           }
         })
         .on('click', function(e) {
-          // var url = $(this).data('url');
-          // window.location.href = url;
+          var url = $(this).data('url');
+          window.location.href = url;
         })
         .on("mouseenter",function() {
             d3.event.stopPropagation(); 
@@ -786,9 +786,11 @@ function addCommas(nStr) {
     })(this);
 
     root.toggle_view = (function(_this) {
-      return function(view_type, year) {
+      return function(view_type, year, noSpinner) {
         root.remove_labels();
-        root.set_loading();
+        if (!noSpinner) {
+          root.set_loading();
+        }
         switch (view_type) {
           case 'nydfs':
             return root.display_ny();
@@ -801,7 +803,7 @@ function addCommas(nStr) {
         }
       };
     })(this);
-    return d3.csv("/pantropicalTESTING.csv", render_vis);
+    return d3.csv("/pantropicalTESTING_isos.csv", render_vis);
   });
 
 }).call(this);

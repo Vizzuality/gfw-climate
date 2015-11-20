@@ -409,16 +409,16 @@
       opacity: 0;
       visibility: hidden;
     }
-    // &:after{
-    //   content: "";
-    //   display: block;
-    //   width: 30px;
-    //   height: 18px;
-    //   position: absolute;
-    //   bottom: -5px;
-    //   right: -5px;
-    //   background: image-url('beta.png');
-    // }
+    &:after{
+      content: "";
+      display: block;
+      width: 30px;
+      height: 18px;
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background: image-url('beta.png');
+    }
     .beta-box{
       display: none;
     }
