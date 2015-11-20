@@ -1,8 +1,9 @@
 define([
   'backbone',
+  'countries/views/pantropical/PantropicalTotalEmissionsView',
   'countries/views/pantropical/vis',
 
-], function(Backbone) {
+], function(Backbone, PantropicalTotalEmissionsView) {
 
   'use strict';
 
@@ -25,6 +26,8 @@ define([
       $(e.target).addClass('active');
       $('#vis').find('.' + $(e.target).attr('id')).show();
       toggle_view($(e.target).attr('id'));
+
+      new PantropicalTotalEmissionsView();
     },
     _change_year: function(e) {
       var $year = $(e.target);
