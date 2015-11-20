@@ -121,7 +121,7 @@ define([
       this.yearsPickerLabel.val(year);
       this._setLabelPosition(year);
 
-      toggle_view('change', year)
+      toggle_view('change', year, true)
     },
 
     _setLabelPosition: function(year) {
