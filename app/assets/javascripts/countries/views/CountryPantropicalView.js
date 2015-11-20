@@ -29,7 +29,7 @@ define([
 
     _cacheVars: function() {
       this.$years = $('#year-picker');
-      this.yearsPickerLabel = $('#year-picker-label');
+      this.$yearsPickerLabel = $('#year-picker-label');
     },
 
     switch_view: function(e) {
@@ -135,7 +135,7 @@ define([
          else if (newPoint > 1) { newPlace = width; }
          else { newPlace = width * newPoint; }
 
-      $('#year-picker-label').css({ left: newPlace });
+      this.$yearsPickerLabel.css({ left: newPlace });
     },
 
     _renderChangeComponents: function() {
