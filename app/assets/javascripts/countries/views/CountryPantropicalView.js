@@ -1,8 +1,9 @@
 define([
   'backbone',
+  'countries/views/pantropical/PantropicalTotalEmissionsView',
   'countries/views/pantropical/vis',
 
-], function(Backbone) {
+], function(Backbone, PantropicalTotalEmissionsView) {
 
   'use strict';
 
@@ -30,7 +31,16 @@ define([
       $('#view_selection').find('.btn').removeClass('active');
       $(e.target).addClass('active');
       $('#vis').find('.' + $(e.target).attr('id')).show();
-      toggle_view($(e.target).attr('id'));
+
+      var viewId = $(e.target).attr('id');
+      toggle_view(viewId);
+
+      if(viewId === 'change') {
+        $('#vis').addClass(viewId);
+        this._renderChangeComponents();
+      } else {
+        $('#vis').removeClass();
+      }
     },
 
     _submityears: function() {
@@ -123,6 +133,12 @@ define([
         }
       }
       toggle_view('change', ~~this.$years.find('.y').text())
+    },
+
+    _renderChangeComponents: function() {
+      if(!this.totalEmissionsChart) {
+        this.totalEmissionsChart = new PantropicalTotalEmissionsView();
+      }
     }
 
   });

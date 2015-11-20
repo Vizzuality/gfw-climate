@@ -199,6 +199,22 @@
 
 #vis {
   min-height: 525px;
+
+  &.change {
+    min-height: 930px;
+
+    .bottom-chart {
+      width: 100%;
+      position: absolute;
+      top: 470px;
+
+      #totalEmissionsChart {
+        width: 100%;
+        height: 380px;
+      }
+    }
+  }
+
   .vis-tab {
     position: absolute;
     margin: 57px 0 0 50px;
