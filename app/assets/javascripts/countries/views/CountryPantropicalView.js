@@ -31,7 +31,7 @@ define([
 
       if(viewId === 'change') {
         $('#vis').addClass(viewId);
-        var totalEmissionsChart = new PantropicalTotalEmissionsView();
+        this._renderChangeComponents();
       } else {
         $('#vis').removeClass();
       }
@@ -56,6 +56,12 @@ define([
         }
       }
       toggle_view('change', ~~this.$years.find('.y').text())
+    },
+
+    _renderChangeComponents: function() {
+      if(!this.totalEmissionsChart) {
+        this.totalEmissionsChart = new PantropicalTotalEmissionsView();
+      }
     }
 
   });
