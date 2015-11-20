@@ -71,8 +71,6 @@
             /   .y
             /     |2001
             /   .minusy.plusy ❯
-            span
-              input#year-picker type="range" min="2001" max="2013" step="1" value="2001"
   
             p.small-figures
               |Indonesia
@@ -82,6 +80,11 @@
               |Other non-NYDF Signatories
             h4
               span.country-big-2 12%
+
+            div.year-range
+              span year:
+              input#year-picker name="year-picker" type="range" min="2001" max="2013" step="1" value="2001"
+              output#year-picker-label for="year-picker" 2001
               
           .vis-tab.country
             div.select-years

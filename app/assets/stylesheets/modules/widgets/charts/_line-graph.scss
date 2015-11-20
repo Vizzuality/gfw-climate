@@ -227,7 +227,9 @@
     }
 
     &.right-side {
+      z-index: 10;
       right: 0;
+      height: 380px;
       margin: 57px 50px 0 0;
       width: 190px;
     }
@@ -299,6 +301,7 @@
       color: #555;
       line-height: 31px;
       margin:0;
+
       &#year-picker {
         margin: 0 0 110px;
         position: relative;
@@ -314,6 +317,35 @@
         }
       }
     }
+    
+    .year-range {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 40px;
+      width: 110%;
+
+      span {
+        position: absolute;
+        bottom: 0;
+        left: -45px;
+      }
+
+      #year-picker-label {
+        position: absolute;
+        top: 0;
+        font-weight: 600;
+        transform: translatex(-50%);
+      }
+
+      input {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+      }
+    }
+
     .select-years {
       display: flex;
       flex-direction: row;
