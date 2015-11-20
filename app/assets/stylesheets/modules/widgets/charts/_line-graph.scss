@@ -162,6 +162,10 @@
   }
 }
 .pantropical-vis {
+  .quote {
+    font-size: 12px;
+  }
+
   .btn-group {
     background-color: #eee;
     height: 40px;
@@ -169,6 +173,7 @@
     justify-content: space-around;
     align-items: center;
   }
+
   .btn {
     background-color: transparent;
     height: 100%;
