@@ -151,6 +151,7 @@
   border:1px solid rgba(200,200,200,0.85);
   text-align:center;
   position: absolute;
+  z-index: 2;
   &:after {
     @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
     right: inherit;
@@ -175,11 +176,27 @@
     font-weight: 400;
     color: #333;
     font-size: 14px;
+    position: relative;
     &.active {
       background-color: white;
     }
   }
+
+  &.is-loading {
+    pointer-events: none;
+
+    &:after {
+      top: 30%;
+      z-index: 5;
+    }
+
+    &:before {
+      z-index: 4;
+      background-color: $white;
+    }
+  }
 }
+
 #vis {
   min-height: 525px;
 
@@ -203,26 +220,38 @@
     margin: 57px 0 0 50px;
     color: #555;
     display: none;
+    width: 300px;
+
     &.nydfs {
       width: 220px
     }
+
     &.right-side {
       right: 0;
       margin: 57px 50px 0 0;
-      width: 250px;
+      width: 190px;
     }
+
+    &.country {
+      left: 50%;
+      transform: translatex(-50%);
+      z-index: 1000;
+    }
+
     h4 {
       font-size: 18px;
     }
+
     h5 {
       margin: 22px 0;
     }
-    width: 300px;
+
     p,li {
       font-size: 14px;
       line-height: 21px;
       margin: 21px 0;
     }
+
     li {
       margin: 4px 0;
       &:before {
@@ -258,7 +287,7 @@
     &.all {
       display: block;
     }
-    #year-picker {
+    .year-picker {
       height: 34px;
       width: 103px;
       border: 1px solid #5b80a0;
@@ -269,7 +298,12 @@
       font-size: 14px;
       color: #555;
       line-height: 31px;
-      margin: 0 0 110px;
+      margin:0;
+      &#year-picker {
+        margin: 0 0 110px;
+        position: relative;
+        z-index: 3;
+      }
       .minusy {
         cursor: pointer;
         font-size: 20px;
@@ -280,9 +314,68 @@
         }
       }
     }
+    .select-years {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      .select-wrapper {
+        position: relative;
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 44%;
+          right: 25px;
+          height: 8px;
+          width: 8px;
+          border-right: 2px solid $black;
+          border-bottom: 2px solid $black;
+          transform: rotate(45deg) translatey(-50%);
+          pointer-events: none;
+        }
+      }
+
+      .year-dropdown {
+        display: blocK;
+        appearance: none;
+        // height: 34px;
+        // width: 103px;
+        padding: 0 30px 0 10px;
+        border: 1px solid $color-1;
+        border-radius: 40px;
+        display: flex;
+        // justify-content: space-around;
+        // align-items: center;
+        font-size: 14px;
+        color: #555;
+        line-height: 31px;
+        margin: 0 10px;
+
+        & .is-disabled {
+          pointer-events: none;
+          color: $color-3;
+        }
+      }
+    }
+  }
+
+  .country-label {
+    font-size: 12px;
+    font-weight: 200px;
+  }
+
+  .data-label {
+    font-size: 18px;
+    font-weight: 400px;
   }
 }
 
+#svg_vis {
+  position: relative;
+  z-index: 1;
+}
 
 .linechart-legend {
   margin: 0 0 0 30px;
@@ -310,3 +403,4 @@
     }
   }
 }
+
