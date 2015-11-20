@@ -65,7 +65,6 @@ function addCommas(nStr) {
 
   BubbleChart = (function() {
     function BubbleChart(data) {
-      console.log(data);
       this.hide_details = __bind(this.hide_details, this);
       this.show_details = __bind(this.show_details, this);
       this.hide_years = __bind(this.hide_years, this);
@@ -492,7 +491,7 @@ function addCommas(nStr) {
               $(this).attr('cx', coordinates[0]);
               $(this).attr('cy', coordinates[1]);
               $(this).attr('data-url', '/countries/' + d.iso);
-              
+
               var value = values_array[i].value;
               var radius = that.radius_scale(value * 1.6);
 
