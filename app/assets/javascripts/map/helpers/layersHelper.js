@@ -89,6 +89,7 @@ define([
   'map/views/layers/CarbonStocksLayer',
   'map/views/layers/BiomassLossLayer',
   'map/views/layers/DrcPrimaryForestLayer',
+  'map/views/layers/IdnPeatLandsLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
   // Layer dialog templates
@@ -189,6 +190,7 @@ define([
   CarbonstocksLayer,
   BiomassLoss,
   DrcPrimaryForestLayer,
+  IdnPeatLandsLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
   // Layer dialog templates
@@ -466,6 +468,9 @@ define([
     },
     cod_primary_forest_wgs: {
       view: DrcPrimaryForestLayer
+    },
+    idn_peat_lands: {
+      view: IdnPeatLandsLayer
     },
     plantations_by_type: {
       view: PlantationsLayerByType

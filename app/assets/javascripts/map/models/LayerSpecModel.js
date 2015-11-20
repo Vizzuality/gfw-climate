@@ -92,7 +92,8 @@ define([
       "infoamazonia",
       "mongabay",
       "user_stories",
-      // FOREST CHANGE
+      // Carbon density
+      "idn_peat_lands",
       "terraicanvas_cover",
       "forma_cover",
       "imazon_cover",
