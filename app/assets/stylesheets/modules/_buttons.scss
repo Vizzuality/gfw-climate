@@ -134,6 +134,11 @@
     text-transform: uppercase;
     cursor: default;
   }
+
+  &.rounded {
+    border-radius: 40px !important;
+  }
+
   &.disabled{
     opacity: 0.25;
     cursor: default;
