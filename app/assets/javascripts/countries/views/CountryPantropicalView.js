@@ -29,7 +29,7 @@ define([
 
     _cacheVars: function() {
       this.$years = $('#year-picker');
-      this.$yearsPickerLabel = $('#year-picker-label');
+      this.$$yearsPickerLabel = $('#year-picker-label');
     },
 
     switch_view: function(e) {
@@ -118,7 +118,7 @@ define([
     _change_year: function(e) {
       var year = e.currentTarget.value;
   
-      this.yearsPickerLabel.val(year);
+      this.$yearsPickerLabel.val(year);
       this._setLabelPosition(year);
 
       toggle_view('change', year, true)
