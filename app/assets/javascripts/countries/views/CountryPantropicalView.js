@@ -29,7 +29,7 @@ define([
 
     _cacheVars: function() {
       this.$years = $('#year-picker');
-      this.$$yearsPickerLabel = $('#year-picker-label');
+      this.$yearsPickerLabel = $('#year-picker-label');
     },
 
     switch_view: function(e) {
