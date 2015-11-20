@@ -13,7 +13,7 @@ define([
   var ModalView = Backbone.View.extend({
 
     events: {
-      'click .close-modal' : 'hide'
+      'click .modal-close' : 'hide'
     },
 
     initialize: function() {
@@ -68,8 +68,7 @@ define([
 
     _toggle: function() {
       (!!this.model.get('hidden')) ? this._stopBindings() : this._initBindings();
-      this.$el.toggleClass('active', !this.model.get('hidden'));
-      this.$backdrop.toggleClass('active', !this.model.get('hidden'));
+      this.$el.toggleClass('is-active', !this.model.get('hidden'));
       //Prevent scroll beyond modal window.
       this.$htmlbody.toggleClass('is-no-scroll', !this.model.get('hidden'));
     },
@@ -84,12 +83,10 @@ define([
       return this;
     },
 
-    show: function(e) {
-      e && e.preventDefault() && e.stopPropagation();
-
+    show: function(cloneId) {
       // this.$el.toggleClass('iframe', !!$(e.currentTarget).data('iframe'));
+      this.$content.html($('#' + cloneId).clone());
       this.$contentWrapper.animate({ scrollTop: 0 }, 0);
-      this.$content.html($('#' + $(e.currentTarget).data('source')).clone());
 
       this.model.set('hidden', false);
 
