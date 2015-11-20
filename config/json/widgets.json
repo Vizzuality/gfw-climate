@@ -238,7 +238,7 @@
         "default": true
       },
       {
-        "id": 1003,
+        "id": 1002,
         "name": "Carbon emissions from primary forest",
         "type": "line",
         "unit": "tg-c",
@@ -253,7 +253,7 @@
         "tab": 1
       },
       {
-        "id": 1004,
+        "id": 1003,
         "name": "Carbon emissions from primary forest",
         "type": "line",
         "unit": "mt-co2",

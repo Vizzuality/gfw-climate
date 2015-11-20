@@ -1,5 +1,7 @@
 <ul>
   {{#each legend}}
-    <li><span style="background: {{this.color}};"></span>{{this.name}}</li>
+    {{#if this.visible}}
+      <li><span style="background: {{this.color}};"></span>{{this.name}}</li>
+    {{/if}}
   {{/each}}
 </ul>
