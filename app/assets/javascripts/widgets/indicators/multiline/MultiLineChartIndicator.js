@@ -28,7 +28,7 @@ define([
 
       this.tab = setup.tab;
 
-      // CeateModel
+      // CreateModel
       this.model = new (Backbone.Model.extend({ defaults: setup.model}));
 
       // Set Params
@@ -62,6 +62,7 @@ define([
       // Fetch indicators complete!!
       $.when.apply(null, promises).then(_.bind(function() {
         var values = _.groupBy(_.flatten(_.pluck(Array.prototype.slice.call(arguments),'values')),'indicator_id');
+        // if compare data exists, we will set 'data' and 'data_compare'
         this.model.set(type, values);
         r.resolve();
       }, this ));
@@ -139,6 +140,7 @@ define([
     },
 
     // Helpers for parse data
+    // As you see, the data now will be filtered by date, the function between
     getData: function(type) {
       var parseDate = d3.time.format("%Y").parse;
       return _.map(this.model.get(type), _.bind(function(indicator_values) {
@@ -157,15 +159,18 @@ define([
     // get the range of years;
     getRangeX: function() {
       var values = _.flatten(_.union(Array.prototype.slice.call(arguments)));
-      return [_.min(values, function(o){return o.year;}).year,
-              _.max(values, function(o){return o.year;}).year];
+      var min = _.min(values, function(o){return o.year;}).year;
+      var max = _.max(values, function(o){return o.year;}).year;
+      return [min,max];
     },
 
-    // get the range of years;
+    // get the range of values;
     getRangeY: function() {
       var values = _.flatten(_.union(Array.prototype.slice.call(arguments)));
-      return [_.min(values, function(o){return o.value;}).value,
-              _.max(values, function(o){return o.value;}).value];
+      var min = _.min(values, function(o){return o.value;}).value;
+      var max = _.max(values, function(o){return o.value;}).value;
+      // We add the 20º part of the max and the min value to prevent the y-axis disappear,
+      return [min - (min/20), max + (max/20)];
     },
 
     getDataLength: function() {
