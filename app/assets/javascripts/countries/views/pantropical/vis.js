@@ -803,7 +803,7 @@ function addCommas(nStr) {
         }
       };
     })(this);
-    return d3.csv("/pantropicalTESTING.csv", render_vis);
+    return d3.csv("/pantropicalTESTING_isos.csv", render_vis);
   });
 
 }).call(this);
