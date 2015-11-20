@@ -66,11 +66,14 @@
               li.africa Africa
               li.asia South and Southeast Asia
           .vis-tab.change.right-side
-            span#year-picker data-maxyear="2013" data-minyear="2001"
-              .minusy.stop ❮
-              .y
-                |2001
-              .minusy.plusy ❯
+            / span#year-picker data-maxyear="2013" data-minyear="2001"
+            /   .minusy.stop ❮
+            /   .y
+            /     |2001
+            /   .minusy.plusy ❯
+            span
+              input#year-picker type="range" min="2001" max="2013" step="1" value="2001"
+  
             p.small-figures
               |Indonesia
             h4

@@ -13,7 +13,8 @@ define([
 
     events: {
       'click #view_selection .btn' : 'switch_view',
-      'click .minusy' : '_change_year'
+      // 'click .minusy' : '_change_year',
+      'input #year-picker' : '_change_year'
     },
 
     initialize: function() {
@@ -37,25 +38,23 @@ define([
       }
     },
     _change_year: function(e) {
-      var $year = $(e.target);
-      if ($year.hasClass('stop')) return;
-
-      var current_y = ~~this.$years.find('.y').text();
-      this.$years.find('.stop').removeClass('stop');
-      if ($year.hasClass('plusy')) {
-        //going a year on the FUTURE, MARTY
-        this.$years.find('.y').text(current_y + 1);
-        if (current_y + 1 >= ~~this.$years.data('maxyear')) {
-          this.$years.find('.plusy').addClass('stop');
-        }
-      } else {
-        //going a year on the past
-        this.$years.find('.y').text(current_y - 1);
-        if (current_y - 1 <= ~~this.$years.data('minyear')) {
-          this.$years.find('.minusy').first().addClass('stop');
-        }
-      }
-      toggle_view('change', ~~this.$years.find('.y').text())
+      var year = e.currentTarget.value;
+      // var current_y = ~~this.$years.find('.y').text();
+      // this.$years.find('.stop').removeClass('stop');
+      // if ($year.hasClass('plusy')) {
+      //   //going a year on the FUTURE, MARTY
+      //   this.$years.find('.y').text(current_y + 1);
+      //   if (current_y + 1 >= ~~this.$years.data('maxyear')) {
+      //     this.$years.find('.plusy').addClass('stop');
+      //   }
+      // } else {
+      //   //going a year on the past
+      //   this.$years.find('.y').text(current_y - 1);
+      //   if (current_y - 1 <= ~~this.$years.data('minyear')) {
+      //     this.$years.find('.minusy').first().addClass('stop');
+      //   }
+      // }
+      toggle_view('change', year)
     },
 
     _renderChangeComponents: function() {
