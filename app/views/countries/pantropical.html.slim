@@ -87,6 +87,11 @@
               input#year-picker name="year-picker" type="range" min="2001" max="2013" step="1" value="2001"
               output#year-picker-label for="year-picker" 2001
 
+          .vis-tab.change.bottom-chart
+            h4
+              |Total emissions
+            #totalEmissionsChart.graph
+
           .vis-tab.country
             div.select-years
               |Average:
@@ -101,6 +106,7 @@
                   - for i in (2001..2013)
                     option value="#{i}"
                       |#{i}
-              
-              button.btn-submit.btn.small.blue.rounded apply
+
+              button.btn-submit.btn.small.blue.rounded Apply
+
 
