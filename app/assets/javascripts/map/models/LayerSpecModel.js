@@ -33,6 +33,7 @@ define([
       "ifl_2013_deg",
       "ifl_2000",
       "mangrove",
+      "idn_peat_lands",
       // PEOPLE
       "resource_rights",
       "cmr_resource_rights",
@@ -93,7 +94,7 @@ define([
       "mongabay",
       "user_stories",
       // Carbon density
-      "idn_peat_lands",
+      "hwsd",
       "terraicanvas_cover",
       "forma_cover",
       "imazon_cover",

@@ -1,0 +1,13 @@
+//just for when this will be solved
+#hwsd {
+  	raster-opacity:1; 
+  	raster-colorizer-default-mode: linear; 
+  	raster-colorizer-default-color: transparent; 
+  	raster-colorizer-epsilon: 0.02; 
+  	raster-colorizer-stops: 
+    	stop(0, #FFFFCC)
+      stop(20, #A1DAB4)
+      stop(65, #41B6C4)
+      stop(160, #2C7FB8)
+      stop(425, #253494)
+      stop(801, #253494)}
