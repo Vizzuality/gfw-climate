@@ -16,7 +16,7 @@ function CustomTooltip(tooltipId, width) {
   }
 
   function hideTooltip(){
-      $("#"+tooltipId).hide();
+    $("#"+tooltipId).hide();
   }
 
   function updatePosition(event){
