@@ -26,6 +26,7 @@
       height: 100px;
       background-color: $white;
       opacity: 1;
+      box-shadow: none;
 
       $backgrounds: "1", "2", "3", "4";
 
@@ -125,30 +126,30 @@
     }
   }
 
-  .profile-list {
-    position: absolute;
-    top: auto;
-    bottom: 0;
-    margin: 0 0 -10px 0;
-    transform: translate(0, 50%);
-    width: 100%;
-    text-align: center;
-  }
+  // .profile-list {
+  //   position: absolute;
+  //   top: auto;
+  //   bottom: 0;
+  //   margin: 0 0 -10px 0;
+  //   transform: translate(0, 50%);
+  //   width: 100%;
+  //   text-align: center;
+  // }
 
-  .profile-list > .profile {
-    display: inline-block;
-    width: 135px;
-    > .profile-img {
-      cursor: pointer;
-    }
-    > .profile-name {
-      font-size: 14px;
-      color: $dark;
-      line-height: 21px;
-      text-align: center;
-      text-transform: capitalize;
-    }
-  }
+  // .profile-list > .profile {
+  //   display: inline-block;
+  //   width: 135px;
+  //   > .profile-img {
+  //     cursor: pointer;
+  //   }
+  //   > .profile-name {
+  //     font-size: 14px;
+  //     color: $dark;
+  //     line-height: 21px;
+  //     text-align: center;
+  //     text-transform: capitalize;
+  //   }
+  // }
 
   .slide {
 
