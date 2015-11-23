@@ -22,39 +22,25 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Place/go': function(params) {
-        this._onPlaceGo(params);
+      'View/update': function() {
+        this.view.lockHeader();
       },
-      'Country/update': function(params) {
-        this._onPlaceGo(params);
-      },
-      'Grid/ready': function() {
-        this.view.getCutPoints()
+      'Grid/ready': function(p) {
+        this._updateOptions(p);
+        this.view.unlockHeader();
       }
     }],
 
-    /**
-    * Triggered from 'Place/Go' and 'Compare/update' events.
-    *
-    * @param  {Object} place PlaceService's place object
-    */
-    _onPlaceGo: function(params) {
-      // Check if the incoming params are the same as current ones before render!
-      var country = new CountryModel({iso: params.country.iso});
-
-      country.fetch().done(function() {
-        this.status.set('country', params);
-        this.view.render();
-      }.bind(this));
+    _updateOptions: function(p) {
+      this.status.set('country', p);
     },
 
+    /**
+     * Set the param's name will be displayed in the header
+     */
     setName: function(d) {
-      this.status.set({
-        dataName: d
-      });
+      this.status.set('dataName', d);
     }
-
-
   });
 
   return fixedHeaderPresenter;

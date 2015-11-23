@@ -43,8 +43,13 @@ define([
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
 
       this.status.on('change:dataName', this.onChangeName, this);
+      this.status.on('change:country', this.render, this);
     },
 
+    /**
+     * Calculates the neccesary number and percentage of tranlations
+     * for every param.
+     */
     onChangeName:function() {
       var id = this.status.get('dataName').id,
         index = $('#' + id).data('index'),
@@ -59,7 +64,6 @@ define([
       $('.-country').css({
         transform: 'translate(0, ' + translate  + 'px)'
       });
-
     },
 
     calculateOffsets: function(){
@@ -67,10 +71,10 @@ define([
       this.offsetBottom = this.$offsetBottom.offset().top - this.$el.height();
     },
 
-
-    // Fix to trigger this function after grid render
+    /**
+     * Obtain the cut points and id's from current widgets displayed
+     */
     getCutPoints: function() {
-
       var boxes = document.getElementsByClassName('box'),
         points = [];
 
@@ -84,26 +88,26 @@ define([
       });
 
       this.cutPoints = points;
-      console.log(this.cutPoints);
     },
 
-    _checkPosition:function(y) {
 
-      if (this.cutPoints) {
-        if(y > this.cutPoints[4].cutpoint) {
-          this.presenter.setName(this.cutPoints[4]);
-        } else if(y > this.cutPoints[3].cutpoint) {
-          this.presenter.setName(this.cutPoints[3]);
-        } else if(y > this.cutPoints[2].cutpoint) {
-          this.presenter.setName(this.cutPoints[2]);
-        } else if(y > this.cutPoints[1].cutpoint) {
-          this.presenter.setName(this.cutPoints[1]);
-        } else if(y > this.cutPoints[0].cutpoint) {
-           this.presenter.setName(this.cutPoints[0]);
+    /**
+     * Check the current scroll position and set name based
+     * on the position.
+     */
+    _checkPosition:function(y) {
+      if (!this.cutPoints) {
+        return;
+      }
+
+      var max = this.cutPoints.length;
+
+      for (var i = max - 1; i >= 0; i--) {
+        if (y > this.cutPoints[i].cutpoint) {
+          return this.presenter.setName(this.cutPoints[i]);
         }
       }
     },
-
 
     scrollDocument: function(e){
       var scrollTop = this.$document.scrollTop();
@@ -125,19 +129,40 @@ define([
     render: function() {
       this.$el.html(this.template(this._parseData()));
       this.$el.find('ul').addClass('-country');
+      this.getCutPoints();
+    },
+
+    lockHeader: function() {
+      this.$el.addClass('is-hidden');
+    },
+
+    unlockHeader: function() {
+      this.$el.removeClass('is-hidden');
     },
 
     _parseData: function() {
-      var country = this.status.get('country');
+      var country = this.status.get('country'),
+        data, filter;
 
-      var data = {
+      switch(country.options.view) {
+
+        case 'subnational':
+            filter = country.options.jurisdictions;
+          break;
+
+        case 'areas':
+            filter = country.options.areas;
+          break;
+      }
+
+      data = _.map(filter, function(d) {
+        return _.pick(d, 'name', 'id')
+      });
+
+      return { country: {
         tab: '1',
-        name:  _.map(country.options.jurisdictions, function(j) {
-            return _.pick(j, 'name', 'id')
-        })
-      };
-
-      return {country: data};
+        name: data
+      }};
     }
 
   });

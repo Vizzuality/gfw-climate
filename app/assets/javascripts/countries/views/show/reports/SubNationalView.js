@@ -99,6 +99,14 @@ define([
 
         }, this));
 
+        this.parent.append(this.$el);
+        mps.publish('Grid/ready', [{
+          options: {
+            view: 'subnational',
+            jurisdictions: this.jurisdictions
+          }
+        }]);
+
       } else {
 
         this.template = Handlebars.compile(noIndicatorsTpl);
@@ -110,10 +118,9 @@ define([
         this.$el.html(this.template({
           setup: options
         }));
-      }
 
-      this.parent.append(this.$el);
-      mps.publish('Grid/ready', []);
+        this.parent.append(this.$el);
+      }
     },
 
     parseData: function() {
