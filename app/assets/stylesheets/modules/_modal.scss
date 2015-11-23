@@ -402,12 +402,7 @@ $height: auto;
     margin-bottom: 20px;
   }
 
-  .forest_change .source_category_title {
-    color: #F69;
-    border-bottom-color: #F69;
-  }
-
-  .forest_cover .source_category_title {
+  .carbon_loss .source_category_title {
     color: #B2D26E;
     border-bottom-color: #B2D26E;
   }
@@ -421,7 +416,10 @@ $height: auto;
     color: #C98E6C;
     border-bottom-color: #C98E6C;
   }
-
+  .forest_cover .source_category_title {
+    color: #B2D26E;
+    border-bottom-color: #B2D26E;
+  }
   .conservation .source_category_title {
     color: #3182BD;
     border-bottom-color: #3182BD;
