@@ -36,7 +36,7 @@
         "position": 2,
         "name": "Other national data",
         "subname": "(Sources vary)",
-        "ipcc" : "(IPCC Approach 2/3)",
+        "ipcc" : "(IPCC Approach 3)",
         "type": "line",
         "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
         "rangetype" : "year",
@@ -286,7 +286,8 @@
     "tabs": [
       {
         "position": 1,
-        "name": "Hansen/Google/UMD",
+        "name": "Tree Cover",
+        "subname": "(Hansen/UMD/Google/USGS/NASA)",
         "type": "number",
         "thresh" : 25,
         "threshunit": "tree cover",
@@ -295,8 +296,9 @@
       },
       {
         "position": 2,
-        "name": "Other national data",
-        "subname": "(sources vary)",
+        "name": "Forest Cover",
+        "subname": "(Other National Data)",
+        "ipcc": "(sources vary)",
         "type": "number",
         "thresh" : 25,
         "threshunit": "tree cover",
@@ -304,7 +306,8 @@
       },
       {
         "position": 3,
-        "name": "FAO",
+        "name": "Forest Cover",
+        "subname": "(FAO FRA 2015)",
         "type": "number",
         "template" : "forest-area-fao",
         "note" : "FAO uses a 10% canopy density by default"
@@ -353,7 +356,8 @@
     "tabs": [
       {
         "position": 1,
-        "name": "Woods Hole/Baccini",
+        "name": "Satellite-based estimates",
+        "subname": "(Woods Hole Research Center)",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -374,7 +378,7 @@
       {
         "position": 2,
         "name": "Other national data",
-        "subname": "(Hansen/UMD/Google/USGS/NASA)",
+        "subname": "(sources vary)",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -391,7 +395,7 @@
       },
       {
         "position": 3,
-        "name": "FAO",
+        "name": "FAO FRA 2015",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -810,8 +814,8 @@
     "tabs": [
       {
         "position": 1,
-        "name": "Harmonized World Soil Database",
-        "subname": "(FAO/IIASA/ISIRC/ISSCAS/JRC)",
+        "name": "Satellite-based estimate",
+        "subname": "(Woods Hole Research Center)",
         "type": "number",
         "thresh" : 25,
         "threshunit": "tree cover",
