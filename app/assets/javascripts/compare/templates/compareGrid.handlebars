@@ -1,5 +1,7 @@
 <section>
   {{#each this.widgets}}
-    <div id="gridgraphs-compare-{{this}}" class="gridgraphs--container"></div>
+    <div id="gridgraphs-compare-{{this}}" class="gridgraphs--container">
+      <button class="lock-mode" data-id="{{this}}"></button>
+    </div>
   {{/each}}
 </section>

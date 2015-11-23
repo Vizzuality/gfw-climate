@@ -115,3 +115,20 @@
     font-size: 26px;
   }
 }
+
+.lock-mode {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: green;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+  &.is-locked {
+    background: red;
+  }
+}

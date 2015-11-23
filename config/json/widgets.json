@@ -36,7 +36,7 @@
         "position": 2,
         "name": "Other national data",
         "subname": "(Sources vary)",
-        "ipcc" : "(IPCC Approach 2/3)",
+        "ipcc" : "(IPCC Approach 3)",
         "type": "line",
         "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
         "rangetype" : "year",
@@ -277,74 +277,7 @@
   },
   {
     "id": 3,
-    "name": "Forest area 2000",
-    "type_slug": "forest-and-carbon-data",
-    "type": "Forest and Carbon Data",
-    "type_chart": "number",
-    "default_thresh": "25",
-    "default": true,
-    "tabs": [
-      {
-        "position": 1,
-        "name": "Hansen/Google/UMD",
-        "type": "number",
-        "thresh" : 25,
-        "threshunit": "tree cover",
-        "template" : "forest-area-umd",
-        "default": true
-      },
-      {
-        "position": 2,
-        "name": "Other national data",
-        "subname": "(sources vary)",
-        "type": "number",
-        "thresh" : 25,
-        "threshunit": "tree cover",
-        "template" : "forest-area-national"
-      },
-      {
-        "position": 3,
-        "name": "FAO",
-        "type": "number",
-        "template" : "forest-area-fao",
-        "note" : "FAO uses a 10% canopy density by default"
-      }
-    ],
-    "indicators": [
-      {
-        "id": 3,
-        "name": "Hansen/Google/UMD",
-        "type": "number",
-        "unit": "hectares",
-        "tab": 1,
-        "default": true
-      },
-      {
-        "id": 17,
-        "name": "FAO",
-        "type": "number",
-        "unit": "hectares",
-        "tab": 3
-      },
-      {
-        "id": 3,
-        "name": "Hansen/Google/UMD",
-        "type": "number",
-        "unit": "hectares",
-        "tab": 2
-      },
-      {
-        "id": 17,
-        "name": "FAO",
-        "type": "number",
-        "unit": "hectares",
-        "tab": 3
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "name": "Biomass carbon stocks",
+    "name": "Total carbon stored in trees",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "pie",
@@ -353,7 +286,8 @@
     "tabs": [
       {
         "position": 1,
-        "name": "Woods Hole/Baccini",
+        "name": "Satellite-based estimates",
+        "subname": "(Woods Hole Research Center)",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -374,7 +308,7 @@
       {
         "position": 2,
         "name": "Other national data",
-        "subname": "(Hansen/UMD/Google/USGS/NASA)",
+        "subname": "(sources vary)",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -391,7 +325,7 @@
       },
       {
         "position": 3,
-        "name": "FAO",
+        "name": "FAO FRA 2015",
         "type": "pie",
         "section" : "biomass",
         "sectionswitch" : [
@@ -571,13 +505,142 @@
     ]
   },
   {
+    "id": 4,
+    "name": "Total carbon stored in soil",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "number",
+    "default_thresh": "25",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Harmonized World Soil Database",
+        "subname": "(FAO/IIASA/ISIRC/ISSCAS/JRC)",
+        "type": "number",
+        "thresh" : 25,
+        "threshunit": "tree cover",
+        "template" : "soil-carbon-stocks",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 36,
+        "name": "Soil Carbon Stocks",
+        "type": "number",
+        "unit": "teragrams of carbon",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
     "id": 5,
-    "name": "Tree biomass density",
+    "name": "Forest area 2000",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "number",
+    "default_thresh": "25",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Tree Cover",
+        "subname": "(Hansen/UMD/Google/USGS/NASA)",
+        "type": "number",
+        "thresh" : 25,
+        "threshunit": "tree cover",
+        "template" : "forest-area-umd",
+        "default": true
+      },
+      {
+        "position": 2,
+        "name": "Forest Cover",
+        "subname": "(Other National Data)",
+        "ipcc": "(sources vary)",
+        "type": "number",
+        "thresh" : 25,
+        "threshunit": "tree cover",
+        "template" : "forest-area-national"
+      },
+      {
+        "position": 3,
+        "name": "Forest Cover",
+        "subname": "(FAO FRA 2015)",
+        "type": "number",
+        "template" : "forest-area-fao",
+        "note" : "FAO uses a 10% canopy density by default"
+      }
+    ],
+    "indicators": [
+      {
+        "id": 3,
+        "name": "Hansen/Google/UMD",
+        "type": "number",
+        "unit": "hectares",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 17,
+        "name": "FAO",
+        "type": "number",
+        "unit": "hectares",
+        "tab": 3
+      },
+      {
+        "id": 3,
+        "name": "Hansen/Google/UMD",
+        "type": "number",
+        "unit": "hectares",
+        "tab": 2
+      },
+      {
+        "id": 17,
+        "name": "FAO",
+        "type": "number",
+        "unit": "hectares",
+        "tab": 3
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Deforestation vs. Fossil Fuel Emissions",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and Drivers",
+    "type_chart": "number",
+    "default_thresh": "0",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Deforestation Emissions/Fossil Fuel Emissions",
+        "subname": "(Zarin et al. 2015/CAIT)",
+        "type": "number",
+        "template" : "deforestation-emissions",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 51,
+        "name": "Deforestation Emissions/Fossil Fuel Emissions",
+        "type": "number",
+        "tab": 1,
+        "default": true
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Average carbon stored in trees per unit area",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "pie",
     "default_thresh": "25",
-    "default": true,
+    "default": false,
     "_text": "On average there are #{value} tons of #{section} per hectare in #{country}'s forests.",
     "tabs": [
       {
@@ -800,18 +863,18 @@
     ]
   },
   {
-    "id": 6,
-    "name": "Soil Carbon Density",
+    "id": 8,
+    "name": "Average carbon stored in soils per unit area",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "number",
     "default_thresh": "25",
-    "default": true,
+    "default": false,
     "tabs": [
       {
         "position": 1,
-        "name": "Harmonized World Soil Database",
-        "subname": "(FAO/IIASA/ISIRC/ISSCAS/JRC)",
+        "name": "Satellite-based estimate",
+        "subname": "(Woods Hole Research Center)",
         "type": "number",
         "thresh" : 25,
         "threshunit": "tree cover",
@@ -831,38 +894,7 @@
     ]
   },
   {
-    "id": 7,
-    "name": "Soil Carbon Stocks",
-    "type_slug": "forest-and-carbon-data",
-    "type": "Forest and Carbon Data",
-    "type_chart": "number",
-    "default_thresh": "25",
-    "default": false,
-    "tabs": [
-      {
-        "position": 1,
-        "name": "Harmonized World Soil Database",
-        "subname": "(FAO/IIASA/ISIRC/ISSCAS/JRC)",
-        "type": "number",
-        "thresh" : 25,
-        "threshunit": "tree cover",
-        "template" : "soil-carbon-stocks",
-        "default": true
-      }
-    ],
-    "indicators": [
-      {
-        "id": 36,
-        "name": "Soil Carbon Stocks",
-        "type": "number",
-        "unit": "teragrams of carbon",
-        "tab": 1,
-        "default": true
-      }
-    ]
-  },
-  {
-    "id": 8,
+    "id": 9,
     "name": "Emissions from peat drainage",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
@@ -891,7 +923,7 @@
     ]
   },
   {
-    "id": 9,
+    "id": 10,
     "name": "Top 5 crops expanding in the area",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
@@ -920,7 +952,7 @@
     ]
   },
   {
-    "id": 10,
+    "id": 11,
     "name": "Drivers of deforestation and degradation",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
@@ -941,34 +973,6 @@
         "id": 40,
         "name": "Worldbank Forest Carbon Partnership Facility",
         "type": "text",
-        "tab": 1,
-        "default": true
-      }
-    ]
-  },
-  {
-    "id": 11,
-    "name": "National deforestation against fossil fuels emissions",
-    "type_slug": "policy-and-drivers",
-    "type": "Policy and Drivers",
-    "type_chart": "number",
-    "default_thresh": "0",
-    "default": false,
-    "tabs": [
-      {
-        "position": 1,
-        "name": "Deforestation Emissions/Fossil Fuel Emissions",
-        "subname": "(Zarin et al. 2015/CAIT)",
-        "type": "number",
-        "template" : "deforestation-emissions",
-        "default": true
-      }
-    ],
-    "indicators": [
-      {
-        "id": 51,
-        "name": "Deforestation Emissions/Fossil Fuel Emissions",
-        "type": "number",
         "tab": 1,
         "default": true
       }

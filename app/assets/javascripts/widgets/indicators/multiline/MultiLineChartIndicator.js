@@ -83,7 +83,7 @@ define([
     _drawGraph: function() {
       var $graphContainer = this.$el.find('.linechart-graph')[0];
       // Set range
-      if (this.model.get('location_compare')) {
+      if (this.model.get('lock')) {
         var data = this.getData('data'),
             dataCompare = this.getData('data_compare'),
             rangeX = this.getRangeX(data,dataCompare),
@@ -105,6 +105,7 @@ define([
           unitname: this.model.get('unitname'),
           rangeX: rangeX,
           rangeY: rangeY,
+          lock: this.model.get('lock'),
           slug: this.model.get('slug'),
           slug_compare: this.model.get('slug_compare'),
           sizing: {top: 10, right: 10, bottom: 20, left: 0},
@@ -130,7 +131,7 @@ define([
       this.$el.addClass('is-loading');
       var slug = this.model.get('slug');
       var slug_compare = this.model.get('slug_compare');
-      if(!!this.model.get('location_compare')) {
+      if(!!this.model.get('lock')) {
         return [this.fetchIndicator(params, 'data',slug),this.fetchIndicator(paramsCompare, 'data_compare',slug_compare)]
       } else {
         return [this.fetchIndicator(params, 'data',slug)]

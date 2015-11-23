@@ -4,10 +4,8 @@ define([
  'underscore',
  'handlebars',
  'mps',
- 'widgets/indicators/line/line_chart_context',
- 'widgets/indicators/line/line_chart_interactionHandler',
  'text!widgets/templates/indicators/line/linechart-tooltip.handlebars'
-], function($, d3, _, Handlebars, mps, LineChartContext, LineChartInteractionHandler, tooltipTpl){
+], function($, d3, _, Handlebars, mps, tooltipTpl){
 
 var LineChart = function(options) {
   this.svg;
@@ -19,6 +17,7 @@ var LineChart = function(options) {
   this.unitname = options.unitname;
   this.rangeX = options.rangeX;
   this.rangeY = options.rangeY;
+  this.lock = options.lock;
   this.templateTooltip = Handlebars.compile(tooltipTpl);
 
   this.sizing = options.sizing;
@@ -49,6 +48,7 @@ LineChart.prototype.offResize = function() {
 LineChart.prototype.resize = function() {
   this.offResize();
   $(this.options.el).find('svg').remove();
+  this.destroy();
   new LineChart(this.options).render();
 };
 
@@ -268,23 +268,25 @@ LineChart.prototype.setListeners = function() {
   var bisectDate = d3.bisector(function(d) { return d.year; }).left;
   var data = this.data;
   var self = this;
-
-  mps.subscribe('LineChart/mouseout'+this.options.slug+this.options.id,function(){
-    if (!!self.svg) {
-      self.positioner
-        .classed("is-reflect", false)
-        .style("visibility", "hidden");
-      self.tooltip
-        .classed("is-reflect", false)
-        .style("visibility", "hidden");
-    }
-  });
-
-  mps.subscribe('LineChart/mousemove'+this.options.slug+this.options.id,function(x0){
-    if (!!self.svg) {
-      self.setTooltip(x0,true);
-    }
-  });
+  if (self.lock) {
+    this.subcriptions = [
+      mps.subscribe('LineChart/mouseout'+this.options.slug+this.options.id,function(){
+        if (!!self.svg) {
+          self.positioner
+            .classed("is-reflect", false)
+            .style("visibility", "hidden");
+          self.tooltip
+            .classed("is-reflect", false)
+            .style("visibility", "hidden");
+        }
+      }),
+      mps.subscribe('LineChart/mousemove'+this.options.slug+this.options.id,function(x0){
+        if (!!self.svg) {
+          self.setTooltip(x0,true);
+        }
+      })
+    ]
+  }
 };
 
 
@@ -317,6 +319,11 @@ LineChart.prototype.render = function() {
 LineChart.prototype.destroy = function() {
   if (!!this.tooltip) {
     this.tooltip.remove();
+  }
+  if (this.subcriptions) {
+    for (var i = 0; i < this.subcriptions.length; i++) {
+      mps.unsubscribe(this.subcriptions[i]);
+    }
   }
 };
 

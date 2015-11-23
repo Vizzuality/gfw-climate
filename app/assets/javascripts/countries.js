@@ -33,9 +33,7 @@ require([
     },
 
     _initViews: function() {
-      new CountryShowView();
       new CountryIndexView();
-      // new CountryModalView();
     },
 
     _initRouter: function() {

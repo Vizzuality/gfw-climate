@@ -137,6 +137,7 @@ define([
                 type: 'line',
                 slug: this.presenter.model.get('slug'),
                 // Compare model params
+                lock: t.lock,
                 location_compare: this.presenter.model.get('location_compare'),
                 slug_compare: this.presenter.model.get('slug_compare'),
               },
@@ -196,6 +197,8 @@ define([
 
     destroy: function() {
       this.presenter.destroy();
+      this.undelegateEvents();
+      this.$el.removeData().unbind();
       if (!!this.indicator) {
         this.indicator.destroy();
       }

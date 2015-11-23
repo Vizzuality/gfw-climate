@@ -112,6 +112,7 @@ define([
 
     categoryOrder: [
       'forest_clearing',
+      'carbon_density',
       'forest_cover',
       'forest_use',
       'people',
