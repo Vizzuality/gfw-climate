@@ -278,7 +278,7 @@ define([
         activeWidgets;
 
       if (!widgets) {
-        activeWidgets = [1, 2, 3, 4, 5];
+        activeWidgets = [1, 2, 3, 4, 5, 6];
       } else {
         activeWidgets = widgets;
       }
