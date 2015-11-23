@@ -17,9 +17,66 @@
   }
 
   .main-slider-viewport > .slick-dots {
-    top: 30px;
-    right: 50px;
-    bottom: auto;
+    bottom: 0;
+    right: 50%;
+    transform: translate(50%, 50%);
+
+    li button {
+      width: 100px;
+      height: 100px;
+      background-color: $white;
+      opacity: 1;
+
+      $backgrounds: "1", "2", "3", "4";
+
+      @for $i from 1 through length($backgrounds) {
+        &:nth-child(#{nth($backgrounds, $i)}){
+          background-image: image-url('home/features/profiles/profile#{nth($backgrounds, $i)}b.png');
+          background-position: center;
+          background-color: $white;
+        }
+      }
+    }
+
+    li {
+      position: relative;;
+
+      &:after {
+        position: absolute;
+        bottom: -20px;
+        right: 50%;
+        transform: translate(50%, 50%);
+        text-align: center;
+        font-size: 12px;
+        color: $font-color-1;
+        text-align: center;
+        text-transform: capitalize;
+      }
+
+      &:nth-child(1):after {
+        content: "JOURNALISTS";
+      }
+
+      &:nth-child(2):after {
+        content: "ORGANIZATIONS";
+      }
+
+      &:nth-child(3):after {
+        content: "POLICY MAKER";
+      }
+
+      &:nth-child(4):after {
+        content: "INVESTORS";
+      }
+    }
+
+    li.slick-active button, 
+    li:hover button {
+      opacity: 1;
+      transform: scale(1);
+      background-image: image-url('home/features/profiles/profile1.png');
+    }
+  
   }
 
   .col > .col-container {
@@ -97,6 +154,7 @@
 
 
     > .slide-container {
+      position: relative;
       display: flex;
       min-height: 425px !important;
       padding: 0;
@@ -127,6 +185,24 @@
       }
       .slide-background {
         background-image: image-url('home/features/slider/slide0.png');
+      }
+    }
+
+    &.slide1 {
+      .col-container {
+        background-color: $brown;
+      }
+    }
+
+    &.slide2 {
+      .col-container {
+        background-color: $brown;
+      }
+    }
+
+    &.slide3 {
+      .col-container {
+        background-color: $brown;
       }
     }
   }
