@@ -344,7 +344,7 @@
   },
   {
     "id": 4,
-    "name": "Biomass carbon stocks",
+    "name": "Total carbon stored in trees",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "pie",
@@ -801,7 +801,7 @@
   },
   {
     "id": 6,
-    "name": "Soil Carbon Density",
+    "name": "Average carbon stored in soils per unit area",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "number",
@@ -832,7 +832,7 @@
   },
   {
     "id": 7,
-    "name": "Soil Carbon Stocks",
+    "name": "Total carbon stored in soil",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "number",
