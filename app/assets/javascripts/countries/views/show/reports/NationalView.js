@@ -16,12 +16,20 @@ define([
       this.parent  = options.parent;
       this.widgets = options.status.widgets;
 
+
       this._setupGrid();
     },
 
     _setupGrid: function() {
-      var promises = [],
-        widgetsArray = [];
+      var promises = [];
+
+
+      if (!!this.activeWidgets && !!this.activeWidgets.length) {
+        this.destroy();
+      };
+
+      this.activeWidgets = [];
+
 
       _.map(this.widgets[this.iso], function(w, key) {
 
@@ -44,14 +52,20 @@ define([
             deferred.resolve();
           });
 
-          widgetsArray.push(newWidget);
+          this.activeWidgets.push(newWidget);
           promises.push(deferred);
 
       }.bind(this));
 
       $.when.apply(null, promises).then(function() {
-        this.render(widgetsArray);
+        this.render(this.activeWidgets);
       }.bind(this));
+    },
+
+    destroy: function() {
+      this.activeWidgets.forEach(function(widget) {
+        widget.destroy();
+      });
     },
 
     render: function(widgetsArray) {

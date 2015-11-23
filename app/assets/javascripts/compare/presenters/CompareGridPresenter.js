@@ -89,6 +89,7 @@ define([
     },
 
     _onWidgetsDelete: function(id) {
+      console.log(this.status.get('widgetsActive'))
       var widgetsActive = _.clone(this.status.get('widgetsActive'));
       widgetsActive = _.without(widgetsActive,id);
       this.status.set('widgetsActive', widgetsActive);
@@ -162,6 +163,8 @@ define([
     changeCompare: function() {
       var compare1 = this.objToSlug(this.status.get('compare1'),'+');
       var compare2 = this.objToSlug(this.status.get('compare2'),'+');
+
+      console.log(compare1, compare2);
       if (!!compare1 && !!compare2) {
         this.service.execute(
           compare1,
