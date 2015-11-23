@@ -437,14 +437,21 @@ function addCommas(nStr) {
       var that = this;
       var style_string;
 
-      var circles = this.generateCircles(values_array)
 
       this.force
         .gravity(0)
         .friction(0.9)
         .charge(that.defaultCharge)
         .on("tick", function(e){
-          circles.each(that.buoyancy(e.alpha));
+          // circles.each(that.buoyancy(e.alpha))
+          var circles = that.generateCircles(values_array);
+          circles
+            .transition().duration(50).attr("r", function(d) {
+              return that.radius_scale(d.value * 1.6);
+            })
+            .each(that.buoyancy(e.alpha))
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; })
         })
         .on("end", function(e) {
           root.$pantropicalVis.removeClass('is-loading');
@@ -487,9 +494,8 @@ function addCommas(nStr) {
               $(this).attr('style', style_string);
 
               coordinates = that.get_coordinates(i);
-
-              $(this).attr('cx', coordinates[0]);
-              $(this).attr('cy', coordinates[1]);
+              d.x = coordinates[0];
+              d.y = coordinates[1];
               $(this).attr('data-url', '/countries/' + d.iso);
 
               var value = values_array[i].value;
@@ -789,7 +795,7 @@ function addCommas(nStr) {
       return function(view_type, year, noSpinner) {
         root.remove_labels();
         if (!noSpinner) {
-          root.set_loading();
+          // root.set_loading();
         }
         switch (view_type) {
           case 'nydfs':
