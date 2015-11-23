@@ -716,7 +716,6 @@ function addCommas(nStr) {
     };
 
     BubbleChart.prototype.show_details = function(data, i, element) {
-      console.log(data);
       var content;
       d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
       content = "<span class=\"value\"> " + data.name + "</span><br/>";
