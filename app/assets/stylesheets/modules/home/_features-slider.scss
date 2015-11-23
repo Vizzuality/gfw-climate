@@ -39,7 +39,7 @@
     }
 
     li {
-      position: relative;;
+      position: relative;
 
       &:after {
         position: absolute;
@@ -110,6 +110,10 @@
       color: $white;
       font-weight: 300;
       line-height: 25px;
+
+      span {
+        color: $font-color-2;
+      }
     }
 
     @media screen and (min-width: $br-mobile) {
