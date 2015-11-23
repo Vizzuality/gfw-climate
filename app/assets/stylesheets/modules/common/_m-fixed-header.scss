@@ -1,0 +1,47 @@
+.m-fixed-header {
+  width: 100%;
+  z-index: 1000;
+
+  &.is-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  &.is-bottom {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+  }
+
+  .fixed-wrap{
+    max-width: 1600px;
+    margin: 0 auto;
+    background: $extra-light-grey;
+    overflow: hidden;
+  }
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    li {
+      width: 47.5%;
+      padding: 10px 0;
+      text-transform: uppercase;
+    }
+
+    &.-country {
+      display: inline-block;
+      height: 36px;
+
+      transform: translate(0, 0);
+      transition: .2s all ease;
+      li {
+        float: left;
+        width: 100%;
+      }
+    }
+  }
+}
+

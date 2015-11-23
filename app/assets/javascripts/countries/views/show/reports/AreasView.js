@@ -1,10 +1,11 @@
 define([
+  'mps',
   'backbone',
   'handlebars',
   'widgets/views/WidgetView',
   'text!countries/templates/country-areas-grid.handlebars',
   'text!countries/templates/no-indicators.handlebars'
-], function(Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
+], function(mps, Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
 
   var AreasView = Backbone.View.extend({
 
@@ -100,6 +101,14 @@ define([
 
         }, this));
 
+        this.parent.append(this.$el);
+        mps.publish('Grid/ready', [{
+          options: {
+            view: 'areas',
+            areas: this.areas
+          }
+        }]);
+
 
       } else {
 
@@ -112,9 +121,9 @@ define([
         this.$el.html(this.template({
           setup: options
         }));
-      }
 
-      this.parent.append(this.$el);
+        this.parent.append(this.$el);
+      }
     },
 
 
