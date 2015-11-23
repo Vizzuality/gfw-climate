@@ -67,6 +67,10 @@ define([
     // PUBLISH the current status of this tab
     publish: function() {
       this.view.widget.changeStatus(this.status.toJSON());
+    },
+
+    destroy: function() {
+      this.unsubscribe();
     }
 
   });

@@ -21,7 +21,6 @@ define([
 
     initialize: function() {
       this.presenter = new WidgetGridPresenter(this);
-
       this._cacheVars();
     },
 
@@ -54,6 +53,7 @@ define([
 
       var view = this.presenter.status.get('view');
       var options = {
+        country: this.presenter.status.get('country'),
         parent: this.$el.find('.reports-grid')
       };
 

@@ -52,8 +52,15 @@ define([
     },
 
     _onPlaceGo: function(params) {
+      this._setCountry(params.country);
       this._setView(params.view);
       this._setOptions(params.options);
+    },
+
+    _setCountry: function(c) {
+      this.status.set({
+        country: c.iso
+      });
     },
 
     setIndicators: function(i) {

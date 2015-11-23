@@ -9,7 +9,8 @@ define([
   'widgets/indicators/map/MapIndicator',
   'widgets/indicators/pie/PieChartIndicator',
   'widgets/indicators/number/NumberChartIndicator',
-], function(Backbone, Handlebars, TabPresenter, tpl, averageTpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator) {
+  'widgets/indicators/list/ListChartIndicator',
+], function(Backbone, Handlebars, TabPresenter, tpl, averageTpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator, ListChartIndicator) {
 
   'use strict';
 
@@ -148,6 +149,25 @@ define([
           }
           break;
 
+        case 'list':
+          var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
+          if (!!indicators.length) {
+            this.indicator = new ListChartIndicator({
+              el: this.$graphContainer,
+              tab: this,
+              className: 'is-list',
+              model: {
+                indicators: indicators,
+                type: 'list',
+              },
+              data: {
+                location: this.presenter.model.get('location'),
+                thresh: t.thresh,
+              }
+            });
+          }
+          break;
+
         case 'pie':
           var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
           if (!!indicators.length) {
@@ -159,7 +179,7 @@ define([
                 indicators: indicators,
                 section: t.section,
                 sectionswitch: this.presenter.model.get('data').sectionswitch,
-                template: 'biomass-carbon',
+                template: t.template,
                 type: 'pie',
               },
               data: {
@@ -195,6 +215,7 @@ define([
     },
 
     destroy: function() {
+      this.presenter.destroy();
       if (!!this.indicator) {
         this.indicator.destroy();
       }

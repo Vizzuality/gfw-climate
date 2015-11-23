@@ -13,7 +13,6 @@ define([
 
     initialize: function() {
       this.presenter = new CountryHeaderPresenter(this);
-
       this.helper = CountryHelper;
     },
 

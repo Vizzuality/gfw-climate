@@ -51,7 +51,7 @@ define([
 
     setWidgetsStatus: function() {
       _.each(this.$checkboxes, _.bind(function(el){
-        var is_active = _.contains(this.status.get('widgetsActive'),$(el).data('id').toString());
+        var is_active = _.contains(this.status.get('widgetsActive'),$(el).data('id'));
         $(el).toggleClass('is-active', is_active);
       }, this ));
     },

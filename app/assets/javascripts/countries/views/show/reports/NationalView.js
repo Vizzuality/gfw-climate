@@ -12,32 +12,32 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(options) {
-      this.parent = options.parent;
-
+      this.iso     = options.country;
+      this.parent  = options.parent;
       this.widgets = options.status.widgets;
+
       this._setupGrid();
     },
 
     _setupGrid: function() {
       var promises = [],
-        widgetsArray = [],
-        iso = sessionStorage.getItem('countryIso');
+        widgetsArray = [];
 
-      _.map(this.widgets[iso], function(w, key) {
+      _.map(this.widgets[this.iso], function(w, key) {
 
           var deferred = $.Deferred();
           var newWidget = new WidgetView({
             model: {
               id: w[0].id,
-              slug: iso,
+              slug: this.iso,
               location: {
-                iso: iso,
+                iso: this.iso,
                 jurisdiction: 0,
                 area: 0
               },
             },
             className: 'gridgraphs-widget',
-            status: this.widgets[iso][w[0].id][0]
+            status: this.widgets[this.iso][w[0].id][0]
           });
 
           newWidget._loadMetaData(function() {
@@ -60,7 +60,7 @@ define([
       this.$el.removeClass();
       this.$el.addClass('gridgraphs -national');
 
-      this.$el.html(this.template)
+      this.$el.html(this.template);
 
       widgetsArray.forEach(function(widget) {
         this.$el.find('.gridgraphs-container').append(widget.render().el);

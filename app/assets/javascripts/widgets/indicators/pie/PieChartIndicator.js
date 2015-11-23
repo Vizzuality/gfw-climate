@@ -5,16 +5,21 @@ define([
   'widgets/views/IndicatorView',
   'widgets/models/IndicatorModel',
   'widgets/indicators/pie/PieChart',
-  'text!widgets/templates/indicators/pie/piechart.handlebars',
+  'text!widgets/templates/indicators/pie/biomass-carbon-stocks.handlebars',
+  'text!widgets/templates/indicators/pie/biomass-density.handlebars',
   'text!widgets/templates/indicators/no-data.handlebars',
-], function(_, d3, Handleabars, IndicatorView, IndicatorModel, PieChart, tpl, noDataTpl) {
+], function(_, d3, Handleabars, IndicatorView, IndicatorModel, PieChart, carbonStocksTpl, biomassDensityTpl, noDataTpl) {
 
   'use strict';
 
   var PieChartIndicator = IndicatorView.extend({
 
-    template: Handlebars.compile(tpl),
-    noDataTemplate: Handlebars.compile(noDataTpl),
+    templates: {
+      'biomass-carbon-stocks' : Handlebars.compile(carbonStocksTpl),
+      'biomass-density' : Handlebars.compile(biomassDensityTpl),
+      'no-data' : Handlebars.compile(noDataTpl),
+
+    },
 
     events: function() {
       return _.extend({}, IndicatorView.prototype.events, {
@@ -68,13 +73,14 @@ define([
           this.model.set('data', data);
           this.render();
         } else {
-          this.$el.html(this.noDataTemplate({ classname: 'pie' }));
+          this.$el.html(this.templates['no-data']({ classname: 'pie' }));
         }
       }, this ));
     },
 
     render: function() {
-      this.$el.html(this.template(this.parseData()));
+      var tpl = this.model.get('template');
+      this.$el.html(this.templates[tpl](this.parseData()));
       this.cacheVars();
       this.setStatusValues();
       this.drawGraph();
@@ -86,7 +92,7 @@ define([
       return {
         sectionswitch: this.model.get('sectionswitch'),
         country_name: this.model.get('data')[0].country_name,
-        total: parseValues(_.findWhere(this.model.get('data'), {type:'total'}).data[0].value) + ' tons'
+        total: parseValues(_.findWhere(this.model.get('data'), {type:'total'}).data[0].value)
       }
     },
 

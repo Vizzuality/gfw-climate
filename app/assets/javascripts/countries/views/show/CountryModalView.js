@@ -32,13 +32,7 @@ define([
     initialize: function() {
       this.constructor.__super__.initialize.apply(this);
       this.presenter = new CountryModalPresenter(this);
-
-      var iso = sessionStorage.getItem('countryIso');
-
-      this.countryModel = new CountryModel({id: iso});
       this.widgetCollection = new WidgetCollection();
-
-      this.$el.addClass('source_window--countries');
 
       this._setListeners();
     },
@@ -48,7 +42,12 @@ define([
     },
 
     start: function() {
+      this.countryModel = new CountryModel({
+        iso: this.presenter.status.get('country')
+      });
+
       this.widgetCollection.fetch().done(function(){
+
         this._setupModal();
       }.bind(this));
     },
@@ -275,6 +274,8 @@ define([
     },
 
     render: function() {
+
+      this.$el.addClass('source_window--countries');
 
       this._resetPosition();
       this._cleanIndicators();
