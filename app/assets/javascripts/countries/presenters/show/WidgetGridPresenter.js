@@ -13,7 +13,8 @@ define([
 
     status: new (Backbone.Model.extend({
       defaults: {
-        activeWidgets: [1, 2, 3, 4, 5],
+        activeWidgets: null,
+        defaultWidgets: ["1", "2", "3", "4", "5"],
         globalThresh: 30
       }
     })),
@@ -56,7 +57,7 @@ define([
 
           var p = {
             view: view
-          }
+          };
 
           this.widgetCollection.fetch({default: true}).done(function() {
 
@@ -120,13 +121,28 @@ define([
       var p = {};
 
       p.options = this.status.get('options');
-
       p.options.areas =  this.status.get('jurisdictions') ? null : this.status.get('areas');
       p.options.jurisdictions = this.status.get('areas') ? null : this.status.get('jurisdictions');
+      p.options.activeWidgets = this.status.get('activeWidgets') ? this.status.get('activeWidgets') : null;
+
+      console.log(this.status.get('activeWidgets'))
+
+      var x = this.status.get('activeWidgets');
+
+      x.forEach(function(v, i) {
+        x[i] = v.toString();
+      });
+
+      p.options.activeWidgets = x;
+
+
+      debugger;
 
       _.extend(p.options, {
         view: this.status.get('view')
       });
+
+      console.log(p)
 
       return p;
     },
@@ -137,6 +153,8 @@ define([
      * @param  {Object} place PlaceService's place object
      */
     _onPlaceGo: function(params) {
+      console.log('onPlaceGo')
+      console.log(params)
       switch(params.view) {
         case 'national':
           if (params.options) {
@@ -221,6 +239,7 @@ define([
     },
 
     _loadCustomizedOptions: function(params) {
+      console.log(params)
       this.status.set({
         country: params.country.iso,
         jurisdictions: params.jurisdictions ? params.jurisdictions :  this.getJurisdictions(params),
@@ -244,12 +263,14 @@ define([
     },
 
     _onWidgetsDelete: function(id) {
+      console.log('ondelete');
       var widgetsActive = _.clone(this.status.get('activeWidgets'));
       widgetsActive = _.without(widgetsActive,id);
       this.status.set('activeWidgets', widgetsActive);
+      console.log(this.status.get('activeWidgets'))
 
       this.widgetCollection.fetch({default: true}).done(function() {
-        this.status.set('options', this.getOptions());
+        this.status.set('options', this.getOptions(this.status.get('activeWidgets'), null));
         mps.publish('Place/update');
         this._removeWidget();
       }.bind(this));
@@ -268,14 +289,6 @@ define([
 
     onSuccess: function(data) {
       var activeWidgets = this.status.get('activeWidgets');
-      // var data = _.map(data.countries, function(c){
-      //   c.widgets = _.compact(_.map(c.widgets, function(w){
-      //     return (_.contains(activeWidgets, w.id)) ? w : null;
-      //   }));
-      //   return c;
-      // });
-      // console.log(data)
-      // this.status.set('data', data);
       this.view.render();
       mps.publish('Widgets/update',[this.status.get('activeWidgets')]);
     },
@@ -324,12 +337,18 @@ define([
 
       var activeWidgets, r = {};
       var params = params ? params : this.status.get('options');
-      activeWidgets = widgets ? widgets : this.status.get('activeWidgets');
+      activeWidgets = widgets ? widgets : this.status.get('defaultWidgets');
 
-      this.status.set('activeWidgets', activeWidgets);
+      this.status.set('activeWidgets', activeWidgets, {silent: true});
+
+      var x = this.status.get('activeWidgets');
+
+      x.forEach(function(v, i) {
+        x[i] = Number.parseInt(v);
+      });
 
       var w = _.groupBy(_.compact(_.map(this.widgetCollection.toJSON(),_.bind(function(w){
-        if (_.contains(activeWidgets, w.id)) {
+        if (_.contains(x, w.id)) {
           return {
             id: w.id,
             tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null,
@@ -338,6 +357,9 @@ define([
         }
         return null;
       }, this))), 'id');
+
+
+      console.log(w)
 
 
       switch(params.view) {

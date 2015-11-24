@@ -22,10 +22,12 @@ define([
     },
 
     _initIndex: function() {
-      // new CountryIndexView();
+      new CountryIndexView();
     },
 
     _initShow: function(country, view) {
+
+      new CountryShowView();
 
       var params = _.extend({
         country: country,

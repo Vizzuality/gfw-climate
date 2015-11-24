@@ -43,6 +43,7 @@ define([
         fade: true,
         cssEase: 'linear',
         dots: true,
+        pauseOnDotsHover: true,
         pauseOnHover: false,
         arrows: false,
 

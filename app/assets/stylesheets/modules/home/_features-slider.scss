@@ -17,9 +17,67 @@
   }
 
   .main-slider-viewport > .slick-dots {
-    top: 30px;
-    right: 50px;
-    bottom: auto;
+    bottom: 0;
+    right: 50%;
+    transform: translate(50%, 50%);
+
+    li button {
+      width: 100px;
+      height: 100px;
+      background-color: $white;
+      opacity: 1;
+      box-shadow: none;
+
+      $backgrounds: "1", "2", "3", "4";
+
+      @for $i from 1 through length($backgrounds) {
+        &:nth-child(#{nth($backgrounds, $i)}){
+          background-image: image-url('home/features/profiles/profile#{nth($backgrounds, $i)}b.png');
+          background-position: center;
+          background-color: $white;
+        }
+      }
+    }
+
+    li {
+      position: relative;
+
+      &:after {
+        position: absolute;
+        bottom: -20px;
+        right: 50%;
+        transform: translate(50%, 50%);
+        text-align: center;
+        font-size: 12px;
+        color: $font-color-1;
+        text-align: center;
+        text-transform: capitalize;
+      }
+
+      &:nth-child(1):after {
+        content: "JOURNALISTS";
+      }
+
+      &:nth-child(2):after {
+        content: "ORGANIZATIONS";
+      }
+
+      &:nth-child(3):after {
+        content: "POLICY MAKER";
+      }
+
+      &:nth-child(4):after {
+        content: "INVESTORS";
+      }
+    }
+
+    li.slick-active button, 
+    li:hover button {
+      opacity: 1;
+      transform: scale(1);
+      background-image: image-url('home/features/profiles/profile1.png');
+    }
+  
   }
 
   .col > .col-container {
@@ -53,6 +111,10 @@
       color: $white;
       font-weight: 300;
       line-height: 25px;
+
+      span {
+        color: $font-color-2;
+      }
     }
 
     @media screen and (min-width: $br-mobile) {
@@ -64,30 +126,30 @@
     }
   }
 
-  .profile-list {
-    position: absolute;
-    top: auto;
-    bottom: 0;
-    margin: 0 0 -10px 0;
-    transform: translate(0, 50%);
-    width: 100%;
-    text-align: center;
-  }
+  // .profile-list {
+  //   position: absolute;
+  //   top: auto;
+  //   bottom: 0;
+  //   margin: 0 0 -10px 0;
+  //   transform: translate(0, 50%);
+  //   width: 100%;
+  //   text-align: center;
+  // }
 
-  .profile-list > .profile {
-    display: inline-block;
-    width: 135px;
-    > .profile-img {
-      cursor: pointer;
-    }
-    > .profile-name {
-      font-size: 14px;
-      color: $dark;
-      line-height: 21px;
-      text-align: center;
-      text-transform: capitalize;
-    }
-  }
+  // .profile-list > .profile {
+  //   display: inline-block;
+  //   width: 135px;
+  //   > .profile-img {
+  //     cursor: pointer;
+  //   }
+  //   > .profile-name {
+  //     font-size: 14px;
+  //     color: $dark;
+  //     line-height: 21px;
+  //     text-align: center;
+  //     text-transform: capitalize;
+  //   }
+  // }
 
   .slide {
 
@@ -97,6 +159,7 @@
 
 
     > .slide-container {
+      position: relative;
       display: flex;
       min-height: 425px !important;
       padding: 0;
@@ -127,6 +190,24 @@
       }
       .slide-background {
         background-image: image-url('home/features/slider/slide0.png');
+      }
+    }
+
+    &.slide1 {
+      .col-container {
+        background-color: $brown;
+      }
+    }
+
+    &.slide2 {
+      .col-container {
+        background-color: $brown;
+      }
+    }
+
+    &.slide3 {
+      .col-container {
+        background-color: $brown;
       }
     }
   }
