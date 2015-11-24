@@ -18,7 +18,7 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 12,
-      urlTemplate: 'http://storage.googleapis.com/thau_wri_carbon_for_vizz/full50{z}{/x}{/y}.png'
+      urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png'
     },
 
     init: function(layer, options, map) {
