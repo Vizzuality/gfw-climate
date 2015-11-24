@@ -927,7 +927,7 @@
     "name": "Top 5 crops expanding in the area",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
-    "type_chart": "text",
+    "type_chart": "list",
     "default_thresh": "0",
     "default": false,
     "tabs": [
@@ -935,7 +935,7 @@
         "position": 1,
         "name": "FAO STAT",
         "subname": "(2001-2012)",
-        "type": "text",
+        "type": "list",
         "default": true
       }
     ],
@@ -944,7 +944,7 @@
         "id": 42,
         "conditional_indicator": 41,
         "name": "Top 5 crops expanding in the area",
-        "type": "text",
+        "type": "list",
         "alternative_text": "According to this data agriculture did not expand in the country between 2001-2012.",
         "tab": 1,
         "default": true
@@ -956,7 +956,7 @@
     "name": "Drivers of deforestation and degradation",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
-    "type_chart": "text",
+    "type_chart": "list",
     "default_thresh": "0",
     "default": false,
     "tabs": [
@@ -964,7 +964,7 @@
         "position": 1,
         "name": "Worldbank Forest Carbon Partnership Facility",
         "subname": "(REDD+ Readiness Preparation Proposals)",
-        "type": "text",
+        "type": "list",
         "default": true
       }
     ],
@@ -972,7 +972,7 @@
       {
         "id": 40,
         "name": "Worldbank Forest Carbon Partnership Facility",
-        "type": "text",
+        "type": "list",
         "tab": 1,
         "default": true
       }
