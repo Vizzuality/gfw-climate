@@ -498,8 +498,8 @@ function addCommas(nStr) {
               var value = values_array[i].value;
               var radius = that.radius_scale(value * 1.6);
 
-              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, radius);
-              document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
+              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, radius, d.iso);
+              document.getElementById(this.id).insertAdjacentHTML('afterend', label_text)
 
               break;
             }
@@ -516,7 +516,7 @@ function addCommas(nStr) {
       return circles;
     };
 
-    BubbleChart.prototype.get_label_text = function(order, coordinates, id, country, data, radius) {
+    BubbleChart.prototype.get_label_text = function(order, coordinates, id, country, data, radius, iso) {
       var x_coord = 'x="' + coordinates[0] + '" ';
 
       var y_coord =         'y="' + coordinates[1] + '" ';
@@ -542,7 +542,8 @@ function addCommas(nStr) {
               id_country +
               x_coord +
               y_coord_country +
-              'text-anchor="middle" width="150px">' +
+              'data-url=country/'+ iso +
+              ' text-anchor="middle" width="150px">' +
               country +
       '</text>' +
 
@@ -550,9 +551,16 @@ function addCommas(nStr) {
               id_data +
               x_coord +
               y_coord_data +
-              'text-anchor="middle">' +
+              'data-url=country/'+ iso +
+              ' text-anchor="middle">' +
               parseFloat(data*100).toFixed(3) + '%' + 
       '</text>';
+
+      //TODO - make labels clickables
+      // $(label_text).on('click', function(e) {
+      //   var url = $(this).data('url');
+      //   window.location.href = url;
+      // });
 
       return label_text;
     }
