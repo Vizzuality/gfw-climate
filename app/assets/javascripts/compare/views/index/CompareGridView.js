@@ -67,7 +67,7 @@ define([
       $.when.apply(null, this.promises).then(_.bind(function() {
         this.widgets.forEach(function(widget) {
           widget.render();
-          $('#gridgraphs-compare-'+widget.id).append(widget.el);
+          $('#gridgraphs-compare-'+widget.id).addClass('is-locked').append(widget.el);
         });
       },this));
     },
@@ -84,7 +84,7 @@ define([
 
       var id = $(e.currentTarget).data('id');
 
-      if (!is_locked) {
+      if (is_locked) {
         $('#gridgraphs-compare-' + id).addClass('is-locked');
       } else {
         $('#gridgraphs-compare-' + id).removeClass('is-locked');
@@ -101,7 +101,6 @@ define([
       } else {
         legend.addClass('is-hidden')
       }
-
     },
 
     destroy: function() {

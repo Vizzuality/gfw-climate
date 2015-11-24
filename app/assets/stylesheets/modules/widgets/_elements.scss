@@ -135,7 +135,7 @@
     height: 100%;
   }
 
-  .icon-lock {
+  .icon-unlock {
     display: none;
   }
 
@@ -152,10 +152,10 @@
   }
 
   &.is-locked {
-    > .icon-lock {
+    > .icon-unlock {
       display: inline-block;
     }
-    > .icon-unlock {
+    > .icon-lock {
       display: none;
     }
     .locker-tooltip {
