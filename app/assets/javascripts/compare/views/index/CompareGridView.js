@@ -10,7 +10,9 @@ define([
     el: '#compareGridView',
 
     events: {
-      'click .lock-mode' : 'toggleLock'
+      'click .lock-mode' : 'toggleLock',
+      'mouseenter .lock-mode' : 'toggleLegend',
+      'mouseleave .lock-mode' : 'toggleLegend'
     },
 
     template: Handlebars.compile(tpl),
@@ -19,9 +21,6 @@ define([
       this.presenter = new CompareMainPresenter(this);
     },
 
-    setListeners: function() {
-
-    },
 
     render: function() {
       this.$el.html(this.template(this.parseData()));
@@ -82,8 +81,27 @@ define([
     // Events
     toggleLock: function(e) {
       var is_locked = $(e.currentTarget).hasClass('is-locked');
+
+      var id = $(e.currentTarget).data('id');
+
+      if (!is_locked) {
+        $('#gridgraphs-compare-' + id).addClass('is-locked');
+      } else {
+        $('#gridgraphs-compare-' + id).removeClass('is-locked');
+      }
+
       $(e.currentTarget).toggleClass('is-locked', !is_locked);
-      this.presenter.toggleLock($(e.currentTarget).data('id'), is_locked);
+      this.presenter.toggleLock(id, is_locked);
+    },
+
+    toggleLegend: function(e) {
+      var legend = $(e.currentTarget).find('.locker-tooltip');
+      if (e && e.type === 'mouseenter') {
+        legend.removeClass('is-hidden');
+      } else {
+        legend.addClass('is-hidden')
+      }
+
     },
 
     destroy: function() {
@@ -91,8 +109,6 @@ define([
         widget.destroy();
       });
     }
-
-
 
   });
 

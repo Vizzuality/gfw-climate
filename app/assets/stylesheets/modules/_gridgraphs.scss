@@ -15,6 +15,14 @@
   .gridgraphs--widget {
     width: 47.5%;
   }
+
+  &.is-locked {
+    background: #f8fafb;
+
+    .locker-tooltip > .tooltip-legend {
+      color: $blue;
+    }
+  }
 }
 
 
