@@ -538,29 +538,28 @@ function addCommas(nStr) {
       }
 
       var label_text =
-      '<text class="country-label" ' +
+      '<text class="country-label bubble-label" ' +
               id_country +
               x_coord +
               y_coord_country +
-              'data-url=country/'+ iso +
+              'data-url=countries/'+ iso +
               ' text-anchor="middle" width="150px">' +
               country +
       '</text>' +
 
-      '<text  class="data-label"' +
+      '<text  class="data-label bubble-label"' +
               id_data +
               x_coord +
               y_coord_data +
-              'data-url=country/'+ iso +
+              'data-url=countries/'+ iso +
               ' text-anchor="middle">' +
               parseFloat(data*100).toFixed(3) + '%' + 
       '</text>';
 
-      //TODO - make labels clickables
-      // $(label_text).on('click', function(e) {
-      //   var url = $(this).data('url');
-      //   window.location.href = url;
-      // });
+      $('.bubble-label').on('click', function(e) {
+        var url = $(this).data('url');
+        window.location.href = url;
+      });
 
       return label_text;
     }
