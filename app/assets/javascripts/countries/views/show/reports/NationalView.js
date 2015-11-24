@@ -1,9 +1,10 @@
 define([
+  'mps',
   'backbone',
   'handlebars',
   'widgets/views/WidgetView',
   'text!countries/templates/country-national-grid.handlebars',
-], function(Backbone, Handlebars, WidgetView, tpl) {
+], function(mps, Backbone, Handlebars, WidgetView, tpl) {
 
   var NationalView = Backbone.View.extend({
 
@@ -58,7 +59,14 @@ define([
       }.bind(this));
 
       $.when.apply(null, promises).then(function() {
-        this.render(this.activeWidgets);
+        this.render(widgetsArray);
+        mps.publish('Grid/ready', [{
+          iso: this.iso,
+          options: {
+            view: 'national'
+          }
+        }]);
+
       }.bind(this));
     },
 

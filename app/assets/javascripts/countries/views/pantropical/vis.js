@@ -454,7 +454,6 @@ function addCommas(nStr) {
           root.$pantropicalVis.removeClass('is-loading');
         })
         .start();
-        
     };
 
     BubbleChart.prototype.generateCircles = function(values_array) {
@@ -499,8 +498,8 @@ function addCommas(nStr) {
               var value = values_array[i].value;
               var radius = that.radius_scale(value * 1.6);
 
-              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, radius);
-              document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
+              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, radius, d.iso);
+              document.getElementById(this.id).insertAdjacentHTML('afterend', label_text)
 
               break;
             }
@@ -517,7 +516,7 @@ function addCommas(nStr) {
       return circles;
     };
 
-    BubbleChart.prototype.get_label_text = function(order, coordinates, id, country, data, radius) {
+    BubbleChart.prototype.get_label_text = function(order, coordinates, id, country, data, radius, iso) {
       var x_coord = 'x="' + coordinates[0] + '" ';
 
       var y_coord =         'y="' + coordinates[1] + '" ';
@@ -539,21 +538,28 @@ function addCommas(nStr) {
       }
 
       var label_text =
-      '<text class="country-label" ' +
+      '<text class="country-label bubble-label" ' +
               id_country +
               x_coord +
               y_coord_country +
-              'text-anchor="middle" width="150px">' +
+              'data-url=countries/'+ iso +
+              ' text-anchor="middle" width="150px">' +
               country +
       '</text>' +
 
-      '<text  class="data-label"' +
+      '<text  class="data-label bubble-label"' +
               id_data +
               x_coord +
               y_coord_data +
-              'text-anchor="middle">' +
+              'data-url=countries/'+ iso +
+              ' text-anchor="middle">' +
               parseFloat(data*100).toFixed(3) + '%' + 
       '</text>';
+
+      $('.bubble-label').on('click', function(e) {
+        var url = $(this).data('url');
+        window.location.href = url;
+      });
 
       return label_text;
     }
@@ -614,7 +620,7 @@ function addCommas(nStr) {
 
       if (! !!this.year) {
         this.year_left = 2001;
-        this.year_right = 2001;
+        this.year_right = 2013;
       } else {
         this.year_left = this.year[0];
         this.year_right = this.year[1];

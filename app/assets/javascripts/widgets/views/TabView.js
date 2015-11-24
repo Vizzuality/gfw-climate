@@ -9,7 +9,8 @@ define([
   'widgets/indicators/map/MapIndicator',
   'widgets/indicators/pie/PieChartIndicator',
   'widgets/indicators/number/NumberChartIndicator',
-], function(Backbone, Handlebars, TabPresenter, tpl, averageTpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator) {
+  'widgets/indicators/list/ListChartIndicator',
+], function(Backbone, Handlebars, TabPresenter, tpl, averageTpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator, ListChartIndicator) {
 
   'use strict';
 
@@ -140,6 +141,25 @@ define([
                 lock: t.lock,
                 location_compare: this.presenter.model.get('location_compare'),
                 slug_compare: this.presenter.model.get('slug_compare'),
+              },
+              data: {
+                location: this.presenter.model.get('location'),
+                thresh: t.thresh,
+              }
+            });
+          }
+          break;
+
+        case 'list':
+          var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
+          if (!!indicators.length) {
+            this.indicator = new ListChartIndicator({
+              el: this.$graphContainer,
+              tab: this,
+              className: 'is-list',
+              model: {
+                indicators: indicators,
+                type: 'list',
               },
               data: {
                 location: this.presenter.model.get('location'),
