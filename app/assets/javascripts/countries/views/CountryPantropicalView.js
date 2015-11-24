@@ -25,6 +25,11 @@ define([
       //I can't find who is giving display:block to country tab...
       $('#vis').find('.country').hide();
       this._cacheVars();
+      this._setRankingAverage();
+    },
+
+    _setRankingAverage: function() {
+      $('#year-drop-right').val('2013');
     },
 
     _cacheVars: function() {
