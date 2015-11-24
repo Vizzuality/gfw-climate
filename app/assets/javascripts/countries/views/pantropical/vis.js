@@ -399,6 +399,9 @@ function addCommas(nStr) {
                   }
                 }
               }
+              if (that.VALID_NAMES.indexOf(d.name) != -1) {
+                document.getElementById(d.name+'_data').innerHTML = parseFloat(value*100).toFixed(3)+'%';
+              }
               return that.radius_scale(value * 1.6);
             })
             .each(that.mandatorySort(e.alpha, true))
