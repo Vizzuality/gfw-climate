@@ -82,6 +82,7 @@ function addCommas(nStr) {
       this.height = 480;
       this.NYDF = "Other NYDF Signatory",
       this.NONYDF = "Other non-NYDF Signatory",
+      this.VALID_NAMES = ["Brazil","Indonesia","New_York_Declaration_on_Forests_Signatories","Non_New_York_Declaration_on_Forests_Signatories"];
       this.NET_INTEREST = "Net interest",
       this.defaultCharge  = function(d){
                         if (d.value < 0) {
@@ -300,6 +301,9 @@ function addCommas(nStr) {
     BubbleChart.prototype.move_towards_center = function(alpha) {
       return (function(_this) {
         return function(d) {
+            if (d.id == 103 || d.id == 104) {
+              return d.x = d.y = -2000;
+            }
           d.x = d.x + (_this.center.x - d.x + 150) * (_this.damper + 0.02) * alpha;
           return d.y = d.y + (_this.center.y - d.y) * (_this.damper + 0.02) * alpha;
         };
@@ -314,9 +318,18 @@ function addCommas(nStr) {
       };
     };
 
-    BubbleChart.prototype.mandatorySort = function(alpha) {
+    BubbleChart.prototype.mandatorySort = function(alpha, filter) {
       var that = this;
       return function(d){
+        // if (! !!filter) {
+        //   if (d.id == 103 || d.id == 104) return;
+        // } else {
+        //   if (that.VALID_NAMES.indexOf(d.name) == -1) return;
+        // }
+        //Avoid non-NYDF and NYDF items.
+        if (d.id == 103 || d.id == 104) {
+          return d.x = d.y = -2000;
+        }
         var targetY = that.centerY;
         var targetX = 0;
         if (d.category.includes('non-NYDF'))
@@ -388,7 +401,7 @@ function addCommas(nStr) {
               }
               return that.radius_scale(value * 1.6);
             })
-            .each(that.mandatorySort(e.alpha))
+            .each(that.mandatorySort(e.alpha, true))
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; })
@@ -711,7 +724,6 @@ function addCommas(nStr) {
 
       var cx = x_position + offset_x;
       var cy = y_position + offset_y;
-
 
       return [cx, cy];
     };
