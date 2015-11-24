@@ -59,7 +59,7 @@ define([
       }.bind(this));
 
       $.when.apply(null, promises).then(function() {
-        this.render(widgetsArray);
+        this.render(this.activeWidgets);
         mps.publish('Grid/ready', [{
           iso: this.iso,
           options: {
