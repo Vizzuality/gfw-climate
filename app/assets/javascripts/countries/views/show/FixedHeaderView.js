@@ -146,6 +146,15 @@ define([
 
       switch(country.options.view) {
 
+        case 'national':
+
+          return { country: {
+            tab: '1',
+            name: [{
+              name: country['countryName']
+            }]
+          }};
+
         case 'subnational':
             filter = country.options.jurisdictions;
           break;
@@ -154,6 +163,7 @@ define([
             filter = country.options.areas;
           break;
       }
+
 
       data = _.map(filter, function(d) {
         return _.pick(d, 'name', 'id')
