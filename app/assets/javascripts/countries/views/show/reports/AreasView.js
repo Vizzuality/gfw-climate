@@ -70,8 +70,7 @@ define([
       this.$el.html('');
 
       this.$el.removeClass();
-      this.$el.addClass('gridgraphs -areas')
-
+      this.$el.addClass('gridgraphs -areas');
 
       if (this.areas && this.areas.length > 0) {
 
@@ -87,8 +86,8 @@ define([
 
         this.areas.forEach(function(a, i) {
           data.push({
-              areas: a,
-              widgets: widgetsGroup[a.id]
+            areas: a,
+            widgets: widgetsGroup[a.id]
           });
 
         }.bind(this));
