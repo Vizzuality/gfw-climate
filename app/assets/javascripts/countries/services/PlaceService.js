@@ -141,18 +141,13 @@ define([
     _standardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
 
-      console.log(params)
-
       p.country = {
         iso: p.country
       };
 
       p.view = p.view;
+
       p.options = p.options ? JSON.parse(atob(p.options)) : null;
-
-
-      console.log('PARAMS RECEIVE')
-      console.log(p.options);
 
       return p;
     },

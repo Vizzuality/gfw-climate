@@ -123,26 +123,28 @@ define([
       p.options = this.status.get('options');
       p.options.areas =  this.status.get('jurisdictions') ? null : this.status.get('areas');
       p.options.jurisdictions = this.status.get('areas') ? null : this.status.get('jurisdictions');
-      p.options.activeWidgets = this.status.get('activeWidgets') ? this.status.get('activeWidgets') : null;
+      // p.options.activeWidgets = this.status.get('activeWidgets') ? this.status.get('activeWidgets') : null;
 
-      console.log(this.status.get('activeWidgets'))
-
-      var x = this.status.get('activeWidgets');
-
-      x.forEach(function(v, i) {
-        x[i] = v.toString();
-      });
-
-      p.options.activeWidgets = x;
+      var widgetString = this.status.get('activeWidgets');
 
 
-      debugger;
+      if (widgetString) {
+
+        widgetString.forEach(function(v, i) {
+          widgetString[i] = v.toString();
+        });
+
+        p.options.activeWidgets = widgetString;
+
+      } else {
+        p.options.activeWidgets = null
+      }
+
+
 
       _.extend(p.options, {
         view: this.status.get('view')
       });
-
-      console.log(p)
 
       return p;
     },
@@ -153,8 +155,6 @@ define([
      * @param  {Object} place PlaceService's place object
      */
     _onPlaceGo: function(params) {
-      console.log('onPlaceGo')
-      console.log(params)
       switch(params.view) {
         case 'national':
           if (params.options) {
@@ -176,7 +176,8 @@ define([
               view: params.view,
               areas: null,
               jurisdictions: null,
-              options: {}
+              options: {},
+              activeWidgets: null
             });
             this.view.start()
 
@@ -198,7 +199,8 @@ define([
               view: params.view,
               areas: null,
               jurisdictions: null,
-              options: {}
+              options: {},
+              activeWidgets: null
             });
 
             this.view.start();
@@ -229,7 +231,8 @@ define([
           jurisdictions: null,
           areas: null,
           view: params.view,
-          options: this.getOptions(null, params)
+          options: this.getOptions(null, params),
+          activeWidgets: this.status.get('defaultWidgets')
         });
 
         this.view.start();
@@ -239,13 +242,14 @@ define([
     },
 
     _loadCustomizedOptions: function(params) {
-      console.log(params)
+      // this.status.set('activeWidgets', params.options.activeWidgets);
       this.status.set({
         country: params.country.iso,
         jurisdictions: params.jurisdictions ? params.jurisdictions :  this.getJurisdictions(params),
         areas: params.areas ? params.areas : this.getAreas(params),
         options: params.options,
-        view: params.view
+        view: params.view,
+        activeWidgets: params.options.activeWidgets
       });
 
       this.view.start();
@@ -263,11 +267,10 @@ define([
     },
 
     _onWidgetsDelete: function(id) {
-      console.log('ondelete');
       var widgetsActive = _.clone(this.status.get('activeWidgets'));
-      widgetsActive = _.without(widgetsActive,id);
+      // Fix this SHIT in a neraby future, ffs
+      widgetsActive = _.without(widgetsActive,id.toString());
       this.status.set('activeWidgets', widgetsActive);
-      console.log(this.status.get('activeWidgets'))
 
       this.widgetCollection.fetch({default: true}).done(function() {
         this.status.set('options', this.getOptions(this.status.get('activeWidgets'), null));
@@ -357,9 +360,6 @@ define([
         }
         return null;
       }, this))), 'id');
-
-
-      console.log(w)
 
 
       switch(params.view) {
