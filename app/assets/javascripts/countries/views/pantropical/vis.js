@@ -454,7 +454,6 @@ function addCommas(nStr) {
           root.$pantropicalVis.removeClass('is-loading');
         })
         .start();
-        
     };
 
     BubbleChart.prototype.generateCircles = function(values_array) {
@@ -614,7 +613,7 @@ function addCommas(nStr) {
 
       if (! !!this.year) {
         this.year_left = 2001;
-        this.year_right = 2001;
+        this.year_right = 2013;
       } else {
         this.year_left = this.year[0];
         this.year_right = this.year[1];
