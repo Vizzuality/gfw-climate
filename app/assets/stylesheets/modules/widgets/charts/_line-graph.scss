@@ -400,18 +400,22 @@
 
   .country-label {
     font-size: 12px;
-    font-weight: 200px;
+    // cursor: pointer;
   }
 
   .data-label {
     font-size: 18px;
-    font-weight: 400px;
+    // cursor: pointer;
   }
 }
 
 #svg_vis {
   position: relative;
   z-index: 1;
+
+  circle {
+    cursor: pointer;
+  }
 }
 
 .linechart-legend {
