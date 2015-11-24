@@ -16,7 +16,7 @@ function CustomTooltip(tooltipId, width) {
   }
 
   function hideTooltip(){
-      $("#"+tooltipId).hide();
+    $("#"+tooltipId).hide();
   }
 
   function updatePosition(event){
@@ -270,6 +270,7 @@ function addCommas(nStr) {
         .on("tick", (function(_this) {
           return function(e) {
             _this.circles.transition().duration(50).attr("r", function(d) {
+                d.currentValue = d.value;
                 return _this.radius_scale(d.value * 1.6);
               })
             return _this.circles.each(_this.move_towards_center(e.alpha)).attr("cx", function(d) {
@@ -339,6 +340,7 @@ function addCommas(nStr) {
         .on("tick", function(e){
           that.circles
             .transition().duration(50).attr("r", function(d) {
+              d.currentValue = d.value;
               return that.radius_scale(d.value * 1.6);
             })
             .each(that.mandatorySort(e.alpha))
@@ -375,10 +377,12 @@ function addCommas(nStr) {
             .transition().duration(50).attr("r", function(d) {
               if (! !!that.year_to_compare) {
                 var value = d.y2001;
+                d.currentValue = d.y2001;
               } else {
                 for (key in d) {
                   if (key.includes(that.year_to_compare.toString())){
                     var value = d[key];
+                    d.currentValue = value;
                   }
                 }
               }
@@ -715,7 +719,7 @@ function addCommas(nStr) {
       var content;
       d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
       content = "<span class=\"value\"> " + data.name + "</span><br/>";
-      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.value*100).toFixed(3) + "%</span><br/>";
+      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.currentValue*100 || data.value*100).toFixed(3) + "%</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 

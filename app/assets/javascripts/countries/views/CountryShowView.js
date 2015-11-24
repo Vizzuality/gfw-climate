@@ -1,7 +1,7 @@
 define([
   'backbone',
-  'countries/views/show/CountryShowHeaderView',
   'countries/views/show/FixedHeaderView',
+  'countries/views/show/CountryShowHeaderView',
   'countries/views/show/TabsView',
   'countries/views/show/CountryModalView',
   'countries/views/show/WidgetGridView'
