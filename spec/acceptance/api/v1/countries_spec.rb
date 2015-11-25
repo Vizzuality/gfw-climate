@@ -11,9 +11,6 @@ resource 'Countries' do
       countries = JSON.parse(response_body)['countries']
 
       expect(countries.length).to be >= 10
-      expect(countries[6]['name']).to eq('Barbados')
-      expect(countries[6]['iso']).to eq('BRB')
-      expect(countries[6]['enabled']).to eq(true)
     end
   end
 
