@@ -455,28 +455,11 @@ function addCommas(nStr) {
       });
 
       var that = this;
-      var style_string;
-
-
-      this.force
-        .gravity(0)
-        .friction(0.9)
-        .charge(that.defaultCharge)
-        .on("tick", function(e){
-          // circles.each(that.buoyancy(e.alpha))
-          var circles = that.generateCircles(values_array);
-          circles
-            .transition().duration(50).attr("r", function(d) {
-              return that.radius_scale(d.value * 1.6);
-            })
-            .each(that.buoyancy(e.alpha))
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; })
-        })
-        .on("end", function(e) {
-          root.$pantropicalVis.removeClass('is-loading');
-        })
-        .start();
+      var circles = that.generateCircles(values_array);
+      console.log(new Date, 'lala');
+      circles
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; })
     };
 
     BubbleChart.prototype.generateCircles = function(values_array) {
