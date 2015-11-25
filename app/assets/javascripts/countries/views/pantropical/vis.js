@@ -432,9 +432,8 @@ function addCommas(nStr) {
       $('#svg_vis').css({
         'height':1100
       });
-
-      var that = this;
-      var circles = that.generateCircles(values_array);
+      this.force.stop();
+      var circles = this.generateCircles(values_array);
       circles
         .attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; })
@@ -444,9 +443,9 @@ function addCommas(nStr) {
       var that = this;
       var circles = that.circles;
       var style_string;
-
+      
       circles
-        .transition().attr("r", function(d) {
+        .attr("r", function(d) {
           id = d.id;
           for (index in values_array){
             // find corresponding value for this bubble
@@ -457,9 +456,7 @@ function addCommas(nStr) {
           }
           
           return that.radius_scale(value * 1.6);
-        });
-
-      circles
+        })
         .each( function(d) {
           var coordinates = [];
           var label_text = "";
