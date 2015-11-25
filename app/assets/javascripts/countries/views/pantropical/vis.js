@@ -495,12 +495,19 @@ function addCommas(nStr) {
         .each( function(d) {
           var coordinates = [];
           var label_text = "";
+          
+          //Avoid non-NYDF and NYDF bubles.
+          values_array = values_array
+            .filter(function (i) {
+              return i.id !== 103 && i.id !== 104;
+            });
+
           // look up current bubble in value_array
           // use that index to assign order
           // use order to determine coordinates
           for (var i = 0; i < values_array.length; i++){
             id_search_string = "bubble_" + values_array[i].id;
-            
+
             if (this.id == id_search_string) {
               style_string = 'order:' + i + ";";
               $(this).attr('style', style_string);
