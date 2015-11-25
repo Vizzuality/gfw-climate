@@ -592,7 +592,7 @@ function addCommas(nStr) {
       var year_right = this.year_right;
       var diff_years = Math.abs(this.year_right - this.year_left);
       var years_between = diff_years - 1;
-      var years_total = diff_years + 2;
+      var years_total = diff_years + 1;
       var lookup_years = [];
 
       // push years onto array
@@ -607,6 +607,7 @@ function addCommas(nStr) {
 
       // look up data corresponding to year
       var sum_data = 0;
+
       for (year in lookup_years){
         for (key in d) {
           if (key == ("y" + lookup_years[year].toString())){
@@ -616,7 +617,6 @@ function addCommas(nStr) {
       }
 
       var avg = sum_data/years_total;
-
       return avg.toFixed(6);
     };
 
