@@ -380,13 +380,13 @@ function addCommas(nStr) {
     BubbleChart.prototype.display_by_change = function(year) {
       this.year_to_compare = year;
       var that = this;
-      this.force
-        .gravity(0)
-        .friction(0.9)
-        .charge(that.defaultCharge)
-        .on("tick", function(e){
-          that.circles
-            .transition().duration(50).attr("r", function(d) {
+      this
+        .force
+        .gravity(this.layout_gravity)
+        .charge(this.charge).friction(0.9)
+        .on("tick", (function(_this) {
+          return function(e) {
+            _this.circles.transition().duration(50).attr("r", function(d) {
               if (! !!that.year_to_compare) {
                 var value = d.y2001;
                 d.currentValue = d.y2001;
@@ -403,12 +403,15 @@ function addCommas(nStr) {
               }
               return that.radius_scale(value * 1.6);
             })
-            .each(that.mandatorySort(e.alpha, true))
-            .each(that.buoyancy(e.alpha))
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; })
-        })
-        .start();
+            return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
+                return d.x;
+              }).attr("cy",
+                function(d) { 
+                  return d.y; 
+              })
+          };
+        })(this));
+        this.force.start();
 
         this.circles.on("mouseenter", function(d, i) {
           var el = d3.select(this);
