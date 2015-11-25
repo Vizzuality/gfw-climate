@@ -72,7 +72,7 @@ define([
       this.$el.removeClass();
       this.$el.addClass('gridgraphs -areas');
 
-      if (this.areas && this.areas.length > 0) {
+      if (this.areas && this.areas.length > 0 && this.widgets) {
 
         this.template = Handlebars.compile(tpl);
 

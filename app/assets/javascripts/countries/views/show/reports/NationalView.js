@@ -4,7 +4,8 @@ define([
   'handlebars',
   'widgets/views/WidgetView',
   'text!countries/templates/country-national-grid.handlebars',
-], function(mps, Backbone, Handlebars, WidgetView, tpl) {
+  'text!countries/templates/no-indicators.handlebars'
+], function(mps, Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
 
   var NationalView = Backbone.View.extend({
 
@@ -31,43 +32,58 @@ define([
 
       this.activeWidgets = [];
 
+      if(_.keys(this.widgets[this.iso]).length >  0) {
 
-      _.map(this.widgets[this.iso], function(w, key) {
+        _.map(this.widgets[this.iso], function(w, key) {
 
-          var deferred = $.Deferred();
-          var newWidget = new WidgetView({
-            model: {
-              id: w[0].id,
-              slug: this.iso,
-              location: {
-                iso: this.iso,
-                jurisdiction: 0,
-                area: 0
+            var deferred = $.Deferred();
+            var newWidget = new WidgetView({
+              model: {
+                id: w[0].id,
+                slug: this.iso,
+                location: {
+                  iso: this.iso,
+                  jurisdiction: 0,
+                  area: 0
+                },
               },
-            },
-            className: 'gridgraphs-widget',
-            status: this.widgets[this.iso][w[0].id][0]
-          });
+              className: 'gridgraphs-widget',
+              status: this.widgets[this.iso][w[0].id][0]
+            });
 
-          newWidget._loadMetaData(function() {
-            deferred.resolve();
-          });
+            newWidget._loadMetaData(function() {
+              deferred.resolve();
+            });
 
-          this.activeWidgets.push(newWidget);
-          promises.push(deferred);
+            this.activeWidgets.push(newWidget);
+            promises.push(deferred);
 
-      }.bind(this));
+        }.bind(this));
 
-      $.when.apply(null, promises).then(function() {
-        this.render(this.activeWidgets);
-        mps.publish('Grid/ready', [{
-          iso: this.iso,
-          options: {
-            view: 'national'
-          }
-        }]);
+        $.when.apply(null, promises).then(function() {
+          this.render(this.activeWidgets);
+          mps.publish('Grid/ready', [{
+            iso: this.iso,
+            options: {
+              view: 'national'
+            }
+          }]);
 
-      }.bind(this));
+        }.bind(this));
+      } else {
+
+        this.template = Handlebars.compile(noIndicatorsTpl);
+
+        var options = {
+          isNational: true
+        };
+
+        this.$el.html(this.template({
+          setup: options
+        }));
+
+        this.parent.append(this.$el);
+      }
     },
 
     destroy: function() {

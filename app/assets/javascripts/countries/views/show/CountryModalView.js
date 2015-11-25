@@ -61,15 +61,22 @@ define([
 
       var indicators = this.presenter.status.get('options')['activedWidgets'];
 
-      indicators.forEach(function(ind) {
-        $(".indicators-group li[data-id='" + ind + "']").addClass('is-selected');
-      });
+      if (indicators) {
+        indicators.forEach(function(ind) {
+          $(".indicators-group li[data-id='" + ind + "']").addClass('is-selected');
+        });
+      }
+
 
       switch(this.presenter.status.get('view')) {
 
         case 'subnational':
 
           var jurisdictions = this.presenter.status.get('jurisdictions');
+
+          if (!jurisdictions) {
+            return;
+          }
 
           jurisdictions.forEach(function(j) {
             $("#jurisdictions-list li[data-id='" + j.idNumber + "']").addClass('is-selected');
@@ -79,6 +86,10 @@ define([
 
         case 'areas':
           var areas = this.presenter.status.get('areas');
+
+          if (!areas) {
+            return;
+          }
 
           areas.forEach(function(a) {
             $("#areas-list li[data-id='" + a.idNumber + "']").addClass('is-selected');
@@ -92,6 +103,8 @@ define([
 
     _cleanIndicators: function() {
       $('.indicators-group li').removeClass('is-selected');
+      $('#jurisdictions-list li').removeClass('is-selected');
+      $('#areas-list li').removeClass('is-selected');
     },
 
     setInitialParams: function() {

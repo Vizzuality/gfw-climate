@@ -94,9 +94,9 @@ define([
         this.widgetCollection.fetch({default: true}).done(function() {
 
           this.status.set({
-            areas: params.areas,
             view: params.view,
-            jurisdictions: params.jurisdictions,
+            areas: p.options.indicators > 0 ? params.areas : null,
+            jurisdictions: p.options.indicators > 0 ? params.jurisdictions : null,
             options: this.getOptions(p.options.indicators, p)
           });
 
@@ -123,10 +123,8 @@ define([
       p.options = this.status.get('options');
       p.options.areas =  this.status.get('jurisdictions') ? null : this.status.get('areas');
       p.options.jurisdictions = this.status.get('areas') ? null : this.status.get('jurisdictions');
-      // p.options.activeWidgets = this.status.get('activeWidgets') ? this.status.get('activeWidgets') : null;
 
       var widgetString = this.status.get('activeWidgets');
-
 
       if (widgetString) {
 
@@ -292,6 +290,13 @@ define([
 
     onSuccess: function(data) {
       var activeWidgets = this.status.get('activeWidgets');
+
+      if (activeWidgets.length == 0) {
+        this.status.attributes.options.jurisdictions = null;
+        this.status.attributes.options.areas = null;
+        this.status.attributes.options.widgets = null;
+        mps.publish('Widgets/update');
+      }
       this.view.render();
       mps.publish('Widgets/update',[this.status.get('activeWidgets')]);
     },
