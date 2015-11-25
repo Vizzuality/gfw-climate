@@ -265,9 +265,6 @@ function addCommas(nStr) {
         .force
         .gravity(this.layout_gravity)
         .charge(this.charge).friction(0.9)
-        .on("end", function(e) {
-          root.$pantropicalVis.removeClass('is-loading');
-        })
         .on("tick", (function(_this) {
           return function(e) {
             _this.circles.transition().duration(50).attr("r", function(d) {
@@ -361,9 +358,6 @@ function addCommas(nStr) {
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; })
         })
-        .on("end", function(e) {
-          root.$pantropicalVis.removeClass('is-loading');
-        })
         .start();
 
         this.circles.on("mouseenter", function(d, i) {
@@ -408,21 +402,6 @@ function addCommas(nStr) {
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; })
-            // .each(function(d) {
-            //   // filter the circles so we only paint BRA. IND and the sums of YESNY and NONY
-            //   var valid_ids = [1,2,103,104];
-            //   if (valid_ids.indexOf(~~d.id) == -1) {
-            //     // we don't want to display that country
-            //     $(this).attr("cx", Math.random() -2000);
-            //     $(this).attr("cy", Math.random() -2000);
-            //   } else {
-            //     $(this).attr("cx", function(d) { return d.x; });
-            //     $(this).attr("cy", function(d) { return d.y; });
-            //   }
-            // });
-        })
-        .on("end", function(e) {
-          root.$pantropicalVis.removeClass('is-loading');
         })
         .start();
 
@@ -800,18 +779,10 @@ function addCommas(nStr) {
       };
     })(this);
 
-    root.set_loading = (function(_this) {
-      return function() {
-        root.$pantropicalVis.addClass('is-loading');
-      };
-    })(this);
 
     root.toggle_view = (function(_this) {
-      return function(view_type, year, noSpinner) {
+      return function(view_type, year) {
         root.remove_labels();
-        if (!noSpinner) {
-          // root.set_loading();
-        }
         switch (view_type) {
           case 'nydfs':
             return root.display_ny();
