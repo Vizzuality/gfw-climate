@@ -435,7 +435,6 @@ function addCommas(nStr) {
 
       var that = this;
       var circles = that.generateCircles(values_array);
-      console.log(new Date, 'lala');
       circles
         .attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; })
@@ -447,7 +446,7 @@ function addCommas(nStr) {
       var style_string;
 
       circles
-        .transition().duration(100).attr("r", function(d) {
+        .transition().attr("r", function(d) {
           id = d.id;
           for (index in values_array){
             // find corresponding value for this bubble
