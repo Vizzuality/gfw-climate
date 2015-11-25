@@ -43,7 +43,7 @@ class Country
 
     def index_query
       <<-SQL
-       SELECT DISTINCT UPPER(iso), admin0_name AS name, true as enabled
+       SELECT DISTINCT iso, admin0_name AS name, true as enabled
        FROM #{CDB_INDICATORS_TABLE}
        WHERE iso IS NOT NULL AND admin0_name IS NOT NULL
        ORDER BY name

@@ -10,6 +10,7 @@ RSpec.describe CountriesController, type: :controller do
       get :index
       expect(response).to be_success
       expect(response).to have_http_status(200)
+      expect(response.body).to match 'Angola'
     end
 
     it "GET cached countries page", type: :feature do
