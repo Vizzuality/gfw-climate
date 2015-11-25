@@ -93,6 +93,13 @@ define([
             rangeX = this.getRangeX(data),
             rangeY = this.getRangeY(data);
       }
+
+      var widgetId = _.pluck(this.model.get('indicators'), 'id').join('');
+      console.log(widgetId)
+      if ( widgetId == 15 || widgetId == 16 ) {
+        this._checkNegativeValues(data);
+      }
+
       if (this.getDataLength(data)) {
         // Initialize Line Chart
         this.chart = new MultiLineChart({
@@ -115,6 +122,17 @@ define([
         this.chart.render();
       } else {
         this.$el.html(this.noDataTemplate({ classname: 'line'}));
+      }
+    },
+
+    _checkNegativeValues: function(data) {
+      for(var key in data[0]) {
+        var value = data[0][key].value;
+        if ( value < 0 ) {
+          console.log(this);
+          this.$('.fao-note').removeClass('is-hidden');
+          break
+        }
       }
     },
 
