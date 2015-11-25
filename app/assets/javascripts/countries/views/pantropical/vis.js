@@ -73,6 +73,7 @@ function addCommas(nStr) {
       this.display_by_year = __bind(this.display_by_year, this);
       this.move_towards_center = __bind(this.move_towards_center, this);
       this.display_group_all = __bind(this.display_group_all, this);
+      this.display_by_ny = __bind(this.display_by_ny, this);
       this.start = __bind(this.start, this);
       this.create_vis = __bind(this.create_vis, this);
       this.create_nodes = __bind(this.create_nodes, this);
@@ -247,7 +248,7 @@ function addCommas(nStr) {
       }).on("mouseout", function(d, i) {
         return that.hide_details(d, i, this);
       });
-      return this.circles.transition().duration(2000).attr("r", function(d) {
+      return this.circles.transition().duration(50).attr("r", function(d) {
         return d.radius;
       });
     };
@@ -276,7 +277,7 @@ function addCommas(nStr) {
             }).attr("cy", function(d) {
               return d.y;
             });
-        };
+          };
       })(this));
       this.force.start();
 
@@ -342,34 +343,38 @@ function addCommas(nStr) {
     },
 
     BubbleChart.prototype.display_by_ny = function() {
-      var that = this;
-      this.force
-        .gravity(0)
-        .friction(0.9)
-        .charge(that.defaultCharge)
-        .on("tick", function(e){
-          that.circles
-            .transition().duration(50).attr("r", function(d) {
-              d.currentValue = d.value;
-              return that.radius_scale(d.value * 1.6);
-            })
-            .each(that.mandatorySort(e.alpha))
-            .each(that.buoyancy(e.alpha))
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; })
-        })
-        .start();
+      this
+        .force
+        .gravity(this.layout_gravity)
+        .charge(this.charge).friction(0.9)
+        .on("tick", (function(_this) {
+          return function(e) {
+            _this.circles.transition().duration(50).attr("r", function(d) {
+                d.currentValue = d.value;
+                return _this.radius_scale(d.value * 1.6);
+              })
+            return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
+                return d.x;
+              }).attr("cy",
+                function(d) { 
+                  return d.y; 
+              })
+          };
+        })(this));
+        this.force.start();
 
-        this.circles.on("mouseenter", function(d, i) {
-          var el = d3.select(this);
-          var xpos = ~~el.attr('cx') - 115;
-          var ypos = (el.attr('cy') - d.radius - 37);
-          d3.select("#pantropical_tooltip")
-            .style('top',ypos+"px")
-            .style('left',xpos+"px")
-            .style('display','block');
-          return that.show_details(d, i, this);
-        })
+      var that = this;
+      this.circles.on("mouseenter", function(d, i) {
+        var el = d3.select(this);
+        var xpos = ~~el.attr('cx') - 115;
+        var ypos = (el.attr('cy') - d.radius - 37);
+        d3.select("#pantropical_tooltip")
+          .style('top',ypos+"px")
+          .style('left',xpos+"px")
+          .style('display','block');
+        return that.show_details(d, i, this);
+      })
+      return this.hide_years();
     };
 
     BubbleChart.prototype.display_by_change = function(year) {
@@ -432,11 +437,15 @@ function addCommas(nStr) {
       $('#svg_vis').css({
         'height':1100
       });
-      this.force.stop();
+
       var circles = this.generateCircles(values_array);
       circles
         .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; })
+        .attr("cy", function(d) { return d.y; });
+
+      this.circles.transition().duration(0);
+      this.force.stop();
+      return;
     };
 
     BubbleChart.prototype.generateCircles = function(values_array) {
