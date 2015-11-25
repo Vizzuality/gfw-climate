@@ -50,7 +50,6 @@ define([
     },
 
     render: function() {
-
       var view = this.presenter.status.get('view');
       var options = {
         country: this.presenter.status.get('country'),
@@ -65,7 +64,6 @@ define([
           });
 
           new NationalView(options);
-
           break;
 
         case 'subnational':
@@ -76,7 +74,6 @@ define([
           });
 
           new SubNationalView(options);
-
           break;
 
         case 'areas-interest':

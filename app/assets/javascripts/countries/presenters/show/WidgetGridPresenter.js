@@ -1,29 +1,33 @@
 define([
   'mps',
+  'jquery',
   'underscore',
   'countries/presenters/PresenterClass',
+  'countries/services/CountryService',
   'widgets/collections/WidgetCollection'
-], function(mps, _, PresenterClass, WidgetCollection) {
+], function(mps, $, _, PresenterClass, CountryService, WidgetCollection) {
 
   'use strict';
 
   var WidgetGridPresenter = PresenterClass.extend({
 
+    status: new (Backbone.Model.extend({
+      defaults: {
+        activeWidgets: null,
+        defaultWidgets: ["1", "2", "3", "4", "5"],
+        globalThresh: 30
+      }
+    })),
+
     init: function(view) {
       this.view = view;
       this._super();
 
-      this.widgetCollection = new WidgetCollection()
-
-      this.status = new (Backbone.Model.extend({
-        defaults: {
-          globalThresh: 30
-        }
-      }));
+      this.widgetCollection = new WidgetCollection();
+      this.service = CountryService;
+      mps.publish('Place/register', [this]);
 
       this._setListeners();
-
-      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -32,12 +36,16 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this._onPlaceGo(place);
-      }
-    },{
+      },
+
       'Options/updated': function(id,slug,wstatus) {
         this._onOptionsUpdate(id,slug,wstatus);
-      }
-    }, {
+      },
+
+      'Widgets/delete': function(id) {
+        this._onWidgetsDelete(id);
+      },
+
       'View/update': function(view) {
         var p = {
           view: view
@@ -49,9 +57,10 @@ define([
 
           var p = {
             view: view
-          }
+          };
 
-          var callback = function() {
+          this.widgetCollection.fetch({default: true}).done(function() {
+
             this.status.set({
               country: this.status.get('country'),
               jurisdictions: null,
@@ -61,9 +70,9 @@ define([
             });
 
             this.view.start();
-          }
 
-          this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+          }.bind(this));
+
         }
 
         if (view === 'subnational' || view === 'areas-interest') {
@@ -77,12 +86,13 @@ define([
           });
           this.view.start();
         }
-      }
-    }, {
+      },
+
       'Grid/update': function(params) {
         var p = jQuery.extend({}, params)
 
-        var callback = function() {
+        this.widgetCollection.fetch({default: true}).done(function() {
+
           this.status.set({
             areas: params.areas,
             view: params.view,
@@ -91,9 +101,8 @@ define([
           });
 
           this.view.start();
-        };
 
-        this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+        }.bind(this));
       }
     }],
 
@@ -112,9 +121,26 @@ define([
       var p = {};
 
       p.options = this.status.get('options');
-
       p.options.areas =  this.status.get('jurisdictions') ? null : this.status.get('areas');
       p.options.jurisdictions = this.status.get('areas') ? null : this.status.get('jurisdictions');
+      // p.options.activeWidgets = this.status.get('activeWidgets') ? this.status.get('activeWidgets') : null;
+
+      var widgetString = this.status.get('activeWidgets');
+
+
+      if (widgetString) {
+
+        widgetString.forEach(function(v, i) {
+          widgetString[i] = v.toString();
+        });
+
+        p.options.activeWidgets = widgetString;
+
+      } else {
+        p.options.activeWidgets = null
+      }
+
+
 
       _.extend(p.options, {
         view: this.status.get('view')
@@ -150,7 +176,8 @@ define([
               view: params.view,
               areas: null,
               jurisdictions: null,
-              options: {}
+              options: {},
+              activeWidgets: null
             });
             this.view.start()
 
@@ -172,7 +199,8 @@ define([
               view: params.view,
               areas: null,
               jurisdictions: null,
-              options: {}
+              options: {},
+              activeWidgets: null
             });
 
             this.view.start();
@@ -195,29 +223,33 @@ define([
      */
 
     _loadDefaultOptions: function(params) {
-      var callback = function() {
+
+      this.widgetCollection.fetch({default: true}).done(function() {
+
         this.status.set({
           country: params.country.iso,
           jurisdictions: null,
           areas: null,
           view: params.view,
-          options: this.getOptions(null, params)
+          options: this.getOptions(null, params),
+          activeWidgets: this.status.get('defaultWidgets')
         });
 
         this.view.start();
         mps.publish('Tab/update', [this.status.get('view')])
-      };
 
-      this.widgetCollection.fetch({default: true}).done(callback.bind(this));
+      }.bind(this));
     },
 
     _loadCustomizedOptions: function(params) {
+      // this.status.set('activeWidgets', params.options.activeWidgets);
       this.status.set({
         country: params.country.iso,
         jurisdictions: params.jurisdictions ? params.jurisdictions :  this.getJurisdictions(params),
         areas: params.areas ? params.areas : this.getAreas(params),
         options: params.options,
-        view: params.view
+        view: params.view,
+        activeWidgets: params.options.activeWidgets
       });
 
       this.view.start();
@@ -234,6 +266,40 @@ define([
       }, {silent: true});
     },
 
+    _onWidgetsDelete: function(id) {
+      var widgetsActive = _.clone(this.status.get('activeWidgets'));
+      // Fix this SHIT in a neraby future, ffs
+      widgetsActive = _.without(widgetsActive,id.toString());
+      this.status.set('activeWidgets', widgetsActive);
+
+      this.widgetCollection.fetch({default: true}).done(function() {
+        this.status.set('options', this.getOptions(this.status.get('activeWidgets'), null));
+        mps.publish('Place/update');
+        this._removeWidget();
+      }.bind(this));
+
+    },
+
+    _removeWidget: function() {
+      var iso = this.status.get('country');
+
+      this.service.execute(
+        iso,
+        _.bind(this.onSuccess, this),
+        _.bind(this.onError, this)
+      );
+    },
+
+    onSuccess: function(data) {
+      var activeWidgets = this.status.get('activeWidgets');
+      this.view.render();
+      mps.publish('Widgets/update',[this.status.get('activeWidgets')]);
+    },
+
+    onError: function(err) {
+      throw err;
+    },
+
     _onOptionsUpdate: function(id,slug,wstatus) {
       var options = _.clone(this.status.get('options').widgets);
       options[slug][id][0] = wstatus;
@@ -241,9 +307,7 @@ define([
       var x = {};
       x[slug] = options[slug];
 
-
       // Set and publish
-      // this.status.set('options', options);
       _.extend(this.status.get('options'), x);
       mps.publish('Place/update');
     },
@@ -274,17 +338,20 @@ define([
 
     getOptions: function(widgets, params) {
 
-      var defaultWidgets = this.widgetCollection.toJSON(),
-        activeWidgets;
+      var activeWidgets, r = {};
+      var params = params ? params : this.status.get('options');
+      activeWidgets = widgets ? widgets : this.status.get('defaultWidgets');
 
-      if (!widgets) {
-        activeWidgets = [1, 2, 3, 4, 5];
-      } else {
-        activeWidgets = widgets;
-      }
+      this.status.set('activeWidgets', activeWidgets, {silent: true});
 
-      var w = _.groupBy(_.compact(_.map(defaultWidgets,_.bind(function(w){
-        if (_.contains(activeWidgets, w.id)) {
+      var x = this.status.get('activeWidgets');
+
+      x.forEach(function(v, i) {
+        x[i] = Number.parseInt(v);
+      });
+
+      var w = _.groupBy(_.compact(_.map(this.widgetCollection.toJSON(),_.bind(function(w){
+        if (_.contains(x, w.id)) {
           return {
             id: w.id,
             tabs: (!!w.tabs) ? this.getTabsOptions(w.tabs) : null,
@@ -294,36 +361,34 @@ define([
         return null;
       }, this))), 'id');
 
-      var r = {};
 
       switch(params.view) {
 
         case 'national':
 
-            var iso = !!params['country'] ? params.country.iso : this.status.get('country');
-            r[this.objToSlug(iso, '')] = w;
+          var iso = !!params['country'] ? params.country.iso : this.status.get('country');
+          r[this.objToSlug(iso, '')] = w;
           break;
 
         case 'subnational':
 
-            if(params.options.jurisdictions) {
-              _.map(params.options.jurisdictions, function(j) {
-                r[this.objToSlug(j.id, '')] = w;
-              }.bind(this));
-            }
+          if(params.jurisdictions) {
+            _.map(params.jurisdictions, function(j) {
+              r[this.objToSlug(j.id, '')] = w;
+            }.bind(this));
+          }
 
           break;
 
         case 'areas-interest':
 
-            if (params.options.areas) {
-              _.map(params.options.areas, function(a) {
-                r[this.objToSlug(a.id, '')] = w;
-              }.bind(this));
-            };
+          if (params.areas) {
+            _.map(params.areas, function(a) {
+              r[this.objToSlug(a.id, '')] = w;
+            }.bind(this));
+          };
 
           break;
-
       }
 
       return {widgets: r};

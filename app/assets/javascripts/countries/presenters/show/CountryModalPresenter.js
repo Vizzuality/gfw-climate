@@ -17,19 +17,27 @@ define([
     _subscriptions: [{
       'Modal/open': function() {
         this.view.show();
-      }
-    }, {
+      },
       'Modal/close': function() {
         this.view.hide();
-      }
-    }, {
+      },
+
       'View/update': function(view){
         this._setView(view)
         this._resetIndicators();
-      }
-    }, {
+      },
       'Place/go': function(params) {
         this._onPlaceGo(params);
+      },
+      'Widgets/update': function(p) {
+
+        if(this.status.get('options')) {
+          this.status.set('options', _.extend(this.status.get('options'), {activedWidgets: p}));
+        } else {
+          this.status.set('options', {activedWidgets: p});
+        }
+
+        this.view.update();
       }
     }],
 

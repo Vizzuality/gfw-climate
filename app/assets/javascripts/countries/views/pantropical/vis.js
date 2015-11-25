@@ -16,7 +16,7 @@ function CustomTooltip(tooltipId, width) {
   }
 
   function hideTooltip(){
-      $("#"+tooltipId).hide();
+    $("#"+tooltipId).hide();
   }
 
   function updatePosition(event){
@@ -82,6 +82,7 @@ function addCommas(nStr) {
       this.height = 480;
       this.NYDF = "Other NYDF Signatory",
       this.NONYDF = "Other non-NYDF Signatory",
+      this.VALID_NAMES = ["Brazil","Indonesia","New_York_Declaration_on_Forests_Signatories","Non_New_York_Declaration_on_Forests_Signatories"];
       this.NET_INTEREST = "Net interest",
       this.defaultCharge  = function(d){
                         if (d.value < 0) {
@@ -270,6 +271,7 @@ function addCommas(nStr) {
         .on("tick", (function(_this) {
           return function(e) {
             _this.circles.transition().duration(50).attr("r", function(d) {
+                d.currentValue = d.value;
                 return _this.radius_scale(d.value * 1.6);
               })
             return _this.circles.each(_this.move_towards_center(e.alpha)).attr("cx", function(d) {
@@ -299,6 +301,9 @@ function addCommas(nStr) {
     BubbleChart.prototype.move_towards_center = function(alpha) {
       return (function(_this) {
         return function(d) {
+            if (d.id == 103 || d.id == 104) {
+              return d.x = d.y = -2000;
+            }
           d.x = d.x + (_this.center.x - d.x + 150) * (_this.damper + 0.02) * alpha;
           return d.y = d.y + (_this.center.y - d.y) * (_this.damper + 0.02) * alpha;
         };
@@ -313,9 +318,18 @@ function addCommas(nStr) {
       };
     };
 
-    BubbleChart.prototype.mandatorySort = function(alpha) {
+    BubbleChart.prototype.mandatorySort = function(alpha, filter) {
       var that = this;
       return function(d){
+        // if (! !!filter) {
+        //   if (d.id == 103 || d.id == 104) return;
+        // } else {
+        //   if (that.VALID_NAMES.indexOf(d.name) == -1) return;
+        // }
+        //Avoid non-NYDF and NYDF items.
+        if (d.id == 103 || d.id == 104) {
+          return d.x = d.y = -2000;
+        }
         var targetY = that.centerY;
         var targetX = 0;
         if (d.category.includes('non-NYDF'))
@@ -339,6 +353,7 @@ function addCommas(nStr) {
         .on("tick", function(e){
           that.circles
             .transition().duration(50).attr("r", function(d) {
+              d.currentValue = d.value;
               return that.radius_scale(d.value * 1.6);
             })
             .each(that.mandatorySort(e.alpha))
@@ -375,16 +390,21 @@ function addCommas(nStr) {
             .transition().duration(50).attr("r", function(d) {
               if (! !!that.year_to_compare) {
                 var value = d.y2001;
+                d.currentValue = d.y2001;
               } else {
                 for (key in d) {
                   if (key.includes(that.year_to_compare.toString())){
                     var value = d[key];
+                    d.currentValue = value;
                   }
                 }
               }
+              if (that.VALID_NAMES.indexOf(d.name) != -1) {
+                document.getElementById(d.name+'_data').innerHTML = parseFloat(value*100).toFixed(3)+'%';
+              }
               return that.radius_scale(value * 1.6);
             })
-            .each(that.mandatorySort(e.alpha))
+            .each(that.mandatorySort(e.alpha, true))
             .each(that.buoyancy(e.alpha))
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; })
@@ -457,7 +477,6 @@ function addCommas(nStr) {
           root.$pantropicalVis.removeClass('is-loading');
         })
         .start();
-        
     };
 
     BubbleChart.prototype.generateCircles = function(values_array) {
@@ -483,12 +502,19 @@ function addCommas(nStr) {
         .each( function(d) {
           var coordinates = [];
           var label_text = "";
+          
+          //Avoid non-NYDF and NYDF bubles.
+          values_array = values_array
+            .filter(function (i) {
+              return i.id !== 103 && i.id !== 104;
+            });
+
           // look up current bubble in value_array
           // use that index to assign order
           // use order to determine coordinates
           for (var i = 0; i < values_array.length; i++){
             id_search_string = "bubble_" + values_array[i].id;
-            
+
             if (this.id == id_search_string) {
               style_string = 'order:' + i + ";";
               $(this).attr('style', style_string);
@@ -501,8 +527,8 @@ function addCommas(nStr) {
               var value = values_array[i].value;
               var radius = that.radius_scale(value * 1.6);
 
-              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, radius);
-              document.getElementById(this.id).insertAdjacentHTML('afterend', label_text);
+              label_text = that.get_label_text(i, coordinates, this.id, d.name, value, radius, d.iso);
+              document.getElementById(this.id).insertAdjacentHTML('afterend', label_text)
 
               break;
             }
@@ -519,7 +545,7 @@ function addCommas(nStr) {
       return circles;
     };
 
-    BubbleChart.prototype.get_label_text = function(order, coordinates, id, country, data, radius) {
+    BubbleChart.prototype.get_label_text = function(order, coordinates, id, country, data, radius, iso) {
       var x_coord = 'x="' + coordinates[0] + '" ';
 
       var y_coord =         'y="' + coordinates[1] + '" ';
@@ -541,21 +567,28 @@ function addCommas(nStr) {
       }
 
       var label_text =
-      '<text class="country-label" ' +
+      '<text class="country-label bubble-label" ' +
               id_country +
               x_coord +
               y_coord_country +
-              'text-anchor="middle" width="150px">' +
+              'data-url=countries/'+ iso +
+              ' text-anchor="middle" width="150px">' +
               country +
       '</text>' +
 
-      '<text  class="data-label"' +
+      '<text  class="data-label bubble-label"' +
               id_data +
               x_coord +
               y_coord_data +
-              'text-anchor="middle">' +
+              'data-url=countries/'+ iso +
+              ' text-anchor="middle">' +
               parseFloat(data*100).toFixed(3) + '%' + 
       '</text>';
+
+      $('.bubble-label').on('click', function(e) {
+        var url = $(this).data('url');
+        window.location.href = url;
+      });
 
       return label_text;
     }
@@ -565,7 +598,7 @@ function addCommas(nStr) {
       var year_right = this.year_right;
       var diff_years = Math.abs(this.year_right - this.year_left);
       var years_between = diff_years - 1;
-      var years_total = diff_years + 2;
+      var years_total = diff_years + 1;
       var lookup_years = [];
 
       // push years onto array
@@ -580,6 +613,7 @@ function addCommas(nStr) {
 
       // look up data corresponding to year
       var sum_data = 0;
+
       for (year in lookup_years){
         for (key in d) {
           if (key == ("y" + lookup_years[year].toString())){
@@ -589,7 +623,6 @@ function addCommas(nStr) {
       }
 
       var avg = sum_data/years_total;
-
       return avg.toFixed(6);
     };
 
@@ -616,7 +649,7 @@ function addCommas(nStr) {
 
       if (! !!this.year) {
         this.year_left = 2001;
-        this.year_right = 2001;
+        this.year_right = 2013;
       } else {
         this.year_left = this.year[0];
         this.year_right = this.year[1];
@@ -708,7 +741,6 @@ function addCommas(nStr) {
       var cx = x_position + offset_x;
       var cy = y_position + offset_y;
 
-
       return [cx, cy];
     };
 
@@ -721,7 +753,7 @@ function addCommas(nStr) {
       var content;
       d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
       content = "<span class=\"value\"> " + data.name + "</span><br/>";
-      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.value*100).toFixed(3) + "%</span><br/>";
+      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.currentValue*100 || data.value*100).toFixed(3) + "%</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 
