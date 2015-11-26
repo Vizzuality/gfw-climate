@@ -151,6 +151,9 @@ define([
 
     _play_pause: function(e) {
       var target = (e) ? $(e.target) : this.$play_pause;
+      if (!!e && $(e.target).hasClass('stop')) {
+        target.removeClass('stop')
+      }
       if ((!target.hasClass('is-playing') || ! !!e) && !target.hasClass('stop')) {
         target.addClass('is-playing');
         var that = this;
@@ -163,7 +166,8 @@ define([
           }
         },1500)
       } else {
-        target.removeClass('is-playing').addClass('stop');
+        if (this.$yearsPickerLabel.val() <= this.$years.attr('max'))
+          target.removeClass('is-playing').addClass('stop');
       }
     }
 
