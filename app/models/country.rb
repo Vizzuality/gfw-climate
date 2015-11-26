@@ -6,6 +6,7 @@ class Country
 
   class << self
     CDB_INDICATORS_TABLE="indicators_values"
+    CDB_COUNTRIES_TABLE = "gadm27_adm0"
     CDB_BOUNDARIES_TABLE="boundaries_table"
 
     def base_countries_path
@@ -43,9 +44,9 @@ class Country
 
     def index_query
       <<-SQL
-       SELECT DISTINCT iso, admin0_name AS name, true as enabled
-       FROM #{CDB_INDICATORS_TABLE}
-       WHERE iso IS NOT NULL AND admin0_name IS NOT NULL
+       SELECT DISTINCT climate_iso AS iso, name_0 AS name, true as enabled
+       FROM #{CDB_COUNTRIES_TABLE}
+       WHERE climate_iso IS NOT NULL
        ORDER BY name
       SQL
     end
