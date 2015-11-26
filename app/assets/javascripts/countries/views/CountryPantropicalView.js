@@ -49,9 +49,8 @@ define([
       if(viewId === 'change') {
         $('#vis').addClass(viewId);
         this._renderChangeComponents();
-      } else {
-        $('#vis').removeClass();
       }
+      return false;
     },
 
     _submityears: function() {
