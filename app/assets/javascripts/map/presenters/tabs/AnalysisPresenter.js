@@ -11,9 +11,8 @@ define([
   'topojson',
   'helpers/geojsonUtilsHelper',
   'map/services/CountryService',
-  'map/services/RegionService',
-  'map/services/TreeLossCarbonEmissionsService'
-], function(PresenterClass, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService, treeLossCarbonEmissionsService) {
+  'map/services/RegionService'
+], function(PresenterClass, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService) {
 
   'use strict';
 
@@ -243,7 +242,7 @@ define([
      */
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
-      this._fetchTreeLoosCarbonEmissionsData(iso);
+      
       this.view.setSelects(iso, this.status.get('dont_analyze'));
       mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
 
@@ -296,28 +295,6 @@ define([
 
         },this));
       }
-    },
-
-    _fetchTreeLoosCarbonEmissionsData: function(iso) {
-      var params1 = {};
-      params1.iso = iso.country;
-      params1.indicator = 1;
-
-      var params2 = {};
-      params2.iso = iso.country;
-      params2.indicator = 29;
-
-      treeLossCarbonEmissionsService.execute(params1, _.bind(function(results1) {
-        
-        treeLossCarbonEmissionsService.execute(params2, _.bind(function(results2) {
-
-            this.view.drawTreeLoosCarbonEmissionsChart(results1, results2)
-
-        },this));
-
-      },this));
-
-        
     },
 
     setAnalyzeIso: function(iso){

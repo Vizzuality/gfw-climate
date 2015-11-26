@@ -7,7 +7,8 @@ define([
   'underscore',
   'mps',
   'map/presenters/PresenterClass',
-], function(_, mps, PresenterClass) {
+  'map/services/TreeLossCarbonEmissionsService'
+], function(_, mps, PresenterClass, treeLossCarbonEmissionsService) {
 
   'use strict';
 
@@ -17,8 +18,6 @@ define([
       dont_analyze: true
     }
   });
-
-
 
   var CountriesPresenter = PresenterClass.extend({
 
@@ -64,6 +63,13 @@ define([
     },{
       'DownloadView/create': function(downloadView) {
         this.view.downloadView = downloadView;
+      }
+    },{
+      'Countries/changeIso': function(iso,analyze) {
+        this.status.set('dont_analyze', analyze);
+        if (!!iso.country) {
+          this._fetchTreeLoosCarbonEmissionsData(iso);
+        }  
       }
     }],
 
@@ -118,6 +124,25 @@ define([
 
     initExperiment: function(id){
       mps.publish('Experiment/choose',[id]);
+    },
+
+    _fetchTreeLoosCarbonEmissionsData: function(iso) {
+      var params1 = {};
+      params1.iso = iso.country;
+      params1.indicator = 1;
+
+      var params2 = {};
+      params2.iso = iso.country;
+      params2.indicator = 29;
+
+      treeLossCarbonEmissionsService.execute(params1, _.bind(function(treeLoss) {
+        
+        treeLossCarbonEmissionsService.execute(params2, _.bind(function(carbonEmissions) {
+
+            this.view.drawTreeLoosCarbonEmissionsChart(treeLoss, carbonEmissions)
+
+        },this));
+      },this));
     },
 
 

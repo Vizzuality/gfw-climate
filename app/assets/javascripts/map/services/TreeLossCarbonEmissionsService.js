@@ -15,7 +15,7 @@ define([
 
     // _uriTemplate:'http://wri-01.cartodb.com/api/v1/sql?q=SELECT%20*%20FROM%20gadm2_provinces_simple%20where%20iso=%27{iso}%27%20and%20id_1={id1}&format=geojson',
 
-    _uriTemplate: 'http://localhost:5000/api/indicators/{indicator}?iso={iso}&threshold=25',
+    _uriTemplate: 'http://localhost:5000/api/indicators/{indicator}?iso={iso}&threshold=0',
 
     /**
      * Constructs a new instance of TreeLossCarbonEmissionsService.

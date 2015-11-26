@@ -685,13 +685,6 @@ define([
       var img = new Image();
       img.src = url;
       return url;
-    },
-
-
-    //DRAW COUNTRIES RESULTS GRAPHS FOR  Gross Carbon Emissions AND Tree cover loss.
-    drawTreeLoosCarbonEmissionsChart: function(data, data1) {
-      console.log(data)
-      console.log(data1)
     }
 
 

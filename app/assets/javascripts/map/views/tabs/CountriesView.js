@@ -296,6 +296,7 @@ define([
 
     // Select change iso
     changeIso: function(e){
+      // console.log('changeIso')
       this.iso = $(e.currentTarget).val() || null;
       this.commonIsoChanges();
       this.presenter.changeIso({country: this.iso, region: null});
@@ -372,6 +373,11 @@ define([
       this.setButtons(!!this.iso, country);
     },
 
+    //DRAW COUNTRIES RESULTS GRAPHS FOR  Gross Carbon Emissions AND Tree cover loss.
+    drawTreeLoosCarbonEmissionsChart: function(treeLoss, carbonEmissions) {
+      console.log(treeLoss)
+      console.log(carbonEmissions)
+    }
 
   });
 
