@@ -299,11 +299,25 @@ define([
     },
 
     _fetchTreeLoosCarbonEmissionsData: function(iso) {
-      var country = iso.country
-      treeLossCarbonEmissionsService.execute(country, _.bind(function(results) {
-        console.log(results);
-        // this.view.drawTreeLoosCarbonEmissionsChart(results)
+      var params1 = {};
+      params1.iso = iso.country;
+      params1.indicator = 1;
+
+      var params2 = {};
+      params2.iso = iso.country;
+      params2.indicator = 29;
+
+      treeLossCarbonEmissionsService.execute(params1, _.bind(function(results1) {
+        
+        treeLossCarbonEmissionsService.execute(params2, _.bind(function(results2) {
+
+            this.view.drawTreeLoosCarbonEmissionsChart(results1, results2)
+
+        },this));
+
       },this));
+
+        
     },
 
     setAnalyzeIso: function(iso){

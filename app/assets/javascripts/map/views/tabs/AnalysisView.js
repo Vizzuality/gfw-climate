@@ -689,8 +689,9 @@ define([
 
 
     //DRAW COUNTRIES RESULTS GRAPHS FOR  Gross Carbon Emissions AND Tree cover loss.
-    drawTreeLoosCarbonEmissionsChart: function(iso) {
-      console.log(iso)
+    drawTreeLoosCarbonEmissionsChart: function(data, data1) {
+      console.log(data)
+      console.log(data1)
     }
 
 
