@@ -1,0 +1,14 @@
+.graph-line {
+  height: 250px;
+
+  .bar {
+    shape-rendering: crispEdges;
+  }
+  
+  .line {
+    shape-rendering: crispEdges;
+    fill: none;
+    stroke: #ff6699;
+    stroke-width: 3px;
+  }
+}

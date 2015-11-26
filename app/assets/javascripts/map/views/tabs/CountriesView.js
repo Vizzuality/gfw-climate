@@ -9,11 +9,12 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/CountriesPresenter',
+  'widgets/indicators/bars/BarChart',
   'text!map/templates/tabs/countries.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
   'text!map/templates/tabs/countriesButtons.handlebars',
   'text!map/templates/tabs/countries-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, barChart, tpl, tplIso, tplButtons, tplMobile) {
 
   'use strict';
 
@@ -22,8 +23,6 @@ define([
       country_layers: null
     }
   });
-
-
 
   var CountriesView = Backbone.View.extend({
 
@@ -55,6 +54,8 @@ define([
       this.map = map;
       this.model = new CountriesModel();
       this.presenter = new Presenter(this);
+      this.barChart = barChart;
+
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = false;
@@ -376,7 +377,42 @@ define([
     //DRAW COUNTRIES RESULTS GRAPHS FOR  Gross Carbon Emissions AND Tree cover loss.
     drawTreeLoosCarbonEmissionsChart: function(treeLoss, carbonEmissions) {
       console.log(treeLoss)
-      console.log(carbonEmissions)
+      console.log(carbonEmissions);
+
+      var data = this._parseData(treeLoss, carbonEmissions);
+
+      this.slug = 'TreeLoosCarbonEmissions';
+
+      new this.barChart({
+        elem: '#' + this.slug + '-graph',
+        barWidth: 22,
+        barSeparation: 13,
+        data: data,
+        hover: true,
+        loader: 'is-loading',
+        interpolate: 'basis',
+        unit: 'CO2T',
+        unitZ: 'Ha',
+        hasLine: true
+      });
+    },
+
+    _parseData: function(line, bar) {
+      var data = [];
+
+      $.each(bar.values, function() {
+        var value = {};
+
+        value.y = this.value;
+        value.x = this.year;
+        value.color = '#d9d9d9';
+        value.lineColor = '#ff6699';
+        value.z = _.where(bar.values, {'year': this.year })[0].value;
+        
+        data.push(value);
+      })
+
+      return data;
     }
 
   });
