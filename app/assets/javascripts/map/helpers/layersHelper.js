@@ -66,7 +66,8 @@ define([
       view: CarbonstocksLayer
     },
     biomass_loss: {
-      view: BiomassLoss
+      view: BiomassLoss,
+      timelineView: LossTimeline 
     },
     cod_primary_forest_wgs: {
       view: DrcPrimaryForestLayer

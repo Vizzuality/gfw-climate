@@ -55,7 +55,7 @@ define([
   'use strict';
 
   var urlDefaultsParams = {
-    baselayers: 'loss,forestgain',
+    baselayers: 'biomass_loss',
     zoom: 3,
     lat: 15,
     lng: 27,

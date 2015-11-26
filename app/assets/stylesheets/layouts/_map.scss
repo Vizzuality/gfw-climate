@@ -163,6 +163,9 @@ body,html{
     margin-left: 15px;
     position: relative;
     top: 3px;
+    &.whrc > img {
+      width: 125px;
+    }
   }
 
   img {
