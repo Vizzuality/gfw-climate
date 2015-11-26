@@ -12,13 +12,13 @@ define([
     el: '.pantropical-vis',
 
     events: {
-      'click #view_selection .btn' : 'switch_view',
-      // 'click .minusy' : '_change_year',
-      'input #year-picker' : '_change_year',
-      'click .minusy' : '_change_year',
-      'change #year-drop-left' : '_set_year',
-      'change #year-drop-right' : '_set_year',
-      'click .btn-submit' : '_submityears',
+      'click #view_selection .btn'  : 'switch_view',
+      'input #year-picker'          : '_change_year',
+      'click .minusy'               : '_change_year',
+      'change #year-drop-left'      : '_set_year',
+      'change #year-drop-right'     : '_set_year',
+      'click .btn-submit'           : '_submityears',
+      'click #play-pause'           : '_play_pause'
     },
 
     initialize: function() {
@@ -33,8 +33,9 @@ define([
     },
 
     _cacheVars: function() {
-      this.$years = $('#year-picker');
-      this.$yearsPickerLabel = $('#year-picker-label');
+      this.$years             = $('#year-picker');
+      this.$yearsPickerLabel  = $('#year-picker-label');
+      this.$play_pause        = $('#play-pause');
     },
 
     switch_view: function(e) {
@@ -119,8 +120,8 @@ define([
       }
     },
 
-    _change_year: function(e) {
-      var year = e.currentTarget.value;
+    _change_year: function(e, year_moved) {
+      var year = (e) ? e.currentTarget.value : year_moved;
   
       this.$yearsPickerLabel.val(year);
       this._setLabelPosition(year);
@@ -145,6 +146,20 @@ define([
     _renderChangeComponents: function() {
       if(!this.totalEmissionsChart) {
         this.totalEmissionsChart = new PantropicalTotalEmissionsView();
+      }
+    },
+
+    _play_pause: function(e) {
+      var element = (e) ? $(e.target) : this.$play_pause;
+      if (! element.hasClass('is-playing')) {
+        var that = this;
+        window.setTimeout(function() {
+          var year = ~~that.$yearsPickerLabel.val() + 1;
+          if (year <= that.$years.attr("max")) {
+            that._change_year(null, ~~that.$yearsPickerLabel.val() + 1);
+            that._play_pause();
+          }
+        },1500)
       }
     }
 
