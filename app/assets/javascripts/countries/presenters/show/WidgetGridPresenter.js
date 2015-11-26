@@ -91,14 +91,19 @@ define([
       'Grid/update': function(params) {
         var p = jQuery.extend({}, params)
 
+        console.log(params)
+        console.log(p)
+
         this.widgetCollection.fetch({default: true}).done(function() {
 
           this.status.set({
             view: params.view,
-            areas: p.options.indicators > 0 ? params.areas : null,
-            jurisdictions: p.options.indicators > 0 ? params.jurisdictions : null,
+            areas: p.options.indicators.length > 0 ? params.areas : null,
+            jurisdictions: p.options.indicators.length > 0 ? params.jurisdictions : null,
             options: this.getOptions(p.options.indicators, p)
           });
+
+          console.log(this.status.toJSON())
 
           this.view.start();
 
