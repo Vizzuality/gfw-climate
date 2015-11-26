@@ -158,6 +158,7 @@ define([
           var year = ~~that.$yearsPickerLabel.val() + 1;
           if (year <= that.$years.attr("max")) {
             that._change_year(null, year);
+            that.$years.val(year)
             that._play_pause();
           }
         },1500)
