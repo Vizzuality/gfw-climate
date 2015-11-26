@@ -152,20 +152,25 @@ define([
     _play_pause: function(e) {
       var target = (e) ? $(e.target) : this.$play_pause;
       if (!!e && $(e.target).hasClass('stop')) {
+        // the user has previously stopped the movement and wants to continue: ALLOW
         target.removeClass('stop')
       }
+
       if ((!target.hasClass('is-playing') || ! !!e) && !target.hasClass('stop')) {
+        // the user wants to start the animation
+        // the animation hasn't started yet or well it hasn't been called by the user but by this same function
         target.addClass('is-playing');
         var that = this;
         window.setTimeout(function() {
           var year = ~~that.$yearsPickerLabel.val() + 1;
           if (year <= that.$years.attr("max")) {
-            that._change_year(null, year);
-            that.$years.val(year)
-            that._play_pause();
+            that._change_year(null, year); // update label
+            that.$years.val(year);         // update range position
+            that._play_pause();            // paint next year
           }
         },1500)
       } else {
+        // the user wants to stop the animation or the animation is finishing
         if (this.$yearsPickerLabel.val() <= this.$years.attr('max'))
           target.removeClass('is-playing').addClass('stop');
       }
