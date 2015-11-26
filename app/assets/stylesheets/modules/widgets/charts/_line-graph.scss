@@ -342,7 +342,12 @@
         font-weight: 600;
         transform: translatex(-50%);
       }
-
+      #play-pause {
+        position: relative;
+        top: 50px;
+        width: 40px;
+        cursor: pointer;
+      }
       input {
         position: absolute;
         right: 0;
