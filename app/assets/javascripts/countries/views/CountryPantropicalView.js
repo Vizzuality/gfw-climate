@@ -150,16 +150,19 @@ define([
     },
 
     _play_pause: function(e) {
-      var element = (e) ? $(e.target) : this.$play_pause;
-      if (! element.hasClass('is-playing')) {
+      var target = (e) ? $(e.target) : this.$play_pause;
+      if ((!target.hasClass('is-playing') || ! !!e) && !target.hasClass('stop')) {
+        target.addClass('is-playing');
         var that = this;
         window.setTimeout(function() {
           var year = ~~that.$yearsPickerLabel.val() + 1;
           if (year <= that.$years.attr("max")) {
-            that._change_year(null, ~~that.$yearsPickerLabel.val() + 1);
+            that._change_year(null, year);
             that._play_pause();
           }
         },1500)
+      } else {
+        target.removeClass('is-playing').addClass('stop');
       }
     }
 
