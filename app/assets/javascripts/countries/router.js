@@ -14,6 +14,7 @@ define([
     routes: {
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
+      'embed/pantropical'                   : '_initPantropical',
       'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
 
