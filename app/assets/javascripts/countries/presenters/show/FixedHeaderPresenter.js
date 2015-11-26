@@ -26,6 +26,9 @@ define([
       },
       'Grid/ready': function(p) {
         this._onReadyGrid(p)
+      },
+      'Grid/update': function() {
+        this.view.lockHeader()
       }
     }],
 

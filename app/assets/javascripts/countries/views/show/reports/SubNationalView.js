@@ -71,7 +71,7 @@ define([
       this.$el.removeClass();
       this.$el.addClass('gridgraphs -subnational');
 
-      if (this.jurisdictions && this.jurisdictions.length > 0) {
+      if (this.jurisdictions && this.jurisdictions.length > 0  && this.widgets) {
 
         this.template = Handlebars.compile(tpl);
 
