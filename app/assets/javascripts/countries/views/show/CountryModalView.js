@@ -193,8 +193,6 @@ define([
         indicators.push(~~$(i).data('id') );
       });
 
-      console.log(indicators)
-
       this.presenter.setIndicators(indicators);
     },
 
