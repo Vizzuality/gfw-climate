@@ -12,9 +12,9 @@ node :country do
                        id:         territory['id_1'],
                        cartodb_id: territory['cartodb_id'],
                        bounds:     {
-                                     coordinates: territory['bounds']['coordinates'][0],
-                                     type:        territory['bounds']['type']
-                                   }
+                         coordinates: territory['bounds']['coordinates'][0],
+                         type:        territory['bounds']['type']
+                       }
                      }
                    end,
     areas_of_interest: @country['areas_of_interest'].map do |aoi|
