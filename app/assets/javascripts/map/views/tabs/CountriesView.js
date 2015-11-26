@@ -81,7 +81,6 @@ define([
     },
 
     cacheVars: function(){
-
       //toggle-countries-content
       this.$toggle = $('#toggle-countries-content');
       //buttons

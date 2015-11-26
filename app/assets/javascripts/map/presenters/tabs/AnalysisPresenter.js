@@ -11,8 +11,9 @@ define([
   'topojson',
   'helpers/geojsonUtilsHelper',
   'map/services/CountryService',
-  'map/services/RegionService'
-], function(PresenterClass, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService) {
+  'map/services/RegionService',
+  'map/services/TreeLossCarbonEmissionsService'
+], function(PresenterClass, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService, treeLossCarbonEmissionsService) {
 
   'use strict';
 
@@ -242,6 +243,7 @@ define([
      */
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
+      this._fetchTreeLoosCarbonEmissionsData(iso);
       this.view.setSelects(iso, this.status.get('dont_analyze'));
       mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
 
@@ -256,6 +258,7 @@ define([
       resource = this._buildResource(resource);
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Iso: ' + resource.iso.country);
 
+      //Pan map to selected country.
       if (!iso.region) {
         // Get geojson/fit bounds/draw geojson/publish analysis.
         countryService.execute(resource.iso, _.bind(function(results) {
@@ -276,7 +279,6 @@ define([
             mps.publish('Spinner/stop');
           }
 
-
         },this));
       } else {
         regionService.execute(resource, _.bind(function(results) {
@@ -294,6 +296,14 @@ define([
 
         },this));
       }
+    },
+
+    _fetchTreeLoosCarbonEmissionsData: function(iso) {
+      var country = iso.country
+      treeLossCarbonEmissionsService.execute(country, _.bind(function(results) {
+        console.log(results);
+        // this.view.drawTreeLoosCarbonEmissionsChart(results)
+      },this));
     },
 
     setAnalyzeIso: function(iso){
