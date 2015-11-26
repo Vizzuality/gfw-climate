@@ -22,6 +22,7 @@ html
     meta (name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak")
 
     == render 'shared/icons'
+    
     = stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all'
     = stylesheet_link_tag "map", :media => "all"
     = csrf_meta_tags
@@ -37,6 +38,7 @@ html
 
   body class="is-#{params[:controller]}-page is-#{params[:action]}-action"
 
+    = render 'shared/icons'
     == render 'shared/svg_icons'
     == render 'shared/svg_icons_map'
     == render 'shared/svg_icons_applications'

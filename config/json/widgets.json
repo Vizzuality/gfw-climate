@@ -163,7 +163,7 @@
           {
             "unit": "mt-co2",
             "unitname": "Mt CO2",
-            "unitfullname": "Mega ton of Carbon dioxide"
+            "unitfullname": "Million tons of Carbon dioxide"
           }
         ],
         "thresh": 25,
@@ -187,7 +187,7 @@
           {
             "unit": "mt-co2",
             "unitname": "Mt CO2",
-            "unitfullname": "Mega ton of Carbon dioxide"
+            "unitfullname": "Million tons of Carbon dioxide"
           }
         ]
       },
@@ -208,7 +208,7 @@
           {
             "unit": "mt-co2",
             "unitname": "Mt CO2",
-            "unitfullname": "Mega ton of Carbon dioxide"
+            "unitfullname": "Million tons of Carbon dioxide"
           }
         ],
         "note" : "FAO uses a 10% canopy density by default"

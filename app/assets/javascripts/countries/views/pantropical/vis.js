@@ -73,6 +73,7 @@ function addCommas(nStr) {
       this.display_by_year = __bind(this.display_by_year, this);
       this.move_towards_center = __bind(this.move_towards_center, this);
       this.display_group_all = __bind(this.display_group_all, this);
+      this.display_by_ny = __bind(this.display_by_ny, this);
       this.start = __bind(this.start, this);
       this.create_vis = __bind(this.create_vis, this);
       this.create_nodes = __bind(this.create_nodes, this);
@@ -247,7 +248,7 @@ function addCommas(nStr) {
       }).on("mouseout", function(d, i) {
         return that.hide_details(d, i, this);
       });
-      return this.circles.transition().duration(2000).attr("r", function(d) {
+      return this.circles.transition().duration(50).attr("r", function(d) {
         return d.radius;
       });
     };
@@ -265,9 +266,6 @@ function addCommas(nStr) {
         .force
         .gravity(this.layout_gravity)
         .charge(this.charge).friction(0.9)
-        .on("end", function(e) {
-          root.$pantropicalVis.removeClass('is-loading');
-        })
         .on("tick", (function(_this) {
           return function(e) {
             _this.circles.transition().duration(50).attr("r", function(d) {
@@ -279,7 +277,7 @@ function addCommas(nStr) {
             }).attr("cy", function(d) {
               return d.y;
             });
-        };
+          };
       })(this));
       this.force.start();
 
@@ -345,49 +343,50 @@ function addCommas(nStr) {
     },
 
     BubbleChart.prototype.display_by_ny = function() {
-      var that = this;
-      this.force
-        .gravity(0)
-        .friction(0.9)
-        .charge(that.defaultCharge)
-        .on("tick", function(e){
-          that.circles
-            .transition().duration(50).attr("r", function(d) {
-              d.currentValue = d.value;
-              return that.radius_scale(d.value * 1.6);
-            })
-            .each(that.mandatorySort(e.alpha))
-            .each(that.buoyancy(e.alpha))
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; })
-        })
-        .on("end", function(e) {
-          root.$pantropicalVis.removeClass('is-loading');
-        })
-        .start();
+      this
+        .force
+        .gravity(this.layout_gravity)
+        .charge(this.charge).friction(0.9)
+        .on("tick", (function(_this) {
+          return function(e) {
+            _this.circles.transition().duration(50).attr("r", function(d) {
+                d.currentValue = d.value;
+                return _this.radius_scale(d.value * 1.6);
+              })
+            return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
+                return d.x;
+              }).attr("cy",
+                function(d) { 
+                  return d.y; 
+              })
+          };
+        })(this));
+        this.force.start();
 
-        this.circles.on("mouseenter", function(d, i) {
-          var el = d3.select(this);
-          var xpos = ~~el.attr('cx') - 115;
-          var ypos = (el.attr('cy') - d.radius - 37);
-          d3.select("#pantropical_tooltip")
-            .style('top',ypos+"px")
-            .style('left',xpos+"px")
-            .style('display','block');
-          return that.show_details(d, i, this);
-        })
+      var that = this;
+      this.circles.on("mouseenter", function(d, i) {
+        var el = d3.select(this);
+        var xpos = ~~el.attr('cx') - 115;
+        var ypos = (el.attr('cy') - d.radius - 37);
+        d3.select("#pantropical_tooltip")
+          .style('top',ypos+"px")
+          .style('left',xpos+"px")
+          .style('display','block');
+        return that.show_details(d, i, this);
+      })
+      return this.hide_years();
     };
 
     BubbleChart.prototype.display_by_change = function(year) {
       this.year_to_compare = year;
       var that = this;
-      this.force
-        .gravity(0)
-        .friction(0.9)
-        .charge(that.defaultCharge)
-        .on("tick", function(e){
-          that.circles
-            .transition().duration(50).attr("r", function(d) {
+      this
+        .force
+        .gravity(this.layout_gravity)
+        .charge(this.charge).friction(0.9)
+        .on("tick", (function(_this) {
+          return function(e) {
+            _this.circles.transition().duration(50).attr("r", function(d) {
               if (! !!that.year_to_compare) {
                 var value = d.y2001;
                 d.currentValue = d.y2001;
@@ -404,27 +403,15 @@ function addCommas(nStr) {
               }
               return that.radius_scale(value * 1.6);
             })
-            .each(that.mandatorySort(e.alpha, true))
-            .each(that.buoyancy(e.alpha))
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; })
-            // .each(function(d) {
-            //   // filter the circles so we only paint BRA. IND and the sums of YESNY and NONY
-            //   var valid_ids = [1,2,103,104];
-            //   if (valid_ids.indexOf(~~d.id) == -1) {
-            //     // we don't want to display that country
-            //     $(this).attr("cx", Math.random() -2000);
-            //     $(this).attr("cy", Math.random() -2000);
-            //   } else {
-            //     $(this).attr("cx", function(d) { return d.x; });
-            //     $(this).attr("cy", function(d) { return d.y; });
-            //   }
-            // });
-        })
-        .on("end", function(e) {
-          root.$pantropicalVis.removeClass('is-loading');
-        })
-        .start();
+            return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
+                return d.x;
+              }).attr("cy",
+                function(d) { 
+                  return d.y; 
+              })
+          };
+        })(this));
+        this.force.start();
 
         this.circles.on("mouseenter", function(d, i) {
           var el = d3.select(this);
@@ -454,31 +441,23 @@ function addCommas(nStr) {
         'height':1100
       });
 
-      var that = this;
-      var style_string;
+      var circles = this.generateCircles(values_array);
+      circles
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
 
-      var circles = this.generateCircles(values_array)
-
-      this.force
-        .gravity(0)
-        .friction(0.9)
-        .charge(that.defaultCharge)
-        .on("tick", function(e){
-          circles.each(that.buoyancy(e.alpha));
-        })
-        .on("end", function(e) {
-          root.$pantropicalVis.removeClass('is-loading');
-        })
-        .start();
+      this.circles.transition().duration(0);
+      this.force.stop();
+      return;
     };
 
     BubbleChart.prototype.generateCircles = function(values_array) {
       var that = this;
       var circles = that.circles;
       var style_string;
-
+      
       circles
-        .transition().duration(100).attr("r", function(d) {
+        .attr("r", function(d) {
           id = d.id;
           for (index in values_array){
             // find corresponding value for this bubble
@@ -489,9 +468,7 @@ function addCommas(nStr) {
           }
           
           return that.radius_scale(value * 1.6);
-        });
-
-      circles
+        })
         .each( function(d) {
           var coordinates = [];
           var label_text = "";
@@ -513,9 +490,8 @@ function addCommas(nStr) {
               $(this).attr('style', style_string);
 
               coordinates = that.get_coordinates(i);
-
-              $(this).attr('cx', coordinates[0]);
-              $(this).attr('cy', coordinates[1]);
+              d.x = coordinates[0];
+              d.y = coordinates[1];
               $(this).attr('data-url', '/countries/' + d.iso);
 
               var value = values_array[i].value;
@@ -811,18 +787,10 @@ function addCommas(nStr) {
       };
     })(this);
 
-    root.set_loading = (function(_this) {
-      return function() {
-        root.$pantropicalVis.addClass('is-loading');
-      };
-    })(this);
 
     root.toggle_view = (function(_this) {
-      return function(view_type, year, noSpinner) {
+      return function(view_type, year) {
         root.remove_labels();
-        if (!noSpinner) {
-          root.set_loading();
-        }
         switch (view_type) {
           case 'nydfs':
             return root.display_ny();
