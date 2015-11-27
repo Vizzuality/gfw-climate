@@ -71,9 +71,10 @@ define([
     _drawCountries: function() {
       var that = this;
 
-      var sql = ['SELECT c.iso, c.enabled, m.the_geom',
-                 'FROM ne_50m_admin_0_countries m, gfw2_countries c',
-                 'WHERE c.iso = m.adm0_a3 AND c.enabled',
+      var sql = ['SELECT climate_iso AS iso,',
+                 'ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom',
+                 'FROM gadm27_adm0',
+                 'WHERE climate_iso IS NOT NULL',
                  '&format=topojson'].join(' ');
 
       var sql_ = ['SELECT c.iso, m.the_geom',

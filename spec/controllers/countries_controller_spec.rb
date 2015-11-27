@@ -42,7 +42,7 @@ RSpec.describe CountriesController, type: :controller do
     it "GET cached certain country page", type: :feature do
       get :show, id: 'bra'
       expect(response).to be_success
-      expect($redis.exists('country/item_bra25')).to eq(true)
+      expect($redis.exists('country/item_bra')).to eq(true)
     end
   end
 
