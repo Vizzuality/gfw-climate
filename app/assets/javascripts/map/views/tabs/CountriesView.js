@@ -377,8 +377,6 @@ define([
 
     //DRAW COUNTRIES RESULTS GRAPHS FOR  Gross Carbon Emissions AND Tree cover loss.
     drawTreeLoosCarbonEmissionsChart: function(treeLoss, carbonEmissions) {
-      console.log(treeLoss)
-      console.log(carbonEmissions);
 
       var data = this._parseData(treeLoss, carbonEmissions);
 
@@ -402,16 +400,19 @@ define([
       var data = [];
 
       $.each(bar.values, function() {
-        
-        var valueSet = {};
+        if (this.year != 0 && this.year != 2015) {
+          var valueSet = {};
 
-        valueSet.y = this.value;
-        valueSet.x = this.year;
-        valueSet.color = '#d9d9d9';
-        valueSet.lineColor = '#ff6699';
-        valueSet.z = (_.where(line.values, {'year': this.year })[0] && _.where(line.values, {'year': this.year })[0].value) ? _.where(line.values, {'year': this.year })[0].value : null;
-        
-        data.push(valueSet);
+          valueSet.y = this.value;
+          valueSet.x = this.year;
+          valueSet.LegendBar = "Gross carbon emissions";
+          valueSet.LegendLine = "Tree cover loss";
+          valueSet.color = '#d9d9d9';
+          valueSet.lineColor = '#ff6699';
+          valueSet.z = (_.where(line.values, {'year': this.year })[0] && _.where(line.values, {'year': this.year })[0].value) ? _.where(line.values, {'year': this.year })[0].value : '';
+
+          data.push(valueSet);
+        }
 
       })
       return data;

@@ -10,7 +10,7 @@ define(['d3'], function(d3) {
     var contentWidth = $el.width();
     var contentHeight = $el.height();
     var data = params.data;
-    var hover = params.hover;
+    var hover = true;
     var loader = params.loader || null;
     var infoWindow = params.infoWindowText || '';
     var decimals = params.decimals || 0;
@@ -24,9 +24,9 @@ define(['d3'], function(d3) {
     var transition = 200;
     var margin = params.margin || {
       top: 30,
-      right: 65,
-      bottom: 30,
-      left: 30,
+      right: 0,
+      bottom: 10,
+      left: 10,
       xaxis: 10,
       tooltip: 1.8
     };
@@ -61,7 +61,6 @@ define(['d3'], function(d3) {
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
-        .attr('transform', 'translate('+(margin.left * 2)+', '+ margin.top +')');
 
     var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .4);
@@ -72,83 +71,34 @@ define(['d3'], function(d3) {
     x.domain(data.map(function(d) { return d.x; }));
     x2.domain(data.map(function(d) { return d.x; }));
 
-    var yMin = d3.min(data,function(d){ return d.y; });
+    var yMin = d3.min(data, function(d){ return d.y; });
     var yMax = d3.max(data, function(d) { return d.y; });
 
     if (hasLine) { 
       var zMin = d3.min(data,function(d){ return d.z; });
       var zMax = d3.max(data, function(d) { return d.z; });
-
-      if (zMin < yMin) {
-        yMin = zMin;
-      }
-
-      if (zMax > yMax) {
-        yMax = zMax;
-      }
-    }
-
-    // if(yMin >= 0) {
-    //   yMin = 0;
-    // }
-
-    if(hasLine) {
-      var zMax = d3.max(data, function(d) { return d.z; });
-      var z = d3.scale.linear()
-        .domain([yMin, zMax])
-        .range([height,0]).nice();
     }
 
     var y = d3.scale.linear()
       .domain([yMin, yMax])
       .range([height,yMin]).nice();
 
-    var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient('bottom')
-      .ticks(5)
-      .tickSize(0)
-      .tickPadding(10);
-
-    var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient('left')
-      .ticks(4)
-      .innerTickSize(-width)
-      .outerTickSize(0)
-      .tickPadding(4)
-      .ticks(8);
-
-    var zAxis = d3.svg.axis()
-      .scale(z)
-      .orient('right')
-      .ticks(4)
-      .innerTickSize(-width)
-      .outerTickSize(0)
-      .tickPadding(4)
-      .ticks(8);
+    if(hasLine) {
+      var zMax = d3.max(data, function(d) { return d.z; });
+      var z = d3.scale.linear()
+        .domain([zMin, zMax])
+        .range([height,0]).nice();
+     
+      var y = d3.scale.linear()
+        .domain([yMin, yMax])
+        .range([height,0]).nice();
+    }
 
    var line = d3.svg.line()
      .x(function(d, i) { 
        return x2(d.x) + i; })
      .y(function(d) { return z(d.z); })
      .interpolate(interpolate);
-
-    svgBars.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-
-    if(hasLine) {
-      svgBars.append("g")
-        .attr("class", "y z axis")
-        .attr('transform', 'translate('+ width +', 0)')
-        .call(zAxis);
-    }
-
-    svgBars.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
 
     svgBars.selectAll(".bar")
         .data(data)
@@ -159,28 +109,10 @@ define(['d3'], function(d3) {
         .attr("width", x.rangeBand()) 
         .attr("y", function(d) { return y(Math.max(0, d.y)); })
         .attr("height", function(d) { return yMin >= 0 ? Math.abs(height - y(d.y)) : Math.abs(y(d.y) - y(0)); })
-        
-    svgBars.append("g")
-        .attr("class", "y axis")
-      .append("line")
-        .attr("y1", yMin >= 0 ? height : y(0))
-        .attr("y2", yMin >= 0 ? height : y(0))
-        .attr("x1", 0)
-        .attr("x2", width);
-
-    svgBars.append('g')
-        .attr('transform', 'translate(-5, -10)').append('text')
-        .attr('class', 'unit')
-        .attr('x', function(d) { return 0 })
-        .attr('y', '-10')
-        .attr('dy', '.35em')
-        .attr('text-anchor', 'start')
-        .text(function(d) { return unit; });
     
     if(hasLine) {
 
       svgBars.append('g')
-        .attr('transform', 'translate('+ (width + (margin.left / 2)) +', -10)').append('text')
         .attr('class', 'unit z')
         .attr('x', function(d) { return 0 })
         .attr('y', '-10')
@@ -204,7 +136,6 @@ define(['d3'], function(d3) {
 
     if(hover) {
       var tooltipEl = elem+'-tooltip';
-
       var tooltip = d3.select(elem)
         .insert('div', 'svg')
           .attr('id', elemAttr+'-tooltip')
@@ -214,12 +145,12 @@ define(['d3'], function(d3) {
       var tooltipH = $(tooltipEl).height();
 
       tooltip.append('div')
-        .attr('class', 'content');
+        .attr('class', 'tooltip-content');
       tooltip.append('div')
         .attr('class', 'bottom');
 
       var tooltipContent = d3.select(tooltipEl)
-        .select('.content');
+        .select('.tooltip-content');
 
       tooltipContent.append('div')
         .attr('class', 'title');
@@ -237,11 +168,11 @@ define(['d3'], function(d3) {
 
         d3.select(tooltipEl)
           .select('.title')
-          .text(d.name);
+          .text(d.LegendBar);
 
         d3.select(tooltipEl)
           .select('.value')
-          .text(d.value).append('span')
+          .text(parseFloat(d.y).toFixed(2)).append('span')
           .attr('class', 'tooltip-unit')
           .text(unit);
       });
