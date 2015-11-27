@@ -297,8 +297,10 @@ define([
         this.status.attributes.options.widgets = null;
         mps.publish('Widgets/update');
       }
+
       this.view.render();
       mps.publish('Widgets/update',[this.status.get('activeWidgets')]);
+      mps.publish('Place/update', []);
     },
 
     onError: function(err) {

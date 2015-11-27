@@ -28,7 +28,10 @@ define([
         this._onReadyGrid(p)
       },
       'Grid/update': function() {
-        this.view.lockHeader()
+        this.view.lockHeader();
+      },
+      'Widgets/update': function() {
+        this.view.lockHeader();
       }
     }],
 
