@@ -6,14 +6,11 @@ class Country
 
   class << self
     CDB_INDICATORS_TABLE="indicators_values"
+    CDB_COUNTRIES_TABLE = "gadm27_adm0"
     CDB_BOUNDARIES_TABLE="boundaries_table"
 
     def base_countries_path
       "#{ENV['CDB_API_HOST']}?q="
-    end
-
-    def base_country_path
-      "#{ENV['GFW_API_HOST']}/countries"
     end
 
     def find_all
@@ -27,44 +24,60 @@ class Country
     end
 
     def find_country(filter_params)
-      country_id   = filter_params[:id].downcase
-      thresh_value = filter_params[:thresh].present? ? filter_params['thresh'] : '25'
-
-      # Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75
-      url =  "#{ base_country_path }/#{ country_id }"
-      url += "?thresh=#{ thresh_value }"
+      iso   = filter_params[:id].downcase
 
       timeouts do
-        item_caching(country_id, nil, nil, thresh_value) do
-         get(url).merge({"areas_of_interest" => areas_of_interest_for(country_id)})
+        item_caching(iso, nil, nil, nil) do
+          country = country_data(iso) || {}
+          country.merge({"subnat_bounds" => jurisdictions_for(iso)}).
+            merge({"areas_of_interest" => areas_of_interest_for(iso)})
         end
       end
     end
 
     def index_query
       <<-SQL
-       SELECT DISTINCT iso, admin0_name AS name, true as enabled
-       FROM #{CDB_INDICATORS_TABLE}
-       WHERE iso IS NOT NULL AND admin0_name IS NOT NULL
+       SELECT DISTINCT climate_iso AS iso, name_0 AS name
+       FROM #{CDB_COUNTRIES_TABLE}
+       WHERE climate_iso IS NOT NULL
        ORDER BY name
       SQL
     end
 
-    def areas_of_interest_for country_iso
+    def country_data iso
+     sql = <<-SQL
+      SELECT climate_iso AS iso, name_0 AS name
+      FROM #{CDB_COUNTRIES_TABLE}
+      WHERE UPPER(climate_iso) = UPPER('#{iso}')
+     SQL
+
+     get(base_countries_path+sql)['rows'].first
+    end
+
+    def jurisdictions_for iso
+      sql = <<-SQL
+        SELECT name_1 AS jurisdiction_name, iso, id_1,
+          cartodb_id, ST_AsGeoJSON(ST_Envelope(the_geom))::json AS bounds
+        FROM #{Jurisdiction::CDB_JURISDICTIONS_TABLE}
+        WHERE UPPER(iso) = UPPER('#{iso}')
+        ORDER by jurisdiction_name
+      SQL
+
+      get(base_countries_path+sql)['rows']
+    end
+
+    def areas_of_interest_for iso
       sql = <<-SQL
         SELECT DISTINCT boundary_id AS id, boundary_name AS name, boundary_code AS code
         FROM #{CDB_INDICATORS_TABLE} i
         INNER JOIN #{CDB_BOUNDARIES_TABLE} b ON
         i.boundary_id = b.cartodb_id
-        WHERE UPPER(iso) = UPPER('#{country_iso}') AND
+        WHERE UPPER(iso) = UPPER('#{iso}') AND
         boundary <> 'admin'
         ORDER BY boundary_id
       SQL
 
-      url =  base_countries_path
-      url += sql
-
-      get(url)['rows']
+      get(base_countries_path+sql)['rows']
     end
 
     include Concerns::Cached

@@ -1,7 +1,7 @@
 module Api::V1
   class CountriesController < BaseControllerV1
 
-    before_action :set_country, only: [:show, :show_jurisdiction]
+    before_action :set_country, only: :show
     before_action :set_jurisdiction, only: :show_jurisdiction
 
     def index

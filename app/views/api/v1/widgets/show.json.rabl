@@ -25,7 +25,6 @@ def tabs
       switch:        tab['switch'],
       thresh:        tab['thresh'],
       threshunit:    tab['threshunit'],
-      switch:        tab['switch'],
       sectionswitch: tab['sectionswitch'],
       template:      tab['template'],
       note:          tab['note'],
