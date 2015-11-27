@@ -3,6 +3,7 @@
  *
  * @return CountriesView instance (extends Backbone.View).
  */
+
 define([
   'underscore',
   'handlebars',
@@ -401,17 +402,18 @@ define([
       var data = [];
 
       $.each(bar.values, function() {
-        var value = {};
-
-        value.y = this.value;
-        value.x = this.year;
-        value.color = '#d9d9d9';
-        value.lineColor = '#ff6699';
-        value.z = _.where(bar.values, {'year': this.year })[0].value;
         
-        data.push(value);
-      })
+        var valueSet = {};
 
+        valueSet.y = this.value;
+        valueSet.x = this.year;
+        valueSet.color = '#d9d9d9';
+        valueSet.lineColor = '#ff6699';
+        valueSet.z = (_.where(line.values, {'year': this.year })[0] && _.where(line.values, {'year': this.year })[0].value) ? _.where(line.values, {'year': this.year })[0].value : null;
+        
+        data.push(valueSet);
+
+      })
       return data;
     }
 

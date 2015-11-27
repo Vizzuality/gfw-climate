@@ -31,11 +31,8 @@ define(['d3'], function(d3) {
       tooltip: 1.8
     };
 
-
     var width = contentWidth,
         height = contentHeight;
-
-        console.log(height);
 
     var width = width - margin.left - margin.right,
         height = height - margin.top - margin.bottom;

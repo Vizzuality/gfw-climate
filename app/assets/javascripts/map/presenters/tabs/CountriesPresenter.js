@@ -127,13 +127,17 @@ define([
     },
 
     _fetchTreeLoosCarbonEmissionsData: function(iso) {
+      //Achtung! Sending thresh param because we don't have enough data.
+      //When API will be fixed threshold would be the same in both cases. 
       var params1 = {};
       params1.iso = iso.country;
       params1.indicator = 1;
+      params1.thresh = 25;
 
       var params2 = {};
       params2.iso = iso.country;
       params2.indicator = 29;
+      params2.thresh = 0;
 
       treeLossCarbonEmissionsService.execute(params1, _.bind(function(treeLoss) {
         
