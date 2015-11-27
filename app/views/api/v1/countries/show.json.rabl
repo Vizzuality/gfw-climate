@@ -3,7 +3,6 @@ object false
 node :country do
   {
     iso:           @country['iso'],
-    enabled:       @country['enabled'],
     name:          @country['name'],
     jurisdictions: @country['subnat_bounds'].map do |territory|
                      {

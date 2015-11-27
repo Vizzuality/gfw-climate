@@ -7,15 +7,10 @@ class Country
   class << self
     CDB_INDICATORS_TABLE="indicators_values"
     CDB_COUNTRIES_TABLE = "gadm27_adm0"
-    CDB_JURISDICTIONS_TABLE = "gadm27_adm1"
     CDB_BOUNDARIES_TABLE="boundaries_table"
 
     def base_countries_path
       "#{ENV['CDB_API_HOST']}?q="
-    end
-
-    def base_country_path
-      "#{ENV['GFW_API_HOST']}/countries"
     end
 
     def find_all
@@ -33,8 +28,8 @@ class Country
 
       timeouts do
         item_caching(iso, nil, nil, nil) do
-          country_data(iso).
-            merge({"subnat_bounds" => jurisdictions_for(iso)}).
+          country = country_data(iso) || {}
+          country.merge({"subnat_bounds" => jurisdictions_for(iso)}).
             merge({"areas_of_interest" => areas_of_interest_for(iso)})
         end
       end
@@ -42,7 +37,7 @@ class Country
 
     def index_query
       <<-SQL
-       SELECT DISTINCT climate_iso AS iso, name_0 AS name, true as enabled
+       SELECT DISTINCT climate_iso AS iso, name_0 AS name
        FROM #{CDB_COUNTRIES_TABLE}
        WHERE climate_iso IS NOT NULL
        ORDER BY name
@@ -51,19 +46,19 @@ class Country
 
     def country_data iso
      sql = <<-SQL
-      SELECT climate_iso AS iso, true as enabled, name_0 AS name
+      SELECT climate_iso AS iso, name_0 AS name
       FROM #{CDB_COUNTRIES_TABLE}
       WHERE UPPER(climate_iso) = UPPER('#{iso}')
      SQL
 
-       get(base_countries_path+sql)['rows'].first
+     get(base_countries_path+sql)['rows'].first
     end
 
     def jurisdictions_for iso
       sql = <<-SQL
         SELECT name_1, iso, id_1, cartodb_id,
           ST_AsGeoJSON(ST_Envelope(the_geom))::json AS bounds
-        FROM #{CDB_JURISDICTIONS_TABLE}
+        FROM #{Jurisdiction::CDB_JURISDICTIONS_TABLE}
         WHERE UPPER(iso) = UPPER('#{iso}')
       SQL
 

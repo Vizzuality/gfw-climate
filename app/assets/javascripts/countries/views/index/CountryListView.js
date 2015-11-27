@@ -71,7 +71,7 @@ define([
     _drawCountries: function() {
       var that = this;
 
-      var sql = ['SELECT climate_iso AS iso, true AS enabled,',
+      var sql = ['SELECT climate_iso AS iso,',
                  'ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom',
                  'FROM gadm27_adm0',
                  'WHERE climate_iso IS NOT NULL',

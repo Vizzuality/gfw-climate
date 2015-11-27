@@ -12,7 +12,7 @@
 
     ul.inner.countries_list_index
       - @countries.each do |country|
-        - if country['iso'].present? && country['enabled'].present?
+        - if country['iso'].present?
           li(id="#{country['iso']}" class="country")
             a.country-href (href="#{country_path(country['iso'])}")
               span.country-content
