@@ -1,8 +1,7 @@
 define([
   'backbone',
-  'countries/views/pantropical/PantropicalTotalEmissionsView',
-  'countries/views/pantropical/vis',
-
+  'embed/views/pantropical/PantropicalTotalEmissionsView',
+  'embed/views/pantropical/vis',
 ], function(Backbone, PantropicalTotalEmissionsView) {
 
   'use strict';
