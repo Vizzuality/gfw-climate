@@ -179,6 +179,7 @@ define(['d3'], function(d3) {
     }
 
     //legend
+    var legend = elem+'-legend';
   };
 
 return barsChart;
