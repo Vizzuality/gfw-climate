@@ -16,7 +16,7 @@ define([
 
     render: function() {
       var self = this;
-      
+
       this.$el.html('');
 
       d3.csv('/patropical_total_emissions.csv', function(data){
@@ -139,7 +139,7 @@ define([
 
       svg.append('g')
         .attr('class', 'y axis')
-        .attr('transform', 'translate(-45,0)')        
+        .attr('transform', 'translate(-45,0)')
         .call(yAxis)
         .call(customYAxis);
 

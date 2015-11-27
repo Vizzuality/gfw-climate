@@ -4,8 +4,10 @@ define([
   'countries/services/PlaceService',
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView',
-  'countries/views/CountryPantropicalView'
-], function(Backbone, utils, PlaceService, CountryIndexView, CountryShowView,CountryPantropicalView) {
+  'countries/views/CountryPantropicalView',
+  'embed/PantropicalView'
+], function(Backbone, utils, PlaceService, CountryIndexView,
+  CountryShowView,CountryPantropicalView, EmbedPantropicalView) {
 
   'use strict';
 
@@ -14,7 +16,7 @@ define([
     routes: {
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
-      'embed/pantropical'                   : '_initPantropical',
+      'embed/pantropical'                   : '_initEmbedPantropical',
       'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
 
@@ -40,6 +42,10 @@ define([
 
     _initPantropical: function() {
       new CountryPantropicalView();
+    },
+
+    _initEmbedPantropical: function() {
+      new EmbedPantropicalView();
     }
 
   });

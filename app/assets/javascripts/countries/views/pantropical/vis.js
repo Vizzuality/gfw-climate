@@ -211,7 +211,7 @@ function addCommas(nStr) {
             };
 
             return _this.nodes.push(node);
-          } 
+          }
         };
       })(this));
       return this.nodes.sort(function(a, b) {
@@ -356,8 +356,8 @@ function addCommas(nStr) {
             return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
                 return d.x;
               }).attr("cy",
-                function(d) { 
-                  return d.y; 
+                function(d) {
+                  return d.y;
               })
           };
         })(this));
@@ -406,8 +406,8 @@ function addCommas(nStr) {
             return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
                 return d.x;
               }).attr("cy",
-                function(d) { 
-                  return d.y; 
+                function(d) {
+                  return d.y;
               })
           };
         })(this));
@@ -455,7 +455,7 @@ function addCommas(nStr) {
       var that = this;
       var circles = that.circles;
       var style_string;
-      
+
       circles
         .attr("r", function(d) {
           id = d.id;
@@ -466,13 +466,13 @@ function addCommas(nStr) {
               break;
             }
           }
-          
+
           return that.radius_scale(value * 1.6);
         })
         .each( function(d) {
           var coordinates = [];
           var label_text = "";
-          
+
           //Avoid non-NYDF and NYDF bubles.
           values_array = values_array
             .filter(function (i) {
@@ -509,7 +509,7 @@ function addCommas(nStr) {
           window.location.href = url;
         })
         .on("mouseenter",function() {
-            d3.event.stopPropagation(); 
+            d3.event.stopPropagation();
         });
 
       return circles;
@@ -529,7 +529,7 @@ function addCommas(nStr) {
       if ( order === 1 && radius < 47.5 || order === 2 && radius < 47.5 || order === 3 && radius < 47.5) {
         var y_coord_country = 'y="' + (coordinates[1]+60) + '" ';
         var y_coord_data =    'y="' + (coordinates[1]+80) + '" ';
-      } 
+      }
 
       if ( radius > 47.5 ) {
         var y_coord_country = 'y="' + (coordinates[1]) + '" ';
@@ -552,7 +552,7 @@ function addCommas(nStr) {
               y_coord_data +
               'data-url=countries/'+ iso +
               ' text-anchor="middle">' +
-              parseFloat(data*100).toFixed(3) + '%' + 
+              parseFloat(data*100).toFixed(3) + '%' +
       '</text>';
 
       $('.bubble-label').on('click', function(e) {
@@ -666,7 +666,7 @@ function addCommas(nStr) {
       if (sorted_index === 0 ) {
         offset_x = 225
       }
-      
+
       if (sorted_index === 3 ) {
         offset_x = 260
       }
