@@ -65,7 +65,7 @@ define([
 
       if (indicators) {
         indicators.forEach(function(ind) {
-          $indicatorsGroup.find('li[data-id="' + ind + "']").addClass('is-selected');
+          $indicatorsGroup.find('li[data-id="' + ind + '"]').addClass('is-selected');
         });
       }
 
