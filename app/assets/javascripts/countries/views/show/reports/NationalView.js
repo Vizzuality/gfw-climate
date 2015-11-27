@@ -32,7 +32,7 @@ define([
 
       this.activeWidgets = [];
 
-      if(_.keys(this.widgets[this.iso]).length >  0) {
+      if(this.widgets && _.keys(this.widgets[this.iso]).length >  0) {
 
         _.map(this.widgets[this.iso], function(w, key) {
 
