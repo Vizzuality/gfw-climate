@@ -300,6 +300,7 @@ define([
 
       this.view.render();
       mps.publish('Widgets/update',[this.status.get('activeWidgets')]);
+      mps.publish('Place/update', []);
     },
 
     onError: function(err) {
