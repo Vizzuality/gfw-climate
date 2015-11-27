@@ -58,7 +58,7 @@ class Indicator
       filter = <<-SQL
         indicator_id = #{indicator_id}
         AND (value IS NOT NULL OR text_value IS NOT NULL)
-        AND threshold = #{thresh_value}
+        AND thresh = #{thresh_value}
       SQL
       filter += filter_location(iso, id_1, area) if iso.present?
 

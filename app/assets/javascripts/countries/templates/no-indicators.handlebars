@@ -7,6 +7,10 @@
 
   <div class="start-container">
 
+    {{#if setup.isNational}}
+      <p class="start-text">Start adding some<br><span> data indicators</span></p>
+    {{/if}}
+
     {{#if setup.isJurisdictions}}
       <p class="start-text">Start adding some<br> <span>jurisdictions</span> and <span> data indicators</span></p>
     {{/if}}

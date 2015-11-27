@@ -9,6 +9,7 @@ define([
   'map/presenters/LegendPresenter',
   'text!map/templates/legend/legend.handlebars',
   'text!map/templates/legend/biomass_loss.handlebars',
+  'text!map/templates/legend/biomass.handlebars',
   'text!map/templates/legend/imazon.handlebars',
   'text!map/templates/legend/fires.handlebars',
   'text!map/templates/legend/forest2000.handlebars',
@@ -31,7 +32,7 @@ define([
   'text!map/templates/legend/idn_peat.handlebars',
   'text!map/templates/legend/hsdw.handlebars',
 
-], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, imazonTpl, firesTpl,
+], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, idn_peatTPL,hsdwTPL) {
 
   'use strict';
@@ -56,6 +57,7 @@ define([
      */
     detailsTemplates: {
       biomass_loss: Handlebars.compile(biomass_lossTpl),
+      carbon_stocks: Handlebars.compile(biomassTpl),
       imazon: Handlebars.compile(imazonTpl),
       fires: Handlebars.compile(firesTpl),
       forest2000: Handlebars.compile(forest2000Tpl),
