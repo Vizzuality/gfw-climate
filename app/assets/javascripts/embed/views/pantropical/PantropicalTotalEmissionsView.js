@@ -1,7 +1,6 @@
 define([
   'backbone',
   'd3'
-
 ], function(Backbone, d3) {
 
   'use strict';

@@ -17,7 +17,8 @@ define([
       'change #year-drop-left'      : '_set_year',
       'change #year-drop-right'     : '_set_year',
       'click .btn-submit'           : '_submityears',
-      'click #play-pause'           : '_play_pause'
+      'click #play-pause'           : '_play_pause',
+      'click #share-options-btn'    : '_toggleShareMenu'
     },
 
     initialize: function() {
@@ -173,6 +174,10 @@ define([
         if (this.$yearsPickerLabel.val() <= this.$years.attr('max'))
           target.removeClass('is-playing').addClass('stop');
       }
+    },
+
+    _toggleShareMenu: function(e) {
+      $('.share-options-list').toggleClass('is-hidden');
     }
 
   });

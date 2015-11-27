@@ -322,7 +322,7 @@
         }
       }
     }
-    
+
     .year-range {
       position: absolute;
       bottom: 0;
@@ -334,6 +334,13 @@
         position: absolute;
         bottom: 0;
         left: -45px;
+      }
+
+      #play-pause {
+        position: absolute;
+        bottom: -25px;
+        color: $blue;
+        cursor: pointer;
       }
 
       #year-picker-label {
@@ -348,6 +355,15 @@
         right: 0;
         bottom: 0;
         width: 100%;
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 9px;
+        cursor: pointer;
+        // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        background: $border;
+        border-radius: 5px;
+        // border: 0.2px solid #010101;
       }
     }
 

@@ -1,0 +1,89 @@
+.is-embed-page {
+  .country-profiles {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .pantropical-vis {
+
+    .btn-group {
+      position: relative;
+      > .btn {
+        flex: 1;
+      }
+    }
+
+    .share-item {
+      position: relative;
+      padding: 0 20px;
+      height: 100%;
+      background: $blue;
+      cursor: pointer;
+      &:hover {
+        background: darken($blue, 10%);
+      }
+
+      > svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        fill: $white;
+      }
+    }
+    .share-options-list {
+      z-index: 2;
+      position: absolute;
+      top: 40px;
+      right: 0;
+
+      .share-item {
+        display: block;
+        height: 40px;
+      }
+    }
+
+    #vis {
+      position: relative;
+
+      > .vis-tab  {
+        width: 165px;
+        margin: 35px 0 0 15px;
+
+        > h4 {
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        > .small-figures {
+          margin: 21px 0 0;
+        }
+
+        > p,
+        > ul > li  {
+          font-size: 12px;
+        }
+
+        > ul {
+          margin: 45px 0 0;
+        }
+
+        > .year-range {
+          bottom: -110px;
+          right: 30px
+        }
+
+        &.bottom-chart {
+          width: 640px;
+          top: auto;
+          bottom: 145px;
+        }
+
+        &.right-side {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

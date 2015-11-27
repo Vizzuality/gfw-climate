@@ -79,7 +79,7 @@ function addCommas(nStr) {
       this.create_nodes = __bind(this.create_nodes, this);
       var max_amount;
       this.data = data;
-      this.width = 960;
+      this.width = 640;
       this.height = 480;
       this.NYDF = "Other NYDF Signatory",
       this.NONYDF = "Other non-NYDF Signatory",
@@ -98,7 +98,7 @@ function addCommas(nStr) {
       this.year_right = undefined;
       this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
-        x: this.width / 2,
+        x: this.width / 2.5,
         y: this.height / 2
       };
       this.centerY = 300;
@@ -167,7 +167,7 @@ function addCommas(nStr) {
       max_amount = d3.max(this.data, function(d) {
         return d.Average;
       });
-      this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, max_amount]).range([2, 85]);
+      this.radius_scale = d3.scale.pow().exponent(0.8).domain([0, max_amount]).range([2, 85]);
       this.create_nodes();
       this.create_vis();
     }
@@ -351,7 +351,7 @@ function addCommas(nStr) {
           return function(e) {
             _this.circles.transition().duration(50).attr("r", function(d) {
                 d.currentValue = d.value;
-                return _this.radius_scale(d.value * 1.6);
+                return _this.radius_scale(d.value * 0.9);
               })
             return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
                 return d.x;
@@ -443,8 +443,8 @@ function addCommas(nStr) {
 
       var circles = this.generateCircles(values_array);
       circles
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+        .attr("cx", function(d) { return (d.x) - 625; })
+        .attr("cy", function(d) { return (d.y); });
 
       this.circles.transition().duration(0);
       this.force.stop();
@@ -467,7 +467,7 @@ function addCommas(nStr) {
             }
           }
 
-          return that.radius_scale(value * 1.6);
+          return that.radius_scale(value * 0.7);
         })
         .each( function(d) {
           var coordinates = [];
@@ -490,7 +490,7 @@ function addCommas(nStr) {
               $(this).attr('style', style_string);
 
               coordinates = that.get_coordinates(i);
-              d.x = coordinates[0];
+              d.x = coordinates[0] + 475;
               d.y = coordinates[1];
               $(this).attr('data-url', '/countries/' + d.iso);
 

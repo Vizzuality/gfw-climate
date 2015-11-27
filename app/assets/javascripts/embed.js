@@ -2,10 +2,12 @@
  * Application entry point.
  */
 require([
+  'jquery',
+  'd3',
   'backbone',
   'compare/router',
   'embed/PantropicalView'
-], function(Backbone, RouterView, PantropicalView) {
+], function($, d3, Backbone, RouterView, PantropicalView) {
 
   'use strict';
 
