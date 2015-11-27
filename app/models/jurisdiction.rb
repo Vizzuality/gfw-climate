@@ -13,19 +13,20 @@ class Jurisdiction
 
     def find_jurisdiction(filter_params)
       iso      = filter_params[:id].downcase
-      jurisdiction_id = filter_params[:id_1].to_i
+      id_1 = filter_params[:id_1].to_i
 
       sql = <<-SQL
-        SELECT name_1 AS jurisdiction_name, iso, id_1 AS jurisdiction_id,
+        SELECT name_1 AS jurisdiction_name, iso, id_1,
           cartodb_id, iso, name_0 AS country_name,
           ST_AsGeoJSON(ST_Envelope(the_geom))::json AS bounds
         FROM #{CDB_JURISDICTIONS_TABLE}
-        WHERE UPPER(iso) = UPPER('#{iso}') AND id_1 = #{jurisdiction_id}
+        WHERE UPPER(iso) = UPPER('#{iso}') AND id_1 = #{id_1}
+        ORDER BY jurisdiction_name
       SQL
       url = base_path+sql
 
       timeouts do
-        item_caching(iso, jurisdiction_id) do
+        item_caching(iso, id_1) do
           get(url)['rows'].first
         end
       end

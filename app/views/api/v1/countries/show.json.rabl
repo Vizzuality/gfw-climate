@@ -6,7 +6,7 @@ node :country do
     name:          @country['name'],
     jurisdictions: @country['subnat_bounds'].map do |territory|
                      {
-                       name:       territory['name_1'],
+                       name:       territory['jurisdiction_name'],
                        iso:        territory['iso'],
                        id:         territory['id_1'],
                        cartodb_id: territory['cartodb_id'],

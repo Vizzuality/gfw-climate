@@ -56,10 +56,11 @@ class Country
 
     def jurisdictions_for iso
       sql = <<-SQL
-        SELECT name_1, iso, id_1, cartodb_id,
-          ST_AsGeoJSON(ST_Envelope(the_geom))::json AS bounds
+        SELECT name_1 AS jurisdiction_name, iso, id_1,
+          cartodb_id, ST_AsGeoJSON(ST_Envelope(the_geom))::json AS bounds
         FROM #{Jurisdiction::CDB_JURISDICTIONS_TABLE}
         WHERE UPPER(iso) = UPPER('#{iso}')
+        ORDER by jurisdiction_name
       SQL
 
       get(base_countries_path+sql)['rows']
