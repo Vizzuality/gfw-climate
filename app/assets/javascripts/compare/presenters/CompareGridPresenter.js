@@ -13,7 +13,7 @@ define([
     status: new (Backbone.Model.extend({
       defaults: {
         name: 'compare-countries',
-        widgetsActive: [1,2,3,4,5],
+        widgetsActive: [1,2,3,4,5,6],
         globalThresh: 30
       }
     })),

@@ -112,7 +112,7 @@ define([
         $indicatorsGroup = $('.indicators-group');
 
       // Change this
-      var defaultIndicators = [1,2,3,4,5];
+      var defaultIndicators = [1,2,3,4,5,6];
 
       if (!this.presenter.status.get('options') || !this.presenter.status.get('options')['widgets']) {
 

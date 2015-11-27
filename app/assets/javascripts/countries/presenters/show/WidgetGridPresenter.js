@@ -14,7 +14,7 @@ define([
     status: new (Backbone.Model.extend({
       defaults: {
         activeWidgets: null,
-        defaultWidgets: ["1", "2", "3", "4", "5"],
+        defaultWidgets: [1,2,3,4,5,6],
         globalThresh: 30
       }
     })),
