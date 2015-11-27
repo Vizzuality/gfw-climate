@@ -394,6 +394,8 @@ define([
         unitZ: 'Ha',
         hasLine: true
       });
+      // debugger
+      $('.graph-line-bar').removeClass('is-hidden');
     },
 
     _parseData: function(line, bar) {

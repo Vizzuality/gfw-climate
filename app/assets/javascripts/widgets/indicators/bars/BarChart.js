@@ -6,7 +6,6 @@ define(['d3'], function(d3) {
     var elem = params.elem;
     var elemAttr = elem.replace(/[#]|[.]/g, '');
     var $el = $(elem)
-                .addClass('graph-line'); 
     var contentWidth = $el.width();
     var contentHeight = $el.height();
     var data = params.data;
@@ -23,10 +22,10 @@ define(['d3'], function(d3) {
     var interpolate = params.interpolate || 'linear';
     var transition = 200;
     var margin = params.margin || {
-      top: 30,
+      top: 0,
       right: 0,
-      bottom: 10,
-      left: 10,
+      bottom: 0,
+      left: 0,
       xaxis: 10,
       tooltip: 1.8
     };
@@ -130,10 +129,6 @@ define(['d3'], function(d3) {
           .attr('d', line); 
     }
 
-    if(loader) {
-      $el.removeClass(loader);
-    }
-
     if(hover) {
       var tooltipEl = elem+'-tooltip';
       var tooltip = d3.select(elem)
@@ -182,6 +177,8 @@ define(['d3'], function(d3) {
             .style('display', 'none');
       });
     }
+
+    //legend
   };
 
 return barsChart;

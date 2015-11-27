@@ -1,7 +1,11 @@
-.graph-line {
-  height: 200px;
-  padding-top: 20px;
-  position: relative;
+.graph-line-bar {
+  padding: 20px 0;
+
+  #TreeLoosCarbonEmissions-graph {
+    position: relative;
+    height: 200px;
+    width: 250px;
+  }
 
   .bar {
     shape-rendering: crispEdges;
@@ -16,6 +20,7 @@
 
 
 .tooltip-graph {
+  display: none;
   position: absolute;
   width: 105px;
   height: 68px;
@@ -108,5 +113,46 @@
       }
     }
   }
+}
 
+.graph-legend {
+  padding-top :20px;
+  
+  .tree-cover-loss,
+  .gross-carbon-emissions {
+    @include clearfix();
+  }
+
+  p:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+  }
+
+  .tree-cover-loss p:before {
+    color: #ff6699;
+    border-radius: 50%;
+    border: 3px solid #ff6699;
+  }
+
+  .gross-carbon-emissions p:before {
+    background-color: #d9d9d9;
+  }
+
+  p {
+    position: relative;
+    font-size: 12px;
+    float: left;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+
+  span {
+    float: right;
+    font-size: 12px;
+  }
 }
