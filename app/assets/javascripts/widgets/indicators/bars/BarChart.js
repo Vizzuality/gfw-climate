@@ -1,8 +1,6 @@
 define(['d3'], function(d3) {
 
   var barsChart = function(params) {
-    console.log(params);
-
     var elem = params.elem;
     var elemAttr = elem.replace(/[#]|[.]/g, '');
     var $el = $(elem)
@@ -24,7 +22,7 @@ define(['d3'], function(d3) {
     var margin = params.margin || {
       top: 0,
       right: 0,
-      bottom: 0,
+      bottom: 80,
       left: 0,
       xaxis: 10,
       tooltip: 1.8
@@ -179,7 +177,36 @@ define(['d3'], function(d3) {
     }
 
     //legend
-    var legend = elem+'-legend';
+    var legendEl = elem+'-legend';
+    var legend = d3.select(elem)
+      .insert('div', 'svg')
+        .attr('id', elemAttr+'-legend')
+        .attr('class', 'graph-legend');
+
+    var legendcontent1 = legend.append('div')
+                          .attr('class', 'tree-cover-loss');
+
+    legendcontent1.append('p').html('Tree cover loss');
+    legendcontent1.append('span').attr('class', 'unit').html('Ha');
+    legendcontent1.append('span').attr('class', 'tree-cover-loss-value');
+
+    var legendcontent2 = legend.append('div')
+                          .attr('class', 'gross-carbon-emissions');
+
+    legendcontent2.append('p').html('Gross carbon emissions');
+    legendcontent2.append('span').attr('class', 'unit').html('TCO2');
+    legendcontent2.append('span').attr('class', 'gross-carbon-emissions-value');
+
+    d3.selectAll(elem+' .bar').on('mousemove', function (d) {
+     
+    d3.select(legendEl)
+      .select('.tree-cover-loss-value')
+      .text(parseFloat(d.z).toFixed(2))
+
+    d3.select(legendEl)
+     .select('.gross-carbon-emissions-value')
+     .text(parseFloat(d.y).toFixed(2))
+    });
   };
 
 return barsChart;

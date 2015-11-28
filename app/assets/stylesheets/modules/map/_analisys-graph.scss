@@ -3,7 +3,7 @@
 
   #TreeLoosCarbonEmissions-graph {
     position: relative;
-    height: 200px;
+    height: 250px;
     width: 250px;
   }
 
@@ -116,7 +116,11 @@
 }
 
 .graph-legend {
-  padding-top :20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 20px;
   
   .tree-cover-loss,
   .gross-carbon-emissions {
@@ -154,5 +158,6 @@
   span {
     float: right;
     font-size: 12px;
+    margin-left: 5px;
   }
 }
