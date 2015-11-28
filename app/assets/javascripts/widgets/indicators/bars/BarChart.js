@@ -127,54 +127,18 @@ define(['d3'], function(d3) {
           .attr('d', line); 
     }
 
-    if(hover) {
-      var tooltipEl = elem+'-tooltip';
-      var tooltip = d3.select(elem)
-        .insert('div', 'svg')
-          .attr('id', elemAttr+'-tooltip')
-          .attr('class', 'tooltip-graph')
+    //Toolttio year
+    var tooltipEl = elem+'-tooltip';
+    var tooltip = d3.select(elem)
+      .insert('div', 'svg')
+        .attr('id', elemAttr+'-tooltip')
+        .attr('class', 'tooltip-graph')
 
-      var tooltipW = $(tooltipEl).width();
-      var tooltipH = $(tooltipEl).height();
+    tooltip.append('span')
+      .attr('class', 'tooltip-year');
 
-      tooltip.append('div')
-        .attr('class', 'tooltip-content');
-      tooltip.append('div')
-        .attr('class', 'bottom');
-
-      var tooltipContent = d3.select(tooltipEl)
-        .select('.tooltip-content');
-
-      tooltipContent.append('div')
-        .attr('class', 'title');
-      tooltipContent.append('div')
-        .attr('class', 'value number');
-
-      d3.selectAll(elem+' .bar').on('mousemove', function (d) {
-        var element = d3.select(elem+' svg');
-        var cords = d3.mouse(element.node());
-
-        d3.select(tooltipEl)
-          .style('left', ( cords[0] - (tooltipW / 2)) + 'px')
-          .style('top', ( cords[1] - tooltipH - (tooltipH/3) ) + 'px')
-          .style('display', 'block');
-
-        d3.select(tooltipEl)
-          .select('.title')
-          .text(d.LegendBar);
-
-        d3.select(tooltipEl)
-          .select('.value')
-          .text(parseFloat(d.y).toFixed(2)).append('span')
-          .attr('class', 'tooltip-unit')
-          .text(unit);
-      });
-
-      d3.selectAll(elem+' .bar').on('mouseout', function () {
-          d3.select(tooltipEl)
-            .style('display', 'none');
-      });
-    }
+    var tooltipYear = d3.select(tooltipEl)
+      .select('.tooltip-year');
 
     //legend
     var legendEl = elem+'-legend';
@@ -198,14 +162,31 @@ define(['d3'], function(d3) {
     legendcontent2.append('span').attr('class', 'gross-carbon-emissions-value');
 
     d3.selectAll(elem+' .bar').on('mousemove', function (d) {
-     
-    d3.select(legendEl)
-      .select('.tree-cover-loss-value')
-      .text(parseFloat(d.z).toFixed(2))
+      //Legend values
+      d3.select(legendEl)
+        .select('.tree-cover-loss-value')
+        .text(parseFloat(d.z).toFixed(2))
 
-    d3.select(legendEl)
-     .select('.gross-carbon-emissions-value')
-     .text(parseFloat(d.y).toFixed(2))
+      d3.select(legendEl)
+       .select('.gross-carbon-emissions-value')
+       .text(parseFloat(d.y).toFixed(2))
+
+      //Tooltip year
+      var element = d3.select(elem+' svg');
+      var cords = d3.mouse(element.node());
+
+      d3.select(tooltipEl)
+        .style('left', ( cords[0] + 'px'))
+        .style('display', 'block');
+
+      d3.select(tooltipEl)
+        .select('.tooltip-year')
+        .text(d.x);
+    });
+
+    d3.selectAll(elem+' .bar').on('mouseout', function () {
+        d3.select(tooltipEl)
+          .style('display', 'none');
     });
   };
 

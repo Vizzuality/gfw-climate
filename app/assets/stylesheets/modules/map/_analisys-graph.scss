@@ -22,97 +22,12 @@
 .tooltip-graph {
   display: none;
   position: absolute;
-  width: 105px;
-  height: 68px;
+  top: 175px;
+  transform: translatex(-50%);
   z-index: 1;
   pointer-events: none;
-
-  .tooltip-content {
-    width: 105px;
-    height: 68px;
-    padding: 8px;
-    text-align: center;
-    background: $white;
-    border-radius: 4px;
-    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.15);
-    overflow: hidden;
-    color: $font-color-1;
-
-    .title {
-      margin: 0 auto;
-      text-align: center;
-      padding-bottom: 5px;
-      font-size: 12px;
-      color: #ddd;
-    }
-
-    .value {
-      text-align: center;
-      color: $font-color-1;
-      font-weight: 700;
-      padding-top: 0;
-      font-size: 14px;
-      margin-bottom: 3px;
-    }
-
-    .tooltip-unit {
-      display: block;
-      color: $font-color-1;
-      font-size: 12px;
-    }
-  }
-  .bottom {
-    width: 40px;
-    height: 20px;
-    left: 34px;
-    bottom: 0;
-    position: relative;
-    overflow: hidden;
-    transform: rotate(180deg);
-    box-shadow: 0 16px 10px -17px rgba(0, 0, 0, 0.5);
-
-    &:after{
-      content: "";
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      background: $white;
-      transform: rotate(45deg);
-      top: 13px;
-      left: 12.5px;
-      box-shadow: -1px -1px 10px -2px rgba(0, 0, 0, 0.5);
-    }
-  }
-
-  &.left {
-    border-radius: 4px;
-    border: 1px solid #D8D8D8;
-    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.15);
-
-    .bottom {
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 8.5px 9px 8.5px 0;
-      border-color: transparent #D8D8D8 transparent transparent;
-      left: -10px;
-      bottom: 48px;
-      position: relative;
-
-      &:before{
-        content: '';
-        position: absolute;
-        border-style: solid;
-        border-width: 8.5px 9px 8.5px 0;
-        border-color: transparent rgba(255,255,255,1);
-        display: block;
-        width: 0;
-        z-index: 0;
-        left: 1px;
-        bottom: -8px;
-      }
-    }
-  }
+  font-size: 12px;
+  color: #ff6699;
 }
 
 .graph-legend {
