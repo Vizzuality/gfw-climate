@@ -30,7 +30,10 @@ define([
         $('#figure-' + iso.toLowerCase()).html('');
       }
 
-      sql = "SELECT m.the_geom FROM ne_50m_admin_0_countries m WHERE m.adm0_a3 = '" + iso + "'&format=topojson";
+      sql = ['SELECT ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom',
+             'FROM gadm27_adm0',
+             "WHERE UPPER(climate_iso) = UPPER('" + iso + "')",
+             '&format=topojson'].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, _.bind(function(error, topology) {
         this.helper.draw(topology, 0, 'figure-' + iso.toLowerCase(), { alerts: true });

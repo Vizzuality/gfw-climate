@@ -8,7 +8,7 @@ class CountriesController < ApplicationController
 
   def show
     @name = @country['name']
-    @iso  = @country['params']['iso']
+    @iso  = @country['iso']
     @jurisdictions = @country['subnat_bounds']
   end
 

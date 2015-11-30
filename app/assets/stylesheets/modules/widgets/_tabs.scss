@@ -88,6 +88,15 @@
       min-height: 120px;
     }
 
+    .fao-note {
+      font-size: 12px;
+      margin: 1em 0;
+
+      a, p {
+        display: inline-block;
+      }
+    }
+
     .tab-graph--no-data {
 
       div {
