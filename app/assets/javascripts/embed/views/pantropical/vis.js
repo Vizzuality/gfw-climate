@@ -79,7 +79,7 @@ function addCommas(nStr) {
       this.create_nodes = __bind(this.create_nodes, this);
       var max_amount;
       this.data = data;
-      this.width = 960;
+      this.width = 640;
       this.height = 480;
       this.NYDF = "Other NYDF Signatory",
       this.NONYDF = "Other non-NYDF Signatory",
@@ -98,7 +98,7 @@ function addCommas(nStr) {
       this.year_right = undefined;
       this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
-        x: this.width / 2,
+        x: this.width / 2.75,
         y: this.height / 2
       };
       this.centerY = 300;
@@ -167,7 +167,7 @@ function addCommas(nStr) {
       max_amount = d3.max(this.data, function(d) {
         return d.Average;
       });
-      this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, max_amount]).range([2, 85]);
+      this.radius_scale = d3.scale.pow().exponent(0.8).domain([0, max_amount]).range([2, 85]);
       this.create_nodes();
       this.create_vis();
     }
@@ -287,7 +287,7 @@ function addCommas(nStr) {
       this.circles.on("mouseenter", function(d, i) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;
-        var ypos = (el.attr('cy') - d.radius - 37);
+        var ypos = (el.attr('cy') - d.radius - 80);
         d3.select("#pantropical_tooltip")
           .style('top',ypos+"px")
           .style('left',xpos+"px")
@@ -353,10 +353,10 @@ function addCommas(nStr) {
           return function(e) {
             _this.circles.transition().duration(50).attr("r", function(d) {
                 d.currentValue = d.value;
-                return _this.radius_scale(d.value * 1.6);
+                return _this.radius_scale(d.value * 1.1);
               })
             return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
-                return d.x;
+                return d.x - 115;
               }).attr("cy",
                 function(d) {
                   return d.y;
@@ -403,13 +403,13 @@ function addCommas(nStr) {
               if (that.VALID_NAMES.indexOf(d.name) != -1) {
                 document.getElementById(d.name+'_data').innerHTML = parseFloat(value*100).toFixed(0)+'%';
               }
-              return that.radius_scale(value * 1.6);
+              return that.radius_scale(value * 1.1);
             })
             return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
-                return d.x;
+                return d.x  - 135;
               }).attr("cy",
                 function(d) {
-                  return d.y;
+                  return d.y - 95;
               })
           };
         })(this));
@@ -469,7 +469,7 @@ function addCommas(nStr) {
             }
           }
 
-          return that.radius_scale(value * 1.6);
+          return that.radius_scale(value * 0.7);
         })
         .each( function(d) {
           var coordinates = [];
@@ -649,29 +649,29 @@ function addCommas(nStr) {
     // returns an array of the coordinates according to the sorted_array index (bubble_id, starts at 1)
     // sorted_index, index_of start at 0
     BubbleChart.prototype.get_coordinates = function(sorted_index){
-      var dist_x = 125;
+      var dist_x = 85;
       var dist_y = 55;
-      var offset_x = 150;
+      var offset_x = 75;
       var offset_y = 50;
       var col_count = 6;
 
       if (sorted_index < 4){
         // bubbles at index 0, 1, 2, 3 are in line 1
         col_count = 4;
-        dist_x = 170;
-        offset_x = 275;
+        dist_x = 85;
+        offset_x = 200;
       } else {
         // modify current index to push bubbles into line 2
         sorted_index += 2;
       }
 
       if (sorted_index === 0 ) {
-        offset_x = 225
+        offset_x = 125
       }
 
-      if (sorted_index === 3 ) {
-        offset_x = 260
-      }
+      // if (sorted_index === 3 ) {
+      //   offset_x = 260
+      // }
 
       var x_position = (((sorted_index) % col_count) * dist_x);
       var y_position = 0;

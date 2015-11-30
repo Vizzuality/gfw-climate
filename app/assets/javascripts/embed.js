@@ -3,16 +3,15 @@
  */
 require([
   'jquery',
-  'underscore',
+  'd3',
   'backbone',
-  'countries/router',
-  'countries/views/CountryShowView',
-  'countries/views/CountryIndexView'
-], function($, _, Backbone, RouterView, CountryShowView, CountryIndexView) {
+  'compare/router',
+  'embed/PantropicalView'
+], function($, d3, Backbone, RouterView, PantropicalView) {
 
   'use strict';
 
-  var CountriesPage = Backbone.View.extend({
+  var ComparePage = Backbone.View.extend({
 
     el: document.body,
 
@@ -31,16 +30,16 @@ require([
       }
     },
 
-    _initViews: function() {
-      new CountryIndexView();
-    },
-
     _initRouter: function() {
       this.router = new RouterView();
+    },
+
+    _initViews: function() {
+      new PantropicalView();
     }
 
   });
 
-  new CountriesPage();
+  new ComparePage();
 
 });
