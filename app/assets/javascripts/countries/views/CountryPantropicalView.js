@@ -5,8 +5,6 @@ define([
   'countries/views/pantropical/PantropicalTotalEmissionsView',
   'countries/views/pantropical/vis',
   'views/ShareView',
-
-
 ], function(Backbone, d3, chosen, PantropicalTotalEmissionsView, vis, ShareView) {
 
   'use strict';

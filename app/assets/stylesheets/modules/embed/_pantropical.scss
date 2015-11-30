@@ -33,7 +33,7 @@
       }
     }
     .share-options-list {
-      z-index: 2;
+      z-index: 3;
       position: absolute;
       top: 40px;
       right: 0;
@@ -78,6 +78,10 @@
         &.right-side {
           margin: 0;
           z-index: -1;
+        }
+
+        &.country {
+          margin: 75px 0 0 15px;
         }
       }
 
@@ -142,6 +146,16 @@
               background: transparent; /* Hides the slider so custom styles can be added */
               border-color: transparent;
               color: transparent;
+            }
+
+            input[type=range]::-webkit-slider-runnable-track {
+              width: 100%;
+              height: 9px;
+              cursor: pointer;
+              // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+              background: $border;
+              border-radius: 5px;
+              // border: 0.2px solid #010101;
             }
 
             .progress-year {

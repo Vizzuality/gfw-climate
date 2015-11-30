@@ -1,8 +1,9 @@
 define([
   'backbone',
+  'chosen',
   'embed/views/pantropical/PantropicalTotalEmissionsView',
   'embed/views/pantropical/vis',
-], function(Backbone, PantropicalTotalEmissionsView) {
+], function(Backbone, chosen, PantropicalTotalEmissionsView) {
 
   'use strict';
 
@@ -19,6 +20,8 @@ define([
       'click .btn-submit'           : '_submityears',
       'click #play-pause'           : '_play_pause',
       'click #share-options-btn'    : '_toggleShareMenu',
+      'change #pantropical-search'  : '_search_country',
+      'click #pantropical-search-delete' : '_search_country',
       'click .share-options-list a' : '_shareToSocial'
     },
 
@@ -28,6 +31,8 @@ define([
       $('#vis').find('.country').hide();
       this._cacheVars();
       this._setRankingAverage();
+
+      this._setAutocomplete();
 
       if (!!currentTab) {
         window.setTimeout(function(){
@@ -49,6 +54,8 @@ define([
       this.$progressbar       = $('.progress-year');
       this.progression        = 0;
       this.ticks              = ~~this.$years.attr("max") - ~~this.$years.attr("min");
+      this.$search            = $('#pantropical-search');
+      this.$deleteSelection   = $('#pantropical-search-delete');
     },
 
     switch_view: function(e) {
@@ -242,6 +249,44 @@ define([
 
       window.open(url, 'Share this map view', opts);
     },
+
+    _search_country: function(e) {
+      d3.selection.prototype.moveToFront = function() { return this.each(function() { this.parentNode.appendChild(this); }); };
+      var iso = $(e.currentTarget).val();
+      this.$deleteSelection.toggleClass('is-active', !!iso);
+      if(!!iso) {
+        _.each($('#svg_vis').find('.bubble'), function(b){
+          if(iso === $(b).data('iso')) {
+            $(b).attr("opacity",'1');
+            d3.select(b).moveToFront();
+          } else {
+            $(b).attr("opacity",'0.25');
+          }
+        })
+      } else {
+        this.$search.val('').trigger('chosen:updated');
+        _.each($('#svg_vis').find('.bubble'), function(b){
+          $(b).attr("opacity",'1');
+        })
+      }
+    },
+
+    _setAutocomplete: function() {
+      this.$search.chosen({
+        width: '100%',
+      });
+      d3.csv("/pantropicalTESTING_isos.csv", _.bind(function(data) {
+        this.$search.html('<option value="">Select country</option>');
+        var options = _.compact(_.map(_.sortBy(data, 'Country'), function(d){
+          if (parseFloat(d.Average).toFixed(3) > 0.003) {
+            return '<option value="'+d.FIPS_CNTRY+'">'+d.Country+'</option>';
+          }
+          return null;
+        }));
+        this.$search.append(options.join('')).trigger('chosen:updated');
+      }, this ));
+    },
+
 
   });
 
