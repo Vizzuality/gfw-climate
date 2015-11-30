@@ -247,7 +247,7 @@ define([
       }
     },
 
-    _open_share: function() {
+    _open_share: function(event) {
       var shareView = new ShareView().share(event);
       $('body').append(shareView.el);
     }
