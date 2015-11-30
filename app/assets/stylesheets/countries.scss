@@ -38,9 +38,13 @@
 @import "modules/widgets/*";
 @import "modules/widgets/charts/*";
 
+// Pantropical: we should remove this to another tab
+@import "modules/pantropical/m-pantropical";
+
 // Common
 @import "states";
-@import "modules/common/*";
+@import "modules/common/m-fixed-header";
+@import "modules/common/m-toolbar";
 
 // Layouts
 @import "layouts/countries";
