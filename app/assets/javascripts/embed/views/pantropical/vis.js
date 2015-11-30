@@ -98,7 +98,7 @@ function addCommas(nStr) {
       this.year_right = undefined;
       this.tooltip = CustomTooltip("pantropical_tooltip", 230);
       this.center = {
-        x: this.width / 2.5,
+        x: this.width / 2.75,
         y: this.height / 2
       };
       this.centerY = 300;
@@ -285,7 +285,7 @@ function addCommas(nStr) {
       this.circles.on("mouseenter", function(d, i) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;
-        var ypos = (el.attr('cy') - d.radius - 37);
+        var ypos = (el.attr('cy') - d.radius - 80);
         d3.select("#pantropical_tooltip")
           .style('top',ypos+"px")
           .style('left',xpos+"px")
@@ -443,8 +443,8 @@ function addCommas(nStr) {
 
       var circles = this.generateCircles(values_array);
       circles
-        .attr("cx", function(d) { return (d.x) - 625; })
-        .attr("cy", function(d) { return (d.y); });
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
 
       this.circles.transition().duration(0);
       this.force.stop();
@@ -490,7 +490,7 @@ function addCommas(nStr) {
               $(this).attr('style', style_string);
 
               coordinates = that.get_coordinates(i);
-              d.x = coordinates[0] + 475;
+              d.x = coordinates[0];
               d.y = coordinates[1];
               $(this).attr('data-url', '/countries/' + d.iso);
 
@@ -647,7 +647,7 @@ function addCommas(nStr) {
     // returns an array of the coordinates according to the sorted_array index (bubble_id, starts at 1)
     // sorted_index, index_of start at 0
     BubbleChart.prototype.get_coordinates = function(sorted_index){
-      var dist_x = 125;
+      var dist_x = 90;
       var dist_y = 55;
       var offset_x = 150;
       var offset_y = 50;
@@ -656,15 +656,15 @@ function addCommas(nStr) {
       if (sorted_index < 4){
         // bubbles at index 0, 1, 2, 3 are in line 1
         col_count = 4;
-        dist_x = 170;
-        offset_x = 275;
+        dist_x = 95;
+        offset_x = 255;
       } else {
         // modify current index to push bubbles into line 2
         sorted_index += 2;
       }
 
       if (sorted_index === 0 ) {
-        offset_x = 225
+        offset_x = 200
       }
 
       if (sorted_index === 3 ) {
