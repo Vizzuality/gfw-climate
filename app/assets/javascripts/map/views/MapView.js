@@ -14,8 +14,10 @@ define([
   'map/views/maptypes/darkMaptype',
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
-  'map/helpers/layersHelper'
-], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, layersHelper) {
+  'map/helpers/layersHelper',
+  'text!map/geojson_overlays/tropics.json'
+], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype,
+  darkMaptype, positronMaptype, landsatMaptype, layersHelper, tropicsOverlay) {
 
   'use strict';
 
@@ -86,7 +88,6 @@ define([
          new google.maps.LatLng(85, 180)
       ); // why (-85, -180)? Well, because f*ck you, Google: http://stackoverflow.com/questions/5405539/google-maps-v3-why-is-latlngbounds-contains-returning-false
       this.lastValidCenter = this.map.getCenter();
-
       this._checkDialogs();
 
       this.resize();
@@ -94,7 +95,6 @@ define([
       this._addListeners();
       // Node
       this.createMaptypeNode();
-
     },
 
     /**
@@ -427,7 +427,14 @@ define([
      * Set additional maptypes to this.map.
      */
     _setMaptypes: function() {
-      this.map.mapTypes.set('grayscale', grayscaleMaptype());
+      this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
+      var featureStyle = {
+          strokeColor: "#eee",
+          fillColor: "#eee",
+          strokeWeight: 1
+      };
+      this.map.data.setStyle(featureStyle);
+      this.map.mapTypes.set('grayscale', grayscaleMaptype(), featureStyle);
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
