@@ -427,20 +427,27 @@ define([
      * Set additional maptypes to this.map.
      */
     _setMaptypes: function() {
-      this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
-      var featureStyle = {
-          strokeColor: "#eee",
-          fillColor: "#eee",
-          strokeWeight: 1
-      };
-      this.map.data.setStyle(featureStyle);
-      this.map.mapTypes.set('grayscale', grayscaleMaptype(), featureStyle);
+      var featureStyle ={
+          visible: true,
+          clickable:false,
+          fillColor: "#000",
+          fillOpacity:1,
+          strokeOpacity:0,
+          strokeWeight: 0,
+          strokeColor:"#000"
+        };
+      
+      
+      this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       this.map.mapTypes.set('dark', darkMaptype());
       this.map.mapTypes.set('positron', positronMaptype());
       for (var i = 1999; i < 2013; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
+      this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
+      this.map.data.setStyle(featureStyle);
+
     },
 
 
