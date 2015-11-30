@@ -1,11 +1,13 @@
 define([
   'backbone',
   'd3',
+  'chosen',
   'countries/views/pantropical/PantropicalTotalEmissionsView',
   'countries/views/pantropical/vis',
-  'chosen',
+  'views/ShareView',
 
-], function(Backbone, d3, PantropicalTotalEmissionsView, vis, chosen) {
+
+], function(Backbone, d3, chosen, PantropicalTotalEmissionsView, vis, ShareView) {
 
   'use strict';
 
@@ -22,7 +24,8 @@ define([
       'click .btn-submit'           : '_submityears',
       'click #play-pause'           : '_play_pause',
       'change #pantropical-search'  : '_search_country',
-      'click #pantropical-search-delete' : '_search_country'
+      'click #pantropical-search-delete' : '_search_country',
+      'click #pantropical-share'    : '_open_share'
     },
 
     initialize: function() {
@@ -218,6 +221,11 @@ define([
           $(b).attr("opacity",'1');
         })
       }
+    },
+
+    _open_share: function() {
+      var shareView = new ShareView().share(event);
+      $('body').append(shareView.el);
     }
 
   });
