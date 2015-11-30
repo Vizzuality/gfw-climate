@@ -299,6 +299,25 @@ $height: auto;
     }
   }
 
+  .source_table {
+    font-size: 12px;
+    th,td {
+      padding: 5px;
+      border: 1px solid $border;
+      strong {
+        font-weight: 500;
+      }
+    }
+
+    th {
+      font-weight: 500;
+    }
+
+    td {
+
+    }
+  }
+
   // CONTENT
   .single-source-item {
     font-size: 15px;
@@ -439,11 +458,6 @@ $height: auto;
   .source_category_title {
     border-bottom: 2px solid #ccc;
     margin: 0 0 20px;
-  }
-
-  .source_table {
-    border-top: 1px solid #ccc;
-    margin-bottom: 20px;
   }
 
   .forest_change .source_category_title {
