@@ -3,13 +3,12 @@
   justify-content: space-between;
   flex-wrap: wrap;
   margin: 35px 0 0;
-  padding: 35px 0 0;
+  padding: 20px;
   border-top: 1px solid $border;
   position: relative;
   min-height: 200px;
   &:first-child {
     margin: 0;
-    padding: 0;
     border: none;
   }
   .gridgraphs--widget {
