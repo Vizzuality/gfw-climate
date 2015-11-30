@@ -49,6 +49,9 @@ define([
 
       if(viewId === 'change') {
         $('#vis').addClass(viewId);
+        $('#vis').find('#svg_vis:last-child').css({
+          'height': 475
+        });
         this._renderChangeComponents();
       }
       return false;
