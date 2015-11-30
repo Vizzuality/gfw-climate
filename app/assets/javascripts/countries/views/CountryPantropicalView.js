@@ -21,7 +21,8 @@ define([
       'change #year-drop-right'     : '_set_year',
       'click .btn-submit'           : '_submityears',
       'click #play-pause'           : '_play_pause',
-      'change #pantropical-search'  : '_search_country'
+      'change #pantropical-search'  : '_search_country',
+      'click #pantropical-search-delete' : '_search_country'
     },
 
     initialize: function() {
@@ -41,6 +42,7 @@ define([
       this.$yearsPickerLabel  = $('#year-picker-label');
       this.$play_pause        = $('#play-pause');
       this.$search            = $('#pantropical-search');
+      this.$deleteSelection   = $('#pantropical-search-delete');
     },
 
     switch_view: function(e) {
@@ -200,6 +202,7 @@ define([
     _search_country: function(e) {
       d3.selection.prototype.moveToFront = function() { return this.each(function() { this.parentNode.appendChild(this); }); };
       var iso = $(e.currentTarget).val();
+      this.$deleteSelection.toggleClass('is-active', !!iso);
       if(!!iso) {
         _.each($('#svg_vis').find('.bubble'), function(b){
           if(iso === $(b).data('iso')) {
@@ -210,6 +213,7 @@ define([
           }
         })
       } else {
+        this.$search.val('').trigger('chosen:updated');
         _.each($('#svg_vis').find('.bubble'), function(b){
           $(b).attr("opacity",'1');
         })

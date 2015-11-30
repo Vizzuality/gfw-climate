@@ -79,27 +79,9 @@
     margin: 10px 0 0;
     min-width: 300px;
   }
-  svg {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translate(4px,-50%);
-    width: 24px;
-    height: 24px;
-    fill: $color-3;
-  }
   select {
     display: none;
   }
-  // input {
-  //   @extend %clean-button-or-input;
-  //   display: block;
-  //   border: 1px solid $color-1;
-  //   border-radius: 20px;
-  //   background: $white;
-  //   font-size: 14px;
-  //   padding: 8px 15px 8px 30px;
-  // }
 }
 
 #vis {
