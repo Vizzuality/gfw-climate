@@ -75,6 +75,9 @@
   @include clearfix();
   display: flex;
   justify-content: flex-end;
+  margin: 0 0 -53px;
+  position: relative;
+  z-index: 2;
 
   .pantropical-search-box {
     position: relative;
