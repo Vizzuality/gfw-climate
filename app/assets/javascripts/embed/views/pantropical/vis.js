@@ -351,10 +351,10 @@ function addCommas(nStr) {
           return function(e) {
             _this.circles.transition().duration(50).attr("r", function(d) {
                 d.currentValue = d.value;
-                return _this.radius_scale(d.value * 0.9);
+                return _this.radius_scale(d.value * 1.1);
               })
             return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
-                return d.x;
+                return d.x - 115;
               }).attr("cy",
                 function(d) {
                   return d.y;
