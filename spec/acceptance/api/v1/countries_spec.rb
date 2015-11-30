@@ -13,33 +13,26 @@ resource 'Countries' do
       expect(countries.length).to be >= 10
       expect(countries[6]['name']).to eq('Barbados')
       expect(countries[6]['iso']).to eq('BRB')
-      expect(countries[6]['enabled']).to eq(true)
     end
   end
 
-  get "/api/countries/aus" do
-    parameter :thresh, "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
-
-    example_request "Getting a specific country", thresh: 50 do
+  get "/api/countries/bra" do
+    example_request "Getting a specific country" do
       expect(status).to eq(200)
       country = JSON.parse(response_body)['country']
 
-      expect(country['iso']).to eq('AUS')
-      expect(country['enabled']).to eq(true)
-      expect(country['name']).to eq('Australia')
+      expect(country['iso']).to eq('BRA')
+      expect(country['name']).to eq('Brazil')
       expect(country['jurisdictions']).not_to be_nil
     end
 
   end
 
   get "/api/countries/bra/1" do
-    parameter :thresh, "Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75"
-
-    example_request "Getting a specific jurisdiction", thresh: 50 do
+    example_request "Getting a specific jurisdiction" do
       expect(status).to eq(200)
       jurisdiction = JSON.parse(response_body)['jurisdiction']
       expect(jurisdiction['iso']).to eq('BRA')
-      expect(jurisdiction['thresh']).to eq('50')
       expect(jurisdiction['country_name']).to eq('Brazil')
       expect(jurisdiction['name']).to eq('Acre')
       expect(jurisdiction['id']).to eq(1)

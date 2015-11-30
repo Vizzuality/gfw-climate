@@ -13,7 +13,7 @@ define([
     status: new (Backbone.Model.extend({
       defaults: {
         name: 'compare-countries',
-        widgetsActive: [1,2,3,4,5],
+        widgetsActive: [1,2,3,4,5,6],
         globalThresh: 30
       }
     })),
@@ -162,6 +162,7 @@ define([
     changeCompare: function() {
       var compare1 = this.objToSlug(this.status.get('compare1'),'+');
       var compare2 = this.objToSlug(this.status.get('compare2'),'+');
+
       if (!!compare1 && !!compare2) {
         this.service.execute(
           compare1,
@@ -216,6 +217,7 @@ define([
       // ******
       // CAREFUL: if you add anything new to the widgets.json
       //          remember to add it inside CompareGridPresenter (getTabsOptions function) and inside widgetPresenter (changeTab function)
+      //          You must add it to views/api/v1/widgets/show.json.rabl (If you don't, the API won't send the new parameter)
       // ******
       return _.map(tabs, _.bind(function(t){
         return {
@@ -227,6 +229,7 @@ define([
           thresh: (t.thresh) ? this.status.get('globalThresh') : 0,
           section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
           template: (t.template) ? t['template'] : null,
+          lock: (t.lock != null && t.lock != undefined) ? t['lock'] : true,
         }
       }, this ))[0];
     },
@@ -245,6 +248,11 @@ define([
       r[this.objToSlug(params.compare1,'')] = options[0];
       r[this.objToSlug(params.compare2,'')] = options[1];
       return r;
+    },
+
+    // LOCK MODE
+    toggleLock: function(id, lock) {
+      mps.publish('Lock/toggle', [id,lock]);
     },
 
     // HELPERS

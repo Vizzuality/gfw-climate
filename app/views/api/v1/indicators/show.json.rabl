@@ -9,7 +9,7 @@ node do |value|
     iso_and_sub_nat:      value['iso_and_sub_nat'],
     boundary:             value['boundary'],
     boundary_id:          value['boundary_id'],
-    thresh:               value['threshold'],
+    thresh:               value['thresh'],
     the_geom:             value['the_geom'],
     the_geom_webmercator: value['the_geom_webmercator'],
     country_name:         value['admin0_name'],

@@ -8,7 +8,8 @@ define([
   'handlebars',
   'map/presenters/LegendPresenter',
   'text!map/templates/legend/legend.handlebars',
-  'text!map/templates/legend/loss.handlebars',
+  'text!map/templates/legend/biomass_loss.handlebars',
+  'text!map/templates/legend/biomass.handlebars',
   'text!map/templates/legend/imazon.handlebars',
   'text!map/templates/legend/fires.handlebars',
   'text!map/templates/legend/forest2000.handlebars',
@@ -28,9 +29,11 @@ define([
   'text!map/templates/legend/global_land_cover.handlebars',
   'text!map/templates/legend/forma.handlebars',
   'text!map/templates/legend/bra_biomes.handlebars',
+  'text!map/templates/legend/idn_peat.handlebars',
+  'text!map/templates/legend/hsdw.handlebars',
 
-], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL) {
+], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl, imazonTpl, firesTpl,
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, idn_peatTPL,hsdwTPL) {
 
   'use strict';
 
@@ -53,7 +56,8 @@ define([
      * Optional layers detail templates.
      */
     detailsTemplates: {
-      loss: Handlebars.compile(lossTpl),
+      biomass_loss: Handlebars.compile(biomass_lossTpl),
+      carbon_stocks: Handlebars.compile(biomassTpl),
       imazon: Handlebars.compile(imazonTpl),
       fires: Handlebars.compile(firesTpl),
       forest2000: Handlebars.compile(forest2000Tpl),
@@ -73,7 +77,9 @@ define([
       global_land_cover : Handlebars.compile(global_land_coverTPL),
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
       forma : Handlebars.compile(formaTPL),
-      bra_biomes : Handlebars.compile(bra_biomesTPL)
+      bra_biomes : Handlebars.compile(bra_biomesTPL),
+      idn_peat_lands : Handlebars.compile(idn_peatTPL),
+      hwsd : Handlebars.compile(hsdwTPL)
 
     },
 

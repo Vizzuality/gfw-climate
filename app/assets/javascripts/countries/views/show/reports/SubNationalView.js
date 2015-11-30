@@ -1,10 +1,11 @@
 define([
+  'mps',
   'backbone',
   'handlebars',
   'widgets/views/WidgetView',
   'text!countries/templates/country-subnational-grid.handlebars',
   'text!countries/templates/no-indicators.handlebars'
-], function(Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
+], function(mps, Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
 
   var SubNationalView = Backbone.View.extend({
 
@@ -70,7 +71,7 @@ define([
       this.$el.removeClass();
       this.$el.addClass('gridgraphs -subnational');
 
-      if (this.jurisdictions && this.jurisdictions.length > 0) {
+      if (this.jurisdictions && this.jurisdictions.length > 0  && this.widgets) {
 
         this.template = Handlebars.compile(tpl);
 
@@ -98,6 +99,14 @@ define([
 
         }, this));
 
+        this.parent.append(this.$el);
+        mps.publish('Grid/ready', [{
+          options: {
+            view: 'subnational',
+            jurisdictions: this.jurisdictions
+          }
+        }]);
+
       } else {
 
         this.template = Handlebars.compile(noIndicatorsTpl);
@@ -109,9 +118,9 @@ define([
         this.$el.html(this.template({
           setup: options
         }));
-      }
 
-      this.parent.append(this.$el);
+        this.parent.append(this.$el);
+      }
     },
 
     parseData: function() {

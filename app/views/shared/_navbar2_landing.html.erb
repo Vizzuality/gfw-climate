@@ -22,7 +22,7 @@
       <a <% if controller?("countries") && action?("pantropical") %>class="current"<% end %> href="/pantropical">Pantropical Overview</a>
     </li>
     <li class="<%= disabled_class %>" data-source="<%= disabled_data_source %>">
-      <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="#">About</a>
+      <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="#">Learn more</a>
       <ul class="submenu">
         <li>
           <!-- <a <% if controller?("posts") && action?("index") %>class="current"<% end %> href="<%= posts_path %>">Blog</a> -->
@@ -35,7 +35,6 @@
           <a href="http://www.globalforestwatch.org/getinvolved/provide-feedback">Submit Feedback</a>
         </li>
         <li class="<%= disabled_class %>" data-source="<%= disabled_data_source %>"><a href="http://data.globalforestwatch.org/">Open Data Portal</a></li>
-        <li class="<%= disabled_class %>" data-source="<%= disabled_data_source %>"><a href="#">Definitions page</a></li>
         <li class="<%= disabled_class %>" data-source="<%= disabled_data_source %>"><a href="#">FAQs page</a></li>
         <li class="<%= disabled_class %>" data-source="<%= disabled_data_source %>"><a href="#">Technical Notes and Publications</a></li>
       </ul>

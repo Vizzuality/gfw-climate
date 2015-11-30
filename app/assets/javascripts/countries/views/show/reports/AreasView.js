@@ -1,10 +1,11 @@
 define([
+  'mps',
   'backbone',
   'handlebars',
   'widgets/views/WidgetView',
   'text!countries/templates/country-areas-grid.handlebars',
   'text!countries/templates/no-indicators.handlebars'
-], function(Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
+], function(mps, Backbone, Handlebars, WidgetView, tpl, noIndicatorsTpl) {
 
   var AreasView = Backbone.View.extend({
 
@@ -69,10 +70,9 @@ define([
       this.$el.html('');
 
       this.$el.removeClass();
-      this.$el.addClass('gridgraphs -areas')
+      this.$el.addClass('gridgraphs -areas');
 
-
-      if (this.areas && this.areas.length > 0) {
+      if (this.areas && this.areas.length > 0 && this.widgets) {
 
         this.template = Handlebars.compile(tpl);
 
@@ -86,8 +86,8 @@ define([
 
         this.areas.forEach(function(a, i) {
           data.push({
-              areas: a,
-              widgets: widgetsGroup[a.id]
+            areas: a,
+            widgets: widgetsGroup[a.id]
           });
 
         }.bind(this));
@@ -99,6 +99,14 @@ define([
           }));
 
         }, this));
+
+        this.parent.append(this.$el);
+        mps.publish('Grid/ready', [{
+          options: {
+            view: 'areas',
+            areas: this.areas
+          }
+        }]);
 
 
       } else {
@@ -112,9 +120,9 @@ define([
         this.$el.html(this.template({
           setup: options
         }));
-      }
 
-      this.parent.append(this.$el);
+        this.parent.append(this.$el);
+      }
     },
 
 

@@ -23,7 +23,7 @@ RSpec.describe CountriesController, type: :controller do
       get :pantropical
       expect(response).to be_success
       expect(response).to have_http_status(200)
-      expect(response.body).to match 'Carbon Emissions for Tropical Deforestation'
+      expect(response.body).to match 'Carbon Emissions from Tropical Deforestation'
     end
 
   end
@@ -42,7 +42,7 @@ RSpec.describe CountriesController, type: :controller do
     it "GET cached certain country page", type: :feature do
       get :show, id: 'bra'
       expect(response).to be_success
-      expect($redis.exists('country/item_bra25')).to eq(true)
+      expect($redis.exists('country/item_bra')).to eq(true)
     end
   end
 

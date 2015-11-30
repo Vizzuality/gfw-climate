@@ -1,5 +1,13 @@
 <section>
   {{#each this.widgets}}
-    <div id="gridgraphs-compare-{{this}}" class="gridgraphs--container"></div>
+    <div id="gridgraphs-compare-{{this}}" class="gridgraphs--container">
+      <button class="lock-mode" data-id="{{this}}">
+        <svg class="icon-unlock"><use xlink:href="#icon-unlock"></use></svg>
+        <svg class="icon-lock"><use xlink:href="#icon-lock"></use></svg>
+        <div class="locker-tooltip is-hidden">
+          <span class="tooltip-legend">Lock</span>
+        </div>
+      </button>
+    </div>
   {{/each}}
 </section>

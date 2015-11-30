@@ -17,9 +17,9 @@ define([
 
     options: {
       forbidCombined: {
-        forest_clearing: {
+        carbon_loss: {
           except: [
-            ['loss', 'forestgain']
+            ['carbon_stocks', 'biomass_loss']
           ]
         },
         geographic_coverage: {}

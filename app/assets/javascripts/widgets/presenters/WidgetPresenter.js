@@ -29,12 +29,24 @@ define([
           this.status.set(status);
         }
       },
+      'Lock/toggle': function(id,lock) {
+        if (this.model.get('id') == id) {
+          var tabs = _.clone(this.status.get('tabs'));
+          tabs.lock = lock;
+          this.status.set('tabs', tabs);
+        }
+      },
+      'Threshold/change': function(thresh) {
+        this.thresh = thresh;
+      },
+
     }],
 
     changeTab: function(position) {
       // ******
       // CAREFUL: if you add anything new to the widgets.json
       //          remember to add it inside CompareGridPresenter (getTabsOptions function) and inside widgetPresenter (changeTab function)
+      //          You must add it to views/api/v1/widgets/show.json.rabl (If you don't, the API won't send the new parameter)
       // ******
       var tabs = _.clone(this.status.get('tabs'));
       var t = _.findWhere(this.model.get('tabs'), { position: position });
@@ -44,9 +56,10 @@ define([
         unit: (t.switch) ? t['switch'][0]['unit'] : null,
         start_date: (t.range) ? t['range'][0] : null,
         end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
-        thresh: (t.thresh) ? t['thresh'] : 0,
+        thresh: (t.thresh) ? this.thresh : 0,
         section: (t.sectionswitch) ? t['sectionswitch'][0]['unit'] : null,
         template: (t.template) ? t['template'] : null,
+        lock: (this.status.get('tabs').lock != null && this.status.get('tabs').lock != undefined) ? this.status.get('tabs').lock : true,
       }
       this.status.set('tabs',tabs);
     },
@@ -62,9 +75,8 @@ define([
 
 
     publish: function() {
-      // Duplicate events, be careful and check it later
       mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
-      if (!!this.model.get('slug_compare')) {
+      if (this.status.get('tabs').lock) {
         mps.publish('Compare/reflection', [this.model.get('id'),this.model.get('slug_compare'),this.status.toJSON()]);
       }
     },

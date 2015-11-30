@@ -23,7 +23,15 @@
       .tooltip1 {
         font-size: 12px;
         left: 0;
-        transform: translate(0, 10px);
+        bottom: auto;
+        top: -10px;
+        transform: translate(0px,-100%);
+
+        &:after {
+          bottom: 0;
+          top: auto;
+          transform: translate(50%, 50%) rotate(45deg);
+        }
       }
 
       &:first-child {
@@ -31,7 +39,6 @@
 
           &:after {
             left: 0;
-            transform: translate(50%, -50%) rotate(45deg);
           }
         }
       }
@@ -41,7 +48,6 @@
         .tooltip1 {
           &:after {
             left: 0;
-            transform: translate(50%, -50%) rotate(45deg);
           }
         }
       }
@@ -80,6 +86,15 @@
 
     &.is-number {
       min-height: 120px;
+    }
+
+    .fao-note {
+      font-size: 12px;
+      margin: 1em 0;
+
+      a, p {
+        display: inline-block;
+      }
     }
 
     .tab-graph--no-data {

@@ -34,9 +34,12 @@ define([
     },
 
     _toggleWarnings: function() {
-      var widgets = this.presenter.status.get('options')['widgets'];
+      var widgets = this.presenter.status.get('options')['widgets'],
+        jurisdictions = this.presenter.status.get('jurisdictions'),
+        areas = this.presenter.status.get('areas'),
+        iso = this.presenter.status.get('country')
 
-      if (_.keys(widgets).length > 0) {
+      if (widgets && _.keys(widgets[iso]).length > 0 || jurisdictions || areas) {
         this.$noIndicatorsWarning.addClass('is-hidden');
         this.$moreIndicatorsWarning.removeClass('is-hidden');
       } else {
@@ -50,7 +53,6 @@ define([
     },
 
     render: function() {
-
       var view = this.presenter.status.get('view');
       var options = {
         country: this.presenter.status.get('country'),
@@ -65,7 +67,6 @@ define([
           });
 
           new NationalView(options);
-
           break;
 
         case 'subnational':
@@ -76,7 +77,6 @@ define([
           });
 
           new SubNationalView(options);
-
           break;
 
         case 'areas-interest':

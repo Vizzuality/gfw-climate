@@ -14,6 +14,9 @@ define([
 
   'use strict';
 
+  /*
+   * REFACTOR MÁS ADELANTE
+   */
   var CountryModalView = SourceWindowView.extend({
 
     template: Handlebars.compile(indicatorTemplate),
@@ -47,16 +50,69 @@ define([
       });
 
       this.widgetCollection.fetch().done(function(){
-
         this._setupModal();
       }.bind(this));
     },
 
+    update: function() {
+      var $jurisdictionsList = $('#jurisdictions-list'),
+        $areasList = $('#areas-list'),
+        $indicatorsGroup = $('.indicators-group'),
+        indicators = this.presenter.status.get('options')['activedWidgets'];
+
+      this._cleanIndicators();
+      this.setData();
+
+      if (indicators) {
+        indicators.forEach(function(ind) {
+          $indicatorsGroup.find('li[data-id="' + ind + '"]').addClass('is-selected');
+        });
+      }
+
+      switch(this.presenter.status.get('view')) {
+
+        case 'subnational':
+
+          var jurisdictions = this.presenter.status.get('jurisdictions');
+
+          if (!jurisdictions) {
+            return;
+          }
+
+          jurisdictions.forEach(function(j) {
+            $jurisdictionsList.find('li[data-id="' + j.idNumber + '"]').addClass('is-selected');
+          });
+
+          break;
+
+        case 'areas':
+          var areas = this.presenter.status.get('areas');
+
+          if (!areas) {
+            return;
+          }
+
+          areas.forEach(function(a) {
+            $areasList.find('li[data-id="' + a.idNumber + '"]').addClass('is-selected');
+          });
+
+          break;
+      }
+    },
+
     _cleanIndicators: function() {
-      $('.indicators-group li').removeClass('is-selected');
+      $('.indicators-group').find('li').removeClass('is-selected');
+      $('#jurisdictions-list').find('li').removeClass('is-selected');
+      $('#areas-list').find('li').removeClass('is-selected');
     },
 
     setInitialParams: function() {
+      var $jurisdictionsList = $('#jurisdictions-list'),
+        $areasList = $('#areas-list'),
+        $indicatorsGroup = $('.indicators-group');
+
+      // Change this
+      var defaultIndicators = [1,2,3,4,5,6];
 
       if (!this.presenter.status.get('options') || !this.presenter.status.get('options')['widgets']) {
 
@@ -64,10 +120,8 @@ define([
           return;
         }
 
-        var defaultIndicators = [1,2,3,4,5];
-
         defaultIndicators.forEach(function(ind) {
-          $(".indicators-group li[data-id='" + ind + "']").addClass('is-selected');
+          $indicatorsGroup.find('li[data-id="' + ind + '"]').addClass('is-selected');
         });
 
         return;
@@ -80,7 +134,7 @@ define([
         var jurisdictions = opts.jurisdictions;
 
         jurisdictions.forEach(function(j) {
-          $("#jurisdictions-list li[data-id='" + j.idNumber + "']").addClass('is-selected');
+          $jurisdictionsList.find('li[data-id="' + j.idNumber + '"]').addClass('is-selected');
         });
       }
 
@@ -89,7 +143,7 @@ define([
         var areas = opts.areas;
 
         areas.forEach(function(a) {
-          $("#areas-list li[data-id='" + a.idNumber + "']").addClass('is-selected');
+          $areasList.find('li[data-id="' + a.idNumber + '"]').addClass('is-selected');
         });
       }
 
@@ -99,8 +153,8 @@ define([
           indicators = opts.widgets[key[0]];
 
         _.map(indicators, function(i) {
-          $(".indicators-group li[data-id='" + i[0].id + "']").addClass('is-selected');
-        })
+          $indicatorsGroup.find('li[data-id="' + i[0].id + '"]').addClass('is-selected');
+        });
       }
     },
 
@@ -158,6 +212,11 @@ define([
 
       this.presenter.setJurisdictions(jurisdictions);
       this.presenter.setAreas(null);
+    },
+
+    setData: function() {
+      this._addAreas();
+      this._addJurisdictions();
     },
 
     _addAreas: function() {
@@ -270,7 +329,6 @@ define([
       if (view === 'national') {
         this.$el.find('.page2').removeClass('is-hidden');
       }
-
     },
 
     render: function() {

@@ -146,6 +146,7 @@ define([
       };
 
       p.view = p.view;
+
       p.options = p.options ? JSON.parse(atob(p.options)) : null;
 
       return p;
@@ -159,11 +160,11 @@ define([
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
-
       if (params && this.params.options) {
         this.params.options.areas = params.options.areas;
         this.params.options.jurisdictions = params.options.jurisdictions;
         this.params.options.widgets = params.options.widgets ? params.options.widgets : null;
+        this.params.options.activeWidgets = params.options.activeWidgets ? params.options.activeWidgets : null;
       }
 
       var p = _.extendNonNull({}, this.params, params);

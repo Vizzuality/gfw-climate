@@ -2,10 +2,9 @@ object false
 
 node :jurisdiction do
   {
-    iso:          @country['iso'],
-    thresh:       @country['params']['thresh'],
-    country_name: @country['name'],
-    name:         @jurisdiction['name_1'],
+    iso:          @jurisdiction['iso'],
+    country_name: @jurisdiction['country_name'],
+    name:         @jurisdiction['jurisdiction_name'],
     id:           @jurisdiction['id_1'],
     cartodb_id:   @jurisdiction['cartodb_id'],
     bounds:       {
