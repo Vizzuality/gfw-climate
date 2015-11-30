@@ -6,6 +6,10 @@ class EmbedController < ApplicationController
   def index
   end
 
+  def pantropical
+    response.headers.delete "X-Frame-Options"
+  end
+
   def countries_show_info
     @employees = @country['employment']
   end
