@@ -60,11 +60,12 @@ define([
 
     parseData: function() {
       var data = this.model.get('data')[0];
-      var parseValues = d3.format(".3s");
-      var valueString = parseValues(data.value);
+      var shortened = d3.format(",.0f")(data.value);
+      var scientific = d3.format(".3s")(data.value);
       return {
         country_name: data.country_name,
-        valueString: valueString
+        valueString: data.value > 1000 ? scientific : shortened,
+        millionsValueString: shortened
       };
     }
 

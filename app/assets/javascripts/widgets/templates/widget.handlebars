@@ -4,19 +4,11 @@
     <h2 class="name">{{this.name}}</h2>
     <ul class="options">
       <li>
-        <a class="btn-action -text close" href="#">Delete
+        <a class="btn-action close" href="#">
           <svg>
             <use xlink:href="#shape-close"></use>
           </svg>
-
-        </a>
-      </li>
-      <li>
-        <a class="btn-action info" href="#">
-          <svg>
-            <use xlink:href="#shape-info"></use>
-          </svg>
-          <span class="tooltip1 dark">More info</span>
+          <span class="tooltip1 dark">Remove</span>
         </a>
       </li>
       <li>
@@ -33,6 +25,13 @@
             <use xlink:href="#shape-download-arrow"></use>
           </svg>
           <span class="tooltip1 dark last">Download</span>
+        </a>
+      </li>
+      <li>
+        <a class="btn-action source" href="#" data-source="source-widget-{{this.id}}">Read more
+          <svg>
+            <use xlink:href="#shape-info"></use>
+          </svg>
         </a>
       </li>
     </ul>

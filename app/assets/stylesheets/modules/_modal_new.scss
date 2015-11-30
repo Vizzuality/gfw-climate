@@ -1,0 +1,501 @@
+$width: 500px;
+$height: auto;
+
+// Layout
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+  height: 100%;
+  display: none;
+  &.is-active {
+    display: block;
+
+    .modal-backdrop {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-window {
+      opacity: 1;
+      visibility: visible;
+      @media (min-width: $br-mobile){
+        transform: translate(-50%,-50%);
+      }
+    }
+  }
+
+  &.is-huge {
+    .modal-window {
+      width: 820px;
+      height: 80%;
+      .modal-wrapper {
+        padding: 0;
+        max-height: none;
+      }
+    }
+  }
+
+
+  .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s $easeInOutSine;
+  }
+
+  .modal-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0s $easeInOutSine;
+
+    @media (min-width: $br-mobile){
+      left: 50%; top: 50%;
+      width: $width;
+      height: $height;
+      min-height: 100px;
+      transform: translate(-50%,-60%);
+    }
+
+    .modal-close {
+      display: block;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 40px;
+      height: 40px;
+      z-index: 20;
+
+      svg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 50%;
+        transform: translate(-50%,-50%);
+      }
+    }
+  }
+}
+
+
+// Styles
+.modal-backdrop {
+  background: rgba(0,0,0,0.25);
+}
+
+.modal-window {
+  background: $white;
+  border: none;
+  box-shadow: $shadow1;
+
+  // GRADIENTS
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: calc(100% - 8px);
+    left: 0;
+  }
+
+  &:before {
+    top: 0;
+    @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
+  }
+
+  &:after {
+    bottom: 0;
+    @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+  }
+
+  // MODAL CLOSE BTN
+  .modal-close {
+    svg{
+      fill: $font-color-1;
+    }
+
+    &:hover {
+      svg {
+        fill: darken($font-color-1,10%);
+      }
+    }
+  }
+
+  // MODAL WRAPPER
+  .modal-wrapper{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    @media (min-width: $br-mobile){
+      max-height: 450px;
+    }
+    .modal-content {
+      height: auto;
+      width: 100%;
+      outline: none;
+
+      font-size: 15px;
+      color: $font-color-1;
+
+      li { list-style: none;}
+
+      p a:not(.btn){
+        color: $blue;
+        &:hover{
+          color: darken($blue,5%);
+        }
+      }
+    }
+  }
+}
+
+// MODAL HEADER
+.modal-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: $white;
+  z-index: 2;
+  @include clearfix();
+  // GRADIENTS
+  .gradient {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
+  }
+
+  ul{
+    margin: 15px 0;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0);
+    float: left;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid $font-color-3;
+    border-radius: 45px;
+
+    li{
+      font-size: 19px;
+      padding: 10px 20px 7px;
+      color: $dark;
+      cursor: pointer;
+      font-weight: 500;
+      border-radius: 40px;
+      &:hover {
+        background: darken($white,1%);
+      }
+      &.is-active {
+        color: $white;
+        background: $font-color-3;
+      }
+    }
+  }
+}
+
+// MODAL FOOTER
+.modal-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: $white;
+  z-index: 2;
+  padding: 15px 0;
+  @include clearfix();
+  // GRADIENTS
+  .gradient {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: 100%;
+    left: 0;
+    bottom: 100%;
+    border-bottom: 1px solid $border;
+    @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+  }
+
+}
+
+
+
+
+// It would be nice if we can refactor this code... I don't want to be mad, but it's shit.
+// The names are no-sense
+.modal-content {
+  // TABLE
+  .sources_row {
+    display: table;
+    width: 100%;
+
+    &.even {
+      background: #F2F2F3;
+    }
+
+    dt {
+      display: table-cell;
+      width: 120px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      font-weight: 500;
+      font-size: 11px;
+
+      text-transform: uppercase;
+    }
+
+    dd {
+      display: table-cell;
+      padding: 10px 10px 10px 15px;
+      border-left: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      font-size: 13px;
+
+      p {
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+      }
+    }
+    sup {
+      position: relative;
+      top: -3px;
+      font-size: 80%;
+    }
+    sub {
+      position: relative;
+      top: 2px;
+      font-size: 80%;
+    }
+    em {
+      font-style: italic;
+      font-size: 90%;
+    }
+  }
+
+  .source_table {
+    font-size: 12px;
+    th,td {
+      padding: 5px;
+      border: 1px solid $border;
+      strong {
+        font-weight: 500;
+      }
+    }
+
+    th {
+      font-weight: 500;
+    }
+
+    td {
+
+    }
+  }
+
+  // CONTENT
+  .single-source-item {
+    font-size: 15px;
+    line-height: 1.4;
+    color: #666;
+
+    h3 {
+      font-weight: 500;
+      color: $font-color-1;
+    }
+
+    p {
+      font-size: 13px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+
+      strong{
+        font-weight: 500;
+        color: #333;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.credits {
+        margin-bottom: 10px;
+        font-size: 12px;
+        color: #aaa;
+
+        strong {
+          display: block;
+          font-weight: 500;
+        }
+
+        a {
+          color: #aaa;
+          text-decoration: underline;
+
+          &:hover {
+            color: #aaa;
+          }
+        }
+      }
+    }
+  }
+
+  .source_body,
+  .source_coverage {
+    @extend .single-source-item;
+
+    .bullets  {
+      list-style-type: disc;
+      color: $font-color-1;
+      margin: 0 0 0 10px;
+      > li{
+        list-style-type: disc;
+        padding: 10px 0 0;
+        font-size: 13px;
+        margin-left: 20px;
+        line-height: 1.5;
+        &:first-child{
+          padding: 0;
+        }
+      }
+    }
+    strong {
+      font-weight: bold;
+    }
+
+    .read_more {
+      padding: 10px 0;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+      &.read_more {
+        display: block;
+      }
+    }
+    .em {
+      font-style: italic;
+      font-size: 90%;
+    }
+    .source_summary{
+      margin: 0 0 15px;
+    }
+  }
+
+
+  .source_category_description,
+  .overview_title,
+  .source_download,
+  .source_extended,
+  .source_coverage_header,
+  .source_coverage,
+  .download {
+    display: none;
+  }
+
+  .source_description {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    line-height: 1.2;
+
+    color: #999;
+  }
+
+  .source_title,
+  .source_category_title,
+  .source_coverage_title {
+    display: block;
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: $font-color-1;
+
+    span {
+      text-transform: none;
+    }
+
+    sub {
+      position: relative;
+      bottom: -3px;
+      font-size: 80%;
+    }
+  }
+
+  .source_header,
+  .source_category_title,
+  .source_coverage_header {
+    padding: 0 0 5px;
+  }
+
+  .source_category_title {
+    border-bottom: 2px solid #ccc;
+    margin: 0 0 20px;
+  }
+
+  .forest_change .source_category_title {
+    color: #F69;
+    border-bottom-color: #F69;
+  }
+
+  .forest_cover .source_category_title {
+    color: #B2D26E;
+    border-bottom-color: #B2D26E;
+  }
+
+  .forest_use .source_category_title {
+    color: #C98E6C;
+    border-bottom-color: #C98E6C;
+  }
+
+  .conservation .source_category_title {
+    color: #3182BD;
+    border-bottom-color: #3182BD;
+  }
+
+  .people .source_category_title {
+    color: #707D92;
+    border-bottom-color: #707D92;
+  }
+
+  .stories .source_category_title {
+    color: #F2B257;
+    border-bottom-color: #F2B257;
+  }
+
+  .source_category_title {
+    color: $blue;
+    border-bottom-color: $blue;
+  }
+
+  .hidden {
+    display: block;
+  }
+}

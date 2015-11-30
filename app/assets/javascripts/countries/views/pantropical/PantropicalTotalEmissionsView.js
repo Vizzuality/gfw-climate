@@ -129,7 +129,7 @@ define([
       });
 
       x.domain(d3.extent(data, function(d) { return d.date; })).nice();
-      y.domain(d3.extent(data, function(d) { return d.value ; })).nice();
+      y.domain([0, d3.max(data, function(d) { return d.value ; })]).nice();
 
       function customYAxis(g) {
         g.selectAll('text')

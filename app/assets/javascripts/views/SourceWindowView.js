@@ -15,7 +15,6 @@ define([
     el: 'body',
 
     events: {
-      'click .source' : 'show',
       'click .close-modal': 'hide'
     },
 

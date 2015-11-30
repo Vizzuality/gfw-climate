@@ -226,7 +226,7 @@ function addCommas(nStr) {
         return d.id;
       });
       that = this;
-      this.circles.enter().append("circle").attr("r", 0).attr("fill", (function(_this) {
+      this.circles.enter().append("circle").attr("class", "bubble").attr("r", 0).attr("fill", (function(_this) {
         return function(d) {
           return _this.fill_color(d.group);
         };
@@ -236,6 +236,8 @@ function addCommas(nStr) {
         };
       })(this)).attr("id", function(d) {
         return "bubble_" + d.id;
+      }).attr("data-iso", function(d) {
+        return d.iso;
       }).on("mouseenter", function(d, i) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;

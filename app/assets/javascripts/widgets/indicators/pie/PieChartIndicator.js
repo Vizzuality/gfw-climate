@@ -88,11 +88,15 @@ define([
     },
 
     parseData: function() {
-      var parseValues = d3.format(".3s");
+      var totalVal = _.findWhere(this.model.get('data'), {type:'total'}).data[0].value;
+      var shortened = d3.format(",.0f")(totalVal);
+      var scientific = d3.format(".3s")(totalVal);
       return {
         sectionswitch: this.model.get('sectionswitch'),
         country_name: this.model.get('data')[0].country_name,
-        total: parseValues(_.findWhere(this.model.get('data'), {type:'total'}).data[0].value)
+        total: totalVal > 1000 ? scientific : shortened,
+        millionsTotal: shortened
+
       }
     },
 
