@@ -3,6 +3,7 @@ modules:
   - name: 'map'
   - name: 'countries'
   - name: 'compare'
+  - name: 'embed'
 
 waitSeconds: 200
 
