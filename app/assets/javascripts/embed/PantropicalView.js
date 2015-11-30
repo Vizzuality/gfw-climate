@@ -36,11 +36,16 @@ define([
       this.$years             = $('#year-picker');
       this.$yearsPickerLabel  = $('#year-picker-label');
       this.$play_pause        = $('#play-pause');
+      this.$progressbar       = $('.progress-year');
+      this.progression        = 0;
+      this.ticks              = ~~this.$years.attr("max") - ~~this.$years.attr("min");
+
     },
 
     switch_view: function(e) {
       $('#vis').find('.vis-tab').hide();
       $('#view_selection').find('.btn').removeClass('active');
+      $('.country-legend-container').addClass('is-hidden');
       $(e.target).addClass('active');
       $('#vis').find('.' + $(e.target).attr('id')).show();
 
@@ -49,6 +54,7 @@ define([
 
       if(viewId === 'change') {
         $('#vis').addClass(viewId);
+        $('.country-legend-container').removeClass('is-hidden');
         $('#vis').find('#svg_vis:last-child').css({
           'height': 475
         });
@@ -164,17 +170,35 @@ define([
         // the animation hasn't started yet or well it hasn't been called by the user but by this same function
         target.addClass('is-playing');
         var that = this;
+
+
         window.setTimeout(function() {
+          that.progression += 100 / that.ticks;
+
+
           var year = ~~that.$yearsPickerLabel.val() + 1;
           if (year <= that.$years.attr("max")) {
             that._change_year(null, year); // update label
             that.$years.val(year);         // update range position
+            that.$progressbar.css({
+              'left': that.progression + '%'
+            });
             that._play_pause();            // paint next year
+            if (year == that.$years.attr("max")) {
+              that.progression = 0;
+              target.addClass('stop');
+            }
           }
+
         },1500)
       } else {
         // the user wants to stop the animation or the animation is finishing
-        if (this.$yearsPickerLabel.val() <= this.$years.attr('max'))
+        if (~~this.$yearsPickerLabel.val() <= ~~this.$years.attr('max'))
+          this._change_year(null, this.$years.attr("min")); // update label
+          this.$years.val(this.$years.attr("min"));         // update range position
+          this.$progressbar.css({
+            'left': 0
+          });
           target.removeClass('is-playing').addClass('stop');
       }
     },

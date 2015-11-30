@@ -69,32 +69,41 @@
             |Shifting Responsibilities
           p
             |Between 2001 and 2014, increasing carbon emissions from gross tropical deforestation in many tropical countries have largely offset declines in Brazil.
-          p.small-figures
-            |Brazil
-          h4
-            span#Brazil_data.country-big-1 60%
-          p.small-figures
-            |Other non-NYDF  Signatories
-          h4
-            span#Non_New_York_Declaration_on_Forests_Signatories_data.country-big-2 21%
           / h4
           /   |Color shows continent
           ul
             li.latam Latin America
             li.africa Africa
             li.asia South and Southeast Asia
-        .vis-tab.change.right-side  
-          p.small-figures
-            |Indonesia
-          h4
-            span#Indonesia_data.country-big-1 40%
-          p.small-figures
-            |Other non-NYDF Signatories
-          h4
-            span#New_York_Declaration_on_Forests_Signatories_data.country-big-2 12%
+        .vis-tab.change.country-legend-container.is-hidden
+
+          .left
+            div.country-legend.brazil
+              p.small-figures
+                |Brazil
+              h4
+                span#Brazil_data.country-big-1 60%
+            div.country-legend.nonNYDF
+              p.small-figures
+                |Other non-NYDF  Signatories
+              h4
+                span#Non_New_York_Declaration_on_Forests_Signatories_data.country-big-2 21%
+
+          .right
+            div.country-legend.indonesia
+              p.small-figures
+                |Indonesia
+              h4
+                span#Indonesia_data.country-big-1 40%
+            div.country-legend.nonNYDF-signatories
+              p.small-figures
+                |Other non-NYDF Signatories
+              h4
+                span#New_York_Declaration_on_Forests_Signatories_data.country-big-2 12%
 
           div.year-range
             span Year:
+            div.progress-year
             input#year-picker name="year-picker" type="range" min="2001" max="2013" step="1" value="2001"
             output#year-picker-label for="year-picker" 2001
             #play-pause
