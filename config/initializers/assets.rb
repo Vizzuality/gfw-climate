@@ -18,12 +18,12 @@ Rails.application.config.assets.precompile += %w( map.css )
 Rails.application.config.assets.precompile += %w( countries.js )
 Rails.application.config.assets.precompile += %w( countries.css )
 
+Rails.application.config.assets.precompile += %w( compare.js )
+Rails.application.config.assets.precompile += %w( compare.css )
+
 # Embed pantropical
 Rails.application.config.assets.precompile += %w( embed.css )
 Rails.application.config.assets.precompile += %w( embed.js )
-
-Rails.application.config.assets.precompile += %w( compare.js )
-Rails.application.config.assets.precompile += %w( compare.css )
 
 unless Rails.env.production?
   Rails.application.config.assets.precompile += %w( teaspoon.css )
