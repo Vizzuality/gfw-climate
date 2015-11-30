@@ -18,14 +18,22 @@ define([
       'change #year-drop-right'     : '_set_year',
       'click .btn-submit'           : '_submityears',
       'click #play-pause'           : '_play_pause',
-      'click #share-options-btn'    : '_toggleShareMenu'
+      'click #share-options-btn'    : '_toggleShareMenu',
+      'click .share-options-list a' : '_shareToSocial'
     },
 
     initialize: function() {
       //I can't find who is giving display:block to country tab...
+      var currentTab = location.search.split('tab=')[1];
       $('#vis').find('.country').hide();
       this._cacheVars();
       this._setRankingAverage();
+
+      if (!!currentTab) {
+        window.setTimeout(function(){
+          $('#' + currentTab).trigger('click');
+        },50)
+      }
     },
 
     _setRankingAverage: function() {
@@ -36,10 +44,11 @@ define([
       this.$years             = $('#year-picker');
       this.$yearsPickerLabel  = $('#year-picker-label');
       this.$play_pause        = $('#play-pause');
+      this.$playBtn           = this.$play_pause.find('.play');
+      this.$pauseBtn          = this.$play_pause.find('.pause');
       this.$progressbar       = $('.progress-year');
       this.progression        = 0;
       this.ticks              = ~~this.$years.attr("max") - ~~this.$years.attr("min");
-
     },
 
     switch_view: function(e) {
@@ -52,6 +61,8 @@ define([
       var viewId = $(e.target).attr('id');
       toggle_view(viewId);
 
+      this._updateUrl(viewId);
+
       if(viewId === 'change') {
         $('#vis').addClass(viewId);
         $('.country-legend-container').removeClass('is-hidden');
@@ -61,6 +72,10 @@ define([
         this._renderChangeComponents();
       }
       return false;
+    },
+
+    _updateUrl: function(viewId) {
+      history.pushState('', document.title, window.location.origin + window.location.pathname + '?tab=' + viewId);
     },
 
     _submityears: function() {
@@ -171,10 +186,12 @@ define([
         target.addClass('is-playing');
         var that = this;
 
+        this.$playBtn.addClass('is-hidden');
+        this.$pauseBtn.removeClass('is-hidden');
+
 
         window.setTimeout(function() {
           that.progression += 100 / that.ticks;
-
 
           var year = ~~that.$yearsPickerLabel.val() + 1;
           if (year <= that.$years.attr("max")) {
@@ -186,7 +203,7 @@ define([
             that._play_pause();            // paint next year
             if (year == that.$years.attr("max")) {
               that.progression = 0;
-              target.addClass('stop');
+              // target.addClass('stop');
             }
           }
 
@@ -196,8 +213,11 @@ define([
         if (~~this.$yearsPickerLabel.val() <= ~~this.$years.attr('max'))
           this._change_year(null, this.$years.attr("min")); // update label
           this.$years.val(this.$years.attr("min"));         // update range position
+          this.progression = 0;
+          this.$playBtn.removeClass('is-hidden');
+          this.$pauseBtn.addClass('is-hidden');
           this.$progressbar.css({
-            'left': 0
+            'left': this.progression
           });
           target.removeClass('is-playing').addClass('stop');
       }
@@ -205,7 +225,23 @@ define([
 
     _toggleShareMenu: function(e) {
       $('.share-options-list').toggleClass('is-hidden');
-    }
+    },
+
+    _shareToSocial: function(e) {
+      e && e.preventDefault();
+      var width  = 575,
+          height = 400,
+          left   = ($(window).width()  - width)  / 2,
+          top    = ($(window).height() - height) / 2,
+          url    = $(e.currentTarget).attr('href'),
+          opts   = 'status=1' +
+                   ',width='  + width  +
+                   ',height=' + height +
+                   ',top='    + top    +
+                   ',left='   + left;
+
+      window.open(url, 'Share this map view', opts);
+    },
 
   });
 

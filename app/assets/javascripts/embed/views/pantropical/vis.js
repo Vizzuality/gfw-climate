@@ -399,15 +399,15 @@ function addCommas(nStr) {
                 }
               }
               if (that.VALID_NAMES.indexOf(d.name) != -1) {
-                document.getElementById(d.name+'_data').innerHTML = parseFloat(value*100).toFixed(3)+'%';
+                document.getElementById(d.name+'_data').innerHTML = parseFloat(value*100).toFixed(0)+'%';
               }
-              return that.radius_scale(value * 1.6);
+              return that.radius_scale(value * 1.1);
             })
             return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
-                return d.x;
+                return d.x  - 135;
               }).attr("cy",
                 function(d) {
-                  return d.y;
+                  return d.y - 95;
               })
           };
         })(this));
@@ -647,29 +647,29 @@ function addCommas(nStr) {
     // returns an array of the coordinates according to the sorted_array index (bubble_id, starts at 1)
     // sorted_index, index_of start at 0
     BubbleChart.prototype.get_coordinates = function(sorted_index){
-      var dist_x = 90;
+      var dist_x = 85;
       var dist_y = 55;
-      var offset_x = 150;
+      var offset_x = 75;
       var offset_y = 50;
       var col_count = 6;
 
       if (sorted_index < 4){
         // bubbles at index 0, 1, 2, 3 are in line 1
         col_count = 4;
-        dist_x = 95;
-        offset_x = 255;
+        dist_x = 85;
+        offset_x = 200;
       } else {
         // modify current index to push bubbles into line 2
         sorted_index += 2;
       }
 
       if (sorted_index === 0 ) {
-        offset_x = 200
+        offset_x = 125
       }
 
-      if (sorted_index === 3 ) {
-        offset_x = 260
-      }
+      // if (sorted_index === 3 ) {
+      //   offset_x = 260
+      // }
 
       var x_position = (((sorted_index) % col_count) * dist_x);
       var y_position = 0;

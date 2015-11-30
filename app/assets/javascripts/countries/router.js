@@ -16,7 +16,6 @@ define([
     routes: {
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
-      'embed/pantropical'                   : '_initEmbedPantropical',
       'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
 
@@ -42,12 +41,7 @@ define([
 
     _initPantropical: function() {
       new CountryPantropicalView();
-    },
-
-    _initEmbedPantropical: function() {
-      new EmbedPantropicalView();
     }
-
   });
 
   return Router;

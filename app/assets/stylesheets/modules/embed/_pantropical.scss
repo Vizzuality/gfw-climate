@@ -69,19 +69,93 @@
           margin: 45px 0 0;
         }
 
-        > .year-range {
-          bottom: -110px;
-          right: 30px
-        }
-
         &.bottom-chart {
           width: 640px;
           top: auto;
-          bottom: 0;
+          bottom: -100px;
         }
 
         &.right-side {
           margin: 0;
+          z-index: -1;
+        }
+      }
+
+      &.change {
+        .country-legend-container {
+          position: absolute;
+          top: 375px;
+          bottom: auto;
+          left: 0;
+          right: 0;
+          display: flex !important;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+          margin: 0;
+
+          > .left, .right {
+            display: flex;
+            >.country-legend {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              width: 50%;
+              text-align: center;
+
+              h4 {
+                font-weight: 500;
+              }
+            }
+          }
+
+          > .year-range {
+            width: 200px;
+            bottom: -75px;
+            right: 0;
+
+            > span {
+              left: -49px;
+              bottom: -3px;
+            }
+
+            // RANGE INPUT
+            input[type=range] {
+              -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+              width: 100%; /* Specific width is required for Firefox. */
+              margin: 0;
+            }
+
+            input[type=range]::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              color: blue;
+              background: blue;
+            }
+
+            input[type=range]:focus {
+              outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+            }
+
+            input[type=range]::-ms-track {
+              width: 100%;
+              cursor: pointer;
+              background: transparent; /* Hides the slider so custom styles can be added */
+              border-color: transparent;
+              color: transparent;
+            }
+
+            .progress-year {
+              z-index: 3;
+              position: absolute;
+              top: 28px;
+              width: 15px;
+              height: 15px;
+              background: $blue;
+              border-radius: 50%;
+              transform: translate(-8px, 0);
+            }
+          }
+
         }
       }
     }
