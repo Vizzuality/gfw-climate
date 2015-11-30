@@ -25,6 +25,7 @@ define([
     },
     setEmbedUrl: function(){
       if($('body').hasClass('is-countries-page')){
+
         this.embedUrl = window.location.origin + '/embed' + window.location.pathname + window.location.search;
       }else{
         this.embedUrl = window.location.href;
@@ -187,7 +188,7 @@ define([
     },
 
     _toggleTypeButtons: function() {
-      this.$changeType.toggleClass('green').toggleClass('gray');
+      this.$changeType.toggleClass('blue').toggleClass('gray');
       this._renderInput();
     },
 

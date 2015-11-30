@@ -1,11 +1,13 @@
 define([
   'backbone',
   'd3',
+  'chosen',
   'countries/views/pantropical/PantropicalTotalEmissionsView',
   'countries/views/pantropical/vis',
-  'chosen',
+  'views/ShareView',
 
-], function(Backbone, d3, PantropicalTotalEmissionsView, vis, chosen) {
+
+], function(Backbone, d3, chosen, PantropicalTotalEmissionsView, vis, ShareView) {
 
   'use strict';
 
@@ -22,15 +24,24 @@ define([
       'click .btn-submit'           : '_submityears',
       'click #play-pause'           : '_play_pause',
       'change #pantropical-search'  : '_search_country',
-      'click #pantropical-search-delete' : '_search_country'
+      'click #pantropical-search-delete' : '_search_country',
+      'click #pantropical-share'    : '_open_share'
     },
 
     initialize: function() {
       //I can't find who is giving display:block to country tab...
+      var currentTab = location.search.split('tab=')[1];
       $('#vis').find('.country').hide();
+
       this._cacheVars();
       this._setRankingAverage();
       this._setAutocomplete();
+
+      if (!!currentTab) {
+        window.setTimeout(function(){
+          $('#' + currentTab).trigger('click');
+        },50)
+      }
     },
 
     _setRankingAverage: function() {
@@ -52,6 +63,8 @@ define([
       $('#vis').find('.' + $(e.target).attr('id')).show();
 
       var viewId = $(e.target).attr('id');
+      // This should be removed as long as we have a router
+      this._updateUrl(viewId);
       toggle_view(viewId);
 
       if(viewId === 'change') {
@@ -59,6 +72,20 @@ define([
         this._renderChangeComponents();
       }
       return false;
+    },
+
+    _updateUrl: function(viewId) {
+      history.pushState('', document.title, window.location.origin + window.location.pathname + '?tab=' + viewId);
+    },
+
+    _getUrlParams: function() {
+      var regex = /[?&]([^=#]+)=([^&#]*)/g,
+          params = {},
+          match;
+      while(match = regex.exec(location.href)) {
+          params[match[1]] = match[2];
+      }
+      return params;
     },
 
     _submityears: function() {
@@ -218,6 +245,11 @@ define([
           $(b).attr("opacity",'1');
         })
       }
+    },
+
+    _open_share: function() {
+      var shareView = new ShareView().share(event);
+      $('body').append(shareView.el);
     }
 
   });
