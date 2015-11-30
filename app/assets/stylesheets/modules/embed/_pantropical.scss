@@ -1,0 +1,177 @@
+.is-embed-page {
+  .country-profiles {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .pantropical-vis {
+
+    .btn-group {
+      position: relative;
+      > .btn {
+        flex: 1;
+      }
+    }
+
+    .share-item {
+      position: relative;
+      padding: 0 20px;
+      height: 100%;
+      background: $blue;
+      cursor: pointer;
+      &:hover {
+        background: darken($blue, 10%);
+      }
+
+      > svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        fill: $white;
+      }
+    }
+    .share-options-list {
+      z-index: 3;
+      position: absolute;
+      top: 40px;
+      right: 0;
+
+      .share-item {
+        display: block;
+        height: 40px;
+      }
+    }
+
+    #vis {
+      position: relative;
+
+      > .vis-tab  {
+        width: 165px;
+        margin: 35px 0 0 15px;
+
+        > h4 {
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        > .small-figures {
+          margin: 21px 0 0;
+        }
+
+        > p,
+        > ul > li  {
+          font-size: 12px;
+        }
+
+        > ul {
+          margin: 45px 0 0;
+        }
+
+        &.bottom-chart {
+          width: 640px;
+          top: auto;
+          bottom: -100px;
+        }
+
+        &.right-side {
+          margin: 0;
+          z-index: -1;
+        }
+
+        &.country {
+          margin: 75px 0 0 15px;
+        }
+      }
+
+      &.change {
+        .country-legend-container {
+          position: absolute;
+          top: 375px;
+          bottom: auto;
+          left: 0;
+          right: 0;
+          display: flex !important;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+          margin: 0;
+
+          > .left, .right {
+            display: flex;
+            >.country-legend {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              width: 50%;
+              text-align: center;
+
+              h4 {
+                font-weight: 500;
+              }
+            }
+          }
+
+          > .year-range {
+            width: 200px;
+            bottom: -75px;
+            right: 0;
+
+            > span {
+              left: -49px;
+              bottom: -3px;
+            }
+
+            // RANGE INPUT
+            input[type=range] {
+              -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+              width: 100%; /* Specific width is required for Firefox. */
+              margin: 0;
+            }
+
+            input[type=range]::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              color: blue;
+              background: blue;
+            }
+
+            input[type=range]:focus {
+              outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+            }
+
+            input[type=range]::-ms-track {
+              width: 100%;
+              cursor: pointer;
+              background: transparent; /* Hides the slider so custom styles can be added */
+              border-color: transparent;
+              color: transparent;
+            }
+
+            input[type=range]::-webkit-slider-runnable-track {
+              width: 100%;
+              height: 9px;
+              cursor: pointer;
+              // box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+              background: $border;
+              border-radius: 5px;
+              // border: 0.2px solid #010101;
+            }
+
+            .progress-year {
+              z-index: 3;
+              position: absolute;
+              top: 28px;
+              width: 15px;
+              height: 15px;
+              background: $blue;
+              border-radius: 50%;
+              transform: translate(-8px, 0);
+            }
+          }
+
+        }
+      }
+    }
+  }
+}

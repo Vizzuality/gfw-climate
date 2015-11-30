@@ -1,11 +1,9 @@
 define([
   'backbone',
-  'd3',
   'chosen',
-  'countries/views/pantropical/PantropicalTotalEmissionsView',
-  'countries/views/pantropical/vis',
-  'views/ShareView',
-], function(Backbone, d3, chosen, PantropicalTotalEmissionsView, vis, ShareView) {
+  'embed/views/pantropical/PantropicalTotalEmissionsView',
+  'embed/views/pantropical/vis',
+], function(Backbone, chosen, PantropicalTotalEmissionsView) {
 
   'use strict';
 
@@ -21,18 +19,19 @@ define([
       'change #year-drop-right'     : '_set_year',
       'click .btn-submit'           : '_submityears',
       'click #play-pause'           : '_play_pause',
+      'click #share-options-btn'    : '_toggleShareMenu',
       'change #pantropical-search'  : '_search_country',
       'click #pantropical-search-delete' : '_search_country',
-      'click #pantropical-share'    : '_open_share'
+      'click .share-options-list a' : '_shareToSocial'
     },
 
     initialize: function() {
       //I can't find who is giving display:block to country tab...
       var currentTab = location.search.split('tab=')[1];
       $('#vis').find('.country').hide();
-
       this._cacheVars();
       this._setRankingAverage();
+
       this._setAutocomplete();
 
       if (!!currentTab) {
@@ -50,6 +49,11 @@ define([
       this.$years             = $('#year-picker');
       this.$yearsPickerLabel  = $('#year-picker-label');
       this.$play_pause        = $('#play-pause');
+      this.$playBtn           = this.$play_pause.find('.play');
+      this.$pauseBtn          = this.$play_pause.find('.pause');
+      this.$progressbar       = $('.progress-year');
+      this.progression        = 0;
+      this.ticks              = ~~this.$years.attr("max") - ~~this.$years.attr("min");
       this.$search            = $('#pantropical-search');
       this.$deleteSelection   = $('#pantropical-search-delete');
     },
@@ -57,16 +61,21 @@ define([
     switch_view: function(e) {
       $('#vis').find('.vis-tab').hide();
       $('#view_selection').find('.btn').removeClass('active');
+      $('.country-legend-container').addClass('is-hidden');
       $(e.target).addClass('active');
       $('#vis').find('.' + $(e.target).attr('id')).show();
 
       var viewId = $(e.target).attr('id');
-      // This should be removed as long as we have a router
-      this._updateUrl(viewId);
       toggle_view(viewId);
+
+      this._updateUrl(viewId);
 
       if(viewId === 'change') {
         $('#vis').addClass(viewId);
+        $('.country-legend-container').removeClass('is-hidden');
+        $('#vis').find('#svg_vis:last-child').css({
+          'height': 475
+        });
         this._renderChangeComponents();
       }
       return false;
@@ -74,16 +83,6 @@ define([
 
     _updateUrl: function(viewId) {
       history.pushState('', document.title, window.location.origin + window.location.pathname + '?tab=' + viewId);
-    },
-
-    _getUrlParams: function() {
-      var regex = /[?&]([^=#]+)=([^&#]*)/g,
-          params = {},
-          match;
-      while(match = regex.exec(location.href)) {
-          params[match[1]] = match[2];
-      }
-      return params;
     },
 
     _submityears: function() {
@@ -193,35 +192,62 @@ define([
         // the animation hasn't started yet or well it hasn't been called by the user but by this same function
         target.addClass('is-playing');
         var that = this;
+
+        this.$playBtn.addClass('is-hidden');
+        this.$pauseBtn.removeClass('is-hidden');
+
+
         window.setTimeout(function() {
+          that.progression += 100 / that.ticks;
+
           var year = ~~that.$yearsPickerLabel.val() + 1;
           if (year <= that.$years.attr("max")) {
             that._change_year(null, year); // update label
             that.$years.val(year);         // update range position
+            that.$progressbar.css({
+              'left': that.progression + '%'
+            });
             that._play_pause();            // paint next year
+            if (year == that.$years.attr("max")) {
+              that.progression = 0;
+              // target.addClass('stop');
+            }
           }
+
         },1500)
       } else {
         // the user wants to stop the animation or the animation is finishing
-        if (this.$yearsPickerLabel.val() <= this.$years.attr('max'))
+        if (~~this.$yearsPickerLabel.val() <= ~~this.$years.attr('max'))
+          this._change_year(null, this.$years.attr("min")); // update label
+          this.$years.val(this.$years.attr("min"));         // update range position
+          this.progression = 0;
+          this.$playBtn.removeClass('is-hidden');
+          this.$pauseBtn.addClass('is-hidden');
+          this.$progressbar.css({
+            'left': this.progression
+          });
           target.removeClass('is-playing').addClass('stop');
       }
     },
 
-    _setAutocomplete: function() {
-      this.$search.chosen({
-        width: '100%',
-      });
-      d3.csv("/pantropicalTESTING_isos.csv", _.bind(function(data) {
-        this.$search.html('<option value="">Select country</option>');
-        var options = _.compact(_.map(_.sortBy(data, 'Country'), function(d){
-          if (parseFloat(d.Average).toFixed(3) > 0.003) {
-            return '<option value="'+d.FIPS_CNTRY+'">'+d.Country+'</option>';
-          }
-          return null;
-        }));
-        this.$search.append(options.join('')).trigger('chosen:updated');
-      }, this ));
+    _toggleShareMenu: function(e) {
+      $('.share-options-list').toggleClass('is-hidden');
+    },
+
+    _shareToSocial: function(e) {
+      e && e.preventDefault();
+      var width  = 575,
+          height = 400,
+          left   = ($(window).width()  - width)  / 2,
+          top    = ($(window).height() - height) / 2,
+          url    = $(e.currentTarget).attr('href'),
+          opts   = 'status=1' +
+                   ',width='  + width  +
+                   ',height=' + height +
+                   ',top='    + top    +
+                   ',left='   + left;
+
+      window.open(url, 'Share this map view', opts);
     },
 
     _search_country: function(e) {
@@ -245,10 +271,22 @@ define([
       }
     },
 
-    _open_share: function(event) {
-      var shareView = new ShareView().share(event);
-      $('body').append(shareView.el);
-    }
+    _setAutocomplete: function() {
+      this.$search.chosen({
+        width: '100%',
+      });
+      d3.csv("/pantropicalTESTING_isos.csv", _.bind(function(data) {
+        this.$search.html('<option value="">Select country</option>');
+        var options = _.compact(_.map(_.sortBy(data, 'Country'), function(d){
+          if (parseFloat(d.Average).toFixed(3) > 0.003) {
+            return '<option value="'+d.FIPS_CNTRY+'">'+d.Country+'</option>';
+          }
+          return null;
+        }));
+        this.$search.append(options.join('')).trigger('chosen:updated');
+      }, this ));
+    },
+
 
   });
 

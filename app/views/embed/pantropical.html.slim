@@ -1,0 +1,143 @@
+.layout-content
+  section#countryListView.section.country-profiles
+    / .inner
+    /   h2.title-section Carbon Emissions from Tropical Deforestation
+    / .inner.pantropical-title
+    /   h3
+    /     |Explore how country contributions have changed over the 21st century.
+    / .inner
+    .pantropical-vis
+      #view_selection.btn-group
+        a#all.btn.active href="#" All countries
+        a#nydfs.btn href="#" NYDFS 
+        a#change.btn href="#" Change 2001-2013
+        a#country.btn href="#" Country Rankings
+        
+        a#share-options-btn.share-item.share
+          svg
+            use xlink:href="#shape-share"
+        ul.share-options-list.is-hidden
+          li
+            a.share-item.facebook(href="https://www.facebook.com/sharer.php?u=http://gfwc-staging.herokuapp.com/pantropical")
+              svg
+                use xlink:href="#icon-facebook"
+          li
+            a.share-item.twitter(href="https://twitter.com/share?url=http://gfwc-staging.herokuapp.com/pantropical")
+              svg
+                use xlink:href="#icon-twitter"
+          li
+            a.share-item.googleplus(href="https://plus.google.com/share?url=http://gfwc-staging.herokuapp.com/pantropical")
+              svg
+                use xlink:href="#icon-googleplus"
+
+      .pantropical-options
+        .pantropical-search-box
+          .m-select-autocomplete          
+            select#pantropical-search[placeholder="Search country"]
+            .btn-delete#pantropical-search-delete
+              svg
+                use [xlink:href="#shape-close"]
+
+      #vis
+        .vis-tab.all
+          h4
+            |Where 2,269Gt CO<sub>2</sub> yr<sup>-1</sup> were emitted
+          p
+            |(2015) estimates that average carbon emissions from tropical deforestation between 2001 and 2013 were 2,269Mt CO<sub>2</sub> yr<sup>-1</sup>.
+          p
+            |Circles are sized according to the proportion of total carbon emissions emitted from each country between 2001 and 2013.
+          p.quote * Zarin et al. in press
+          / h4
+          /   |Color shows continent
+          ul
+            li.latam Latin America
+            li.africa Africa
+            li.asia South and Southeast Asia
+        .vis-tab.nydfs
+          h4
+            |Non New York Declaration on Forests Signatories
+          h5
+            |1,750 Mt CO<sub>2</sub> yr<sup>-1</sup>
+          p
+            |About 77 percent of average carbon emissions from tropical deforestation between 2001-2013 were from tropical countries that did not sign the New York Declaration on Forests in September 2014. The largest emitter was Brazil.
+          h4
+            |Color shows continent
+          h4
+            |New York Declaration on Forests Signatories
+          h5
+            |520 Mt <sub>2</sub> yr<sup>-1</sup>
+          p
+            |About 23 percent of average carbon emissions from tropical deforestation between 2001-2013 were from tropical forested countries that signed the New York Declaration on Forests, including Indonesia.
+          ul
+            li.latam Latin America
+            li.africa Africa
+            li.asia South and Southeast Asia
+        .vis-tab.change
+          h4
+            |Shifting Responsibilities
+          p
+            |Between 2001 and 2014, increasing carbon emissions from gross tropical deforestation in many tropical countries have largely offset declines in Brazil.
+          / h4
+          /   |Color shows continent
+          ul
+            li.latam Latin America
+            li.africa Africa
+            li.asia South and Southeast Asia
+        .vis-tab.change.country-legend-container.is-hidden
+
+          .left
+            div.country-legend.brazil
+              p.small-figures
+                |Brazil
+              h4
+                span#Brazil_data.country-big-1 60%
+            div.country-legend.nonNYDF
+              p.small-figures
+                |Other non-NYDF  Signatories
+              h4
+                span#Non_New_York_Declaration_on_Forests_Signatories_data.country-big-2 21%
+
+          .right
+            div.country-legend.indonesia
+              p.small-figures
+                |Indonesia
+              h4
+                span#Indonesia_data.country-big-1 40%
+            div.country-legend.nonNYDF-signatories
+              p.small-figures
+                |Other non-NYDF Signatories
+              h4
+                span#New_York_Declaration_on_Forests_Signatories_data.country-big-2 12%
+
+          div.year-range
+            span Year:
+            div.progress-year
+            input#year-picker name="year-picker" type="range" min="2001" max="2013" step="1" value="2001"
+            output#year-picker-label for="year-picker" 2001
+            #play-pause
+             .play ► 
+             .pause.is-hidden ❙❙ 
+
+        / .vis-tab.change.bottom-chart
+        /   h4
+        /     |Total emissions
+        /   #totalEmissionsChart.graph
+
+        .vis-tab.country
+          div.select-years
+            |Average:
+            .select-wrapper
+              select.year-dropdown#year-drop-left
+                - for i in (2001..2013)
+                  option value="#{i}"
+                    |#{i}
+            |to
+            .select-wrapper
+              select.year-dropdown#year-drop-right
+                - for i in (2001..2013)
+                  option value="#{i}"
+                    |#{i}
+
+            button.btn-submit.btn.small.blue.rounded Apply
+
+
