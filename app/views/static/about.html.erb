@@ -19,14 +19,13 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'About GFW Climate', "#{about_path}", :"data-slug" => 'about-gfw-climate', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw-climate selected' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'FAQ', "#{about_path}", :"data-slug" => 'faq', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item faq' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Data Providers and Partners', "#{about_path}", :"data-slug" => 'data-providers', :"data-interesting" => 'about_fires, about_commodities, data-providers', :class => 'nav-item data-providers' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'About GFW Climate', "#{about_path}?page=about", :"data-slug" => 'about-gfw-climate', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw-climate selected' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'FAQ', "#{about_path}?page=faq", :"data-slug" => 'faq', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item faq' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
-          <article id='about-gfw-climate' class='source-article'>
+          <article id='about-gfw-climate' class='source-article' style="display:  <%= !params[:page] || params[:page] == "about" ? "block" : "none" %>">
             <header>
               <h2>About GFW Climate</h2>
             </header>
@@ -58,7 +57,7 @@
               </ul>
             </div>
           </article>
-          <article id='faq' class="source-article">
+          <article id='faq' class="source-article" style="display: <%= params[:page] == "faq" ? "block" : "none" %>;">
             <header>
               <h2>FAQ</h2>
             </header>
@@ -125,10 +124,6 @@
                   All code and detailed workflows related to GIS calculations can be found on GitHub at https://github.com/wri/gfw_climate.
                   </p>
                 </li>
-          </article>
-
-          <article id='data-providers' class="source-article">
-          	data provider content
           </article>
         </div>
       </div>
