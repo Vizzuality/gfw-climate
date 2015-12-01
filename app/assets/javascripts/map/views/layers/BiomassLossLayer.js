@@ -69,7 +69,7 @@ define([
        for(var j = 0 |0; j < h; ++j) {
          var pixelPos = ((j * w + i) * components) |0,
              intensity = imgdata[pixelPos+1] |0;
-          imgdata[pixelPos + 3] = 0;
+          imgdata[pixelPos + 3] = 0 |0;
 
           if (intensity > 0) {
             var intensity_scaled = myscale(intensity) |0,
