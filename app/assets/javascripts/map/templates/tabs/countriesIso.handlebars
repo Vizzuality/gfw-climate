@@ -1,3 +1,8 @@
+{{!-- This should be better to be in another template,
+but let's do that when it will be clear where it goes --}}
+<div class="graph-line-bar is-hidden">
+  <div id="TreeLoosCarbonEmissions-graph"></div>
+</div>
 {{#if layers}}
 <header>
   <div class="alone">
@@ -21,6 +26,6 @@
     <p>No country data is available yet. </p>
     <p><a href="#" class="source" data-source="view_existing_global_data">View existing global data sets</a> or <a href="/getinvolved/share-data" target="_blank">suggest your own.</a></p>
   </div> --}}
-  <h2>Select a country  <br>to analyze</h2>
+  <a href="/countries/{{this.iso}}">View country page</a>
 </header>
 {{/if}}

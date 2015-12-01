@@ -239,8 +239,8 @@
 
       span {
         position: absolute;
-        bottom: 0;
-        left: -45px;
+        bottom: -3px;
+        left: -52px;
       }
 
       #year-picker-label {
@@ -261,6 +261,71 @@
         bottom: 0;
         width: 100%;
       }
+
+      // RANGE INPUT
+      input[type=range] {
+        -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+        -moz-appearance: none; /* Hides the slider so that custom slider can be made */
+        width: 100%; /* Specific width is required for Firefox. */
+        margin: 0;
+        background: transparent;
+        border: 0;
+
+      }
+
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+      }
+
+      input[type=range]::-moz-range-thumb {
+        -moz-appearance: none;
+        background: transparent;
+        border: 0;
+      }
+
+      input[type=range]:focus {
+        outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+      }
+
+      input[type=range]:-moz-focusring {
+        outline: none;
+      }
+
+      input[type=range]::-ms-track {
+        width: 100%;
+        cursor: pointer;
+        background: transparent; /* Hides the slider so custom styles can be added */
+        border-color: transparent;
+        color: transparent;
+      }
+
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 9px;
+        cursor: pointer;
+        background: $border;
+        border-radius: 5px;
+      }
+
+      input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 9px;
+        cursor: pointer;
+        background: $border;
+        border-radius: 5px;
+      }
+
+      .progress-year {
+        z-index: 3;
+        position: absolute;
+        top: 28px;
+        width: 15px;
+        height: 15px;
+        background: $blue;
+        border-radius: 50%;
+        transform: translate(-8px, 0);
+      }
+
     }
 
     .select-years {
@@ -289,14 +354,10 @@
       .year-dropdown {
         display: blocK;
         appearance: none;
-        // height: 34px;
-        // width: 103px;
         padding: 0 30px 0 10px;
         border: 1px solid $color-1;
         border-radius: 40px;
         display: flex;
-        // justify-content: space-around;
-        // align-items: center;
         font-size: 14px;
         color: #555;
         line-height: 31px;

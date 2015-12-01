@@ -66,7 +66,10 @@ define([
           values = _.groupBy(values,'indicator_id');
 
           var data = _.map(this.model.get('indicators'), function(i){
-            i.country_name = values[i.id][0].country_name
+            var aux = values[i.id][0];
+            var displayName = aux.id_1 ?  aux.sub_nat_name :
+              (aux.boundary_id != 1 ? aux.boundary_name : aux.country_name);
+            i.location_name = displayName;
             i.data = values[i.id];
             return i;
           })
@@ -93,7 +96,7 @@ define([
       var scientific = d3.format(".3s")(totalVal);
       return {
         sectionswitch: this.model.get('sectionswitch'),
-        country_name: this.model.get('data')[0].country_name,
+        location_name: this.model.get('data')[0].location_name,
         total: totalVal > 1000 ? scientific : shortened,
         millionsTotal: shortened
 

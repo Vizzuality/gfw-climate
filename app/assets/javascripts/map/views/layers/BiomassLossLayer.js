@@ -65,33 +65,44 @@ define([
 
          if (yearLoss >= yearStart && yearLoss <= yearEnd) {
            
-           if (myscale(intensity) <255){
-               imgdata[pixelPos] = 189;
-               imgdata[pixelPos + 1] = 0;
-               imgdata[pixelPos + 2] = 38;
+           if (myscale(intensity) <256){
+               imgdata[pixelPos] = 255;
+               imgdata[pixelPos + 1] = 208;
+               imgdata[pixelPos + 2] = 11;
+               imgdata[pixelPos + 3] = 255;
            }
-            if (myscale(intensity) <180){
-               imgdata[pixelPos] = 240;
-               imgdata[pixelPos + 1] = 59;
-               imgdata[pixelPos + 2] = 32;
+           if (myscale(intensity) <200){
+               imgdata[pixelPos] = 241;
+               imgdata[pixelPos + 1] = 152;
+               imgdata[pixelPos + 2] = 19;
+               imgdata[pixelPos + 3] = 255;
+           }
+           if (myscale(intensity) <150){
+               imgdata[pixelPos] = 210;
+               imgdata[pixelPos + 1] =31; 
+               imgdata[pixelPos + 2] = 38;
+               imgdata[pixelPos + 3] = 255;
            }
            if (myscale(intensity) <100){
-               imgdata[pixelPos] = 253;
-               imgdata[pixelPos + 1] = 141;
-               imgdata[pixelPos + 2] = 60;
+               imgdata[pixelPos] = 76;
+               imgdata[pixelPos + 1] =83; 
+               imgdata[pixelPos + 2] = 122;
+               imgdata[pixelPos + 3] = 255;
            }
             if (myscale(intensity) <50){
-               imgdata[pixelPos] = 240;
-               imgdata[pixelPos + 1] = 59;
-               imgdata[pixelPos + 2] = 32;
+               imgdata[pixelPos] = 0;
+               imgdata[pixelPos + 1] = 112;
+               imgdata[pixelPos + 2] = 168;
+               imgdata[pixelPos + 3] = 256;
            }
-            if (myscale(intensity) <20){
-               imgdata[pixelPos] = 255;
-               imgdata[pixelPos + 1] = 255;
-               imgdata[pixelPos + 2] = 178;
+           if (myscale(intensity) <1){
+               imgdata[pixelPos] = 0;
+               imgdata[pixelPos + 1] = 0;
+               imgdata[pixelPos + 2] = 0;
+               imgdata[pixelPos + 3] = 0;
            }
            
-           imgdata[pixelPos + 3] = z < 13 ? myscale(intensity) : intensity;;
+           
         } else {
           imgdata[pixelPos + 3] = 0;
          }
