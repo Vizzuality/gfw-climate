@@ -91,10 +91,12 @@
 
             div.year-range
               span year:
+              div.progress-year
               input#year-picker name="year-picker" type="range" min="2001" max="2013" step="1" value="2001"
               output#year-picker-label for="year-picker" 2001
               #play-pause
-               |►/❙❙ 
+                .play ► 
+                .pause.is-hidden ❙❙ 
 
           .vis-tab.change.bottom-chart
             h4

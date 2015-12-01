@@ -42,11 +42,63 @@ define([
     for(var i=0; i < w; ++i) {
       for(var j=0; j < h; ++j) {
         var pixelPos = (j*w + i) * components;
-        var intensity = imgdata[pixelPos+3];
+        var intensity = imgdata[pixelPos+2];
+           
+           if (myscale(intensity) <256){
+               imgdata[pixelPos] = 21;
+               imgdata[pixelPos + 1] = 95;
+               imgdata[pixelPos + 2] = 8;
+               imgdata[pixelPos + 3] = 210;
 
-        imgdata[pixelPos] = 240;
-        imgdata[pixelPos + 1] = 120;
-        imgdata[pixelPos + 2] = 61;
+           }
+           if (myscale(intensity) <220){
+               imgdata[pixelPos] = 157;
+               imgdata[pixelPos + 1] = 179;
+               imgdata[pixelPos + 2] = 138;
+               imgdata[pixelPos + 3] = 255;
+
+           }
+            if (myscale(intensity) <190){
+               imgdata[pixelPos] = 157;
+               imgdata[pixelPos + 1] = 179;
+               imgdata[pixelPos + 2] = 138;
+               imgdata[pixelPos + 3] = 200;
+
+           }
+           if (myscale(intensity) <140){
+              imgdata[pixelPos] = 148;
+               imgdata[pixelPos + 1] = 123;
+               imgdata[pixelPos + 2] = 75;
+               imgdata[pixelPos + 3] = 200;
+
+           }
+           if (myscale(intensity) <100){
+               imgdata[pixelPos] = 148;
+               imgdata[pixelPos + 1] = 123;
+               imgdata[pixelPos + 2] = 75;
+               imgdata[pixelPos + 3] = 220;
+           }
+  
+            if (myscale(intensity) <75){
+               imgdata[pixelPos] = 137;
+               imgdata[pixelPos + 1] = 81;
+               imgdata[pixelPos + 2] = 34;
+               imgdata[pixelPos + 3] = 230;
+               
+           }
+           if (myscale(intensity) <30){
+               imgdata[pixelPos] = 137;
+               imgdata[pixelPos + 1] = 81;
+               imgdata[pixelPos + 2] = 34;
+               imgdata[pixelPos + 3] = 255;
+               
+           }
+           if (myscale(intensity) <1){
+               imgdata[pixelPos] = 137;
+               imgdata[pixelPos + 1] = 81;
+               imgdata[pixelPos + 2] = 34;
+               imgdata[pixelPos + 3] = 0;
+           }
 
         // apply intensity-dependent saturation on R & B channels
         //imgdata[pixelPos ] = (72 - zoom) + 151 - (3 * myscale(intensity) / zoom);
@@ -57,8 +109,6 @@ define([
         // } else {
         //   imgdata[pixelPos+ 3] = intensity*0.8;
         // }
-
-        imgdata[pixelPos + 3] = zoom < 13 ? myscale(intensity)*0.8 : intensity*0.8;
       }
     }
     },

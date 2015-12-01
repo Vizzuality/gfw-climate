@@ -20,7 +20,8 @@ define([
       'change #year-drop-left'      : '_set_year',
       'change #year-drop-right'     : '_set_year',
       'click .btn-submit'           : '_submityears',
-      'click #play-pause'           : '_play_pause',
+      'click .play'                 : '_play',
+      'click .pause'                 : '_pause',
       'change #pantropical-search'  : '_search_country',
       'click #pantropical-search-delete' : '_search_country',
       'click #pantropical-share'    : '_open_share'
@@ -50,6 +51,11 @@ define([
       this.$years             = $('#year-picker');
       this.$yearsPickerLabel  = $('#year-picker-label');
       this.$play_pause        = $('#play-pause');
+      this.$playBtn           = this.$play_pause.find('.play');
+      this.$pauseBtn          = this.$play_pause.find('.pause');
+      this.$progressbar       = $('.progress-year');
+      this.progression        = 0;
+      this.ticks              = ~~this.$years.attr("max") - ~~this.$years.attr("min");
       this.$search            = $('#pantropical-search');
       this.$deleteSelection   = $('#pantropical-search-delete');
     },
@@ -180,34 +186,6 @@ define([
         this.totalEmissionsChart = new PantropicalTotalEmissionsView();
       }
     },
-
-    _play_pause: function(e) {
-      var target = (e) ? $(e.target) : this.$play_pause;
-      if (!!e && $(e.target).hasClass('stop')) {
-        // the user has previously stopped the movement and wants to continue: ALLOW
-        target.removeClass('stop')
-      }
-
-      if ((!target.hasClass('is-playing') || ! !!e) && !target.hasClass('stop')) {
-        // the user wants to start the animation
-        // the animation hasn't started yet or well it hasn't been called by the user but by this same function
-        target.addClass('is-playing');
-        var that = this;
-        window.setTimeout(function() {
-          var year = ~~that.$yearsPickerLabel.val() + 1;
-          if (year <= that.$years.attr("max")) {
-            that._change_year(null, year); // update label
-            that.$years.val(year);         // update range position
-            that._play_pause();            // paint next year
-          }
-        },1500)
-      } else {
-        // the user wants to stop the animation or the animation is finishing
-        if (this.$yearsPickerLabel.val() <= this.$years.attr('max'))
-          target.removeClass('is-playing').addClass('stop');
-      }
-    },
-
     _setAutocomplete: function() {
       this.$search.chosen({
         width: '100%',
@@ -248,6 +226,67 @@ define([
     _open_share: function(event) {
       var shareView = new ShareView().share(event);
       $('body').append(shareView.el);
+    },
+
+
+    // PLAYER FUNCTIONS
+    _player: function() {
+
+      if (this.$play_pause.hasClass('is-playing')) {
+        window.setTimeout(function() {
+          this.progression += 100 / this.ticks;
+
+          var year;
+
+          if (~~this.$yearsPickerLabel.val() + 1 > this.$years.attr("max")) {
+            year = this.$years.attr("min");
+            this.progression = 0;
+          } else {
+            year = ~~this.$yearsPickerLabel.val() + 1;
+          }
+
+          if (year <= this.$years.attr("max")) {
+            this._change_year(null, year); // update label
+            this.$years.val(year);         // update range position
+            this.$progressbar.css({
+              'left': this.progression + '%'
+            });
+            this._player();            // paint next year
+          }
+
+          if (year == this.$years.attr("max")) {
+            this.$play_pause.removeClass('is-playing');
+
+            this.$playBtn.removeClass('is-hidden');
+            this.$pauseBtn.addClass('is-hidden');
+          };
+
+        }.bind(this), 1500)
+      }
+    },
+
+    _play: function() {
+      this.$play_pause.addClass('is-playing');
+      this.$play_pause.removeClass('stop');
+
+      this.$playBtn.addClass('is-hidden');
+      this.$pauseBtn.removeClass('is-hidden');
+
+      this._player();
+    },
+
+    _pause: function() {
+      if (this.$play_pause.hasClass('stop')) {
+        this._play();
+      } else {
+        this.$playBtn.removeClass('is-hidden');
+        this.$pauseBtn.addClass('is-hidden');
+
+        this.$play_pause.removeClass('is-playing');
+        this.$play_pause.addClass('stop');
+
+        this._player();
+      }
     }
 
   });

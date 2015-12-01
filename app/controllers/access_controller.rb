@@ -1,6 +1,6 @@
 class AccessController < ApplicationController
 
-  before_action :check_terms, except: :accept_and_redirect
+  #before_action :check_terms, except: :accept_and_redirect
 
   def accept_and_redirect
     cookies.permanent[ENV['TERMS_COOKIE'].to_sym] = { value: true, domain: ENV['GFW_HOST'] }

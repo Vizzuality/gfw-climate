@@ -39,8 +39,41 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
         background: #000;
         border-radius: 50%;
         border: 2px solid $border;
-
+        background: url('/assets/basemaps-s84b6feb159.png');
       }
+
+      &.grayscale > i  {
+        background-position: 0 -616px;
+      }
+
+      &.terrain > i  {
+        background-position: 0 -440px;
+      }
+
+      &.satellite > i {
+        background-position: 0 -264px;
+      }
+
+      &.dark > i {
+        background-position: 0 -88px;
+      }
+
+      &.positron > i {
+        background-position: 0 0;
+      }
+
+      &.hybrid > i {
+        background-position: 0 -176px;
+      }
+
+      &.treeheight > i {
+        background-position: 0 -528px;
+      }
+
+      &.landsat > i {
+        background-position: 0 -352px;
+      }
+
       .source{
         @extend .info-icon;
         display: block;

@@ -18,7 +18,9 @@ define([
       'change #year-drop-left'      : '_set_year',
       'change #year-drop-right'     : '_set_year',
       'click .btn-submit'           : '_submityears',
-      'click #play-pause'           : '_play_pause',
+      // 'click #play-pause'           : '_play_pause',
+      'click .play'                 : '_play',
+      'click .pause'                 : '_pause',
       'click #share-options-btn'    : '_toggleShareMenu',
       'change #pantropical-search'  : '_search_country',
       'click #pantropical-search-delete' : '_search_country',
@@ -180,56 +182,6 @@ define([
       }
     },
 
-    _play_pause: function(e) {
-      var target = (e) ? $(e.target) : this.$play_pause;
-      if (!!e && $(e.target).hasClass('stop')) {
-        // the user has previously stopped the movement and wants to continue: ALLOW
-        target.removeClass('stop')
-      }
-
-      if ((!target.hasClass('is-playing') || ! !!e) && !target.hasClass('stop')) {
-        // the user wants to start the animation
-        // the animation hasn't started yet or well it hasn't been called by the user but by this same function
-        target.addClass('is-playing');
-        var that = this;
-
-        this.$playBtn.addClass('is-hidden');
-        this.$pauseBtn.removeClass('is-hidden');
-
-
-        window.setTimeout(function() {
-          that.progression += 100 / that.ticks;
-
-          var year = ~~that.$yearsPickerLabel.val() + 1;
-          if (year <= that.$years.attr("max")) {
-            that._change_year(null, year); // update label
-            that.$years.val(year);         // update range position
-            that.$progressbar.css({
-              'left': that.progression + '%'
-            });
-            that._play_pause();            // paint next year
-            if (year == that.$years.attr("max")) {
-              that.progression = 0;
-              // target.addClass('stop');
-            }
-          }
-
-        },1500)
-      } else {
-        // the user wants to stop the animation or the animation is finishing
-        if (~~this.$yearsPickerLabel.val() <= ~~this.$years.attr('max'))
-          this._change_year(null, this.$years.attr("min")); // update label
-          this.$years.val(this.$years.attr("min"));         // update range position
-          this.progression = 0;
-          this.$playBtn.removeClass('is-hidden');
-          this.$pauseBtn.addClass('is-hidden');
-          this.$progressbar.css({
-            'left': this.progression
-          });
-          target.removeClass('is-playing').addClass('stop');
-      }
-    },
-
     _toggleShareMenu: function(e) {
       $('.share-options-list').toggleClass('is-hidden');
     },
@@ -286,6 +238,66 @@ define([
         this.$search.append(options.join('')).trigger('chosen:updated');
       }, this ));
     },
+
+    // PLAYER FUNCTIONS
+    _player: function() {
+
+      if (this.$play_pause.hasClass('is-playing')) {
+        window.setTimeout(function() {
+          this.progression += 100 / this.ticks;
+
+          var year;
+
+          if (~~this.$yearsPickerLabel.val() + 1 > this.$years.attr("max")) {
+            year = this.$years.attr("min");
+            this.progression = 0;
+          } else {
+            year = ~~this.$yearsPickerLabel.val() + 1;
+          }
+
+          if (year <= this.$years.attr("max")) {
+            this._change_year(null, year); // update label
+            this.$years.val(year);         // update range position
+            this.$progressbar.css({
+              'left': this.progression + '%'
+            });
+            this._player();            // paint next year
+          }
+
+          if (year == this.$years.attr("max")) {
+            this.$play_pause.removeClass('is-playing');
+
+            this.$playBtn.removeClass('is-hidden');
+            this.$pauseBtn.addClass('is-hidden');
+          };
+
+        }.bind(this), 1500)
+      }
+    },
+
+    _play: function() {
+      this.$play_pause.addClass('is-playing');
+      this.$play_pause.removeClass('stop');
+
+      this.$playBtn.addClass('is-hidden');
+      this.$pauseBtn.removeClass('is-hidden');
+
+      this._player();
+    },
+
+    _pause: function() {
+      if (this.$play_pause.hasClass('stop')) {
+        this._play();
+      } else {
+        this.$playBtn.removeClass('is-hidden');
+        this.$pauseBtn.addClass('is-hidden');
+
+        this.$play_pause.removeClass('is-playing');
+        this.$play_pause.addClass('stop');
+
+        this._player();
+      }
+    }
 
 
   });
