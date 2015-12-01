@@ -33,15 +33,98 @@
             <div class="content">
               <ul class='faq-list'>
                 <li>
-                  <p>GFW Climate provides (interactive and high resolution (30 meter) maps) of both the carbon stored in forests and the carbon dioxide emitted to the atmosphere when forests are cleared. It also offers a customized user experience through the creation of on-the-fly maps and analysis, (interactive country dashboards), (customized reports) and (data downloads). The result is decision-relevant information that is transparent, easy to understand, and available to all who want to mitigate climate change through the implementation of better forest policies and programs. The entire GFW platform is free to use and follows an (open data approach).</p>
+                  <p>
+                    GFW Climate provides <%= link_to "interactive and high resolution (30 meter) maps", map_path %>
+                  of both the carbon stored in forests and the carbon dioxide emitted to the atmosphere
+                  when forests are cleared. It also offers a customized user experience through the creation
+                  of on-the-fly maps and analysis, <%= link_to "interactive country dashboards", countries_path %>,
+                  <%= link_to "customized reports", compare_countries_path %> and
+                  <%= link_to "data downloads", "http://data.globalforestwatch.org/datasets/d87217b5732347ab8a04ef8ffacff1fd_8"%>.
+                  The result is decision-relevant information that is transparent,
+                  easy to understand, and available to all who want to mitigate
+                  climate change through the implementation of better forest policies and programs.
+                  The entire GFW platform is free to use and follows an
+                  <%= link_to "open data approach", "http://www.globalforestwatch.org/about/data_policy" %>.
+                  </p>
                   <p>At this time, GFW Climate focuses only on estimating emissions from tropical deforestation, and does not include emissions or removals from other land use activities such as forest degradation or carbon stock enhancements from forest gains. Methods and data for these activities are generally less developed than those for deforestation. Given the recent momentum behind global and regional restoration initiatives, future versions of GFW Climate may expand to include other activities as new data become available.</p>
-                  <p>GFW Climate is supported by a diverse (partnership of organizations) that contribute data, technology, funding, and expertise. The GFW partnership is convened by the World Resources Institute. See a full list of partners below. </p>
+                  <p>
+                    GFW Climate is supported by a diverse
+                    <%= link_to "partnership of organizations", "http://www.globalforestwatch.org/about/the-gfw-partnership" %>
+                    that contribute data, technology, funding, and expertise.
+                    The GFW partnership is convened by the World Resources Institute.
+                    See a full list of partners below.
+                  </p>
                 </li>
               </ul>
             </div>
           </article>
           <article id='faq' class="source-article">
-          	faq content
+            <header>
+              <h2>FAQ</h2>
+            </header>
+            <div class="content">
+              <ul class='faq-list'>
+                <li>
+                  <p>
+                  <strong>How does GFW Climate relate to country-level measurement, reporting and verification (MRV)?</strong><br>
+                  The establishment of robust MRV systems for REDD+ is a key
+                  component in the successful implementation of carbon emissions
+                  reduction strategies. Global Forest Watch Climate is not
+                  intended to replace country-led MRV efforts, which should
+                  include much more detailed information on the greenhouse gas
+                  impacts of planned or implemented policies and measures.
+                  However, GFW Climate can be used as an independent tool
+                  against which forest reference emissions levels and other
+                  nationally-reported estimates can be assessed.</p></li>
+                <li><p><strong> Can I use this website for project-level monitoring and assessment for REDD+?</strong><br>
+                  While the tree cover loss and carbon emission estimates on Global Forest Watch Climate are spatially and temporally explicit, we do not advise their use for project-level assessment for REDD+, due to the scale of the carbon density data, in addition to year-to-year uncertainties in the tree cover loss data. For example, the aboveground live woody biomass density value of a single pixel may have large uncertainty when compared with small plots for verification. Therefore the forest changes visualized on the GFW Climate map should be considered indicative at best, and may require further verification from field assessment or more high-resolution imagery.</p>
+                </li>
+                <li>
+                  <p><strong>Why doesn't this site include restoration?</strong><br>
+                  Forest regrowth often occurs slowly over many years, and requires continued monitoring using high resolution satellite imagery for an accurate depiction of gains in tree cover. Although the original University of Maryland and Google data set includes a global tree cover gain layer for 2000-2012, the data set cannot distinguish between natural regeneration and the establishment of plantations, such as those for timber harvesting and agricultural cultivation (oil palm, rubber, etc.). In the absence of a consistent and accurate global forest regrowth data set, GFW Climate has chosen to focus instead on emissions due to forest loss, for which up-to-date global and national data exist.</p>
+                </li>
+                <li>
+                  <p><strong>Why does GFW Climate focus only on the tropics?</strong><br>
+                Monitoring greenhouse gas fluxes from forests is complex. When building GFW Climate,
+                it was necessary to start somewhere. Through our outreach and interactions with stakeholders and other interested parties, it was clear that deforestation in the tropics was where there was the highest interest and need for an independent monitoring tool.. As we move forward, it is our intention to move beyond the tropics and beyond only deforestation.</p>
+                </li>
+
+                <li>
+                  <p><strong>Why do you show emissions only from primary forests for Indonesia and DRC in the pantropical overview?</strong><br>
+                  An important caveat regarding the Hansen et al. (2013) tree cover loss dataset is that the definition of gross tree cover loss includes rotational clear-felling of management units within tree plantations and clearing of forest regrowth in shifting cultivation cycles, along with conversion of natural forests. Data shown in the pantropical overview are based on emission estimates from Zarin et al. (in press), which took steps to address this issue using specific modifications of the Hansen et al. (2013) data for three countries that are substantial contributors to total carbon emissions from gross tropical deforestation -- Indonesia, DRC, and Malaysia. For Indonesia, primary forests in 2000 as mapped by Margono et al. and available on GFW closely match a map of forest extent from the Indonesian Ministry of Environment and Forestry data for the same year. For DRC, the focus on primary forest only aims to exclude secondary forest clearing associated with stable shifting cultivation cycles, while while still capturing emissions from expansion of shifting cultivation into primary forest areas. For Malaysia, emissions from gross deforestation is approximated by filtering out tree cover loss occurring within plantation areas as mapped by Transparent World and available on GFW. See Zarin et al. for more details. Additional data beyond those shown on the pantropical overview page for these three countries are shown on their country profile pages.
+                  </p>
+                </li>
+                <li>
+                  <p><strong>What does it mean that GFW Climate is in beta?</strong><br>
+                        We are still collecting user feedback to improve website features and functionality.
+                        Establishing an effective web-based tool requires an iterative process of feedback and refinement. This is why your feedback is important to us. Please submit your feedback on the feedback page to help us improve the site.</p>
+                </li>
+                <li>
+                  <p><strong>Why isn't the biomass density map representative of a later year?</strong><br>
+                  Our approach to estimating emissions from deforestation combines biomass density estimates with annual tree cover loss estimates from 2001 to 2014, both derived from spatially-explicit remote sensing imagery. This allowed us to co-locate a biomass density value with a given loss pixel. If the biomass density map were developed to be representative of a later year, e.g. 2010, then biomass density values corresponding to areas of loss in earlier years (e.g., 2001-2010) would be reflective of the cleared land after tree cover removal, rather than prior to clearing.</p>
+                </li>
+                <li>
+                  <p><strong>What’s the difference between biomass and carbon?</strong><br>
+                        The carbon content of woody matter (stem, branches and roots) and leaves is
+                        approximately 50% of their total weight, or biomass. Multiplying the total biomass by the proportion of that biomass which is carbon gets us to an estimate of the total amount of carbon stored in a tree.</p>
+                </li>
+                <li>
+                  <p><strong>How accurate are the emissions estimates?</strong><br>
+                  The accuracy of emissions estimates varies, due to estimation errors inherent in the input data. Along with the aboveground live woody biomass density values, users can view an error map at the same spatial resolution, which provides the level of uncertainty for this data layer. It is recommended that both aboveground carbon density and uncertainty values be used together for carbon assessments and verification. The map will provide accurate estimates of aboveground carbon stocks and aboveground carbon density when aggregated to large areas (5,000 to 10,000 ha) for project and regional level assessments. The biomass density value of a single pixel may have large uncertainty when compared with small plots for verification. In addition, there may be year-to-year uncertainties in the loss data. Hansen et al (2013) are 75 percent confident that the loss occurred within the stated year, and 97 percent confident that it occurred within a period from the year before to the year after the stated year.
+                  </p>
+                </li>
+                <li>
+                  <p><strong>Why don't my plot data match pixel values in the aboveground live woody biomass density map?</strong><br>
+                  Almost all estimates of aboveground live woody biomass density are based on the
+                  collection of reliable data within inventory plots on the ground, where the diameter at breast height (DBH) of individual trees is measured by field technicians at a certain point in time. These measurements are converted to tree biomass density estimates using allometric equations.</p>
+                  <p>But because it is impractical to measure all points all the time, various methods are used to approximate forest biomass across a landscape based on a smaller sample of measurement points. Any of these approximation methods, including both statistical sampling approaches and spatial modeling approaches, are meant to provide forest biomass density estimates for an area of interest beyond what can be measured at a single point.</p>
+                  <p>The aboveground live woody biomass density map on GFW Climate, developed by Woods Hole Research Center, reflects output from a spatial model calibrated with ground sampling points and optimized to reflect biomass distribution across all tropical forests. Each pixel value in the map may therefore not perfectly reflect biomass density measurements collected at a single point. GFW Climate provides a pixel-level uncertainty map along with the biomass density map.</p>
+                </li>
+                <li>
+                  <p><strong>How are calculations done in a GIS to compute country level totals?</strong><br>
+                  All code and detailed workflows related to GIS calculations can be found on GitHub at https://github.com/wri/gfw_climate.
+                  </p>
+                </li>
           </article>
 
           <article id='data-providers' class="source-article">
