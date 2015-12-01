@@ -199,6 +199,7 @@ define([
      * to SubscribePresenter.
      */
     subscribeAnalysis: function() {
+      console.log('subscribeAnalysis ');
       var options = {
         analysisResource: this.status.get('resource'),
         layer: this.status.get('baselayer')
