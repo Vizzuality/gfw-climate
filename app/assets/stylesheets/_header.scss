@@ -202,7 +202,8 @@
               &.shape-country { svg{ fill: $gfw-green;} }
               &.shape-fire { svg{ fill: $red;} }
               &.shape-commodities { svg{ fill: $orange;} }
-              &.shape-blog { svg{ fill: $gfw-green;} }
+              &.shape-blog { svg { fill: $gfw-green;} }
+              &.shape-climate { svg { fill: $blue;}}
               svg {
                 fill: $gfw-green;
               }
