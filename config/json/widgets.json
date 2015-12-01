@@ -588,15 +588,8 @@
         "default": true
       },
       {
-        "id": 17,
-        "name": "FAO",
-        "type": "number",
-        "unit": "hectares",
-        "tab": 3
-      },
-      {
-        "id": 3,
-        "name": "Hansen/Google/UMD",
+        "id": 56,
+        "name": "Other National Data",
         "type": "number",
         "unit": "hectares",
         "tab": 2

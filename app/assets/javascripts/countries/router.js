@@ -4,10 +4,9 @@ define([
   'countries/services/PlaceService',
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView',
-  'countries/views/CountryPantropicalView',
-  'embed/PantropicalView'
+  'countries/views/CountryPantropicalView'
 ], function(Backbone, utils, PlaceService, CountryIndexView,
-  CountryShowView,CountryPantropicalView, EmbedPantropicalView) {
+  CountryShowView,CountryPantropicalView) {
 
   'use strict';
 
