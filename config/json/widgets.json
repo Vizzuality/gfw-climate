@@ -606,7 +606,7 @@
   {
     "id": 6,
     "name": "Emissions from Deforestation vs. All Other Sectors",
-    "name": "emissions-from-deforestation-vs-all-other-sectors",
+    "slug": "emissions-from-deforestation-vs-all-other-sectors",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "number",
