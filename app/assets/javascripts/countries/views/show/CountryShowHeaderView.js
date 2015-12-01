@@ -36,7 +36,7 @@ define([
              '&format=topojson'].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, _.bind(function(error, topology) {
-        this.helper.draw(topology, 0, 'figure-' + iso, { alerts: true });
+        this.helper.draw(topology, 0, 'figure-' + iso, { alerts: true }, {width: 225, height: 225});
       }, this ));
     }
 
