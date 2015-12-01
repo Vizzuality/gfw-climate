@@ -60,54 +60,30 @@ define([
          .exponent(exp)
          .domain([0,256])
          .range([0,256]);
-
+      var c = [112, 168, 256, // first bucket 
+               76,  83,  122, 
+               210, 31,  38,  
+               241, 152, 19,  
+               255, 208, 11]; // last bucket 
       for(var i = 0 |0; i < w; ++i) {
        for(var j = 0 |0; j < h; ++j) {
          var pixelPos = ((j * w + i) * components) |0,
-             intensity = imgdata[pixelPos+1] |0,
-             intensity_scaled = myscale(intensity) |0,
-             yearLoss = 2001 + imgdata[pixelPos] |0;
+             intensity = imgdata[pixelPos+1] |0;
+          imgdata[pixelPos + 3] = 0;
 
-         //intensity=z < 13 ? (intensity)=Math.pow (2, (12-z)) : intensity;
-
-         if (yearLoss >= yearStart && yearLoss <= yearEnd) {
-          imgdata[pixelPos] = 0 | 0;
-          if (intensity_scaled < 1){
-               imgdata[pixelPos + 3] = imgdata[pixelPos + 2] = imgdata[pixelPos + 1] = 0;
-           }
-          else if (intensity_scaled < 50){
-               imgdata[pixelPos + 1] = 112 | 0;
-               imgdata[pixelPos + 2] = 168 | 0;
-               imgdata[pixelPos + 3] = 256 | 0;
+          if (intensity > 0) {
+            var intensity_scaled = myscale(intensity) |0,
+                yearLoss = 2001 + imgdata[pixelPos] |0;
+            if (yearLoss >= yearStart && yearLoss <= yearEnd) {
+              var bucket = (~~(5 * intensity_scaled / 256) * 3);
+              imgdata[pixelPos] = c[bucket];
+              imgdata[pixelPos + 1] = c[bucket + 1];
+              imgdata[pixelPos + 2] = c[bucket + 2];
+              imgdata[pixelPos + 3] = 255 | 0;
+            }
           }
-          else if (intensity_scaled < 100){
-               imgdata[pixelPos]     = 76 | 0;
-               imgdata[pixelPos + 1] = 83 | 0; 
-               imgdata[pixelPos + 2] = 122 | 0;
-               imgdata[pixelPos + 3] = 255 | 0;
-           }
-          else if (intensity_scaled < 150){
-               imgdata[pixelPos]     = 210 | 0;
-               imgdata[pixelPos + 1] = 31 | 0; 
-               imgdata[pixelPos + 2] = 38 | 0;
-               imgdata[pixelPos + 3] = 255 | 0;
-          }
-          else if (intensity_scaled < 200){
-               imgdata[pixelPos]     = 241 | 0;
-               imgdata[pixelPos + 1] = 152 | 0;
-               imgdata[pixelPos + 2] = 19 | 0;
-               imgdata[pixelPos + 3] = 255 | 0;
-          }
-          else if (intensity_scaled < 256){
-               imgdata[pixelPos + 3] = imgdata[pixelPos] = 255 | 0;
-               imgdata[pixelPos + 1] = 208 | 0;
-               imgdata[pixelPos + 2] = 11 | 0;
-          }
-        } else {
-          imgdata[pixelPos + 3] = 0 | 0;
         }
        }
-      }
     },
 
     /**
