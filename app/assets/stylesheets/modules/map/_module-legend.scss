@@ -342,9 +342,11 @@
   }
 
   /****************************/
-  /* PantropicalLayer details */
+  /* PantropicalLayer details &
+     Biomass Loss */
   /****************************/
-  .layer-details-pantropical {
+  .layer-details-pantropical,
+  .layer-details-biomass_loss {
     .details-title .units {
       font-weight: normal;
       text-transform: normal;
@@ -396,24 +398,9 @@
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFD4', endColorstr='#dd8653', GradientType=1);
       background-image: -ms-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
     }
-    .quartile-bar-biomass {
-      clear: both;
-      height: 12px;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      background: #FFFFD4;
-      background: -moz-linear-gradient(left, #FFFFD4 0%, #dd8653 100%);
-      background: -webkit-gradient(linear, left top, right top, color-stop(0%,#FFFFD4), color-stop(100%,#dd8653));
-      background: -webkit-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-      background: -o-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-      background: -ms-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-      background: linear-gradient(to right, #FFFFD4 0%,#dd8653 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFD4', endColorstr='#dd8653', GradientType=1);
-      background-image: -ms-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-    }
-  }
 
+  }
+  
   /****************************/
   /* ImazonLayer details */
   /****************************/
