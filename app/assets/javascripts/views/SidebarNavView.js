@@ -33,6 +33,7 @@ define([
     },
 
     initialize: function() {
+      debugger
       if (!this.$el.length) {
         return
       }
