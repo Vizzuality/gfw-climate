@@ -61,10 +61,7 @@ define([
 
          //intensity=z < 13 ? (intensity)=Math.pow (2, (12-z)) : intensity;
 
-       
-
          if (yearLoss >= yearStart && yearLoss <= yearEnd) {
-           
           imgdata[pixelPos] = 0;
           if (myscale(intensity) < 1){
                imgdata[pixelPos + 3] = imgdata[pixelPos + 2] = imgdata[pixelPos + 1] = 0;
