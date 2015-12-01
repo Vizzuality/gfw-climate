@@ -19,9 +19,9 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'About GFW Climate', "#{about_path}/about-gfw-climate", :"data-slug" => 'about-gfw-climate', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw-climate selected' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'FAQ', "#{about_path}/faq", :"data-slug" => 'faq', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item faq' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Data Providers and Partners', "#{about_path}/data-providers", :"data-slug" => 'data-providers', :"data-interesting" => 'about_fires, about_commodities, data-providers', :class => 'nav-item data-providers' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'About GFW Climate', "#{about_path}", :"data-slug" => 'about-gfw-climate', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw-climate selected' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'FAQ', "#{about_path}", :"data-slug" => 'faq', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item faq' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Data Providers and Partners', "#{about_path}", :"data-slug" => 'data-providers', :"data-interesting" => 'about_fires, about_commodities, data-providers', :class => 'nav-item data-providers' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -45,9 +45,11 @@
             </div>
           </article>
           <article id='faq' class="source-article">
+          	faq content
           </article>
 
           <article id='data-providers' class="source-article">
+          	data provider content
           </article>
         </div>
       </div>
