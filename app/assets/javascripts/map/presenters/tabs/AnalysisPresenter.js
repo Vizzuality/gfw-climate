@@ -264,7 +264,7 @@ define([
           mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
-            this.view.drawCountrypolygon(geojson,'#A2BC28');
+            this.view.drawCountrypolygon(geojson,'#5B80A0');
             this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
@@ -279,7 +279,7 @@ define([
           mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
-            this.view.drawCountrypolygon(geojson,'#A2BC28');
+            this.view.drawCountrypolygon(geojson,'#5B80A0');
             this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
@@ -525,8 +525,6 @@ define([
       baselayer = baselayers[_.first(_.intersection(
         _.pluck(baselayers, 'slug'),
         _.keys(this.datasets)))];
-      console.log(baselayers);
-      console.log(baselayer);
       $('#analyzeBtn').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();

@@ -121,8 +121,8 @@ define([
       this.getCountries();
 
       //other
-      this.png = '/assets/infowindow-example.png';
-      this.gif = this.loadImg('/assets/infowindow-example.gif');
+      this.png = '/assets/map/infowindow-example.png';
+      this.gif = this.loadImg('/assets/map/infowindow-example.gif');
     },
 
     // navigate between tabs
@@ -189,7 +189,7 @@ define([
         strokeWeight: 2,
         fillOpacity: 0,
         fillColor: '#FFF',
-        strokeColor: '#A2BC28',
+        strokeColor: '#5B80A0',
         icon: new google.maps.MarkerImage(
           '/assets/icons/marker_exclamation.png',
           new google.maps.Size(36, 36), // size
@@ -199,7 +199,7 @@ define([
       };
 
       this.map.data.setStyle(_.bind(function(feature){
-        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
+        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#5B80A0';
         return ({
           strokeWeight: 2,
           fillOpacity: 0,
@@ -535,7 +535,7 @@ define([
             }\
             #country_mask[code='" + iso + "'] {\
               polygon-opacity: 0;\
-              line-color: #97Bd3d;\
+              line-color: #5B80A0;\
               line-width: 1;\
               line-opacity: 0;\
             }"

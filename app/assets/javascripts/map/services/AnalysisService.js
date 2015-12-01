@@ -68,10 +68,14 @@ define([
 
       var failure = _.bind(function(t, a) {
         if (a === 'abort') {return;}
-        var results = {failure: a};
+        // var results = {failure: a};
+        // Remove this
+        var results = {"apis": {"ifl_national": "http://localhost:8080/biomass-loss/admin/ifl/{/iso}{?bust,dev,thresh}", "ifl_subnational": "http://localhost:8080/biomass-loss/admin/ifl/{/iso}{/id1}{?bust,dev,thresh}", "national": "http://localhost:8080/biomass-loss/admin{/iso}{?bust,dev,thresh}", "subnational": "http://localhost:8080/biomass-loss/admin{/iso}{/id1}{?bust,dev,thresh}"}, "meta": {"coverage": "", "description": "Identifies areas of biomass loss", "id": "biomass-loss", "name": "", "resolution": "30 x 30 meters", "source": "Landsat 7 ETM+", "timescale": "January 2000-2014", "units": "Biomass: Mg, Biomass loss: Mg biomass", "updates": "Loss: Annual, Gain: 12-year cumulative, updated                 annually"}, "params": {"begin": "2012-01-01", "end": "2015-01-01", "id1": "1", "iso": "bra", "thresh": 10}, "years": [{"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 4, "iso": "BRA", "thresh": 10, "value": 3663.327595, "year": 0}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 3142.190211, "year": 0}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 12.35020454, "year": 2001}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 14.06061915, "year": 2002}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 7.617328353, "year": 2003}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 13.93449072, "year": 2004}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 33.51633577, "year": 2005}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 8.551910836, "year": 2006}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 7.604036179, "year": 2007}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 11.64711393, "year": 2008}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 7.668414644, "year": 2009}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 8.85747759, "year": 2010}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 8.380695386, "year": 2011}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 13.60393228, "year": 2012}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 10.502979, "year": 2013}, {"admin0_name": "Brazil", "boundary": "admin", "id1": 1, "indicator_id": 12, "iso": "BRA", "thresh": 10, "value": 12.52428626, "year": 2014}]};
         mps.publish('AnalysisService/results', [results]);
         if (failureCb) {
-          failureCb(results);
+          // Remove this
+          successCb(results);
+          // failureCb(results);
         }
       }, this);
 
@@ -146,7 +150,6 @@ define([
         _.str.sprintf('%s/%s/use/{use}/{useid}%s', URL, dataset, params),
         _.str.sprintf('%s/%s/wdpa/{wdpaid}%s', URL, dataset, params)
       ];
-
       return _.object(ids, urls);
     },
 

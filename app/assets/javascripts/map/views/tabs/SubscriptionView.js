@@ -98,8 +98,8 @@ define([
       this.getCountries();
 
       //other
-      this.png = '/assets/infowindow-example.png';
-      this.gif = this.loadImg('/assets/infowindow-example2.gif');
+      this.png = '/assets/map/infowindow-example.png';
+      this.gif = this.loadImg('/assets/map/infowindow-example2.gif');
     },
 
     // navigate between tabs

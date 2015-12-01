@@ -416,7 +416,8 @@ define([
           data.push(valueSet);
         }
 
-      })
+      });
+      console.log(data);
       return data;
     }
 

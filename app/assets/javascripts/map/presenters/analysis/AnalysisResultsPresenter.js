@@ -34,14 +34,7 @@ define([
     ],
 
     datasets: {
-      'loss': 'umd-loss-gain',
-      'forestgain': 'umd-loss-gain',
-      'forma': 'forma-alerts',
-      'imazon': 'imazon-alerts',
-      'fires': 'nasa-active-fires',
-      'modis': 'quicc-alerts',
-      'terrailoss': 'terrai-alerts',
-      'prodes': 'prodes-alerts'
+      'biomass_loss': 'biomass-loss',
     },
 
     init: function(view) {
@@ -181,8 +174,13 @@ define([
       }
 
       var params = this._getAnalysisResource(results, layer);
+      this.setResults(results);
       this.view.renderAnalysis(params);
       mps.publish('Place/update', [{go: false}]);
+    },
+
+    setResults: function(results) {
+      this.status.set('results',results);
     },
 
     /**
@@ -333,7 +331,6 @@ define([
         p.totalArea = this._getTotalArea();
       }
 
-
       return p;
     },
 
@@ -345,7 +342,6 @@ define([
     showCanopy: function(){
       mps.publish('ThresholdControls/toggle');
     },
-
 
 
   });
