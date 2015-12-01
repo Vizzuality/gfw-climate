@@ -9,8 +9,9 @@ require([
   '_string',
   'home/views/sliderView',
   'home/views/launchCounter',
-  'views/SourceWindowView'
-], function($, _, Class, Backbone, _string, sliderView, LaunchCounterView, SourceWindowView) {
+  'views/SourceWindowView',
+  'views/SidebarNavView'
+], function($, _, Class, Backbone, _string, sliderView, LaunchCounterView, SourceWindowView, SidebarNavView) {
 
   'use strict';
 
@@ -40,6 +41,7 @@ require([
       new SourceWindowView();
       new LaunchCounterView();
       new sliderView();
+      new SidebarNavView();
     }
 
   });
