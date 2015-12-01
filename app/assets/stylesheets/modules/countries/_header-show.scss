@@ -2,13 +2,11 @@
   position: relative;
   overflow: hidden;
   padding: 25px 0 0;
-  height: 425px;
+  height: 350px;
   background-color: #333;
 
   .container-country__content {
     width: 100%;
-    // min-height: 380px;
-    padding-right: 300px;
 
     .header-country__title-country {
       padding: 35px 0 50px;
@@ -40,7 +38,6 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 300px;
       padding: 40px 0 0;
       svg {
         fill: $blue;
