@@ -685,10 +685,7 @@ define([
       var img = new Image();
       img.src = url;
       return url;
-    },
-
-
-
+    }
 
 
   });

@@ -242,6 +242,7 @@ define([
      */
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
+      
       this.view.setSelects(iso, this.status.get('dont_analyze'));
       mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
 
@@ -256,6 +257,7 @@ define([
       resource = this._buildResource(resource);
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Iso: ' + resource.iso.country);
 
+      //Pan map to selected country.
       if (!iso.region) {
         // Get geojson/fit bounds/draw geojson/publish analysis.
         countryService.execute(resource.iso, _.bind(function(results) {
@@ -275,7 +277,6 @@ define([
           }else{
             mps.publish('Spinner/stop');
           }
-
 
         },this));
       } else {

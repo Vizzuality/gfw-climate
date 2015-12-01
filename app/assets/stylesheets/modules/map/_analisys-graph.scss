@@ -1,0 +1,78 @@
+.graph-line-bar {
+  padding: 20px 0;
+
+  #TreeLoosCarbonEmissions-graph {
+    position: relative;
+    height: 250px;
+    width: 250px;
+  }
+
+  .bar {
+    shape-rendering: crispEdges;
+  }
+  
+  .line {
+    fill: none;
+    stroke: #ff6699;
+    stroke-width: 2px;
+  }
+}
+
+
+.tooltip-graph {
+  display: none;
+  position: absolute;
+  top: 175px;
+  transform: translatex(-50%);
+  z-index: 1;
+  pointer-events: none;
+  font-size: 12px;
+  color: #ff6699;
+}
+
+.graph-legend {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 20px;
+  
+  .tree-cover-loss,
+  .gross-carbon-emissions {
+    @include clearfix();
+  }
+
+  p:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+  }
+
+  .tree-cover-loss p:before {
+    color: #ff6699;
+    border-radius: 50%;
+    border: 3px solid #ff6699;
+  }
+
+  .gross-carbon-emissions p:before {
+    background-color: #d9d9d9;
+  }
+
+  p {
+    position: relative;
+    font-size: 12px;
+    float: left;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+
+  span {
+    float: right;
+    font-size: 12px;
+    margin-left: 5px;
+  }
+}
