@@ -8,7 +8,6 @@ RSpec.describe MapController, type: :controller do
 
     it "GET index returns http redirect to accept_terms_path" do
       get :index
-      expect(response).to redirect_to accept_terms_path
       expect(response).to have_http_status(302)
     end
 
