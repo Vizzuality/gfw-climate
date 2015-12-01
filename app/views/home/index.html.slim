@@ -1,6 +1,6 @@
 .layout-content
   section#main-slider.main-slider
-    nav.mobile-hide.is-temporary-disabled.disabled-source data-source="temporary-disabled"
+    nav.mobile-hide
       h2
         | Suggestions for getting started
         #get-started.box-button.no-pointer-events
@@ -129,13 +129,13 @@
       .inner
         .row
           .col.col6
-            a.is-temporary-disabled.disabled-source (href="/map" data-source="temporary-disabled")
+            a(href="/map")
               .icon
                 svg
                   use (xlink:href="#shape-world" xmlns:xlink="http://www.w3.org/1999/xlink")
               h3 Explore the map
           .col.col6
-            a.is-temporary-disabled.disabled-source (href="/countries" data-source="temporary-disabled")
+            a(href="/countries")
               .icon
                 svg
                   use (xlink:href="#shape-country" xmlns:xlink="http://www.w3.org/1999/xlink")
@@ -173,7 +173,7 @@
                   span interactive map.
 
                 .link-container
-                  a(href="/map" class="btn medium blue is-temporary-disabled disabled-source" data-source="temporary-disabled") Explore map
+                  a(href="/map" class="btn medium blue") Explore map
                   a(href="http://data.globalforestwatch.org/datasets/d87217b5732347ab8a04ef8ffacff1fd_8" target="_blank" class="btn medium blue") Download data
                   
 
@@ -189,7 +189,7 @@
                   | print or share your report with the world.
 
                 .link-container
-                  a (href="/countries" class="btn medium blue is-temporary-disabled disabled-source" data-source="temporary-disabled") Country profiles
+                  a (href="/countries" class="btn medium blue") Country profiles
           .col.-c6
             = image_tag("home/features/img-profiles.png")
 
@@ -208,7 +208,7 @@
                   | you can make the decisions that matter.
 
                 .link-container
-                  a(href="/compare-countries" class="btn medium blue is-temporary-disabled disabled-source" data-source="temporary-disabled") Compare countries
+                  a(href="/compare-countries" class="btn medium blue") Compare countries
 
       section.feature-section.-pantropical
         .feature-content
@@ -222,7 +222,7 @@
                   | have changed over the 21st century.
 
                 .link-container
-                  a(href="/pantropical" class="btn medium blue is-temporary-disabled disabled-source" data-source="temporary-disabled") Pantropical overview
+                  a(href="/pantropical" class="btn medium blue") Pantropical overview
           .col.-c6
             = image_tag("home/features/img-pantropical.png")
 
