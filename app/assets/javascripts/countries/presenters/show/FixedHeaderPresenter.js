@@ -26,12 +26,6 @@ define([
       },
       'Grid/ready': function(p) {
         this._onReadyGrid(p)
-      },
-      'Grid/update': function() {
-        this.view.lockHeader();
-      },
-      'Widgets/update': function() {
-        this.view.lockHeader();
       }
     }],
 
@@ -59,7 +53,6 @@ define([
         this._updateOptions(p);
         this.view.unlockHeader();
       }
-
     },
 
     _updateOptions: function(p) {
