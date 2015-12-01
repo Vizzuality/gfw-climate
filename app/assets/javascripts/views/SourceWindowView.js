@@ -109,10 +109,6 @@ define([
       this.$body.addClass('is-no-scroll');
       this.$html.addClass('is-no-scroll');
 
-      if ( $(e.currentTarget).hasClass('is-temporary-disabled') ) {
-        this.$sourceWindow.addClass('launching-soon');
-      }
-
       return this;
     }
 
