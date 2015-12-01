@@ -33,8 +33,8 @@ define([
       // Carbon density
       "hwsd",
       // Carbon loss
-      "biomass_loss",
-      "carbon_stocks"
+      "carbon_stocks",
+      "biomass_loss"
     ],
 
     categoryOrder: [

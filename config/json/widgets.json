@@ -2,6 +2,7 @@
   {
     "id": 1,
     "name": "Deforestation rate",
+    "slug": "deforestation-rate",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "line",
@@ -140,6 +141,7 @@
   {
     "id": 2,
     "name": "Carbon emissions",
+    "slug": "carbon-emissions",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "line",
@@ -150,7 +152,7 @@
         "position": 1,
         "name": "Annual gross carbon emissions",
         "subname": "(WHRC/Baccini et al. 2015)",
-        "ipcc" : "(IPCC Tier 2)",
+        "ipcc" : "(IPCC Tier 1/2)",
         "type": "line",
         "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014],
         "rangetype" : "year",
@@ -278,6 +280,7 @@
   {
     "id": 3,
     "name": "Total carbon stored in trees",
+    "slug": "total-carbon-stored-in-trees",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "pie",
@@ -507,6 +510,7 @@
   {
     "id": 4,
     "name": "Total carbon stored in soil",
+    "slug": "total-carbon-stored-in-soil",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "number",
@@ -538,6 +542,7 @@
   {
     "id": 5,
     "name": "Forest area 2000",
+    "slug": "forest-area-2000",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "number",
@@ -601,6 +606,7 @@
   {
     "id": 6,
     "name": "Emissions from Deforestation vs. All Other Sectors",
+    "slug": "emissions-from-deforestation-vs-all-other-sectors",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "number",
@@ -629,6 +635,7 @@
   {
     "id": 7,
     "name": "Average carbon stored in trees per unit area",
+    "slug": "average-carbon-stored-in-trees-per-unit-area",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "pie",
@@ -858,6 +865,7 @@
   {
     "id": 8,
     "name": "Average carbon stored in soils per unit area",
+    "slug": "average-carbon-stored-in-soils-per-unit-area",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "number",
@@ -889,6 +897,7 @@
   {
     "id": 9,
     "name": "Emissions from peat drainage",
+    "slug": "emissions-from-peat-drainage",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "number",
@@ -918,6 +927,7 @@
   {
     "id": 10,
     "name": "Top 5 crops expanding in the area",
+    "slug": "top-5-crops-expanding-in-the-area",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "list",
@@ -947,6 +957,7 @@
   {
     "id": 11,
     "name": "Drivers of deforestation and degradation",
+    "slug": "drivers-of-deforestation-and-degradation",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "list",
@@ -974,6 +985,7 @@
   {
     "id": 12,
     "name": "Human population trends",
+    "slug": "human-population-trends",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "line",
@@ -1019,6 +1031,7 @@
   {
     "id": 13,
     "name": "Value of Primary Agricultural Export Commodity",
+    "slug": "value-of-primary-agricultural-export-commodity",
     "type_slug": "policy-and-drivers",
     "type": "Policy and Drivers",
     "type_chart": "line",
@@ -1056,6 +1069,7 @@
   {
     "id": 14,
     "name": "Value of Primary Wood Product Export Commodity",
+    "slug": "value-of-primary-wood-product-export-commodity",
     "type": "Policy and Drivers",
     "type_slug": "policy-and-drivers",
     "type_chart": "line",
