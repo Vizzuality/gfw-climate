@@ -44,9 +44,9 @@ define([
         var pixelPos = (j*w + i) * components;
         var intensity = imgdata[pixelPos+3];
 
-        imgdata[pixelPos] = 240;
-        imgdata[pixelPos + 1] = 120;
-        imgdata[pixelPos + 2] = 61;
+        imgdata[pixelPos] = 89;
+        imgdata[pixelPos + 1] = 51;
+        imgdata[pixelPos + 2] = 22;
 
         // apply intensity-dependent saturation on R & B channels
         //imgdata[pixelPos ] = (72 - zoom) + 151 - (3 * myscale(intensity) / zoom);
@@ -58,7 +58,7 @@ define([
         //   imgdata[pixelPos+ 3] = intensity*0.8;
         // }
 
-        imgdata[pixelPos + 3] = zoom < 13 ? myscale(intensity)*0.8 : intensity*0.8;
+        imgdata[pixelPos + 3] = zoom < 13 ? myscale(intensity)*0.5 : intensity*0.5;
       }
     }
     },

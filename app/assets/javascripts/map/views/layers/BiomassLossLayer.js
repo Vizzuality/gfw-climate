@@ -66,32 +66,32 @@ define([
          if (yearLoss >= yearStart && yearLoss <= yearEnd) {
            
            if (myscale(intensity) <255){
-               imgdata[pixelPos] = 189;
-               imgdata[pixelPos + 1] = 0;
+               imgdata[pixelPos] = 210;
+               imgdata[pixelPos + 1] = 31;
                imgdata[pixelPos + 2] = 38;
            }
             if (myscale(intensity) <180){
-               imgdata[pixelPos] = 240;
-               imgdata[pixelPos + 1] = 59;
-               imgdata[pixelPos + 2] = 32;
+               imgdata[pixelPos] = 210;
+               imgdata[pixelPos + 1] = 31;
+               imgdata[pixelPos + 2] = 38;
            }
-           if (myscale(intensity) <100){
-               imgdata[pixelPos] = 253;
-               imgdata[pixelPos + 1] = 141;
-               imgdata[pixelPos + 2] = 60;
+           if (myscale(intensity) <196){
+               imgdata[pixelPos] = 128;
+               imgdata[pixelPos + 1] = 94;
+               imgdata[pixelPos + 2] = 114;
            }
             if (myscale(intensity) <50){
-               imgdata[pixelPos] = 240;
-               imgdata[pixelPos + 1] = 59;
-               imgdata[pixelPos + 2] = 32;
+               imgdata[pixelPos] = 128;
+               imgdata[pixelPos + 1] = 94;
+               imgdata[pixelPos + 2] = 114;
            }
             if (myscale(intensity) <20){
-               imgdata[pixelPos] = 255;
-               imgdata[pixelPos + 1] = 255;
-               imgdata[pixelPos + 2] = 178;
+               imgdata[pixelPos] = 0;
+               imgdata[pixelPos + 1] = 112;
+               imgdata[pixelPos + 2] = 168;
            }
            
-           imgdata[pixelPos + 3] = z < 13 ? myscale(intensity) : intensity;;
+           imgdata[pixelPos + 3] = z < 13 ? myscale(intensity) : intensity;
         } else {
           imgdata[pixelPos + 3] = 0;
          }
