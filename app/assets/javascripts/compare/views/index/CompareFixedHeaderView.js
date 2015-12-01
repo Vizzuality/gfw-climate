@@ -52,14 +52,12 @@ define([
       var scrollTop = this.$document.scrollTop();
       this.calculateOffsets();
       if (scrollTop > this.offsetTop) {
-        this.$offsetTop.css({'padding-top': this.$el.height()});
         if(scrollTop < this.offsetBottom) {
           this.$el.removeClass('is-bottom').addClass('is-fixed');
         }else{
           this.$el.removeClass('is-fixed').addClass('is-bottom');
         }
       }else{
-        this.$offsetTop.css({'padding-top': 0});
         this.$el.removeClass('is-fixed is-bottom');
       }
     },
