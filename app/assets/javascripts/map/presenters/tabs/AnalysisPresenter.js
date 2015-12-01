@@ -41,14 +41,7 @@ define([
   var AnalysisToolPresenter = PresenterClass.extend({
 
     datasets: {
-      'loss': 'umd-loss-gain',
-      'forestgain': 'umd-loss-gain',
-      'forma': 'forma-alerts',
-      'imazon': 'imazon-alerts',
-      'fires': 'nasa-active-fires',
-      'modis': 'quicc-alerts',
-      'terrailoss': 'terrai-alerts',
-      'prodes' : 'prodes-alerts'
+      'biomass_loss': 'biomass-loss',
     },
 
     init: function(view) {
@@ -242,7 +235,7 @@ define([
      */
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
-      
+
       this.view.setSelects(iso, this.status.get('dont_analyze'));
       mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
 
@@ -529,14 +522,11 @@ define([
      */
     _setBaselayer: function(baselayers) {
       var baselayer;
-      if (baselayers['loss']) {
-        baselayer = baselayers['loss'];
-        this.status.set('both', (baselayers['forestgain']) ? true : false);
-      }else{
-        baselayer = baselayers[_.first(_.intersection(
-          _.pluck(baselayers, 'slug'),
-          _.keys(this.datasets)))];
-      }
+      baselayer = baselayers[_.first(_.intersection(
+        _.pluck(baselayers, 'slug'),
+        _.keys(this.datasets)))];
+      console.log(baselayers);
+      console.log(baselayer);
       $('#analyzeBtn').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();
