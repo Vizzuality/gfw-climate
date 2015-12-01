@@ -83,31 +83,17 @@ define([
     },
 
     _drawCanvasImage: function(canvasData) {
-      var canvas = canvasData.canvas;
-      var image = canvasData.image;
-      var x = canvasData.x;
-      var y = canvasData.y;
-      var z = canvasData.z;
-
-      var ctx = canvas.getContext('2d');
-      var zsteps = this._getZoomSteps(z);
-
-      if (zsteps < 0) {
-        ctx.drawImage(image, 0, 0);
-      } else {
-        ctx.imageSmoothingEnabled = false;
-        ctx.mozImageSmoothingEnabled = false;
-        ctx.webkitImageSmoothingEnabled = false;
-
-        var srcX = 256 / Math.pow(2, zsteps) * (x % Math.pow(2, zsteps));
-        var srcY = 256 / Math.pow(2, zsteps) * (y % Math.pow(2, zsteps));
-        var srcW = 256 / Math.pow(2, zsteps);
-        var srcH = 256 / Math.pow(2, zsteps);
-
-        ctx.clearRect(0, 0, 256, 256);
-        ctx.drawImage(image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
-      }
-
+      var canvas = canvasData.canvas,
+          ctx = canvas.getContext('2d'),
+          image = canvasData.image;
+ 
+      var x = canvasData.x,
+          y = canvasData.y,
+          z = canvasData.z;
+ 
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0);
+ 
       var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
       this.filterCanvasImgdata(I.data, canvas.width, canvas.height, z);
       ctx.putImageData(I, 0, 0);
