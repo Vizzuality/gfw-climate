@@ -15,4 +15,15 @@ class StaticController < ApplicationController
   def about
   end
 
+  def forest_change_data
+    file = File.join(Rails.root, 'lib', 'data', 'forest_area_change_table.csv')
+    @table = CSV.read(file)
+    @table.shift
+  end
+
+  def biomass_data
+    file = File.join(Rails.root, 'lib', 'data', 'biomass_table.csv')
+    @table = CSV.read(file)
+    @table.shift
+  end
 end

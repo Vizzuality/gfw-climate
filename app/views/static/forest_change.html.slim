@@ -1,0 +1,25 @@
+table
+  thead
+    tr
+      th Region
+      th Country
+      th Tier
+      th Primary Data Type
+      th Primary Year
+      th Primary Source
+      th Secondary Data Type
+      th Secondary Year
+      th Secondary Source
+      th Notes
+  tbody
+    - @table.each do |row|
+      tr
+        td= row[0]
+        td= row[1]
+        td= row[2]
+        td= row[3]
+        td= row[4]
+        td= row[5]
+        td= row[6]
+        td= row[7]
+        td= row[8]

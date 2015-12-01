@@ -22,6 +22,9 @@ Rails.application.routes.draw do
   get  'terms',        to: 'static#terms',        as: :terms
   get  'about',        to: 'static#about',        as: :about
   get  'data-methods', to: 'static#data_methods', as: :data_methods
+  get  'forest_change_data', to: 'static#forest_change_data',
+    as: :forest_change_data
+  get  'biomass_data', to: 'static#biomass_data', as: :biomass_data
 
   with_options only: [:index, :show] do |list_show_only|
     list_show_only.resources :countries
