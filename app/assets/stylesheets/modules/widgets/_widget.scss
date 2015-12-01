@@ -22,6 +22,8 @@
     > .options {
       display: flex;
       float: right;
+      min-width: 161px;
+      padding: 0 0 0 10px;
 
       > li{
         margin: 0 3px;
@@ -72,7 +74,7 @@
 
             width: auto;
             font-size: 10px;
-            padding: 3px 5px 0 16px;
+            padding: 1px 5px 0 16px;
             border-radius: 8px;
 
             svg {

@@ -17,6 +17,7 @@ define([
       this.parent        = options.parent;
       this.widgets       = options.widgets;
 
+
       if (!this.jurisdictions || !this.widgets) {
         this.render();
       } else {
@@ -38,7 +39,7 @@ define([
           var newWidget = new WidgetView({
             model: {
               id: w[0].id,
-              slug: key,
+              jur_slug: key,
               location: {
                 iso: this.iso,
                 jurisdiction: currentJurisdiction.idNumber,
@@ -80,7 +81,7 @@ define([
         var data = [];
 
         var widgetsGroup = _.groupBy(widgetsArray, function(w) {
-          return w.presenter.model.attributes.slug;
+          return w.presenter.model.attributes.jur_slug;
         });
 
         this.jurisdictions.forEach(function(j, i) {
@@ -92,7 +93,6 @@ define([
         }.bind(this));
 
         _.each(data, _.bind(function(d) {
-
           _.each(d.widgets, (function(w) {
             $('#box-jurisdictions-' + d.jurisdiction.id+ ' .gridgraphs-container').append(w.render().el);
           }));

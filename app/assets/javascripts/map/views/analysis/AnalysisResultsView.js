@@ -40,6 +40,7 @@ define([
     },
 
     initialize: function() {
+      console.log('analisys view');
       this.model = new AnalysisResultsModel();
       this.presenter = new Presenter(this);
       this.$resultsHide = $('.results-hide');
@@ -108,6 +109,7 @@ define([
     },
 
     _subscribe: function() {
+      console.log('subscribe')
       this.presenter.subscribeAnalysis();
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
     },

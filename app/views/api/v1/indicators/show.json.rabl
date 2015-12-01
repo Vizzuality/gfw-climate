@@ -15,6 +15,8 @@ node do |value|
     country_name:         value['admin0_name'],
     year:                 value['year'],
     value:                value['value'],
-    text_value:           value['text_value']
+    text_value:           value['text_value'],
+    sub_nat_name:         value['sub_nat_name'],
+    boundary_name:        value['boundary_name']
   }
 end

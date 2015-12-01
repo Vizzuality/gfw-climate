@@ -5,7 +5,8 @@ define([
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView',
   'countries/views/CountryPantropicalView'
-], function(Backbone, utils, PlaceService, CountryIndexView, CountryShowView,CountryPantropicalView) {
+], function(Backbone, utils, PlaceService, CountryIndexView,
+  CountryShowView,CountryPantropicalView) {
 
   'use strict';
 
@@ -40,7 +41,6 @@ define([
     _initPantropical: function() {
       new CountryPantropicalView();
     }
-
   });
 
   return Router;

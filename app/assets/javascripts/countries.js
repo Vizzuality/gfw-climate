@@ -7,8 +7,7 @@ require([
   'backbone',
   'countries/router',
   'countries/views/CountryShowView',
-  'countries/views/CountryIndexView',
-  // 'countries/views/CountryModalView'
+  'countries/views/CountryIndexView'
 ], function($, _, Backbone, RouterView, CountryShowView, CountryIndexView) {
 
   'use strict';
