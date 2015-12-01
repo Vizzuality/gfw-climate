@@ -1,0 +1,59 @@
+<section class="header-static">
+  <div class="inner">
+    <header>
+      <h2>About</h2>
+      <h3>Global Forest Watch Climate (GFW Climate) is the latest <a href="http://www.globalforestwatch.org">Global Forest Watch application</a>, joining a host of interactive online forest monitoring tools designed to empower people everywhere with the information they need to better manage and conserve forest landscapes. GFW Climate strives to deliver timely and accurate data on forest carbon in a way that unlocks insights for government, REDD+ donors, the private sector, NGOs, journalists, universities and the general public.</h3>
+    </header>
+  </div>
+</section>
+
+<section id="sidebarNavView" class="content-static">
+  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg><ABBR>About</ABBR></a>
+  <div class="inner">
+    <div class="row">
+      <aside id="sidebarAside">
+        <ul>
+          <li>
+            <a href="#" class="nav-title">
+              <svg><use xlink:href="#shape-fast-forward-up"></use></svg>
+              <%= @title %>
+            </a>
+          </li>
+          <li><%= link_to 'About GFW Climate', "#{about_path}/about-gfw-climate", :"data-slug" => 'about-gfw-climate', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw-climate selected' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'FAQ', "#{about_path}/faq", :"data-slug" => 'faq', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item faq' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Data Providers and Partners', "#{about_path}/data-providers", :"data-slug" => 'data-providers', :"data-interesting" => 'about_fires, about_commodities, data-providers', :class => 'nav-item data-providers' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+        </ul>
+      </aside>
+      <div id="sources-box" class="sources-box">
+        <div class="sources-content">
+          <article id='about-gfw-climate' class='source-article'>
+            <header>
+              <h2>About GFW Climate</h2>
+            </header>
+            <div class="content">
+              <ul class='faq-list'>
+                <li>
+                  <h3>Purpose</h3>
+                  <p>GFW Climate provides (interactive and high resolution (30 meter) maps) of both the carbon stored in forests and the carbon dioxide emitted to the atmosphere when forests are cleared. It also offers a customized user experience through the creation of on-the-fly maps and analysis, (interactive country dashboards), (customized reports) and (data downloads). The result is decision-relevant information that is transparent, easy to understand, and available to all who want to mitigate climate change through the implementation of better forest policies and programs. The entire GFW platform is free to use and follows an (open data approach).</p>
+				<p>GFW Climate is supported by a diverse (partnership of organizations) that contribute data, technology, funding, and expertise. The GFW partnership is convened by the World Resources Institute. See a full list of partners below.</p>
+                </li>
+                <li>
+                  <h3>Staff</h3>
+                  <p>View a list of <a href='http://www.wri.org/our-work/project/global-forest-watch' target='_blank'>staff</a> who work on Global Forest Watch Climate. </p>
+                </li>
+              </ul>
+            </div>
+          </article>
+          <article id='faq' class="source-article">
+          </article>
+
+          <article id='data-providers' class="source-article">
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="cut" style="height:1px;"></div>
+
+<section id="interestingView" class="interesting-section"></section>
