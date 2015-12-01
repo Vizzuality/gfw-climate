@@ -42,16 +42,30 @@ define([
     for(var i=0; i < w; ++i) {
       for(var j=0; j < h; ++j) {
         var pixelPos = (j*w + i) * components;
-        var intensity = imgdata[pixelPos+3];
+        var intensity = imgdata[pixelPos+2];
            
            if (myscale(intensity) <256){
-               imgdata[pixelPos] = 159;
-               imgdata[pixelPos + 1] = 212;
-               imgdata[pixelPos + 2] = 177;
-               imgdata[pixelPos + 3] = 255;
+               imgdata[pixelPos] = 157;
+               imgdata[pixelPos + 1] = 179;
+               imgdata[pixelPos + 2] = 138;
+               imgdata[pixelPos + 3] = 250;
+
+           }
+           if (myscale(intensity) <220){
+               imgdata[pixelPos] = 157;
+               imgdata[pixelPos + 1] = 179;
+               imgdata[pixelPos + 2] = 138;
+               imgdata[pixelPos + 3] = 150;
 
            }
             if (myscale(intensity) <180){
+               imgdata[pixelPos] = 159;
+               imgdata[pixelPos + 1] = 212;
+               imgdata[pixelPos + 2] = 177;
+               imgdata[pixelPos + 3] = 250;
+
+           }
+           if (myscale(intensity) <140){
                imgdata[pixelPos] = 157;
                imgdata[pixelPos + 1] = 179;
                imgdata[pixelPos + 2] = 138;
@@ -59,16 +73,24 @@ define([
 
            }
            if (myscale(intensity) <100){
-               imgdata[pixelPos] = 149;
-               imgdata[pixelPos + 1] = 127;
-               imgdata[pixelPos + 2] = 79;
-               imgdata[pixelPos + 3] = 250;
+               imgdata[pixelPos] = 148;
+               imgdata[pixelPos + 1] = 123;
+               imgdata[pixelPos + 2] = 75;
+               imgdata[pixelPos + 3] = 255;
            }
-            if (myscale(intensity) <50){
+  
+            if (myscale(intensity) <75){
                imgdata[pixelPos] = 137;
                imgdata[pixelPos + 1] = 81;
                imgdata[pixelPos + 2] = 34;
-               imgdata[pixelPos + 3] = 250;
+               imgdata[pixelPos + 3] = 180;
+               
+           }
+           if (myscale(intensity) <30){
+               imgdata[pixelPos] = 137;
+               imgdata[pixelPos + 1] = 81;
+               imgdata[pixelPos + 2] = 34;
+               imgdata[pixelPos + 3] = 255;
                
            }
            if (myscale(intensity) <1){

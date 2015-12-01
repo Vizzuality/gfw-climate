@@ -71,10 +71,22 @@ define([
                imgdata[pixelPos + 2] = 11;
                imgdata[pixelPos + 3] = 255;
            }
-           if (myscale(intensity) <196){
+           if (myscale(intensity) <200){
+               imgdata[pixelPos] = 241;
+               imgdata[pixelPos + 1] = 152;
+               imgdata[pixelPos + 2] = 19;
+               imgdata[pixelPos + 3] = 255;
+           }
+           if (myscale(intensity) <150){
                imgdata[pixelPos] = 210;
                imgdata[pixelPos + 1] =31; 
                imgdata[pixelPos + 2] = 38;
+               imgdata[pixelPos + 3] = 255;
+           }
+           if (myscale(intensity) <100){
+               imgdata[pixelPos] = 76;
+               imgdata[pixelPos + 1] =83; 
+               imgdata[pixelPos + 2] = 122;
                imgdata[pixelPos + 3] = 255;
            }
             if (myscale(intensity) <50){
