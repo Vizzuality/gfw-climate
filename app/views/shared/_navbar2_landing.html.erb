@@ -6,7 +6,7 @@
   </form>
   <div id="google_translate_element_box2"></div>
   <div id="mobileMenu"></div>
-  <% disabled_class = ENV["DISABLE_LINKS"] == "true" ? "is-temporary-disabled source" : "" %>
+  <% disabled_class = ENV["DISABLE_LINKS"] == "true" ? "is-temporary-disabled disabled-source" : "" %>
   <% disabled_data_source = ENV["DISABLE_LINKS"] == "true" ? "temporary-disabled" : "" %>
   <ul class="mobile-hide">
     <li class="<%= disabled_class %>" data-source="<%= disabled_data_source %>">
