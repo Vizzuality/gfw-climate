@@ -3,13 +3,13 @@ define([
   'countries/views/show/FixedHeaderView',
   'countries/views/show/CountryShowHeaderView',
   'countries/views/show/TabsView',
-  'countries/views/show/CountryModalView',
+  'countries/views/show/CountryWidgetsModalView',
   'countries/views/show/WidgetGridView',
   // Common views
   'views/SourceModalView',
 
 ], function(Backbone, FixedHeaderView,
-  CountryShowHeaderView, TabsView, CountryModalView, WidgetGridView, SourceModalView) {
+  CountryShowHeaderView, TabsView, CountryWidgetsModalView, WidgetGridView, SourceModalView) {
 
   'use strict';
 
@@ -17,7 +17,7 @@ define([
 
     initialize: function() {
       new CountryShowHeaderView();
-      new CountryModalView();
+      new CountryWidgetsModalView();
       new FixedHeaderView();
       new TabsView();
       new WidgetGridView();
