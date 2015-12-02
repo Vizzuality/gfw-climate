@@ -59,7 +59,7 @@ define([
               intensity = imgdata[pixelPos+2] |0;
              
             var intensity_scaled = myscale(intensity) |0,
-            bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
+            bucket = (~~(countBuckets * intensity_scaled / 256) * 4);
 
             imgdata[pixelPos] = c[bucket];
             imgdata[pixelPos + 1] = c[bucket + 1];
