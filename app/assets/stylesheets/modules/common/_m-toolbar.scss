@@ -9,7 +9,7 @@
 
     .options_item {
       padding: 0 20px;
-
+      cursor: pointer;
       svg {
         display: inline-block;
         width: 15px;
@@ -25,12 +25,23 @@
         font-family: inherit;
         cursor: pointer;
       }
+
       a, button {
         margin-left: 5px;
         font-size: 14px;
         color: $dark;
         text-transform: uppercase;
         font-weight: 500;
+      }
+
+      &.-disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.5;
+        a,button{
+          pointer-events: none;
+          cursor: default;
+        }
       }
     }
   }
