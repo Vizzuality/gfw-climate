@@ -1,16 +1,16 @@
 section.l-compare-countries
   .l-toolbar
     .inner
-      .m-toolbar
+      .m-toolbar#toolbarView
         ul.options
-          li.options_item
+          li.options_item.btn-share (data-hideembed="true")
             svg
               use (xlink:href="#shape-share")
-            button#share-country share
-          li.options_item
+            button share
+          li.options_item.-disabled.btn-save
             svg
-              use (xlink:href="#shape-share")
-            button#print-country save/print report
+              use (xlink:href="#shape-alerts")
+            button save/print report
   .l-header
     .inner
       .m-section-header
