@@ -24,8 +24,8 @@ define([
     },
 
     _subscriptions: [{
-      'Compare/reflection': function(id,slug_compare,status) {
-        if (this.model.get('id') == id && this.model.get('slug') == slug_compare) {
+      'Compare/reflection': function(id,slugw_compare,status) {
+        if (this.model.get('id') == id && this.model.get('slugw') == slugw_compare) {
           this.status.set(status);
         }
       },
@@ -75,9 +75,9 @@ define([
 
 
     publish: function() {
-      mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
+      mps.publish('Options/updated', [this.model.get('id'),this.model.get('slugw'),this.status.toJSON()]);
       if (this.status.get('tabs').lock) {
-        mps.publish('Compare/reflection', [this.model.get('id'),this.model.get('slug_compare'),this.status.toJSON()]);
+        mps.publish('Compare/reflection', [this.model.get('id'),this.model.get('slugw_compare'),this.status.toJSON()]);
       }
     },
 

@@ -42,7 +42,7 @@ define([
 
     },
 
-    fetchIndicator: function(params, type, slug) {
+    fetchIndicator: function(params, type, slugw) {
       var r = new $.Deferred();
       var promises = [];
 
@@ -113,8 +113,8 @@ define([
           rangeX: rangeX,
           rangeY: rangeY,
           lock: this.model.get('lock'),
-          slug: this.model.get('slug'),
-          slug_compare: this.model.get('slug_compare'),
+          slugw: this.model.get('slugw'),
+          slugw_compare: this.model.get('slugw_compare'),
           sizing: {top: 10, right: 10, bottom: 20, left: 0},
           innerPadding: { top: 15, right: 10, bottom: 20, left: 50 },
           keys: { x: 'year', y: 'value' }
@@ -146,12 +146,12 @@ define([
     // Helpers for parse data
     getPromises: function(params,paramsCompare) {
       this.$el.addClass('is-loading');
-      var slug = this.model.get('slug');
-      var slug_compare = this.model.get('slug_compare');
+      var slugw = this.model.get('slugw');
+      var slugw_compare = this.model.get('slugw_compare');
       if(!!this.model.get('lock')) {
-        return [this.fetchIndicator(params, 'data',slug),this.fetchIndicator(paramsCompare, 'data_compare',slug_compare)]
+        return [this.fetchIndicator(params, 'data',slugw),this.fetchIndicator(paramsCompare, 'data_compare',slugw_compare)]
       } else {
-        return [this.fetchIndicator(params, 'data',slug)]
+        return [this.fetchIndicator(params, 'data',slugw)]
       }
 
     },
