@@ -70,47 +70,37 @@ define([
      * Render analysis results.
      *
      */
-    renderAnalysis: function() {
+    renderAnalysis: function(params) {
+      this.setParams(params);
       this.$el.html(this.templates.chart()).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
       this.drawChart();
     },
 
-
-    //DRAW COUNTRIES RESULTS GRAPHS FOR  Gross Carbon Emissions AND Tree cover loss.
-
     drawChart: function() {
-
-
-
       var data = this.parseData(this.presenter.status.get('results'));
 
-      // new BarChart({
-      //   elem: '#loss-carbon-chart',
-      //   barWidth: 22,
-      //   barSeparation: 13,
-      //   data: data,
-      //   hover: true,
-      //   loader: 'is-loading',
-      //   interpolate: 'basis',
-      //   unit: 'CO2T',
-      //   unitZ: 'Ha',
-      //   hasLine: true
-      // });
-      // // debugger
-      // $('.graph-line-bar').removeClass('is-hidden');
+      new BarChart({
+        elem: '#loss-carbon-chart',
+        barWidth: 30,
+        barSeparation: 5,
+        data: data,
+        hover: true,
+        loader: 'is-loading',
+        interpolate: 'basis',
+        unit: 'CO2T',
+        unitZ: 'Ha',
+        hasLine: true
+      });
     },
 
     parseData: function(data) {
-      console.log('¿¿¿¿¿¿¿PARSE DATA!!!!!!');
-      console.log(data);
-    },
+      var barValues = _.map(data.biomass_loss_by_year,function(v,k){return {year:k,value:v}});
+      var lineValues = _.map(data.tree_loss_by_year,function(v,k){return {year:k,value:v}});
+      var dataParsed = [];
 
-    _parseData: function(line, bar) {
-      var data = [];
-
-      $.each(bar.values, function() {
+      $.each(barValues, function(v,i) {
         if (this.year != 0 && this.year != 2015) {
           var valueSet = {};
 
@@ -120,17 +110,13 @@ define([
           valueSet.LegendLine = "Tree cover loss";
           valueSet.color = '#d9d9d9';
           valueSet.lineColor = '#ff6699';
-          valueSet.z = (_.where(line.values, {'year': this.year })[0] && _.where(line.values, {'year': this.year })[0].value) ? _.where(line.values, {'year': this.year })[0].value : '';
+          valueSet.z = _.findWhere(lineValues, {'year': this.year }).value;
 
-          data.push(valueSet);
+          dataParsed.push(valueSet);
         }
-
-      })
-      return data;
+      });
+      return dataParsed;
     },
-
-
-
 
     /**
      * Render failure analysis request message.

@@ -245,7 +245,7 @@ define([
     },
 
     getSubCountries: function(){
-      this.$regionSelect.attr('disabled', true).trigger("liszt:updated");
+      this.$regionSelect.attr('disabled', true).trigger("chosen:updated");
       var sql = ["SELECT gadm_1_all.cartodb_id, gadm_1_all.iso, gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1 FROM gadm_1_all, gadm2_provinces_simple where gadm_1_all.iso = '"+this.iso+"' AND gadm2_provinces_simple.iso = '"+this.iso+"' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc"];
       $.ajax({
         url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
@@ -289,7 +289,7 @@ define([
         options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
       }, this ));
       this.$regionSelect.empty().append(options).removeAttr('disabled');
-      this.$regionSelect.val(this.area).trigger("liszt:updated");
+      this.$regionSelect.val(this.area).trigger("chosen:updated");
     },
 
     // Select change iso
@@ -302,7 +302,7 @@ define([
       }else{
         this.presenter.deleteAnalysis();
         this.presenter.resetIsos();
-        this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
+        this.$regionSelect.val(null).attr('disabled', true).trigger("chosen:updated");
       }
     },
     changeArea: function(e){
@@ -315,7 +315,7 @@ define([
       this.iso = iso.country;
       this.area = iso.region;
 
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      this.$countrySelect.val(this.iso).trigger("chosen:updated");
       if (this.iso) {
         this.getSubCountries();
         if (!dont_analyze) {
@@ -323,7 +323,7 @@ define([
         }
       }else{
         this.$countryButton.removeClass('disabled');
-        this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
+        this.$regionSelect.val(this.area).attr('disabled', true).trigger("chosen:updated")
       }
     },
 

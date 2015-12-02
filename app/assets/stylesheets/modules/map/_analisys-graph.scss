@@ -1,16 +1,12 @@
 .graph-line-bar {
-  padding: 20px 0;
-
-  #TreeLoosCarbonEmissions-graph {
-    position: relative;
-    height: 250px;
-    width: 250px;
-  }
+  width: 100%;
+  height: 180px;
+  position: relative;
 
   .bar {
     shape-rendering: crispEdges;
   }
-  
+
   .line {
     fill: none;
     stroke: #ff6699;
@@ -21,13 +17,51 @@
 
 .tooltip-graph {
   display: none;
+  min-width: 150px;
   position: absolute;
-  top: 175px;
-  transform: translatex(-50%);
+  transform: translate(-50%, -100%);
   z-index: 1;
   pointer-events: none;
   font-size: 12px;
-  color: #ff6699;
+  background: #FFF;
+  padding: 10px;
+  box-shadow: $shadow1;
+
+  .line-value{
+    color: #ff6699;
+    &:before {
+      color: #ff6699;
+      border-radius: 50%;
+      border: 3px solid #ff6699;
+    }
+  }
+  .bar-value {
+    color: $light-grey;
+    &:before {
+      background-color: $light-grey;
+    }
+  }
+  .year-value {
+    font-size: 21px;
+  }
+
+  p{
+    position: relative;
+    padding: 0 0 0 15px;
+    margin: 5px 0 0;
+    &:first-child {
+      margin: 0;
+    }
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 10px;
+    }
+  }
 }
 
 .graph-legend {
@@ -36,7 +70,7 @@
   left: 0;
   right: 0;
   padding-top: 20px;
-  
+
   .tree-cover-loss,
   .gross-carbon-emissions {
     @include clearfix();
@@ -59,7 +93,7 @@
   }
 
   .gross-carbon-emissions p:before {
-    background-color: #d9d9d9;
+    background-color: $light-grey;
   }
 
   p {

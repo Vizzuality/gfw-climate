@@ -1,4 +1,10 @@
-define(['d3'], function(d3) {
+define([
+  'd3',
+  'handlebars',
+  'text!widgets/templates/indicators/bars/barschart-tooltip.handlebars'
+], function(d3, Handlebars, tooltipTpl) {
+
+  var tooltipTemplate = Handlebars.compile(tooltipTpl);
 
   var barsChart = function(params) {
     var elem = params.elem;
@@ -11,8 +17,8 @@ define(['d3'], function(d3) {
     var loader = params.loader || null;
     var infoWindow = params.infoWindowText || '';
     var decimals = params.decimals || 0;
-    var unit = params.unit || ''; 
-    var unitZ = params.unitZ || ''; 
+    var unit = params.unit || '';
+    var unitZ = params.unitZ || '';
     var barWidth = params.barWidth || 10;
     var barSeparation = params.barSeparation || 10;
     var xIsDate = params.xIsDate || false;
@@ -22,7 +28,7 @@ define(['d3'], function(d3) {
     var margin = params.margin || {
       top: 0,
       right: 0,
-      bottom: 80,
+      bottom: 65,
       left: 0,
       xaxis: 10,
       tooltip: 1.8
@@ -33,10 +39,6 @@ define(['d3'], function(d3) {
 
     var width = width - margin.left - margin.right,
         height = height - margin.top - margin.bottom;
-    var heightPadding = height - 50;
-
-    var totalBarsWidth = ((barWidth + barSeparation) * data.length) - barSeparation;
-    var centerContainer = (contentWidth / 2) - (totalBarsWidth / 2);
 
     if(xIsDate) {
       data.forEach(function(d) {
@@ -46,7 +48,7 @@ define(['d3'], function(d3) {
 
     if(hasLine) {
       var line = d3.svg.line()
-        .x(function(d, i) { 
+        .x(function(d, i) {
           return (barWidth+barSeparation) * i;
         })
         .y(function(d) { return y(d.z); })
@@ -60,39 +62,35 @@ define(['d3'], function(d3) {
       .append('g')
 
     var x = d3.scale.ordinal()
-      .rangeRoundBands([0, width], .4);
+      .rangeBands([0, width], 0.2);
 
     var x2 = d3.scale.ordinal()
-      .rangeBands([0, width], 0);
+      .rangeBands([0, width], 0.2);
 
     x.domain(data.map(function(d) { return d.x; }));
     x2.domain(data.map(function(d) { return d.x; }));
 
-    var yMin = d3.min(data, function(d){ return d.y; });
+    var yMin = 0;
     var yMax = d3.max(data, function(d) { return d.y; });
-
-    if (hasLine) { 
-      var zMin = d3.min(data,function(d){ return d.z; });
-      var zMax = d3.max(data, function(d) { return d.z; });
-    }
 
     var y = d3.scale.linear()
       .domain([yMin, yMax])
       .range([height,yMin]).nice();
 
     if(hasLine) {
+      var zMin = d3.min(data,function(d){ return d.z; });
       var zMax = d3.max(data, function(d) { return d.z; });
       var z = d3.scale.linear()
         .domain([zMin, zMax])
         .range([height,0]).nice();
-     
+
       var y = d3.scale.linear()
         .domain([yMin, yMax])
         .range([height,0]).nice();
     }
 
    var line = d3.svg.line()
-     .x(function(d, i) { 
+     .x(function(d, i) {
        return x2(d.x) + i; })
      .y(function(d) { return z(d.z); })
      .interpolate(interpolate);
@@ -103,10 +101,10 @@ define(['d3'], function(d3) {
         .attr("class", "bar")
         .style('fill', function(d) { return d.color; })
         .attr("x", function(d) { return x(d.x); })
-        .attr("width", x.rangeBand()) 
+        .attr("width", x.rangeBand())
         .attr("y", function(d) { return y(Math.max(0, d.y)); })
         .attr("height", function(d) { return yMin >= 0 ? Math.abs(height - y(d.y)) : Math.abs(y(d.y) - y(0)); })
-    
+
     if(hasLine) {
 
       svgBars.append('g')
@@ -119,69 +117,47 @@ define(['d3'], function(d3) {
 
       svgBars.append('g')
         .attr('transform', function(d,i) {
-          return 'translate(' + ((barWidth) / 2) + ', 0)';
+          return 'translate(0, 0)';
         }).append('path')
           .datum(data)
           .attr('class', 'line')
           .attr('stroke', function(d) { return d.lineColor })
-          .attr('d', line); 
+          .attr('d', line);
     }
 
-    //Toolttio year
+    // Legend
+    d3.select(elem+' .tree-cover-loss-value')
+      .text(d3.format(",.2f")(_.reduce(data, function(memo, d){ return memo + d.z; }, 0)));
+    d3.select(elem+' .gross-carbon-emissions-value')
+      .text(d3.format(",.2f")(_.reduce(data, function(memo, d){ return memo + d.y; }, 0)));
+
+    // Toolttio
     var tooltipEl = elem+'-tooltip';
     var tooltip = d3.select(elem)
-      .insert('div', 'svg')
-        .attr('id', elemAttr+'-tooltip')
-        .attr('class', 'tooltip-graph')
+                    .insert('div', 'svg')
+                      .attr('id', elemAttr+'-tooltip')
+                      .attr('class', 'tooltip-graph');
 
     tooltip.append('span')
       .attr('class', 'tooltip-year');
 
-    var tooltipYear = d3.select(tooltipEl)
-      .select('.tooltip-year');
-
-    //legend
-    var legendEl = elem+'-legend';
-    var legend = d3.select(elem)
-      .insert('div', 'svg')
-        .attr('id', elemAttr+'-legend')
-        .attr('class', 'graph-legend');
-
-    var legendcontent1 = legend.append('div')
-                          .attr('class', 'tree-cover-loss');
-
-    legendcontent1.append('p').html('Tree cover loss');
-    legendcontent1.append('span').attr('class', 'unit').html('Ha');
-    legendcontent1.append('span').attr('class', 'tree-cover-loss-value');
-
-    var legendcontent2 = legend.append('div')
-                          .attr('class', 'gross-carbon-emissions');
-
-    legendcontent2.append('p').html('Gross carbon emissions');
-    legendcontent2.append('span').attr('class', 'unit').html('TCO2');
-    legendcontent2.append('span').attr('class', 'gross-carbon-emissions-value');
 
     d3.selectAll(elem+' .bar').on('mousemove', function (d) {
-      //Legend values
-      d3.select(legendEl)
-        .select('.tree-cover-loss-value')
-        .text(parseFloat(d.z).toFixed(2))
-
-      d3.select(legendEl)
-       .select('.gross-carbon-emissions-value')
-       .text(parseFloat(d.y).toFixed(2))
-
-      //Tooltip year
       var element = d3.select(elem+' svg');
       var cords = d3.mouse(element.node());
 
       d3.select(tooltipEl)
+        .style('top', ( cords[1] + 'px'))
         .style('left', ( cords[0] + 'px'))
         .style('display', 'block');
 
       d3.select(tooltipEl)
         .select('.tooltip-year')
-        .text(d.x);
+        .html(tooltipTemplate({
+          lineValue: d3.format(",.2f")(d.z),
+          barValue: d3.format(",.2f")(d.y),
+          year: d.x
+        }));
     });
 
     d3.selectAll(elem+' .bar').on('mouseout', function () {
