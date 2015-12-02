@@ -43,14 +43,14 @@ define([
             .exponent(exp)
             .domain([0,256])
             .range([0,256]);
-      var c = [137, 81, 34, 0, // first bucket
-               137, 81, 34, 255,
-               137, 81, 34, 230,
+      var c = [137, 81,  34, 0,     // first bucket
+               137, 81,  34, 255,
+               137, 81,  34, 230,
                148, 123, 75, 220,
                148, 123, 75, 200,
                157, 179, 138, 200,
                157, 179, 138, 255,
-               21, 95, 8, 210]; // last bucket 
+               21,  95,  8,   210]; // last bucket 
       var countBuckets = c.length / 4 |0; //4: four bands
 
       for(var i = 0 |0; i < w; ++i) {
@@ -64,7 +64,7 @@ define([
             imgdata[pixelPos] = c[bucket];
             imgdata[pixelPos + 1] = c[bucket + 1];
             imgdata[pixelPos + 2] = c[bucket + 2];
-            imgdata[pixelPos + 3] = 255 | 0;
+            imgdata[pixelPos + 3] = c[bucket + 3];
 
           // apply intensity-dependent saturation on R & B channels
           //imgdata[pixelPos ] = (72 - zoom) + 151 - (3 * myscale(intensity) / zoom);
