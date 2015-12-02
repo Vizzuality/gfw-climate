@@ -64,23 +64,26 @@ define([
                76,  83,  122, 
                210, 31,  38,  
                241, 152, 19,  
-               255, 208, 11]; // last bucket 
+               255, 208, 11]; // last bucket
+      var countBuckets = c.length / 3 |0; //3: three bands
       for(var i = 0 |0; i < w; ++i) {
        for(var j = 0 |0; j < h; ++j) {
-         var pixelPos = ((j * w + i) * components) |0,
-             intensity = imgdata[pixelPos+1] |0;
-          imgdata[pixelPos + 3] = 0 |0;
+          var pixelPos  = ((j * w + i) * components) |0,
+              intensity = imgdata[pixelPos+1] |0;
+
 
           if (intensity > 0) {
             var intensity_scaled = myscale(intensity) |0,
                 yearLoss = 2001 + imgdata[pixelPos] |0;
             if (yearLoss >= yearStart && yearLoss <= yearEnd) {
-              var bucket = (~~(5 * intensity_scaled / 256) * 3);
+              var bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
               imgdata[pixelPos] = c[bucket];
               imgdata[pixelPos + 1] = c[bucket + 1];
               imgdata[pixelPos + 2] = c[bucket + 2];
               imgdata[pixelPos + 3] = 255 | 0;
             }
+          } else {
+            imgdata[pixelPos + 3] = 0 |0;
           }
         }
        }

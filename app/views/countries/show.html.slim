@@ -1,17 +1,17 @@
 .layout-content
   .l-toolbar
     .inner
-      .m-toolbar
+      .m-toolbar#toolbarView
         ul.options
-          li.options_item
+          li.options_item.btn-share (data-hideembed="true")
             svg
               use (xlink:href="#shape-share")
             button#share-country share
-          li.options_item
+          li.options_item.-disabled.btn-save
             svg
               use (xlink:href="#shape-share")
             button#print-country save/print report
-          li.options_item
+          li.options_item.-disabled.btn-analyze
             svg
               use (xlink:href="#shape-country")
             a#analyze-country (href="#") analyze on map

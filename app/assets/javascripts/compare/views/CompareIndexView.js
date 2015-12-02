@@ -8,7 +8,8 @@ define([
   'compare/views/index/CompareWidgetsModalView',
   // Common views
   'views/SourceModalView',
-], function(Backbone, CompareSelectorsView, CompareGridView, CompareModalView, CompareFixedHeaderView, CompareGridButtonBoxView, CompareWidgetsModalView, SourceModalView) {
+  'views/ToolbarView',
+], function(Backbone, CompareSelectorsView, CompareGridView, CompareModalView, CompareFixedHeaderView, CompareGridButtonBoxView, CompareWidgetsModalView, SourceModalView, ToolbarView) {
 
   var CompareIndexView = Backbone.View.extend({
 
@@ -21,6 +22,7 @@ define([
       new CompareWidgetsModalView();
       // Common views
       new SourceModalView();
+      new ToolbarView();
     }
 
   });

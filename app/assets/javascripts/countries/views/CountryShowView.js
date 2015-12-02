@@ -7,9 +7,10 @@ define([
   'countries/views/show/WidgetGridView',
   // Common views
   'views/SourceModalView',
+  'views/ToolbarView',
 
 ], function(Backbone, FixedHeaderView,
-  CountryShowHeaderView, TabsView, CountryModalView, WidgetGridView, SourceModalView) {
+  CountryShowHeaderView, TabsView, CountryModalView, WidgetGridView, SourceModalView, ToolbarView) {
 
   'use strict';
 
@@ -23,6 +24,7 @@ define([
       new WidgetGridView();
       // Common views
       new SourceModalView();
+      new ToolbarView();
     }
 
   });
