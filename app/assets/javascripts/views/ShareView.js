@@ -4,12 +4,13 @@
  * @return ShareView instance (extends Backbone.View).
  */
 define([
+  'backbone',
   'underscore',
   'handlebars',
   'mps',
   'text!templates/share.handlebars',
   'views/SharePreviewView'
-], function(_, Handlebars, mps, tpl, SharePreviewView) {
+], function(Backbonoe,_, Handlebars, mps, tpl, SharePreviewView) {
 
   'use strict';
 

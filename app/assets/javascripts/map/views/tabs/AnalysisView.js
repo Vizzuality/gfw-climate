@@ -9,9 +9,10 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/AnalysisPresenter',
+  'map/services/CountriesService',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, CountriesService, tpl, tplMobile) {
 
   'use strict';
 
@@ -51,6 +52,7 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new AnalysisModel();
+      this.countriesService = CountriesService;
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = false;
@@ -121,8 +123,8 @@ define([
       this.getCountries();
 
       //other
-      this.png = '/assets/infowindow-example.png';
-      this.gif = this.loadImg('/assets/infowindow-example.gif');
+      this.png = '/assets/map/infowindow-example.png';
+      this.gif = this.loadImg('/assets/map/infowindow-example.gif');
     },
 
     // navigate between tabs
@@ -189,7 +191,7 @@ define([
         strokeWeight: 2,
         fillOpacity: 0,
         fillColor: '#FFF',
-        strokeColor: '#A2BC28',
+        strokeColor: '#5B80A0',
         icon: new google.maps.MarkerImage(
           '/assets/icons/marker_exclamation.png',
           new google.maps.Size(36, 36), // size
@@ -199,7 +201,7 @@ define([
       };
 
       this.map.data.setStyle(_.bind(function(feature){
-        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
+        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#5B80A0';
         return ({
           strokeWeight: 2,
           fillOpacity: 0,
@@ -226,49 +228,28 @@ define([
      * Ajax for getting countries.
      */
     getCountries: function(){
-      if (!amplify.store('countries')) {
-        var sql = ['SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'];
-        $.ajax({
-          url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
-          dataType: 'json',
-          success: _.bind(function(data){
-            amplify.store('countries', data.rows);
-            this.printCountries();
-          }, this ),
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }else{
-        this.printCountries()
-      }
+      this.countriesService.execute('',_.bind(function(data){
+        this.printCountries(data.countries);
+      },this));
     },
 
     getSubCountries: function(){
-      this.$regionSelect.attr('disabled', true).trigger("liszt:updated");
-      var sql = ["SELECT gadm_1_all.cartodb_id, gadm_1_all.iso, gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1 FROM gadm_1_all, gadm2_provinces_simple where gadm_1_all.iso = '"+this.iso+"' AND gadm2_provinces_simple.iso = '"+this.iso+"' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc"];
-      $.ajax({
-        url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
-        dataType: 'json',
-        success: _.bind(function(data){
-          this.printSubareas(data.rows);
-        }, this ),
-        error: function(error){
-          console.log(error);
-        }
-      });
+      this.$regionSelect.attr('disabled', true).trigger("chosen:updated");
+      this.countriesService.execute(this.iso,_.bind(function(data){
+        this.printSubareas(data.country);
+      },this));
     },
 
     /**
      * Print countries.
      */
-    printCountries: function(){
+    printCountries: function(countries){
       //Country select
-      this.countries = amplify.store('countries');
+      this.countries = countries;
 
       //Loop for print options
       var options = (this.mobile) ? '' : '<option></option>';
-      _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
+      _.each(this.countries, _.bind(function(country, i){
         options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
       }, this ));
       this.$countrySelect.append(options);
@@ -282,14 +263,14 @@ define([
       }
     },
 
-    printSubareas: function(subareas){
-      var subareas = subareas;
+    printSubareas: function(country){
+      var subareas = country.jurisdictions;
       var options = (this.mobile) ? '<option value="" disabled selected>Select jurisdiction (optional)</option>' : '<option></option>';
-      _.each(_.sortBy(subareas, function(area){ return area.name_1 }), _.bind(function(area, i){
-        options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
+      _.each(subareas, _.bind(function(area, i){
+        options += '<option value="'+ area.id +'">'+ area.name + '</option>';
       }, this ));
       this.$regionSelect.empty().append(options).removeAttr('disabled');
-      this.$regionSelect.val(this.area).trigger("liszt:updated");
+      this.$regionSelect.val(this.area).trigger("chosen:updated");
     },
 
     // Select change iso
@@ -302,7 +283,7 @@ define([
       }else{
         this.presenter.deleteAnalysis();
         this.presenter.resetIsos();
-        this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
+        this.$regionSelect.val(null).attr('disabled', true).trigger("chosen:updated");
       }
     },
     changeArea: function(e){
@@ -315,7 +296,7 @@ define([
       this.iso = iso.country;
       this.area = iso.region;
 
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      this.$countrySelect.val(this.iso).trigger("chosen:updated");
       if (this.iso) {
         this.getSubCountries();
         if (!dont_analyze) {
@@ -323,7 +304,7 @@ define([
         }
       }else{
         this.$countryButton.removeClass('disabled');
-        this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
+        this.$regionSelect.val(this.area).attr('disabled', true).trigger("chosen:updated")
       }
     },
 
@@ -535,7 +516,7 @@ define([
             }\
             #country_mask[code='" + iso + "'] {\
               polygon-opacity: 0;\
-              line-color: #97Bd3d;\
+              line-color: #5B80A0;\
               line-width: 1;\
               line-opacity: 0;\
             }"
@@ -660,7 +641,7 @@ define([
 
     toggleUseBtn: function(to){
       this.$start.toggleClass('in_use', to);
-      (to) ? this.$start.removeClass('green').addClass('gray').text('Cancel') : this.$start.removeClass('gray').addClass('green').text('Start drawing');
+      (to) ? this.$start.removeClass('blue').addClass('gray').text('Cancel') : this.$start.removeClass('gray').addClass('blue').text('Start drawing');
       $('.cartodb-popup').toggleClass('dont_analyze', to);
     },
 

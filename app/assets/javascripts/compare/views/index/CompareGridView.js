@@ -39,8 +39,8 @@ define([
       _.each(widgetsIds, _.bind(function(w){
         _.each(data, _.bind(function(c,i){
           var deferred = $.Deferred();
-          var slug = this.presenter.objToSlug(this.presenter.status.get('compare'+(i+1)),'');
-          var slug_compare = this.presenter.objToSlug(this.presenter.status.get('compare'+((data.length) - i )), '');
+          var slugw = this.presenter.objToSlug(this.presenter.status.get('compare'+(i+1)),'');
+          var slugw_compare = this.presenter.objToSlug(this.presenter.status.get('compare'+((data.length) - i )), '');
           var currentWidget = new WidgetView({
             id: w,
             className: 'gridgraphs--widget',
@@ -48,10 +48,10 @@ define([
               id: w,
               location: this.presenter.status.get('compare'+(i+1)),
               location_compare: this.presenter.status.get('compare'+((data.length) - i )),
-              slug: slug,
-              slug_compare: slug_compare,
+              slugw: slugw,
+              slugw_compare: slugw_compare,
             },
-            status: this.presenter.status.get('options')[slug][w][0]
+            status: this.presenter.status.get('options')[slugw][w][0]
           });
 
           currentWidget._loadMetaData(function(data) {

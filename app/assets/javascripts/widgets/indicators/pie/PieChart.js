@@ -81,8 +81,6 @@ PieChart.prototype.render = function() {
     g.append('path')
       .attr('d', arc)
       .style('fill', function(d) { return color(d.data.name); })
-      .style('stroke', '#FFF')
-      .style('stroke-width', '2px')
       .attr('data-legend', function(d) { return d.data.name })
       .attr('data-legend-color', function(d) { return color(d.data.name); });
 

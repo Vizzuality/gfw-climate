@@ -30,87 +30,43 @@ define([
      * @override
      */
     filterCanvasImgdata: function(imgdata, w, h) {
-    var components = 4;
-    var zoom = this.map.getZoom();
-    var exp = zoom < 11 ? 0.3 + ((zoom - 3) / 20) : 1;
+      "use asm";
+      // We'll force the use of a 32bit integer wit `value |0`
+      // More info here: http://asmjs.org/spec/latest/ 
+      var components = 4 | 0,
+          w = w |0,
+          j = j |0,
+          zoom = this.map.getZoom(),
+          exp = zoom < 11 ? 0.3 + ((zoom - 3) / 20) : 1 | 0;
 
-    var myscale = d3.scale.pow()
-          .exponent(exp)
-          .domain([0,256])
-          .range([0,256]);
+      var myscale = d3.scale.pow()
+            .exponent(exp)
+            .domain([0,256])
+            .range([0,256]);
+      var c = [137, 81,  34,  0,    // first bucket
+               137, 81,  34,  255,
+               137, 81,  34,  230,
+               148, 123, 75,  220,
+               148, 123, 75,  200,
+               157, 179, 138, 200,
+               157, 179, 138, 255,
+               21,  95,  8,   210]; // last bucket 
+      var countBuckets = c.length / 4 |0; //4: four bands
 
-    for(var i=0; i < w; ++i) {
-      for(var j=0; j < h; ++j) {
-        var pixelPos = (j*w + i) * components;
-        var intensity = imgdata[pixelPos+2];
-           
-           if (myscale(intensity) <256){
-               imgdata[pixelPos] = 21;
-               imgdata[pixelPos + 1] = 95;
-               imgdata[pixelPos + 2] = 8;
-               imgdata[pixelPos + 3] = 210;
+      for(var i = 0 |0; i < w; ++i) {
+        for(var j = 0 |0; j < h; ++j) {
+          var pixelPos  = ((j * w + i) * components) |0,
+              intensity = imgdata[pixelPos+2] |0;
+             
+          var intensity_scaled = myscale(intensity) |0,
+          bucket = (~~(countBuckets * intensity_scaled / 256) * 4);
 
-           }
-           if (myscale(intensity) <220){
-               imgdata[pixelPos] = 157;
-               imgdata[pixelPos + 1] = 179;
-               imgdata[pixelPos + 2] = 138;
-               imgdata[pixelPos + 3] = 255;
-
-           }
-            if (myscale(intensity) <190){
-               imgdata[pixelPos] = 157;
-               imgdata[pixelPos + 1] = 179;
-               imgdata[pixelPos + 2] = 138;
-               imgdata[pixelPos + 3] = 200;
-
-           }
-           if (myscale(intensity) <140){
-              imgdata[pixelPos] = 148;
-               imgdata[pixelPos + 1] = 123;
-               imgdata[pixelPos + 2] = 75;
-               imgdata[pixelPos + 3] = 200;
-
-           }
-           if (myscale(intensity) <100){
-               imgdata[pixelPos] = 148;
-               imgdata[pixelPos + 1] = 123;
-               imgdata[pixelPos + 2] = 75;
-               imgdata[pixelPos + 3] = 220;
-           }
-  
-            if (myscale(intensity) <75){
-               imgdata[pixelPos] = 137;
-               imgdata[pixelPos + 1] = 81;
-               imgdata[pixelPos + 2] = 34;
-               imgdata[pixelPos + 3] = 230;
-               
-           }
-           if (myscale(intensity) <30){
-               imgdata[pixelPos] = 137;
-               imgdata[pixelPos + 1] = 81;
-               imgdata[pixelPos + 2] = 34;
-               imgdata[pixelPos + 3] = 255;
-               
-           }
-           if (myscale(intensity) <1){
-               imgdata[pixelPos] = 137;
-               imgdata[pixelPos + 1] = 81;
-               imgdata[pixelPos + 2] = 34;
-               imgdata[pixelPos + 3] = 0;
-           }
-
-        // apply intensity-dependent saturation on R & B channels
-        //imgdata[pixelPos ] = (72 - zoom) + 151 - (3 * myscale(intensity) / zoom);
-        //imgdata[pixelPos + 2] = (33 - zoom) + 61 - ((intensity) / zoom);
-
-        // if (zoom < 13) {
-        //   imgdata[pixelPos+ 3] = intensity*0.8;
-        // } else {
-        //   imgdata[pixelPos+ 3] = intensity*0.8;
-        // }
+          imgdata[pixelPos] = c[bucket];
+          imgdata[pixelPos + 1] = c[bucket + 1];
+          imgdata[pixelPos + 2] = c[bucket + 2];
+          imgdata[pixelPos + 3] = c[bucket + 3];
+        }
       }
-    }
     },
 
     setThreshold: function(threshold) {

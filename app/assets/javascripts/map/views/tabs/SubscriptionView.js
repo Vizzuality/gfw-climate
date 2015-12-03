@@ -98,8 +98,8 @@ define([
       this.getCountries();
 
       //other
-      this.png = '/assets/infowindow-example.png';
-      this.gif = this.loadImg('/assets/infowindow-example2.gif');
+      this.png = '/assets/map/infowindow-example.png';
+      this.gif = this.loadImg('/assets/map/infowindow-example2.gif');
     },
 
     // navigate between tabs
@@ -481,7 +481,7 @@ define([
 
     toggleUseBtn: function(to){
       this.$start.toggleClass('in_use', to);
-      (to) ? this.$start.removeClass('green').addClass('gray').text('Cancel') : this.$start.removeClass('gray').addClass('green').text('Start drawing');
+      (to) ? this.$start.removeClass('blue').addClass('gray').text('Cancel') : this.$start.removeClass('gray').addClass('blue').text('Start drawing');
       $('.cartodb-popup').toggleClass('dont_analyze', to);
     },
 
