@@ -7,7 +7,7 @@
     font-size: 14px;
     > thead {
       th {
-        padding:  0 0 20px 0;
+        padding: 0 5px 20px 5px;
         font-weight: 500;
         color: $dark;
         line-height: 16px;
@@ -32,7 +32,7 @@
         }
         > td {
           position: relative;
-          padding: 15px 0;
+          padding: 15px 5px;
           line-height: 19px;
           span {
             display: block;
@@ -100,17 +100,12 @@
       > thead {
         th {
           text-align: left;
-          padding: 0 5px 20px 5px;
         }
       }
 
       > tbody {
         tr {
           border-top: 1px solid $border;
-        }
-
-        tr > td {
-          padding: 15px 5px;
         }
       }
     }
