@@ -9,9 +9,10 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/AnalysisPresenter',
+  'map/services/CountriesService',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, CountriesService, tpl, tplMobile) {
 
   'use strict';
 
@@ -51,6 +52,7 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new AnalysisModel();
+      this.countriesService = CountriesService;
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = false;
@@ -226,49 +228,28 @@ define([
      * Ajax for getting countries.
      */
     getCountries: function(){
-      if (!amplify.store('countries')) {
-        var sql = ['SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'];
-        $.ajax({
-          url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
-          dataType: 'json',
-          success: _.bind(function(data){
-            amplify.store('countries', data.rows);
-            this.printCountries();
-          }, this ),
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }else{
-        this.printCountries()
-      }
+      this.countriesService.execute('',_.bind(function(data){
+        this.printCountries(data.countries);
+      },this));
     },
 
     getSubCountries: function(){
       this.$regionSelect.attr('disabled', true).trigger("chosen:updated");
-      var sql = ["SELECT gadm_1_all.cartodb_id, gadm_1_all.iso, gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1 FROM gadm_1_all, gadm2_provinces_simple where gadm_1_all.iso = '"+this.iso+"' AND gadm2_provinces_simple.iso = '"+this.iso+"' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc"];
-      $.ajax({
-        url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
-        dataType: 'json',
-        success: _.bind(function(data){
-          this.printSubareas(data.rows);
-        }, this ),
-        error: function(error){
-          console.log(error);
-        }
-      });
+      this.countriesService.execute(this.iso,_.bind(function(data){
+        this.printSubareas(data.country);
+      },this));
     },
 
     /**
      * Print countries.
      */
-    printCountries: function(){
+    printCountries: function(countries){
       //Country select
-      this.countries = amplify.store('countries');
+      this.countries = countries;
 
       //Loop for print options
       var options = (this.mobile) ? '' : '<option></option>';
-      _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
+      _.each(this.countries, _.bind(function(country, i){
         options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
       }, this ));
       this.$countrySelect.append(options);
@@ -282,11 +263,11 @@ define([
       }
     },
 
-    printSubareas: function(subareas){
-      var subareas = subareas;
+    printSubareas: function(country){
+      var subareas = country.jurisdictions;
       var options = (this.mobile) ? '<option value="" disabled selected>Select jurisdiction (optional)</option>' : '<option></option>';
-      _.each(_.sortBy(subareas, function(area){ return area.name_1 }), _.bind(function(area, i){
-        options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
+      _.each(subareas, _.bind(function(area, i){
+        options += '<option value="'+ area.id +'">'+ area.name + '</option>';
       }, this ));
       this.$regionSelect.empty().append(options).removeAttr('disabled');
       this.$regionSelect.val(this.area).trigger("chosen:updated");
