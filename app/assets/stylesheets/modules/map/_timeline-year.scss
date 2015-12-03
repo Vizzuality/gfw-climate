@@ -112,14 +112,14 @@
       // font-weight: 500;
 
       &.selected {
-        fill: $blue1;
+        fill: $blue;
       }
     }
     .tick{
       // transform: translateY(3px);
     }
     .domain {
-      stroke: $blue1;
+      stroke: $blue;
       stroke-width: 4;
       transform: translate(0,-4px);
       // shape-rendering: crispEdges;
@@ -134,18 +134,18 @@
       fill: $dark;
       font-weight: 500;
       &:hover{
-        fill: $blue1;
+        fill: $blue;
       }
       &.selected {
-        fill: $blue1;
+        fill: $blue;
       }
     }
   }
 
 
   .slider .handle {
-    fill: $blue1;
-    stroke: darken($blue1, 20);
+    fill: $blue;
+    stroke: darken($blue, 20);
     cursor: col-resize;
     transform: translate(-9px,-3px);
   }
