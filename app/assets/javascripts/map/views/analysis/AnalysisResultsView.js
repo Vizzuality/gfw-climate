@@ -7,9 +7,11 @@ define([
   'underscore',
   'handlebars',
   'map/presenters/analysis/AnalysisResultsPresenter',
+  'widgets/indicators/bars/BarChart',
   'text!map/templates/analysis/analysisResults.handlebars',
+  'text!map/templates/analysis/analysisResultsChart.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
-], function(_, Handlebars, Presenter, tpl, failureTpl) {
+], function(_, Handlebars, Presenter, BarChart, tpl, chartTpl, failureTpl) {
 
   'use strict';
 
@@ -27,6 +29,7 @@ define([
     template: Handlebars.compile(tpl),
 
     templates: {
+      chart: Handlebars.compile(chartTpl),
       failure: Handlebars.compile(failureTpl),
     },
 
@@ -40,7 +43,6 @@ define([
     },
 
     initialize: function() {
-      console.log('analisys view');
       this.model = new AnalysisResultsModel();
       this.presenter = new Presenter(this);
       this.$resultsHide = $('.results-hide');
@@ -67,16 +69,54 @@ define([
     /**
      * Render analysis results.
      *
-     * @param  {Object} params Analysis html params
      */
     renderAnalysis: function(params) {
       this.setParams(params);
-      this.$el.html(this.template(this.params)).removeClass('hidden');
+      this.$el.html(this.templates.chart(this.params)).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
-      ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
+      this.drawChart();
     },
 
+    drawChart: function() {
+      var data = this.parseData(this.presenter.status.get('results'));
+
+      new BarChart({
+        elem: '#loss-carbon-chart',
+        barWidth: 30,
+        barSeparation: 5,
+        data: data,
+        hover: true,
+        loader: 'is-loading',
+        interpolate: 'basis',
+        unit: 'CO2T',
+        unitZ: 'Ha',
+        hasLine: true
+      });
+    },
+
+    parseData: function(data) {
+      var barValues = _.map(data.co2_loss_by_year,function(v,k){return {year:k,value:v}});
+      var lineValues = _.map(data.tree_loss_by_year,function(v,k){return {year:k,value:v}});
+      var dataParsed = [];
+
+      $.each(barValues, function(v,i) {
+        if (this.year != 0 && this.year != 2015) {
+          var valueSet = {};
+
+          valueSet.y = this.value;
+          valueSet.x = this.year;
+          valueSet.LegendBar = "Gross carbon emissions";
+          valueSet.LegendLine = "Tree cover loss";
+          valueSet.color = '#d9d9d9';
+          valueSet.lineColor = '#ff6699';
+          valueSet.z = _.findWhere(lineValues, {'year': this.year }).value;
+
+          dataParsed.push(valueSet);
+        }
+      });
+      return dataParsed;
+    },
 
     /**
      * Render failure analysis request message.
@@ -109,7 +149,6 @@ define([
     },
 
     _subscribe: function() {
-      console.log('subscribe')
       this.presenter.subscribeAnalysis();
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
     },
