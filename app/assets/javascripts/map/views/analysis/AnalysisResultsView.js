@@ -96,7 +96,7 @@ define([
     },
 
     parseData: function(data) {
-      var barValues = _.map(data.biomass_loss_by_year,function(v,k){return {year:k,value:v}});
+      var barValues = _.map(data.co2_loss_by_year,function(v,k){return {year:k,value:v}});
       var lineValues = _.map(data.tree_loss_by_year,function(v,k){return {year:k,value:v}});
       var dataParsed = [];
 
