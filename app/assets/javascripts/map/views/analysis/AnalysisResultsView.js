@@ -72,7 +72,7 @@ define([
      */
     renderAnalysis: function(params) {
       this.setParams(params);
-      this.$el.html(this.templates.chart()).removeClass('hidden');
+      this.$el.html(this.templates.chart(this.params)).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
       this.drawChart();
@@ -149,7 +149,6 @@ define([
     },
 
     _subscribe: function() {
-      console.log('subscribe')
       this.presenter.subscribeAnalysis();
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
     },
