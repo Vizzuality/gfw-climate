@@ -136,11 +136,11 @@ define([
                 start_date: t.start_date,
                 end_date: t.end_date,
                 type: 'line',
-                slug: this.presenter.model.get('slug'),
+                slugw: this.presenter.model.get('slugw'),
                 // Compare model params
                 lock: t.lock,
                 location_compare: this.presenter.model.get('location_compare'),
-                slug_compare: this.presenter.model.get('slug_compare'),
+                slugw_compare: this.presenter.model.get('slugw_compare'),
               },
               data: {
                 location: this.presenter.model.get('location'),

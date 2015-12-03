@@ -375,51 +375,6 @@ define([
       this.setButtons(!!this.iso, country);
     },
 
-    //DRAW COUNTRIES RESULTS GRAPHS FOR  Gross Carbon Emissions AND Tree cover loss.
-    drawTreeLoosCarbonEmissionsChart: function(treeLoss, carbonEmissions) {
-
-      var data = this._parseData(treeLoss, carbonEmissions);
-
-      this.slug = 'TreeLoosCarbonEmissions';
-
-      new this.barChart({
-        elem: '#' + this.slug + '-graph',
-        barWidth: 22,
-        barSeparation: 13,
-        data: data,
-        hover: true,
-        loader: 'is-loading',
-        interpolate: 'basis',
-        unit: 'CO2T',
-        unitZ: 'Ha',
-        hasLine: true
-      });
-      // debugger
-      $('.graph-line-bar').removeClass('is-hidden');
-    },
-
-    _parseData: function(line, bar) {
-      var data = [];
-
-      $.each(bar.values, function() {
-        if (this.year != 0 && this.year != 2015) {
-          var valueSet = {};
-
-          valueSet.y = this.value;
-          valueSet.x = this.year;
-          valueSet.LegendBar = "Gross carbon emissions";
-          valueSet.LegendLine = "Tree cover loss";
-          valueSet.color = '#d9d9d9';
-          valueSet.lineColor = '#ff6699';
-          valueSet.z = (_.where(line.values, {'year': this.year })[0] && _.where(line.values, {'year': this.year })[0].value) ? _.where(line.values, {'year': this.year })[0].value : '';
-
-          data.push(valueSet);
-        }
-
-      })
-      return data;
-    }
-
   });
 
   return CountriesView;
