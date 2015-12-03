@@ -100,6 +100,12 @@
       > thead {
         th {
           text-align: left;
+
+          &.header-diameter > .subtitle {
+            font-size: 14px;
+            opacity: .5;
+            text-transform: none;
+          }
         }
       }
 
