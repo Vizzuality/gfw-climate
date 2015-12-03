@@ -2,29 +2,39 @@ section.header-static
   .inner
     header
       h2 Country Data on Forest Area Change reported to FAO
-section
+section.table-container
   table
     thead
       tr
-        th Region
-        th Country
-        th Tier
-        th Primary Data Type
-        th Primary Year
-        th Primary Source
-        th Secondary Data Type
-        th Secondary Year
-        th Secondary Source
-        th Notes
+        th.header-country colspan="2" Country
+        th.header-data-type  Data Type
+        th.header-year Year
+        th.header-source Source
+        
     tbody
-      - @table.each do |row|
+      
+      - @table.each do |col|
         tr
-          td= row[0]
-          td= row[1]
-          td= row[2]
-          td= row[3]
-          td= row[4]
-          td= row[5]
-          td= row[6]
-          td= row[7]
-          td= row[8]
+          td.col-country rowspan="2"
+            span.continent = col[0]
+            span.country = col[1]
+            span.tier 
+              | Tier: 
+              = col[2]
+          td.col-data-type 
+            span.data-type-tag Primary:
+          td.col-data-type
+            span.data-type-value = col[3]
+          td.col-year
+            span.primary-year = col[4]
+          td.col-source
+            span.primary-source = col[5]
+        tr
+          td.col-data-type 
+            span.data-type-tag Secondary:
+          td.col-data-type
+            span.data-type-value = col[6]
+          td.col-year
+            span.secondary-year = col[7]
+          td.col-source
+            span.secondary-source = col[8]
