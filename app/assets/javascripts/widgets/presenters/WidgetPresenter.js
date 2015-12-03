@@ -17,6 +17,7 @@ define([
         defaults: setup.status
       }));
       this._setListeners();
+      this.thresh = 30;
     },
 
     _setListeners: function() {
