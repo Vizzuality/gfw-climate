@@ -40,7 +40,7 @@ define([
             var newWidget = new WidgetView({
               model: {
                 id: w[0].id,
-                slug: this.iso,
+                slugw: this.iso,
                 location: {
                   iso: this.iso,
                   jurisdiction: 0,
