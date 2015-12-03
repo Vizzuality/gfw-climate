@@ -423,8 +423,8 @@ define([
         resource.period = '{0},{1}'.format(date[0].format(dateFormat), date[1].format(dateFormat));
 
         // this is super ugly
-        if (baselayer.slug === 'loss') {
-          resource.thresh = '?thresh=' + ((this.status.get('threshold') === null) ? 30 :  this.status.get('threshold'));
+        if (baselayer.slug === 'biomass_loss') {
+          resource.thresh = ((this.status.get('threshold') === null) ? 30 :  this.status.get('threshold'));
         } else {
           delete resource.thresh;
         }
