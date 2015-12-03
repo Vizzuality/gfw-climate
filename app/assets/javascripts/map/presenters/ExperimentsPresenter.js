@@ -45,16 +45,16 @@ define([
 
         switch(variation){
           case 0:
-            $('.source').removeClass('default green yellow').addClass('default');
+            $('.source').removeClass('default blue yellow').addClass('default');
           break;
           case 1:
-            $('.source').removeClass('default green yellow').addClass('green');
+            $('.source').removeClass('default blue yellow').addClass('blue');
           break;
           case 2:
-            $('.source').removeClass('default green yellow').addClass('yellow');
+            $('.source').removeClass('default blue yellow').addClass('yellow');
           break;
           default:
-            $('.source').removeClass('default green yellow').addClass('default');
+            $('.source').removeClass('default blue yellow').addClass('default');
           break;
         }
       }
