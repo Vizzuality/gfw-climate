@@ -71,29 +71,22 @@
   right: 0;
   padding-top: 20px;
 
-  .tree-cover-loss,
-  .gross-carbon-emissions {
-    @include clearfix();
+  > * {
+    margin-top: 5px;
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
-  p:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10px;
-    height: 10px;
+  > h3 {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 400;
   }
 
-  .tree-cover-loss p:before {
-    color: #ff6699;
-    border-radius: 50%;
-    border: 3px solid #ff6699;
-  }
-
-  .gross-carbon-emissions p:before {
-    background-color: $light-grey;
+  .legend-value {
+    display: flex;
+    justify-content: space-between;
   }
 
   p {
@@ -101,11 +94,28 @@
     font-size: 12px;
     float: left;
     padding-left: 20px;
-    margin-bottom: 10px;
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 10px;
+    }
+  }
+  .line-value p:before {
+    color: #ff6699;
+    border-radius: 50%;
+    border: 3px solid #ff6699;
+  }
+
+  .bars-value p:before {
+    background-color: $light-grey;
   }
 
   span {
-    float: right;
+    display: block;
     font-size: 12px;
     margin-left: 5px;
   }

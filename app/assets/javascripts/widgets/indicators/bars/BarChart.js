@@ -1,10 +1,12 @@
 define([
   'd3',
   'handlebars',
-  'text!widgets/templates/indicators/bars/barschart-tooltip.handlebars'
-], function(d3, Handlebars, tooltipTpl) {
+  'text!widgets/templates/indicators/bars/barschart-tooltip.handlebars',
+  'text!widgets/templates/indicators/bars/barschart-legend.handlebars'
+], function(d3, Handlebars, tooltipTpl, legendTpl) {
 
   var tooltipTemplate = Handlebars.compile(tooltipTpl);
+  var legendTemplate = Handlebars.compile(legendTpl);
 
   var barsChart = function(params) {
     var elem = params.elem;
@@ -126,10 +128,11 @@ define([
     }
 
     // Legend
-    d3.select(elem+' .tree-cover-loss-value')
-      .text(d3.format(",.2f")(_.reduce(data, function(memo, d){ return memo + d.z; }, 0)));
-    d3.select(elem+' .gross-carbon-emissions-value')
-      .text(d3.format(",.2f")(_.reduce(data, function(memo, d){ return memo + d.y; }, 0)));
+    d3.select(elem+' .graph-legend')
+      .html(legendTemplate({
+        lineTotalValue: d3.format(",.2f")(_.reduce(data, function(memo, d){ return memo + d.z; }, 0)),
+        barsTotalValue: d3.format(",.2f")(_.reduce(data, function(memo, d){ return memo + d.y; }, 0))
+      }));
 
     // Toolttio
     var tooltipEl = elem+'-tooltip';
