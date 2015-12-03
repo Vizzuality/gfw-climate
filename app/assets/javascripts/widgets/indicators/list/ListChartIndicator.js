@@ -36,7 +36,7 @@ define([
 
     },
 
-    fetchIndicator: function(params, type, slug) {
+    fetchIndicator: function(params, type, slugw) {
       var r = new $.Deferred();
       var promises = [];
 
@@ -74,8 +74,8 @@ define([
     // Helpers for parse data
     getPromises: function(params,paramsCompare) {
       this.$el.addClass('is-loading');
-      var slug = this.model.get('slug');
-      return [this.fetchIndicator(params, 'data',slug)]
+      var slugw = this.model.get('slugw');
+      return [this.fetchIndicator(params, 'data',slugw)]
     },
 
     destroy: function() {
