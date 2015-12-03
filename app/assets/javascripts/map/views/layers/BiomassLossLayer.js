@@ -61,17 +61,15 @@ define([
          .domain([0,256])
          .range([0,256]);
       var c = [112, 168, 256, // first bucket 
-               76,  83,  122, 
-               210, 31,  38,  
-               241, 152, 19,  
+               76,  83,  122,
+               210, 31,  38,
+               241, 152, 19,
                255, 208, 11]; // last bucket
       var countBuckets = c.length / 3 |0; //3: three bands
       for(var i = 0 |0; i < w; ++i) {
        for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
               intensity = imgdata[pixelPos+1] |0;
-
-
           if (intensity > 0) {
             var intensity_scaled = myscale(intensity) |0,
                 yearLoss = 2001 + imgdata[pixelPos] |0;
