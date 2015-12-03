@@ -43,11 +43,11 @@ define([
             .exponent(exp)
             .domain([0,256])
             .range([0,256]);
-      var c = [137, 81,  34, 0,     // first bucket
-               137, 81,  34, 255,
-               137, 81,  34, 230,
-               148, 123, 75, 220,
-               148, 123, 75, 200,
+      var c = [137, 81,  34,  0,    // first bucket
+               137, 81,  34,  255,
+               137, 81,  34,  230,
+               148, 123, 75,  220,
+               148, 123, 75,  200,
                157, 179, 138, 200,
                157, 179, 138, 255,
                21,  95,  8,   210]; // last bucket 
@@ -58,23 +58,13 @@ define([
           var pixelPos  = ((j * w + i) * components) |0,
               intensity = imgdata[pixelPos+2] |0;
              
-            var intensity_scaled = myscale(intensity) |0,
-            bucket = (~~(countBuckets * intensity_scaled / 256) * 4);
+          var intensity_scaled = myscale(intensity) |0,
+          bucket = (~~(countBuckets * intensity_scaled / 256) * 4);
 
-            imgdata[pixelPos] = c[bucket];
-            imgdata[pixelPos + 1] = c[bucket + 1];
-            imgdata[pixelPos + 2] = c[bucket + 2];
-            imgdata[pixelPos + 3] = c[bucket + 3];
-
-          // apply intensity-dependent saturation on R & B channels
-          //imgdata[pixelPos ] = (72 - zoom) + 151 - (3 * myscale(intensity) / zoom);
-          //imgdata[pixelPos + 2] = (33 - zoom) + 61 - ((intensity) / zoom);
-
-          // if (zoom < 13) {
-          //   imgdata[pixelPos+ 3] = intensity*0.8;
-          // } else {
-          //   imgdata[pixelPos+ 3] = intensity*0.8;
-          // }
+          imgdata[pixelPos] = c[bucket];
+          imgdata[pixelPos + 1] = c[bucket + 1];
+          imgdata[pixelPos + 2] = c[bucket + 2];
+          imgdata[pixelPos + 3] = c[bucket + 3];
         }
       }
     },
