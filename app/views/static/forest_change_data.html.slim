@@ -6,34 +6,65 @@ section.table-container
   table
     thead
       tr
-        th.header-country Country
-        th.header-data-type Data Type
+        th.header-country colspan="2" Country
+        th.header-data-type  Data Type
         th.header-year Year
         th.header-source Source
         
     tbody
+      
       - @table.each do |col|
-        tr 
-          td.col-country
+        tr
+          td.col-country rowspan="2"
             span.continent = col[0]
             span.country = col[1]
             span.tier 
-              | Tier 
+              | Tier: 
               = col[2]
-          td.col-daya-type
-            span.primary-data-type
-              | Primary: 
-              = col[3]
-            span.secondary-data-type
-              | Secondary: 
-              = col[6]
+          td.col-data-type 
+            span.data-type-tag Primary:
+          td.col-data-type
+            span.data-type-value = col[3]
           td.col-year
-            span.primary-year
-              = col[4]
-            span.secondary-year
-              = col[7]
+            span.primary-year = col[4]
           td.col-source
-            span.primary-source
-              = col[5]
-            span.secondary-source
-              = col[8]
+            span.primary-source = col[5]
+        tr
+          td.col-data-type 
+            span.data-type-tag Secondary:
+          td.col-data-type
+            span.data-type-value = col[6]
+          td.col-year
+            span.secondary-year = col[7]
+          td.col-source
+            span.secondary-source = col[8]
+
+
+
+        / tr 
+        /   td.col-country
+        /     span.continent = col[0]
+        /     span.country = col[1]
+        /     span.tier 
+        /       | Tier: 
+        /       = col[2]
+        
+        /   td.col-data-type-tag 
+        /     div.test
+        /       span Primary: 
+        /       span Secondary:
+
+        /   td.col-data-type-value 
+        /     span = col[3] 
+        /     span = col[6]
+            
+        /   td.col-year
+        /     span.primary-year
+        /       = col[4]
+        /     span.secondary-year
+        /       = col[7]
+        /   td.col-source
+        /     span.primary-source
+        /       = col[5]
+        /     span.secondary-source
+        /       = col[8]
