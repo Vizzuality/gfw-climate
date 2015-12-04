@@ -157,8 +157,8 @@ define([
       d3.select(tooltipEl)
         .select('.tooltip-year')
         .html(tooltipTemplate({
-          lineValue: d3.format(",.2f")(d.z),
-          barValue: d3.format(",.2f")(d.y),
+          lineValue: d3.format(",f")(d.z),
+          barValue: d3.format(",f")(d.y),
           year: d.x
         }));
     });
