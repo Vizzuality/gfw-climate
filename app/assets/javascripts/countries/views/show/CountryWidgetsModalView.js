@@ -87,16 +87,18 @@ define([
       }, this ));
     },
 
+    // Set active jurisdictions (not widgets)
     setJurisdictionStatus: function() {
       _.each(this.$jurisdictionsBoxes, _.bind(function(el){
-        var is_active = _.contains(this.status.get('jurisdictionsActive'),$(el).data('id'));
+        var is_active = _.contains(this.status.get('jurisdictionsIds'),$(el).data('id'));
         $(el).toggleClass('is-active', is_active);
       }, this ));
     },
 
+    // Set active areas (not widgets)
     setAreasStatus: function() {
       _.each(this.$areasBoxes, _.bind(function(el){
-        var is_active = _.contains(this.status.get('areasActive'),$(el).data('id'));
+        var is_active = _.contains(this.status.get('areasIds'),$(el).data('id'));
         $(el).toggleClass('is-active', is_active);
       }, this ));
     },

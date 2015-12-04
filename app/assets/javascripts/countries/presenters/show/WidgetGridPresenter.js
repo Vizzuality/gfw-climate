@@ -265,6 +265,7 @@ define([
     },
 
     _onWidgetsDelete: function(id) {
+
       var widgetsActive = _.clone(this.status.get('activeWidgets'));
       // Fix this SHIT in a neraby future, ffs
       widgetsActive = _.without(widgetsActive,id.toString());

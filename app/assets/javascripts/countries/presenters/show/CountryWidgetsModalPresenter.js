@@ -72,8 +72,8 @@ define([
               country: p.country.iso,
               view: p.view,
               widgetsActive: activeWidgetsIds,
-              jurisdictionsActive: jurisdictionsActive,
-              areasActive: areasActive
+              jurisdictionsIds: jurisdictionsActive,
+              areasIds: areasActive
             });
 
             this.countryModel = new CountryModel(p.country);
@@ -91,8 +91,8 @@ define([
       'View/update': function(v) {
         this.status.set({
           view: v,
-          jurisdictionsActive: [],
-          areasActive:[]
+          jurisdictionsIds: [],
+          areasIds:[]
         });
 
         if (v !== 'national') {
@@ -107,33 +107,33 @@ define([
         }
 
         this.view.render();
-        this.view.setWidgetsStatus();
 
-        // this.view.setJurisdictionStatus();
-        // this.view.setAreasStatus();
+        if (v == 'national') {
+          console.log('draw indicators');
+          this.view.setWidgetsStatus();
+        }
       },
 
       'Widgets/update': function(widgets) {
-        var view = this.status.get('view');
-        switch(view) {
+        this.status.set('widgetsActive', this._toInteger(widgets));
+
+        this.view.render();
+
+        switch(this.status.get('view')) {
           case 'national':
-            this.status.set('widgetsActive', this._toInteger(widgets));
+            this.view.setWidgetsStatus();
             break;
 
           case 'subnational':
-            this.status.set('jurisdictionsActive', this._toInteger(widgets));
+            this.view.setJurisdictionStatus();
+            this.view.setWidgetsStatus();
             break;
 
           case 'areas-interest':
-            this.status.set('areasActive', this._toInteger(widgets));
+            this.view.setAreasStatus();
+            this.view.setWidgetsStatus();
             break;
         }
-
-
-        this.view.render();
-        this.view.setWidgetsStatus();
-        this.view.setJurisdictionStatus();
-        this.view.setAreasStatus();
       },
 
       'CountryWidgetsModal/show': function() {
@@ -156,25 +156,21 @@ define([
       var widgets = _.clone(this._toInteger(this.status.get('widgetsActive')));
       var view = this.status.get('view');
       (remove) ? widgets = _.without(widgets,widgetId) : widgets.push(widgetId);
-
-
       this.status.set('widgetsActive', widgets);
       this.view.setWidgetsStatus();
-
-
     },
 
     changeActiveJurisdictions: function(jurisdictionId, remove) {
-      var jurisdictions = _.clone(this._toInteger(this.status.get('jurisdictionsActive')));
+      var jurisdictions = _.clone(this._toInteger(this.status.get('jurisdictionsIds')));
       (remove) ? jurisdictions = _.without(jurisdictions,jurisdictionId) : jurisdictions.push(jurisdictionId);
-      this.status.set('jurisdictionsActive', jurisdictions);
+      this.status.set('jurisdictionsIds', jurisdictions);
       this.view.setJurisdictionStatus();
     },
 
     changeActiveAreas: function(areasId, remove) {
-      var areas = _.clone(this._toInteger(this.status.get('areasActive')));
+      var areas = _.clone(this._toInteger(this.status.get('areasIds')));
       (remove) ? areas = _.without(areas, areasId) : areas.push(areasId);
-      this.status.set('areasActive', areas);
+      this.status.set('areasIds', areas);
       this.view.setAreasStatus();
     },
 
