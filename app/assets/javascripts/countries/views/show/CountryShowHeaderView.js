@@ -30,7 +30,7 @@ define([
         $('#figure-' + iso.toLowerCase()).html('');
       }
 
-      sql = ['SELECT ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom',
+      sql = ['SELECT ST_GeomFromText(topojson) AS the_geom',
              'FROM gadm27_adm0',
              "WHERE UPPER(climate_iso) = UPPER('" + iso + "')",
              '&format=topojson'].join(' ');
