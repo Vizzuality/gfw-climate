@@ -21,25 +21,17 @@ section.table-container.biomass-table
           td.col-country
             span.continent = col[0]
             span.country = col[1]
-            span.tier 
-              | Tier: 
+            span.tier
+              | Tier:
               = col[2]
-          td.col-year 
+          td.col-year
             span = col[3]
           td.col-biomass
             span = col[4]
           td.col-diameter
             span = col[5]
-          - if col[6].present?
-            td.col-limitations 
-              span 
-          - else
-            td.col-limitations 
-              span = col[6]
-          - if col[7].present?
-            td.col-limitations  
-              span 
-          - else
-            td.col-limitations
-              span = col[7]
+          td.col-limitations
+            span = col[6]
+          td.col-limitations
+            span = col[7]
 
