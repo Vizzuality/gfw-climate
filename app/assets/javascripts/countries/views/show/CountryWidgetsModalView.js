@@ -25,7 +25,7 @@ define([
         'click .js-field-list-checkbox-area' : 'changeAreas',
         'click .js-btn-continue' : 'hide',
         'click .js-btn-next'  : '_nextStep',
-        'click #btn-back'  : '_prevStep'
+        'click #js-btn-back'  : '_prevStep'
       });
     },
 
@@ -136,6 +136,11 @@ define([
           break;
       }
 
+      this.$el.find('.page-1').toggleClass('is-hidden');
+      this.$el.find('.page-2').toggleClass('is-hidden');
+    },
+
+    _prevStep: function() {
       this.$el.find('.page-1').toggleClass('is-hidden');
       this.$el.find('.page-2').toggleClass('is-hidden');
     },
