@@ -110,6 +110,38 @@
     }
   }
 
+  .modal-footer {
+
+    > .prev-step {
+      position: absolute;
+      top: 50%;
+      left: 40px;
+      transform: translate(0, -50%);
+      cursor: pointer;
+
+      > .svg-left-arrow {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translate(0, -50%);
+        width: 15px;
+        height: 16px;
+        stroke: $black;
+      }
+      > .btn-back {
+        margin: 0 0 0 15px;
+        background: none;
+        border: none;
+        font-size: 14px;
+        font-weight: 500;
+        color: $dark;
+        text-transform: uppercase;
+        outline: none;
+        cursor: pointer;
+      }
+    }
+  }
+
   // Only shown when you haven't selected any country.
   .m-alert {
     text-align: center;

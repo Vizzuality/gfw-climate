@@ -111,6 +111,18 @@
               </div>
                <footer class="modal-footer">
                 <span class="gradient"></span>
+                <div id="js-btn-back" class="prev-step">
+                  <svg class="svg-left-arrow">
+                    <use xlink:href="#shape-arrow-left"></use>
+                  </svg>
+                  <button class="btn-back">
+                    {{#if view.isSubNational}}
+                      select jurisdictions
+                    {{else}}
+                      select areas
+                    {{/if}}
+                  </button>
+                </div>
                 <ul class="m-btncontainer is-center">
                   <li>
                     <button class="btn blue medium uppercase js-btn-continue">Continue</button>
