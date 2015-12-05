@@ -1,0 +1,119 @@
+.table-container {
+  padding: 50px;
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 2em;
+    font-size: 14px;
+    > thead {
+      th {
+        padding: 0 5px 20px 5px;
+        font-weight: 500;
+        color: $dark;
+        line-height: 16px;
+        text-transform: uppercase;
+
+
+        &.header-country,
+        &.header-source {
+          text-align: left;
+        }
+        &.header-data-type {
+          text-align: justify;
+        }
+      }
+    }
+
+    > tbody {
+
+      tr {
+        &:nth-child(odd) {
+          border-top: 1px solid $border;
+        }
+        > td {
+          position: relative;
+          padding: 15px 5px;
+          line-height: 19px;
+          span {
+            display: block;
+          }
+
+          .continent,
+          &.col-data-type > .data-type-tag {
+            color: #b4b4b4;
+            font-weight: 500;
+            text-transform: uppercase;
+          }
+
+          // Country Col
+          &.col-country {
+            &:after {
+              content: "";
+              position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translate(0,-50%);
+              height: calc(100% - 30px);
+              width: 1px;
+              background: $border;
+            }
+          }
+          &.col-country > .country {
+            font-size: 24px;
+            line-height: 28px;
+            margin: 5px 10px 10px 0;
+          }
+          &.col-country > .tier {
+            font-weight: 500;
+            color: $blue;
+          }
+
+          // Data-type-Col
+          &.col-data-type > .data-type-tag {
+            margin: 0 20px;
+          }
+
+          // Year-Col
+          &.col-year {
+            width: 95px;
+            text-align: center;
+          }
+
+          // Source-Col
+          &.col-source {
+            padding: 0;
+          }
+          &.col-source > .primary-source {
+            padding-bottom: 0;
+          }
+          &.col-source > .secondary-source {
+            padding-bottom: 15px;
+          }
+        }
+      }
+    }
+  }
+
+  &.biomass-table {
+    table {
+
+      > thead {
+        th {
+          text-align: left;
+
+          &.header-diameter > .subtitle {
+            font-size: 14px;
+            opacity: .5;
+            text-transform: none;
+          }
+        }
+      }
+
+      > tbody {
+        tr {
+          border-top: 1px solid $border;
+        }
+      }
+    }
+  }
+}
