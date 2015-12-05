@@ -1,0 +1,139 @@
+{{!-- BACKDROP --}}
+<div class="modal-backdrop"></div>
+{{!-- WINDOW --}}
+<div class="modal-window">
+  <a href="#" class="modal-close">
+    <svg><use xlink:href="#shape-close"></use></svg>
+  </a>
+  <div class="modal-wrapper scroll-dark">
+    <div class="modal-content">
+      <div class="m-country-modal">
+        <div class="m-modal--tab is-active">
+
+          {{#if view.isNational}}
+            <div class="m-field">
+              <h3>Select indicators</h3>
+
+                {{#each widgets}}
+                  <div class="indicator-group">
+                  <h4>{{@key}}</h4>
+                  <ul class="m-field-list compare-area">
+                    {{#each this}}
+                      <li class="m-field-list-item is-checkbox js-field-list-checkbox-widget" data-id="{{this.id}}"><svg class="icon-chart-{{this.type_chart}}"><use xlink:href="#icon-chart-{{this.type_chart}}"></use></svg>{{this.name}}</li>
+                    {{/each}}
+                  </ul>
+                  </div>
+                {{/each}}
+              </ul>
+            </div>
+            <footer class="modal-footer">
+              <span class="gradient"></span>
+              <ul class="m-btncontainer is-center">
+                <li>
+                  <button class="btn blue medium uppercase js-btn-continue">Continue</button>
+                </li>
+              </ul>
+            </footer>
+          {{/if}}
+
+
+          {{#if view.isSubNational}}
+            <div class="page-1">
+              <div class="m-field">
+                <h3>Select jurisdictions</h3>
+                  {{#if jurisdictions}}
+                    <div class=".
+                    jurisdictions-group">
+                      <ul class="m-field-list compare-area">
+                      {{#each jurisdictions}}
+                        <li class="m-field-list-item is-checkbox js-field-list-checkbox-jurisdiction" data-id="{{id}}" data-name="{{name}}"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg>{{name}}</li>
+                      {{/each}}
+                      </ul>
+                    </div>
+                  {{/if}}
+                </ul>
+              </div>
+              <footer class="modal-footer">
+                <span class="gradient"></span>
+                <ul class="m-btncontainer is-center">
+                  <li>
+                    <button class="btn blue medium uppercase js-btn-next">Next</button>
+                  </li>
+                </ul>
+              </footer>
+            </div>
+          {{/if}}
+
+          {{#if view.isAreas}}
+            <div class="page-1">
+              <div class="m-field">
+                <h3>Select areas</h3>
+                  {{#if areas}}
+                    <div class="areas-group">
+                      <ul class="m-field-list compare-area">
+                      {{#each areas}}
+                        <li class="m-field-list-item is-checkbox js-field-list-checkbox-area" data-id="{{id}}" data-name="{{name}}"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg>{{name}}</li>
+                      {{/each}}
+                      </ul>
+                    </div>
+                  {{/if}}
+                </ul>
+              </div>
+              <footer class="modal-footer">
+                <span class="gradient"></span>
+                <ul class="m-btncontainer is-center">
+                  <li>
+                    <button class="btn blue medium uppercase js-btn-next">Next</button>
+                  </li>
+                </ul>
+              </footer>
+            </div>
+          {{/if}}
+
+          {{#unless view.isNational}}
+            <div class="page-2 is-hidden">
+              <div class="m-field">
+                <h3>Select indicators</h3>
+                  {{#if widgets}}
+                      {{#if view.isSubNational}}
+                        <div class="indicators-jurisdictions-group">
+                        {{else}}
+                        <div class="indicators-areas-group">
+                      {{/if}}
+                      <ul class="m-field-list compare-area">
+                      {{#each widgets}}
+                        <li class="m-field-list-item is-checkbox js-field-list-checkbox-widget" data-id="{{id}}" data-name="{{name}}"><svg class="icon-chart-{{this.type_chart}}"><use xlink:href="#icon-chart-{{this.type_chart}}"></use></svg>{{name}}</li>
+                      {{/each}}
+                      </ul>
+                    </div>
+                  {{/if}}
+                </ul>
+              </div>
+               <footer class="modal-footer">
+                <span class="gradient"></span>
+                <div id="js-btn-back" class="prev-step">
+                  <svg class="svg-left-arrow">
+                    <use xlink:href="#shape-arrow-left"></use>
+                  </svg>
+                  <button class="btn-back">
+                    {{#if view.isSubNational}}
+                      select jurisdictions
+                    {{else}}
+                      select areas
+                    {{/if}}
+                  </button>
+                </div>
+                <ul class="m-btncontainer is-center">
+                  <li>
+                    <button class="btn blue medium uppercase js-btn-continue">Continue</button>
+                  </li>
+                </ul>
+              </footer>
+            </div>
+          {{/unless}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

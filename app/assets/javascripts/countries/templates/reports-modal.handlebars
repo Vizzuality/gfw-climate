@@ -8,43 +8,43 @@
         <div class="source_header">
           <strong class="source_title">Select indicators</strong>
         </div>
-      <div class="source_body">
-        <div class="item-list">
-          {{#if data.indicators}}
-            <div class="indicators-group">
-              {{#each data.indicators}}
-                <h3>{{@key}}</h3>
-                <ul>
-                {{#each this}}
-                  <li data-id="{{id}}" class="item">
-                    <span class="item__name">{{name}}<svg class="icon-chart-{{type_chart}}"><use xlink:href="#icon-chart-{{type_chart}}"></use></svg></span>
-                  </li>
+        <div class="source_body">
+          <div class="item-list">
+            {{#if data.indicators}}
+              <div class="indicators-group">
+                {{#each data.indicators}}
+                  <h3>{{@key}}</h3>
+                  <ul>
+                  {{#each this}}
+                    <li data-id="{{id}}" class="item">
+                      <span class="item__name">{{name}}<svg class="icon-chart-{{type_chart}}"><use xlink:href="#icon-chart-{{type_chart}}"></use></svg></span>
+                    </li>
+                  {{/each}}
+                  <ul>
                 {{/each}}
-                <ul>
-              {{/each}}
-            </div>
+              </div>
+            {{/if}}
+          </div>
+        </div>
+        <div class="row">
+
+          {{#unless data.isNational}}
+            <svg class="svg-left-arrow">
+              <use xlink:href="#shape-arrow-left"></use>
+            </svg>
+          {{/unless}}
+
+          {{#if data.jurisdictions}}
+            <button id="btn-back" class="btn--back">select jurisdictions</button>
           {{/if}}
+
+          {{#if data.areas}}
+            <button id="btn-back" class="btn--back">select areas</button>
+          {{/if}}
+
+          <button id="btn-done" class="btn medium blue">Continue</button>
         </div>
       </div>
-      <div class="row">
-
-        {{#unless data.isNational}}
-          <svg class="svg-left-arrow">
-            <use xlink:href="#shape-arrow-left"></use>
-          </svg>
-        {{/unless}}
-
-        {{#if data.jurisdictions}}
-          <button id="btn-back" class="btn--back">select jurisdictions</button>
-        {{/if}}
-
-        {{#if data.areas}}
-          <button id="btn-back" class="btn--back">select areas</button>
-        {{/if}}
-
-        <button id="btn-done" class="btn medium blue">Continue</button>
-      </div>
-    </div>
 </div>
   {{!-- Jurisdictions first page --}}
   {{#if data.jurisdictions}}
