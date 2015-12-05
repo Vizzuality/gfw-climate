@@ -109,7 +109,6 @@ define([
         this.view.render();
 
         if (v == 'national') {
-          console.log('draw indicators');
           this.view.setWidgetsStatus();
         }
       },
@@ -125,11 +124,19 @@ define([
             break;
 
           case 'subnational':
+            if (this.status.get('widgetsActive').length == 0) {
+              this.status.set('jurisdictionsIds', []);
+            }
+
             this.view.setJurisdictionStatus();
             this.view.setWidgetsStatus();
             break;
 
           case 'areas-interest':
+            if (this.status.get('widgetsActive').length == 0) {
+              this.status.set('areasIds', []);
+            }
+
             this.view.setAreasStatus();
             this.view.setWidgetsStatus();
             break;
