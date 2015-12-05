@@ -96,8 +96,7 @@ define([
      */
     _defineRequests: function() {
       var datasets = [
-        'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires',
-        'quicc-alerts', 'terrai-alerts', 'prodes-alerts'
+        'biomass-loss'
       ];
 
       // Defines requests for each dataset (e.g., forma-alerts) and type (e.g.
@@ -147,7 +146,6 @@ define([
         _.str.sprintf('%s/%s/use/{use}/{useid}%s', URL, dataset, params),
         _.str.sprintf('%s/%s/wdpa/{wdpaid}%s', URL, dataset, params)
       ];
-
       return _.object(ids, urls);
     },
 

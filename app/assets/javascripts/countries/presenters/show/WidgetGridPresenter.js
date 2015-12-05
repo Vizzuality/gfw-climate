@@ -95,9 +95,9 @@ define([
 
           this.status.set({
             view: params.view,
-            areas: p.options.indicators.length > 0 ? params.areas : null,
-            jurisdictions: p.options.indicators.length > 0 ? params.jurisdictions : null,
-            options: this.getOptions(p.options.indicators, p)
+            areas: p.options.widgetsActive.length > 0 ? params.areas : null,
+            jurisdictions: p.options.widgetsActive.length > 0 ? params.jurisdictions : null,
+            options: this.getOptions(p.options.widgetsActive, p)
           });
 
           this.view.start();
@@ -265,6 +265,7 @@ define([
     },
 
     _onWidgetsDelete: function(id) {
+
       var widgetsActive = _.clone(this.status.get('activeWidgets'));
       // Fix this SHIT in a neraby future, ffs
       widgetsActive = _.without(widgetsActive,id.toString());
@@ -295,7 +296,7 @@ define([
         this.status.attributes.options.jurisdictions = null;
         this.status.attributes.options.areas = null;
         this.status.attributes.options.widgets = null;
-        mps.publish('Widgets/update');
+        mps.publish('Widgets/update', []);
       }
 
       this.view.render();
@@ -367,7 +368,6 @@ define([
         }
         return null;
       }, this))), 'id');
-
 
       switch(params.view) {
 

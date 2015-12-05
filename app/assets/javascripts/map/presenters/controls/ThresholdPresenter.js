@@ -25,9 +25,8 @@ define([
      * Supported threshold layers.
      */
     supportedLayers: [
-      'loss',
-      'forestgain',
-      'forest2000'
+      'biomass_loss',
+      'carbon_stocks'
     ],
 
     /**

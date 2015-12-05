@@ -41,14 +41,7 @@ define([
   var AnalysisToolPresenter = PresenterClass.extend({
 
     datasets: {
-      'loss': 'umd-loss-gain',
-      'forestgain': 'umd-loss-gain',
-      'forma': 'forma-alerts',
-      'imazon': 'imazon-alerts',
-      'fires': 'nasa-active-fires',
-      'modis': 'quicc-alerts',
-      'terrailoss': 'terrai-alerts',
-      'prodes' : 'prodes-alerts'
+      'biomass_loss': 'biomass-loss',
     },
 
     init: function(view) {
@@ -242,7 +235,7 @@ define([
      */
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
-      
+
       this.view.setSelects(iso, this.status.get('dont_analyze'));
       mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
 
@@ -271,7 +264,7 @@ define([
           mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
-            this.view.drawCountrypolygon(geojson,'#A2BC28');
+            this.view.drawCountrypolygon(geojson,'#5B80A0');
             this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
@@ -286,7 +279,7 @@ define([
           mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
-            this.view.drawCountrypolygon(geojson,'#A2BC28');
+            this.view.drawCountrypolygon(geojson,'#5B80A0');
             this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
@@ -430,8 +423,8 @@ define([
         resource.period = '{0},{1}'.format(date[0].format(dateFormat), date[1].format(dateFormat));
 
         // this is super ugly
-        if (baselayer.slug === 'loss') {
-          resource.thresh = '?thresh=' + ((this.status.get('threshold') === null) ? 30 :  this.status.get('threshold'));
+        if (baselayer.slug === 'biomass_loss') {
+          resource.thresh = ((this.status.get('threshold') === null) ? 30 :  this.status.get('threshold'));
         } else {
           delete resource.thresh;
         }
@@ -529,14 +522,9 @@ define([
      */
     _setBaselayer: function(baselayers) {
       var baselayer;
-      if (baselayers['loss']) {
-        baselayer = baselayers['loss'];
-        this.status.set('both', (baselayers['forestgain']) ? true : false);
-      }else{
-        baselayer = baselayers[_.first(_.intersection(
-          _.pluck(baselayers, 'slug'),
-          _.keys(this.datasets)))];
-      }
+      baselayer = baselayers[_.first(_.intersection(
+        _.pluck(baselayers, 'slug'),
+        _.keys(this.datasets)))];
       $('#analyzeBtn').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();
