@@ -39,6 +39,7 @@ define([
     },
 
     _initPantropical: function() {
+      ga('send', 'event', 'pantropical','Choose visualisation','All countries');
       new CountryPantropicalView();
     }
   });

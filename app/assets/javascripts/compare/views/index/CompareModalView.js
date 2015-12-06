@@ -86,6 +86,8 @@ define([
       (!!!this.status.get('compare1')) ? this.presenter.changeTab(1) : null;
       (!!!this.status.get('compare2')) ? this.presenter.changeTab(2) : null;
       if(!!this.status.get('compare1') && !!this.status.get('compare2')) {
+        ga('send', 'event', 'Compare Page','Select Countries',
+           this.status.get('compare1').iso+':'+this.status.get('compare2').iso);
         this.hide();
       }
     },
