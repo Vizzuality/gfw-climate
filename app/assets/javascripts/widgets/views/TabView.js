@@ -62,19 +62,28 @@ define([
 
     // CHANGE EVENTS
     changeThreshold: function(e) {
-      this.presenter.changeThreshold($(e.currentTarget).val());
+      var val = $(e.currentTarget).val();
+      ga('send', 'event', 'Widget','Settings','density:'+val);
+      this.presenter.changeThreshold(val);
     },
 
     changeUnit: function(e) {
-      this.presenter.changeUnit($(e.currentTarget).data('unit'));
+      var unit = $(e.currentTarget).data('unit');
+      var name = this.presenter.model.attributes.data.name;
+      ga('send', 'event', 'Widget','Change Unit',name+':' + unit);
+      this.presenter.changeUnit(unit);
     },
 
     changeStartDate: function(e) {
-      this.presenter.changeStartDate($(e.currentTarget).val());
+      var startYear = $(e.currentTarget).val();
+      ga('send', 'event', ‘Widget’,’Start year’,startYear);
+      this.presenter.changeStartDate(startYear);
     },
 
     changeEndDate: function(e) {
-      this.presenter.changeEndDate($(e.currentTarget).val());
+      var endYear = $(e.currentTarget).val();
+      ga('send', 'event', ‘Widget’,’End year’,endYear);
+      this.presenter.changeEndDate(endYear);
     },
 
     changeSection: function(e) {

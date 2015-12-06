@@ -67,6 +67,7 @@ define([
       $('#vis').find('.' + $(e.target).attr('id')).show();
 
       var viewId = $(e.target).attr('id');
+      ga('send', 'event', 'pantropical','Choose visualisation',viewId);
       // This should be removed as long as we have a router
       this._updateUrl(viewId);
       toggle_view(viewId);
@@ -104,11 +105,13 @@ define([
         this.year_left = parseInt(element.options[element.selectedIndex].value);
         this.year_right = parseInt(element2.options[element2.selectedIndex].value);
         this._hideYears(element.id);
+        ga('send', 'event', 'pantropical','Start Year',this.year_left);
       }else if (element.id == "year-drop-right"){
         element2 = document.getElementById('year-drop-left');
         this.year_right = parseInt(element.options[element.selectedIndex].value);
         this.year_left = parseInt(element2.options[element2.selectedIndex].value);
         this._hideYears(element.id);
+        ga('send', 'event', 'pantropical','Start Year',this.year_right);
       }
       this.year = [this.year_left, this.year_right];
     },
@@ -160,6 +163,7 @@ define([
 
     _change_year: function(e, year_moved) {
       var year = (e) ? e.currentTarget.value : year_moved;
+      ga('send', 'event', 'pantropical','Change Timeline',year);
 
       this.$yearsPickerLabel.val(year);
       this._setLabelPosition(year);
@@ -266,16 +270,19 @@ define([
     },
 
     _play: function() {
+      ga('send', 'event', 'pantropical','Change Timeline','play');
       this.$play_pause.addClass('is-playing');
       this.$play_pause.removeClass('stop');
 
       this.$playBtn.addClass('is-hidden');
       this.$pauseBtn.removeClass('is-hidden');
 
+
       this._player();
     },
 
     _pause: function() {
+      ga('send', 'event', 'pantropical','Change Timeline','pause');
       if (this.$play_pause.hasClass('stop')) {
         this._play();
       } else {
