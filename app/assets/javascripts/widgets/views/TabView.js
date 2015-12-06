@@ -76,13 +76,13 @@ define([
 
     changeStartDate: function(e) {
       var startYear = $(e.currentTarget).val();
-      ga('send', 'event', ‘Widget’,’Start year’,startYear);
+      ga('send', 'event', 'Widget','Start year',startYear);
       this.presenter.changeStartDate(startYear);
     },
 
     changeEndDate: function(e) {
       var endYear = $(e.currentTarget).val();
-      ga('send', 'event', ‘Widget’,’End year’,endYear);
+      ga('send', 'event', 'Widget','End year',endYear);
       this.presenter.changeEndDate(endYear);
     },
 
