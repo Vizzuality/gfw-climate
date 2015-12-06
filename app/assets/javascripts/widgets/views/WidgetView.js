@@ -97,6 +97,7 @@ define([
     },
 
     _close: function(e) {
+      ga('send', 'event', 'Widget','Delete',this.presenter.model.get('name'));
       e && e.preventDefault();
       this.presenter.deleteWidget();
     },
