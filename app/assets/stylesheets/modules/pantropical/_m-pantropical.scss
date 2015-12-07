@@ -136,6 +136,10 @@
     }
   }
 
+  .legend {
+    margin-top: 20px;
+  }
+
   .vis-tab {
     position: absolute;
     margin: 57px 0 0 50px;
@@ -173,6 +177,10 @@
       font-size: 14px;
       line-height: 21px;
       margin: 21px 0;
+
+      &.small-figures {
+        margin-bottom: 0;
+      }
     }
 
     li {
