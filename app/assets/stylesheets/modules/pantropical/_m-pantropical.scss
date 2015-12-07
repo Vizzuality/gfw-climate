@@ -1,9 +1,18 @@
-.pantropical-title h3{
-  font-size: 18px;
-  color: #555;
-  text-align: center;
-  margin: 0 0 30px;
+.pantropical-title{
+  h3 {
+    font-size: 18px;
+    color: $white;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  h2 {
+    font-size: 47px;
+    color: $white;
+    text-align: center;
+  }
 }
+
 #pantropical_tooltip {
   max-width: 230px;
   width: 230px;
