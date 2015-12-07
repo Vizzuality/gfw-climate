@@ -248,8 +248,8 @@
 
       span {
         position: absolute;
-        bottom: -3px;
-        left: -52px;
+        top: 0;
+        left: -58px;
       }
 
       #year-picker-label {
@@ -260,7 +260,8 @@
       }
       #play-pause {
         position: relative;
-        top: 50px;
+        top: 30px;
+        left: -38px;
         width: 40px;
         cursor: pointer;
       }
