@@ -18,7 +18,6 @@ require([
 
     initialize: function() {
       this._initRouter();
-      this._initViews();
       this._initApp();
     },
 
@@ -29,10 +28,6 @@ require([
       if (!Backbone.History.started) {
         Backbone.history.start({pushState: true});
       }
-    },
-
-    _initViews: function() {
-      new CountryIndexView();
     },
 
     _initRouter: function() {
