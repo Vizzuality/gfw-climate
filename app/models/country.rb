@@ -23,6 +23,23 @@ class Country
       end
     end
 
+    def all_shapes
+      sql = <<-SQL
+        SELECT climate_iso AS iso,
+        ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom
+        FROM gadm27_adm0
+        WHERE climate_iso IS NOT NULL
+      SQL
+      url = base_countries_path
+      url += sql.squish
+      url += '&format=topojson'
+      timeouts do
+        items_caching("countries_shapes") do
+          JSON.parse(get(url))
+        end
+      end
+    end
+
     def find_country(filter_params)
       iso   = filter_params[:id].downcase
 

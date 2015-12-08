@@ -71,18 +71,7 @@ define([
     _drawCountries: function() {
       var that = this;
 
-      var sql = ['SELECT climate_iso AS iso,',
-                 'ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom',
-                 'FROM gadm27_adm0',
-                 'WHERE climate_iso IS NOT NULL',
-                 '&format=topojson'].join(' ');
-
-      var sql_ = ['SELECT c.iso, m.the_geom',
-                  'FROM ne_50m_admin_0_countries m, gfw2_countries c',
-                  'WHERE c.iso = m.adm0_a3',
-                  "AND c.iso = 'TWN'&format=topojson"].join(' ');
-
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
+      d3.json('/api/countries/shapes', _.bind(function(error, topology) {
         for (var i = 0; i < Object.keys(topology.objects).length; i++) {
           var iso = topology.objects[i].properties.iso;
 
