@@ -3,7 +3,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background-color: #AAA;
+  background-color: $color-1;
   position: relative;
 
   &:after {
@@ -35,7 +35,7 @@
   }
 
   &.default {
-    background-color: #AAA;
+    background-color: $color-1;
     
     svg{
       fill: $white;

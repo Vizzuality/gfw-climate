@@ -1,4 +1,5 @@
 $w-control: 44px;
+
 .module-tabs {
   color: $dark;
   background: #EEE;
@@ -7,12 +8,13 @@ $w-control: 44px;
   width: 100%;
   z-index: 22;
   position: static;
+
   @media (min-width: $br-mobileMap){
     position: absolute;
     background: $white;
     top: 110px;
     left: auto;
-    right: 35px;
+    right: 25px;
     width: 283px;
     z-index: 102;
   }
