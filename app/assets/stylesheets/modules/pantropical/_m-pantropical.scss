@@ -61,6 +61,8 @@
     color: #333;
     font-size: 14px;
     position: relative;
+    flex-grow: 1;
+
     &.active {
       background-color: white;
     }
