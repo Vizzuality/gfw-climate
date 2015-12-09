@@ -86,8 +86,10 @@ define([
 
       if (is_locked) {
         $('#gridgraphs-compare-' + id).addClass('is-locked');
+        $('#gridgraphs-compare-' + id).find('.tooltip-legend').html('unlock');
       } else {
         $('#gridgraphs-compare-' + id).removeClass('is-locked');
+        $('#gridgraphs-compare-' + id).find('.tooltip-legend').html('lock');
       }
 
       $(e.currentTarget).toggleClass('is-locked', !is_locked);

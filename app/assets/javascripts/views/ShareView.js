@@ -73,6 +73,8 @@ define([
       }
 
       this.remove();
+
+      $('html').removeClass('is-no-scroll');
     },
 
     _setListeners: function() {
@@ -90,6 +92,8 @@ define([
       this._renderInput();
       this.$el.html(this.template({ hideEmbed: this.model.get('hideEmbed') }));
       this._cacheVars();
+
+      $('html').addClass('is-no-scroll');
     },
 
     _cacheVars: function() {
