@@ -230,7 +230,7 @@ function addCommas(nStr) {
         return function(d) {
           return _this.fill_color(d.group);
         };
-      })(this)).attr("stroke-width", 2).attr("stroke", (function(_this) {
+      })(this)).attr("stroke-width", 1).attr("stroke", (function(_this) {
         return function(d) {
           return d3.rgb(_this.fill_color(d.group)).darker();
         };
