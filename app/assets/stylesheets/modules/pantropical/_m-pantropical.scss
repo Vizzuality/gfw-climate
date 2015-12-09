@@ -1,4 +1,4 @@
-.pantropical-title{
+.pantropical-title {
   h3 {
     font-size: 18px;
     color: $white;
@@ -29,6 +29,7 @@
   text-align:center;
   position: absolute;
   z-index: 2;
+
   &:after {
     @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
     right: inherit;
@@ -38,6 +39,7 @@
     position: relative;
   }
 }
+
 .pantropical-vis {
   .quote {
     font-size: 12px;
@@ -110,7 +112,6 @@
         margin: 0 auto;
       }
     }
-
   }
 
   select {
@@ -127,17 +128,13 @@
     .bottom-chart {
       width: 100%;
       position: absolute;
-      top: 470px;
+      top: 750px;
 
       #totalEmissionsChart {
         width: 100%;
         height: 380px;
       }
     }
-  }
-
-  .legend {
-    margin-top: 20px;
   }
 
   .vis-tab {
@@ -163,6 +160,56 @@
       left: 50%;
       transform: translatex(-50%);
       z-index: 2;
+    }
+
+    &.change.legend {
+      top: 470px;
+      left: 0;
+      width: 100%;
+      height: 180px;
+
+      @include clearfix();
+
+      .legend-colors {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        transform: translatey(50%);
+      }
+
+      .datum {
+        position: relative;
+        left: 50%;
+        width: 65%;
+        transform: translatex(-50%);
+
+        .non-nydf,
+        .nydf {
+          width: 48%;
+
+          .item {
+            width: 48%;
+            margin: 0 1%;
+          }
+        }
+
+        .non-nydf {
+          float: left;
+
+          .item {
+            float: left;
+          }
+        }
+
+        .nydf {
+          float: right;
+          width: 40%;
+
+          .item {
+            float: right;
+          }
+        }
+      }
     }
 
     h4 {
@@ -250,9 +297,10 @@
     .year-range {
       position: absolute;
       bottom: 0;
-      right: 0;
+      left: 50%;
+      transform: translatex(-50%);
+      width: 30%;
       height: 40px;
-      width: 110%;
 
       span {
         position: absolute;
