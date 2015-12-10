@@ -93,9 +93,12 @@
   z-index: 4;
 
   .pantropical-search-box {
-    position: relative;
-    margin: 10px 0 0 20px;
-    min-width: 300px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translatex(-50%);
+    // margin: 10px 0 0 20px;
+    min-width: 250px;
   }
 
   .pantropical-share {
@@ -160,8 +163,10 @@
 
     &.country {
       left: 50%;
+      top: 100px;
       transform: translatex(-50%);
       z-index: 2;
+      margin: 0;
     }
 
     &.change.legend {
