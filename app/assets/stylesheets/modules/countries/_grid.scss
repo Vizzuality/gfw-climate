@@ -38,16 +38,17 @@
   }
 
   &.-areas,
-  &.-subnational {
+  &.-subnational,
+  &.-national {
 
     > .gridgraphs-content {
       transform: translate(0, -1.05%);
+    }
 
-      > .box > .title {
-        font-size: 32px;
-        color: $dark;
-        font-weight: 300;
-      }
+    h2.title {
+      font-size: 32px;
+      color: $dark;
+      font-weight: 300;
     }
   }
 }
