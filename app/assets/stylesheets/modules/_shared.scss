@@ -31,7 +31,7 @@
   }
 
   &:hover {
-    background-color: #777;
+    background-color: darken($color-1, 5%);
   }
 
   &.default {
@@ -42,7 +42,7 @@
     }
 
     &:hover{
-      background-color: #777;
+      background-color: darken($color-1, 5%);
     }
   }
 
