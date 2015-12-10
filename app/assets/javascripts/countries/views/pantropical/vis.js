@@ -242,6 +242,7 @@ function addCommas(nStr) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;
         var ypos = (el.attr('cy') - d.radius - 37);
+        
         d3.select("#pantropical_tooltip")
           .style('top',ypos+"px")
           .style('left',xpos+"px")
@@ -288,6 +289,7 @@ function addCommas(nStr) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;
         var ypos = (el.attr('cy') - d.radius - 37);
+        
         d3.select("#pantropical_tooltip")
           .style('top',ypos+"px")
           .style('left',xpos+"px")

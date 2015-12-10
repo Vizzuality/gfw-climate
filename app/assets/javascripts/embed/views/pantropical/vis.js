@@ -241,7 +241,8 @@ function addCommas(nStr) {
       }).on("mouseenter", function(d, i) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;
-        var ypos = (el.attr('cy') - d.radius - 37);
+        var ypos = (el.attr('cy') - d.radius + 37);
+
         d3.select("#pantropical_tooltip")
           .style('top',ypos+"px")
           .style('left',xpos+"px")
@@ -287,7 +288,7 @@ function addCommas(nStr) {
       this.circles.on("mouseenter", function(d, i) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;
-        var ypos = (el.attr('cy') - d.radius - 80);
+        var ypos = (el.attr('cy') - d.radius - 30);
         d3.select("#pantropical_tooltip")
           .style('top',ypos+"px")
           .style('left',xpos+"px")
@@ -369,7 +370,7 @@ function addCommas(nStr) {
       this.circles.on("mouseenter", function(d, i) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;
-        var ypos = (el.attr('cy') - d.radius - 37);
+        var ypos = (el.attr('cy') - d.radius - 20);
         d3.select("#pantropical_tooltip")
           .style('top',ypos+"px")
           .style('left',xpos+"px")
@@ -418,7 +419,7 @@ function addCommas(nStr) {
         this.circles.on("mouseenter", function(d, i) {
           var el = d3.select(this);
           var xpos = ~~el.attr('cx') - 115;
-          var ypos = (el.attr('cy') - d.radius - 37);
+          var ypos = (el.attr('cy') - d.radius - 20 );
           d3.select("#pantropical_tooltip")
             .style('top',ypos+"px")
             .style('left',xpos+"px")
