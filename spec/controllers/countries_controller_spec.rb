@@ -23,7 +23,7 @@ RSpec.describe CountriesController, type: :controller do
       get :pantropical
       expect(response).to be_success
       expect(response).to have_http_status(200)
-      expect(response.body).to match 'Carbon Emissions from Tropical Deforestation'
+      expect(response.body).to match 'Carbon Emissions from tropical deforestation'
     end
 
   end
