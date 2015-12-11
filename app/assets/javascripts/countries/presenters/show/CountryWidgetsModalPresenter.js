@@ -188,14 +188,6 @@ define([
         jurisdictions: this.status.get('jurisdictions'),
         areas: this.status.get('areas')
       }]);
-
-      // mps.publish('Grid/update', [{
-      //   options: this.presenter.status.toJSON(),
-      //   jurisdictions: this.presenter.status.get('jurisdictions'),
-      //   areas: this.presenter.status.get('areas'),
-      //   view: this.presenter.status.get('view'),
-      //   country: sessionStorage.getItem('countryIso')
-      // }]);
     }
 
   });
