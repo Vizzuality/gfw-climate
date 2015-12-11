@@ -52,38 +52,46 @@
     padding: 0 10px;
     max-height: 240px;
     -webkit-overflow-scrolling: touch;
+
     li {
       display: none;
       margin: 0;
       padding: 5px 6px;
       list-style: none;
       line-height: 15px;
-      em{
+
+      em {
         font-style: normal;
         text-decoration: underline;
       }
+
       &.active-result {
         display: list-item;
         cursor: pointer;
       }
+
       &.disabled-result {
         display: list-item;
         color: #ccc;
         cursor: default;
       }
+
       &.highlighted{
         background-color: #FAFAFA;
       }
+
       &.no-results{
         display: list-item;
         background: #f4f4f4;
       }
+
       &.group-result{
         display: list-item;
         color: #999;
         font-weight: bold;
         cursor: default;
       }
+
       &.group-option {
         padding-left: 15px;
       }

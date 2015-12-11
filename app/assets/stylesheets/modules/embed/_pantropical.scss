@@ -3,6 +3,7 @@
     max-width: 640px;
     margin: 0 auto;
   }
+
   .pantropical-vis {
 
     .btn-group {
@@ -32,6 +33,7 @@
         fill: $white;
       }
     }
+
     .share-options-list {
       z-index: 3;
       position: absolute;
@@ -49,6 +51,7 @@
 
       > .vis-tab  {
         width: 165px;
+        top: 100px;
         margin: 35px 0 0 15px;
 
         > h4 {
@@ -80,8 +83,11 @@
           z-index: -1;
         }
 
-        &.country {
-          margin: 75px 0 0 15px;
+        &.change {
+          ul {
+            position: absolute;
+            bottom: -228px;
+          }
         }
       }
 
@@ -122,4 +128,10 @@
       }
     }
   }
+
+  #svg_vis {
+    top: 50px;
+  }
 }
+
+
