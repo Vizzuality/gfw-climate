@@ -29,7 +29,6 @@
 @import "modules/countries/no-indicators";
 @import 'modules/countries/tabs.scss';
 @import 'modules/countries/charts/line_chart';
-@import "modules/countries/m-country-modal";
 @import "modules/select";
 @import "modules/gridgraphs";
 
@@ -48,6 +47,7 @@
 @import "modules/common/m-fixed-header";
 @import "modules/common/m-toolbar";
 @import "modules/common/m-grid-button-box";
+@import "modules/common/m-modal-fields";
 
 // Layouts
 @import "layouts/countries";
