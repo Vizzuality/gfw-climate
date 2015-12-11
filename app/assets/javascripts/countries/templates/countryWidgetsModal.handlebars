@@ -7,12 +7,12 @@
   </a>
   <div class="modal-wrapper scroll-dark">
     <div class="modal-content">
-      <div class="m-country-modal">
+      <div class="m-modal-field">
         <div class="m-modal--tab is-active">
 
           {{#if view.isNational}}
             <div class="m-field">
-              <h3>Select indicators</h3>
+              <h2>Select indicators</h2>
                 {{#each widgets}}
                   <div class="indicator-group">
                   <h4>{{@key}}</h4>
@@ -39,7 +39,7 @@
           {{#if view.isSubNational}}
             <div class="page-1">
               <div class="m-field">
-                <h3>Select jurisdictions</h3>
+                <h2>Select jurisdictions</h2>
                   {{#if jurisdictions}}
                     <div class=".
                     jurisdictions-group">
@@ -66,7 +66,7 @@
           {{#if view.isAreas}}
             <div class="page-1">
               <div class="m-field">
-                <h3>Select areas</h3>
+                <h2>Select areas</h2>
                   {{#if areas}}
                     <div class="areas-group">
                       <ul class="m-field-list compare-area">
@@ -92,7 +92,7 @@
           {{#unless view.isNational}}
             <div class="page-2 is-hidden">
               <div class="m-field">
-                <h3>Select indicators</h3>
+                <h2>Select indicators</h2>
                   {{#if widgets}}
                       {{#if view.isSubNational}}
                         <div class="indicators-jurisdictions-group">
