@@ -37,13 +37,6 @@
     /               | Know more about our
     /               strong  data and methods
     /               i.img.report-story
-    
-    //Counter
-    / nav.mobile-hide
-    /   h2
-    /     | Lauching in 
-    /     span#countdown 
-    /     |  days
 
     ul.main-slider-viewport
       li.slide.slide0.current
@@ -134,7 +127,7 @@
                 svg
                   use (xlink:href="#shape-world" xmlns:xlink="http://www.w3.org/1999/xlink")
               h3 Explore the map
-          .col.col6
+          .col.col6.s-col-12
             a(href="/countries")
               .icon
                 svg
@@ -158,7 +151,7 @@
                   | GFW Climate catalyzes action on climate change by providing 
                   span timely, credible answers 
                   | to questions about carbon emissions from tropical deforestation.
-          .col.-c6
+          .col.-c6.overlap-image.overflow-allowed
             .translated-image
               = image_tag("home/features/img-info.png")
 
@@ -190,13 +183,15 @@
 
                 .link-container
                   a (href="/countries" class="btn medium blue") Country profiles
-          .col.-c6
-            = image_tag("home/features/img-profiles.png")
+          .col.-c6.overlap-image
+            .wrap
+              = image_tag("home/features/img-profiles.png")
 
       section.feature-section.-compare-countries
         .feature-content
-          .col.-c6
-            = image_tag("home/features/img-compare.png")
+          .col.-c6.overlap-image
+            .wrap
+              = image_tag("home/features/img-compare.png")
           .col.-c4
             .col-container
               .description-container
