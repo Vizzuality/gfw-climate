@@ -112,10 +112,10 @@ define([
 
     changeSourceNav: function(e){
       e && e.preventDefault();
-      // this.model.set('section',$(e.currentTarget).data('slug'));
-      // this.model.set('interesting', $(e.currentTarget).data('interesting'));
-      // this.model.set('t',null);
-      // this.updateSource();
+      this.model.set('section',$(e.currentTarget).data('slug'));
+      this.model.set('interesting', $(e.currentTarget).data('interesting'));
+      this.model.set('t',null);
+      this.updateSource();
 
       /**/
       // no router fallback
@@ -144,7 +144,9 @@ define([
         interesting: this.model.get('interesting'),
         t: this.model.get('t')
       }
-      mps.publish('SourceStatic/update',[params]);
+      this.$sideBarBox.addClass('active');
+      this.changeHelper();
+      // mps.publish('SourceStatic/update',[params]);
     },
 
     changeSource: function(params){
