@@ -238,6 +238,34 @@ $height: auto;
     border-bottom: 1px solid $border;
     @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
   }
+  > .prev-step {
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    transform: translate(0, -50%);
+    cursor: pointer;
+
+    > .svg-left-arrow {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate(0, -50%);
+      width: 15px;
+      height: 16px;
+      stroke: $black;
+    }
+    > .btn-back {
+      margin: 0 0 0 15px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: $dark;
+      text-transform: uppercase;
+      outline: none;
+      cursor: pointer;
+    }
+  }
 
 }
 
@@ -477,7 +505,7 @@ $height: auto;
     color: #B2D26E;
     border-bottom-color: #B2D26E;
   }
-  
+
   .source_category_title {
     color: $blue;
     border-bottom-color: $blue;

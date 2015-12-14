@@ -1,11 +1,8 @@
-// COMPARE MODAL CONTENT
-.m-compare-modal {
+.m-modal-field {
   // Tabs header
 
   // Content header
-  .m-modal--tabscontent {
-
-  }
+  .m-modal--tabscontent {}
 
   .m-modal--tab {
     padding: 90px 40px 76px;
@@ -23,10 +20,26 @@
     &.m-select {
       width: 32.7%
     }
+    h2 {
+      margin-bottom: 30px;
+      color: $font-color-1;
+      font-size: 32px;
+      text-align: center;
+      font-weight: 300;
+    }
+
     h3 {
       font-weight: 500;
       color: $font-color-3;
       font-size: 19px;
+    }
+
+    h4 {
+      margin: 10px 0;
+      font-size: 16px;
+      color: $dark;
+      font-weight: 500;
+      opacity: .5;
     }
   }
 
@@ -35,15 +48,17 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     margin: 0 -0.5%;
+    padding-bottom: 25px;
 
     .m-field-list-item {
       position: relative;
       width: 32.333333333%;
       margin: 0.5%;
       padding: 16px;
-      padding-right: 32px;
+      padding-right: 55px;
       font-size: 14px;
-      color: $dark;
+      font-weight: 500;
+      color: rgba($black, .5);
       border: 1px solid $border;
       border-radius: 5px;
       cursor: pointer;
@@ -61,7 +76,14 @@
         border: 1px solid $border;
       }
 
-      &.is-checkbox {
+      &.is-data {
+        &:before {
+          display: none;
+        }
+      }
+
+      &.is-checkbox,
+      &.is-data {
         svg{
           display: block;
           position: absolute;
@@ -74,6 +96,16 @@
           fill: $white;
         }
       }
+
+      &.is-data {
+        svg{
+          display: block;
+          width: 18px;
+          height: 18px;
+          fill: #e6e6e6;
+        }
+      }
+
       &.is-radio {
         &:before{
           border-radius: 50%;
@@ -90,6 +122,12 @@
             display: block;
           }
         }
+        &.is-data {
+          svg {
+            fill: $white;
+          }
+        }
+
         &.is-radio {
           &:before {
             box-shadow: 0 0 0 2px $font-color-3 inset, 0 0 0 12px $white inset;
