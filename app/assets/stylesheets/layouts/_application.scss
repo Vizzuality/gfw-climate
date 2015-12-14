@@ -620,6 +620,11 @@ $main-slider-height-mb: 300px;
         min-height: 400px;
         align-items: flex-start;
       }
+
+      img {
+        max-width: 100%;
+        width: auto;
+      }
     }
 
     &.-right {
@@ -627,8 +632,10 @@ $main-slider-height-mb: 300px;
     }
 
     img {
-      max-width: 100%;
+      // max-width: 100%;
+      width: 100%;
     }
+
   }
 
   @media screen and (max-width: $br-mobile) {
@@ -653,7 +660,7 @@ $main-slider-height-mb: 300px;
         
         //This wrapper is to avoid img deformation 
         //into flex container
-        .wrap {
+        .wrap-img {
           overflow: hidden;
         }
       }
@@ -661,6 +668,7 @@ $main-slider-height-mb: 300px;
   }
 
   .description-container {
+    margin-right: 20px;
 
     @media screen and (max-width: $br-mobile) {
       display: flex;
@@ -669,6 +677,7 @@ $main-slider-height-mb: 300px;
       align-items: center;
       margin-top: 50px;
       margin-bottom: 25px;
+      margin-left: 0;
 
       .title {
         text-align: center;
@@ -918,8 +927,9 @@ $main-slider-height-mb: 300px;
   strong{
     font-weight: 500;
   }
+
   img{
-    max-width: 100%;
+    width: 100%;
   }
 
 

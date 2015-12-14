@@ -9,7 +9,7 @@
 
       .translated-image {
         width: 150%;
-        transform: translate(10%, 0);
+        transform: translate(20%, 0);
       }
     }
   }
@@ -61,18 +61,20 @@
     }
 
     .image-compare {
-      @media screen and (max-width: $br-mobile) {
+      
         display: none;
-      }
+      
     }
-
-    .feature-content {
-      display: flex;
-      flex-direction: column;
-
-      .col.-c6 {
+    
+    @media screen and (max-width: $br-mobile) {
+      .feature-content {
         display: flex;
-        order: 2;
+        flex-direction: column;
+
+        .col.-c6 {
+          display: flex;
+          order: 2;
+        }
       }
     }
   }
