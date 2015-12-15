@@ -481,7 +481,8 @@
       clear: none;
       background: none;
       border-bottom: none;
-      &.layers-menu{
+
+      &.layers-menu {
         display: none !important;
         @media (min-width: $br-mobileMap){
           padding: 0;
@@ -490,7 +491,8 @@
           clear: none;
           background: none;
           border-bottom: none;
-          &.layers-menu{
+
+          &.layers-menu {
 
           }
         }

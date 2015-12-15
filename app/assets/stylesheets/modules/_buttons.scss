@@ -107,11 +107,6 @@
     &:hover {
       background: darken($blue,10%);
     }
-    &.disabled{
-      &:hover {
-        background: $blue;
-      }
-    }
   }
   &.light {
     color: $white;
@@ -142,10 +137,6 @@
     // color: $white !important;
   }
 
-  &.disabled{
-    opacity: 0.25;
-    cursor: default;
-  }
   &.with-icon{
     min-width: 0;
     @media (min-width: $br-mobile) {
