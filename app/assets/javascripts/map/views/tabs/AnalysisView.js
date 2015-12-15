@@ -554,9 +554,9 @@ define([
               line-opacity: 1;\
             }"
         }, {
-          sql: "SELECT * FROM gadm_1_all WHERE iso LIKE '" + iso +"' ",
+          sql: "SELECT * FROM gadm27_adm0 WHERE iso LIKE '" + iso +"' ",
           cartocss: "\
-            #gadm_1_all {\
+            #gadm27_adm0 {\
               polygon-fill: #373737;\
               polygon-opacity: 0.15;\
               line-color: #333;\
