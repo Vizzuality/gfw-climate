@@ -25,7 +25,8 @@ html
 
     = stylesheet_link_tag "countries", :media => "all"
     = csrf_meta_tags
-
+    <script id="loader-gfw" data-current=".shape-climate" src="http://localhost:8000/js/build/production.js"></script>
+    
   body class="is-#{params[:controller]}-page is-#{params[:action]}-action"
 
     = render 'shared/svg_icons'
