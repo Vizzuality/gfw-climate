@@ -13,6 +13,7 @@ class StaticController < ApplicationController
   end
 
   def about
+    @title = 'About'
   end
 
   def forest_change_data
