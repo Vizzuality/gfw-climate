@@ -9,13 +9,15 @@ $country-color: rgb(207, 127, 236);
 $categories: 'carbon-loss','carbon-density','land-use','land-cover';
 $colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-color;
 
+.l-layers-header {
+   border-top: 1px solid #E5E5DF;
+}
 
 .layers-menu {
   // height: 77px;
   position: relative;
   @include clearfix();
-  border-top: 1px solid #E5E5DF;
-
+ 
   .inner {
     height: 100%;
     position: relative;
