@@ -3,11 +3,9 @@
   background-color: $white;
 
   img {
-    // width: auto;
-    // height: auto;
+    display: block;
     max-width: 100%;
     margin: 0 auto;
-    // height: 100%;
   }
 
   &.-intro {
