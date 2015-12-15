@@ -5,13 +5,6 @@ class Indicator
   default_timeout 10
 
   class << self
-
-    ADMIN_BOUNDARY_ID = 1
-    INDICATORS_VALUES_TABLE = "indicators_values"
-    INDICATORS_TABLE = "indicators"
-    CDB_BOUNDARIES_TABLE="boundaries_table"
-    CDB_SUBNAT_TABLE = "gadm27_adm1"
-
     def base_path
       "#{ENV['CDB_API_HOST']}?q="
     end
@@ -51,7 +44,7 @@ class Indicator
     def index_query
       <<-SQL
        SELECT indicator_group, chart_type, description, indicator_id, value_units
-       FROM #{INDICATORS_TABLE}
+       FROM #{CDB_INDICATORS_TABLE}
        GROUP BY indicator_id, indicator_group, description, value_units, chart_type
       SQL
     end
@@ -72,7 +65,7 @@ class Indicator
         values.iso_and_sub_nat,
         subnat.name_1 AS sub_nat_name,
         boundaries.boundary_name
-        FROM #{INDICATORS_VALUES_TABLE} AS values
+        FROM #{CDB_INDICATORS_VALUES_TABLE} AS values
         LEFT JOIN #{CDB_SUBNAT_TABLE} AS subnat
         ON values.sub_nat_id  = subnat.id_1 AND values.iso = subnat.iso
         LEFT JOIN #{CDB_BOUNDARIES_TABLE} AS boundaries
