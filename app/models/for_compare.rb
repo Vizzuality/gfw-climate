@@ -41,7 +41,7 @@ class ForCompare
 
     def search_country_query(iso)
       filter =  "iso = '#{iso}'"
-      "SELECT *
+      "SELECT iso, name_0 AS name, cartodb_id
        FROM #{CDB_COUNTRIES_TABLE}
        WHERE #{filter}"
     end
@@ -49,7 +49,7 @@ class ForCompare
     def search_jurisdiction_query(iso, id)
       filter =  "iso = '#{iso}'"
       filter += "AND id_1 = #{id}"
-      "SELECT cartodb_id, iso, id_1 as id, name_1 as name, bounds
+      "SELECT cartodb_id, iso, id_1 as id, name_1 as name
        FROM #{CDB_SUBNAT_TABLE}
        WHERE #{filter}"
     end
