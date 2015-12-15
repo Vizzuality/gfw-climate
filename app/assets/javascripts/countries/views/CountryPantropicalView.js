@@ -265,7 +265,7 @@ define([
             this.$pauseBtn.addClass('is-hidden');
           };
 
-        }.bind(this), 1500)
+        }.bind(this), 750)
       }
     },
 
