@@ -57,14 +57,16 @@ define([
     _drawCountries: function(tab) {
       var compare = this.status.get('compare'+tab);
       if (!!compare.iso && !!compare.jurisdiction) {
-        var sql = ["SELECT m.the_geom",
-                   "FROM gadm_1_all m",
-                   "WHERE m.iso = '"+compare.iso+"'",
-                   "AND m.id_1 = '"+compare.jurisdiction+"'&format=topojson"].join(' ');
+        var sql = ["SELECT",
+                   "ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom",
+                   "FROM gadm27_adm1",
+                   "WHERE iso = '"+compare.iso+"'",
+                   "AND id_1 = '"+compare.jurisdiction+"'&format=topojson"].join(' ');
       } else {
-        var sql = ["SELECT m.the_geom",
-                   "FROM ne_50m_admin_0_countries m",
-                   "WHERE m.adm0_a3 = '"+compare.iso+"'&format=topojson"].join(' ');
+        var sql = ["SELECT",
+                   "ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom",
+                   "FROM gadm27_adm0",
+                   "WHERE iso = '"+compare.iso+"'&format=topojson"].join(' ');
       }
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
