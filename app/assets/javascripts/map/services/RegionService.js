@@ -13,7 +13,10 @@ define([
 
     requestId: 'RegionService',
 
-    _uriTemplate:'http://wri-01.cartodb.com/api/v1/sql?q=SELECT%20*%20FROM%20gadm2_provinces_simple%20where%20iso=%27{iso}%27%20and%20id_1={id1}&format=geojson',
+    _uriTemplate: ['http://wri-01.cartodb.com/api/v1/sql?q=',
+                   'SELECT * FROM gadm27_adm1',
+                   "where iso='{iso}' AND id_1={id1}",
+                   '&format=geojson'].join(' '),
 
     /**
      * Constructs a new instance of RegionService.
