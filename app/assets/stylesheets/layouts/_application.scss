@@ -620,22 +620,11 @@ $main-slider-height-mb: 300px;
         min-height: 400px;
         align-items: flex-start;
       }
-
-      img {
-        max-width: 100%;
-        width: auto;
-      }
     }
 
     &.-right {
       justify-content: flex-end;
     }
-
-    img {
-      // max-width: 100%;
-      width: 100%;
-    }
-
   }
 
   @media screen and (max-width: $br-mobile) {

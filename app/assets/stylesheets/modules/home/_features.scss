@@ -2,6 +2,14 @@
 .feature-section {
   background-color: $white;
 
+  img {
+    // width: auto;
+    // height: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    // height: 100%;
+  }
+
   &.-intro {
     border-top: 1px solid $border;
 
@@ -72,7 +80,7 @@
         flex-direction: column;
 
         .col.-c6 {
-          display: flex;
+          display: block;
           order: 2;
         }
       }
