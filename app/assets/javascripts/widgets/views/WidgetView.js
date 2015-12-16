@@ -1,10 +1,11 @@
 define([
   'backbone',
   'handlebars',
+  'enquire',
   'widgets/presenters/WidgetPresenter',
   'widgets/views/TabView',
   'text!widgets/templates/widget.handlebars',
-], function(Backbone, Handlebars, WidgetPresenter, TabView, tpl) {
+], function(Backbone, Handlebars, enquire, WidgetPresenter, TabView, tpl) {
 
   'use strict';
 
@@ -22,6 +23,20 @@ define([
 
     initialize: function(setup) {
       this.presenter = new WidgetPresenter(this, setup);
+
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+          this.render();
+        },this)
+      });
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+          this.render();
+        },this)
+      });
     },
 
     /**
@@ -40,7 +55,7 @@ define([
         slug: this.presenter.model.get('slug'),
         tabs: this.presenter.model.get('tabs'),
         name: this.presenter.model.get('name'),
-        isMobile: this._isMobile()
+        isMobile: this.mobile
       }));
 
       this.cacheVars();
@@ -65,7 +80,7 @@ define([
       // UI
       this.$tablink.removeClass('-selected');
       
-      if (this._isMobile()) {
+      if (this.mobile) {
         //Mobile
         this.$tabgrid.find('.tab-li[data-position="' + position + '"]').attr('selected');
         this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('-selected');
@@ -101,7 +116,7 @@ define([
      * @param  {click event} e
      */
     _changeTab: function(e) {
-      if (this._isMobile()) {
+      if (this.mobile) {
         //Mobile
         this.presenter.changeTab($(e.currentTarget).val());
       } else {
@@ -133,10 +148,6 @@ define([
       this.$el.remove();
       this.remove();
       Backbone.View.prototype.remove.call(this);
-    },
-
-    _isMobile: function() {
-      return ($(window).width() > 850) ? false : true;
     }
 
   });
