@@ -1,5 +1,5 @@
 .is-hidden {
-  display: none;
+  display: none !important;
   visibility: hidden;
 }
 
@@ -23,4 +23,18 @@
 
 .is-bold {
   font-weight: 600;
+}
+
+.is-mobile-hidden {
+  @media only screen and (max-width: $br-mobile) {
+    display: none !important;
+    visibility: hidden;
+  }
+}
+
+.is-desktop-hidden {
+  @media only screen and (min-width: $br-mobile) {
+    display: none !important;
+    visibility: hidden;
+  }
 }

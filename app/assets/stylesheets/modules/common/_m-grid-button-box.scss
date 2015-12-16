@@ -2,6 +2,10 @@
   float: right;
 
   @media only screen and (max-width: $br-mobile) {
-    
+    float: none;
+    width: 100%;
+    text-align: right;
+    margin-bottom: 20px;
+    padding-right: 10px;
   }
 }

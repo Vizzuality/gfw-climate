@@ -120,6 +120,7 @@
         border: 1px solid $border;
         border-right: 0;
         cursor: pointer;
+
         &:last-child {
           border-right: 1px solid $border;
         }
@@ -143,6 +144,10 @@
           font-size: 9px;
         }
       }
+    }
+
+    .tab-selector {
+      max-width: 100%;
     }
   }
 }
