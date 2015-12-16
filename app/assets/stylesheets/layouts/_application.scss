@@ -859,17 +859,21 @@
 
 
           &.selected {
-            background: $white;
+            @media (min-width: $br-mobile) {
+              background: $white;
+            }
             box-shadow: 2px 0 0 0px #FFF;
-            &:after{
-              content: "";
-              position: absolute;
-              display: block;
-              bottom: 0%;
-              left: 0px;
-              width: 100%;
-              height: 4px;
-              background: rgba(#5B80A0,0.5);
+            @media (min-width: $br-mobile) {
+              &:after{
+                content: "";
+                position: absolute;
+                display: block;
+                bottom: 0%;
+                left: 0px;
+                width: 100%;
+                height: 4px;
+                background: rgba($blue, 0.5);
+              }
             }
           }
           &.nav-title {
@@ -879,6 +883,7 @@
             svg {
               width: 11px;
               height: 12px;
+              margin-right: 5px;
             }
             &:hover{
               svg{
