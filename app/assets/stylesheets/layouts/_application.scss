@@ -1,10 +1,12 @@
+$main-slider-height-mb: 300px;
 // Main Slider
 .main-slider {
   width: 100%;
-  height: 260px;
+  height: $main-slider-height-mb;
   background: #CCC;
   position: relative;
   z-index: 3;
+
   @media (min-width: $br-mobile) {
     top: -60px;
     min-height: 620px;
@@ -15,16 +17,10 @@
     }
   }
 
-  #countdown {
-    color: $color-1;
-    font-weight: 400;
-  }
-
-
   .main-slider-viewport {
     position: relative;
     width: 100%;
-    max-height: 260px;
+    max-height: $main-slider-height-mb;
 
     @media (min-width: $br-mobile) {
       max-height: 620px;
@@ -48,6 +44,7 @@
       padding: 10px 80px 10px;
       border-radius: 50px;
       box-shadow: 0 1px 3px rgba(#000,0.25);
+
       @media (min-width: 1350px) {
         padding: 15px 80px 15px;
       }
@@ -55,6 +52,7 @@
       .box-button {
         display: inline-block;
         position: relative;
+
         .btn {
           -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
@@ -256,12 +254,14 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 260px;
+  height: 300px;
   background-size: cover;
   background-position: center;
+
   @media (min-width: $br-mobile) {
     height: 620px;
   }
+
   >a{
     position: absolute;
     top: 0;
@@ -330,6 +330,7 @@
         padding: 10px 5px 5px;
       }
     }
+
     h3 {
       font-size: 15px;
       color: #333;
@@ -389,28 +390,54 @@
   position: relative;
   z-index: 2;
 }
+
 .main-apps  {
+
 	.row {
 		@include row();
+    flex-wrap: wrap;
 	}
+
 	.col {
 		cursor: pointer;
 	}
+
 	.col6 {
 		@include col(50);
 		padding: 20px 0;
-    // @media (min-width: $br-mobile) {
-    //   padding: 0;
-    // }
 		border-left: 1px solid $border;
-		&:first-child  { border-left: none; }
+
+    @media (max-width: $br-mobile) {
+      @include col(100);
+      padding: 0;
+    }
+
+		&:first-child  { 
+      border-left: none; 
+
+      @media (max-width: $br-mobile) {
+        border-bottom: 1px solid $border;
+      }
+    }
+
     a {
       text-decoration: none;
       display: block;
       position: relative;
-      @media (min-width: $br-mobile) {
-        padding: 30px 0;
+
+      @media (max-width: $br-mobile) {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+
+        .icon {
+          margin: 0;
+          margin-right: 20px;
+        }
       }
+
       &:hover {
         .icon {
           background: $dark;
@@ -425,6 +452,7 @@
 			border-radius: 50%;
 			background: $blue;
       transition: all .15s $easeInOutSine;
+
       @media (min-width: $br-mobile) {
         width: 100px;
         height: 100px;
@@ -435,14 +463,17 @@
 				fill: $white;
 			}
 		}
+
 		h3  {
 			text-align: center;
 			text-transform: uppercase;
-      font-size: 17px;
+      font-size: 24px;
 			padding: 20px 0 0;
       color: $dark;
-      @media (min-width: $br-mobile) {
-        font-size: 24px;
+
+      @media (max-width: $br-mobile) {
+        font-size: 17px;
+         padding-top: 0;
       }
 		}
 	}
@@ -457,9 +488,11 @@
 	.row {
 		@include row();
     flex-wrap: wrap;
+
     @media (min-width: $br-tablet) {
       padding: 0 10%;
     }
+
 		position: relative;
 
 		.btn-arrow-box {
@@ -488,15 +521,19 @@
 			padding: 20px;
       border-top: 1px solid $border;
 			border-left: 1px solid $border;
+
       @media (min-width: $br-mobile) {
         @include col(25);
         border-top: none;
       }
+
 			&:first-child  { border-left: none; }
+
       a {
         text-decoration: none;
         display: block;
         position: relative;
+
         @media (min-width: $br-mobile) {
           padding: 30px 0;
         }
@@ -546,6 +583,7 @@
     visibility: hidden;
     opacity: 0;
     transition: all,0.25s,linear;
+
     p{
       position: absolute;
       top: 50%;
@@ -568,48 +606,137 @@
 
   .feature-section > .feature-content {
     display: flex;
+    flex-wrap: wrap;
     min-height: 500px;
-    padding: 30px;
-    @media screen and (min-width: $br-mobile) {
-      padding: 60px;
+    padding: 60px;
+    // background-color: $white;
+
+    @media screen and (max-width: $br-mobile) {
+      padding: 30px;
+      padding-bottom: 0;
+      min-height: 0;
+
+      &.-map {
+        min-height: 400px;
+        align-items: flex-start;
+      }
     }
 
     &.-right {
       justify-content: flex-end;
     }
+  }
 
-    img {
-      // max-width: 100%;
-      display: block;
-      width: 100%;
-      height: auto;
+  @media screen and (max-width: $br-mobile) {
+    & .-map {
+      min-height: 550px;
+      align-items: flex-start;
     }
   }
+
+  .feature-section {
+    @media screen and (max-width: $br-mobile) {
+      position: relative;
+      z-index: 1;
+
+      .overlap-image {
+        height: 250px;
+        overflow: hidden;
+
+        &.overflow-allowed {
+          overflow: visible;
+        }
+        
+        //This wrapper is to avoid img deformation 
+        //into flex container
+        .wrap-img {
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
+  .description-container {
+    margin-right: 20px;
+
+    @media screen and (max-width: $br-mobile) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+      margin-bottom: 25px;
+      margin-left: 0;
+
+      .title {
+        text-align: center;
+      }
+
+      .description {
+        text-align: center;
+        font-size: 15px;
+        font-weight: 300;
+      }
+    }
+  }
+
   .col {
     position: relative;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    flex-wrap: wrap;
 
     &.-c3 {
       @include col(30);
+
+      @media (max-width: $br-mobile) {
+        @include col(100);
+        padding: 0;
+        display: block;
+      }
     }
+
     &.-c4 {
       @include col(40);
+
+      @media (max-width: $br-mobile) {
+        @include col(100);
+        padding: 0;
+        display: block;
+      }
     }
+
     &.-c5 {
       @include col(50);
+
+      @media (max-width: $br-mobile) {
+        @include col(100);
+        padding: 0;
+        display: block;
+      }
     }
+
     &.-c6 {
       @include col(60);
+
+      @media (max-width: $br-mobile) {
+        @include col(100);
+        padding: 0;
+        display: block;
+      }
     }
+
     &.-c7 {
       @include col(70);
+
+      @media (max-width: $br-mobile) {
+        @include col(100);
+        padding: 0;
+        display: block;
+      }
     }
   }
 }
-
-
 
 
 // LAYOUT
@@ -789,8 +916,9 @@
   strong{
     font-weight: 500;
   }
+
   img{
-    max-width: 100%;
+    width: 100%;
   }
 
 
@@ -859,17 +987,21 @@
 
 
           &.selected {
-            background: $white;
+            @media (min-width: $br-mobile) {
+              background: $white;
+            }
             box-shadow: 2px 0 0 0px #FFF;
-            &:after{
-              content: "";
-              position: absolute;
-              display: block;
-              bottom: 0%;
-              left: 0px;
-              width: 100%;
-              height: 4px;
-              background: rgba(#5B80A0,0.5);
+            @media (min-width: $br-mobile) {
+              &:after{
+                content: "";
+                position: absolute;
+                display: block;
+                bottom: 0%;
+                left: 0px;
+                width: 100%;
+                height: 4px;
+                background: rgba($blue, 0.5);
+              }
             }
           }
           &.nav-title {
@@ -879,6 +1011,7 @@
             svg {
               width: 11px;
               height: 12px;
+              margin-right: 5px;
             }
             &:hover{
               svg{
@@ -2020,8 +2153,6 @@
     }
   }
 
-
-
   .single-source-item {
     font-size: 15px;
     line-height: 1.4;
@@ -2098,10 +2229,6 @@
       }
 
     }
-
-    // img{
-    //   @include clearfix();
-    // }
 
     .hidden {
       display: none;
@@ -2354,6 +2481,7 @@
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
+
     @media (min-width: $br-mobile) {
       flex-wrap: nowrap;
     }

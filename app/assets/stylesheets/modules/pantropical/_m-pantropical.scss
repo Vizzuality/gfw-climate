@@ -46,7 +46,6 @@
   }
 
   .btn-group {
-    background-color: #eee;
     height: 40px;
     display: flex;
     justify-content: space-around;
@@ -93,11 +92,12 @@
   z-index: 4;
 
   .pantropical-search-box {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translatex(-50%);
-    // margin: 10px 0 0 20px;
+    // position: absolute;
+    // top: 10px;
+    // left: 50%;
+    // transform: translatex(-50%);
+    position: relative;
+    margin: 10px 0 0 20px;
     min-width: 250px;
   }
 
@@ -156,8 +156,9 @@
     &.right-side {
       z-index: 2;
       right: 0;
+      top: 180px;
       height: 380px;
-      margin: 57px 50px 0 0;
+      margin: 0 50px 0 0;
       width: 190px;
     }
 

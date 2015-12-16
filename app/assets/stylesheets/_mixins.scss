@@ -4,11 +4,11 @@
     justify-content: $content;
     align-items: $items;
 }
-@mixin col ($per) {
-    width: percentage($per/100);
-    min-height: 1px;
-}
 
+@mixin col($per) {
+  width: percentage($per/100);
+  min-height: 1px;
+}
 
 // Clearfix
 @mixin clearfix() {
