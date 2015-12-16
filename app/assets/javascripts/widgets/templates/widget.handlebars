@@ -39,24 +39,26 @@
   <div class="m-widget-content">
 
     {{#if this.tabs}}
-      <ul class="tab-ul is-mobile-hidden">
-      {{#each this.tabs}}
-        <li class="tab-li" data-position="{{this.position}}">
-          <span class="name">{{this.name}}</span>
-          {{#if this.subname}}<span class="subname">{{this.subname}}</span>{{/if}}
-          {{#if this.ipcc}}<span class="ipcc">{{this.ipcc}}</span>{{/if}}
-        </li>
-      {{/each}}
-      </ul>
-      <select class="is-desktop-hidden tab-li tab-selector" name="tabs" id="country-tabs-mobile">
+      {{#if this.isMobile}}
+        <select class="is-desktop-hidden tab-selector tab-ul" name="tabs" id="country-tabs-mobile">
+          {{#each this.tabs}}
+            <option class="tab-li" value="{{this.position}}" data-position="{{this.position}}">
+              <span class="name">{{this.name}}</span>
+              {{#if this.subname}}<span class="subname">{{this.subname}}</span>{{/if}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        <ul class="tab-ul is-mobile-hidden">
         {{#each this.tabs}}
-          <option value="{{this.position}}" data-position="{{this.position}}">
+          <li class="tab-li" data-position="{{this.position}}">
             <span class="name">{{this.name}}</span>
             {{#if this.subname}}<span class="subname">{{this.subname}}</span>{{/if}}
-          </option>
+            {{#if this.ipcc}}<span class="ipcc">{{this.ipcc}}</span>{{/if}}
+          </li>
         {{/each}}
-      </select>
-
+        </ul>
+      {{/if}}
       <div class="m-tab tab-content"></div>
     {{/if}}
   </div>

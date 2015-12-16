@@ -16,7 +16,8 @@ define([
       'click .close'   : '_close',
       'click .info'    : '_info',
       'click .share'   : '_share',
-      'click .tab-li'  : '_changeTab'
+      'click .tab-li'  : '_changeTab',
+      'change .tab-selector'  : '_changeTab'
     },
 
     initialize: function(setup) {
@@ -38,7 +39,8 @@ define([
       this.$el.html(this.template({
         slug: this.presenter.model.get('slug'),
         tabs: this.presenter.model.get('tabs'),
-        name: this.presenter.model.get('name')
+        name: this.presenter.model.get('name'),
+        isMobile: this._isMobile()
       }));
 
       this.cacheVars();
@@ -52,6 +54,7 @@ define([
       this.$tabgrid = this.$el.find('.tab-ul');
       this.$tablink = this.$el.find('.tab-li');
       this.$tabcontent = this.$el.find('.tab-content');
+      this.$tabSelector = this.$el.find('.tab-selector');
     },
 
     /**
@@ -61,7 +64,17 @@ define([
       var position = this.presenter.status.get('tabs').position;
       // UI
       this.$tablink.removeClass('-selected');
-      this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('-selected');
+      
+      if (this._isMobile()) {
+        //Mobile
+        this.$tabgrid.find('.tab-li[data-position="' + position + '"]').attr('selected');
+        this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('-selected');
+
+        this.$tabSelector.val(position);
+      } else {
+        this.$tabgrid.find('.tab-li[data-position="' + position + '"]').addClass('-selected');
+      }
+
       // Check if the tab exist to remove all the events and data
       if (!!this.tab) {
         this.tab.destroy();
@@ -72,8 +85,8 @@ define([
         widget: this,
         model: {
           location: this.presenter.model.get('location'),
-          data: _.findWhere(this.presenter.model.get('tabs'), {position: position}),
-          indicators: _.where(this.presenter.model.get('indicators'), {tab: position}),
+          data: _.findWhere(this.presenter.model.get('tabs'), {'position': ~~position}),
+          indicators: _.where(this.presenter.model.get('indicators'), {'tab': ~~position}),
           slugw: this.presenter.model.get('slugw'),
           // Compare model params
           location_compare: this.presenter.model.get('location_compare'),
@@ -81,7 +94,6 @@ define([
         },
         status: this.presenter.status.toJSON()
       });
-
     },
 
     /**
@@ -89,7 +101,12 @@ define([
      * @param  {click event} e
      */
     _changeTab: function(e) {
-      this.presenter.changeTab($(e.currentTarget).data('position'));
+      if (this._isMobile()) {
+        //Mobile
+        this.presenter.changeTab($(e.currentTarget).val());
+      } else {
+        this.presenter.changeTab($(e.currentTarget).data('position'));
+      }
     },
 
     changeStatus: function(status) {
@@ -116,6 +133,10 @@ define([
       this.$el.remove();
       this.remove();
       Backbone.View.prototype.remove.call(this);
+    },
+
+    _isMobile: function() {
+      return ($(window).width() > 850) ? false : true;
     }
 
   });
