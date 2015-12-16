@@ -70,6 +70,7 @@ define([
        for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
               intensity = imgdata[pixelPos+1] |0;
+          imgdata[pixelPos + 3] = 0 |0;
           if (intensity > 0) {
             var intensity_scaled = myscale(intensity) |0,
                 yearLoss = 2001 + imgdata[pixelPos] |0;
@@ -80,9 +81,7 @@ define([
               imgdata[pixelPos + 2] = c[bucket + 2];
               imgdata[pixelPos + 3] = 255 | 0;
             }
-          } else {
-            imgdata[pixelPos + 3] = 0 |0;
-          }
+          } 
         }
        }
     },

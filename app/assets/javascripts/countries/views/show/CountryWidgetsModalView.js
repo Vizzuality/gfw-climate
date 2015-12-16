@@ -46,19 +46,20 @@ define([
 
     parseData: function() {
       var widgets = _.groupBy(this.status.get('widgets'), 'type'),
-        widgets, jurisdictions, areas;
+        jurisdictions, areas;
 
       switch(this.status.get('view')) {
 
         case 'subnational':
           widgets = widgets['Forest and Carbon Data'];
           jurisdictions = this.presenter.countryModel.get('jurisdictions');
+          jurisdictions = jurisdictions.length > 0 ? jurisdictions : null;
           break;
 
         case 'areas-interest':
-
           widgets = widgets['Forest and Carbon Data'];
-          areas = this.presenter.countryModel.get('areas_of_interest')
+          areas = this.presenter.countryModel.get('areas_of_interest');
+          areas = areas.length > 0 ? areas : null;
           break;
       }
 
@@ -150,7 +151,7 @@ define([
 
       if(view !== 'national') {
         this.$el.find('.page-1').removeClass('is-hidden');
-        this.$el.find('.page-2').toggleClass('is-hidden');
+        this.$el.find('.page-2').addClass('is-hidden');
       } else {
         this.$el.find('.page-1').addClass('is-hidden');
         this.$el.find('.page-2').removeClass('is-hidden');

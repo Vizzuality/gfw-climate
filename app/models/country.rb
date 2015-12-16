@@ -5,10 +5,6 @@ class Country
   default_timeout 10
 
   class << self
-    CDB_INDICATORS_TABLE="indicators_values"
-    CDB_COUNTRIES_TABLE = "gadm27_adm0"
-    CDB_BOUNDARIES_TABLE="boundaries_table"
-
     def base_countries_path
       "#{ENV['CDB_API_HOST']}?q="
     end
@@ -69,7 +65,7 @@ class Country
     def areas_of_interest_for iso
       sql = <<-SQL
         SELECT DISTINCT boundary_id AS id, boundary_name AS name, boundary_code AS code
-        FROM #{CDB_INDICATORS_TABLE} i
+        FROM #{CDB_INDICATORS_VALUES_TABLE} i
         INNER JOIN #{CDB_BOUNDARIES_TABLE} b ON
         i.boundary_id = b.cartodb_id
         WHERE UPPER(iso) = UPPER('#{iso}') AND

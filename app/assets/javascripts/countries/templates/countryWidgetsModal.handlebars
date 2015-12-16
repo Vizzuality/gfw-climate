@@ -39,24 +39,30 @@
           {{#if view.isSubNational}}
             <div class="page-1">
               <div class="m-field">
-                <h2>Select jurisdictions</h2>
-                  {{#if jurisdictions}}
-                    <div class=".
-                    jurisdictions-group">
-                      <ul class="m-field-list compare-area">
-                      {{#each jurisdictions}}
-                        <li class="m-field-list-item is-checkbox js-field-list-checkbox-jurisdiction" data-id="{{id}}" data-name="{{name}}"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg>{{name}}</li>
-                      {{/each}}
-                      </ul>
-                    </div>
-                  {{/if}}
-                </ul>
+                {{#if jurisdictions}}
+                  <h2>Select jurisdictions</h2>
+                  <div class="jurisdictions-group">
+                    <ul class="m-field-list compare-area">
+                    {{#each jurisdictions}}
+                      <li class="m-field-list-item is-checkbox js-field-list-checkbox-jurisdiction" data-id="{{id}}" data-name="{{name}}"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg>{{name}}</li>
+                    {{/each}}
+                    </ul>
+                  </div>
+                {{else}}
+                  <div class="no-data">
+                    <h2>No jurisdictions data available for this country.</h2>
+                  </div>
+                {{/if}}
               </div>
               <footer class="modal-footer">
                 <span class="gradient"></span>
                 <ul class="m-btncontainer is-center">
                   <li>
-                    <button class="btn blue medium uppercase js-btn-next">Next</button>
+                    {{#if jurisdictions}}
+                      <button class="btn blue medium uppercase js-btn-next">Next</button>
+                    {{else}}
+                      <button class="btn blue medium is-disabled uppercase js-btn-next">Next</button>
+                    {{/if}}
                   </li>
                 </ul>
               </footer>
@@ -66,23 +72,30 @@
           {{#if view.isAreas}}
             <div class="page-1">
               <div class="m-field">
-                <h2>Select areas</h2>
-                  {{#if areas}}
-                    <div class="areas-group">
-                      <ul class="m-field-list compare-area">
-                      {{#each areas}}
-                        <li class="m-field-list-item is-checkbox js-field-list-checkbox-area" data-id="{{id}}" data-name="{{name}}"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg>{{name}}</li>
-                      {{/each}}
-                      </ul>
-                    </div>
-                  {{/if}}
-                </ul>
+                {{#if areas}}
+                  <h2>Select areas</h2>
+                  <div class="areas-group">
+                    <ul class="m-field-list compare-area">
+                    {{#each areas}}
+                      <li class="m-field-list-item is-checkbox js-field-list-checkbox-area" data-id="{{id}}" data-name="{{name}}"><svg class="icon-check"><use xlink:href="#icon-check"></use></svg>{{name}}</li>
+                    {{/each}}
+                    </ul>
+                  </div>
+                  {{else}}
+                  <div class="no-data">
+                    <h2>No data for areas of interest available for this country.</h2>
+                  </div>
+                {{/if}}
               </div>
               <footer class="modal-footer">
                 <span class="gradient"></span>
                 <ul class="m-btncontainer is-center">
                   <li>
-                    <button class="btn blue medium uppercase js-btn-next">Next</button>
+                    {{#if areas}}
+                      <button class="btn blue medium uppercase js-btn-next">Next</button>
+                    {{else}}
+                      <button class="btn blue medium is-disabled uppercase js-btn-next">Next</button>
+                    {{/if}}
                   </li>
                 </ul>
               </footer>
