@@ -9,6 +9,12 @@
     justify-content: space-between;
     align-items: center;
 
+    @media only screen and (max-width: $br-mobile) {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
     // NAME
     > .name {
       float: left;
@@ -24,6 +30,11 @@
       float: right;
       min-width: 161px;
       padding: 0 0 0 10px;
+
+      @media only screen and (max-width: $br-mobile) {
+        padding-left: 0;
+        padding-top: 5px;
+      }
 
       > li{
         margin: 0 3px;
