@@ -51,6 +51,15 @@
         @media screen and (max-width: $br-mobile) {
           align-items: center;
           flex-direction: column;
+
+          > .btn:first-child {
+            margin-right: 0;
+            margin-bottom: 15px;
+          }
+
+          > .btn:last-child {
+            margin: 0;
+          }
         }
       }
     }
