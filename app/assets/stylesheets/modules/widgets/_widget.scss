@@ -146,8 +146,40 @@
       }
     }
 
+    .wrapper {
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        width: 10px;
+        height: 10px;
+        border-left: 2px solid #555;
+        border-bottom: 2px solid #555;
+        transform: rotate(-45deg);
+        pointer-events: none;
+      }
+    }
+
     .tab-selector {
       max-width: 100%;
+      width: 100%;
+
+      -webkit-appearance: none;
+      height: 25px;
+      padding-left: 20px;
+      border-radius: 50px;
+      background: none;
+      border-color: #ddd;
+
+      font-family: "Fira Sans";
+      
+      option {
+        @include ellipsis(90%);
+      }
+      
     }
   }
 }

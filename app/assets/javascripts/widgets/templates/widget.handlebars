@@ -40,14 +40,15 @@
 
     {{#if this.tabs}}
       {{#if this.isMobile}}
-        <select class="is-desktop-hidden tab-selector tab-ul" name="tabs" id="country-tabs-mobile">
-          {{#each this.tabs}}
-            <option class="tab-li" value="{{this.position}}" data-position="{{this.position}}">
-              <span class="name">{{this.name}}</span>
-              {{#if this.subname}}<span class="subname">{{this.subname}}</span>{{/if}}
-            </option>
-          {{/each}}
-        </select>
+        <div class="wrapper"> 
+          <select class="is-desktop-hidden tab-selector tab-ul" name="tabs" id="country-tabs-mobile">
+            {{#each this.tabs}}
+              <option class="tab-li" value="{{this.position}}" data-position="{{this.position}}">
+                {{this.name}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
       {{else}}
         <ul class="tab-ul is-mobile-hidden">
         {{#each this.tabs}}
