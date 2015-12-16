@@ -25,7 +25,8 @@ html
 
     = stylesheet_link_tag "countries", :media => "all"
     = csrf_meta_tags
-
+    script src="http://www.globalforestwatch.org/gfw-assets" id="loader-gfw" data-current=".shape-climate"
+    
   body class="is-#{params[:controller]}-page is-#{params[:action]}-action"
 
     = render 'shared/svg_icons'
