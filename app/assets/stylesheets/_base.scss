@@ -14,10 +14,8 @@ html,body {
 }
 
 body {
-  max-width: 1600px;
-  margin: 0 auto;
   font-family: "Fira Sans", Georgia, serif;
-  // background: #EEE;
+  background: $extra-light-grey;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
