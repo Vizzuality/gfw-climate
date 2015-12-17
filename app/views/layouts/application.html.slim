@@ -36,9 +36,9 @@ html
     = render 'shared/svg_icons_applications'
     = render 'shared/svg_icons_layers'
 
-    = render "shared/header"
-
-    = yield
+    div (class="wrap")
+      = render "shared/header"
+      = yield
 
     = render "shared/footer"
 
