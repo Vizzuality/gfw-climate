@@ -7,10 +7,13 @@
     margin: 0 auto;
     justify-content: space-around;
     background-color: #eee;
+    @media screen and (max-width: $br-mobile) {
+      width: 100%;
+    }
 
     li {
       flex-grow: 3;
-      padding: 10px 0;
+      padding: 10px;
       font-size: 14px;
       color: rgba(255, 255, 255, .5);
       font-weight: 500;

@@ -16,6 +16,9 @@
         color: $white;
         font-size: 47px;
         font-weight: 300;
+        @media screen and (max-width: $br-mobile) {
+          padding: 0 0 0 15px;
+        }
       }
     }
 
