@@ -31,12 +31,11 @@ html
 
     = render 'shared/svg_icons'
     = render 'shared/svg_icons_countries'
-
-    = render "shared/header"
-
-    = yield
-
-    = render "shared/footer"
+  
+    div(class="wrap")
+      = render "shared/header"
+      = yield
+      = render "shared/footer"
 
     = render 'shared/modal'
     = render 'shared/notifications'
