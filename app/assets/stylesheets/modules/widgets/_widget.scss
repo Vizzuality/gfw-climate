@@ -22,7 +22,7 @@
     > .options {
       display: flex;
       float: right;
-      min-width: 161px;
+      // min-width: 161px;
       padding: 0 0 0 10px;
 
       > li{
@@ -68,18 +68,15 @@
           }
 
           &.source {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+            background-color: $blue;
+            border-color: $blue;
 
-            width: auto;
-            font-size: 10px;
-            padding: 1px 5px 0 16px;
-            border-radius: 8px;
+            &:hover {
+              background-color: darken($blue, .1);
+            }
 
             svg {
-              left: 0px;
-              transform: translate(2px, -50%);
+              fill: $white;
             }
           }
         }
