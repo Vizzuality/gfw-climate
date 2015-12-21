@@ -111,15 +111,16 @@ PieChart.prototype.render = function() {
       .style('fill', '#FFF')
       .text(function(d) { return d.data.value + '%'; });
 
-    this._createLegend(this.mobile);
+    this._createLegend(this.mobile, this.parentHeight);
   }
 };
 
-PieChart.prototype._createLegend = function(mobile) {
+PieChart.prototype._createLegend = function(mobile, mobileHeight) {
   var self = this;
   var legendDotSize = 12;
   var legendSpacing = 4;
-  var widgetHeightMobile = 200;
+  var widgetHeightMobile = mobileHeight;
+  
   var legend = svg.selectAll('.legend')
     .data(color.domain())
     .enter()
