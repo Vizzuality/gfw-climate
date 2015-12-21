@@ -16,10 +16,7 @@
     }
 
     @media screen and (max-width: $br-mobile) {
-      >.svg-arrow {
-        transform: translate(0) rotate(-27deg);
-        width: 150px;
-      }
+      display: none;
     }
   }
 
