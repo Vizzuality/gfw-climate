@@ -8,6 +8,11 @@ $l-padding: 50px;
 .l-toolbar {
   padding: 10px 0;
   background-color: $extra-light-grey;
+  
+  @media screen and (max-width: $br-mobile) {
+    //We dont have design for this.. so for the moment...
+    display: none;
+  }
 }
 
 .l-main-content-wrap {
