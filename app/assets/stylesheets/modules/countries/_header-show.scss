@@ -11,11 +11,17 @@
 
     .header-country__title-country {
       padding: 35px 0 50px;
+
+      @media screen and (max-width: $br-mobile) {
+        padding: 60px 0 25px;
+      }
+
       h1 {
         display: inline-block;
         color: $white;
         font-size: 47px;
         font-weight: 300;
+        
         @media screen and (max-width: $br-mobile) {
           padding: 0 0 0 15px;
         }
