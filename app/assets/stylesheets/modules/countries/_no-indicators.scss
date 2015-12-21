@@ -40,5 +40,9 @@
         color: $blue;
       }
     }
+    
+    @media screen and (max-width: $br-mobile) {
+      margin: 0 20px;
+    }
   }
 }
