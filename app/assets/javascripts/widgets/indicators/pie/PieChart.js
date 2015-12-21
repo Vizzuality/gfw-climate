@@ -92,7 +92,7 @@ PieChart.prototype.render = function() {
         .attr('class', 'arc')
         .attr('transform', function() {
           if (this.mobile) {
-            return 'translate(' + (this.parentWidth / 2) + ', ' + this.parentHeight / 2 + ')';
+            return 'translate(' + (this.parentWidth / 2 - 10 ) + ', ' + this.parentHeight / 2 + ')';
           } else {
             return 'translate(' + (this.parentWidth - this.parentHeight / 2) + ', ' + this.parentHeight / 2 + ')';
           }
@@ -131,7 +131,7 @@ PieChart.prototype._createLegend = function(mobile, mobileHeight) {
       var offset =  height * color.domain().length / 2;
       
       if (mobile) {
-        var horz = 50 + i*100;
+        var horz = 40 + i*100;
         var vert = widgetHeightMobile - height/2 - 5;
         return 'translate(' + horz + ',' + vert + ')';
       } else {

@@ -80,15 +80,16 @@
 
   // SUB OPTIONS
   .sub-options {
-    margin-top: 20px;
     padding-top: 20px;
     font-size: 12px;
     border-top: 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
 
     @media screen and (min-width: $br-mobile) {
       border-top: 1px solid $border;
+      margin-top: 20px;
     }
   }
 

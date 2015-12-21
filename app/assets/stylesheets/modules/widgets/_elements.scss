@@ -53,9 +53,16 @@
 .tab-average {
   font-size: 19px;
   margin: 0px 0 0 10px;
+
   .tab-average--item {
     position: relative;
     padding: 3px 0 0 22px;
+    
+    @media screen and (max-width: $br-mobile) {
+      font-size: 14px;
+      padding-left: 15px;
+    }
+
     > span {
       display: block;
       position: absolute;
