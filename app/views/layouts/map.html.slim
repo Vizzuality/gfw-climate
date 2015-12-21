@@ -26,6 +26,8 @@ html
     = stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all'
     = stylesheet_link_tag "map", :media => "all"
     = csrf_meta_tags
+    script src="http://www.globalforestwatch.org/gfw-assets" id="loader-gfw" data-current=".shape-climate"
+        
     javascript:
       var gfw = window.gfw = {
         config: {

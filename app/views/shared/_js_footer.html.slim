@@ -32,17 +32,6 @@ javascript:
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 
-  // Google translate
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement(
-      {
-        pageLanguage: '',
-        includedLanguages: 'ar,es,en,fr,id,pt,ru,zh-CN,de,uk,ro,tr,it,hi,km',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false
-      },
-      'google_translate_element');
-  }
   // Crazy Egg (only on PRO)
   if (location.hostname === "www.globalforestwatch.org") {
     setTimeout(function(){var a=document.createElement("script");
@@ -51,5 +40,3 @@ javascript:
     a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
   }
 
-javascript src="/assets/wri-nav.js"
-javascript src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"

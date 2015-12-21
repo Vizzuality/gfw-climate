@@ -25,7 +25,8 @@ html
     / = stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all'
     = stylesheet_link_tag "static", :media => "all"
     = csrf_meta_tags
-
+    script src="http://www.globalforestwatch.org/gfw-assets" id="loader-gfw" data-current=".shape-climate"
+    
   body class="is-#{params[:controller]}-page is-#{params[:action]}-action"
 
     = render 'shared/svg_icons'
@@ -33,11 +34,10 @@ html
     = render 'shared/svg_icons_applications'
     = render 'shared/svg_icons_layers'
 
-    = render "shared/header"
-
-    = yield
-
-    = render "shared/footer"
+    div(class="wrap")
+      = render "shared/header"
+      = yield
+      = render "shared/footer"
 
     = render 'shared/modal'
     = render 'shared/notifications'
