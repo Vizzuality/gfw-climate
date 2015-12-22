@@ -28,6 +28,14 @@ html
     = csrf_meta_tags
     script src="http://www.globalforestwatch.org/gfw-assets" id="loader-gfw" data-current=".shape-climate"
 
+    javascript:
+      var gfw = window.gfw = {
+        config: {
+          GFW_API_HOST: "#{ENV['GFW_API_HOST']}",
+          GFW_MOBILE: 850
+        }
+      };
+
   body class="is-#{params[:controller]}-page is-#{params[:action]}-action"
 
     

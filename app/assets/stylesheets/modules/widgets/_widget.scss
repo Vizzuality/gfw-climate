@@ -9,6 +9,12 @@
     justify-content: space-between;
     align-items: center;
 
+    @media only screen and (max-width: $br-mobile) {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
     // NAME
     > .name {
       float: left;
@@ -24,6 +30,11 @@
       float: right;
       // min-width: 161px;
       padding: 0 0 0 10px;
+
+      @media only screen and (max-width: $br-mobile) {
+        padding-left: 0;
+        padding-top: 5px;
+      }
 
       > li{
         margin: 0 3px;
@@ -106,6 +117,7 @@
         border: 1px solid $border;
         border-right: 0;
         cursor: pointer;
+
         &:last-child {
           border-right: 1px solid $border;
         }
@@ -129,6 +141,42 @@
           font-size: 9px;
         }
       }
+    }
+
+    .wrapper {
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        width: 10px;
+        height: 10px;
+        border-left: 2px solid #555;
+        border-bottom: 2px solid #555;
+        transform: rotate(-45deg);
+        pointer-events: none;
+      }
+    }
+
+    .tab-selector {
+      max-width: 100%;
+      width: 100%;
+
+      -webkit-appearance: none;
+      height: 25px;
+      padding-left: 20px;
+      border-radius: 50px;
+      background: none;
+      border-color: #ddd;
+
+      font-family: "Fira Sans";
+      
+      option {
+        @include ellipsis(90%);
+      }
+      
     }
   }
 }

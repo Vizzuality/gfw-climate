@@ -92,11 +92,11 @@ LineChart.prototype._createDefs = function() {
 
 LineChart.prototype._drawAxes = function() {
   var self = this;
+  var tickSizeX = ($(window).width() > 1025) ? 1 : 2;
   var tickFormatY = (this.unit != 'percentage') ? "s" : ".2f";
   this.xAxis = d3.svg.axis()
                  .scale(self.x)
-                 .ticks(d3.time.year, 1)
-                 .tickSize(6, 6)
+                 .ticks(d3.time.year, tickSizeX)
                  .orient("bottom")
                  .tickFormat(d3.time.format("%Y"));
 

@@ -50,7 +50,8 @@ define([
       //          You must add it to views/api/v1/widgets/show.json.rabl (If you don't, the API won't send the new parameter)
       // ******
       var tabs = _.clone(this.status.get('tabs'));
-      var t = _.findWhere(this.model.get('tabs'), { position: position });
+      var t = _.findWhere(this.model.get('tabs'), { 'position': ~~position });
+
       tabs = {
         type: t.type,
         position: position,
@@ -62,6 +63,7 @@ define([
         template: (t.template) ? t['template'] : null,
         lock: (this.status.get('tabs').lock != null && this.status.get('tabs').lock != undefined) ? this.status.get('tabs').lock : true,
       }
+      
       this.status.set('tabs',tabs);
     },
 

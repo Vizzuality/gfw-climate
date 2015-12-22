@@ -62,6 +62,7 @@ define([
     },
 
     shareOpen: function(event){
+      console.log('holi')
       var shareView = new ShareView().share(event);
       this.$el.append(shareView.el);
     },

@@ -147,18 +147,23 @@ $height: auto;
   }
 
   // MODAL WRAPPER
-  .modal-wrapper{
-    overflow-x: hidden;
-    overflow-y: auto;
+  .modal-wrapper {
+    position: static;
     height: 100%;
     max-height: 100%;
     width: 100%;
     top: 0;
     left: 0;
-    padding: 20px;
+    overflow: hidden;
+
     @media (min-width: $br-mobile){
+      position: relative;
       max-height: 450px;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
+
     .modal-content {
       height: auto;
       width: 100%;
@@ -188,6 +193,7 @@ $height: auto;
   background: $white;
   z-index: 2;
   @include clearfix();
+  
   // GRADIENTS
   .gradient {
     content: "";
@@ -199,7 +205,7 @@ $height: auto;
     @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
   }
 
-  ul{
+  ul {
     margin: 15px 0;
     position: relative;
     left: 50%;
@@ -211,7 +217,7 @@ $height: auto;
     border: 1px solid $font-color-3;
     border-radius: 45px;
 
-    li{
+    li {
       font-size: 19px;
       padding: 10px 20px 7px;
       color: $dark;
@@ -231,13 +237,14 @@ $height: auto;
 
 // MODAL FOOTER
 .modal-footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   background: $white;
   z-index: 2;
-  padding: 15px 55px;
+  padding: 15px 20px;
+
   @media screen and (min-width: $br-mobile) {
     padding: 15px 40px;
   }
@@ -261,7 +268,7 @@ $height: auto;
 
 
 // It would be nice if we can refactor this code... I don't want to be mad, but it's shit.
-// The names are no-sense
+// The names have no-sense
 .modal-content {
   // TABLE
   .sources_row {

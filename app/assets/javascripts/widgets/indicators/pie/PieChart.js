@@ -13,6 +13,12 @@ var PieChart = function(options) {
   this.options = options;
   this.data = this._defindeData(options.data);
 
+  enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+    match: _.bind(function(){
+      this.mobile = true;
+    },this)
+  });
+
   this.sizing = options.sizing;
   this.innerPadding = options.innerPadding;
 
@@ -21,7 +27,15 @@ var PieChart = function(options) {
   this.parentWidth = $(this.options.el).outerWidth();
   this.parentHeight = $(this.options.el).outerHeight();
   this.width = this.parentWidth - this.sizing.left - this.sizing.right,
-  this.height = this.parentHeight - this.sizing.top - this.sizing.bottom;
+  // this.height = this.parentHeight - this.sizing.top - this.sizing.bottom;
+
+  this.height = function() {
+   if (this.mobile) {
+    return this.parentHeight - this.sizing.top - this.sizing.bottom - 40;
+   } else {
+    return this.parentHeight - this.sizing.top - this.sizing.bottom;
+   }
+  }.bind(this)();
 
   this.radius = Math.min(this.width, this.height) / 2;
   arc = d3.svg.arc()
@@ -76,7 +90,13 @@ PieChart.prototype.render = function() {
         .data(pie(this.data))
         .enter().append('g')
         .attr('class', 'arc')
-        .attr('transform', 'translate(' + (this.parentWidth - this.parentHeight / 2) + ', ' + this.parentHeight / 2 + ')');
+        .attr('transform', function() {
+          if (this.mobile) {
+            return 'translate(' + (this.parentWidth / 2 - 10 ) + ', ' + this.parentHeight / 2 + ')';
+          } else {
+            return 'translate(' + (this.parentWidth - this.parentHeight / 2) + ', ' + this.parentHeight / 2 + ')';
+          }
+        }.bind(this))
 
     g.append('path')
       .attr('d', arc)
@@ -91,14 +111,16 @@ PieChart.prototype.render = function() {
       .style('fill', '#FFF')
       .text(function(d) { return d.data.value + '%'; });
 
-    this._createLegend();
+    this._createLegend(this.mobile, this.parentHeight);
   }
 };
 
-PieChart.prototype._createLegend = function() {
+PieChart.prototype._createLegend = function(mobile, mobileHeight) {
   var self = this;
   var legendDotSize = 12;
   var legendSpacing = 4;
+  var widgetHeightMobile = mobileHeight;
+  
   var legend = svg.selectAll('.legend')
     .data(color.domain())
     .enter()
@@ -107,9 +129,16 @@ PieChart.prototype._createLegend = function() {
     .attr('transform', function(d, i) {
       var height = legendDotSize + legendSpacing*2;
       var offset =  height * color.domain().length / 2;
-      var horz = 0;
-      var vert = i * height - offset + self.height/2;
-      return 'translate(' + horz + ',' + vert + ')';
+      
+      if (mobile) {
+        var horz = 40 + i*100;
+        var vert = widgetHeightMobile - height/2 - 5;
+        return 'translate(' + horz + ',' + vert + ')';
+      } else {
+        var horz = 0;
+        var vert = i * height - offset + self.height/2;
+        return 'translate(' + horz + ',' + vert + ')';
+      }
     });
 
   legend.append('circle')
