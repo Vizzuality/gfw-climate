@@ -1,17 +1,22 @@
 $l-padding: 50px;
 
 .l-header {
-  padding: 70px 0 25px;
+  padding-top: 70px;
   background-color: $dark-grey;
+  
+  @media screen and (min-width: $br-mobile) {
+    padding: 70px 0 25px;
+  }
 }
 
 .l-toolbar {
+  display: none;
   padding: 10px 0;
   background-color: $extra-light-grey;
   
-  @media screen and (max-width: $br-mobile) {
+  @media screen and (min-width: $br-mobile) {
     //We dont have design for this.. so for the moment...
-    display: none;
+    display: block;
   }
 }
 
@@ -24,11 +29,10 @@ $l-padding: 50px;
 }
 
 .l-compare {
-  text-align: center;
 }
 
 .l-compare-selectors {
-  margin: 40px 20px;
+  padding: 40px 20px;
 
   @media screen and (min-width: $br-mobile) {
     display: flex;
@@ -46,4 +50,10 @@ $l-padding: 50px;
 
 .l-cutpoint {
   height: 1px;
+}
+
+.l-compare-switcher {
+  padding: 8px 20px;
+  background-color: #404040;
+
 }

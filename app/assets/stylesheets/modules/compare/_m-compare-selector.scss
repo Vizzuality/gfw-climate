@@ -1,5 +1,25 @@
 .m-compare-grid {
+  width: 100%;
   padding-top: 60px;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  > .widgets-wrapper {
+    width: 200%;
+    transition: all .5s $easeInCubic;
+
+    &.is-tab-2 {
+      transform: translatex(-50%);
+    }
+  }
+
+  @media screen and (min-width: $br-mobile) {
+    overflow-x: auto;
+
+    > .widgets-wrapper {
+      width: 100%;
+    }
+  }
 }
 
 .m-compare-selector {

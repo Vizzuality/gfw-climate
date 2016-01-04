@@ -15,13 +15,13 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .m-compare-selector' : 'showModal'
+      'click .m-compare-selector' : 'showModal',
+      'click .js--compare-switcher': 'moveComparePanel'
     },
 
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
       this.status = this.presenter.status;
-
       this.helper = CountryHelper;
     },
 
@@ -33,6 +33,8 @@ define([
       this.$el.html(this.template(this._parseData()));
       (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
       (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
+
+      this._setActiveTabMb();
     },
 
     _parseData: function() {
@@ -74,6 +76,10 @@ define([
       }, this ));
     },
 
+    _setActiveTabMb: function() {
+      $('.js--compare-switcher[data-tab="1"]').addClass('is-active');
+    },
+
     setName: function(country,tab) {
       var jurisdiction = ~~this.status.get('compare'+tab).jurisdiction;
       var area = ~~this.status.get('compare'+tab).area;
@@ -96,9 +102,7 @@ define([
       } else {
         return '';
       }
-    },
-
-
+    }
 
   });
 

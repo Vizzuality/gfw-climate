@@ -5,24 +5,22 @@
   .m-modal--tabscontent {
     position: absolute;
     top: 50px;
-    bottom: 70px;
+    bottom: 0;
     left: 0;
     right: 0;
   }
 
   .m-modal--tab {
+    position: absolute;
+    top: 40px;
+    bottom: 70px;
+    width: 100%;
     padding: 15px 25px 10px;
+    overflow-y: scroll; 
 
-    &.is-compare {
-      position: absolute;
-      top: 20px;
-      bottom: 70px;
-      width: 100%;
-      overflow-y: scroll; 
-
-      @media screen and (min-width: $br-mobile) {
-        top: 40px;
-      }
+    @media screen and (min-width: $br-mobile) {
+      top: 40px;
+      bottom: 0;
     }
 
     display: none;
@@ -32,6 +30,7 @@
   }
 
   .m-field {
+    position: relative;
 
     &.m-select {
       margin-bottom: 25px;
