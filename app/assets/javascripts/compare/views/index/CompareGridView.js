@@ -1,9 +1,10 @@
 define([
   'backbone',
+  'mps',
   'compare/presenters/CompareGridPresenter',
   'widgets/views/WidgetView',
   'text!compare/templates/compareGrid.handlebars',
-], function(Backbone, CompareMainPresenter, WidgetView, tpl) {
+], function(Backbone, mps, CompareMainPresenter, WidgetView, tpl) {
 
   var CompareMainView = Backbone.View.extend({
 
@@ -12,7 +13,8 @@ define([
     events: {
       'click .lock-mode' : 'toggleLock',
       'mouseenter .lock-mode' : 'toggleLegend',
-      'mouseleave .lock-mode' : 'toggleLegend'
+      'mouseleave .lock-mode' : 'toggleLegend',
+      'scroll' : 'checkPanelPosition'
     },
 
     template: Handlebars.compile(tpl),
@@ -70,6 +72,11 @@ define([
           $('#gridgraphs-compare-'+widget.id).addClass('is-locked').append(widget.el);
         });
       },this));
+
+      //CACHE VARS
+      this.widgetPanel = this.$('.widgets-wrapper');
+      this.panelWidth = this.widgetPanel.width();
+
     },
 
     parseData: function() {
@@ -109,7 +116,27 @@ define([
       this.widgets.forEach(function(widget) {
         widget.destroy();
       });
+    },
+
+    //only for mobile
+    checkPanelPosition: function(e) {
+      var activeTabCompare;
+      var offset = Math.abs((this.widgetPanel.offset().left));
+
+      if (offset > parseInt(this.panelWidth/4) ) {
+        activeTabCompare = 'is-tab-2';
+        this.widgetPanel.addClass(activeTabCompare);
+        this.widgetPanel.removeClass('is-tab-1');
+        Backbone.Events.trigger('compareTabMb:change', activeTabCompare);
+      } else {
+        activeTabCompare = 'is-tab-1';
+        this.widgetPanel.addClass(activeTabCompare);
+        this.widgetPanel.removeClass('is-tab-2');
+        Backbone.Events.trigger('compareTabMb:change', activeTabCompare);
+      }
+
     }
+
 
   });
 

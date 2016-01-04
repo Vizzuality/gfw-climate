@@ -15,7 +15,7 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .js--compare-switcher': 'moveComparePanel'
+      'click .js--compare-switcher': '_moveComparePanel'
     },
 
     initialize:function() {
@@ -30,9 +30,9 @@ define([
       this.$offsetTop = $('#offsetTop');
       this.$offsetBottom = $('#offsetBottom');
 
-      this.calculateOffsets();
-      this.scrollDocument();
-      this.setListeners();
+      this._calculateOffsets();
+      this._scrollDocument();
+      this._setListeners();
     },
 
     render: function() {
@@ -41,9 +41,11 @@ define([
       this._setActiveTabMb();
     },
 
-    setListeners: function(){
-      this.$document.on('scroll',_.bind(this.scrollDocument,this));
-      this.$window.on('resize',_.bind(this.calculateOffsets,this));
+    _setListeners: function(){
+      this.$document.on('scroll',_.bind(this._scrollDocument,this));
+      // $('#compareGridView').on('scroll',_.bind(this._checkPannel,this));
+      this.$window.on('resize',_.bind(this._calculateOffsets,this));
+      Backbone.Events.on('compareTabMb:change', _.bind(this._changeTab), this)
     },
 
     _parseData: function() {
@@ -52,12 +54,12 @@ define([
 
       var select1 = {
         tab: '1',
-        name: this.setName(country1,1)
+        name: this._setName(country1,1)
       };
 
       var select2 = {
         tab: '2',
-        name: this.setName(country2,2)
+        name: this._setName(country2,2)
       };
 
       return { selection: [select1, select2] };
@@ -67,7 +69,7 @@ define([
       $('.js--compare-switcher[data-tab="1"]').addClass('is-active');
     },
 
-    setName: function(country,tab) {
+    _setName: function(country,tab) {
       var jurisdiction = ~~this.status.get('compare'+tab).jurisdiction;
       var area = ~~this.status.get('compare'+tab).area;
       if (!!jurisdiction) {
@@ -79,7 +81,7 @@ define([
       }
     },
 
-    moveComparePanel: function (e) {
+    _moveComparePanel: function (e) {
       var $panel = $('.widgets-wrapper');
       var $switchers = $('.js--compare-switcher');
       var $currentBtn = $(e.currentTarget);
@@ -95,14 +97,14 @@ define([
       $currentBtn.addClass('is-active');
     },
 
-    calculateOffsets: function(){
+    _calculateOffsets: function(){
       this.offsetTop = this.$offsetTop.offset().top;
       this.offsetBottom = this.$offsetBottom.offset().top - this.$el.height();
     },
 
-    scrollDocument: function(e){
+    _scrollDocument: function(e){
       var scrollTop = this.$document.scrollTop();
-      this.calculateOffsets();
+      this._calculateOffsets();
       if (scrollTop > this.offsetTop) {
         if(scrollTop < this.offsetBottom) {
           this.$el.removeClass('is-bottom').addClass('is-fixed');
@@ -113,6 +115,13 @@ define([
         this.$el.removeClass('is-fixed is-bottom');
       }
     },
+
+    _changeTab: function(activeTab) {
+      this.$('.js--compare-switcher').removeClass('is-active');
+      this.$('.'+activeTab).addClass('is-active');
+    }
+
+
 
   });
 

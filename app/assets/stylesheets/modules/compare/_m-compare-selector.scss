@@ -1,6 +1,5 @@
 .m-compare-grid {
   width: 100%;
-  padding-top: 60px;
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
 
@@ -14,6 +13,7 @@
   }
 
   @media screen and (min-width: $br-mobile) {
+    padding-top: 60px;
     overflow-x: auto;
 
     > .widgets-wrapper {
