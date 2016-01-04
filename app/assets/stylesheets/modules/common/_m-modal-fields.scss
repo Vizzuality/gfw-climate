@@ -4,7 +4,7 @@
   // Content header
   .m-modal--tabscontent {
     position: absolute;
-    top: 100px;
+    top: 50px;
     bottom: 70px;
     left: 0;
     right: 0;
@@ -15,18 +15,14 @@
 
     &.is-compare {
       position: absolute;
-      top: 0;
-      bottom: 0;
+      top: 20px;
+      bottom: 70px;
       width: 100%;
       overflow-y: scroll; 
-    }
 
-    @media screen and (min-width: $br-mobile) {
-      // padding: 50px 40px;
-
-      // &.is-compare {
-      //   padding: 90px 40px 50px;
-      // }
+      @media screen and (min-width: $br-mobile) {
+        top: 40px;
+      }
     }
 
     display: none;
@@ -36,13 +32,6 @@
   }
 
   .m-field {
-    // position: absolute;
-    // top: 40px;
-    // bottom: 70px;
-    // left: 20px;
-    // right: 20px;
-    // padding: 20px;
-    // overflow-y: auto;
 
     &.m-select {
       margin-bottom: 25px;
@@ -137,7 +126,7 @@
         width: 48%;
         margin: 0.5%;
       }
-      
+
       @media screen and (min-width: $br-mobile) {
         width: 32.333333333%;
       }
