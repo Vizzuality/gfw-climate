@@ -22,12 +22,28 @@ define([
       this.presenter = new CompareSelectorsPresenter(this);
       this.status = this.presenter.status;
       this.helper = CountryHelper;
+
+      //CACHE
+      this.$window = $(window);
+      this.$document = $(document);
+      
+      this.$offsetTop = $('#offsetTop');
+      this.$offsetBottom = $('#offsetBottom');
+
+      this.calculateOffsets();
+      this.scrollDocument();
+      this.setListeners();
     },
 
     render: function() {
       this.$el.html(this.template(this._parseData()));
 
       this._setActiveTabMb();
+    },
+
+    setListeners: function(){
+      this.$document.on('scroll',_.bind(this.scrollDocument,this));
+      this.$window.on('resize',_.bind(this.calculateOffsets,this));
     },
 
     _parseData: function() {
@@ -77,7 +93,26 @@ define([
 
       $switchers.removeClass('is-active');
       $currentBtn.addClass('is-active');
-    }
+    },
+
+    calculateOffsets: function(){
+      this.offsetTop = this.$offsetTop.offset().top;
+      this.offsetBottom = this.$offsetBottom.offset().top - this.$el.height();
+    },
+
+    scrollDocument: function(e){
+      var scrollTop = this.$document.scrollTop();
+      this.calculateOffsets();
+      if (scrollTop > this.offsetTop) {
+        if(scrollTop < this.offsetBottom) {
+          this.$el.removeClass('is-bottom').addClass('is-fixed');
+        } else {
+          this.$el.removeClass('is-fixed').addClass('is-bottom');
+        }
+      } else {
+        this.$el.removeClass('is-fixed is-bottom');
+      }
+    },
 
   });
 

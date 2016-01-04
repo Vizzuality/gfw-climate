@@ -53,7 +53,18 @@ $l-padding: 50px;
 }
 
 .l-compare-switcher {
+  //To avoid white space due to l-cutpoint.
+  position: relative;
+  top: -1px;
+  
   padding: 8px 20px;
   background-color: #404040;
-
+  
+  &.is-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
 }
