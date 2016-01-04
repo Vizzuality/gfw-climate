@@ -28,9 +28,14 @@ $l-padding: 50px;
 }
 
 .l-compare-selectors {
-  display: flex;
-  justify-content: space-between;
-  margin: 40px 0;
+  margin: 40px 20px;
+
+  @media screen and (min-width: $br-mobile) {
+    display: flex;
+    justify-content: space-between;
+    
+    margin: 40px 0;
+  }
 }
 
 .l-aside-content {
