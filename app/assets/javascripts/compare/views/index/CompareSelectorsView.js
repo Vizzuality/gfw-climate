@@ -15,14 +15,25 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click .m-compare-selector' : 'showModal',
-      'click .js--compare-switcher': 'moveComparePanel'
+      'click .m-compare-selector' : 'showModal'
     },
 
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
       this.status = this.presenter.status;
       this.helper = CountryHelper;
+
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+        },this)
+      });
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+        },this)
+      });
     },
 
     showModal: function(e) {
@@ -31,10 +42,11 @@ define([
 
     render: function() {
       this.$el.html(this.template(this._parseData()));
-      (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
-      (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
 
-      this._setActiveTabMb();
+      if (!this.mobile) {
+        (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
+        (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
+      }
     },
 
     _parseData: function() {
@@ -74,10 +86,6 @@ define([
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
         this.helper.draw(topology, 0, 'compare-figure'+tab, { alerts: true });
       }, this ));
-    },
-
-    _setActiveTabMb: function() {
-      $('.js--compare-switcher[data-tab="1"]').addClass('is-active');
     },
 
     setName: function(country,tab) {
