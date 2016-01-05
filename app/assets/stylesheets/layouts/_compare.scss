@@ -25,8 +25,13 @@ $l-padding: 50px;
 }
 
 .l-main-content {
-  padding: $l-padding 0;
+  //adapted for compare page.
+  padding: 20px 0;
   overflow-x: hidden;
+
+  @media screen and (min-width: $br-mobile) {
+    padding: $l-padding 0;
+  }
 }
 
 .l-compare {

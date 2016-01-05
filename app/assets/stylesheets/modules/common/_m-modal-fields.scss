@@ -4,7 +4,7 @@
   // Content header
   .m-modal--tabscontent {
     position: absolute;
-    top: 50px;
+    top: 60px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -13,9 +13,11 @@
   .m-modal--tab {
     position: absolute;
     top: 40px;
+    left: 0;
+    right: 0;
     bottom: 70px;
     width: 100%;
-    padding: 15px 25px 10px;
+    padding: 0 20px;
     overflow-y: scroll; 
 
     @media screen and (min-width: $br-mobile) {

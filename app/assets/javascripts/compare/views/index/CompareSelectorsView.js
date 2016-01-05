@@ -32,6 +32,9 @@ define([
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = false;
+
+          (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
+          (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
         },this)
       });
     },

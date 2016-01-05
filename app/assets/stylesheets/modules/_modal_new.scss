@@ -29,9 +29,12 @@ $height: auto;
     }
 
     .modal-window {
+      padding: 40px 0;
       opacity: 1;
       visibility: visible;
+
       @media (min-width: $br-mobile){
+        padding: 0;
         transform: translate(-50%,-50%);
       }
     }
@@ -154,7 +157,8 @@ $height: auto;
     width: 100%;
     top: 0;
     left: 0;
-    overflow: hidden;
+    padding: 0 20px;
+    overflow: auto;
 
     @media (min-width: $br-mobile){
       position: relative;
@@ -187,12 +191,16 @@ $height: auto;
 // MODAL HEADER
 .modal-header {
   position: absolute;
-  top: 0;
+  top: 20px;
   left: 0;
   width: 100%;
   background: $white;
   z-index: 2;
   @include clearfix();
+
+  @media screen and (min-width: $br-mobile) {
+    top: 0;
+  }
   
   // GRADIENTS
   .gradient {
