@@ -13,14 +13,27 @@ define([
     events: {
       'click .lock-mode' : 'toggleLock',
       'mouseenter .lock-mode' : 'toggleLegend',
-      'mouseleave .lock-mode' : 'toggleLegend',
-      'scroll' : 'checkPanelPosition'
+      'mouseleave .lock-mode' : 'toggleLegend'
     },
 
     template: Handlebars.compile(tpl),
 
     initialize:function() {
       this.presenter = new CompareMainPresenter(this);
+
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+          this.render();
+        },this)
+      });
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+          this.render();
+        },this)
+      });
     },
 
 
@@ -73,9 +86,16 @@ define([
         });
       },this));
 
-      //CACHE VARS
-      this.widgetPanel = this.$('.widgets-wrapper');
-      this.panelWidth = this.widgetPanel.width();
+
+
+      if (this.mobile) {
+        //CACHE VARS FOR MOBILE ONLY
+        this.widgetPanel = this.$('.widgets-wrapper');
+        this.panelWidth = this.widgetPanel.width();
+
+        //Listener for widget panel switch
+        this.$el.scroll(_.throttle(_.bind(this.checkPanelPosition, this), 300));
+      }
 
     },
 
@@ -119,22 +139,17 @@ define([
     },
 
     //only for mobile
-    checkPanelPosition: function(e) {
+    checkPanelPosition: function() {
       var activeTabCompare;
       var offset = Math.abs((this.widgetPanel.offset().left));
 
       if (offset > parseInt(this.panelWidth/4) ) {
         activeTabCompare = 'is-tab-2';
-        this.widgetPanel.addClass(activeTabCompare);
-        this.widgetPanel.removeClass('is-tab-1');
         Backbone.Events.trigger('compareTabMb:change', activeTabCompare);
       } else {
         activeTabCompare = 'is-tab-1';
-        this.widgetPanel.addClass(activeTabCompare);
-        this.widgetPanel.removeClass('is-tab-2');
         Backbone.Events.trigger('compareTabMb:change', activeTabCompare);
       }
-
     }
 
 

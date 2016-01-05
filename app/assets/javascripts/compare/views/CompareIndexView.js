@@ -15,16 +15,32 @@ define([
   var CompareIndexView = Backbone.View.extend({
 
     initialize:function() {
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+        },this)
+      });
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+        },this)
+      });
+
       new CompareSelectorsView();
       new CompareGridView();
       new CompareModalView();
-      new CompareFixedHeaderView();
       new CompareGridButtonBoxView();
       new CompareWidgetsModalView();
       // Common views
       new SourceModalView();
       new ToolbarView();
-      new CompareSwitcherView();
+      
+      if (this.mobile) {
+        new CompareSwitcherView();
+      } else {
+        new CompareFixedHeaderView();
+      }
     }
 
   });

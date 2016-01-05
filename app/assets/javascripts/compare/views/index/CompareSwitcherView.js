@@ -37,15 +37,13 @@ define([
 
     render: function() {
       this.$el.html(this.template(this._parseData()));
-
-      this._setActiveTabMb();
+      this._setActiveTab();
     },
 
     _setListeners: function(){
       this.$document.on('scroll',_.bind(this._scrollDocument,this));
-      // $('#compareGridView').on('scroll',_.bind(this._checkPannel,this));
       this.$window.on('resize',_.bind(this._calculateOffsets,this));
-      Backbone.Events.on('compareTabMb:change', _.bind(this._changeTab), this)
+      Backbone.Events.on('compareTabMb:change', _.bind(this._changeTab), this);
     },
 
     _parseData: function() {
@@ -65,7 +63,7 @@ define([
       return { selection: [select1, select2] };
     },
 
-    _setActiveTabMb: function() {
+    _setActiveTab: function() {
       $('.js--compare-switcher[data-tab="1"]').addClass('is-active');
     },
 
@@ -83,18 +81,16 @@ define([
 
     _moveComparePanel: function (e) {
       var $panel = $('.widgets-wrapper');
-      var $switchers = $('.js--compare-switcher');
+      var panelWidth = $panel.width();
+      
       var $currentBtn = $(e.currentTarget);
       var tab = $currentBtn.data('tab');
 
       if ( tab == 2 ) {
-        $panel.addClass( 'is-tab-'+tab );
+        $panel.parent().animate( { scrollLeft: panelWidth }, 200 );
       } else {
-        $panel.removeClass('is-tab-2');
+        $panel.parent().animate( { scrollLeft: 0 }, 200 );
       }
-
-      $switchers.removeClass('is-active');
-      $currentBtn.addClass('is-active');
     },
 
     _calculateOffsets: function(){
@@ -116,12 +112,11 @@ define([
       }
     },
 
+    //Listen to grid wrap, change active button.
     _changeTab: function(activeTab) {
       this.$('.js--compare-switcher').removeClass('is-active');
       this.$('.'+activeTab).addClass('is-active');
     }
-
-
 
   });
 
