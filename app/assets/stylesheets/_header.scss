@@ -406,32 +406,42 @@
     background-image: url("/assets/logo-new.svg");
     background-size: contain;
     transition: all 0.25s linear;
-    &.active{
+
+    &.active {
       opacity: 0;
       visibility: hidden;
     }
-    &:after{
+
+    &:after {
       content: "";
       display: block;
       width: 30px;
       height: 18px;
       position: absolute;
-      bottom: -5px;
+      bottom: -10px;
       right: -5px;
       background: image-url('beta.png');
+
+      @media (min-width: $br-mobile){
+        bottom: -5px;
+      }
     }
-    .beta-box{
+
+    .beta-box {
       display: none;
     }
+
     @media (min-width: $br-mobile){
       width: 90px;
       height: 90px;
       margin: 0;
-      &.active{
+
+      &.active {
         opacity: 1;
         visibility: visible;
       }
     }
+
 		a {
 			display: block;
 			height: 100%;

@@ -4,13 +4,19 @@
   >.arrow-container {
     display: flex;
     justify-content: center;
+
     >.btn {
       position: absolute;
       right: 0;
     }
+
     >.svg-arrow {
       fill: #d5d5d5;
       transform: translate(50%, 3%);
+    }
+
+    @media screen and (max-width: $br-mobile) {
+      display: none;
     }
   }
 
@@ -18,16 +24,22 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     > .start-text {
       font-size: 32px;
       color: $dark;
       font-weight: 300;
       text-align: center;
       line-height: 1.3;
+
       > span {
         font-weight: 500;
         color: $blue;
       }
+    }
+    
+    @media screen and (max-width: $br-mobile) {
+      margin: 0 20px;
     }
   }
 }

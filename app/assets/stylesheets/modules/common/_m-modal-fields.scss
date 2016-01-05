@@ -23,9 +23,19 @@
   }
 
   .m-field {
-    margin: 20px 10px;
+    position: absolute;
+    top: 40px;
+    bottom: 70px;
+    left: 20px;
+    right: 20px;
+    padding: 20px;
+    overflow-y: auto;
+
     @media screen and (min-width: $br-mobile) {
+      position: static;
+      padding: 0;
       margin: 20px 0 0;
+
       &:first-child{
         margin: 0;
       }

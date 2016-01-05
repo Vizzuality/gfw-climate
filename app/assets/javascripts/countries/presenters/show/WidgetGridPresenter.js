@@ -355,7 +355,9 @@ define([
       var x = this.status.get('activeWidgets');
 
       x.forEach(function(v, i) {
-        x[i] = Number.parseInt(v);
+        //Before, it was x[i] = Number.parseInt(v);
+        //Safari mobile doesn't understand it. So I changed it. 
+        x[i] = ~~v;
       });
 
       var w = _.groupBy(_.compact(_.map(this.widgetCollection.toJSON(),_.bind(function(w){
