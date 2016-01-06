@@ -1,17 +1,22 @@
 $l-padding: 50px;
 
 .l-header {
-  padding: 70px 0 25px;
+  padding-top: 70px;
   background-color: $dark-grey;
+  
+  @media screen and (min-width: $br-mobile) {
+    padding: 70px 0 25px;
+  }
 }
 
 .l-toolbar {
+  display: none;
   padding: 10px 0;
   background-color: $extra-light-grey;
   
-  @media screen and (max-width: $br-mobile) {
+  @media screen and (min-width: $br-mobile) {
     //We dont have design for this.. so for the moment...
-    display: none;
+    display: block;
   }
 }
 
@@ -20,17 +25,27 @@ $l-padding: 50px;
 }
 
 .l-main-content {
-  padding: $l-padding 0;
+  //adapted for compare page.
+  padding: 20px 0;
+  overflow-x: hidden;
+
+  @media screen and (min-width: $br-mobile) {
+    padding: $l-padding 0;
+  }
 }
 
 .l-compare {
-  text-align: center;
 }
 
 .l-compare-selectors {
-  display: flex;
-  justify-content: space-between;
-  margin: 40px 0;
+  padding: 40px 20px;
+
+  @media screen and (min-width: $br-mobile) {
+    display: flex;
+    justify-content: space-between;
+    
+    margin: 40px 0;
+  }
 }
 
 .l-aside-content {
@@ -41,4 +56,25 @@ $l-padding: 50px;
 
 .l-cutpoint {
   height: 1px;
+}
+
+.l-compare-switcher {
+  //To avoid white space due to l-cutpoint.
+  position: relative;
+  top: -1px;
+
+  padding: 8px 20px;
+  background-color: #404040;
+  
+  &.is-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+
+    + .l-main-content {
+      margin-top: 57px;
+    }
+  }
 }

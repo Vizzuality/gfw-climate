@@ -7,10 +7,12 @@
   border-top: 1px solid $border;
   position: relative;
   min-height: 200px;
+
   &:first-child {
     margin: 0;
     border: none;
   }
+
   .gridgraphs--widget {
     width: 47.5%;
   }
