@@ -18,6 +18,11 @@ body {
   background: $extra-light-grey;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+
+  @media screen and (min-width: $br-mobile) {
+    overflow-x: auto; 
+  }
 }
 
 a{

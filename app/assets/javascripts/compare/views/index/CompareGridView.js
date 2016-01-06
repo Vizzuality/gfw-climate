@@ -1,9 +1,10 @@
 define([
   'backbone',
+  'mps',
   'compare/presenters/CompareGridPresenter',
   'widgets/views/WidgetView',
   'text!compare/templates/compareGrid.handlebars',
-], function(Backbone, CompareMainPresenter, WidgetView, tpl) {
+], function(Backbone, mps, CompareMainPresenter, WidgetView, tpl) {
 
   var CompareMainView = Backbone.View.extend({
 
@@ -19,6 +20,20 @@ define([
 
     initialize:function() {
       this.presenter = new CompareMainPresenter(this);
+
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+          this.render();
+        },this)
+      });
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+          this.render();
+        },this)
+      });
     },
 
 
@@ -70,6 +85,18 @@ define([
           $('#gridgraphs-compare-'+widget.id).addClass('is-locked').append(widget.el);
         });
       },this));
+
+
+
+      if (this.mobile) {
+        //CACHE VARS FOR MOBILE ONLY
+        this.widgetPanel = this.$('.widgets-wrapper');
+        this.panelWidth = this.widgetPanel.width();
+
+        //Listener for widget panel switch
+        this.$el.scroll(_.throttle(_.bind(this.checkPanelPosition, this), 300));
+      }
+
     },
 
     parseData: function() {
@@ -109,7 +136,22 @@ define([
       this.widgets.forEach(function(widget) {
         widget.destroy();
       });
+    },
+
+    //only for mobile
+    checkPanelPosition: function() {
+      var activeTabCompare;
+      var offset = Math.abs((this.widgetPanel.offset().left));
+
+      if (offset > parseInt(this.panelWidth/4) ) {
+        activeTabCompare = 'is-tab-2';
+        Backbone.Events.trigger('compareTabMb:change', activeTabCompare);
+      } else {
+        activeTabCompare = 'is-tab-1';
+        Backbone.Events.trigger('compareTabMb:change', activeTabCompare);
+      }
     }
+
 
   });
 

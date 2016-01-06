@@ -21,8 +21,22 @@ define([
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
       this.status = this.presenter.status;
-
       this.helper = CountryHelper;
+
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+        },this)
+      });
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+
+          (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
+          (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
+        },this)
+      });
     },
 
     showModal: function(e) {
@@ -31,8 +45,11 @@ define([
 
     render: function() {
       this.$el.html(this.template(this._parseData()));
-      (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
-      (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
+
+      if (!this.mobile) {
+        (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
+        (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
+      }
     },
 
     _parseData: function() {
@@ -96,9 +113,7 @@ define([
       } else {
         return '';
       }
-    },
-
-
+    }
 
   });
 
