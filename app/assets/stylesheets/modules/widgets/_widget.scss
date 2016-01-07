@@ -27,8 +27,13 @@
     }
 
     @media only screen and (min-width: $br-mobile) {
-      position: static;
-      width: 100%;
+      // position: static;
+      // width: 100%;
+
+      .-compare & {
+        position: static;
+        width: 100%;
+      }
 
       .gridgraphs--widget:nth-child(3) & {
         display: flex;
