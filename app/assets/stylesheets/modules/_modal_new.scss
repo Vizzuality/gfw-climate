@@ -45,6 +45,7 @@ $height: auto;
       .modal-window {
         width: 820px;
         height: 80%;
+
         .modal-wrapper {
           padding: 0;
           max-height: none;
@@ -151,13 +152,11 @@ $height: auto;
 
   // MODAL WRAPPER
   .modal-wrapper {
-    position: static;
-    height: 100%;
-    max-height: 100%;
-    width: 100%;
+    position: absolute;
     top: 0;
+    bottom: 0;
+    right: 0;
     left: 0;
-    overflow: hidden;
 
     @media (min-width: $br-mobile){
       position: relative;
@@ -262,10 +261,9 @@ $height: auto;
     content: "";
     position: absolute;
     height: 15px;
-    width: 100%;
     left: 0;
+    right: 10px;
     bottom: 100%;
-    border-bottom: 1px solid $border;
     @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
   }
 

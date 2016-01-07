@@ -5,10 +5,12 @@
   <a href="#" class="modal-close">
     <svg><use xlink:href="#shape-close"></use></svg>
   </a>
-  <div class="modal-wrapper scroll-dark">
+
+  <div class="modal-wrapper">
     <div class="modal-content">
-      <div class="m-modal-field">
+      <div class="m-modal-field scroll-dark">
         <div class="m-modal--tab is-country is-active">
+
           {{#if view.isNational}}
             <div class="m-field">
               <h2>Select indicators</h2>
@@ -144,9 +146,11 @@
               </footer>
             </div>
           {{/unless}}
+
         </div>
       </div>
     </div>
   </div>
+
 </div>
 
