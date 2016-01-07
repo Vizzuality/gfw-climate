@@ -15,7 +15,7 @@
   // Content header
   .m-modal--tabscontent {
     position: relative;
-    top: 70px;
+    top: 30px;
   }
 
   .m-modal--tab {
@@ -35,8 +35,8 @@
    
     &.-scroll {
       position: absolute;
-      top: 40px;
-      bottom: 50px;
+      top: 0;
+      bottom: 0;
       right: 0;
       left: 0;
       padding: 0 20px;
