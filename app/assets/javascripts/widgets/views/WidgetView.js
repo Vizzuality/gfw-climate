@@ -51,7 +51,9 @@ define([
      * RENDER
      */
     render: function() {
+      // console.log(this.presenter.model);
       this.$el.html(this.template({
+        id: this.presenter.model.get('id'),
         slug: this.presenter.model.get('slug'),
         tabs: this.presenter.model.get('tabs'),
         name: this.presenter.model.get('name'),

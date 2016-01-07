@@ -4,20 +4,31 @@
 
   // HEADER
   > .m-widget-header {
-    // overflow: hidden;
+    position: absolute;
+    top: 35px;
+    left: 20px;
+    right: 53%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    @media only screen and (max-width: $br-mobile) {
+    .gridgraphs--widget:nth-child(3) & {
+      display: none;
+    }
+
+    @media only screen and (min-width: $br-mobile) {
+      position: static;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
+
+      .gridgraphs--widget:nth-child(3) & {
+        display: flex;
+      }
     }
 
     // NAME
     > .name {
-      float: left;
       font-size: 14px;
       text-transform: uppercase;
       color: rgba(0,0,0, .5);
@@ -27,7 +38,6 @@
     // OPTIONS
     > .options {
       display: flex;
-      float: right;
       // min-width: 161px;
       padding: 0 0 0 10px;
 
