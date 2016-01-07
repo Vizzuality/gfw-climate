@@ -1,12 +1,15 @@
 .m-modal-field {
-  position: absolute;
-  top: 40px;
-  bottom: 50px;
-  right: 0;
-  left: 0;
-  padding: 0 20px;
-  overflow-y: scroll;
 
+  &.-scroll {
+    position: absolute;
+    top: 40px;
+    bottom: 50px;
+    right: 0;
+    left: 0;
+    padding: 0 20px;
+    overflow-y: scroll;
+  }
+  // position: relative;
   // Tabs header
 
   // Content header
@@ -29,7 +32,17 @@
   }
 
   .m-field {
-    // position: relative;
+   
+    &.-scroll {
+      position: absolute;
+      top: 40px;
+      bottom: 50px;
+      right: 0;
+      left: 0;
+      padding: 0 20px;
+      overflow-y: scroll;
+      // position: relative;
+    }
 
     &.m-select {
       margin-bottom: 25px;

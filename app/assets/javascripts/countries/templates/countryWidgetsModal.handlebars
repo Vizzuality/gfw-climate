@@ -8,11 +8,11 @@
 
   <div class="modal-wrapper">
     <div class="modal-content">
-      <div class="m-modal-field scroll-dark">
+      <div class="m-modal-field">
         <div class="m-modal--tab is-country is-active">
 
           {{#if view.isNational}}
-            <div class="m-field">
+            <div class="m-field scroll-dark -scroll">
               <h2>Select indicators</h2>
                 {{#each widgets}}
                   <div class="indicator-group">
@@ -26,6 +26,7 @@
                 {{/each}}
               </ul>
             </div>
+
             <footer class="modal-footer">
               <span class="gradient"></span>
               <ul class="m-btncontainer is-center">
@@ -39,7 +40,7 @@
 
           {{#if view.isSubNational}}
             <div class="page-1">
-              <div class="m-field">
+              <div class="m-field scroll-dark -scroll">
                 {{#if jurisdictions}}
                   <h2>Select jurisdictions</h2>
                   <div class="jurisdictions-group">
@@ -72,7 +73,7 @@
 
           {{#if view.isAreas}}
             <div class="page-1">
-              <div class="m-field">
+              <div class="m-field scroll-dark -scroll">
                 {{#if areas}}
                   <h2>Select areas</h2>
                   <div class="areas-group">
@@ -105,7 +106,7 @@
 
           {{#unless view.isNational}}
             <div class="page-2 is-hidden">
-              <div class="m-field">
+              <div class="m-field scroll-dark -scroll">
                 <h2>Select indicators</h2>
                   {{#if widgets}}
                       {{#if view.isSubNational}}
