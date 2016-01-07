@@ -159,11 +159,9 @@ $height: auto;
     left: 0;
 
     @media (min-width: $br-mobile){
-      position: relative;
       max-height: 450px;
       padding: 20px;
       overflow-x: hidden;
-      overflow-y: auto;
     }
 
     .modal-content {
