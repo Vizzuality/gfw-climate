@@ -4,13 +4,23 @@
 
   // HEADER
   > .m-widget-header {
-    position: absolute;
-    top: 35px;
-    left: 20px;
-    right: 53%;
+
+    .-compare & {
+      position: absolute;
+      top: 35px;
+      left: 25px;
+      right: auto;
+      width: 43%;
+    }
+
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    &.-right-side {
+      left: auto;
+      right: 25px;
+    }
 
     .gridgraphs--widget:nth-child(3) & {
       display: none;
@@ -18,9 +28,7 @@
 
     @media only screen and (min-width: $br-mobile) {
       position: static;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
+      width: 100%;
 
       .gridgraphs--widget:nth-child(3) & {
         display: flex;
@@ -33,6 +41,7 @@
       text-transform: uppercase;
       color: rgba(0,0,0, .5);
       font-weight: 500;
+      max-width: 48%;
     }
 
     // OPTIONS

@@ -153,8 +153,8 @@ $height: auto;
   // MODAL WRAPPER
   .modal-wrapper {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 40px;
+    bottom: 40px;
     right: 0;
     left: 0;
 
@@ -179,6 +179,10 @@ $height: auto;
         &:hover{
           color: darken($blue,5%);
         }
+      }
+
+      .source-item {
+        padding: 0 20px;
       }
     }
   }

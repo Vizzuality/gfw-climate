@@ -20,6 +20,7 @@
     }
 
     > .gridgraphs-widget {
+      position: relative;
       width: 47.5%;
       border-bottom: 1px solid #e5e5e5;
       padding-bottom: 80px;
@@ -28,6 +29,7 @@
       @media screen and (max-width: $br-mobile) {
         margin: 0 0 40px;
         padding: 0 0 40px;
+
         &:last-child {
           margin: 0;
           border-bottom: 0;
