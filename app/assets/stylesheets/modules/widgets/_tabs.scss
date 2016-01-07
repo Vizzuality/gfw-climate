@@ -81,16 +81,12 @@
   // SUB OPTIONS
   .sub-options {
     padding-top: 20px;
+    margin-left: 30px;
     font-size: 12px;
     border-top: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    @media screen and (min-width: $br-mobile) {
-      border-top: 1px solid $border;
-      margin-top: 20px;
-    }
+    justify-content: flex-start;
   }
 
 
