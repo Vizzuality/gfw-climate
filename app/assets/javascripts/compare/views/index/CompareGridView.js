@@ -86,17 +86,23 @@ define([
         });
       },this));
 
+      this.cacheVars();
+      this.setListeners();
+    },
 
-
+    cacheVars: function() {
       if (this.mobile) {
         //CACHE VARS FOR MOBILE ONLY
-        this.widgetPanel = this.$('.widgets-wrapper');
-        this.panelWidth = this.widgetPanel.width();
+        this.$widgetPanel = this.$('.widgets-wrapper');
+        this.panelWidth = this.$widgetPanel.width();
+      }
+    },
 
+    setListeners: function() {
+     if (this.mobile) {
         //Listener for widget panel switch
         this.$el.scroll(_.throttle(_.bind(this.checkPanelPosition, this), 300));
       }
-
     },
 
     parseData: function() {
@@ -139,19 +145,20 @@ define([
     },
 
     //only for mobile
-    checkPanelPosition: function() {
+    checkPanelPosition: function(e) {
       var activeTabCompare;
-      var offset = Math.abs((this.widgetPanel.offset().left));
+      var offset = Math.abs((this.$widgetPanel.offset().left));
 
       if (offset > parseInt(this.panelWidth/4) ) {
         activeTabCompare = 'is-tab-2';
+        $('.m-widget-header').addClass('-right-side');
         Backbone.Events.trigger('compareTabMb:change', activeTabCompare);
       } else {
         activeTabCompare = 'is-tab-1';
+        $('.m-widget-header').removeClass('-right-side');
         Backbone.Events.trigger('compareTabMb:change', activeTabCompare);
       }
     }
-
 
   });
 

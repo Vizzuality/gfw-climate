@@ -294,7 +294,7 @@ $main-slider-height-mb: 300px;
   &.slide0 { background-image:url('home/home-slider/bg_slide0.jpg');}
   &.slide1 { background-image:url('home/home-slider/bg_slide1.jpg');}
   &.slide2 { background-image:url('home/home-slider/bg_slide2.jpg');}
-  &.slide3 { background-image:url('home/home-slider/bg_slide3.jpg');}
+  // &.slide3 { background-image:url('home/home-slider/bg_slide3.jpg');}
   // &.slide4 { background-image:url('home/home-slider/bg_slide4.jpg');}
   // &.slide5 { background-image:url('home/home-slider/bg_slide5.jpg');}
   // &.slide6 { background-image:url('home/home-slider/bg_slide6.jpg');}
@@ -667,6 +667,7 @@ $main-slider-height-mb: 300px;
       margin-top: 50px;
       margin-bottom: 25px;
       margin-left: 0;
+      margin-right: 0;
 
       .title {
         text-align: center;
@@ -2046,6 +2047,7 @@ $main-slider-height-mb: 300px;
 
 
   .source-item {
+
     &:hover,
     &.selected {
       .source_header {
