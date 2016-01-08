@@ -455,8 +455,9 @@
   }
 }
 
-.scroll-dark{
+.scroll-dark {
   -webkit-overflow-scrolling: touch;
+  overflow: scroll;
   /* Let's get this party started */
   &::-webkit-scrollbar {
     width: 8px;

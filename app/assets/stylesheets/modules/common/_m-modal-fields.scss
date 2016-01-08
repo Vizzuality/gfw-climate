@@ -1,24 +1,24 @@
 .m-modal-field {
+
+  &.-scroll {
+    position: absolute;
+    top: 40px;
+    bottom: 50px;
+    right: 0;
+    left: 0;
+    padding: 0 20px;
+    overflow-y: scroll;
+  }
+  // position: relative;
   // Tabs header
 
   // Content header
   .m-modal--tabscontent {
-    position: absolute;
-    top: 60px;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
+    top: 30px;
   }
 
   .m-modal--tab {
-    position: absolute;
-    top: 40px;
-    left: 0;
-    right: 0;
-    bottom: 70px;
-    width: 100%;
-    padding: 0 20px;
-    overflow-y: scroll; 
 
     @media screen and (min-width: $br-mobile) {
       top: 40px;
@@ -32,15 +32,24 @@
   }
 
   .m-field {
-    position: relative;
+   
+    &.-scroll {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      padding: 0 20px;
+      overflow-y: scroll;
+      // position: relative;
+    }
 
     &.m-select {
       margin-bottom: 25px;
     }
 
-
     @media screen and (min-width: $br-mobile) {
-      position: static;
+      // position: static;
       padding: 0;
       margin: 20px 0 0;
 

@@ -4,6 +4,15 @@
     <h2 class="name">{{this.name}}</h2>
     <ul class="options">
       <li>
+        <button class="lock-mode -mobile is-desktop-hidden" data-id="{{this.id}}">
+          <svg class="icon-unlock"><use xlink:href="#icon-unlock"></use></svg>
+          <svg class="icon-lock"><use xlink:href="#icon-lock"></use></svg>
+          <div class="locker-tooltip is-hidden">
+            <span class="tooltip-legend">unlock</span>
+          </div>
+        </button>
+      </li>
+      <li>
         <a class="btn-action close" href="#">
           <svg>
             <use xlink:href="#shape-close"></use>

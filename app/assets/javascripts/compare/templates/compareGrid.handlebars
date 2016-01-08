@@ -1,7 +1,7 @@
-<section class="widgets-wrapper">
+<section class="widgets-wrapper -compare">
   {{#each this.widgets}}
     <div id="gridgraphs-compare-{{this}}" class="gridgraphs--container">
-      <button class="lock-mode" data-id="{{this}}">
+      <button class="lock-mode -desktop is-mobile-hidden" data-id="{{this}}">
         <svg class="icon-unlock"><use xlink:href="#icon-unlock"></use></svg>
         <svg class="icon-lock"><use xlink:href="#icon-lock"></use></svg>
         <div class="locker-tooltip is-hidden">
