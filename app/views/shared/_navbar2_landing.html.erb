@@ -31,7 +31,7 @@
           <li><a href="http://www.globalforestwatch.org/about/the-gfw-partnership">Data providers and partners</a></li>
           <!-- <li><a href="#">Tutorials</a></li> -->
           <li>
-            <a href="http://www.globalforestwatch.org/getinvolved/provide-feedback">Submit Feedback</a>
+            <a class="feedback-link" href="http://www.globalforestwatch.org/getinvolved/provide-feedback">Submit Feedback</a>
           </li>
           <li><a href="http://data.globalforestwatch.org/">Open Data Portal</a></li>
           <li><a href="/about?page=faq">FAQs page</a></li>
@@ -42,7 +42,7 @@
   </nav>
 </div>
 <% if content_for?(:header) %>
-  <div class="l-layers-header"> 
+  <div class="l-layers-header">
     <div class="inner">
       <%= yield :header %>
     </div>
