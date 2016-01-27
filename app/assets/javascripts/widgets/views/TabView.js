@@ -201,14 +201,14 @@ define([
           break;
 
         case 'number':
-          var indicator = _.findWhere(this.presenter.model.get('indicators'),{ tab: t.position});
-          if (!!indicator) {
+          var indicators = _.where(this.presenter.model.get('indicators'),{ tab: t.position});
+          if (!!indicators.length) {
             this.indicator = new NumberChartIndicator({
               el: this.$graphContainer,
               tab: this,
               className: 'is-number',
               model: {
-                id: indicator.id,
+                id: (!!t.unit) ? _.findWhere(indicators, { unit: t.unit }).id : indicators[0].id,
                 template: t.template,
                 type: 'number',
               },
