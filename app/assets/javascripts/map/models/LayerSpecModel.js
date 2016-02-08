@@ -24,6 +24,7 @@ define([
       "idn_primary",
       "ifl_2013_deg",
       "idn_peat_lands",
+      "protected_areasCDB",
       // FOREST USE
       "dam_hotspots",
       "wood_fiber_plantations",

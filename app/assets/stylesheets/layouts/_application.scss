@@ -21,6 +21,7 @@ $main-slider-height-mb: 300px;
     position: relative;
     width: 100%;
     max-height: $main-slider-height-mb;
+    overflow: hidden;
 
     @media (min-width: $br-mobile) {
       max-height: 620px;
@@ -412,8 +413,8 @@ $main-slider-height-mb: 300px;
       padding: 0;
     }
 
-		&:first-child  { 
-      border-left: none; 
+		&:first-child  {
+      border-left: none;
 
       @media (max-width: $br-mobile) {
         border-bottom: 1px solid $border;
@@ -646,8 +647,8 @@ $main-slider-height-mb: 300px;
         &.overflow-allowed {
           overflow: visible;
         }
-        
-        //This wrapper is to avoid img deformation 
+
+        //This wrapper is to avoid img deformation
         //into flex container
         .wrap-img {
           overflow: hidden;
