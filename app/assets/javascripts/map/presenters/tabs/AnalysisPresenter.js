@@ -325,7 +325,7 @@ define([
 
             this._geojsonFitBounds(geojson);
             this.view.drawMultipolygon(geojson);
-            resource.geom = geojson;
+            // resource.geom = geojson;
             this._publishAnalysis(resource);
 
             this.wdpaid = null;

@@ -16,6 +16,7 @@ define([
   'map/views/layers/SoilOrganicCarbonDLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
+  'map/views/layers/ProtectedAreasCDBLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -35,6 +36,7 @@ define([
   SoilOrganicCarbonDLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
+  ProtectedAreasCDBLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -83,6 +85,9 @@ define([
     },
     plantations_by_species: {
       view: PlantationsLayerBySpecies
+    },
+    protected_areasCDB: {
+      view: ProtectedAreasCDBLayer
     },
     nothing: {
     }
