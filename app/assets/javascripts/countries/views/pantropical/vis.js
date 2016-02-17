@@ -729,9 +729,9 @@ function addCommas(nStr) {
       content = "<span class=\"value\"> " + data.name + "</span><br/>";
       var figure = function(data) {
         if (data.currentValue) {
-          return (data.currentValue*100 > 1) ? data.currentValue*100 : (data.currentValue*100).toFixed(3);
+          return (data.currentValue*100 > 1) ? ~~(data.currentValue*100) : (data.currentValue*100).toFixed(3);
         }
-        return (data.value*100 > 1) ? data.value*100 : (data.value*100).toFixed(3);
+        return (data.value*100 > 1) ? ~~(data.value*100) : (data.value*100).toFixed(3);
       };
       content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + figure(data) + "%</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
