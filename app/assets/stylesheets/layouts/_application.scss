@@ -21,7 +21,7 @@ $main-slider-height-mb: 300px;
     position: relative;
     width: 100%;
     max-height: $main-slider-height-mb;
-    overflow: hidden;
+    // overflow: hidden;
 
     @media (min-width: $br-mobile) {
       max-height: 620px;
@@ -195,22 +195,31 @@ $main-slider-height-mb: 300px;
 
   .slick-dots {
     position: absolute;
+    width: 100%;
     top: 20px;
     right: 65px;
     z-index: 2;
+
     @media (min-width: $br-mobile) {
+      width: 50%;
       top: auto;
       bottom: 10px;
       right: 30px;
     }
-    li{
+
+    li {
       margin: 0 0 0 15px;
       float: left;
+      width: 50%;
+
       &:first-child { margin: 0;}
+
       @media (min-width: $br-mobile) {
         margin: 0 0 0 20px;
+        width: 21%;
       }
-      button{
+
+      button {
         position: relative;
         box-shadow: $shadow1;
         width: 6px;
