@@ -15,7 +15,6 @@ define([
     el: 'body',
 
     events: {
-      'click .source' : 'show',
       'click .close-modal': 'hide'
     },
 
@@ -109,10 +108,6 @@ define([
       //Prevent scroll beyond modal window.
       this.$body.addClass('is-no-scroll');
       this.$html.addClass('is-no-scroll');
-
-      if ( $(e.currentTarget).hasClass('is-temporary-disabled') ) {
-        this.$sourceWindow.addClass('launching-soon');
-      }
 
       return this;
     }

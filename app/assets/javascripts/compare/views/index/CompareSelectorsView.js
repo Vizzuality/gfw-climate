@@ -21,8 +21,22 @@ define([
     initialize:function() {
       this.presenter = new CompareSelectorsPresenter(this);
       this.status = this.presenter.status;
-
       this.helper = CountryHelper;
+
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+        },this)
+      });
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+
+          (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
+          (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
+        },this)
+      });
     },
 
     showModal: function(e) {
@@ -31,8 +45,11 @@ define([
 
     render: function() {
       this.$el.html(this.template(this._parseData()));
-      (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
-      (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
+
+      if (!this.mobile) {
+        (!!this.status.get('compare1')) ? this._drawCountries(1) : null;
+        (!!this.status.get('compare2')) ? this._drawCountries(2) : null;
+      }
     },
 
     _parseData: function() {
@@ -57,14 +74,16 @@ define([
     _drawCountries: function(tab) {
       var compare = this.status.get('compare'+tab);
       if (!!compare.iso && !!compare.jurisdiction) {
-        var sql = ["SELECT m.the_geom",
-                   "FROM gadm_1_all m",
-                   "WHERE m.iso = '"+compare.iso+"'",
-                   "AND m.id_1 = '"+compare.jurisdiction+"'&format=topojson"].join(' ');
+        var sql = ["SELECT",
+                   "ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom",
+                   "FROM gadm27_adm1",
+                   "WHERE iso = '"+compare.iso+"'",
+                   "AND id_1 = '"+compare.jurisdiction+"'&format=topojson"].join(' ');
       } else {
-        var sql = ["SELECT m.the_geom",
-                   "FROM ne_50m_admin_0_countries m",
-                   "WHERE m.adm0_a3 = '"+compare.iso+"'&format=topojson"].join(' ');
+        var sql = ["SELECT",
+                   "ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom",
+                   "FROM gadm27_adm0",
+                   "WHERE iso = '"+compare.iso+"'&format=topojson"].join(' ');
       }
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
@@ -94,9 +113,7 @@ define([
       } else {
         return '';
       }
-    },
-
-
+    }
 
   });
 

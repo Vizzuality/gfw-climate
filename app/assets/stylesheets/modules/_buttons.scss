@@ -107,11 +107,6 @@
     &:hover {
       background: darken($blue,10%);
     }
-    &.disabled{
-      &:hover {
-        background: $blue;
-      }
-    }
   }
   &.light {
     color: $white;
@@ -142,10 +137,6 @@
     // color: $white !important;
   }
 
-  &.disabled{
-    opacity: 0.25;
-    cursor: default;
-  }
   &.with-icon{
     min-width: 0;
     @media (min-width: $br-mobile) {
@@ -208,12 +199,53 @@
   }
 }
 
-
 .m-btncontainer {
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+
+  @media screen and (min-width: $br-mobile) {
+    justify-content: center;
+  }
+  
   &.is-center {
     justify-content: center;
+  }
+
+  .prev-step {
+    cursor: pointer;
+    @media screen and (min-width: $br-mobile) {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate(0, -50%);
+    }
+
+    .svg-left-arrow {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate(0, -50%);
+      width: 9px;
+      height: 16px;
+      stroke: $black;
+    }
+    .btn-back {
+      margin: 0 0 0 8px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: $dark;
+      text-transform: uppercase;
+      outline: none;
+      cursor: pointer;
+
+      @media screen and (max-width: $br-mobile) {
+        font-size: 10px;
+      }
+    }
   }
 }
 

@@ -1,71 +1,40 @@
 // Compass
-@import "compass/reset";
-@import "compass/css3";
-@import 'flexbox';
+@import "reset";
 
 // General
-@import "settings1600";
-@import "fonts1600";
-@import "mixins1600";
-@import "animations1600";
-@import "base1600";
+@import "settings";
+@import "fonts";
+@import "mixins";
+@import "animations";
+@import "base";
+@import "states";
 
-// Images
-@import "logos/*.png";
-@import "static-icons/*.png";
 
 // Layout
-@import "header1600";
-@import "footer1600";
-@import "layouts/grid1600";
+@import "header";
+@import "footer";
+@import "grid";
+
+//modules
+@import "modules/shared";
+@import "modules/buttons";
+@import "modules/icons";
+@import "modules/slick";
 @import "modules/notifications";
+@import "modules/home/features";
 
+@import "modules/slick";
+@import "modules/home/features-slider";
+
+@import "modules/static/table";
+
+@import
 // Modules
-@import "modules/modal";
-@import "modules/shared1600";
-@import "modules/buttons1600";
-@import "modules/icons1600";
-@import "modules/slick1600";
-@import "modules/carrousel";
-@import "modules/pagination";
-@import "layouts/static";
+  "modules/navbar",
+  "modules/form",
+  "modules/modal",
+  "modules/dialog";
 
 
-
-
-// // Common
-// @import "states";
-
-
-// //= require jquery.qtip.min
-
-// // Compass
-// @import "compass/reset";
-// @import "compass/css3";
-
-// // Images
-// @import "static-icons/*.png";
-// @import "static-logos/*.png";
-// @import "home-icons/*.png";
-
-// @import "settings";
-// @import "mixins";
-// @import "base";
-
-// // Layouts
-// @import
-//   "layouts/grid",
-//   "layouts/application",
-//   "layouts/static";
-
-// // Modules
-// @import
-//   "modules/notice",
-//   "modules/navbar",
-//   "modules/modal",
-//   "modules/buttons",
-//   "modules/carrousel",
-//   "modules/dropdowns";
-
-// // States
-// @import "states";
+// Common
+@import 'layouts/application';

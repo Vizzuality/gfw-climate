@@ -3,7 +3,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background-color: #AAA;
+  background-color: $color-1;
   position: relative;
 
   &:after {
@@ -31,18 +31,18 @@
   }
 
   &:hover {
-    background-color: #777;
+    background-color: darken($color-1, 5%);
   }
 
   &.default {
-    background-color: #AAA;
-    
+    background-color: $color-1;
+
     svg{
       fill: $white;
     }
 
     &:hover{
-      background-color: #777;
+      background-color: darken($color-1, 5%);
     }
   }
 
@@ -411,29 +411,6 @@
   }
 }
 
-.feedback-link {
-  display: none;
-  position: fixed;
-  top: 50%;
-  right: 0;
-  z-index: 250;
-  background: #FFD24D;
-  text-transform: uppercase;
-  color: $dark;
-  text-decoration: none;
-  padding: 8px;
-  transform: rotate(90deg) translate(50%,0);
-  transform-origin: 100% 0;
-  &:hover {
-    background: darken(#FFD24D,5%);
-  }
-  @media (min-width: $br-mobile){
-    display: block;
-  }
-
-}
-
-
 .scroll-light{
   -webkit-overflow-scrolling: touch;
   /* Let's get this party started */
@@ -455,8 +432,9 @@
   }
 }
 
-.scroll-dark{
+.scroll-dark {
   -webkit-overflow-scrolling: touch;
+  overflow: scroll;
   /* Let's get this party started */
   &::-webkit-scrollbar {
     width: 8px;

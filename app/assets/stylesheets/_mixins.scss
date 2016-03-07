@@ -4,11 +4,11 @@
     justify-content: $content;
     align-items: $items;
 }
-@mixin col ($per) {
-    width: percentage($per/100);
-    min-height: 1px;
-}
 
+@mixin col($per) {
+  width: percentage($per/100);
+  min-height: 1px;
+}
 
 // Clearfix
 @mixin clearfix() {
@@ -238,5 +238,10 @@
   &:-ms-input-placeholder {@content}
 }
 
-
+@mixin ellipsis($max-width) {
+  max-width: $max-width;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 

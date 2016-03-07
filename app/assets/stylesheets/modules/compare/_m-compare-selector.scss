@@ -1,8 +1,28 @@
+.m-compare-grid {
+  width: 100%;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+
+  > .widgets-wrapper {
+    position: relative;
+    width: 200%;
+    overflow: hidden;
+    transform: translatex(0);
+    transition: all .5s $easeInCubic;
+  }
+
+  @media screen and (min-width: $br-mobile) {
+    padding-top: 60px;
+    overflow-x: auto;
+
+    > .widgets-wrapper {
+      width: 100%;
+    }
+  }
+}
+
 .m-compare-selector {
   position: relative;
-  width: 47.5%;
-  min-height: 280px;
-
   padding: 20px;
   border: 1px solid rgba($font-color-2,0.3);
   border-radius: 10px;
@@ -10,22 +30,54 @@
 
   cursor: pointer;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  &:first-child {
+    margin-bottom: 20px;
+  }
 
   &:hover {
     background-color: lighten($dark-grey, 5%);
   }
 
+  &:after {
+    content: "";
+    position: absolute;
+    top: 35%;
+    right: 20px;
+    @include arrow(10px, $white, 2px, -135deg);
+  }
+
+  @media screen and (min-width: $br-mobile) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 47.5%;
+    min-height: 280px;
+
+    &:first-child {
+      margin-bottom: 0;
+    }
+
+    &:after {
+      display: none;
+    }
+  }
+
   .m-compare-selector-empty {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    left: 20px;
+    transform: translatey(-50%);
     color: $white;
-    font-size: 32px;
+    font-size: 20px;
+    white-space: nowrap;
+
+    @media screen and (min-width: $br-mobile) {
+      left: 50%;
+      transform: translate(-50%,-50%);
+      font-size: 32px;
+    }
   }
 
   .m-compare-selector-not-empty {

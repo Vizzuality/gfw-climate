@@ -8,6 +8,7 @@ define([
   var CountryIndexView = Backbone.View.extend({
 
     initialize:function() {
+      ga('send', 'event', 'country','Search');
       new CountryListView();
     }
 

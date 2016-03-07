@@ -1,0 +1,21 @@
+<div id="loss-carbon-chart" class="graph-line-bar">
+  <div id="loss-carbon-chart-legend" class="graph-legend"></div>
+</div>
+{{#if iso}}
+<div class="m-btncontainer">
+  <a class="btn blue uppercase full-width" href="/countries/{{iso}}">Country profile</a>
+</div>
+{{/if}}
+
+<footer class="analysis-footer">
+  <ul>
+    <li id="analysis-delete">
+      <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
+      <span class="tooltipmap bottom">Discard analysis</span>
+    </li>
+    {{!-- <li id="analysis-subscribe">
+      <svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg>
+      <span class="tooltipmap bottom">Subscribe</span>
+    </li> --}}
+  </ul>
+</footer>

@@ -31,9 +31,11 @@ define([
   'text!map/templates/legend/bra_biomes.handlebars',
   'text!map/templates/legend/idn_peat.handlebars',
   'text!map/templates/legend/hsdw.handlebars',
+  'text!map/templates/legend/plantations_by_type.handlebars',
+  'text!map/templates/legend/plantations_by_species.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, idn_peatTPL,hsdwTPL) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, idn_peatTPL,hsdwTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl) {
 
   'use strict';
 
@@ -79,7 +81,9 @@ define([
       forma : Handlebars.compile(formaTPL),
       bra_biomes : Handlebars.compile(bra_biomesTPL),
       idn_peat_lands : Handlebars.compile(idn_peatTPL),
-      hwsd : Handlebars.compile(hsdwTPL)
+      hwsd : Handlebars.compile(hsdwTPL),
+      plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl)
 
     },
 

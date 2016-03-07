@@ -16,7 +16,7 @@ define([
 
     render: function() {
       var self = this;
-      
+
       this.$el.html('');
 
       d3.csv('/patropical_total_emissions.csv', function(data){
@@ -129,7 +129,7 @@ define([
       });
 
       x.domain(d3.extent(data, function(d) { return d.date; })).nice();
-      y.domain(d3.extent(data, function(d) { return d.value ; })).nice();
+      y.domain([0, d3.max(data, function(d) { return d.value ; })]).nice();
 
       function customYAxis(g) {
         g.selectAll('text')
@@ -139,7 +139,7 @@ define([
 
       svg.append('g')
         .attr('class', 'y axis')
-        .attr('transform', 'translate(-45,0)')        
+        .attr('transform', 'translate(-45,0)')
         .call(yAxis)
         .call(customYAxis);
 

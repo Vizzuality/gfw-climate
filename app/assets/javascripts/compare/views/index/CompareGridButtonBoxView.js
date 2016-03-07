@@ -26,6 +26,7 @@ define([
 
     // Events
     showIndicatorModal: function(e) {
+      ga('send', 'event','customise','compare');
       e && e.preventDefault();
       this.presenter.showIndicatorModal();
     }

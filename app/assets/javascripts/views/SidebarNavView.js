@@ -116,6 +116,15 @@ define([
       this.model.set('interesting', $(e.currentTarget).data('interesting'));
       this.model.set('t',null);
       this.updateSource();
+
+      /**/
+      // no router fallback
+      /**/
+      $('article').hide();
+      var slug = $(e.target).data('slug');
+      $('#' + slug).show();
+      $(this.el).find('.selected').removeClass('selected');
+      $(this.el).find('a[data-slug=' + slug + ']').addClass('selected');
     },
     toggleSources: function(e){
       ($(e.currentTarget).hasClass('active')) ? this.model.set('t', null) : this.model.set('t', $(e.currentTarget).parent().attr('id'));
@@ -135,7 +144,9 @@ define([
         interesting: this.model.get('interesting'),
         t: this.model.get('t')
       }
-      mps.publish('SourceStatic/update',[params]);
+      this.$sideBarBox.addClass('active');
+      this.changeHelper();
+      // mps.publish('SourceStatic/update',[params]);
     },
 
     changeSource: function(params){

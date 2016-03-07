@@ -17,6 +17,7 @@ define([
         defaults: setup.status
       }));
       this._setListeners();
+      this.thresh = 30;
     },
 
     _setListeners: function() {
@@ -24,8 +25,8 @@ define([
     },
 
     _subscriptions: [{
-      'Compare/reflection': function(id,slug_compare,status) {
-        if (this.model.get('id') == id && this.model.get('slug') == slug_compare) {
+      'Compare/reflection': function(id,slugw_compare,status) {
+        if (this.model.get('id') == id && this.model.get('slugw') == slugw_compare) {
           this.status.set(status);
         }
       },
@@ -49,7 +50,8 @@ define([
       //          You must add it to views/api/v1/widgets/show.json.rabl (If you don't, the API won't send the new parameter)
       // ******
       var tabs = _.clone(this.status.get('tabs'));
-      var t = _.findWhere(this.model.get('tabs'), { position: position });
+      var t = _.findWhere(this.model.get('tabs'), { 'position': ~~position });
+
       tabs = {
         type: t.type,
         position: position,
@@ -61,6 +63,7 @@ define([
         template: (t.template) ? t['template'] : null,
         lock: (this.status.get('tabs').lock != null && this.status.get('tabs').lock != undefined) ? this.status.get('tabs').lock : true,
       }
+      
       this.status.set('tabs',tabs);
     },
 
@@ -75,9 +78,9 @@ define([
 
 
     publish: function() {
-      mps.publish('Options/updated', [this.model.get('id'),this.model.get('slug'),this.status.toJSON()]);
+      mps.publish('Options/updated', [this.model.get('id'),this.model.get('slugw'),this.status.toJSON()]);
       if (this.status.get('tabs').lock) {
-        mps.publish('Compare/reflection', [this.model.get('id'),this.model.get('slug_compare'),this.status.toJSON()]);
+        mps.publish('Compare/reflection', [this.model.get('id'),this.model.get('slugw_compare'),this.status.toJSON()]);
       }
     },
 

@@ -1,21 +1,23 @@
 // $forest-change-color: rgb(255, 102, 153);
-$carbon-loss-color: rgb(178, 210, 110);
-$carbon-density-color: rgb(201, 142, 108);
-$land-use-color: #82430c;
-$land-cover-color: #702fa0;
+$carbon-loss-color: rgb(195, 32, 38);
+$carbon-density-color: rgb(159, 212, 177);
+$land-use-color: #C98E6C;
+$land-cover-color: #B2D26E;
 $country-color: rgb(207, 127, 236);
 
 
 $categories: 'carbon-loss','carbon-density','land-use','land-cover';
 $colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-color;
 
+.l-layers-header {
+   border-top: 1px solid #E5E5DF;
+}
 
 .layers-menu {
   // height: 77px;
   position: relative;
   @include clearfix();
-  border-top: 1px solid #E5E5DF;
-
+ 
   .inner {
     height: 100%;
     position: relative;

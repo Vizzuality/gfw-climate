@@ -1,4 +1,6 @@
 .m-section-header {
+  padding: 0 20px;
+
   h1 {
     color: $font-color-2;
     font-size: 47px;
@@ -10,6 +12,10 @@
     color: $font-color-2;
     opacity: .5;
     margin: 15px 0 0;
+  }
+
+  @media (min-width: $br-mobile){
+    padding: 0;
   }
 }
 

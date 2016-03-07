@@ -211,7 +211,7 @@ function addCommas(nStr) {
             };
 
             return _this.nodes.push(node);
-          } 
+          }
         };
       })(this));
       return this.nodes.sort(function(a, b) {
@@ -226,20 +226,23 @@ function addCommas(nStr) {
         return d.id;
       });
       that = this;
-      this.circles.enter().append("circle").attr("r", 0).attr("fill", (function(_this) {
+      this.circles.enter().append("circle").attr("class", "bubble").attr("r", 0).attr("fill", (function(_this) {
         return function(d) {
           return _this.fill_color(d.group);
         };
-      })(this)).attr("stroke-width", 2).attr("stroke", (function(_this) {
+      })(this)).attr("stroke-width", 1).attr("stroke", (function(_this) {
         return function(d) {
           return d3.rgb(_this.fill_color(d.group)).darker();
         };
       })(this)).attr("id", function(d) {
         return "bubble_" + d.id;
+      }).attr("data-iso", function(d) {
+        return d.iso;
       }).on("mouseenter", function(d, i) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;
         var ypos = (el.attr('cy') - d.radius - 37);
+        
         d3.select("#pantropical_tooltip")
           .style('top',ypos+"px")
           .style('left',xpos+"px")
@@ -286,6 +289,7 @@ function addCommas(nStr) {
         var el = d3.select(this);
         var xpos = ~~el.attr('cx') - 115;
         var ypos = (el.attr('cy') - d.radius - 37);
+        
         d3.select("#pantropical_tooltip")
           .style('top',ypos+"px")
           .style('left',xpos+"px")
@@ -356,8 +360,8 @@ function addCommas(nStr) {
             return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
                 return d.x;
               }).attr("cy",
-                function(d) { 
-                  return d.y; 
+                function(d) {
+                  return d.y;
               })
           };
         })(this));
@@ -399,15 +403,15 @@ function addCommas(nStr) {
                 }
               }
               if (that.VALID_NAMES.indexOf(d.name) != -1) {
-                document.getElementById(d.name+'_data').innerHTML = parseFloat(value*100).toFixed(3)+'%';
+                document.getElementById(d.name+'_data').innerHTML = parseFloat(value*100).toFixed(0)+'%';
               }
               return that.radius_scale(value * 1.6);
             })
             return _this.circles.each(_this.mandatorySort(e.alpha)).each(_this.buoyancy(e.alpha)).attr("cx", function(d) {
                 return d.x;
               }).attr("cy",
-                function(d) { 
-                  return d.y; 
+                function(d) {
+                  return d.y;
               })
           };
         })(this));
@@ -455,7 +459,7 @@ function addCommas(nStr) {
       var that = this;
       var circles = that.circles;
       var style_string;
-      
+
       circles
         .attr("r", function(d) {
           id = d.id;
@@ -466,13 +470,13 @@ function addCommas(nStr) {
               break;
             }
           }
-          
+
           return that.radius_scale(value * 1.6);
         })
         .each( function(d) {
           var coordinates = [];
           var label_text = "";
-          
+
           //Avoid non-NYDF and NYDF bubles.
           values_array = values_array
             .filter(function (i) {
@@ -509,7 +513,7 @@ function addCommas(nStr) {
           window.location.href = url;
         })
         .on("mouseenter",function() {
-            d3.event.stopPropagation(); 
+            d3.event.stopPropagation();
         });
 
       return circles;
@@ -529,7 +533,7 @@ function addCommas(nStr) {
       if ( order === 1 && radius < 47.5 || order === 2 && radius < 47.5 || order === 3 && radius < 47.5) {
         var y_coord_country = 'y="' + (coordinates[1]+60) + '" ';
         var y_coord_data =    'y="' + (coordinates[1]+80) + '" ';
-      } 
+      }
 
       if ( radius > 47.5 ) {
         var y_coord_country = 'y="' + (coordinates[1]) + '" ';
@@ -552,7 +556,7 @@ function addCommas(nStr) {
               y_coord_data +
               'data-url=countries/'+ iso +
               ' text-anchor="middle">' +
-              parseFloat(data*100).toFixed(3) + '%' + 
+              parseFloat(data*100).toFixed(3) + '%' +
       '</text>';
 
       $('.bubble-label').on('click', function(e) {
@@ -666,7 +670,7 @@ function addCommas(nStr) {
       if (sorted_index === 0 ) {
         offset_x = 225
       }
-      
+
       if (sorted_index === 3 ) {
         offset_x = 260
       }
@@ -723,7 +727,13 @@ function addCommas(nStr) {
       var content;
       d3.select(element).attr("stroke", "rgba(0,0,0,0.5)");
       content = "<span class=\"value\"> " + data.name + "</span><br/>";
-      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + (data.currentValue*100 || data.value*100).toFixed(3) + "%</span><br/>";
+      var figure = function(data) {
+        if (data.currentValue) {
+          return (data.currentValue*100 > 1) ? ~~(data.currentValue*100) : (data.currentValue*100).toFixed(3);
+        }
+        return (data.value*100 > 1) ? ~~(data.value*100) : (data.value*100).toFixed(3);
+      };
+      content += "<span class=\"name\">Emissions:</span> <span class=\"value\">" + figure(data) + "%</span><br/>";
       return this.tooltip.showTooltip(content, d3.event);
     };
 

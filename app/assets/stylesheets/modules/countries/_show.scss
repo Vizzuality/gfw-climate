@@ -1,9 +1,10 @@
 .container-country__content-country {
+  padding: 50px 0 0;
   background-color: $white;
 
   .more-indicators-warning {
     clear: both;
-    padding: 25px 0;
+    padding: 25px 15px;
     background: $blue;
     text-align: center;
     h3{

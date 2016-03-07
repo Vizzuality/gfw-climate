@@ -1,16 +1,16 @@
 section.l-compare-countries
   .l-toolbar
     .inner
-      .m-toolbar
+      .m-toolbar#toolbarView
         ul.options
-          li.options_item
+          li.options_item.btn-share (data-hideembed="true")
             svg
               use (xlink:href="#shape-share")
-            button#share-country share
-          li.options_item
+            button share
+          li.options_item.-disabled.btn-save
             svg
-              use (xlink:href="#shape-share")
-            button#print-country save/print report
+              use (xlink:href="#shape-alerts")
+            button save/print report
   .l-header
     .inner
       .m-section-header
@@ -30,11 +30,16 @@ section.l-compare-countries
   .l-main-content-wrap
     .l-cutpoint#offsetTop
 
-    .m-fixed-header#compareFixedHeaderView
+    .m-fixed-header#compareFixedHeaderView.is-mobile-hidden
+
+    #compareSwitcherView.l-compare-switcher.is-desktop-hidden
+      .m-compare-switcher  
+        button.compare-switcher.js--compare-switcher No country selected
+        button.compare-switcher.js--compare-switcher No country selected
 
     .l-main-content
       .inner
-        .m-compare-grid-button-box#compareGridButtonBox
+        .m-grid-button-box#compareGridButtonBox
         .m-compare-grid#compareGridView
 
     .l-cutpoint#offsetBottom

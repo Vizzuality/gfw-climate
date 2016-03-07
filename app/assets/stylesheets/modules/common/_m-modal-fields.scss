@@ -1,0 +1,233 @@
+.m-modal-field {
+
+  &.-scroll {
+    position: absolute;
+    top: 40px;
+    bottom: 50px;
+    right: 0;
+    left: 0;
+    padding: 0 20px;
+    overflow-y: scroll;
+  }
+  // position: relative;
+  // Tabs header
+
+  // Content header
+  .m-modal--tabscontent {
+    position: relative;
+    top: 30px;
+  }
+
+  .m-modal--tab {
+
+    @media screen and (min-width: $br-mobile) {
+      top: 40px;
+      bottom: 0;
+    }
+
+    display: none;
+    &.is-active {
+      display: block;
+    }
+  }
+
+  .m-field {
+   
+    &.-scroll {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      padding: 0 20px;
+      overflow-y: scroll;
+      // position: relative;
+    }
+
+    &.m-select {
+      margin-bottom: 25px;
+    }
+
+    @media screen and (min-width: $br-mobile) {
+      // position: static;
+      padding: 0;
+      margin: 20px 0 0;
+
+      &:first-child{
+        margin: 0;
+      }
+
+      &.m-select {
+        width: 32.7%
+      }
+    }
+
+
+    h2 {
+      margin: 0 0 15px;
+      color: $font-color-1;
+      font-size: 32px;
+      text-align: center;
+      font-weight: 300;
+
+      @media screen and (min-width: $br-mobile) {
+        margin: 0 0 30px;
+      }
+    }
+
+    h3 {
+      font-weight: 500;
+      color: $font-color-3;
+      font-size: 19px;
+    }
+
+    h4 {
+      margin: 10px 0;
+      font-size: 16px;
+      color: $dark;
+      text-align: center;
+      font-weight: 500;
+      opacity: .5;
+
+      @media screen and (min-width: $br-mobile) {
+        text-align: left;
+      }
+    }
+
+    .no-data {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .no-data > h3 {
+      margin: 0;
+    }
+  }
+
+  .m-field-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 0 -0.5%;
+    padding-bottom: 25px;
+
+    @media screen and (min-width: $br-mobile-portrait) {
+      flex-direction: row;
+    }
+
+    .m-field-list-item {
+      position: relative;
+      width: 100%;
+      margin: 0.5% 0;
+      padding: 16px;
+      padding-right: 55px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba($black, .5);
+      border: 1px solid $border;
+      border-radius: 5px;
+      cursor: pointer;
+      text-transform: uppercase;
+
+      @media screen and (min-width: $br-mobile-portrait) {
+        width: 48%;
+        margin: 0.5%;
+      }
+
+      @media screen and (min-width: $br-mobile) {
+        width: 32.333333333%;
+      }
+
+      &:before{
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translate(0,-50%);
+        width: 12px;
+        height: 12px;
+        border: 1px solid $border;
+      }
+
+      &.is-data {
+        &:before {
+          display: none;
+        }
+      }
+
+      &.is-checkbox,
+      &.is-data {
+        svg{
+          display: block;
+          position: absolute;
+          top: 50%;
+          right: 11px;
+          transform: translate(0,-50%);
+          width: 10px;
+          height: 10px;
+          display: none;
+          fill: $white;
+        }
+      }
+
+      &.is-data {
+        svg{
+          display: block;
+          width: 18px;
+          height: 18px;
+          fill: #e6e6e6;
+        }
+      }
+
+      &.is-radio {
+        &:before{
+          border-radius: 50%;
+        }
+      }
+      &.is-active {
+        color: $white;
+        background: $font-color-3;
+        &:before {
+          border: 1px solid $white;
+        }
+        &.is-checkbox {
+          svg {
+            display: block;
+          }
+        }
+        &.is-data {
+          svg {
+            fill: $white;
+          }
+        }
+
+        &.is-radio {
+          &:before {
+            box-shadow: 0 0 0 2px $font-color-3 inset, 0 0 0 12px $white inset;
+          }
+        }
+      }
+    }
+  }
+
+  // Only shown when you haven't selected any country.
+  .m-alert {
+    text-align: center;
+    padding: 100px 0 0;
+    font-size: 32px;
+    color: $dark;
+
+    span{
+      color: $font-color-3;
+    }
+
+    @media screen and (min-width: $br-mobile) {
+      padding: 50px 0 0;
+    }
+  }
+}
+

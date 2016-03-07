@@ -1,6 +1,6 @@
 .layout-content
   section#main-slider.main-slider
-    nav.mobile-hide.is-temporary-disabled.source data-source="temporary-disabled"
+    nav.hidden.mobile-hide
       h2
         | Suggestions for getting started
         #get-started.box-button.no-pointer-events
@@ -37,18 +37,20 @@
     /               | Know more about our
     /               strong  data and methods
     /               i.img.report-story
-    
-    //Counter
-    / nav.mobile-hide
-    /   h2
-    /     | Lauching in 
-    /     span#countdown 
-    /     |  days
 
     ul.main-slider-viewport
       li.slide.slide0.current
-        / a href="http://bit.ly/1HSyDPa?referral=carousel"
-        a href="#"
+        a href="http://bit.ly/1JVtYtD"
+          .inner
+            aside
+              h2 Forests Are in the Paris Agreement!
+              h3
+                span Now What?
+              .link
+                span.mobile-hide more info
+                span.mobile-show +
+      li.slide.slide1
+        a href="http://blog.globalforestwatch.org/2015/12/new-platform-reveals-how-much-carbon-is-locked-in-tropical-forests-and-how-much-is-lost/"
           .inner
             aside
               h2 GFW Climate
@@ -58,7 +60,7 @@
                 span on global climate change
               .link
                 span.mobile-hide more info
-                span.mobile-show +
+              span.mobile-show +
         / p.credits Photo: DIGITAL GLOBE
       / li.slide.slide1
       /   a href="http://bit.ly/1I8Mq09?referral=carousel"
@@ -74,14 +76,13 @@
       /           span.mobile-show +
         / p.credits Photo: EIA
       li.slide.slide2
-        / a href="/map?referral=carousel"
-        a href="#"
+        a href="http://blog.globalforestwatch.org/2015/12/insider-whats-your-benchmark-using-the-gfw-climate-platform-to-identify-clearer-targets/"
           .inner
             aside
               h2 What's your benchmark?
               h3
-                span GFW Climate and REDD+
-                span reference levels
+                span Using the GFW Climate platform
+                span to identify clearer targets
               .link
                 span.mobile-hide more info
                 span.mobile-show +
@@ -131,13 +132,13 @@
       .inner
         .row
           .col.col6
-            a.is-temporary-disabled.source (href="/map" data-source="temporary-disabled")
+            a(href="/map")
               .icon
                 svg
                   use (xlink:href="#shape-world" xmlns:xlink="http://www.w3.org/1999/xlink")
               h3 Explore the map
-          .col.col6
-            a.is-temporary-disabled.source (href="/countries" data-source="temporary-disabled")
+          .col.col6.s-col-12
+            a(href="/countries")
               .icon
                 svg
                   use (xlink:href="#shape-country" xmlns:xlink="http://www.w3.org/1999/xlink")
@@ -149,9 +150,8 @@
           /         use (xlink:href="#shape-stay-informed" xmlns:xlink="http://www.w3.org/1999/xlink")
           /     h3 Stay informed
   .m-features
-    .inner
       section.feature-section.-intro
-        .feature-content
+        .feature-content.inner
           .col.-c4
             .col-container
               .description-container
@@ -160,12 +160,12 @@
                   | GFW Climate catalyzes action on climate change by providing 
                   span timely, credible answers 
                   | to questions about carbon emissions from tropical deforestation.
-          .col.-c6
+          .col.-c6.overlap-image.overflow-allowed
             .translated-image
               = image_tag("home/features/img-info.png")
 
       section.feature-section.-map
-        .feature-content.-right
+        .feature-content.-right.inner
           .col.-c4
             .col-container
               .description-container
@@ -175,12 +175,12 @@
                   span interactive map.
 
                 .link-container
-                  a(href="/map" class="btn medium blue is-temporary-disabled source" data-source="temporary-disabled") Explore map
+                  a(href="/map" class="btn medium blue") Explore map
                   a(href="http://data.globalforestwatch.org/datasets/d87217b5732347ab8a04ef8ffacff1fd_8" target="_blank" class="btn medium blue") Download data
                   
 
       section.feature-section.-country-profiles
-        .feature-content
+        .feature-content.inner
           .col.-c4
             .col-container
               .description-container
@@ -191,13 +191,13 @@
                   | print or share your report with the world.
 
                 .link-container
-                  a (href="/countries" class="btn medium blue is-temporary-disabled source" data-source="temporary-disabled") Country profiles
-          .col.-c6
+                  a (href="/countries" class="btn medium blue") Country profiles
+          .col.-c6.overlap-image
             = image_tag("home/features/img-profiles.png")
 
       section.feature-section.-compare-countries
-        .feature-content
-          .col.-c6
+        .feature-content.inner
+          .col.-c6.overlap-image
             = image_tag("home/features/img-compare.png")
           .col.-c4
             .col-container
@@ -210,10 +210,10 @@
                   | you can make the decisions that matter.
 
                 .link-container
-                  a(href="/compare-countries" class="btn medium blue is-temporary-disabled source" data-source="temporary-disabled") Compare countries
+                  a(href="/compare-countries" class="btn medium blue") Compare countries
 
       section.feature-section.-pantropical
-        .feature-content
+        .feature-content.inner
           .col.-c4
             .col-container
               .description-container
@@ -224,7 +224,7 @@
                   | have changed over the 21st century.
 
                 .link-container
-                  a(href="/pantropical" class="btn medium blue is-temporary-disabled source" data-source="temporary-disabled") Pantropical overview
+                  a(href="/pantropical" class="btn medium blue") Pantropical overview
           .col.-c6
             = image_tag("home/features/img-pantropical.png")
 
@@ -243,7 +243,7 @@
                         | Find facts, maps and figures for your story about forests and climate change here, now.
 
                       .link-container
-                        a(href="/compare-countries" class="btn medium white") Learn more
+                        a(href="https://www.youtube.com/watch?v=P_-0NRTHZyM" class="btn medium white" target="_blank") Watch the video
                 .col.-c5
                   .slide-background
 
@@ -259,7 +259,7 @@
                         | with donors and partners. Explore opportunities for new projects, and find the information you need to attract support.
 
                       .link-container
-                        a(href="/compare-countries" class="btn medium white") Learn more
+                        a(href="https://www.youtube.com/watch?v=x0XKNAj6Cos" class="btn medium white" target="_blank") Watch the video
                 .col.-c5
                   .slide-background
 

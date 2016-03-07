@@ -5,11 +5,6 @@ class Indicator
   default_timeout 10
 
   class << self
-
-    ADMIN_BOUNDARY_ID = 1
-    INDICATORS_VALUES_TABLE = "indicators_values"
-    INDICATORS_TABLE = "indicators"
-
     def base_path
       "#{ENV['CDB_API_HOST']}?q="
     end
@@ -49,7 +44,7 @@ class Indicator
     def index_query
       <<-SQL
        SELECT indicator_group, chart_type, description, indicator_id, value_units
-       FROM #{INDICATORS_TABLE}
+       FROM #{CDB_INDICATORS_TABLE}
        GROUP BY indicator_id, indicator_group, description, value_units, chart_type
       SQL
     end
@@ -63,8 +58,18 @@ class Indicator
       filter += filter_location(iso, id_1, area) if iso.present?
 
       sql = <<-SQL
-        SELECT *
-        FROM #{INDICATORS_VALUES_TABLE} AS values
+        SELECT indicator_id, values.cartodb_id AS cartodb_id,
+        values.iso, values.sub_nat_id, values.boundary, values.boundary_id,
+        values.thresh, values.the_geom, values.the_geom_webmercator,
+        values.admin0_name, values.year, values.value, values.text_value,
+        values.iso_and_sub_nat,
+        subnat.name_1 AS sub_nat_name,
+        boundaries.boundary_name
+        FROM #{CDB_INDICATORS_VALUES_TABLE} AS values
+        LEFT JOIN #{CDB_SUBNAT_TABLE} AS subnat
+        ON values.sub_nat_id  = subnat.id_1 AND values.iso = subnat.iso
+        LEFT JOIN #{CDB_BOUNDARIES_TABLE} AS boundaries
+        ON values.boundary_id = boundaries.cartodb_id
         WHERE #{filter}
       SQL
 
@@ -73,9 +78,9 @@ class Indicator
 
     def filter_location(iso, id_1, area)
       <<-SQL
-        AND iso = UPPER('#{iso}')
-        AND sub_nat_id #{id_1.blank? ? 'IS NULL' : "= #{id_1}" }
-        AND boundary_id = #{area.blank? ? ADMIN_BOUNDARY_ID : area}
+        AND values.iso = UPPER('#{iso}')
+        AND values.sub_nat_id #{id_1.blank? ? 'IS NULL' : "= #{id_1}" }
+        AND values.boundary_id = #{area.blank? ? ADMIN_BOUNDARY_ID : area}
       SQL
     end
 

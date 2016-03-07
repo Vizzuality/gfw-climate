@@ -1,0 +1,25 @@
+.m-compare-switcher {
+  width: 100%;
+  padding: 3px;
+  border: 1px solid #656565;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-between;
+
+  .compare-switcher {
+    @extend %clean-button-or-input;
+    width: 49%;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+    color: $white;
+    border-radius: 50px;
+    font-weight: 500;
+    text-transform: uppercase;
+
+    &.is-active {
+      color: $font-color-1;
+      background-color: $white;
+    }
+  }
+}

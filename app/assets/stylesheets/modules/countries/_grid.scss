@@ -8,19 +8,34 @@
       float: right;
     }
   }
+
   .gridgraphs-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin: 25px 0;
     padding: 0;
 
+    @media only screen and (max-width: $br-mobile) {
+      padding: 0 20px;
+    }
+
     > .gridgraphs-widget {
+      position: relative;
       width: 47.5%;
       border-bottom: 1px solid #e5e5e5;
       padding-bottom: 80px;
       margin-bottom: 60px;
-  
+
+      @media screen and (max-width: $br-mobile) {
+        margin: 0 0 40px;
+        padding: 0 0 40px;
+
+        &:last-child {
+          margin: 0;
+          border-bottom: 0;
+        }
+      }
+
       &:nth-child(2n +1) {
         position: relative;
 
@@ -33,22 +48,45 @@
           width: 25%;
           height: 1px;
           background-color: #e5e5e5;
+
+          @media only screen and (max-width: $br-mobile) {
+            display: none;
+          }
         }
+      }
+
+      @media only screen and (max-width: $br-mobile) {
+        width: 100%;
+      }
+
+    }
+  }
+
+  &.-areas,
+  &.-subnational,
+  &.-national {
+    // position: relative;
+
+    > .gridgraphs-content {
+      // position: relative;
+      // transform: translate(0, -1.05%);
+    }
+
+    h2.title {
+      font-size: 32px;
+      color: $dark;
+      font-weight: 300;
+      margin-bottom: 40px;
+
+      @media only screen and (max-width: $br-mobile) {
+        display: none;
+        // margin: 0 20px 20px;
       }
     }
   }
 
   &.-areas,
   &.-subnational {
-
-    > .gridgraphs-content {
-      transform: translate(0, -1.05%);
-
-      > .box > .title {
-        font-size: 32px;
-        color: $dark;
-        font-weight: 300;
-      }
-    }
+    // padding-top: 20px;
   }
 }

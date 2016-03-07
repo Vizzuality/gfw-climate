@@ -1,5 +1,5 @@
 .is-hidden {
-  display: none;
+  display: none !important;
   visibility: hidden;
 }
 
@@ -16,14 +16,25 @@
   overflow: hidden;
 }
 
-.is-temporary-disabled {
-  // border: 1px solid red;
-
-  a {
-    pointer-events: none;
-  }
-}
 
 .no-pointer-events {
   pointer-events: none;
+}
+
+.is-bold {
+  font-weight: 600;
+}
+
+.is-mobile-hidden {
+  @media only screen and (max-width: $br-mobile) {
+    display: none !important;
+    visibility: hidden;
+  }
+}
+
+.is-desktop-hidden {
+  @media only screen and (min-width: $br-mobile) {
+    display: none !important;
+    visibility: hidden;
+  }
 }

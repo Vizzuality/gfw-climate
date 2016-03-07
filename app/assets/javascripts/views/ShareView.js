@@ -4,12 +4,13 @@
  * @return ShareView instance (extends Backbone.View).
  */
 define([
+  'backbone',
   'underscore',
   'handlebars',
   'mps',
   'text!templates/share.handlebars',
   'views/SharePreviewView'
-], function(_, Handlebars, mps, tpl, SharePreviewView) {
+], function(Backbonoe,_, Handlebars, mps, tpl, SharePreviewView) {
 
   'use strict';
 
@@ -25,6 +26,7 @@ define([
     },
     setEmbedUrl: function(){
       if($('body').hasClass('is-countries-page')){
+
         this.embedUrl = window.location.origin + '/embed' + window.location.pathname + window.location.search;
       }else{
         this.embedUrl = window.location.href;
@@ -71,6 +73,8 @@ define([
       }
 
       this.remove();
+
+      $('html').removeClass('is-no-scroll');
     },
 
     _setListeners: function() {
@@ -88,6 +92,8 @@ define([
       this._renderInput();
       this.$el.html(this.template({ hideEmbed: this.model.get('hideEmbed') }));
       this._cacheVars();
+
+      $('html').addClass('is-no-scroll');
     },
 
     _cacheVars: function() {
@@ -187,7 +193,7 @@ define([
     },
 
     _toggleTypeButtons: function() {
-      this.$changeType.toggleClass('green').toggleClass('gray');
+      this.$changeType.toggleClass('blue').toggleClass('gray');
       this._renderInput();
     },
 

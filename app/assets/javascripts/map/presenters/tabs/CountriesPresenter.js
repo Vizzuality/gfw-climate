@@ -7,7 +7,8 @@ define([
   'underscore',
   'mps',
   'map/presenters/PresenterClass',
-], function(_, mps, PresenterClass) {
+  'map/services/TreeLossCarbonEmissionsService'
+], function(_, mps, PresenterClass, treeLossCarbonEmissionsService) {
 
   'use strict';
 
@@ -17,8 +18,6 @@ define([
       dont_analyze: true
     }
   });
-
-
 
   var CountriesPresenter = PresenterClass.extend({
 
@@ -64,6 +63,13 @@ define([
     },{
       'DownloadView/create': function(downloadView) {
         this.view.downloadView = downloadView;
+      }
+    },{
+      'Countries/changeIso': function(iso,analyze) {
+        this.status.set('dont_analyze', analyze);
+        if (!!iso.country) {
+          // this._fetchTreeLoosCarbonEmissionsData(iso);
+        }
       }
     }],
 
@@ -119,7 +125,6 @@ define([
     initExperiment: function(id){
       mps.publish('Experiment/choose',[id]);
     },
-
 
 
   });

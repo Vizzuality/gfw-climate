@@ -4,44 +4,46 @@ define([
   'underscore',
   'handlebars',
   'chosen',
-  'views/SourceWindowView',
+  'views/ModalView',
   'compare/presenters/CompareModalPresenter',
   'text!compare/templates/compareModal.handlebars'
-], function($, Backbone, _, Handlebars, chosen, SourceWindowView, CompareModalPresenter, tpl) {
+], function($, Backbone, _, Handlebars, chosen, ModalView, CompareModalPresenter, tpl) {
 
   'use strict';
 
-  var CountryModalView = SourceWindowView.extend({
+  var CountryModalView = ModalView.extend({
+
+    id: 'compareModal',
+
+    className: 'modal is-huge',
 
     template: Handlebars.compile(tpl),
 
     events: function() {
-      return _.extend({}, SourceWindowView.prototype.events, {
-        'click .m-modal--tablink' : 'changeTab',
-        'click .js-field-list-radio-jurisdiction' : 'changeJurisdiction',
-        'click .js-field-list-radio-area' : 'changeArea',
-        'click #btnModalContinue' : 'continue',
-        'change .chosen-select' : 'changeIso',
+      return _.extend({}, ModalView.prototype.events, {
+        'click  .js-modal-tablink'                 : 'changeTab',
+        'click  .js-field-list-radio-jurisdiction' : 'changeJurisdiction',
+        'click  .js-field-list-radio-area'         : 'changeArea',
+        'click  .js-btn-continue'                  : 'continue',
+        'change .js-chosen-select'                 : 'changeIso',
       });
     },
 
     initialize: function() {
       // Inits
-      this.constructor.__super__.initialize.apply(this,[{ sourceWindow: '.source_window_compare'}]);
+      this.constructor.__super__.initialize.apply(this);
 
-      this.$sourceWindow.addClass('is-huge');
       // Presenter & status
       this.presenter = new CompareModalPresenter(this);
       this.status = this.presenter.status;
-      // Listeners
-      // this.setListeners();
-    },
 
-    setListeners: function() {
+      this.render();
+      this.$body.append(this.el);
     },
 
     render: function() {
-      this.$sourceWindow.html(this.template(this.parseData()));
+      this.$el.html(this.template(this.parseData()));
+      this._initVars();
       this.cacheVars();
       this.inits();
     },
@@ -55,11 +57,10 @@ define([
     },
 
     cacheVars: function() {
-      this.$wrapper = $('.content-wrapper');
-      this.$selects = $('.chosen-select');
-      this.$radios = $('.js-field-list-radio');
-      this.$tablinks = $('.m-modal--tablink');
-      this.$tabs = $('.m-modal--tab');
+      this.$selects =   $('.js-chosen-select');
+      this.$radios =    $('.js-field-list-radio');
+      this.$tablinks =  $('.js-modal-tablink');
+      this.$tabs =      $('.js-modal-tab');
     },
 
     inits: function() {
@@ -68,17 +69,6 @@ define([
         // inherit_select_classes: true,
       });
       this.setTab();
-    },
-
-    /*
-      MODAL: Modal events (extends from 'SourceWindow Class')
-      - show
-      - hide
-    */
-    show: function(e) {
-      e && e.preventDefault() && e.stopPropagation();
-      this.model.set('hidden', false);
-      this.$htmlbody.addClass('active');
     },
 
     hide: function(e) {
@@ -96,6 +86,8 @@ define([
       (!!!this.status.get('compare1')) ? this.presenter.changeTab(1) : null;
       (!!!this.status.get('compare2')) ? this.presenter.changeTab(2) : null;
       if(!!this.status.get('compare1') && !!this.status.get('compare2')) {
+        ga('send', 'event', 'Compare Page','Select Countries',
+           this.status.get('compare1').iso+':'+this.status.get('compare2').iso);
         this.hide();
       }
     },
@@ -113,7 +105,7 @@ define([
 
     changeIso: function(e) {
       this.presenter.changeIso($(e.currentTarget).val());
-      (!!$(e.currentTarget).val()) ? this.$wrapper.addClass('is-loading') : null;
+      (!!$(e.currentTarget).val()) ? this.$contentWrapper.addClass('is-loading') : null;
     },
 
     changeJurisdiction: function(e) {
@@ -136,18 +128,18 @@ define([
 
       // Tablinks
       this.$tablinks.removeClass('is-active');
-      this.$sourceWindow.find('.m-modal--tablink[data-tab='+tab+']').addClass('is-active');
+      this.$el.find('.js-modal-tablink[data-tab='+tab+']').addClass('is-active');
 
       // Tabs
       this.$tabs.removeClass('is-active');
       $('#selection'+tab).addClass('is-active');
 
       // Scroll
-      this.$wrapper.scrollTop(0);
+      this.$contentWrapper.scrollTop(0);
     },
 
     setCompare: function(who,compare) {
-      this.$wrapper.removeClass('is-loading');
+      this.$contentWrapper.removeClass('is-loading');
       if (compare) {
         var $select = $('#selection'+who).find('select'),
             $selectChosen = $('#selection'+who).find('.chosen-container'),

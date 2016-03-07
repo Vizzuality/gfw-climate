@@ -3,17 +3,19 @@
  *
  * @return CountriesView instance (extends Backbone.View).
  */
+
 define([
   'underscore',
   'handlebars',
   'amplify',
   'chosen',
   'map/presenters/tabs/CountriesPresenter',
+  'widgets/indicators/bars/BarChart',
   'text!map/templates/tabs/countries.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
   'text!map/templates/tabs/countriesButtons.handlebars',
   'text!map/templates/tabs/countries-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, barChart, tpl, tplIso, tplButtons, tplMobile) {
 
   'use strict';
 
@@ -22,8 +24,6 @@ define([
       country_layers: null
     }
   });
-
-
 
   var CountriesView = Backbone.View.extend({
 
@@ -55,6 +55,8 @@ define([
       this.map = map;
       this.model = new CountriesModel();
       this.presenter = new Presenter(this);
+      this.barChart = barChart;
+
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = false;
@@ -81,7 +83,6 @@ define([
     },
 
     cacheVars: function(){
-
       //toggle-countries-content
       this.$toggle = $('#toggle-countries-content');
       //buttons
@@ -297,6 +298,7 @@ define([
 
     // Select change iso
     changeIso: function(e){
+      // console.log('changeIso')
       this.iso = $(e.currentTarget).val() || null;
       this.commonIsoChanges();
       this.presenter.changeIso({country: this.iso, region: null});
@@ -372,7 +374,6 @@ define([
       var country = amplify.store('country-'+this.iso);
       this.setButtons(!!this.iso, country);
     },
-
 
   });
 

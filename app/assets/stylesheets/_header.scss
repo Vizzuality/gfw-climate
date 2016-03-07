@@ -37,13 +37,6 @@
   }
 }
 
-
-
-
-
-
-
-
 // top HEADER
 .layout-header-top {
   background: #F7F7F7;
@@ -73,7 +66,7 @@
         overflow: visible;
       }
       >ul {
-        min-width: 410px;
+        min-width: 470px;
         width: 100%;
         padding: 0 5px;
         height: 55px;
@@ -202,7 +195,8 @@
               &.shape-country { svg{ fill: $gfw-green;} }
               &.shape-fire { svg{ fill: $red;} }
               &.shape-commodities { svg{ fill: $orange;} }
-              &.shape-blog { svg{ fill: $gfw-green;} }
+              &.shape-blog { svg { fill: $gfw-green;} }
+              &.shape-climate { svg { fill: $blue;}}
               svg {
                 fill: $gfw-green;
               }
@@ -405,32 +399,42 @@
     background-image: url("/assets/logo-new.svg");
     background-size: contain;
     transition: all 0.25s linear;
-    &.active{
+
+    &.active {
       opacity: 0;
       visibility: hidden;
     }
-    &:after{
+
+    &:after {
       content: "";
       display: block;
       width: 30px;
       height: 18px;
       position: absolute;
-      bottom: -5px;
+      bottom: -10px;
       right: -5px;
       background: image-url('beta.png');
+
+      @media (min-width: $br-mobile){
+        bottom: -5px;
+      }
     }
-    .beta-box{
+
+    .beta-box {
       display: none;
     }
+
     @media (min-width: $br-mobile){
       width: 90px;
       height: 90px;
       margin: 0;
-      &.active{
+
+      &.active {
         opacity: 1;
         visibility: visible;
       }
     }
+
 		a {
 			display: block;
 			height: 100%;
@@ -480,7 +484,8 @@
       clear: none;
       background: none;
       border-bottom: none;
-      &.layers-menu{
+
+      &.layers-menu {
         display: none !important;
         @media (min-width: $br-mobileMap){
           padding: 0;
@@ -489,7 +494,8 @@
           clear: none;
           background: none;
           border-bottom: none;
-          &.layers-menu{
+
+          &.layers-menu {
 
           }
         }

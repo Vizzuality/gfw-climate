@@ -44,9 +44,9 @@
 
   // Modules
   "modules/navbar",
-  "modules/feedback",
   "modules/form",
   "modules/modal",
+  "modules/modal_new",
   "modules/dialog",
 
   // layer nav
@@ -84,8 +84,10 @@
   // analysis
   "modules/map/analysis-tool",
   "modules/map/analysis-results",
+  "modules/map/analisys-graph",
 
   // infowindow
   "modules/map/infowindow";
+
 
 @import "states";

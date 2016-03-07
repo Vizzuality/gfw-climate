@@ -4,24 +4,61 @@
 
   // HEADER
   > .m-widget-header {
-    // overflow: hidden;
+
+    .-compare & {
+      position: absolute;
+      top: 35px;
+      left: 25px;
+      right: auto;
+      width: 43%;
+    }
+
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    &.-right-side {
+      left: auto;
+      right: 25px;
+    }
+
+    .gridgraphs--widget:nth-child(3) & {
+      display: none;
+    }
+
+    @media only screen and (min-width: $br-mobile) {
+      // position: static;
+      // width: 100%;
+
+      .-compare & {
+        position: static;
+        width: 100%;
+      }
+
+      .gridgraphs--widget:nth-child(3) & {
+        display: flex;
+      }
+    }
+
     // NAME
     > .name {
-      float: left;
       font-size: 14px;
       text-transform: uppercase;
       color: rgba(0,0,0, .5);
       font-weight: 500;
+      max-width: 48%;
     }
 
     // OPTIONS
     > .options {
       display: flex;
-      float: right;
+      // min-width: 161px;
+      padding: 0 0 0 10px;
+
+      @media only screen and (max-width: $br-mobile) {
+        padding-left: 0;
+        padding-top: 5px;
+      }
 
       > li{
         margin: 0 3px;
@@ -65,19 +102,16 @@
             fill: $color-3;
           }
 
-          &.-text {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+          &.source {
+            background-color: $blue;
+            border-color: $blue;
 
-            width: auto;
-            font-size: 10px;
-            padding: 0 5px 0 14px;
-            border-radius: 8px;
+            &:hover {
+              background-color: darken($blue, .1);
+            }
 
             svg {
-              left: 0px;
-              transform: translate(2px, -50%);
+              fill: $white;
             }
           }
         }
@@ -107,6 +141,7 @@
         border: 1px solid $border;
         border-right: 0;
         cursor: pointer;
+
         &:last-child {
           border-right: 1px solid $border;
         }
@@ -130,6 +165,42 @@
           font-size: 9px;
         }
       }
+    }
+
+    .wrapper {
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        width: 10px;
+        height: 10px;
+        border-left: 2px solid #555;
+        border-bottom: 2px solid #555;
+        transform: rotate(-45deg);
+        pointer-events: none;
+      }
+    }
+
+    .tab-selector {
+      max-width: 100%;
+      width: 100%;
+
+      -webkit-appearance: none;
+      height: 25px;
+      padding-left: 20px;
+      border-radius: 50px;
+      background: none;
+      border-color: #ddd;
+
+      font-family: "Fira Sans";
+      
+      option {
+        @include ellipsis(90%);
+      }
+      
     }
   }
 }

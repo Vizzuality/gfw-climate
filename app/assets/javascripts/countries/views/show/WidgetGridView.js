@@ -39,11 +39,34 @@ define([
         areas = this.presenter.status.get('areas'),
         iso = this.presenter.status.get('country')
 
-      if (widgets && _.keys(widgets[iso]).length > 0 || jurisdictions || areas) {
-        this.$noIndicatorsWarning.addClass('is-hidden');
-        this.$moreIndicatorsWarning.removeClass('is-hidden');
-      } else {
-        this.$moreIndicatorsWarning.addClass('is-hidden');
+      switch(this.presenter.status.get('view')) {
+
+        case 'national':
+            if (!!widgets && Object.keys(widgets[iso]).length > 0) {
+              this.$noIndicatorsWarning.addClass('is-hidden');
+              this.$moreIndicatorsWarning.removeClass('is-hidden');
+            }  else {
+              this.$moreIndicatorsWarning.addClass('is-hidden');
+            }
+          break;
+
+        case 'subnational':
+            if (!!widgets && !!jurisdictions && Object.keys(jurisdictions).length > 0) {
+              this.$noIndicatorsWarning.addClass('is-hidden');
+              this.$moreIndicatorsWarning.removeClass('is-hidden');
+            }  else {
+              this.$moreIndicatorsWarning.addClass('is-hidden');
+            }
+          break;
+
+        case 'areas-interest':
+            if (!!widgets && !!areas && Object.keys(areas).length > 0) {
+              this.$noIndicatorsWarning.addClass('is-hidden');
+              this.$moreIndicatorsWarning.removeClass('is-hidden');
+            }  else {
+              this.$moreIndicatorsWarning.addClass('is-hidden');
+            }
+          break;
       }
     },
 

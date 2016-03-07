@@ -39,7 +39,8 @@ define([
           var newWidget = new WidgetView({
             model: {
               id: w[0].id,
-              slug: key,
+              slugw: key,
+              areas_slug: key,
               location: {
                 iso: this.iso,
                 jurisdiction: 0,
@@ -81,7 +82,7 @@ define([
         var data = [];
 
         var widgetsGroup = _.groupBy(widgetsArray, function(w) {
-          return w.presenter.model.attributes.slug;
+          return w.presenter.model.attributes.areas_slug;
         });
 
         this.areas.forEach(function(a, i) {

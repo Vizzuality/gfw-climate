@@ -1,0 +1,37 @@
+section.header-static
+  .inner
+    header
+      h2 Country data on Forest Biomass reported to FAO
+section.table-container.biomass-table
+  table
+    thead
+      tr
+        th.header-country Country
+        th.header-year Year
+        th.header-biomass Biomass Source
+        th.header-diameter 
+          | Min Tree Diameter 
+          span.subtitle 
+            | (cm) breast height
+        th.header-limitations Limitations
+        th.header-notes Notes
+    tbody
+      - @table.each do |col|
+        tr
+          td.col-country
+            span.continent = col[0]
+            span.country = col[1]
+            span.tier
+              | Tier:
+              = col[2]
+          td.col-year
+            span = col[3]
+          td.col-biomass
+            span = col[4]
+          td.col-diameter
+            span = col[5]
+          td.col-limitations
+            span = col[6]
+          td.col-limitations
+            span = col[7]
+

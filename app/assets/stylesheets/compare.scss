@@ -15,6 +15,7 @@
 
 // Modules
 @import "modules/modal";
+@import "modules/modal_new";
 @import "modules/shared";
 @import "modules/buttons";
 @import "modules/icons";
@@ -30,6 +31,8 @@
 @import "modules/compare/*";
 @import "modules/common/m-toolbar";
 @import "modules/common/m-fixed-header";
+@import "modules/common/m-grid-button-box";
+@import "modules/common/m-modal-fields";
 
 // Common
 @import "states";

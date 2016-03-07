@@ -22,6 +22,9 @@ Rails.application.routes.draw do
   get  'terms',        to: 'static#terms',        as: :terms
   get  'about',        to: 'static#about',        as: :about
   get  'data-methods', to: 'static#data_methods', as: :data_methods
+  get  'forest_change_data', to: 'static#forest_change_data',
+    as: :forest_change_data
+  get  'biomass_data', to: 'static#biomass_data', as: :biomass_data
 
   with_options only: [:index, :show] do |list_show_only|
     list_show_only.resources :countries
@@ -30,6 +33,7 @@ Rails.application.routes.draw do
 
   # Countries - jurisdiction routes
   get 'pantropical',         to: 'countries#pantropical', as: :pantropical
+  get 'embed/pantropical',   to: 'embed#pantropical',     as: :pantropical_embed
   get 'countries/:id/:id_1', to: 'countries#show',        as: :jurisdiction
 
   # Compare countries routes
@@ -53,7 +57,7 @@ Rails.application.routes.draw do
       get 'indicators/:id/:iso/:id_1', to: 'indicators#show',             as: :jurisdiction_indicator
       get 'widgets/:id/:iso',          to: 'widgets#show',                as: :country_widget
       get 'widgets/:id/:iso/:id_1',    to: 'widgets#show',                as: :jurisdiction_widget
-      
+
       # Compare countries API routes
       # GET 'compare-countries/bra+1+0/aus+1+0/aut+0+3/etc...'
       get 'compare-countries(/*path)', to: 'compare_countries#index', as: :compare_countries
