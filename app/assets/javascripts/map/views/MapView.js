@@ -14,10 +14,12 @@ define([
   'map/views/maptypes/darkMaptype',
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
+  'map/views/GeoStylingView',
   'map/helpers/layersHelper',
   'text!map/geojson_overlays/tropics.json'
 ], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype,
-  darkMaptype, positronMaptype, landsatMaptype, layersHelper, tropicsOverlay) {
+  darkMaptype, positronMaptype, landsatMaptype, GeoStylingView, layersHelper, 
+  tropicsOverlay) {
 
   'use strict';
 
@@ -93,6 +95,7 @@ define([
       this.resize();
       this._setMaptypes();
       this._addListeners();
+      this._setGeoStyles();
       // Node
       this.createMaptypeNode();
     },
@@ -427,17 +430,6 @@ define([
      * Set additional maptypes to this.map.
      */
     _setMaptypes: function() {
-      var featureStyle ={
-          visible: true,
-          clickable:false,
-          fillColor: "#000",
-          fillOpacity:1,
-          strokeOpacity:0,
-          strokeWeight: 0,
-          strokeColor:"#000"
-        };
-      
-      
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       this.map.mapTypes.set('dark', darkMaptype());
@@ -446,10 +438,7 @@ define([
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
       this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
-      this.map.data.setStyle(featureStyle);
-
     },
-
 
     /**
      * Crosshairs when analysis is activated
@@ -552,7 +541,18 @@ define([
           }, this )
         );
       }
-    }
+    },
+
+    /**
+     * This method will set the global styles
+     * for all geojson features
+     */
+    _setGeoStyles: function() {
+      this.geoStyles = new GeoStylingView({
+        map: this.map
+      });
+      this.geoStyles.setStyles();
+    } 
   });
 
   return MapView;
