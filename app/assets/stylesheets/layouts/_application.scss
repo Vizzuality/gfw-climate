@@ -21,10 +21,15 @@ $main-slider-height-mb: 300px;
     position: relative;
     width: 100%;
     max-height: $main-slider-height-mb;
-    // overflow: hidden;
 
     @media (min-width: $br-mobile) {
       max-height: 620px;
+    }
+  }
+
+  &.-top {
+    .main-slider-viewport {
+      overflow: hidden;
     }
   }
 
@@ -254,6 +259,21 @@ $main-slider-height-mb: 300px;
           opacity: 1;
           transform: scale(2);
         }
+      }
+    }
+  }
+
+  &.-top {
+    .slick-dots {
+      width: 55%;
+      bottom: 40px;
+
+      > li {
+        width: 10%;
+      }
+
+      @media (max-width: $br-mobile) {
+        opacity: 0;
       }
     }
   }
