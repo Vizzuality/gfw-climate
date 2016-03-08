@@ -243,6 +243,9 @@ $slider-height-mb: 550px;
       .col-container {
         background-color: $brown;
       }
+      .slide-background {
+        background-image: image-url('home/features/slider/slide3.jpg');
+      }
     }
   }
 }

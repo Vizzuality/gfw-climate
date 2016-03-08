@@ -22,7 +22,9 @@ define([
       'click #get-started' : 'getStarted',
       'click #go-to-apps' : 'goToApps',
       'click .gotomap' : 'gotoMap',
-      'mouseenter .feature-slider .slick-dots li': '_onFeatureHighlight'
+      'click .feature-slider .slick-dots li': '_onSliderClick',
+      'mouseenter .feature-slider .slick-dots li': '_onSliderFeatureHighlight',
+      'mouseleave .feature-slider .slick-dots li': '_onSliderFeatureUnHighlight'
     },
 
     initialize: function() {
@@ -30,16 +32,52 @@ define([
       this.$getStarted = $('#get-started');
 
       //Inits
-      this.slickSliderMain();
-      this.slickSliderFeature();
+      this._slickSliderMain();
+      this._slickSliderFeature();
     },
 
-    slickSliderMain: function(){
-      $('.home-slider').slick({
+    _slickSliderMain: function() {
+      this.mainSlider = this._initSlicK('.home-slider', 500, 3000);
+    },
+
+    _slickSliderFeature: function() {
+      this.featureSliderStopped = false;
+      this.featureSlider = this._initSlicK('.feature-slider', 500, 8000);
+    },
+
+    /**
+     * Pauses the feature slider when the mouse
+     * its on top of a slick dot
+     */
+    _onSliderFeatureHighlight: function() {
+      this.featureSlider.slick('slickPause');
+    },
+
+    /**
+     * Plays the feature slider when the mouse
+     * leaves a slick dot
+     */
+    _onSliderFeatureUnHighlight: function() {
+      if (!this.featureSliderStopped) {
+        this.featureSlider.slick('slickPlay');
+      }
+    },
+
+    /**
+     * Pauses the feature slider when the mouse
+     * its on top of a slick dot
+     */
+    _onSliderClick: function() {
+      this.featureSliderStopped = true;
+      this.featureSlider.slick('slickPause');
+    },
+
+    _initSlicK: function(el, speed, autoSpeed) {
+      var slick = $(el).slick({
         infinite: true,
-        speed: 500,
+        speed: speed,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: autoSpeed,
         slide: 'li',
         fade: true,
         cssEase: 'linear',
@@ -59,33 +97,8 @@ define([
           }
         ]
       });
-    },
 
-    slickSliderFeature: function(){
-      $('.feature-slider').slick({
-        infinite: true,
-        speed: 1500,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        slide: 'li',
-        fade: true,
-        cssEase: 'linear',
-        dots: true,
-        pauseOnDotsHover: true,
-        pauseOnHover: false,
-        arrows: false,
-
-        responsive: [
-          {
-            breakpoint: 850,
-            speed: 250,
-            settings: {
-              fade: false,
-              cssEase: 'ease-out'
-            }
-          }
-        ]
-      });
+      return slick;
     },
 
     getStarted: function(e){
@@ -133,10 +146,6 @@ define([
       }
       ga('send', 'event', 'Get Started', 'Click', $target.data('ga'));
       window.setTimeout(function(){location.assign($target.attr('href'));20});
-    },
-
-    _onFeatureHighlight: function() {
-      console.log('hey');
     }
 
   });
