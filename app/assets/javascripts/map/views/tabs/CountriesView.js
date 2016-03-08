@@ -10,12 +10,14 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/CountriesPresenter',
+  'map/views/GeoStylingView',
   'widgets/indicators/bars/BarChart',
   'text!map/templates/tabs/countries.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
   'text!map/templates/tabs/countriesButtons.handlebars',
   'text!map/templates/tabs/countries-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, barChart, tpl, tplIso, tplButtons, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, GeoStylingView,
+    barChart, tpl, tplIso, tplButtons, tplMobile) {
 
   'use strict';
 
@@ -56,6 +58,7 @@ define([
       this.model = new CountriesModel();
       this.presenter = new Presenter(this);
       this.barChart = barChart;
+      this.geoStyles = new GeoStylingView();
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
@@ -103,7 +106,6 @@ define([
 
     inits: function(){
       // countries
-      this.setStyle(0.45);
       this.getCountries();
       if (!this.embed) {
         setTimeout(_.bind(function(){
@@ -117,20 +119,7 @@ define([
      * Set geojson style.
      */
     setStyle: function(opacity) {
-      this.style = {
-        strokeWeight: 2,
-        fillOpacity: opacity,
-        fillColor: '#FFF',
-        strokeColor: '#A2BC28',
-        icon: new google.maps.MarkerImage(
-          '/assets/icons/marker_exclamation.png',
-          new google.maps.Size(36, 36), // size
-          new google.maps.Point(0, 0), // offset
-          new google.maps.Point(18, 18) // anchor
-        )
-      };
-
-      this.map.data.setStyle(this.style);
+      this.style = this.geoStyles.getStyles('country');
     },
 
     getIsoLayers: function(layers){

@@ -16,7 +16,6 @@ define([
     },
 
     initialize: function() {
-      console.log(this.$el);
       this.constructor.__super__.initialize.apply(this);
     },
 
