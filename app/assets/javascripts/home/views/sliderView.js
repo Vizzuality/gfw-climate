@@ -37,12 +37,12 @@ define([
     },
 
     _slickSliderMain: function() {
-      this.mainSlider = this._initSlicK('.home-slider', 500, 3000);
+      this.mainSlider = this._initSlick('.home-slider', 500, 3000);
     },
 
     _slickSliderFeature: function() {
       this.featureSliderStopped = false;
-      this.featureSlider = this._initSlicK('.feature-slider', 500, 8000);
+      this.featureSlider = this._initSlick('.feature-slider', 500, 8000);
     },
 
     /**
@@ -72,7 +72,7 @@ define([
       this.featureSlider.slick('slickPause');
     },
 
-    _initSlicK: function(el, speed, autoSpeed) {
+    _initSlick: function(el, speed, autoSpeed) {
       var slick = $(el).slick({
         infinite: true,
         speed: speed,
