@@ -21,7 +21,8 @@ define([
     events: {
       'click #get-started' : 'getStarted',
       'click #go-to-apps' : 'goToApps',
-      'click .gotomap' : 'gotoMap'
+      'click .gotomap' : 'gotoMap',
+      'mouseenter .feature-slider .slick-dots li': '_onFeatureHighlight'
     },
 
     initialize: function() {
@@ -29,12 +30,12 @@ define([
       this.$getStarted = $('#get-started');
 
       //Inits
-      this.slickSlider();
+      this.slickSliderMain();
+      this.slickSliderFeature();
     },
 
-    slickSlider: function(){
-      //INIT
-      $('.main-slider-viewport').slick({
+    slickSliderMain: function(){
+      $('.home-slider').slick({
         infinite: true,
         speed: 500,
         autoplay: true,
@@ -58,7 +59,33 @@ define([
           }
         ]
       });
+    },
 
+    slickSliderFeature: function(){
+      $('.feature-slider').slick({
+        infinite: true,
+        speed: 1500,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        slide: 'li',
+        fade: true,
+        cssEase: 'linear',
+        dots: true,
+        pauseOnDotsHover: true,
+        pauseOnHover: false,
+        arrows: false,
+
+        responsive: [
+          {
+            breakpoint: 850,
+            speed: 250,
+            settings: {
+              fade: false,
+              cssEase: 'ease-out'
+            }
+          }
+        ]
+      });
     },
 
     getStarted: function(e){
@@ -106,6 +133,10 @@ define([
       }
       ga('send', 'event', 'Get Started', 'Click', $target.data('ga'));
       window.setTimeout(function(){location.assign($target.attr('href'));20});
+    },
+
+    _onFeatureHighlight: function() {
+      console.log('hey');
     }
 
   });
