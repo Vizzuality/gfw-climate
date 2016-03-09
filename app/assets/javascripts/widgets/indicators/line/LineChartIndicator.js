@@ -118,7 +118,6 @@ define([
     },
 
     resize: function(){
-      console.log('hello');
     }
 
   });

@@ -1,3 +1,22 @@
+# 1.1.0 (9/03/2016)
+
+* Tropics overlay
+* Fixes to the homepage
+* Several bug fixes since last release
+
+# 1.0.1 (1/12/2015)
+
+* Unbroken links
+* Quicker timeline
+
+# 1.0 (1/12/2015)
+
+* Map with timeline
+* Static pages
+* Pantropical view + Pantropical view embed
+* Compare countries
+* Inspect Country
+
 # 0.5.1
 
 * New data on countries endpoints

@@ -9,8 +9,10 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/SubscriptionPresenter',
+  'map/views/GeoStylingView',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl) {
+], function(_, Handlebars, amplify, chosen, Presenter, 
+  GeoStylingView, tpl) {
 
   'use strict';
 
@@ -50,6 +52,7 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new SubscriptionModel();
+      this.geoStyles = new GeoStylingView();
       this.render();
       this.setListeners();
     },
@@ -161,38 +164,13 @@ define([
      * Set geojson style.
      */
     setStyle: function() {
-      this.style = {
-        strokeWeight: 2,
-        fillOpacity: 0,
-        fillColor: '#FFF',
-        strokeColor: '#F00',
-        icon: new google.maps.MarkerImage(
-          '/assets/icons/marker_exclamation.png',
-          new google.maps.Size(36, 36), // size
-          new google.maps.Point(0, 0), // offset
-          new google.maps.Point(18, 18) // anchor
-        )
-      };
-
-      this.map.data.setStyle(_.bind(function(feature){
-        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#F00';
-        return ({
-          strokeWeight: 2,
-          fillOpacity: 0,
-          fillColor: '#FFF',
-          strokeColor: strokeColor
-        });
-      }, this ));
+      this.style = this.geoStyles.getStyles('country');
     },
 
     setGeojson: function(geojson, color) {
       geojson.properties.color = color;
       return geojson;
     },
-
-
-
-
 
     /**
      * COUNTRY

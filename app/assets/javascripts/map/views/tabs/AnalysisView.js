@@ -10,9 +10,11 @@ define([
   'chosen',
   'map/presenters/tabs/AnalysisPresenter',
   'map/services/CountriesService',
+  'map/views/GeoStylingView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, CountriesService, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, CountriesService, 
+  GeoStylingView, tpl, tplMobile) {
 
   'use strict';
 
@@ -53,6 +55,8 @@ define([
       this.presenter = new Presenter(this);
       this.model = new AnalysisModel();
       this.countriesService = CountriesService;
+      this.geoStyles = new GeoStylingView();
+
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.mobile = false;
@@ -187,38 +191,14 @@ define([
      * Set geojson style.
      */
     setStyle: function() {
-      this.style = {
-        strokeWeight: 2,
-        fillOpacity: 0,
-        fillColor: '#FFF',
-        strokeColor: '#5B80A0',
-        icon: new google.maps.MarkerImage(
-          '/assets/icons/marker_exclamation.png',
-          new google.maps.Size(36, 36), // size
-          new google.maps.Point(0, 0), // offset
-          new google.maps.Point(18, 18) // anchor
-        )
-      };
-
-      this.map.data.setStyle(_.bind(function(feature){
-        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#5B80A0';
-        return ({
-          strokeWeight: 2,
-          fillOpacity: 0,
-          fillColor: '#FFF',
-          strokeColor: strokeColor
-        });
-      }, this ));
+      this.style = this.geoStyles.getStyles('analysis');
     },
 
     setGeojson: function(geojson, color) {
+      geojson.properties.polyType = 'country';
       geojson.properties.color = color;
       return geojson;
     },
-
-
-
-
 
     /**
      * COUNTRY
@@ -328,14 +308,6 @@ define([
         this.presenter.setSubscribeIso(iso);
       }
     },
-
-
-
-
-
-
-
-
 
     /**
      * DRAWING
@@ -480,22 +452,6 @@ define([
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // COUNTRY MASK
     drawMaskCountry: function(geojson, iso){

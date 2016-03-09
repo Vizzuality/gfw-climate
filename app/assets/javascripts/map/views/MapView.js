@@ -14,8 +14,12 @@ define([
   'map/views/maptypes/darkMaptype',
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
-  'map/helpers/layersHelper'
-], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, darkMaptype, positronMaptype, landsatMaptype, layersHelper) {
+  'map/views/GeoStylingView',
+  'map/helpers/layersHelper',
+  'text!map/geojson_overlays/tropics.json'
+], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype,
+  darkMaptype, positronMaptype, landsatMaptype, GeoStylingView, layersHelper, 
+  tropicsOverlay) {
 
   'use strict';
 
@@ -86,15 +90,14 @@ define([
          new google.maps.LatLng(85, 180)
       ); // why (-85, -180)? Well, because f*ck you, Google: http://stackoverflow.com/questions/5405539/google-maps-v3-why-is-latlngbounds-contains-returning-false
       this.lastValidCenter = this.map.getCenter();
-
       this._checkDialogs();
 
       this.resize();
       this._setMaptypes();
       this._addListeners();
+      this._setGeoStyles();
       // Node
       this.createMaptypeNode();
-
     },
 
     /**
@@ -434,8 +437,8 @@ define([
       for (var i = 1999; i < 2013; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
+      this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
     },
-
 
     /**
      * Crosshairs when analysis is activated
@@ -538,7 +541,18 @@ define([
           }, this )
         );
       }
-    }
+    },
+
+    /**
+     * This method will set the global styles
+     * for all geojson features
+     */
+    _setGeoStyles: function() {
+      this.geoStyles = new GeoStylingView({
+        map: this.map
+      });
+      this.geoStyles.setStyles();
+    } 
   });
 
   return MapView;
