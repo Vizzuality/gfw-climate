@@ -195,7 +195,7 @@ define([
      */
     getCountries: function(){
       if (!amplify.store('countries')) {
-        var sql = ['SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'];
+        var sql = ['SELECT c.iso, c.name FROM gfw2_countries c'];
         $.ajax({
           url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
           dataType: 'json',
