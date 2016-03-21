@@ -68,6 +68,7 @@ define([
     },
 
     render: function(widgetsArray) {
+      this.activeWidgets = widgetsArray;
       this.$el.html('');
 
       this.$el.removeClass();
@@ -131,6 +132,14 @@ define([
       return {
         areas: this.areas
       };
+    },
+
+    destroy: function() {
+      if (this.activeWidgets) {
+        this.activeWidgets.forEach(function(widget) {
+          widget.destroy();
+        });
+      }
     }
 
   });
