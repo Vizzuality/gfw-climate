@@ -20,7 +20,7 @@
         "switch" : [
           {
             "unit": "hectares",
-            "unitname": "Ha",
+            "unitname": "ha",
             "unitfullname": "hectares"
           },
           {
@@ -44,7 +44,7 @@
         "switch" : [
           {
             "unit": "hectares",
-            "unitname": "Ha",
+            "unitname": "ha",
             "unitfullname": "hectares"
           },
           {
@@ -65,7 +65,7 @@
         "switch" : [
           {
             "unit": "hectares",
-            "unitname": "Ha",
+            "unitname": "ha",
             "unitfullname": "hectares"
           },
           {
