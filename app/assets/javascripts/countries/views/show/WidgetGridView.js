@@ -82,6 +82,8 @@ define([
         parent: this.$el.find('.reports-grid')
       };
 
+      this._clearViews();
+
       switch(view) {
 
         case 'national':
@@ -89,7 +91,7 @@ define([
             status: this.presenter.status.get('options')
           });
 
-          new NationalView(options);
+          this.nationalView = new NationalView(options);
           break;
 
         case 'subnational':
@@ -99,7 +101,7 @@ define([
             jurisdictions: this.presenter.status.get('options')['jurisdictions']
           });
 
-          new SubNationalView(options);
+          this.subnationalView = new SubNationalView(options);
           break;
 
         case 'areas-interest':
@@ -109,11 +111,32 @@ define([
             areas: this.presenter.status.get('options')['areas']
           });
 
-          new AreasView(options);
+          this.areasView = new AreasView(options);
           break;
       }
 
       this._toggleWarnings();
+    },
+
+    /**
+     * Clears the views widgets before creating
+     * a new instance
+     */
+    _clearViews: function() {
+      if (this.nationalView) {
+        this.nationalView.destroy();
+        this.nationalView = null;
+      }
+
+      if (this.subnationalView) {
+        this.subnationalView.destroy();
+        this.subnationalView = null;
+      }
+
+      if (this.areasView) {
+        this.areasView.destroy();
+        this.areasView = null;
+      }
     }
 
   });

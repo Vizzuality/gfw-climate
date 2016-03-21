@@ -25,7 +25,6 @@ define([
     _setupGrid: function() {
       var promises = [];
 
-
       if (!!this.activeWidgets && !!this.activeWidgets.length) {
         this.destroy();
       };
@@ -87,9 +86,11 @@ define([
     },
 
     destroy: function() {
-      this.activeWidgets.forEach(function(widget) {
-        widget.destroy();
-      });
+      if (this.activeWidgets) {
+        this.activeWidgets.forEach(function(widget) {
+          widget.destroy();
+        });
+      }
     },
 
     render: function(widgetsArray) {
