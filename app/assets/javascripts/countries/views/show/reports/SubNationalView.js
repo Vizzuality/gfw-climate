@@ -68,6 +68,7 @@ define([
     },
 
     render: function(widgetsArray) {
+      this.activeWidgets = widgetsArray;
       this.$el.html('');
 
       this.$el.removeClass();
@@ -128,6 +129,14 @@ define([
       return {
         jurisdictions: this.jurisdictions
       };
+    },
+
+    destroy: function() {
+      if (this.activeWidgets) {
+        this.activeWidgets.forEach(function(widget) {
+          widget.destroy();
+        });
+      }
     }
 
   });
