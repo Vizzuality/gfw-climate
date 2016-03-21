@@ -32,8 +32,12 @@ define([
       this.model = new (Backbone.Model.extend({ defaults: setup.model}));
 
       // Set Params
-      var params = _.extend({},setup.data,{});
-      var paramsCompare = _.extend({},setup.data,{ location: this.model.get('location_compare')});
+      var params = _.extend({}, setup.data);
+      var paramsCompare = _.extend({},setup.data);
+
+      if (this.model.get('location_compare')) {
+        paramsCompare = _.extend(paramsCompare, { location: this.model.get('location_compare') });
+      }
 
       $.when.apply(null, this.getPromises(params,paramsCompare)).then(_.bind(function() {
         this.$el.removeClass('is-loading');
@@ -205,6 +209,9 @@ define([
        this.chart.destroy();
        this.chart = null;
       }
+
+      this.stopListening();
+      this.remove();
     },
 
   });
