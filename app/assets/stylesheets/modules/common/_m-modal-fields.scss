@@ -134,7 +134,7 @@
 
       @media screen and (min-width: $br-mobile-portrait) {
         width: 48%;
-        margin: 0.5%;
+        margin: 3px 0.5%
       }
 
       @media screen and (min-width: $br-mobile) {
@@ -164,13 +164,19 @@
         svg{
           display: block;
           position: absolute;
-          top: 50%;
+          top: 45%;
           right: 11px;
-          transform: translate(0,-50%);
+          margin: -5px 0 0 -5px;
           width: 10px;
           height: 10px;
           display: none;
           fill: $white;
+        }
+      }
+
+      &.is-checkbox {
+        svg {
+          top: 50%;
         }
       }
 
