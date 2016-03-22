@@ -65,9 +65,11 @@
 
         > .btn-action {
           position: relative;
-          display: inline-block;
           width: 18px;
           height: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
           border: 1px $color-3 solid;
           border-radius: 50%;
@@ -93,10 +95,6 @@
           }
 
           svg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             width: 10px;
             height: 10px;
             fill: $color-3;
