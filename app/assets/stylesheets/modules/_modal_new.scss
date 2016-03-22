@@ -94,14 +94,13 @@ $height: auto;
       width: 40px;
       height: 40px;
       z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       svg{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 50%;
-        height: 50%;
-        transform: translate(-50%,-50%);
+        width: 20px;
+        height: 20px;
       }
     }
   }

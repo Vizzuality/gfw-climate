@@ -74,22 +74,20 @@ $height: auto;
 
   // CLOSE BUTTON
   .close, .close-modal {
-    display: block;
+    display: flex;
     position: absolute;
     top: 0px;
     right: 0px;
     width: 40px;
     height: 40px;
     z-index: 20;
+    justify-content: center;
+    align-items: center;
 
     svg{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 50%;
-      height: 50%;
+      width: 20px;
+      height: 20px;
       fill: $dark;
-      transform: translate(-50%,-50%);
     }
     &:hover{
       svg{
@@ -687,20 +685,19 @@ $height: auto;
   }
 
   .close {
-    display: block;
+    display: flex;
     position: absolute;
     top: 0px; right: 0px;
     width: 40px;
     height: 40px;
     z-index: 20;
+    justify-content: center;
+    align-items: center;
+
     svg{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 50%;
-      height: 50%;
+      width: 20px;
+      height: 20px;
       fill: $dark;
-      transform: translate(-50%,-50%);
     }
     &:hover{
       svg{
@@ -779,10 +776,12 @@ $height: auto;
         height: 44px;
 
         a {
-          display: block;
+          display: flex;
           width: 100%;
           height: 100%;
           position: relative;
+          align-items: center;
+          justify-content: center;
           &.google_plus{ background: #DA4735; &:hover{ background: darken(#DA4735, 5%); } }
           &.twitter{ background: #598DCA; &:hover{ background: darken(#598DCA, 5%); } }
           &.facebook{ background: #3A589B; &:hover{ background: darken(#3A589B, 5%); } }
@@ -790,12 +789,8 @@ $height: auto;
 
         svg {
           fill: $white;
-          position: absolute;
-          top: 50%;
-          left: 50%;
           width: 20px;
           height: 20px;
-          transform: translate(-50%,-50%);
         }
       }
     }
