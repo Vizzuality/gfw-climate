@@ -119,6 +119,9 @@ $colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-co
       border-bottom: none;
       width: 40px;
       min-height: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &.disabled{
         opacity: 0.25;
@@ -171,10 +174,6 @@ $colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-co
             width: 100%;
             height: 100%;
             display: block;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
             transition: all,0,linear;
           }
         }
