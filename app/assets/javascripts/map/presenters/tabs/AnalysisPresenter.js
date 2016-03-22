@@ -293,6 +293,7 @@ define([
     setAnalyzeIso: function(iso){
       this.status.set('dont_analyze', null);
       mps.publish('Analysis/analyze-iso', [iso, this.status.get('dont_analyze')]);
+      mps.publish('Countries/changeIso',[iso,this.status.get('dont_analyze')]);
     },
 
     setSubscribeIso: function(iso){
