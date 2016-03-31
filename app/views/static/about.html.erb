@@ -21,6 +21,7 @@
           </li>
           <li><%= link_to 'About GFW Climate', "#{about_path}?page=about", :"data-slug" => 'about-gfw-climate', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw-climate selected' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'FAQ', "#{about_path}?page=faq", :"data-slug" => 'faq', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item faq' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'PUBLICATIONS', "#{about_path}?page=publications", :"data-slug" => 'publications', :"data-interesting" => 'publications, faqs', :class => 'nav-item publications' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'TUTORIAL VIDEOS', "#{about_path}?page=tutorials", :"data-slug" => 'tutorials', :"data-interesting" => 'tutorial videos', :class => 'nav-item tutorials' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
@@ -125,6 +126,18 @@
                   All code and detailed workflows related to GIS calculations can be found on GitHub at https://github.com/wri/gfw_climate.
                   </p>
                 </li>
+          </article>
+          <article id='publications' class="source-article" style="display: <%= params[:page] == "publications" ? "block" : "none" %>;">
+            <header>
+              <h2>Publications</h2>
+            </header>
+            <div class="content">
+              <ul class='faq-list'>
+                <li>
+                  <%= link_to "Zarin et al. (2015)", "https://dl.dropboxusercontent.com/s/rfdjln8se1ii463/Zarin_et_al-2016-Global_Change_Biology.pdf", target:'_blank', :class =>'block' %>
+                </li>
+              </ul>
+            </div>
           </article>
           <article id='tutorials' class="source-article" style="display: <%= params[:page] == "tutorials" ? "block" : "none" %>;">
             <header>
