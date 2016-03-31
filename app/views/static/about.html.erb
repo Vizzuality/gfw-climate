@@ -21,6 +21,7 @@
           </li>
           <li><%= link_to 'About GFW Climate', "#{about_path}?page=about", :"data-slug" => 'about-gfw-climate', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw-climate selected' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'FAQ', "#{about_path}?page=faq", :"data-slug" => 'faq', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item faq' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'TUTORIAL VIDEOS', "#{about_path}?page=tutorials", :"data-slug" => 'tutorials', :"data-interesting" => 'tutorial videos', :class => 'nav-item tutorials' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -124,6 +125,24 @@
                   All code and detailed workflows related to GIS calculations can be found on GitHub at https://github.com/wri/gfw_climate.
                   </p>
                 </li>
+          </article>
+          <article id='tutorials' class="source-article" style="display: <%= params[:page] == "tutorials" ? "block" : "none" %>;">
+            <header>
+              <h2>Tutorial videos</h2>
+            </header>
+            <div class="content">
+              <ul class='faq-list'>
+                <li>
+                  <p>
+                    Global Forest Watch Climate offers a wide range of content and capabilities to serve a variety of users and purposes. Whether you arrive at GFW Climate with a clear purpose or are simply exploring different features, we can help you learn to use the platform. Please click on a topic below to watch the related tutorial video.
+                  </p>
+                  <%= link_to "Discover features and functionality of the Map", "https://www.youtube.com/watch?v=Nbkj4HsrfJc", target:'_blank', :class =>'block' %>
+                  <%= link_to "View statistics and infographics for countries or jurisdictions", "https://www.youtube.com/watch?v=x0XKNAj6Cos", target:'_blank', :class =>'block' %>
+                  <%= link_to "Compare countries and jurisdictions side by side", "https://www.youtube.com/watch?v=_WDf3qp0Fkc", target:'_blank', :class =>'block' %>
+                  <%= link_to "Visualize an overview of the tropics", "https://www.youtube.com/watch?v=P_-0NRTHZyM", target:'_blank', :class =>'block' %>
+                </li>
+              </ul>
+            </div>
           </article>
         </div>
       </div>
