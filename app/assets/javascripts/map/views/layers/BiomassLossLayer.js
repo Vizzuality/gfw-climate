@@ -47,7 +47,7 @@ define([
           w = w |0,
           j = j |0,
           z = z |0,
-          exp = z < 11 ? 0.3 + ((z - 3) / 20) : 1 | 0;
+          exp = z < 11 ? 0.3 + ((z - 6) / 20) : 1 | 0;
 
       if (! !!this.currentDate[0]._d) {
        this.currentDate[0] = moment(this.currentDate[0]);
@@ -60,8 +60,8 @@ define([
          .exponent(exp)
          .domain([0,256])
          .range([0,256]);
-      var c = [112, 168, 256, // first bucket 
-               76,  83,  122,
+      var c = [255, 31,  38, // first bucket
+               210, 31,  38,
                210, 31,  38,
                241, 152, 19,
                255, 208, 11]; // last bucket
@@ -79,9 +79,9 @@ define([
               imgdata[pixelPos] = c[bucket];
               imgdata[pixelPos + 1] = c[bucket + 1];
               imgdata[pixelPos + 2] = c[bucket + 2];
-              imgdata[pixelPos + 3] = 255 | 0;
+              imgdata[pixelPos + 3] = intensity_scaled | 0;
             }
-          } 
+          }
         }
        }
     },
