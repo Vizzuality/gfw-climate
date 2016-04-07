@@ -1142,9 +1142,9 @@
         "rangetype" : "year",
         "switch" : [
           {
-            "unit": "mt-co2",
-            "unitname": "Mt CO2",
-            "unitfullname": "Mt CO2"
+            "unit": "mt-co2e",
+            "unitname": "Mt CO2e",
+            "unitfullname": "Mt CO2e"
           }
         ],
         "default": true
@@ -1155,7 +1155,7 @@
         "id": 73,
         "name": "Global Fire Emissions Database",
         "type": "line",
-        "unit": "mt-co2",
+        "unit": "mt-co2e",
         "tab": 1,
         "default": true
       }
