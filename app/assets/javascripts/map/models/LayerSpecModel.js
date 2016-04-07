@@ -35,6 +35,7 @@ define([
       "hwsd",
       // Carbon loss
       "carbon_stocks",
+      "peatland_drainage",
       "biomass_loss"
     ],
 
