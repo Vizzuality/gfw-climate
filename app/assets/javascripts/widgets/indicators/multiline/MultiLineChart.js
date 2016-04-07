@@ -156,13 +156,16 @@ LineChart.prototype._drawAverages = function() {
         txtaverage = d3.format(",.0f")(average) + ' '+ self.unitname;
       break;
       case 'percentage':
-        txtaverage = d3.format(".2f")(average) + ' '+ self.unitname;
+        txtaverage = d3.format(".0f")(average) + ' '+ self.unitname;
       break;
       case 'tg-c':
-        txtaverage = d3.format(",.2f")(average) + ' '+ self.unitname;
+        txtaverage = d3.format(",.0f")(average) + ' '+ self.unitname;
       break;
       case 'mt-co2':
-        txtaverage = d3.format(",.2f")(average) + ' '+ self.unitname;
+        txtaverage = d3.format(",.0f")(average) + ' '+ self.unitname;
+      break
+      case 'mt-co2e':
+        txtaverage = d3.format(",.0f")(average) + ' '+ self.unitname;
       break
     }
     return { average: txtaverage , color: self.color[i] };
