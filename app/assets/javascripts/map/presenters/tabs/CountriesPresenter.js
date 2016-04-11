@@ -106,7 +106,6 @@ define([
       mps.publish('Countries/changeIso',[this.status.get('iso'),this.status.get('dont_analyze')]);
     },
 
-
     changeIso: function(iso){
       this.status.set('iso', iso);
       this.status.set('dont_analyze', true);
