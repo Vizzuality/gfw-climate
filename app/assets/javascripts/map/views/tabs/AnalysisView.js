@@ -13,7 +13,7 @@ define([
   'map/views/GeoStylingView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, CountriesService, 
+], function(_, Handlebars, amplify, chosen, Presenter, CountriesService,
   GeoStylingView, tpl, tplMobile) {
 
   'use strict';
