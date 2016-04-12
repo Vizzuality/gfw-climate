@@ -17,6 +17,7 @@ define([
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
   'map/views/layers/ProtectedAreasCDBLayer',
+  'map/views/layers/PeatLandsDrainageLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -37,6 +38,7 @@ define([
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
   ProtectedAreasCDBLayer,
+  PeatLandsDrainageLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -89,6 +91,10 @@ define([
     protected_areasCDB: {
       view: ProtectedAreasCDBLayer
     },
+    peatland_drainage: {
+      view: PeatLandsDrainageLayer
+    },
+    
     nothing: {
     }
   };

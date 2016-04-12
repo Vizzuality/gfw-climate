@@ -45,6 +45,7 @@ $slider-height-mb: 550px;
 
     li {
       position: relative;
+      text-align: center;
 
       &:after {
         position: absolute;
@@ -241,6 +242,9 @@ $slider-height-mb: 550px;
     &.slide3 {
       .col-container {
         background-color: $brown;
+      }
+      .slide-background {
+        background-image: image-url('home/features/slider/slide3.jpg');
       }
     }
   }

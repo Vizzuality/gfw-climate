@@ -10,12 +10,15 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/CountriesPresenter',
+  'map/services/CountriesService',
+  'map/views/GeoStylingView',
   'widgets/indicators/bars/BarChart',
   'text!map/templates/tabs/countries.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
   'text!map/templates/tabs/countriesButtons.handlebars',
   'text!map/templates/tabs/countries-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, barChart, tpl, tplIso, tplButtons, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, CountriesService, GeoStylingView,
+    barChart, tpl, tplIso, tplButtons, tplMobile) {
 
   'use strict';
 
@@ -56,6 +59,7 @@ define([
       this.model = new CountriesModel();
       this.presenter = new Presenter(this);
       this.barChart = barChart;
+      this.geoStyles = new GeoStylingView();
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
@@ -103,7 +107,6 @@ define([
 
     inits: function(){
       // countries
-      this.setStyle(0.45);
       this.getCountries();
       if (!this.embed) {
         setTimeout(_.bind(function(){
@@ -117,20 +120,7 @@ define([
      * Set geojson style.
      */
     setStyle: function(opacity) {
-      this.style = {
-        strokeWeight: 2,
-        fillOpacity: opacity,
-        fillColor: '#FFF',
-        strokeColor: '#A2BC28',
-        icon: new google.maps.MarkerImage(
-          '/assets/icons/marker_exclamation.png',
-          new google.maps.Size(36, 36), // size
-          new google.maps.Point(0, 0), // offset
-          new google.maps.Point(18, 18) // anchor
-        )
-      };
-
-      this.map.data.setStyle(this.style);
+      this.style = this.geoStyles.getStyles('country');
     },
 
     getIsoLayers: function(layers){
@@ -148,7 +138,7 @@ define([
     },
 
     renderIsoLayer: function(layersToRender){
-      this.$layers.html(this.templateIso({ layers: layersToRender }));
+      this.$layers.html(this.templateIso({ iso: this.iso, layers: layersToRender }));
       this._renderHtml();
       this._selectSubIsoLayer();
     },
@@ -205,35 +195,19 @@ define([
      * COUNTRY
      */
     getCountries: function(){
-      if (!amplify.store('countries')) {
-        var sql = ['SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'];
-        $.ajax({
-          url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
-          dataType: 'json',
-          success: _.bind(function(data){
-            amplify.store('countries', data.rows);
-            this.printCountries();
-          }, this ),
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }else{
-        this.printCountries()
-      }
+      CountriesService.execute('',_.bind(function(data){
+        this.printCountries(data.countries);
+      },this));
     },
 
     /**
      * Print countries.
      */
-    printCountries: function(){
-      //Country select
-      this.countries = amplify.store('countries');
-
+    printCountries: function(countries) {
       if(this.mobile){
         var options = "";
         var letters = [];
-        _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
+        _.each(_.sortBy(countries, function(country){ return country.name }), _.bind(function(country, i){
           var letter = country.name.charAt(0).toUpperCase();
           options += '<li data-value="'+ country.iso +'" data-alpha="'+ letter +'">'+ country.name + '</li>';
           letters.push(letter);
@@ -245,7 +219,7 @@ define([
       }else{
         //Loop for print options
         var options = "<option></option>";
-        _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
+        _.each(_.sortBy(countries, function(country){ return country.name }), _.bind(function(country, i){
           options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
         }, this ));
         this.$countrySelect.append(options);
@@ -314,7 +288,7 @@ define([
     setSelects: function(iso){
       this.iso = iso.country;
       this.commonIsoChanges();
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      this.$countrySelect.val(this.iso).trigger("chosen:updated");
       if (this.mobile) {
         this.filterByLetter(null);
       }
@@ -345,8 +319,7 @@ define([
           this.filterByLetter(null);
         }
       };
-      this.$countrySelect.val(this.iso).trigger("liszt:updated");
-      // this.$regionSelect.val(this.area).trigger("liszt:updated");
+      this.$countrySelect.val(this.iso).trigger("chosen:updated");
       if (this.iso) {
         this.getAdditionalInfoCountry();
       }

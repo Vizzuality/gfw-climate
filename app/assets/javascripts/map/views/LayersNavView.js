@@ -273,9 +273,9 @@ define([
       _.each(this.$countryLayers.find('.layer'),_.bind(function(li){
         if ($(li).hasClass('selected')) {
           var layerSlug = $(li).data('layer');
-          this.presenter.toggleLayer(layerSlug)
+          this.presenter.toggleLayer(layerSlug);
         }
-      }, this ))
+      }, this ));
     },
 
     setIsoLayers: function(e){

@@ -6,8 +6,8 @@ $land-cover-color: #B2D26E;
 $country-color: rgb(207, 127, 236);
 
 
-$categories: 'carbon-loss','carbon-density','land-use','land-cover';
-$colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-color;
+$categories: 'carbon-loss','carbon-density','land-use','land-cover','country';
+$colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-color,$country-color;
 
 .l-layers-header {
    border-top: 1px solid #E5E5DF;
@@ -119,6 +119,9 @@ $colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-co
       border-bottom: none;
       width: 40px;
       min-height: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &.disabled{
         opacity: 0.25;
@@ -136,8 +139,8 @@ $colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-co
         position: absolute;
         top: 0%;
         left: -1px;
-        height: 46px;
-        width: 40px;
+        height: 33px;
+        width: 29px;
         border-radius: 0;
         padding: 0;
         background: #A300D9;
@@ -157,8 +160,8 @@ $colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-co
           position: absolute;
           top: 50%;
           left: 50%;
-          width: 14px;
-          height: 14px;
+          width: 12px;
+          height: 12px;
           text-align: center;
           font-family: Arial;
           font-weight: 700;
@@ -171,10 +174,6 @@ $colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-co
             width: 100%;
             height: 100%;
             display: block;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
             transition: all,0,linear;
           }
         }
@@ -231,7 +230,7 @@ $colors: $carbon-loss-color,$carbon-density-color,$land-use-color,$land-cover-co
     }
     &.country{
       background: #A300D9;
-      color: $white;
+      color: $country-color;
       @media (max-width: $br-mobileMap - 1){
         background: $white;
         color: #A300D9;

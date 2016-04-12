@@ -20,7 +20,7 @@
         "switch" : [
           {
             "unit": "hectares",
-            "unitname": "Ha",
+            "unitname": "ha",
             "unitfullname": "hectares"
           },
           {
@@ -44,7 +44,7 @@
         "switch" : [
           {
             "unit": "hectares",
-            "unitname": "Ha",
+            "unitname": "ha",
             "unitfullname": "hectares"
           },
           {
@@ -65,7 +65,7 @@
         "switch" : [
           {
             "unit": "hectares",
-            "unitname": "Ha",
+            "unitname": "ha",
             "unitfullname": "hectares"
           },
           {
@@ -913,11 +913,6 @@
         "default": true,
         "switch" : [
           {
-            "unit": "tg-c",
-            "unitname": "Tg C",
-            "unitfullname": "Teragrams of carbon"
-          },
-          {
             "unit": "mt-co2",
             "unitname": "Mt CO2",
             "unitfullname": "Million tons of Carbon dioxide"
@@ -926,14 +921,6 @@
       }
     ],
     "indicators": [
-      {
-        "id": 45,
-        "name": "Emissions from peat drainage",
-        "type": "number",
-        "unit": "tg-c",
-        "tab": 1,
-        "default": true
-      },
       {
         "id": 75,
         "name": "Emissions from peat drainage",
@@ -1142,9 +1129,9 @@
         "rangetype" : "year",
         "switch" : [
           {
-            "unit": "mt-co2",
-            "unitname": "Mt CO2",
-            "unitfullname": "Mt CO2"
+            "unit": "mt-co2e",
+            "unitname": "Mt CO2e",
+            "unitfullname": "Mt CO2e"
           }
         ],
         "default": true
@@ -1155,7 +1142,7 @@
         "id": 73,
         "name": "Global Fire Emissions Database",
         "type": "line",
-        "unit": "mt-co2",
+        "unit": "mt-co2e",
         "tab": 1,
         "default": true
       }
