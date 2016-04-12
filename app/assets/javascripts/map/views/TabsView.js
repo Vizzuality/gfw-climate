@@ -31,7 +31,7 @@ define([
       'click .share-mobile' : 'toggleShareMobile',
       'click .tab-mobile' : 'toggleTabsMobile',
       'click .close-tab-mobile' : 'hideTabsMobile',
-      'click ul' : 'checkForestChangeAvailability'
+      'click ul' : 'checkAnalyzeAvailability'
     },
 
     template: Handlebars.compile(tpl),
@@ -165,10 +165,10 @@ define([
       }
     },
 
-    checkForestChangeAvailability: function(e) {
+    checkAnalyzeAvailability: function(e) {
       // If the user clicks the analysis icon and having this LI item an EVENT POINTER NONE style attribute, what the user actually clicks is the UL
       if (e.target.tagName === 'UL' && $('#analysis-tab-button').hasClass('disabled')) {
-        mps.publish('Notification/open', ['open-forest-change-layer']);
+        mps.publish('Notification/open', ['open-analyze-not-available']);
       }
     }
   });

@@ -14,12 +14,13 @@ define([
   'map/views/maptypes/darkMaptype',
   'map/views/maptypes/positronMaptype',
   'map/views/maptypes/landsatMaptype',
+  'map/views/maptypes/basemapStyles',
   'map/views/GeoStylingView',
   'map/helpers/layersHelper',
   'text!map/geojson_overlays/tropics.json'
 ], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype,
-  darkMaptype, positronMaptype, landsatMaptype, GeoStylingView, layersHelper, 
-  tropicsOverlay) {
+  darkMaptype, positronMaptype, landsatMaptype, BasemapStyles, GeoStylingView,
+  layersHelper, tropicsOverlay) {
 
   'use strict';
 
@@ -32,7 +33,7 @@ define([
      */
     options: {
       minZoom: 3,
-      backgroundColor: '#99b3cc',
+      backgroundColor: 'transparent',
       disableDefaultUI: true,
       panControl: false,
       zoomControl: false,
@@ -80,7 +81,7 @@ define([
       var params = {
         zoom: zoom,
         minZoom: zoom,
-        mapTypeId: 'grayscale',
+        mapTypeId: 'dark',
         center: new google.maps.LatLng(15, 27),
       };
 
@@ -154,7 +155,22 @@ define([
     setOptions: function(options) {
       this.map.setOptions(options);
       this.onCenterChange();
+      this._setBasemapStyles(options.mapTypeId);
       this.presenter.onMaptypeChange(options.mapTypeId);
+    },
+
+    /**
+     * Set's the basemap styles to the map container
+     * @param {String} mapTypeId
+     */
+    _setBasemapStyles: function(mapTypeId) {
+      if (mapTypeId.search('landsat') !== -1) {
+        mapTypeId = 'landsat';
+      }
+      var bgColor = BasemapStyles[mapTypeId];
+      if (bgColor) {
+        this.el.style.backgroundColor = bgColor;
+      }
     },
 
     /**
@@ -363,6 +379,7 @@ define([
         ];
         this.map.setOptions({styles: styles});
       }
+      this._setBasemapStyles(maptype);
       this.presenter.onMaptypeChange(maptype);
     },
 
@@ -552,7 +569,7 @@ define([
         map: this.map
       });
       this.geoStyles.setStyles();
-    } 
+    }
   });
 
   return MapView;

@@ -59,7 +59,7 @@ define([
     zoom: 3,
     lat: 15,
     lng: 27,
-    maptype: 'grayscale',
+    maptype: 'dark',
     iso: 'ALL'
   };
 
