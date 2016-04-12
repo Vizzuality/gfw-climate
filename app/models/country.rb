@@ -33,7 +33,7 @@ class Country
 
     def index_query
       <<-SQL
-       SELECT DISTINCT climate_iso AS iso, name_0 AS name
+       SELECT DISTINCT climate_iso AS iso, name_0 AS name, centroid AS latlng
        FROM #{CDB_COUNTRIES_TABLE}
        WHERE climate_iso IS NOT NULL
        ORDER BY name
@@ -42,7 +42,7 @@ class Country
 
     def country_data iso
      sql = <<-SQL
-      SELECT climate_iso AS iso, name_0 AS name
+      SELECT climate_iso AS iso, name_0 AS name, centroid AS latlng
       FROM #{CDB_COUNTRIES_TABLE}
       WHERE UPPER(climate_iso) = UPPER('#{iso}')
      SQL
