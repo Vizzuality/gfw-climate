@@ -81,6 +81,14 @@
   }
 }
 .tab-analysis, .tab-subscription{
+  overflow: visible;
+
+  @media (max-height: $screen-height-small) {
+    overflow: auto;
+    min-height: 280px;
+    max-height: 55vh;
+  }
+
   .is-subscribing &{
     min-height: 250px;
   }
@@ -714,4 +722,3 @@
     }
   }
 }
-

@@ -137,6 +137,9 @@ $letterW: 20px;
           }
         }
         .layers-list{
+          overflow-y: auto;
+          overflow-x: hidden;
+          max-height: 35vh;
           border-bottom: none;
           li{
             padding-left: 5px;
