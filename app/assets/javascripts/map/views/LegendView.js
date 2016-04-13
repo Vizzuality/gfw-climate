@@ -34,9 +34,20 @@ define([
   'text!map/templates/legend/plantations_by_type.handlebars',
   'text!map/templates/legend/plantations_by_species.handlebars',
   'text!map/templates/legend/peatland_drainage.handlebars',
+  'text!map/templates/legend/colombiaForestChange.handlebars',
+  'text!map/templates/legend/us_land_cover.handlebars',
+  'text!map/templates/legend/bra_biomes.handlebars',
+  'text!map/templates/legend/gtm_forest_change.handlebars',
+  'text!map/templates/legend/gtm_forest_cover.handlebars',
+  'text!map/templates/legend/gtm_forest_density.handlebars',
+  'text!map/templates/legend/khm_eco_land_conc.handlebars',
+  'text!map/templates/legend/usa_forest_ownership.handlebars',
+  'text!map/templates/legend/mysPA.handlebars',
+  'text!map/templates/legend/per_mining.handlebars',
+  'text!map/templates/legend/raisg_mining.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, idn_peatTPL,hsdwTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl,peatland_drainageTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, idn_peatTPL,hsdwTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl,peatland_drainageTpl,colombiaForestChangeTpl, us_land_coverTpl, bra_biomesTpl, gtm_forest_changeTpl, gtm_forest_coverTpl, gtm_forest_densityTpl, khm_eco_land_concTpl, usa_forest_ownershipTpl, mysPATpl, per_miningTpl,raisg_miningTpl) {
 
   'use strict';
 
@@ -85,7 +96,35 @@ define([
       hwsd : Handlebars.compile(hsdwTPL),
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
       plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
-      peatland_drainage: Handlebars.compile(peatland_drainageTpl)
+      peatland_drainage: Handlebars.compile(peatland_drainageTpl),
+      colombia_forest_change: Handlebars.compile(colombiaForestChangeTPL),
+      us_land_cover: Handlebars.compile(us_land_coverTPL),
+      us_land_cover_change : Handlebars.compile(us_land_coverTPL),
+      bra_biomes : Handlebars.compile(bra_biomesTPL),
+      bra_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      per_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      lbr_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      col_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      khm_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      idn_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      mys_plantations_type: Handlebars.compile(gfwPlantationByTypeTpl),
+      bra_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      per_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      lbr_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      col_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      khm_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      idn_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      mys_plantations_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
+      gtm_forest_change1: Handlebars.compile(gtm_forest_changeTpl),
+      gtm_forest_change2: Handlebars.compile(gtm_forest_changeTpl),
+      gtm_forest_cover: Handlebars.compile(gtm_forest_coverTpl),
+      gtm_forest_density: Handlebars.compile(gtm_forest_densityTpl),
+      khm_eco_land_conc: Handlebars.compile(khm_eco_land_concTpl),
+      usa_forest_ownership: Handlebars.compile(usa_forest_ownershipTpl),
+      mys_protected_areas:Handlebars.compile(mysPATpl),
+      bra_mining:Handlebars.compile(raisg_miningTpl),
+      per_mining:Handlebars.compile(per_miningTpl),
+
 
     },
 
