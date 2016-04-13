@@ -366,8 +366,8 @@ define([
     idn_leuser: {
       view: IdnLeuserLayer
     },
-    idn_peat_lands: {
-      view: IdnPeatLandsLayer
+    idn_peatland_drainage: {
+      view: PeatLandsDrainageLayer
     },
     hwsd: {
       view: SoilOrganicCarbonDLayer
