@@ -97,6 +97,7 @@ define([
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
       plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
       peatland_drainage: Handlebars.compile(peatland_drainageTpl),
+      idn_peatland_drainage: Handlebars.compile(peatland_drainageTpl),
       colombia_forest_change: Handlebars.compile(colombiaForestChangeTPL),
       us_land_cover: Handlebars.compile(us_land_coverTPL),
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
