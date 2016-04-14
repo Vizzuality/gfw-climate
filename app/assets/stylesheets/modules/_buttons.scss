@@ -30,6 +30,7 @@
 
   &:hover {
     background: $blue;
+    color: $font-color-2;
     text-decoration: none !important;
   }
 
@@ -208,7 +209,7 @@
   @media screen and (min-width: $br-mobile) {
     justify-content: center;
   }
-  
+
   &.is-center {
     justify-content: center;
   }
@@ -248,4 +249,3 @@
     }
   }
 }
-
