@@ -22,12 +22,12 @@ html
     meta (name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak")
 
     == render 'shared/icons'
-    
+
     = stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all'
     = stylesheet_link_tag "map", :media => "all"
     = csrf_meta_tags
-    script src="http://www.globalforestwatch.org/gfw-assets" id="loader-gfw" data-current=".shape-climate"
-        
+    script src="http://gfw-assets.s3.amazonaws.com/static/gfw-assets.latest.js" id="loader-gfw" data-current=".shape-climate"
+
     javascript:
       var gfw = window.gfw = {
         config: {
