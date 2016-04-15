@@ -57,7 +57,7 @@
   .tab-average--item {
     position: relative;
     padding: 3px 0 0 22px;
-    
+
     @media screen and (max-width: $br-mobile) {
       font-size: 14px;
       padding-left: 15px;
@@ -127,7 +127,8 @@
 .lock-mode {
   @extend %clean-button-or-input;
   position: relative;
-  
+  z-index: 1;
+
   &.-mobile {
     position: relative;
     display: inline-block;

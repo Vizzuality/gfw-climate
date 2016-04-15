@@ -96,6 +96,7 @@ define([
   'map/views/layers/MexMiningLayer',
   'map/views/layers/BraMiningLayer',
   'map/views/layers/PerMinamCoverLayer',
+  'map/views/layers/WMSLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -195,6 +196,7 @@ define([
   MexMiningLayer,
   BraMiningLayer,
   PerMinamCoverLayer,
+  WMSLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -366,8 +368,8 @@ define([
     idn_leuser: {
       view: IdnLeuserLayer
     },
-    idn_peat_lands: {
-      view: IdnPeatLandsLayer
+    idn_peatland_drainage: {
+      view: PeatLandsDrainageLayer
     },
     hwsd: {
       view: SoilOrganicCarbonDLayer
@@ -485,6 +487,9 @@ define([
     },
     per_minam_tree_cover: {
       view:  PerMinamCoverLayer
+    },
+    WMSLayer :{
+      view: WMSLayer
     },
     
     nothing: {

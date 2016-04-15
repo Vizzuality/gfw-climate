@@ -1,0 +1,135 @@
+.modal {
+  .modal-wrapper {
+    top: 0;
+  }
+}
+
+.modal-source {
+
+  // Title
+  .modal-title {
+    display: block;
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: $dark;
+  }
+
+  // Subtitle
+  .modal-subtitle {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #999;
+  }
+
+  // Table
+  .modal-table {
+    margin: 10px 0 0;
+    border: 1px solid $border;
+    @media (min-width: $br-mobile){
+      border: none;
+      border-top: 1px solid $border;
+    }
+
+    .modal-row {
+      width: 100%;
+      @media (min-width: $br-mobile){
+        display: table;
+        &:nth-child(even) {
+          background: #F2F2F3;
+        }
+      }
+
+
+      dt {
+        padding: 10px;
+        font-weight: 500;
+        font-size: 11px;
+        text-transform: uppercase;
+        background: #F2F2F3;
+        @media (min-width: $br-mobile){
+          display: table-cell;
+          width: 120px;
+          border-bottom: 1px solid $border;
+          background: none;
+        }
+      }
+
+      dd {
+        padding: 10px;
+        font-size: 13px;
+        vertical-align: middle;
+        @media (min-width: $br-mobile){
+          display: table-cell;
+          padding: 10px 10px 10px 15px;
+          border-left: 1px solid $border;
+          border-bottom: 1px solid $border;
+        }
+
+        p {
+          margin-bottom: 10px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          sup {
+            position: relative;
+            top: -3px;
+            font-size: 80%;
+          }
+        }
+
+        pre {
+          white-space: normal;
+        }
+      }
+
+      em {
+        font-style: italic;
+      }
+    }
+  }
+
+  // Overview
+  .modal-overview {
+    color: $dark;
+    margin: 20px 0 0;
+
+    &.is-italic {
+      font-style: italic;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    p {
+      font-size: 13px;
+      line-height: 15px;
+      margin: 10px 0;
+    }
+  }
+
+  // Credits
+  .modal-credits {
+    color: $dark;
+    margin: 20px 0 0;
+
+    h3 {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    p {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 10px;
+      margin-top: 5px;
+    }
+  }
+
+}
