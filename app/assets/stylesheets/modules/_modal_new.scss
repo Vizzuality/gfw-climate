@@ -153,7 +153,7 @@ $height: auto;
   .modal-wrapper {
     position: absolute;
     top: 40px;
-    bottom: 40px;
+    bottom: 55px;
     right: 0;
     left: 0;
 
@@ -200,7 +200,7 @@ $height: auto;
   @media screen and (min-width: $br-mobile) {
     top: 0;
   }
-  
+
   // GRADIENTS
   .gradient {
     content: "";

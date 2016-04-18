@@ -37,7 +37,7 @@ define([
     },
 
     _slickSliderMain: function() {
-      this.mainSlider = this._initSlick('.home-slider', 500, 3000);
+      this.mainSlider = this._initSlick('.home-slider', 500, 5000);
     },
 
     _slickSliderFeature: function() {

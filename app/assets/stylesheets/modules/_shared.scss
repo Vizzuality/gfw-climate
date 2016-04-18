@@ -75,7 +75,7 @@
   left: 50%;
   width: 30px;
   height: 30px;
-  transform: translate(-50%,-50%);
+  margin: 7px 7px !important;
   // @mixin animation($name,$duration,$count: 1,$function: linear,$direction: normal,$fill : none,$delay : 0s, $play: running)
   @include animation(loader,1s,infinite,$easeInOutCubic);
   visibility: hidden;
@@ -474,5 +474,3 @@
     background: none;
   }
 }
-
-

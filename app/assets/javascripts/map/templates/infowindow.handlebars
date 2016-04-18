@@ -269,6 +269,14 @@
           <h4>Region:</h4>
           <p>{{content.data.region}}</p>
         {{/if}}
+        {{#if content.data.type_text}}
+          <h4>Type:</h4>
+          <p>{{content.data.type_text}}</p>
+        {{/if}}
+        {{#if content.data.emisc02ha}}
+          <h4>Emissions:</h4>
+          <p>{{content.data.emisc02ha}} tons of CO<sup>2</sup> ha<sup>-1</sup> yr<sup>-1</sup></p>
+        {{/if}}
         {{#if content.data.area_ha}}
           <h4>Area HA:</h4>
           <p>{{content.data.area_ha}}</p>

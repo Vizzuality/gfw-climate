@@ -81,6 +81,10 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Tree Biomass Loss<a href='#' data-source='biomass_loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
+           <li class="layer" data-layer="peatland_drainage">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Emissions from peat drainage<a href='#' data-source='peatland_drainage' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
 {{!--           <li class="layer" data-layer="land_rights">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Land rights (select countries)<a href='#' data-source='land_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -206,7 +210,7 @@
             <span class="layer-title">Intact Forest Landscapes<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             <span class="layer-info">(2000/2013)</span>
           </li>
-          <li class="layer" data-layer="cod_primary_forest_wgs">
+           {{!--  <li class="layer" data-layer="cod_primary_forest_wgs">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Democratic Republic of the Congo primary forests<a href='#' data-source='cod_primary_forest_wgs' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             <span class="layer-info">(2000)</span>
@@ -215,7 +219,7 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Peat lands<a href='#' data-source='idn_peat_lands' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             <span class="layer-info">(Indonesia, 2011)</span>
-          </li>
+          </li>--}}
           <li class="wrapped-layer" data-color="#D67828">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Tree plantations (select countries)<a href="#" data-source="plantations" class="source"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-info"></use></svg></a></span>
@@ -273,11 +277,11 @@
       </div>
     </li> --}}
 
-    {{!-- <li id="country-layers" class="country-layers-nav country disabled">
+    <li id="country-layers" class="country-layers-nav country disabled">
       <span class="category-name">COUNTRY LAYERS <i id="forest_clearing-category-num" class="category-num"></i></span>
     </li>
     <li id="country-layers-reset" class="country-close disabled hidden">
       <button class="btn close"><span><svg><use xlink:href="#shape-close"></use></svg></span></button>
-    </li> --}}
+    </li>
   </ul>
 </div>

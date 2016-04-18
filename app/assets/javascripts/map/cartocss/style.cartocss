@@ -116,6 +116,12 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='mys_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
   [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
     line-color: #EC7014;
@@ -150,7 +156,12 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+  [layer='mex_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
   [layer='can_mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
@@ -235,6 +246,12 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='mys_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
 
   [layer='caf_lc_1'] {
     polygon-fill: #fe9929;
@@ -298,7 +315,12 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+  [layer='mys_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
   [layer='forma_extent'] {
     polygon-fill: #f69;
     polygon-opacity: 0.3;
@@ -441,6 +463,13 @@
     line-width: 1;
     line-opacity: 1;
   }
+  [layer='nzl_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
 
   [layer='gfw_land_rights_sync'] {
     polygon-fill: #4d658f;
@@ -531,6 +560,62 @@
    line-width: 0.5;
    line-opacity: 1;
    polygon-fill: #91b290;
+  }
+  [layer='per_regional_protected_areas'] {
+    polygon-fill: #2167AB;
+  polygon-opacity: 0.7;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+  }
+  [layer='per_private_protected_areas'] {
+   polygon-fill: #94cecb;
+  polygon-opacity: 0.7;
+  line-color: #FFF;
+  line-width: 0;
+  line-opacity: 1;
+  }
+  [layer='per_national_protected_areas'] {
+   polygon-fill: #4d94c4;
+  polygon-opacity: 0.7;
+  line-color: #FFF;
+  line-width: 0.5;
+  line-opacity: 1;
+  }
+  [layer='per_buffer_zones'] {
+   polygon-fill: #00ceff;
+   polygon-opacity: 0.7;
+   line-color: #5CA2D1;
+   line-width: 0.1;
+   line-opacity: 1;
+  }
+  [layer='idn_forest_moratorium'] {
+   polygon-fill: #aa7c5d;
+  polygon-opacity: 0.7;
+  line-color: #FFF;
+  line-width: 0;
+  line-opacity: 1;
+  }
+  [layer='khm_protected_areas_wgs'] {
+  polygon-fill: #3182BD;
+  polygon-opacity: 0.6;
+  line-color: #FFF;
+  line-width: 0.25;
+  line-opacity: 1;
+  }
+  [layer='gfw_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+  [layer='logging_roads_extent'] {
+    polygon-fill: #B2D26E;
+    polygon-opacity: 0.3;
+    line-width: 1;
+    line-color: #FFF;
+    line-opacity: 0;
   }
 
 }

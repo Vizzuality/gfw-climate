@@ -1,0 +1,19 @@
+#peatland_drainage{
+  polygon-fill: #ECF0F6;
+  polygon-opacity: 1;
+  line-color: #FFF;
+  line-width: 0.1;
+  line-opacity: 1;
+}
+#peatland_drainage [ emisc02ha <= 73] {
+   polygon-fill: #5A0198;
+}
+#peatland_drainage [ emisc02ha <= 55] {
+   polygon-fill: #8A33AD;
+}
+#peatland_drainage [ emisc02ha <= 40] {
+   polygon-fill: #C28BCA;
+}
+#peatland_drainage [ emisc02ha <= 0] {
+   polygon-fill: #E0DCE0;
+}

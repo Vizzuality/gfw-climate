@@ -1,0 +1,70 @@
+<div class="layout-content">
+  <div class="l-toolbar">
+    <div class="inner">
+      <div class="m-toolbar" id="toolbarView">
+        <ul class="options">
+          <li class="options_item btn-share" data-hideembed="true">
+            <svg><use xlink:href="#shape-share"></use></svg><button id="share-country">share</button>
+          </li>
+          <li class="options_item -disabled btn-save">
+            <svg><use xlink:href="#shape-share"></use></svg><button id="print-country">save/print report</button>
+          </li>
+          <li class="options_item btn-analyze">
+            <svg><use xlink:href="#shape-country"></use></svg><a href="<%= map_coords %>/dark/biomass_loss?dont_analyze=true" class="action layers_from_country" id="analyze-country">analyze on map</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <section data-iso="<%= @iso %>" id="countryShowView">
+    <div class="container-country">
+      <div class="container-country__header-country" id="headerCountry">
+        <div class="inner">
+          <div class="container-country__content">
+            <div class="header-country__title-country">
+              <h1>
+                <%= @name %>
+              </h1>
+            </div>
+            <div class="header-country__preview-country">
+              <div id="figure-<%= @iso %>"></div>
+            </div>
+          </div>
+        </div>
+        <div class="display-tabs">
+          <ul>
+            <li data-display="national">
+              National data
+            </li>
+            <li data-display="subnational">
+              Subnational data
+            </li>
+            <li data-display="areas-interest">
+              Areas of interest
+            </li>
+          </ul>
+        </div>
+        <div class="header-country__options-country"></div>
+      </div>
+      <div class="container-country__content-country">
+        <div class="l-cutpoint" id="offsetTop"></div>
+        <div class="m-fixed-header" id="fixedHeaderView"></div>
+        <section id="reports">
+          <div class="inner">
+            <div class="m-grid-button-box" id="countryGridButtonBox"></div>
+            <div class="gridgraphs"></div>
+          </div>
+          <section class="more-indicators-warning is-hidden" id="reportIndicators">
+            <div class="inner">
+              <h3>
+                Don't see what you're looking for?
+              </h3>
+              <button class="addIndicators btn medium white" data-source="indicators">Customize report</button>
+            </div>
+          </section>
+        </section>
+        <div class="l-cutpoint" id="offsetBottom"></div>
+      </div>
+    </div>
+  </section>
+</div>

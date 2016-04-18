@@ -142,7 +142,7 @@ define([
         this.status.set('dont_analyze', analyze);
         if (!!iso.country) {
           this.deleteAnalysis();
-          this._analyzeIso(iso)
+          this._analyzeIso(iso);
         }else{
           mps.publish('LocalMode/updateIso',[iso, this.status.get('dont_analyze')]);
           this.deleteAnalysis();
@@ -263,8 +263,10 @@ define([
           this._geojsonFitBounds(geojson);
           mps.publish('Subscribe/geom',[geojson]);
 
+          // Always draw the country shape regardless of the tab
+          this.view.drawCountrypolygon(geojson,'#5B80A0');
+
           if (!this.status.get('dont_analyze')) {
-            this.view.drawCountrypolygon(geojson,'#5B80A0');
             this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
@@ -293,6 +295,7 @@ define([
     setAnalyzeIso: function(iso){
       this.status.set('dont_analyze', null);
       mps.publish('Analysis/analyze-iso', [iso, this.status.get('dont_analyze')]);
+      mps.publish('Countries/changeIso',[iso,this.status.get('dont_analyze')]);
     },
 
     setSubscribeIso: function(iso){

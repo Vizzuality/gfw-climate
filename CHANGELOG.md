@@ -1,3 +1,10 @@
+# 1.2.0 (18/04/2016)
+
+* Adds peat drainage layer
+* Adds country specific layers
+* Updates colours for tree biomass loss and density
+* Fixes bugs and makes all work better!
+
 # 1.1.0 (9/03/2016)
 
 * Tropics overlay

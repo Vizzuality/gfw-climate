@@ -1413,6 +1413,15 @@ $main-slider-height-mb: 300px;
               text-decoration: underline;
             }
           }
+
+          + .block {
+            margin-top: 20px;
+          }
+        }
+
+        .block {
+          display: block;
+          margin-bottom: 10px;
         }
         .btn {
           margin: 10px 0 0;

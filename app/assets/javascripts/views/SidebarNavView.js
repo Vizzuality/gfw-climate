@@ -63,6 +63,18 @@ define([
 
       //INIT
       this.setListeners();
+
+      this.showCurrentTab();
+    },
+
+    showCurrentTab: function() {
+      var location = window.location.search;
+
+      if (location) {
+        $('.nav-item').removeClass('selected');
+        var slug = location.split('=')[1];
+        $('a[data-slug='+ slug +']').addClass('selected');
+      }
     },
 
     setListeners: function(){
@@ -80,7 +92,6 @@ define([
       }, this ), 250)
 
     },
-
 
 
     calculateOffsets: function(){
@@ -126,6 +137,7 @@ define([
       $(this.el).find('.selected').removeClass('selected');
       $(this.el).find('a[data-slug=' + slug + ']').addClass('selected');
     },
+
     toggleSources: function(e){
       ($(e.currentTarget).hasClass('active')) ? this.model.set('t', null) : this.model.set('t', $(e.currentTarget).parent().attr('id'));
       this.$sourceHeader.removeClass('active');
