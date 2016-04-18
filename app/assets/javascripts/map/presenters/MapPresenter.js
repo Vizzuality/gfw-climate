@@ -35,8 +35,8 @@ define([
         this._onPlaceGo(place);
       }
     }, {
-      'LayerNav/change': function(layerSpec) {
-        this._setLayers(layerSpec.getLayers());
+      'LayerNav/change': function(layerSpec, options) {
+        this._setLayers(layerSpec.getLayers(), {}, options);
       }
     }, {
       'Map/fit-bounds': function(bounds) {
@@ -143,12 +143,12 @@ define([
      *
      * @param {object} layers Layers object
      */
-    _setLayers: function(layers, layerOptions) {
+    _setLayers: function(layers, layerOptions, options) {
       // Get layer options. We need the currentDate just when loading
       // a layer first time from url. When changing between layers
       // there is no date so it will be set to the default layer date.
       var options = _.extend(_.pick(this.status.toJSON(),
-        'threshold'), layerOptions);
+        'threshold'), layerOptions, options);
       this.status.set('layers',layers);
       this.view.setLayers(layers, options);
     },
