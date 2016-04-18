@@ -23,7 +23,8 @@ define([
       infowindow: false,
       cartodb_logo: false,
       raster: false,
-      analysis: false
+      analysis: false,
+      fitBounds: false
     },
 
     queryTemplate: 'SELECT cartodb_id||\':\' ||\'{tableName}\' as cartodb_id, the_geom_webmercator,' +
@@ -50,6 +51,10 @@ define([
         .on('done',
           _.bind(function(layer) {
             this.cdbLayer = layer;
+
+            if (this.options.fitBounds) {
+              this._setBounds();
+            }
             deferred.resolve(this.cdbLayer);
           }, this)
         );
@@ -126,6 +131,28 @@ define([
     getQuery: function() {
       return new UriTemplate(this.options.sql || this.queryTemplate)
         .fillFromObject({tableName: this.layer.table_name, analysis: this.options.analysis});
+    },
+
+    /**
+     * Gets and sets the layer's bounds
+     * if it has the option set
+     * the query MUST have the geom
+     */
+    _setBounds: function() {
+      var query = this.getQuery();
+
+      if (query.search(/the_geom(,| )/) !== -1) {
+        var sqlBounds = new cartodb.SQL({
+          user: this.options.user_name
+        });
+        sqlBounds.getBounds(query).done(function(bounds) {
+          var formattedBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(bounds[1][0], bounds[1][1]),
+            new google.maps.LatLng(bounds[0][0], bounds[0][1])
+          );
+          this.map.fitBounds(formattedBounds);
+        }.bind(this));
+      }
     }
 
   });
