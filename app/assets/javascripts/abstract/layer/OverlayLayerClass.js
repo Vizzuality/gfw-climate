@@ -25,7 +25,7 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.tileSize = new google.maps.Size(256, 256);
-      this.options = _.extend({}, this.defaults, this.options || {});
+      this.options = _.extend({}, this.defaults, this.options, options || {});
     },
 
     addLayer: function(position, success) {
@@ -33,6 +33,9 @@ define([
         this.map.overlayMapTypes.setAt(position, layer);
         if (this.options.infowindow && this.options.interactivity) {
           this.setInfowindow(layer);
+        }
+        if (this.options.fitBounds && this.options.toggleFromNav) {
+          this.setBounds();
         }
         success();
       }, this));

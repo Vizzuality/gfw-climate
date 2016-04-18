@@ -69,7 +69,9 @@ define([
 
       layerSpecService.toggle(where,
         _.bind(function(layerSpec) {
-          mps.publish('LayerNav/change', [layerSpec]);
+          mps.publish('LayerNav/change', [layerSpec, {
+            toggleFromNav: true
+          }]);
           mps.publish('Place/update', [{go: false}]);
         }, this));
     },

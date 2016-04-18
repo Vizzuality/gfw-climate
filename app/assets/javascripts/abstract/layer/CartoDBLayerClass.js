@@ -51,10 +51,6 @@ define([
         .on('done',
           _.bind(function(layer) {
             this.cdbLayer = layer;
-
-            if (this.options.fitBounds) {
-              this._setBounds();
-            }
             deferred.resolve(this.cdbLayer);
           }, this)
         );
@@ -138,7 +134,7 @@ define([
      * if it has the option set
      * the query MUST have the geom
      */
-    _setBounds: function() {
+    setBounds: function() {
       var query = this.getQuery();
 
       if (query.search(/the_geom(,| )/) !== -1) {
