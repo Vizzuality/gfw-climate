@@ -37,6 +37,7 @@ define([
     }, {
       'LayerNav/change': function(layerSpec) {
         this._setLayers(layerSpec.getLayers());
+        this._fitToLayers(layerSpec.getLayers());
       }
     }, {
       'Map/fit-bounds': function(bounds) {
@@ -151,6 +152,27 @@ define([
         'threshold'), layerOptions);
       this.status.set('layers',layers);
       this.view.setLayers(layers, options);
+    },
+
+    /**
+     * Check for the last layer and
+     * fit to bounds if the fit_to_geom = true
+     */
+
+    _fitToLayers: function(layers) {
+      var layersToFit = _.where(_.values(layers), {fit_to_geom: true}),
+          // Always fit to the most recent layer
+          layerToFit = layersToFit[layersToFit.length - 1];
+
+      if (layerToFit === undefined) { return; }
+
+      var extent = JSON.parse(layerToFit.extent);
+
+      var southWest = new google.maps.LatLng(extent.min[1], extent.min[0]),
+          northEast = new google.maps.LatLng(extent.max[1], extent.max[0]),
+          bounds = new google.maps.LatLngBounds(southWest, northEast);
+
+      this.view.fitBounds(bounds);
     },
 
     /**

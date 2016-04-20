@@ -56,7 +56,6 @@ define([
     getLayers: function(where, successCb, errorCb) {
       this._fetchLayers(
         _.bind(function(layers) {
-
           //filter iso layers and pack them, then send the package to the presenter
           mps.publish('Layers/isos', [_.filter(layers.rows,function(lay) {return lay.iso != null;})] );
 
@@ -94,10 +93,8 @@ define([
                 zmax, \
                 mindate, \
                 maxdate, \
-                ST_XMAX(the_geom) AS xmax, \
-                ST_XMIN(the_geom) AS xmin, \
-                ST_YMAX(the_geom) AS ymax, \
-                ST_YMIN(the_geom) AS ymin, \
+                fit_to_geom, \
+                extent, \
                 tileurl, \
                 does_wrapper, \
                 true AS visible \
