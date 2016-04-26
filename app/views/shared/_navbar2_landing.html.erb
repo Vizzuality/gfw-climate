@@ -1,5 +1,5 @@
 <div class="inner">
-  <h1><a href="/">Global Forest Watch</a></h1>
+  <h1><a href="/">Global Forest Watch - Climate</a></h1>
   <nav id="nav-mobile">
     <form class="mobile-show" action="/search">
       <svg class="icon"><use xlink:href="#shape-search"></use></svg>
@@ -22,6 +22,9 @@
       </li>
       <li>
         <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="/about">About</a>
+        <ul>
+          <li><a title="GFW Climate Blogs" href="http://blog.globalforestwatch.org/?s=Climate">GFW Climate Blogs</a></li>
+        </ul>
       </li>
     </ul>
   </nav>
@@ -33,4 +36,3 @@
     </div>
   </div>
 <% end %>
-
