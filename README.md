@@ -28,6 +28,7 @@ CODECLIMATE_REPO_TOKEN=c5c128fcb301371d4b89bec2df714028e0a75deb8d732f49f922626aa
 LAYER_SPEC=layerspec_nuclear_hazard
 FEEDBACK_MAIL=example@gfw-climate.com
 CDB_API_HOST=https://wri-01.cartodb.com/api/v2/sql
+ASSETS_VERSION=latest
 ```
 
 ### REDIS ###
@@ -60,7 +61,7 @@ redis-cli flushall
     bundle install
 
 ### Install assets and front end dependencies: ###
-    
+
     bower install
 
 ### Run application: ###
@@ -71,21 +72,21 @@ redis-cli flushall
 
     ./start
 
-    Flush redis: 
+    Flush redis:
 
     ./clean
 
 ## TEST ##
 
-  Run rspec: 
+  Run rspec:
   ```ruby
     bin/rspec
   ```
-  Run teaspoon: 
+  Run teaspoon:
   ```ruby  
     rake teaspoon
   ```
-  Run all: 
+  Run all:
   ```ruby
     rake
   ```
@@ -93,21 +94,21 @@ redis-cli flushall
 ## API ##
 
 ### SAMPLE ###
-  
+
   Getting a list of enabled countries
-  
+
     curl "http://localhost:5000/api/countries" -X GET \
     -H "Accept: application/json; application/gfwc-v1+json" \
     -H "Content-Type: application/json"
 
   Getting a specific country
-  
+
     curl "http://localhost:5000/api/countries/aus" -X GET \
     -H "Accept: application/json; application/gfwc-v1+json" \
     -H "Content-Type: application/json"
 
 ### API DOCUMENTATION ###
-   
+
    For API documentation visit /api/docs
 
    Generate the docs!

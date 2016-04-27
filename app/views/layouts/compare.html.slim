@@ -26,7 +26,8 @@ html
     / = stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all'
     = stylesheet_link_tag "compare", :media => "all"
     = csrf_meta_tags
-    script src="http://gfw-assets.s3.amazonaws.com/static/gfw-assets.nightly.js" id="loader-gfw" data-current=".shape-climate"
+
+    = render 'shared/gfw_assets'
 
     javascript:
       var gfw = window.gfw = {
