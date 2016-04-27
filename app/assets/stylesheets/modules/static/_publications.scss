@@ -1,0 +1,50 @@
+.publications {
+  > .item {
+    width: 80%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+
+    > .image {
+      min-width: 117px;
+      max-height: 154px;
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+      margin-top: 5px;
+    }
+
+    > .detail {
+      flex-direction: column;
+      margin-left: 30px;
+
+      > .title {
+        margin-bottom: 10px;
+        font-size: 21px;
+        color: $font-color-1;
+        line-height: 24px;
+      }
+
+      > .text {
+        font-size: 14px;
+        color: $font-color-4;
+        line-height: 18px;
+      }
+
+      > .action {
+        margin-top: 20px;
+
+        .btn {
+          border-color: $color-4;
+          padding: 0;
+          height: 34px;
+          line-height: 0;
+
+          a {
+            padding: 8px 28px;
+            line-height: 34px;
+            color: $font-color-1;
+          }
+        }
+      }
+    }
+  }
+}
