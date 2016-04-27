@@ -2,7 +2,7 @@
   <div class="inner">
     <header>
       <h2>About</h2>
-      <h3>Global Forest Watch Climate (GFW Climate) is the latest <a href="http://www.globalforestwatch.org">Global Forest Watch application</a>, joining a host of interactive online forest monitoring tools designed to empower people everywhere with the information they need to better manage and conserve forest landscapes. GFW Climate strives to deliver timely and accurate data on forest carbon in a way that unlocks insights for government, REDD+ donors, the private sector, NGOs, journalists, universities and the general public.</h3>
+      <h3>Global Forest Watch Climate (GFW Climate) is the latest <strong><a href="http://www.globalforestwatch.org">Global Forest Watch application</a></strong>, joining a host of interactive online forest monitoring tools designed to empower people everywhere with the information they need to better manage and conserve forest landscapes. GFW Climate strives to deliver timely and accurate data on forest carbon in a way that unlocks insights for government, REDD+ donors, the private sector, NGOs, journalists, universities and the general public.</h3>
     </header>
   </div>
 </section>
@@ -132,11 +132,16 @@
               <h2>Publications</h2>
             </header>
             <div class="content">
-              <ul class='faq-list'>
-                <li>
-                  <%= link_to "Zarin et al. (2015)", "https://dl.dropboxusercontent.com/s/rfdjln8se1ii463/Zarin_et_al-2016-Global_Change_Biology.pdf", target:'_blank', :class =>'block' %>
-                </li>
-              </ul>
+              <div class="publications">
+                <div class="item">
+                  <div class="image"><img src="<%= image_url("publications/publications_can_carbon_emissions_from_tropical.jpg")%>" /></div>
+                  <div class="detail">
+                    <h3 class="title">Can carbon emissions from tropical deforestation drop by 50% in 5 years?</h3>
+                    <div class="text">Halving carbon emissions from tropical deforestation by 2020 could help bring the international community closer to the agreed goal of <2 degree increase in global average temperature change...</div>
+                    <div class="action"><button class="btn gray"><%= link_to "DOWNLOAD", "https://dl.dropboxusercontent.com/s/rfdjln8se1ii463/Zarin_et_al-2016-Global_Change_Biology.pdf", target:'_blank', :class =>'block' %></button></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </article>
           <article id='tutorials' class="source-article" style="display: <%= params[:page] == "tutorials" ? "block" : "none" %>;">
