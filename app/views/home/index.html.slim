@@ -205,10 +205,24 @@
           .col.-c6.overlap-image
             = image_tag("home/features/img-profiles.png")
 
-      section.feature-section.-compare-countries
+      section.feature-section.-pantropical
         .feature-content.inner
           .col.-c6.overlap-image
-            = image_tag("home/features/img-compare.png")
+            = image_tag("home/features/img-pantropical.png")
+          .col.-c4
+            .col-container
+              .description-container
+                h3.title Monitor progress
+                p.description
+                  | See how
+                  span emissions from tropical deforestation
+                  | have changed over the 21st century.
+
+                .link-container
+                  a(href="/pantropical" class="btn medium blue") Pantropical overview
+
+      section.feature-section.-compare-countries
+        .feature-content.inner
           .col.-c4
             .col-container
               .description-container
@@ -221,22 +235,8 @@
 
                 .link-container
                   a(href="/compare-countries" class="btn medium blue") Compare countries
-
-      section.feature-section.-pantropical
-        .feature-content.inner
-          .col.-c4
-            .col-container
-              .description-container
-                h3.title Monitor progress
-                p.description
-                  | See how
-                  span emissions from tropical deforestation
-                  | have changed over the 21st century.
-
-                .link-container
-                  a(href="/pantropical" class="btn medium blue") Pantropical overview
-          .col.-c6
-            = image_tag("home/features/img-pantropical.png")
+          .col.-c6.overlap-image
+            = image_tag("home/features/img-compare.png")
 
       section.feature-section.-profiles
         section.m-feature-slider.main-slider.-feature
@@ -317,4 +317,3 @@
             /     li.profile.-policy-researcher
             /       = image_tag("home/features/profiles/profile4b.png", class: 'profile-img')
             /       p.profile-name Policy Researcher
-

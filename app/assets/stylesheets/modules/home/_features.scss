@@ -76,11 +76,11 @@
     }
 
     .image-compare {
-      
+
         display: none;
-      
+
     }
-    
+
     @media screen and (max-width: $br-mobile) {
       .feature-content {
         display: flex;
@@ -95,7 +95,7 @@
   }
 
   &.-country-profiles,
-  &.-pantropical {
+  &.-compare-countries {
     background: rgba($gray, .2);
   }
 
@@ -126,7 +126,7 @@
     font-size: 19px;
     line-height: 24px;
     color: $dark;
-   
+
     > span {
       color: $blue;
       font-weight: 700;
