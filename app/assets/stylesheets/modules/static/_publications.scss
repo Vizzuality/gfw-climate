@@ -1,15 +1,22 @@
 .publications {
   > .item {
-    width: 80%;
+    width: 90%;
     margin-top: 10px;
     display: flex;
     flex-direction: row;
 
+    @media screen and (max-width: $br-mobile) {
+      width: 100%;
+    }
+
     > .image {
+      width: 117px;
       min-width: 117px;
+      max-width: 117px;
       max-height: 154px;
       box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
       margin-top: 5px;
+      overflow: hidden;
     }
 
     > .detail {
