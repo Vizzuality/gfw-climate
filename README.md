@@ -29,6 +29,7 @@ LAYER_SPEC=layerspec_nuclear_hazard
 FEEDBACK_MAIL=example@gfw-climate.com
 CDB_API_HOST=https://wri-01.cartodb.com/api/v2/sql
 ASSETS_VERSION=latest
+ASSETS_AB=false
 ```
 
 ### REDIS ###
