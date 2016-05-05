@@ -605,42 +605,13 @@
   },
   {
     "id": 6,
-    "name": "Emissions from Deforestation vs. All Other Sectors",
-    "slug": "emissions-from-deforestation-vs-all-other-sectors",
-    "type_slug": "policy-and-drivers",
-    "type": "Policy and Drivers",
-    "type_chart": "number",
-    "default_thresh": "0",
-    "default": true,
-    "tabs": [
-      {
-        "position": 1,
-        "name": "Deforestation Emissions/Fossil Fuel Emissions",
-        "subname": "(Zarin et al. 2015/CAIT)",
-        "type": "number",
-        "template" : "deforestation-emissions",
-        "default": true
-      }
-    ],
-    "indicators": [
-      {
-        "id": 51,
-        "name": "Deforestation Emissions/Fossil Fuel Emissions",
-        "type": "number",
-        "tab": 1,
-        "default": true
-      }
-    ]
-  },
-  {
-    "id": 7,
     "name": "Average carbon stored in trees per unit area",
     "slug": "average-carbon-stored-in-trees-per-unit-area",
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "pie",
     "default_thresh": "25",
-    "default": false,
+    "default": true,
     "_text": "On average there are #{value} tons of #{section} per hectare in #{country}'s forests.",
     "tabs": [
       {
@@ -859,6 +830,35 @@
         "unit": "number",
         "tab": 3,
         "section": "carbon"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Emissions from Deforestation vs. All Other Sectors",
+    "slug": "emissions-from-deforestation-vs-all-other-sectors",
+    "type_slug": "policy-and-drivers",
+    "type": "Policy and Drivers",
+    "type_chart": "number",
+    "default_thresh": "0",
+    "default": false,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Deforestation Emissions/Fossil Fuel Emissions",
+        "subname": "(Zarin et al. 2015/CAIT)",
+        "type": "number",
+        "template" : "deforestation-emissions",
+        "default": true
+      }
+    ],
+    "indicators": [
+      {
+        "id": 51,
+        "name": "Deforestation Emissions/Fossil Fuel Emissions",
+        "type": "number",
+        "tab": 1,
+        "default": true
       }
     ]
   },
