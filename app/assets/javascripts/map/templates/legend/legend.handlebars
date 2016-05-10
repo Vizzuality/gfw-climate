@@ -61,7 +61,7 @@
               <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
               <a href='#' class='layer-close' data-slug="{{this.slug}}"><span>Delete</span> <svg><use xlink:href="#shape-close"></use></svg></a>
               {{#if this.source}}
-              <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+              <a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
               {{/if}}
             </span>
             {{#if this.detailsTpl}}
@@ -70,7 +70,7 @@
             {{#if this.sublayer}}
               <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
                 <span class="onoffswitch {{this.geographic}}" {{#if this.geographic}}style="background-color:#f69;"{{/if}}><span></span></span>
-                <div class="sublayer-title">Geographic coverage<a href='#' data-source='{{this.source}}_source' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></div>
+                <div class="sublayer-title">Geographic coverage<a href='#' data-source='{{this.source_json}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></div>
 
               </div>
             {{/if}}
