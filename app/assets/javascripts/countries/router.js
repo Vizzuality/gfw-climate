@@ -4,9 +4,10 @@ define([
   'countries/services/PlaceService',
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView',
-  'countries/views/CountryPantropicalView'
+  'countries/views/CountryPantropicalView',
+  'countries/views/Pantropical/PantropicalGladAlertsView'
 ], function(Backbone, utils, PlaceService, CountryIndexView,
-  CountryShowView,CountryPantropicalView) {
+  CountryShowView,CountryPantropicalView, PantropicalGladAlertsView) {
 
   'use strict';
 
@@ -41,6 +42,8 @@ define([
     _initPantropical: function() {
       ga('send', 'event', 'pantropical','Choose visualisation','All countries');
       new CountryPantropicalView();
+
+      new PantropicalGladAlertsView();
     }
   });
 

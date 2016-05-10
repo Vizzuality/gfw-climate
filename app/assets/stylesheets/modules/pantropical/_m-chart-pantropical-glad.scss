@@ -1,0 +1,67 @@
+.chart-pantropical-glad {
+
+
+  .axis {
+    &.y {
+      .domain {
+        shape-rendering: crispEdges;
+      }
+
+      .tick {
+        text {
+          fill: #555555;
+          stroke-width: 0;
+          font-size: 12px;
+        }
+      }
+    }
+
+    &.x {
+      .domain {
+        shape-rendering: crispEdges;
+        stroke: rgba(0, 0, 0, 0.3);
+      }
+
+      .tick {
+        line {
+          stroke-width: 0;
+        }
+
+        text {
+          stroke-width: 0;
+          fill: #555555;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .line-dashed-group {
+    .dash-line-path {
+      shape-rendering: crispEdges;
+      stroke: rgba(91, 128, 160, 0.70);
+      fill: transparent;
+      stroke-width: 2.5;
+      stroke-dasharray: 10, 6;
+    }
+  }
+
+  .line-solid-group {
+    .line-solid-path {
+      stroke: rgba(91, 128, 160, 0.70);
+      fill: transparent;
+      stroke-width: 2.5;
+    }
+  }
+
+  .dots-group {
+    .dot {
+      fill: rgba(237, 176, 74, 0.70);
+    }
+  }
+
+  .handle {
+    shape-rendering: crispEdges;
+    fill: rgba(0, 0, 0, 0.3);
+  }
+}
