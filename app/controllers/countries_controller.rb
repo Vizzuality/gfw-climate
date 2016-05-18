@@ -3,7 +3,7 @@ class CountriesController < ApplicationController
   before_action :set_country, only: :show
 
   def index
-    @title = 'Country profiles'
+    @title = 'Country data'
     @countries = Country.find_all
   end
 
