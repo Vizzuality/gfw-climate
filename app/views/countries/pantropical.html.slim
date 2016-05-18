@@ -2,13 +2,13 @@
   section#countryListView.section.country-profiles
     .l-header
       .inner.pantropical-title
-        h2 
-          | Carbon Emissions 
+        h2
+          | Carbon emissions
           br
           | from tropical deforestation
         h3
           |Explore how country contributions have changed over the 21st century.
-    
+
     .l-pantropical
 
       .pantropical-vis
@@ -19,7 +19,7 @@
               a#nydfs.btn href="#" New York Declaration on Forests Signatories
               a#change.btn href="#" Change 2001-2013
               a#country.btn href="#" Country Rankings
-        
+
         .inner
           .pantropical-options
             .pantropical-share
@@ -27,7 +27,7 @@
                 svg
                   use [xlink:href="#shape-share"]
             .pantropical-search-box
-              .m-select-autocomplete          
+              .m-select-autocomplete
                 select#pantropical-search[placeholder="Search country"]
                 .btn-delete#pantropical-search-delete
                   svg
@@ -41,8 +41,8 @@
                 |Average carbon emissions from tropical deforestation between 2001 and 2013 were 2,269 Mt CO<sub>2</sub> yr<sup>-1</sup>.
               p
                 |Circles are sized according to the proportion of total carbon emissions emitted from each country between 2001 and 2013.
-              p.quote 
-                | * Aboveground biomass pool only. See 
+              p.quote
+                | * Aboveground biomass pool only. See
                 a href="/about?page=publications" Zarin et al. (2015)
               h4
                 |Color shows continent
@@ -75,11 +75,11 @@
                 |Shifting Responsibilities
               p
                 |Between 2001 and 2013, increasing carbon emissions from gross tropical deforestation in many tropical countries have largely offset declines in Brazil.
-            
+
             .vis-tab.change.legend
               .datum
                 .non-nydf
-                  .item 
+                  .item
                     p.small-figures
                       |Brazil
                     h4
@@ -89,7 +89,7 @@
                       |Other non-NYDF  Signatories
                     h4
                       span#Non_New_York_Declaration_on_Forests_Signatories_data.country-big-2.is-bold 21%
-                
+
                 .nydf
                   .item
                     p.small-figures
@@ -117,8 +117,8 @@
                   input#year-picker name="year-picker" type="range" min="2001" max="2013" step="1" value="2001"
                   output#year-picker-label for="year-picker" 2001
                   #play-pause
-                    .play ► 
-                    .pause.is-hidden ❙❙ 
+                    .play ►
+                    .pause.is-hidden ❙❙
 
             .vis-tab.change.bottom-chart
               h4
