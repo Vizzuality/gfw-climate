@@ -328,10 +328,14 @@ define([
     },
 
     _showCanopy: function(e){
+      if (!! e.target.parentNode.classList.contains('minavgmax')) return this._changeDensity(e);
       e && e.preventDefault();
       this.presenter.showCanopy();
-    }
+    },
 
+    _changeDensity: function(e) {
+      this.presenter.changeDensity(e.target.dataset);
+    }
 
 
 
