@@ -138,7 +138,8 @@ define([
 
     _info: function(e) {},
 
-    _share: function(e) {},
+    _share: function(e) {
+    },
 
     destroy: function() {
       if (!!this.tab) {
