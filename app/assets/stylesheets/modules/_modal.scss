@@ -738,15 +738,18 @@ $height: auto;
 
   .mini-modal-input{
     padding: 15px 0 0;
-    .copy_url{
+    // Button
+    .copy-share{
       border-radius: 0;
       height: 39px;
       line-height: 39px;
       width: 30%;
       display: block;
     }
+
+    // Input
     input{
-      &.copy-input{
+      &.input-share{
         width: 70%;
         border-right: none;
         float: left;

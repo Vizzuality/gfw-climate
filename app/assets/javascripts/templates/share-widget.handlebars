@@ -1,0 +1,37 @@
+<div class="overlay js-close-share"></div>
+<div class="content-share mini-modal-content">
+  <a href="#" class="close js-close-share"><svg><use xlink:href="#shape-close"></use></svg></a>
+  <header>
+    <h2>Share this view</h2>
+    <div>
+      {{#ifCond this.type "==" 'link'}}
+        <p>Click and paste link in email or IM</p>
+      {{/ifCond}}         
+
+      {{#ifCond this.type "==" 'embed'}}
+        <p>Click and paste HTML to embed in website.</p>
+        <p><button class="js-preview-share btn gray little uppercase">Preview</button></p></p>
+      {{/ifCond}}         
+
+    </div>
+  </header>
+  <div class="mini-modal-input">
+    {{#ifCond this.type "==" 'link'}}
+      <input class='field js-input-share input-share' type='text' id='share-field' value="" readonly />
+      <button class="btn gray uppercase js-copy-share copy-share">Copy</button>
+      <ul class="button-container">
+        <li><button class="js-type-share btn gray uppercase" data-type="embed">Embed</button></li>
+        <li><button class="js-type-share btn blue uppercase" data-type="link">Link</button></li>
+      </ul>
+    {{/ifCond}}         
+
+    {{#ifCond this.type "==" 'embed'}}
+      <input class='field js-input-share input-share' type='text' id='share-field' value="" readonly />
+      <button class="btn gray uppercase js-copy-share copy-share">Copy</button>
+      <ul class="button-container">
+        <li><button class="js-type-share btn blue uppercase" data-type="embed">Embed</button></li>
+        <li><button class="js-type-share btn gray uppercase" data-type="link">Link</button></li>
+      </ul>
+    {{/ifCond}}         
+  </div>
+</div>
