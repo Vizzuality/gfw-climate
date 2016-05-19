@@ -277,6 +277,10 @@
         border-radius: 10px;
         cursor: pointer;
         box-shadow: 0 0 0 2px $blue;
+        position: relative;
+        top: -7px;
+        right: -45px;
+        float: right;
         &:hover{
           background: darken($blue,5%);
           box-shadow: 0 0 0 2px darken($blue,5%);
