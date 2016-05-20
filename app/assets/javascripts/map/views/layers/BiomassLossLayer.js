@@ -18,7 +18,8 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 12,
-      urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png'
+      urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
+      uncertainty: 128
     },
 
     init: function(layer, options, map) {
@@ -31,6 +32,7 @@ define([
       }
       this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
       this.threshold = options.threshold || this.options.threshold;
+      this.uncertainty = options.uncertainty || this.options.uncertainty;
       this._super(layer, options, map);
     },
 
@@ -42,6 +44,7 @@ define([
       "use asm";
       // We'll force the use of a 32bit integer wit `value |0`
       // More info here: http://asmjs.org/spec/latest/
+            console.log(this.uncertainty)
 
       var components = 4 | 0,
           w = w |0,
@@ -69,9 +72,13 @@ define([
       for(var i = 0 |0; i < w; ++i) {
        for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
-              intensity = imgdata[pixelPos+1] |0;
+              intensity = imgdata[pixelPos+1] |0,
+              alpha = imgdata[pixelPos + 3];
           imgdata[pixelPos + 3] = 0 |0;
-          if (intensity > 0) {
+          if (intensity > 0 && alpha > this.uncertainty) {
+            // if (!!alpha && alpha >= this.uncertainty){
+            //     imgdata[pixelPos + 3] = alpha;
+            // }
             var intensity_scaled = myscale(intensity) |0,
                 yearLoss = 2001 + imgdata[pixelPos] |0;
             if (yearLoss >= yearStart && yearLoss <= yearEnd) {
@@ -106,7 +113,19 @@ define([
         .fillFromObject({x: x, y: y, z: z, threshold: this.threshold});
     },
     _updateUncertainty: function(uncertainty) {
-      console.log(uncertainty);
+      switch(uncertainty) {
+        case 'min':
+          this.uncertainty = 0;
+        break;
+        case 'max':
+          this.uncertainty = 200;
+        break;
+        case 'avg':
+        default:
+          this.uncertainty = 128;
+        break;
+      }
+      this.presenter.updateLayer();
     }
 
   });
