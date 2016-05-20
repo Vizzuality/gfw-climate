@@ -18,7 +18,7 @@ require([
     el: document.body,
 
     initialize: function() {
-      this._handlebarsPlugins()
+      this._handlebarsPlugins();
       this._initRouter();
       this._initViews();
       this._initApp();

@@ -55,6 +55,7 @@ define([
       this.$el.html(this.template({
         id: this.presenter.model.get('id'),
         slug: this.presenter.model.get('slug'),
+        slugshare: this.setKeyFromLocation(),
         tabs: this.presenter.model.get('tabs'),
         name: this.presenter.model.get('name'),
         isMobile: this.mobile
@@ -151,6 +152,11 @@ define([
       this.$el.remove();
       this.remove();
       Backbone.View.prototype.remove.call(this);
+    },
+
+    setKeyFromLocation: function() {
+      var location = this.presenter.model.get('location');
+      return location.iso + '+' + location.jurisdiction + '+' + location.area;
     }
 
   });
