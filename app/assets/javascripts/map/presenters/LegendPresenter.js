@@ -123,6 +123,13 @@ define([
       mps.publish('Experiment/choose',[id]);
     },
 
+    changeUncertainty: function(el) {
+      var type = el.hasOwnProperty('quantity') ? el.quantity : null;
+      if (!!type) {
+        this.view._setUncertaintyOptionUI(type);
+        mps.publish('Uncertainty/changed',[type]);
+      }
+    }
 
   });
 
