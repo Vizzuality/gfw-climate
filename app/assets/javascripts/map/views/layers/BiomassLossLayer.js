@@ -104,6 +104,9 @@ define([
     _getUrl: function(x, y, z) {
       return new UriTemplate(this.options.urlTemplate)
         .fillFromObject({x: x, y: y, z: z, threshold: this.threshold});
+    },
+    _updateUncertainty: function(uncertainty) {
+      console.log(uncertainty);
     }
 
   });
