@@ -36,6 +36,7 @@ require([
 
     _initViews: function() {
       new PantropicalView();
+      // new CountryEmbedView();
     }
 
   });
