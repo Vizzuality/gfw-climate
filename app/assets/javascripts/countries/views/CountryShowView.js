@@ -9,7 +9,7 @@ define([
   // Common views
   'views/SourceModalView',
   'views/ToolbarView',
-  'views/ShareWidgetView',
+  'widgets/views/ShareWidgetView',
 
 ], function(Backbone, FixedHeaderView,
   CountryShowHeaderView, TabsView, CountryWidgetsModalView, WidgetGridView, CountryGridButtonBoxView,

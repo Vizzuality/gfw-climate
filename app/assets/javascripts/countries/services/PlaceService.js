@@ -107,8 +107,12 @@ define([
       params = this._destandardizeParams(
         this._getPresenterParams(this._presenters));
 
+
       route = this._getRoute(params);
       this.router.navigate(route, {silent: true});
+
+      mps.publish('Place/store', [this._standardizeParams(params)]);
+
     },
 
     /**

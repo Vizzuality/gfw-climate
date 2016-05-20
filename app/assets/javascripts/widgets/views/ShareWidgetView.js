@@ -9,8 +9,8 @@ define([
   'handlebars',
   'mps',
   'text!templates/share-widget.handlebars',
-  'views/SharePreviewView'
-], function(Backbonoe,_, Handlebars, mps, tpl, SharePreviewView) {
+  'widgets/presenters/ShareWidgetPresenter',  
+], function(Backbonoe,_, Handlebars, mps, tpl, Presenter) {
 
   'use strict';
 
@@ -19,6 +19,7 @@ define([
       hidden: true,
       type: 'link',
       url: null,
+      widget: null
     }
   });
 
@@ -41,6 +42,7 @@ define([
     },
 
     initialize: function(parent) {
+      this.presenter = new Presenter();
       this.model = new ShareModel();
       this.render();
       this.listeners();
@@ -70,12 +72,16 @@ define([
 
     
     // Show, hide and toggle //
-    show: function() {
+    show: function(e) {
+      this.model.set('widget', $(e.currentTarget).data('widget'));
+      this.model.set('slugshare', $(e.currentTarget).data('slugshare'));
       this.model.set('hidden', false);
     },
 
     hide: function() {
       this.model.set('hidden', true);
+      this.model.set('type', 'link');
+
     },
 
     toggle: function() {
@@ -173,8 +179,12 @@ define([
       this.model.set('url', url);
     },
 
-    getEmbedLink: function(callback) {
-      return 'testing';
+    getEmbedLink: function() {
+      console.log(this.model.get('slugshare'));
+      var width = 600;
+      var height = 600;
+      var url = '';
+      return '<iframe width="' +width+ '" height="' +height+ '" frameborder="0" src="' + url + '"></iframe>';
     }
 
     // _renderEmbed: function() {
@@ -241,7 +251,7 @@ define([
     // },
 
     // _showPreview: function() {
-    //   this.iframeView = new SharePreviewView({
+    //   this.iframeView = ne({
     //     src: this.model.get('embedUrl'),
     //     width: this.model.get('embedWidth'),
     //     height: this.model.get('embedHeight'),
