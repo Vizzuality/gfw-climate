@@ -328,13 +328,19 @@ define([
     },
 
     _showCanopy: function(e){
+      if (!! e.target.parentNode.classList.contains('minavgmax')) return this._getUncertainty(e);
       e && e.preventDefault();
       this.presenter.showCanopy();
+    },
+
+    _getUncertainty: function(e) {
+      this.presenter.changeUncertainty(e.target.dataset);
+    },
+
+    _setUncertaintyOptionUI: function(type) {
+      var $opt = this.$el.find('[data-quantity="'+type+'"]');
+      $opt.addClass('current').siblings('.current').removeClass('current');
     }
-
-
-
-
 
   });
 

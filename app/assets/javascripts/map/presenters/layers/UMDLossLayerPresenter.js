@@ -31,6 +31,10 @@ define([
     }, {
       'Threshold/changed': function(threshold) {
         this.view.setThreshold(threshold);
+      },
+    }, {
+      'Uncertainty/changed': function(uncertainty) {
+        this.view._updateUncertainty(uncertainty);
       }
     }],
 
