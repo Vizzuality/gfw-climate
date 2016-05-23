@@ -2,8 +2,8 @@
   <div class="layer-details layer-details-biomass_loss">
     <div class="total-carbon-bar">
       <ul class="labels">
-        <li>0</li>
-        <li>917<span class="units"> t CO<sub>2</sub> ha<sup>-1</sup></span></li>
+        <li>{{minrange}}</li>
+        <li>{{maxrange}}<span class="units"> t CO<sub>2</sub> ha<sup>-1</sup></span></li>
       </ul>
       <div class="quartile-bar-loss-biomass"></div>
     </div>
@@ -11,6 +11,7 @@
     <div class="toggle-legend-option" data-layer-toggle="biomass">
       <p class="canopy">Canopy density above ground biomass displayed <span class="button-wrapper"><span class="canopy-button"> > {{threshold}} %</span></span></p>
       <p class="canopy minavgmax">Uncertainty considered <span class="button-wrapper"><span class="canopy-button minavgmax"> <span data-quantity="min">min</span><span class="current" data-quantity="avg">mean</span><span data-quantity="max">max</span></span></span></p>
+      <p class="canopy range">range <span class="button-wrapper"><span class="canopy-button range min"><input type="number" min="{{minrange}}" max="{{maxrange}}" step="1" value="{{minrange}}"/></span> to <span class="canopy-button range max"><input type="number" min="{{minrange}}" max="{{maxrange}}" step="1" value="{{maxrange}}"/></span></span></p>
     </div>
   </div>
 {{/if}}
