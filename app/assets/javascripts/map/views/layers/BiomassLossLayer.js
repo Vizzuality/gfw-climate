@@ -19,7 +19,9 @@ define([
       threshold: 30,
       dataMaxZoom: 12,
       urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
-      uncertainty: 127
+      uncertainty: 127,
+      this.minrange = '0';
+      this.maxrange = '917';
     },
 
     init: function(layer, options, map) {
@@ -34,6 +36,8 @@ define([
       this.threshold = options.threshold || this.options.threshold;
       this.uncertainty = (!isNaN(options.uncertainty)&&options.uncertainty !== 127) ? options.uncertainty : this.options.uncertainty,
       this._super(layer, options, map);
+      this.minrange = options.minrange || this.options.minrange;
+      this.maxrange = options.maxrange || this.options.maxrange;
     },
 
     /**
@@ -44,6 +48,7 @@ define([
       "use asm";
       // We'll force the use of a 32bit integer wit `value |0`
       // More info here: http://asmjs.org/spec/latest/
+      console.log(this.minrange,this.maxrange)
       var components = 4 | 0,
           w = w |0,
           j = j |0,
@@ -123,6 +128,12 @@ define([
           this.uncertainty = 127;
         break;
       }
+      this.presenter.updateLayer();
+    },
+    _updateRange: function(range) {
+      this.minrange = range[0];
+      this.maxrange = range[1];
+
       this.presenter.updateLayer();
     }
 

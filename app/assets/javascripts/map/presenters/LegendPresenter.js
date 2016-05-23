@@ -129,6 +129,10 @@ define([
         this.view._setUncertaintyOptionUI(type);
         mps.publish('Uncertainty/changed',[type]);
       }
+    },
+
+    setNewRange: function(range) {
+      mps.publish('BiomassRange/set',[range]);
     }
 
   });

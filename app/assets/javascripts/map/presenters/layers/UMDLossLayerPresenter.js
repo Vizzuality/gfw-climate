@@ -36,6 +36,10 @@ define([
       'Uncertainty/changed': function(uncertainty) {
         this.view._updateUncertainty(uncertainty);
       }
+    },{
+      'BiomassRange/set': function(range) {
+        this.view._updateRange(range);
+      }
     }],
 
     updateLayer: function() {

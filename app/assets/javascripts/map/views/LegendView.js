@@ -140,7 +140,8 @@ define([
       'click .layer-close'   : '_removeLayer',
       'click .close' : 'toogleLegend',
       'click #title-dialog-legend' : 'toogleEmbedLegend',
-      'click .toggle-title' : 'toggleLegendOptions'
+      'click .toggle-title' : 'toggleLegendOptions',
+      'change input'        : 'updateRange'
     },
 
     initialize: function() {
@@ -196,7 +197,9 @@ define([
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
-            layerTitle: layer.title
+            layerTitle: layer.title,
+            minrange: options.minrange || '0',
+            maxrange: options.maxrange || '917'
           });
         }
         if (layer.iso) {
@@ -330,6 +333,7 @@ define([
 
     _showCanopy: function(e){
       if (!! e.target.parentNode.classList.contains('minavgmax')) return this._getUncertainty(e);
+      if (!! e.target.parentNode.classList.contains('range'))     return;
       e && e.preventDefault();
       this.presenter.showCanopy();
     },
@@ -345,6 +349,10 @@ define([
     toggleLegendOptions: function(e) {
       $(e.target).find('span').toggleClass('active');
       $(e.target).siblings('.toggle-legend-option').toggle('250');
+    },
+    updateRange: function(e) {
+      var newrange = this.$el.find('input');
+      return this.presenter.setNewRange([newrange[0].value,newrange[1].value]);
     }
 
   });
