@@ -195,7 +195,7 @@ define([
       _.each(layers, function(layer) {
         layer.source = (layer.slug === 'nothing') ? null : layer.slug;
         if (this.detailsTemplates[layer.slug]) {
-          if(layer.slug === 'biomass_loss') {var layer_range = ['0','500']};
+          if(layer.slug === 'biomass_loss') {var layer_range = ['0','917']};
           if(layer.slug === 'carbon_stocks') {var layer_range = ['0','500']};
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
@@ -349,8 +349,10 @@ define([
       $opt.addClass('current').siblings('.current').removeClass('current');
     },
     toggleLegendOptions: function(e) {
-      $(e.target).find('span').toggleClass('active');
-      $(e.target).siblings('.toggle-legend-option').toggle('250');
+      if (e.target.tagName === 'SPAN') e = e.target.parentNode;
+      else e = e.target;
+      $(e).find('span').toggleClass('active');
+      $(e).siblings('.toggle-legend-option').toggle('250');
     },
     updateRange: function(e) {
       var newrange = this.$el.find('input');
