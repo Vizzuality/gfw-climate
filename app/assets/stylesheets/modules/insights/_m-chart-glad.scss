@@ -1,6 +1,4 @@
-.chart-pantropical-glad {
-
-
+.chart-glad {
   .axis {
     &.y {
       .domain {
@@ -31,6 +29,7 @@
           stroke-width: 0;
           fill: #555555;
           font-size: 14px;
+          text-transform: uppercase;
         }
       }
     }
@@ -41,8 +40,8 @@
       shape-rendering: crispEdges;
       stroke: rgba(91, 128, 160, 0.70);
       fill: transparent;
-      stroke-width: 2.5;
-      stroke-dasharray: 10, 6;
+      stroke-width: 3;
+      stroke-dasharray: 13, 6;
     }
   }
 
@@ -50,18 +49,36 @@
     .line-solid-path {
       stroke: rgba(91, 128, 160, 0.70);
       fill: transparent;
-      stroke-width: 2.5;
+      stroke-width: 3;
     }
   }
 
   .dots-group {
     .dot {
       fill: rgba(237, 176, 74, 0.70);
+      transform-origin: center center;
+      transition: .2s ease;
+      transform: scale(0);
     }
   }
 
   .handle {
     shape-rendering: crispEdges;
     fill: rgba(0, 0, 0, 0.3);
+  }
+
+  .handle-label {
+    text-anchor: middle;
+    font-size: 12px;
+    stroke-width: 0;
+    fill: #555555;
+    font-weight: 500;
+  }
+
+  .timeline-button {
+    fill: transparent;
+    stroke: rgba(91, 128, 160, 0.70);
+    stroke-width: 1;
+    cursor: pointer;
   }
 }

@@ -5,9 +5,9 @@ define([
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView',
   'countries/views/CountryPantropicalView',
-  'countries/views/Pantropical/PantropicalGladAlertsView'
+  'insights/views/InsightsGladAlertsView'
 ], function(Backbone, utils, PlaceService, CountryIndexView,
-  CountryShowView,CountryPantropicalView, PantropicalGladAlertsView) {
+  CountryShowView, CountryPantropicalView, InsightsGladAlertsView) {
 
   'use strict';
 
@@ -16,6 +16,7 @@ define([
     routes: {
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
+      'insights/glad-alerts'                : '_initGladAlerts',
       'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
 
@@ -42,8 +43,10 @@ define([
     _initPantropical: function() {
       ga('send', 'event', 'pantropical','Choose visualisation','All countries');
       new CountryPantropicalView();
+    },
 
-      new PantropicalGladAlertsView();
+    _initGladAlerts: function() {
+      new InsightsGladAlertsView();
     }
   });
 

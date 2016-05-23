@@ -1,0 +1,217 @@
+.glad-vis {
+  .main-chart {
+    width: 100%;
+    border-bottom: 1px solid #E0E0E0;
+    padding-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .chart {
+      width: 100%;
+      height: 350px;
+    }
+  }
+
+  .compare-list {
+    width:100%;
+    padding-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .visualizations {
+      width:100%;
+      display:flex;
+    }
+
+    .compare-chart {
+      width:31.333333333%;
+      height: 250px;
+      margin-right: 3%;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .chart {
+        width: 100%;
+        height: inherit;
+      }
+    }
+  }
+
+  .selectors {
+    width: 210px;
+    height: 20px;
+    background: #FFFFFF;
+    box-shadow: inset 0 0 0 1px #5B80A0;
+    border-radius: 36px;
+    overflow: hidden;
+    display: flex;
+
+    .action {
+      font-size: 10px;
+      font-weight: 500;
+      color: #555555;
+      line-height: 12px;
+      text-transform: uppercase;
+      padding: 4px 10px 3px 10px;
+      cursor: pointer;
+
+      &:last-child {
+        margin-left: auto;
+      }
+
+      &.-selected {
+        background: #5B80A0;
+        border-radius: 36px;
+        color: #FFFFFF;
+        cursor: default;
+      }
+    }
+
+    &.-highlight{
+      width: auto;
+      border-radius: 100px;
+      margin-left: auto;
+      box-shadow: none;
+
+      .action {
+        &.-selected {
+          background: #EDB04A;
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+
+  .legend {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+
+    &.-main{
+      width: 55%;
+      margin: 0 0 0 auto;
+    }
+
+    .list {
+      width: 100%;
+      display: flex;
+
+      .item {
+        width: 120px;
+        margin-right: 20px;
+
+        .heading {
+          display: flex;
+          flex-direction: row;
+
+          .icon {
+            width: 18px;
+            height: 15px;
+            flex-shrink: 0;
+            margin-right: 5px;
+            position: relative;;
+
+            &.-line {
+              &:after {
+                content: '';
+                width: 100%;
+                height: 3px;
+                background: #5B80A0;
+                position: absolute;
+                top: 5px;
+              }
+            }
+
+            &.-dashed {
+              &:before {
+                content: '';
+                width: 35%;
+                height: 3px;
+                background: #5B80A0;
+                position: absolute;
+                top: 5px;
+                left: 0;
+              }
+              &:after {
+                content: '';
+                width: 40%;
+                height: 3px;
+                background: #5B80A0;
+                position: absolute;
+                top: 5px;
+                right: 0;
+              }
+            }
+
+            &.-dot {
+              &:after {
+                content: '';
+                width: 10px;
+                height: 10px;
+                border-radius: 10px;
+                background: #EDB04A;
+                position: absolute;
+                top: 1px;
+                left: 9px;
+                right: 0;
+              }
+            }
+          }
+
+          .label {
+            font-size: 14px;
+            color: #555555;
+            height: 30px;
+          }
+        }
+
+        .value {
+          font-size: 35px;
+          font-weight: 300;
+          color: #5B80A0;
+          margin-left: 20px;
+        }
+
+        &.-highlight {
+          .value {
+            color: #EDB04A;
+          }
+        }
+
+        &.-no-icon {
+          .value {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+
+    &.-compare {
+      .list {
+        flex-direction: column;
+        flex-direction: column-reverse;
+
+        .item {
+          display: flex;
+          margin-bottom: 15px;
+
+          .heading {
+            width: 136px;
+            flex-shrink: 0;
+          }
+
+          &.-no-icon {
+            .label {
+              margin-left: 20px;
+            }
+            .value {
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

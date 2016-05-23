@@ -41,7 +41,11 @@
 
 // Pantropical: we should remove this to another tab
 @import "modules/pantropical/m-pantropical";
-@import "modules/pantropical/m-chart-pantropical-glad";
+
+// Insights
+@import "modules/insights/m-insights";
+@import "modules/insights/m-glad-vis";
+@import "modules/insights/m-chart-glad";
 
 // Common
 @import "states";
