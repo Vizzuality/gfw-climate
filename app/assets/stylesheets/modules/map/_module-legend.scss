@@ -289,12 +289,14 @@
       }
       &.minavgmax {
         padding: 10px 0 15px 0;
+        position: relative;
         .canopy-button {
-          top: 0;
+          top: 9px;
           background: transparent;
           color: #5b80A0;
           box-shadow: 0 0 0 1px #5B80A0;
           padding: 1px 0;
+          position: absolute;
           span {
             padding: 0 2px;
           }
