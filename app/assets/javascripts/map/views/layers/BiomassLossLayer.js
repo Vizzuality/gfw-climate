@@ -78,9 +78,6 @@ define([
               alpha = imgdata[pixelPos + 3];
               imgdata[pixelPos + 3] = 0 |0;
           if (intensity > 0 && alpha > this.uncertainty) {
-            // if (!!alpha && alpha >= this.uncertainty){
-            //     imgdata[pixelPos + 3] = alpha;
-            // }
             var intensity_scaled = myscale(intensity) |0,
                 yearLoss = 2000 + imgdata[pixelPos] |0;
             if (yearLoss >= yearStart && yearLoss <= yearEnd) {
