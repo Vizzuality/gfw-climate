@@ -16,7 +16,9 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       layerSpec: null,
-      threshold: null
+      threshold: null,
+      minrange: null,
+      maxrange: null
     }
   });
 
@@ -82,7 +84,9 @@ define([
     _updateLegend: function() {
       var categories = this.status.get('layerSpec').getLayersByCategory(),
           options = {
-            threshold: this.status.get('threshold')
+            threshold: this.status.get('threshold'),
+            minrange: this.status.get('minrange'),
+            maxrange: this.status.get('maxrange'),
           },
           geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
 
