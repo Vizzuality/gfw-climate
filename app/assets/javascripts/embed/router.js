@@ -18,6 +18,10 @@ define([
       this.placeService = new PlaceService(this);
     },
 
+    _initPantropical: function() {
+
+    },
+
     _initShow: function(location, widget) {
       this.name = 'embed';
       var params = _.extend({
@@ -30,7 +34,7 @@ define([
 
       // global views
       new SourceModalView();
-      
+
       this.placeService.initPlace(this.name, params);
     },
 

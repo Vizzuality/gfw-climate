@@ -1,6 +1,8 @@
 .embed-container {
 	max-width: 500px;
 	margin: 0 auto;
+	border: 1px solid #CCC;
+	border-top: none;	
 }
 
 // HEADER
@@ -15,6 +17,13 @@
 	.header-title {
 		padding: 15px 20px;
 		padding-right: 100px;
+		
+		> * {
+			margin: 0 0 10px;
+			&:last-child {
+				margin: 0;
+			}
+		}
 	}
 
 	h1 {
@@ -45,7 +54,6 @@
 		color: $font-color-4;
 		text-transform: uppercase;
 		font-size: 14px;
-		margin: 5px 0 0;
 
 		> span {
 			position: relative;
@@ -90,41 +98,50 @@
 .embed-widget {
 	background: $white;
 
-	.m-widget > .m-widget-header {
-		display: none;
-	}
+	.m-widget {
+		> .m-widget-header {
+			display: none;
+		}
 
-	.m-widget > .m-widget-content {
-		margin: 0;
+		> .m-widget-content {
+			margin: 0;
 
-		.tab-ul {
-	    display: flex !important;
-	    visibility: visible;
-	    
-			.tab-li {
-				background: $dark;
-				color: $white;
-				border: none;
+			.tab-ul {
+		    display: flex !important;
+		    visibility: visible;
 
-				.subname, .ipcc {
+				.tab-li {
+					background: $dark;
 					color: $white;
-				}
+					border: none;
 
-				&.-selected {
-					color: $dark;
-					background: $white;
-		
 					.subname, .ipcc {
+						color: $white;
+					}
+
+					&.-selected {
 						color: $dark;
+						background: $white;
+			
+						.subname, .ipcc {
+							color: $dark;
+						}
 					}
 				}
 			}
-		}
+			
+			.m-tab {
+				padding: 0 15px 15px;
 
-		.tab-content {
-			padding: 0 15px 15px;
+				.sup-options {
+					margin: 25px 0 10px 0;
+					display: block;
+				}
+
+			}			
 		}
 	}
+
 }
 
 // FOOTER

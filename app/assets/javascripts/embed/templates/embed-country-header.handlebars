@@ -1,6 +1,9 @@
 <header>
 	<div class="header-title">
-		<h2>{{this.countryName}}</h2>
+		{{#if this.subtitle}}
+			<h3>{{this.subtitle}}/</h3>
+		{{/if}}
+		<h2>{{this.title}}</h2>
 		<h3>
 			<span>
 				{{this.widgetName}}
