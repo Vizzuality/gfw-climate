@@ -627,7 +627,6 @@ $height: auto;
 }
 
 .mini-modal-content {
-  width: 300px;
   padding: 20px;
   position: fixed;
   top: 50%;
@@ -712,9 +711,10 @@ $height: auto;
   }
 
   .button-container {
-    margin: 10px 0 0;
     display: flex;
     justify-content: space-between;
+    width: 260px;
+    margin: 0 auto 15px;    
 
     li{
       width: 48%;
@@ -797,6 +797,10 @@ $height: auto;
         }
       }
     }
+  }
+
+  .share-iframe {
+    margin: 20px 0 0;
   }
 }
 
