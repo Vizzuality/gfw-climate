@@ -316,14 +316,14 @@
       z-index: 0;
       &:before {
         content: '.';
-        width: 20px; 
-        height: 20px; 
+        width: 15px; 
+        height: 15px; 
         background-color: $white;
         color: $white;
         transform: rotate(45deg);
         box-shadow: inset -1px -1px 0px #cecece;
         position: absolute;
-        top: -9px;
+        top: -7px;
         display: block;
         z-index: -1;
       }
@@ -331,7 +331,7 @@
         width: 100%;
         .button-wrapper {
           display: block;
-          margin: 10px 0;
+          margin: 5px 0;
           text-align: center;
         }
         .canopy-button {
