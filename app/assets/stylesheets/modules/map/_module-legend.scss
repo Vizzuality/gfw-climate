@@ -394,7 +394,7 @@
       font-size: 10px;
       li {display: inline-block;}
       li:first-child {float: left;}
-      li:last-child {float: right;}
+      li:last-child {float: right;width: 50%;text-align: right;}
     }
 
     .quartile-bar {
