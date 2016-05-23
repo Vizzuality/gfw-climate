@@ -332,7 +332,6 @@
         .button-wrapper {
           display: block;
           margin: 5px 0;
-          text-align: center;
         }
         .canopy-button {
           float: none;
@@ -340,6 +339,15 @@
           right: initial;
           background: $white;
           color: $blue;
+          min-width: 48px;
+          text-align: center;
+          input {
+            width: 40px;
+            border: none;
+            text-align: right;
+            color: #5b80A0;
+            padding: 0 0 0 7px;
+          }
         }
         &.minavgmax {
           padding: 10px 0 15px 0;
