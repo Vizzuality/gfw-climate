@@ -355,7 +355,9 @@ define([
       var targets = this.$el.find('.labels em');
       newrange = [newrange[0].value,newrange[1].value];
       if (~~newrange[0] < 0) return this.resetRanges('min');
+      if (~~newrange[0] > 917) return this.resetRanges('min');
       if (~~newrange[1] > 917) return this.resetRanges('max');
+      if (~~newrange[1] < 0) return this.resetRanges('max');
       targets.first().html(newrange[0]);
       targets.last().html(newrange[1]);
       this.presenter.setNewRange([newrange[0],newrange[1]]);
