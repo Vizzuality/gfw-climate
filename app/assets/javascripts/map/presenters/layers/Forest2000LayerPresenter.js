@@ -24,6 +24,14 @@ define([
     _subscriptions: [{
       'Threshold/changed': function(threshold) {
         this.view.setThreshold(threshold);
+      },
+    }, {
+      'Uncertainty/changed': function(uncertainty) {
+        this.view._updateUncertainty(uncertainty);
+      }
+    },{
+      'Range/set': function(range) {
+        this.view._updateRange(range);
       }
     }],
 

@@ -195,11 +195,13 @@ define([
       _.each(layers, function(layer) {
         layer.source = (layer.slug === 'nothing') ? null : layer.slug;
         if (this.detailsTemplates[layer.slug]) {
+          if(layer.slug === 'biomass_loss') {var layer_range = ['0','917']}
+            if(layer.slug === 'carbon_stocks') {var layer_range = ['0','500']}
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             layerTitle: layer.title,
-            minrange: options.minrange || '0',
-            maxrange: options.maxrange || '917'         
+            minrange: options.minrange || layer_range[0],
+            maxrange: options.maxrange || layer_range[1]
           });
         }
         if (layer.iso) {
