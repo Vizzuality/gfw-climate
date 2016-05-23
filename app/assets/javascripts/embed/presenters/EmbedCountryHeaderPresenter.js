@@ -60,18 +60,49 @@ define([
           //all ready and good to go...
           var country = countryModel.toJSON();
           var widget = widgetModel.toJSON();
+          var title = this.setCountryTitle(location, country);
+          var subtitle = this.setCountrySubtitle(location, country);
 
           this.status.set('widgetName', widget.name);
           this.status.set('widgetSlug', widget.slug);
-          this.status.set('countryName', country.name);
-          this.status.set('jurisdictionName', _.findWhere(country.jurisdictions, {id: location.jurisdiction }));
-          this.status.set('areaName', _.findWhere(country.areas_of_interest, {id: location.jurisdiction }));
+          this.status.set('title', title);
+          this.status.set('subtitle', subtitle);
 
           this.view.render();
 
         }.bind(this));
       }
     },
+
+    setCountryTitle: function(location, country) {
+      if (!!~~location.jurisdiction) {
+        var jurisdiction = _.findWhere(country.jurisdictions, {id: ~~location.jurisdiction });
+        return jurisdiction.name;
+
+      } else if (!!~~location.area) {
+        var area = _.findWhere(country.areas_of_interest, {id: ~~location.area });
+        return area.name;
+
+      } else {
+        return country.name;
+      }
+
+      return country.name;
+    },
+
+    setCountrySubtitle: function(location, country) {
+      if (!!~~location.jurisdiction) {
+        return country.name;
+
+      } else if (!!~~location.area) {
+        return country.name;
+        
+      } else {
+        return null;
+      }
+
+      return null;
+    }
 
   });
 
