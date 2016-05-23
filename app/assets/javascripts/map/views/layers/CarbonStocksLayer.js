@@ -38,8 +38,6 @@ define([
      */
     filterCanvasImgdata: function(imgdata, w, h) {
       "use asm";
-
-      console.log(this.uncertainty,this.minrange,this.maxrange)
       // We'll force the use of a 32bit integer wit `value |0`
       // More info here: http://asmjs.org/spec/latest/
       var components = 4 | 0,
