@@ -360,6 +360,7 @@ define([
       if (~~newrange[1] < 0) return this.resetRanges('max');
       targets.first().html(newrange[0]);
       targets.last().html(newrange[1]);
+      this.updateRangeBar(newrange);
       this.presenter.setNewRange([newrange[0],newrange[1]]);
     },
     resetRanges: function(end) {
@@ -373,6 +374,10 @@ define([
         newrange[1].value = 917;
         targets.last().html('917');
       }
+    },
+    updateRangeBar: function(range) {
+      var $bar = this.$el.find('.quartile-bar-loss-biomass');
+      $bar.css('background', 'linear-gradient(to right, #ff1f26 0%, #d21f26 '+range[0]*100/917+'%, #d21f26 52%, #f19813 '+range[1]*100/917+'%, #ffd00b 100%)');
     }
 
   });
