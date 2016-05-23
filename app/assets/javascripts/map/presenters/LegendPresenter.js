@@ -16,7 +16,7 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       layerSpec: null,
-      threshold: null
+      threshold: null,
     }
   });
 
@@ -82,7 +82,7 @@ define([
     _updateLegend: function() {
       var categories = this.status.get('layerSpec').getLayersByCategory(),
           options = {
-            threshold: this.status.get('threshold')
+            threshold: this.status.get('threshold'),
           },
           geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
 
@@ -129,6 +129,10 @@ define([
         this.view._setUncertaintyOptionUI(type);
         mps.publish('Uncertainty/changed',[type]);
       }
+    },
+
+    setNewRange: function(range,layer) {
+      mps.publish('Range/set',[range,layer]);
     }
 
   });

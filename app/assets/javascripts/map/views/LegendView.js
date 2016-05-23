@@ -140,6 +140,8 @@ define([
       'click .layer-close'   : '_removeLayer',
       'click .close' : 'toogleLegend',
       'click #title-dialog-legend' : 'toogleEmbedLegend',
+      'click .toggle-title' : 'toggleLegendOptions',
+      'change input'        : 'updateRange'
     },
 
     initialize: function() {
@@ -193,9 +195,13 @@ define([
       _.each(layers, function(layer) {
         layer.source = (layer.slug === 'nothing') ? null : layer.slug;
         if (this.detailsTemplates[layer.slug]) {
+          if(layer.slug === 'biomass_loss') {var layer_range = ['0','917']};
+          if(layer.slug === 'carbon_stocks') {var layer_range = ['0','500']};
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
-            layerTitle: layer.title
+            layerTitle: layer.title,
+            minrange: options.minrange || layer_range[0],
+            maxrange: options.maxrange || layer_range[1]
           });
         }
         if (layer.iso) {
@@ -329,6 +335,7 @@ define([
 
     _showCanopy: function(e){
       if (!! e.target.parentNode.classList.contains('minavgmax')) return this._getUncertainty(e);
+      if (!! e.target.parentNode.classList.contains('range'))     return;
       e && e.preventDefault();
       this.presenter.showCanopy();
     },
@@ -340,6 +347,56 @@ define([
     _setUncertaintyOptionUI: function(type) {
       var $opt = this.$el.find('[data-quantity="'+type+'"]');
       $opt.addClass('current').siblings('.current').removeClass('current');
+    },
+    toggleLegendOptions: function(e) {
+      if (e.target.tagName === 'SPAN') e = e.target.parentNode;
+      else e = e.target;
+      $(e).find('span').toggleClass('active');
+      $(e).siblings('.toggle-legend-option').toggle('250');
+    },
+    updateRange: function(e) {
+      var newrange = this.$el.find('input');
+      var targets = this.$el.find('.labels em');
+      newrange = [newrange[0].value,newrange[1].value];
+      var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
+      if(layer === 'biomass_loss') {var layer_range = ['0','917']};
+      if(layer === 'carbon_stocks') {var layer_range = ['0','500']};
+      if (~~newrange[0] < 0) return this.resetRanges('min',e);
+      if (~~newrange[0] > layer_range[1]) return this.resetRanges('min',e);
+      if (~~newrange[1] > layer_range[1]) return this.resetRanges('max',e);
+      if (~~newrange[1] < 0) return this.resetRanges('max',e);
+      targets.first().html(newrange[0]);
+      targets.last().html(newrange[1]);
+      this.updateRangeBar(newrange,e);
+      this.presenter.setNewRange([newrange[0],newrange[1]],$(e.target).parents('.layer-details').find('.thislayer').html());
+    },
+    resetRanges: function(end,e) {
+      var newrange = this.$el.find('input');
+      var targets = this.$el.find('.labels em');
+      var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
+      if(layer === 'biomass_loss') {var layer_range = ['0','917']};
+      if(layer === 'carbon_stocks') {var layer_range = ['0','500']};
+      if (end === 'min'){
+        newrange[0].value = layer_range[0];
+        targets.first().html(layer_range[0]);
+      }
+      if (end === 'max'){
+        newrange[1].value = layer_range[1];
+        targets.last().html(layer_range[1]);
+      }
+    },
+    updateRangeBar: function(range,e) {
+      var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
+      if(layer === 'biomass_loss') {
+        var $bar = this.$el.find('.quartile-bar-loss-biomass');
+        var layer_range = ['0','917'];
+        $bar.css('background', 'linear-gradient(to right, #ff1f26 0%, #d21f26 '+range[0]*100/layer_range[1]+'%, #d21f26 52%, #f19813 '+range[1]*100/layer_range[1]+'%, #ffd00b 100%)');
+      };
+      if(layer === 'carbon_stocks') {
+        var $bar = this.$el.find('.quartile-bar-biomass');
+        var layer_range = ['0','500'];
+        $bar.css('background', 'linear-gradient(to right, #895122 10%, #957F4F 35%, #9DB38A 75%, #39A401 100%)');
+      };
     }
 
   });

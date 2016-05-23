@@ -19,7 +19,9 @@ define([
       threshold: 30,
       dataMaxZoom: 12,
       urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
-      uncertainty: 127
+      uncertainty: 127,
+      minrange: 0,
+      maxrange: 255
     },
 
     init: function(layer, options, map) {
@@ -34,6 +36,8 @@ define([
       this.threshold = options.threshold || this.options.threshold;
       this.uncertainty = (!isNaN(options.uncertainty)&&options.uncertainty !== 127) ? options.uncertainty : this.options.uncertainty,
       this._super(layer, options, map);
+      this.minrange = options.minrange || this.options.minrange;
+      this.maxrange = options.maxrange || this.options.maxrange;
     },
 
     /**
@@ -73,10 +77,7 @@ define([
               intensity = imgdata[pixelPos+1] |0,
               alpha = imgdata[pixelPos + 3];
               imgdata[pixelPos + 3] = 0 |0;
-          if (intensity > 0 && alpha > this.uncertainty) {
-            // if (!!alpha && alpha >= this.uncertainty){
-            //     imgdata[pixelPos + 3] = alpha;
-            // }
+          if (intensity > this.minrange && intensity < this.maxrange && alpha > this.uncertainty) {
             var intensity_scaled = myscale(intensity) |0,
                 yearLoss = 2000 + imgdata[pixelPos] |0;
             if (yearLoss >= yearStart && yearLoss <= yearEnd) {
@@ -123,6 +124,16 @@ define([
           this.uncertainty = 127;
         break;
       }
+      this.presenter.updateLayer();
+    },
+
+    // Cross multiplying to get x:
+    // userinput ----- 917
+    // x         ----- 255
+    _updateRange: function(range) {
+      this.minrange = (range[0]/917)*255;
+      this.maxrange = (range[1]/917)*255;
+
       this.presenter.updateLayer();
     }
 
