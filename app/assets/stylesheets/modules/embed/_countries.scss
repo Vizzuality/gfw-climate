@@ -1,0 +1,13 @@
+.embed-widget {
+	max-width: 500px;
+	margin: 0 auto;
+
+	.m-widget > .m-widget-header {
+		display: none;
+	}
+
+	.m-widget > .m-widget-content {
+		margin: 0;
+	}
+
+}

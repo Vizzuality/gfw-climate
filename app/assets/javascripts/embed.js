@@ -5,9 +5,8 @@ require([
   'jquery',
   'd3',
   'backbone',
-  'compare/router',
-  'embed/PantropicalView'
-], function($, d3, Backbone, RouterView, PantropicalView) {
+  'embed/router'
+], function($, d3, Backbone, RouterView) {
 
   'use strict';
 
@@ -17,7 +16,6 @@ require([
 
     initialize: function() {
       this._initRouter();
-      this._initViews();
       this._initApp();
     },
 
@@ -26,18 +24,16 @@ require([
      */
     _initApp: function() {
       if (!Backbone.History.started) {
-        Backbone.history.start({pushState: true});
+        Backbone.history.start({
+          pushState: true,
+          root: '/embed'
+        });
       }
     },
 
     _initRouter: function() {
       this.router = new RouterView();
     },
-
-    _initViews: function() {
-      new PantropicalView();
-      // new CountryEmbedView();
-    }
 
   });
 
