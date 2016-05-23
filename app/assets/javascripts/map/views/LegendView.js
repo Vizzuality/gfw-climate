@@ -352,7 +352,12 @@ define([
     },
     updateRange: function(e) {
       var newrange = this.$el.find('input');
-      return this.presenter.setNewRange([newrange[0].value,newrange[1].value]);
+      var targets = this.$el.find('.labels em');
+      
+      newrange = [newrange[0].value,newrange[1].value];
+      targets.first().html(newrange[0]);
+      targets.last().html(newrange[1]);
+      this.presenter.setNewRange([newrange[0],newrange[1]]);
     }
 
   });
