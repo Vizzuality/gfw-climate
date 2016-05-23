@@ -20,8 +20,8 @@ define([
       dataMaxZoom: 12,
       urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
       uncertainty: 127,
-      minrange: '0',
-      maxrange: '917'
+      minrange: 0,
+      maxrange: 255
     },
 
     init: function(layer, options, map) {
@@ -77,7 +77,7 @@ define([
               intensity = imgdata[pixelPos+1] |0,
               alpha = imgdata[pixelPos + 3];
               imgdata[pixelPos + 3] = 0 |0;
-          if (intensity > 0 && alpha > this.uncertainty) {
+          if (intensity > this.minrange && intensity < this.maxrange && alpha > this.uncertainty) {
             var intensity_scaled = myscale(intensity) |0,
                 yearLoss = 2000 + imgdata[pixelPos] |0;
             if (yearLoss >= yearStart && yearLoss <= yearEnd) {
@@ -127,8 +127,8 @@ define([
       this.presenter.updateLayer();
     },
     _updateRange: function(range) {
-      this.minrange = range[0];
-      this.maxrange = range[1];
+      this.minrange = (range[0]/917)*255;
+      this.maxrange = (range[1]/917)*255;
 
       this.presenter.updateLayer();
     }
