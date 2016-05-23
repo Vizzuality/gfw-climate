@@ -131,8 +131,8 @@ define([
       }
     },
 
-    setNewRange: function(range) {
-      mps.publish('Range/set',[range]);
+    setNewRange: function(range,layer) {
+      mps.publish('Range/set',[range,layer]);
     }
 
   });

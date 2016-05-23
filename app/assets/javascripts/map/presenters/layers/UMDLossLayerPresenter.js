@@ -34,11 +34,12 @@ define([
       },
     }, {
       'Uncertainty/changed': function(uncertainty) {
-        this.view._updateUncertainty(uncertainty);
+        //this.view._updateUncertainty(uncertainty);
       }
     },{
-      'Range/set': function(range) {
-        this.view._updateRange(range);
+      'Range/set': function(range,layer) {
+        if (layer === 'biomass_loss')
+          this.view._updateRange(range);
       }
     }],
 

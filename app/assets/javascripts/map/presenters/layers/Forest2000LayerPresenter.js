@@ -30,8 +30,9 @@ define([
         this.view._updateUncertainty(uncertainty);
       }
     },{
-      'Range/set': function(range) {
-        this.view._updateRange(range);
+      'Range/set': function(range,layer) {
+        if (layer === 'carbon_stocks')
+          this.view._updateRange(range);
       }
     }],
 
