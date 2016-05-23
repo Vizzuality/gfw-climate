@@ -132,7 +132,7 @@ define([
     },
 
     setNewRange: function(range) {
-      mps.publish('BiomassRange/set',[range]);
+      mps.publish('Range/set',[range]);
     }
 
   });

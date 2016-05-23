@@ -20,8 +20,8 @@ define([
       dataMaxZoom: 12,
       urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
       uncertainty: 127,
-      this.minrange = '0';
-      this.maxrange = '917';
+      minrange: '0',
+      maxrange: '917'
     },
 
     init: function(layer, options, map) {
@@ -48,7 +48,6 @@ define([
       "use asm";
       // We'll force the use of a 32bit integer wit `value |0`
       // More info here: http://asmjs.org/spec/latest/
-      console.log(this.minrange,this.maxrange)
       var components = 4 | 0,
           w = w |0,
           j = j |0,

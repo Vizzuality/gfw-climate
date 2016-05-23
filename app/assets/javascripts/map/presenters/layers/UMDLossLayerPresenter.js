@@ -37,7 +37,7 @@ define([
         this.view._updateUncertainty(uncertainty);
       }
     },{
-      'BiomassRange/set': function(range) {
+      'Range/set': function(range) {
         this.view._updateRange(range);
       }
     }],
