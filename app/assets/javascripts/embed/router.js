@@ -3,8 +3,9 @@ define([
   'utils',
   'embed/services/PlaceService',
   'embed/views/show/EmbedCountryView',
-  'embed/views/show/EmbedCountryHeaderView'
-], function(Backbone, utils, PlaceService, EmbedCountryView, EmbedCountryHeaderView) {
+  'embed/views/show/EmbedCountryHeaderView',
+  'views/SourceModalView',  
+], function(Backbone, utils, PlaceService, EmbedCountryView, EmbedCountryHeaderView, SourceModalView) {
 
   var Router = Backbone.Router.extend({
 
@@ -25,8 +26,11 @@ define([
       }, _.parseUrl());
 
       new EmbedCountryHeaderView();
-      new EmbedCountryView();      
+      new EmbedCountryView();    
 
+      // global views
+      new SourceModalView();
+      
       this.placeService.initPlace(this.name, params);
     },
 
