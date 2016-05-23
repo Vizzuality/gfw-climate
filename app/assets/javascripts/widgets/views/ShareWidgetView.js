@@ -35,9 +35,7 @@ define([
       'click .js-type-share' : 'changeType',
       'click .js-copy-share' : 'copyUrl',
       'focus .js-input-share' : 'selectUrl',
-      'click .js-social-share' : 'openPopup',     
-      // 'click #preview' : '_showPreview',
-
+      'click .js-social-share' : 'openPopup',
     },
 
     initialize: function(parent) {
@@ -52,12 +50,15 @@ define([
     render: function() {
       this.$el.html(this.template(this.model.toJSON()));
       this.cache();
-      this.setOptions()
+      this.setOptions();
+      // Reset the interval
+      this.resetIframeInterval();
     },
 
     cache: function() {
       this.$body = $('body');
       this.$input = this.$el.find('#share-field');
+      this.$iframeBox = this.$el.find('#share-iframe-box');
 
       // Social links
       this.$twitterLink = this.$('.twitter');
@@ -86,12 +87,10 @@ define([
     hide: function() {
       this.model.set('hidden', true);
       this.model.set('type', 'link');
-
     },
 
     toggle: function() {
       var is_hidden = this.model.get('hidden');
-     
       if (is_hidden) {
         this.$el.hide(0);
         this.unbindings();
@@ -99,6 +98,9 @@ define([
         this.$el.show(0);
         this.bindings(); 
       }
+
+      // Iframe height interval
+      this.resetIframeInterval();
     },
 
     
@@ -118,7 +120,6 @@ define([
     // SETTERS
     // Set options
     setOptions: function(e) {
-      console.log('We should set the url of embed and link, open the modal, get the options param');
       this.setUrl(e);      
     },
 
@@ -136,6 +137,11 @@ define([
 
     setInput: function() {
       this.$input.val(this.model.get('url'));
+      
+      if (this.model.get('type') == 'embed') {
+        this.$iframeBox.append(this.model.get('url'));
+        this.resizeIframeHeight();
+      }
     },
 
     // LINK
@@ -175,10 +181,10 @@ define([
     },
 
     getEmbedLink: function() {
-      var width = 600;
+      var width = 500;
       var height = 600;
       var url = window.location.protocol + '//' + window.location.host + '/embed/countries/'+ this.model.get('slugshare') +'/'+ this.model.get('widget');
-      return '<iframe width="' +width+ '" height="' +height+ '" frameborder="0" src="' + url + '"></iframe>';
+      return '<iframe id="share-iframe" width="' +width+ '" height="' +height+ '" frameborder="0" src="' + url + '"></iframe>';
     },
 
     // SOCIAL
@@ -226,20 +232,31 @@ define([
       window.open(url, 'Share this map view', opts);
     },
 
-    // _showPreview: function() {
-    //   this.iframeView = ne({
-    //     src: this.model.get('embedUrl'),
-    //     width: this.model.get('embedWidth'),
-    //     height: this.model.get('embedHeight'),
-    //   });
+    resizeIframeHeight: function() {
+      var iframe = document.getElementById('share-iframe');
 
-    //   $('body').append(this.iframeView.render().$el);
-    // },
+      // For other good browsers.
+      this.$iframeBox.find('iframe').load(function () {
+        // Set inline style to equal the body height of the iframed content.
+        var iPrevHeight = 0;
+        this.iframeInterval = setInterval(function(){
+          var iHeight = iframe.contentWindow.document.body.offsetHeight;
+          if (iHeight > 100 && iPrevHeight != iHeight) {
+            iframe.style.height = iHeight + 'px';  
+            iPrevHeight = iHeight;
+          }
+          
+        }.bind(this), 500)
 
+      }.bind(this));
+    },
 
-    // _isMobile: function() {
-    //   return ($(window).width() > 850) ? false : true;
-    // }
+    resetIframeInterval: function() {
+      if(!!this.iframeInterval) {
+        clearInterval(this.iframeInterval);
+      }
+    }
+
   });
 
   return ShareWidgetView;

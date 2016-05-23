@@ -10,19 +10,18 @@
 
       {{#ifCond this.type "==" 'embed'}}
         <p>Click and paste HTML to embed in website.</p>
-        <p><button class="js-preview-share btn gray little uppercase">Preview</button></p></p>
       {{/ifCond}}         
 
     </div>
   </header>
   <div class="mini-modal-input">
     {{#ifCond this.type "==" 'link'}}
-      <input class='field js-input-share input-share' type='text' id='share-field' value="" readonly />
-      <button class="btn gray uppercase js-copy-share copy-share">Copy</button>
       <ul class="button-container">
         <li><button class="js-type-share btn gray uppercase" data-type="embed">Embed</button></li>
         <li><button class="js-type-share btn blue uppercase" data-type="link">Link</button></li>
       </ul>
+      <input class='field js-input-share input-share' type='text' id='share-field' value="" readonly />
+      <button class="btn gray uppercase js-copy-share copy-share">Copy</button>
       <div class="share-sozial">
         <ul>
           <li><a href="#" target="_blank" class="js-social-share google_plus popup"><svg class="icon"><use xlink:href="#icon-googleplus"></use></svg></a></li>
@@ -33,12 +32,13 @@
     {{/ifCond}}         
 
     {{#ifCond this.type "==" 'embed'}}
-      <input class='field js-input-share input-share' type='text' id='share-field' value="" readonly />
-      <button class="btn gray uppercase js-copy-share copy-share">Copy</button>
       <ul class="button-container">
         <li><button class="js-type-share btn blue uppercase" data-type="embed">Embed</button></li>
         <li><button class="js-type-share btn gray uppercase" data-type="link">Link</button></li>
       </ul>
+      <input class='field js-input-share input-share' type='text' id='share-field' value="" readonly />
+      <button class="btn gray uppercase js-copy-share copy-share">Copy</button>
+      <div id="share-iframe-box" class="share-iframe"></div>
     {{/ifCond}}         
   </div>
 </div>

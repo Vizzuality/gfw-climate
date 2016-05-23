@@ -15,7 +15,7 @@ define([
 
     _subscriptions: [{
       'Place/store': function(params) {
-        console.log(params);
+        // console.log(params);
       }
     }]
 
