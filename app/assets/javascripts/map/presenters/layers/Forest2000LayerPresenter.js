@@ -39,8 +39,6 @@ define([
     updateLayer: function() {
       mps.publish('Layer/update', [this.view.getName()]);
     }
-
   });
-
   return Forest2000LayerPresenter;
 });
