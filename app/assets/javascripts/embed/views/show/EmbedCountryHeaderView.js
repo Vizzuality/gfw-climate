@@ -1,20 +1,24 @@
 define([
   'backbone',
+  'handlebars',  
   'embed/presenters/EmbedCountryHeaderPresenter',
-  'widgets/views/WidgetView',
-], function(Backbone, Presenter, WidgetView) {
+  'text!embed/templates/embed-country-header.handlebars'  
+
+], function(Backbone, Handlebars, Presenter, tpl) {
   'use strict';
 
   var EmbedCountryHeaderView = Backbone.View.extend({
 
     el: '#embedHeader',
 
+    template: Handlebars.compile(tpl),
+
     initialize: function() {
       this.presenter = new Presenter(this);
     },
 
     render: function() {
-      console.log('render');
+      this.$el.html(this.template(this.presenter.status.toJSON()));
     }
 
   });

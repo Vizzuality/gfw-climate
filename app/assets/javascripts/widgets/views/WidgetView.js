@@ -23,10 +23,12 @@ define([
 
     initialize: function(setup) {
       this.presenter = new WidgetPresenter(this, setup);
+      // Chack if it's an embed
+      this.embed = $('body').hasClass('is-embed-page');
 
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
-          this.mobile = true;
+          this.mobile = (!this.embed) ? true : false;
           this.render();
         },this)
       });

@@ -42,5 +42,8 @@ html
 
     = yield
 
+    = render 'shared/modal'
+    = render 'shared/sources_widgets'
+    
     = requirejs_include_tag "embed"
     = render "shared/js_footer"

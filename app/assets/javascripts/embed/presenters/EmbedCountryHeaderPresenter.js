@@ -3,7 +3,9 @@ define([
   'backbone',
   'embed/presenters/PresenterClass',
   'embed/models/CountryModel',
-], function(mps, Backbone, PresenterClass, CountryModel) {
+  'widgets/models/WidgetModel',
+
+], function(mps, Backbone, PresenterClass, CountryModel, WidgetModel) {
 
   'use strict';
 
@@ -43,13 +45,31 @@ define([
      */    
     placeGo: function(params) {
       var location = this.status.get('location');
+      var widget = this.status.get('widget');
       
       if (!!location) {
-        new CountryModel({ iso: location.iso })
-          .fetch()
-          .done(function(response){
-            console.log(response);
-          }.bind(this));
+        // Initialize both models
+        var countryModel = new CountryModel({ iso: location.iso });
+        var widgetModel = new WidgetModel({ id: widget, location: location });
+
+        //call fetch and keep their promises
+        var complete = _.invoke([countryModel, widgetModel], 'fetch');
+
+        //when all of them are complete...
+        $.when.apply($, complete).done(function(response) {
+          //all ready and good to go...
+          var country = countryModel.toJSON();
+          var widget = widgetModel.toJSON();
+
+          this.status.set('widgetName', widget.name);
+          this.status.set('widgetSlug', widget.slug);
+          this.status.set('countryName', country.name);
+          this.status.set('jurisdictionName', _.findWhere(country.jurisdictions, {id: location.jurisdiction }));
+          this.status.set('areaName', _.findWhere(country.areas_of_interest, {id: location.jurisdiction }));
+
+          this.view.render();
+
+        }.bind(this));
       }
     },
 
