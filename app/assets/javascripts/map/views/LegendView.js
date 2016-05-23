@@ -199,7 +199,7 @@ define([
             threshold: options.threshold || 30,
             layerTitle: layer.title,
             minrange: options.minrange || '0',
-            maxrange: options.maxrange || '917'
+            maxrange: options.maxrange || '917'         
           });
         }
         if (layer.iso) {
@@ -353,11 +353,24 @@ define([
     updateRange: function(e) {
       var newrange = this.$el.find('input');
       var targets = this.$el.find('.labels em');
-      
       newrange = [newrange[0].value,newrange[1].value];
+      if (~~newrange[0] < 0) return this.resetRanges('min');
+      if (~~newrange[1] > 917) return this.resetRanges('max');
       targets.first().html(newrange[0]);
       targets.last().html(newrange[1]);
       this.presenter.setNewRange([newrange[0],newrange[1]]);
+    },
+    resetRanges: function(end) {
+      var newrange = this.$el.find('input');
+      var targets = this.$el.find('.labels em');
+      if (end === 'min'){
+        newrange[0].value = 0;
+        targets.first().html('0');
+      }
+      if (end === 'max'){
+        newrange[1].value = 917;
+        targets.last().html('917');
+      }
     }
 
   });
