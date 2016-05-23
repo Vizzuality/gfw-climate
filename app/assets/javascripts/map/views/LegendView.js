@@ -140,6 +140,7 @@ define([
       'click .layer-close'   : '_removeLayer',
       'click .close' : 'toogleLegend',
       'click #title-dialog-legend' : 'toogleEmbedLegend',
+      'click .toggle-title' : 'toggleLegendOptions'
     },
 
     initialize: function() {
@@ -340,6 +341,10 @@ define([
     _setUncertaintyOptionUI: function(type) {
       var $opt = this.$el.find('[data-quantity="'+type+'"]');
       $opt.addClass('current').siblings('.current').removeClass('current');
+    },
+    toggleLegendOptions: function(e) {
+      $(e.target).find('span').toggleClass('active');
+      $(e.target).siblings('.toggle-legend-option').toggle('250');
     }
 
   });

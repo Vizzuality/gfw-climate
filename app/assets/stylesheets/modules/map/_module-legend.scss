@@ -269,6 +269,21 @@
       span {
         font-weight: 500;
       }
+      &.toggle-title {
+        color: #999;
+        cursor: pointer;
+        font-size: 80%;
+        padding: 10px 0 0;
+        position: relative;
+        z-index: 1;
+        span {
+          transition: all 0.25s linear;
+          display: inline-block;
+          &.active {
+            transform: rotate(90deg);
+          }
+        }
+      }
       .canopy-button{
         background: $blue;
         color: $white;
@@ -277,39 +292,77 @@
         margin: 0 2px;
         border-radius: 10px;
         cursor: pointer;
-        box-shadow: 0 0 0 2px $blue;
+        box-shadow: 0 0 0 1px $blue;
         position: relative;
         top: -7px;
         right: -45px;
         float: right;
         &:hover{
           background: darken($blue,5%);
-          box-shadow: 0 0 0 2px darken($blue,5%);
-        }
-      }
-      &.minavgmax {
-        padding: 10px 0 15px 0;
-        position: relative;
-        .canopy-button {
-          top: 9px;
-          background: transparent;
-          color: #5b80A0;
-          box-shadow: 0 0 0 1px #5B80A0;
-          padding: 1px 0;
-          position: absolute;
-          span {
-            padding: 0 2px;
-          }
-          .current {
-            background: $blue;
-            color: $white;
-            border-radius: 10px;
-            padding: 0px 6px;
-          }
+          box-shadow: 0 0 0 1px darken($blue,5%);
         }
       }
     }
+    .toggle-legend-option {
+      display: none;
+      background-color: #eee;
+      color: #888;
+      position: relative;
+      left: -35px;
+      width: 284px;
+      padding: 17px 35px 7px;
+      margin: 7px 0 0;
+      box-shadow: inset 0 2px 5px #cecece;
+      z-index: 0;
+      &:before {
+        content: '.';
+        width: 20px; 
+        height: 20px; 
+        background-color: $white;
+        color: $white;
+        transform: rotate(45deg);
+        box-shadow: inset -1px -1px 0px #cecece;
+        position: absolute;
+        top: -9px;
+        display: block;
+        z-index: -1;
+      }
+      .canopy {
+        width: 100%;
+        .button-wrapper {
+          display: block;
+          margin: 10px 0;
+          text-align: center;
+        }
+        .canopy-button {
+          float: none;
+          top: initial;
+          right: initial;
+          background: $white;
+          color: $blue;
+        }
+        &.minavgmax {
+          padding: 10px 0 15px 0;
+          position: relative;
+          .canopy-button {
+            background: $white;
+            color: #5b80A0;
+            box-shadow: 0 0 0 1px #5B80A0;
+            padding: 1px 0;
+            span {
+              padding: 0 5px;
 
+            }
+            .current {
+              background: $blue;
+              color: $white;
+              border-radius: 10px;
+              padding: 0px 6px;
+            }
+          }
+        }
+      } 
+    }
     sup {
       vertical-align: top;
       font-size: 0.8em;
