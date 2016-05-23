@@ -27,10 +27,20 @@ html
     = stylesheet_link_tag "embed", :media => "all"
     = csrf_meta_tags
 
+    javascript:
+      var gfw = window.gfw = {
+        config: {
+          GFW_API_HOST: "#{ENV['GFW_API_HOST']}",
+          GFW_MOBILE: 850
+        }
+      };
+
   body class="is-#{params[:controller]}-page is-#{params[:action]}-action"
 
     = render 'shared/svg_icons'
+    = render 'shared/svg_icons_countries'
 
     = yield
 
     = requirejs_include_tag "embed"
+    = render "shared/js_footer"
