@@ -126,6 +126,10 @@ define([
       }
       this.presenter.updateLayer();
     },
+
+    // Cross multiplying to get x:
+    // userinput ----- 917
+    // x         ----- 255
     _updateRange: function(range) {
       this.minrange = (range[0]/917)*255;
       this.maxrange = (range[1]/917)*255;
