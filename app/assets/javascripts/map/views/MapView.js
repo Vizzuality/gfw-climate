@@ -252,6 +252,9 @@ define([
       var layer = this.layerInst[layerSlug];
       options.currentDate = layer.currentDate ? layer.currentDate : null;
       options.threshold = layer.threshold ? layer.threshold : null;
+      options.minrange = layer.minrange ? layer.minrange : null;
+      options.maxrange = layer.maxrange ? layer.maxrange : null;
+      options.uncertainty = (!isNaN(layer.uncertainty)&&layer.uncertainty !== 128) ? layer.uncertainty : null;
       this._removeLayer(layerSlug);
       this._addLayers([layer.layer], options);
     },

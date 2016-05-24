@@ -31,6 +31,15 @@ define([
     }, {
       'Threshold/changed': function(threshold) {
         this.view.setThreshold(threshold);
+      },
+    }, {
+      'Uncertainty/changed': function(uncertainty) {
+        //this.view._updateUncertainty(uncertainty);
+      }
+    },{
+      'Range/set': function(range,layer) {
+        if (layer === 'biomass_loss')
+          this.view._updateRange(range);
       }
     }],
 
