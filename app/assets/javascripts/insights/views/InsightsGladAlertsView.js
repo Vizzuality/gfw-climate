@@ -29,7 +29,9 @@ define([
       desforestationFilter: 'deforestation',
       isPlayingClassEl: '-is-playing',
       timelineClassEl: 'timeline-button',
-      timelineInterval: 100
+      loadingClassEl: 'is-loading',
+      loadedClassEl: 'loaded',
+      timelineInterval: 500
     },
 
     initialize: function() {
@@ -43,6 +45,8 @@ define([
 
     render: function() {
       this.$el.html(this.template({}));
+      this.$el.removeClass(this.defaults.loadingClassEl);
+      this.$el.addClass(this.defaults.loadedClassEl);
 
       this._renderMainChart();
       this._renderCompareChart('#vis1', '/data_glad_brazil.csv');
@@ -70,6 +74,7 @@ define([
           }
         });
 
+        el.classList.remove(this.defaults.loadingClassEl);
         this._createLegend(legendEl, data, 'main');
       }.bind(this));
     },
@@ -176,6 +181,9 @@ define([
       previousSelected.classList.remove(this.defaults.selectedClassEl);
 
       element.classList.add(this.defaults.selectedClassEl);
+
+      this._stopTimeline();
+      Backbone.Events.trigger('insights:glad:setStep', 1);
     },
 
     _toThousands: function(number) {

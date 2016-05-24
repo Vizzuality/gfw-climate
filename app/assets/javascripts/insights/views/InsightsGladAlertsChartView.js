@@ -94,6 +94,9 @@ define([
       this.currentStep = 1;
 
       this._initChart();
+
+      // Sets listeners
+      this.setListeners();
     },
 
     /**
@@ -105,13 +108,14 @@ define([
 
       Backbone.Events.on('insights:glad:update', this._changeStepByValue.bind(this));
       Backbone.Events.on('insights:glad:updateByTimeline', this._changeStep.bind(this));
+      Backbone.Events.on('insights:glad:setStep', this._setStep.bind(this));
     },
 
     unsetListeners: function() {
       window.removeEventListener('resize', this.refreshEvent, false);
 
       Backbone.Events.off('insights:glad:update', this._changeStepByValue.bind(this));
-      Backbone.Events.off('insights:glad:updateByTimeline', this._changeStep.bind(this));
+      Backbone.Events.off('insigh¡ts:glad:updateByTimeline', this._changeStep.bind(this));
     },
 
     _initChart: function() {
@@ -124,9 +128,6 @@ define([
       if (this.chartData.length) {
         // Render the component on initialize
         this.render();
-
-        // Sets listeners
-        this.setListeners();
       } else {
         this._renderNoData();
       }
@@ -145,12 +146,12 @@ define([
       });
 
       this.dotsData = _.filter(this.chartData, function(d){
-        return d.alerts;
-      });
+        return d[this.dataColumns.dots.r];
+      }.bind(this));
 
       this.solidLineData = _.filter(this.chartData, function(d){
-        return d.cumulative_emissions;
-      });
+        return d[this.dataColumns.dots.y];
+      }.bind(this));
     },
 
     render: function() {
@@ -171,7 +172,7 @@ define([
     _update: function() {
       this.remove();
       this.render();
-      this.setListeners();
+      // this.setListeners();
     },
 
     /**
@@ -550,8 +551,9 @@ define([
 
       current++;
 
-      if (current > x2Domain[1]) {
-        this.currentStep = 1;
+      // if (current > x2Domain[1]) {
+      if (current > 18) {
+        // this.currentStep = 1;
         this._setHandlePosition();
         Backbone.Events.trigger('insights:glad:stopTimeline');
       } else {
@@ -573,6 +575,10 @@ define([
       this._initChart();
     },
 
+    _setStep: function(step) {
+      this.currentStep = step;
+    },
+
     /**
      * Removes the SVG
      */
@@ -585,7 +591,7 @@ define([
         this.currentStep = 1;
         this.el.classList.remove(this.filter);
         this.el.removeChild(svgContainer);
-        this.unsetListeners();
+        // this.unsetListeners();
       }
     },
 
