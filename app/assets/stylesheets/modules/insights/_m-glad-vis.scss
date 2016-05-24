@@ -5,10 +5,79 @@
     padding-bottom: 40px;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 60px;
 
-    .chart {
+    .chart-container {
       width: 100%;
       height: 350px;
+      position: relative;
+
+      .chart {
+        width: 100%;
+        height: inherit;
+      }
+    }
+
+    .heading {
+      width: 100%;
+
+      h3 {
+        font-size: 35px;
+        font-weight: 300;
+        color: #555555;
+        margin-bottom: 22px;
+      }
+    }
+
+    .timeline-button {
+      width: 34px;
+      height: 34px;
+      background: #FFFFFF;
+      border: 1px solid #5B80A0;
+      border-radius: 26px;
+      position: absolute;
+      bottom: 13px;
+      left: 26px;
+
+      .icon {
+        @extend %reset-btn;
+        border: 0;
+        width: 34px;
+        height: 34px;
+        border-radius: 26px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .play {
+        width: 10px;
+        height: 14px;
+        fill: #555555;
+        margin-left: 1px;
+        margin-bottom: 2px;
+      }
+
+      .pause {
+        width: 10px;
+        height: 14px;
+        fill: #555555;
+        margin-right: 2px;
+        margin-top: 2px;
+      }
+
+      .pause-icon {
+        display: none;
+      }
+
+      &.-is-playing {
+        .play-icon {
+          display: none;
+        }
+        .pause-icon {
+          display: block;
+        }
+      }
     }
   }
 
@@ -18,6 +87,34 @@
     display: flex;
     flex-wrap: wrap;
 
+    .country-selectors {
+      width: 100%;
+      display: flex;
+      margin-bottom: 22px;
+
+      .country {
+        width:31.333333333%;
+        margin-right: 3%;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        h3 {
+          font-size: 35px;
+          font-weight: 300;
+          color: #555555;
+          margin-left: 18px;
+        }
+
+        &:first-child {
+          h3 {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+
     .visualizations {
       width:100%;
       display:flex;
@@ -25,7 +122,7 @@
 
     .compare-chart {
       width:31.333333333%;
-      height: 250px;
+      height: 220px;
       margin-right: 3%;
 
       &:last-child {
@@ -43,7 +140,7 @@
     width: 210px;
     height: 20px;
     background: #FFFFFF;
-    box-shadow: inset 0 0 0 1px #5B80A0;
+    box-shadow: inset 0 0 0 1px #B6B6BA;
     border-radius: 36px;
     overflow: hidden;
     display: flex;
@@ -66,6 +163,10 @@
         border-radius: 36px;
         color: #FFFFFF;
         cursor: default;
+
+        &.deforestation {
+          background: #FF6398;
+        }
       }
     }
 
@@ -85,7 +186,7 @@
   }
 
   .legend {
-    width: 80%;
+    width: 75%;
     margin: 0 auto;
     display: flex;
 
@@ -183,6 +284,37 @@
         &.-no-icon {
           .value {
             margin-left: 0;
+          }
+        }
+      }
+
+      &.deforestation{
+        .item {
+          .value {
+            color: #FF6398;
+          }
+
+          &.-highlight {
+            .value {
+              color: #EDB04A;
+            }
+          }
+
+          .icon {
+            &.-line {
+              &:after {
+                background: #FF6398;
+              }
+            }
+
+            &.-dashed {
+              &:before {
+                background: #FF6398;
+              }
+              &:after {
+                background: #FF6398;
+              }
+            }
           }
         }
       }

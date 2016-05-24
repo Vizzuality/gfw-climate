@@ -81,4 +81,14 @@
     stroke-width: 1;
     cursor: pointer;
   }
+
+  &.deforestation {
+    .dash-line-path {
+      stroke: #FF6398;
+    }
+
+    .line-solid-path {
+      stroke: #FF6398;
+    }
+  }
 }

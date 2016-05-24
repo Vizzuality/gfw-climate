@@ -1,22 +1,49 @@
 <div class="glad-vis">
   <div id="visMain" class="main-chart">
+    <div class="heading">
+      <h3>Pantropical</h3>
+    </div>
     <div class="selectors">
-      <div class="action -selected">CO2 Emissions</div>
-      <div class="action">Deforestation Area</div>
+      <div class="action carbon-emissions -selected js-selector-main" data-filter="carbon_emissions">CO2 Emissions</div>
+      <div class="action deforestation js-selector-main" data-filter="deforestation">Deforestation Area</div>
     </div>
 
     <div class="selectors -highlight">
       <div class="action -selected">Glad Alerts</div>
     </div>
-    <div class="chart"></div>
+
+    <div class="chart-container">
+      <div class="chart"></div>
+      <div class="timeline-button">
+        <button class="icon play-icon js-timeline-button">
+          <svg class="play"><use xlink:href="#icon-play"></use></svg>
+        </button>
+        <button class="icon pause-icon js-timeline-button">
+          <svg class="pause"><use xlink:href="#icon-pause"></use></svg>
+        </button>
+      </div>
+    </div>
     <div class="legend -main"></div>
-    <!-- <div class="map">View on map</div> -->
   </div>
 
   <div class="compare-list">
+    <div class="country-selectors">
+      <div class="country">
+        <h3>Brazil</h3>
+      </div>
+
+      <div class="country">
+        <h3>Republic of Congo</h3>
+      </div>
+
+      <div class="country">
+        <h3>Kalimantan</h3>
+      </div>
+    </div>
+
     <div class="selectors">
-      <div class="action -selected">CO2 Emissions</div>
-      <div class="action">Deforestation Area</div>
+      <div class="action carbon-emissions -selected js-selector-compare" data-filter="carbon_emissions">CO2 Emissions</div>
+      <div class="action deforestation js-selector-compare" data-filter="deforestation">Deforestation Area</div>
     </div>
 
     <div class="selectors -highlight">
@@ -25,10 +52,6 @@
 
     <div class="visualizations">
       <div id="vis1" class="compare-chart">
-        <!-- <select class="section" name="section">
-          <option value="biomass">biomass</option>
-          <option value="carbon">carbon</option>
-        </select> -->
         <div class="chart"></div>
         <div class="legend -compare"></div>
       </div>

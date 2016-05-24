@@ -16,15 +16,16 @@ define([
       interpolate: 'linear',
       paddingAxisLabels: 10,
       paddingXAxisLabels: 20,
+      paddingYAxisLabels: 30,
       dateFormat: '%b',
       margin: {
         top: 35,
-        right: 65,
+        right: 75,
         bottom: 65,
-        left: 40
+        left: 60
       },
       circleRadiusRange: [6, 18],
-      timelineInterval: 100,
+      filter: 'carbon_emissions',
       chartConfig: {
         'carbon_emissions': {
           domain: {
@@ -89,14 +90,10 @@ define([
       this.defaults = _.extend({}, this.defaults, settings.params);
       this.compact = this.defaults.compact || false;
       this.data = this.defaults.data;
+      this.filter = this.defaults.filter;
       this.currentStep = 1;
-      this.isPlaying = false;
-      this.dataColumns = this.defaults.chartConfig['carbon_emissions'].dataColumns;
-      this.dataDomain = this.defaults.chartConfig['carbon_emissions'].domain;
 
-      // Data parsing and initialization
-      this._parseData(this.data);
-      this._start();
+      this._initChart();
     },
 
     /**
@@ -106,13 +103,21 @@ define([
       this.refreshEvent = _.debounce(_.bind(this._update, this), 30);
       window.addEventListener('resize', this.refreshEvent, false);
 
-      Backbone.Events.on('pantropical:glad:update', this._changeStepByValue.bind(this));
+      Backbone.Events.on('insights:glad:update', this._changeStepByValue.bind(this));
+      Backbone.Events.on('insights:glad:updateByTimeline', this._changeStep.bind(this));
     },
 
     unsetListeners: function() {
       window.removeEventListener('resize', this.refreshEvent, false);
 
-      Backbone.Events.off('pantropical:glad:update', this._changeStepByValue.bind(this));
+      Backbone.Events.off('insights:glad:update', this._changeStepByValue.bind(this));
+      Backbone.Events.off('insights:glad:updateByTimeline', this._changeStep.bind(this));
+    },
+
+    _initChart: function() {
+      // Data parsing and initialization
+      this._parseData(this.data);
+      this._start();
     },
 
     _start: function() {
@@ -132,6 +137,8 @@ define([
      */
     _parseData: function(data) {
       this.chartData = data;
+      this.dataColumns = this.defaults.chartConfig[this.filter].dataColumns;
+      this.dataDomain = this.defaults.chartConfig[this.filter].domain;
 
       this.chartData.forEach(function(d) {
         d.date = moment().week(d.week).toDate();
@@ -175,7 +182,7 @@ define([
       var margin = this.defaults.margin;
 
       this.el.innerHTML = '';
-      this.el.classList.add(this.defaults.chartClass);
+      this.el.classList.add(this.defaults.chartClass, this.filter);
 
       this.cWidth = el.clientWidth;
       this.cHeight = el.clientHeight;
@@ -310,7 +317,8 @@ define([
         .attr('transform', 'translate(0,' + (this.cHeight) + ')')
         .call(this.xAxis)
         .selectAll('text')
-          .attr('y', _this.defaults.paddingXAxisLabels);
+          .attr('x', _this.defaults.paddingXAxisLabels)
+          .attr('y', _this.defaults.paddingYAxisLabels);
 
       // Y Axis
       this.svg.append('g')
@@ -446,7 +454,7 @@ define([
 
           _this.currentStep = value;
           _this._setHandlePosition();
-          Backbone.Events.trigger('pantropical:glad:update', Math.round(_this.currentStep));
+          Backbone.Events.trigger('insights:glad:update', Math.round(_this.currentStep));
 
         })
         .on('brushend', function() {
@@ -544,12 +552,13 @@ define([
 
       if (current > x2Domain[1]) {
         this.currentStep = 1;
-        this._pause();
+        this._setHandlePosition();
+        Backbone.Events.trigger('insights:glad:stopTimeline');
       } else {
         this.currentStep = current;
         this._setHandlePosition();
       }
-
+      Backbone.Events.trigger('insights:glad:currentStep', Math.round(this.currentStep));
     },
 
     _changeStepByValue: function(step) {
@@ -557,53 +566,11 @@ define([
       this._setHandlePosition();
     },
 
-    /**
-     * Toggles the play / pause functionality
-     */
-    _togglePlay: function() {
+    updateByFilter: function(filter) {
+      this.remove();
 
-      if (!this.isPlaying) {
-        this._play();
-        // elem.classList.remove('paused');
-        // elem.classList.add('playing');
-      } else {
-        this._pause();
-        // elem.classList.remove('playing');
-        // elem.classList.add('paused');
-      }
-    },
-
-    /**
-     * Starts the timeline animation
-     */
-    _play: function() {
-      var _this = this;
-      this.isPlaying = true;
-
-      this._resetInterval();
-
-      this.playInterval = setInterval(function() {
-        _this._changeStep();
-      }, this.defaults.timelineInterval);
-    },
-
-    /**
-     * Stops the timeline animation
-     */
-    _pause: function() {
-      this.isPlaying = false;
-
-      this._resetInterval();
-    },
-
-    /**
-     * Resets the animaton interval
-     */
-    _resetInterval: function() {
-      if (this.playInterval) {
-        clearInterval(this.playInterval);
-        this.playInterval = null;
-      }
+      this.filter = filter;
+      this._initChart();
     },
 
     /**
@@ -615,6 +582,8 @@ define([
 
         this.svg.remove();
         this.svg = null;
+        this.currentStep = 1;
+        this.el.classList.remove(this.filter);
         this.el.removeChild(svgContainer);
         this.unsetListeners();
       }
