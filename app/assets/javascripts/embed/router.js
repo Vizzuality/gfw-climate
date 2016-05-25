@@ -4,8 +4,9 @@ define([
   'embed/services/PlaceService',
   'embed/views/show/EmbedCountryView',
   'embed/views/show/EmbedCountryHeaderView',
+  'embed/views/pantropical/PantropicalView',
   'views/SourceModalView',  
-], function(Backbone, utils, PlaceService, EmbedCountryView, EmbedCountryHeaderView, SourceModalView) {
+], function(Backbone, utils, PlaceService, EmbedCountryView, EmbedCountryHeaderView, PantropicalView, SourceModalView) {
 
   var Router = Backbone.Router.extend({
 
@@ -19,7 +20,7 @@ define([
     },
 
     _initPantropical: function() {
-
+      new PantropicalView();
     },
 
     _initShow: function(location, widget) {
