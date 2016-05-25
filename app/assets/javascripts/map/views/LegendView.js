@@ -200,8 +200,8 @@ define([
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             layerTitle: layer.title,
-            minrange: options.minrange || layer_range[0],
-            maxrange: options.maxrange || layer_range[1]
+            minrange: options.minrange || ((!!layer_range) ? layer_range[0] : null),
+            maxrange: options.maxrange || ((!!layer_range) ? layer_range[1] : null)
           });
         }
         if (layer.iso) {
