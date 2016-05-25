@@ -55,8 +55,6 @@ define([
           uncer = uncer > 100 ? 100 : (uncer < 0 ? 0 : uncer);
 
 
-          imgdata[pixelPos + 3] = 0;
-
           if(this.uncertainty === 0) {
             // min uncertainty subtract the percentage of uncertainty
             intensity = intensity - (uncer*intensity/100);
@@ -65,10 +63,14 @@ define([
             // max uncertainty sum the uncertainty value
             intensity = intensity + (uncer*intensity/100);
           }
-          imgdata[pixelPos] = 255-intensity;
-          imgdata[pixelPos + 1] = 128;
-          imgdata[pixelPos + 2] = 0;
-          if(intensity>0){imgdata[pixelPos + 3] = intensity};
+          if(intensity >= this.minrange && intensity <= this.maxrange) {
+            imgdata[pixelPos] = 255-intensity;
+            imgdata[pixelPos + 1] = 128;
+            imgdata[pixelPos + 2] = 0;
+            imgdata[pixelPos + 3] = intensity;
+          } else {
+            imgdata[pixelPos + 3] = 0;
+          }
         }
       }
     },
