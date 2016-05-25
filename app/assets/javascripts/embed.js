@@ -5,9 +5,10 @@ require([
   'jquery',
   'd3',
   'handlebars',
+  'helpers/handlebarsPlugins',  
   'backbone',
   'embed/router'
-], function($, d3, Handlebars, Backbone, RouterView) {
+], function($, d3, Handlebars, HandlebarsPlugins, Backbone, RouterView) {
 
   'use strict';
 
@@ -16,7 +17,6 @@ require([
     el: document.body,
 
     initialize: function() {
-      this._handlebarsPlugins();
       this._initRouter();
       this._initApp();
     },
@@ -36,33 +36,6 @@ require([
     _initRouter: function() {
       this.router = new RouterView();
     },
-
-    _handlebarsPlugins: function() {
-      Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
-        switch (operator) {
-          case '==':
-            return (v1 == v2) ? options.fn(this) : options.inverse(this);
-          case '===':
-            return (v1 === v2) ? options.fn(this) : options.inverse(this);
-          case '!==':
-            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
-          case '<':
-            return (v1 < v2) ? options.fn(this) : options.inverse(this);
-          case '<=':
-            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-          case '>':
-            return (v1 > v2) ? options.fn(this) : options.inverse(this);
-          case '>=':
-            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-          case '&&':
-            return (v1 && v2) ? options.fn(this) : options.inverse(this);
-          case '||':
-            return (v1 || v2) ? options.fn(this) : options.inverse(this);
-          default:
-            return options.inverse(this);
-        }
-      });
-    }
 
   });
 
