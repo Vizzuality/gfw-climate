@@ -355,12 +355,19 @@ define([
       $(e).siblings('.toggle-legend-option').toggle('250');
     },
     updateRange: function(e) {
-      var newrange = this.$el.find('input');
-      var targets = this.$el.find('.labels em');
-      newrange = [newrange[0].value,newrange[1].value];
       var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
-      if(layer === 'biomass_loss') {var layer_range = ['0','917']};
-      if(layer === 'carbon_stocks') {var layer_range = ['0','500']};
+      
+      if(layer === 'biomass_loss') {
+        var newrange = this.$el.find('.layer-details-biomass_loss input');
+        var targets = this.$el.find('.layer-details-biomass_loss .labels em');
+        var layer_range = ['0','917'];
+      }
+      if(layer === 'carbon_stocks') {
+        var newrange = this.$el.find('.layer-details-carbon_stocks input');
+        var targets = this.$el.find('.layer-details-carbon_stocks .labels em');
+        var layer_range = ['0','500'];
+      }
+      newrange = [newrange[0].value,newrange[1].value];
       if (~~newrange[0] < 0) return this.resetRanges('min',e);
       if (~~newrange[0] > layer_range[1]) return this.resetRanges('min',e);
       if (~~newrange[1] > layer_range[1]) return this.resetRanges('max',e);
