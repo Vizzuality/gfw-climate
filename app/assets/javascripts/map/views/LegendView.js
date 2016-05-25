@@ -387,16 +387,19 @@ define([
     },
     updateRangeBar: function(range,e) {
       var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
+      var range_bars = $(e.target).parents('.layer-details').find('.range-bar');
       if(layer === 'biomass_loss') {
-        var $bar = this.$el.find('.quartile-bar-loss-biomass');
         var layer_range = ['0','917'];
-        $bar.css('background', 'linear-gradient(to right, #ff1f26 0%, #d21f26 '+range[0]*100/layer_range[1]+'%, #d21f26 52%, #f19813 '+range[1]*100/layer_range[1]+'%, #ffd00b 100%)');
-      };
+      }
       if(layer === 'carbon_stocks') {
-        var $bar = this.$el.find('.quartile-bar-biomass');
         var layer_range = ['0','500'];
-        $bar.css('background', 'linear-gradient(to right, #895122 10%, #957F4F 35%, #9DB38A 75%, #39A401 100%)');
-      };
+      }
+      if (range[0] == layer_range[0] && range[1] == layer_range[1]) {
+        return  range_bars.hide();
+      }
+      range_bars.first().css('left',range[0]*100/layer_range[1]+'%');
+      range_bars.last().css('left',range[1]*100/layer_range[1]+'%');
+      range_bars.show();
     }
 
   });

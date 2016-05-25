@@ -446,6 +446,7 @@
 
     .total-carbon-bar {
       margin-top: 4px;
+      position: relative;
     }
 
     .labels {
@@ -457,7 +458,11 @@
       li:first-child {float: left;}
       li:last-child {float: right;width: 50%;text-align: right;}
     }
-
+    .range-bar {
+      display: none;
+      position: absolute;
+      color: lightblue;
+    }
     .quartile-bar {
       clear: both;
       height: 12px;
