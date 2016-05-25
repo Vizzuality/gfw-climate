@@ -12,13 +12,13 @@
         <a <% if controller?("map") && action?("index") %>class="current"<% end %> href="/map">Map</a>
       </li>
       <li>
-        <a <% if controller?("countries") && action?("index") || action?("show") %>class="current"<% end %> href="/countries">Country profiles</a>
+        <a <% if controller?("countries") && action?("index") || action?("show") %>class="current"<% end %> href="/countries">Country data</a>
       </li>
       <li>
         <a <% if controller?("compare") && action?("index") %>class="current"<% end %> href="/compare-countries">Country Comparisons</a>
       </li>
       <li>
-        <a <% if controller?("countries") && action?("pantropical") %>class="current"<% end %> href="/pantropical">Pantropical Overview</a>
+        <a <% if (controller?("insights")) || (controller?("countries") && action?("pantropical"))  %>class="current"<% end %> href="/insights">Insights</a>
       </li>
       <li>
         <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="/about">About</a>

@@ -1,0 +1,66 @@
+<div class="list {{#if isDesforestation}}deforestation{{/if}}">
+
+  {{#if isDesforestation}}
+    <div class="item">
+      <div class="heading">
+        <div class="icon -line"></div>
+        <div class="label">Deforestation (ha)</div>
+      </div>
+      <div class="value">{{deforestation}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -dashed"></div>
+        <div class="label">Deforestation Cap (ha)</div>
+      </div>
+      <div class="value">{{deforestation_cap}}</div>
+    </div>
+
+    <div class="item -no-icon">
+      <div class="heading">
+        <div class="label">Deforestation target</div>
+      </div>
+      <div class="value">-</div>
+    </div>
+  {{else}}
+    <div class="item">
+      <div class="heading">
+        <div class="icon -line"></div>
+        <div class="label">Emissions to date (MtCO2)</div>
+      </div>
+      <div class="value">{{emissions}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -dashed"></div>
+        <div class="label">Annual Budget (MtCO2)</div>
+      </div>
+      <div class="value">{{annual_budget}}</div>
+    </div>
+
+    <div class="item -no-icon">
+      <div class="heading">
+        <div class="label">Emissions Budget Used to Date</div>
+      </div>
+      <div class="value">-</div>
+    </div>
+  {{/if}}
+
+
+  <div class="item -highlight">
+    <div class="heading">
+      <div class="icon -dot"></div>
+      <div class="label">Numbers of Alerts</div>
+    </div>
+    <div class="value">
+      {{#if alerts}}
+        {{alerts}}
+      {{else}}
+        -
+      {{/if}}
+    <div>
+  </div>
+
+</div>

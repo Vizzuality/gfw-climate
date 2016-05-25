@@ -39,6 +39,10 @@ Rails.application.routes.draw do
   get 'embed/pantropical',   to: 'embed#pantropical',     as: :pantropical_embed
   get 'embed/countries(/*path)', to: 'embed#countries', as: :countries_embed
 
+  # Insights
+  get 'insights', to: 'insights', as: :insights
+  get 'insights/glad-alerts', to: 'insights#glad_alerts', as: :glad_alerts
+
   # Compare countries routes
   # GET 'compare-countries/bra+1+0/aus+1+0/aut+0+3'
   get 'compare-countries(/*path)', to: 'compare#index', as: :compare_countries

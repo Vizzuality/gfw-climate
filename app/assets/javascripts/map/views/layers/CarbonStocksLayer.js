@@ -17,12 +17,19 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 12,
-      urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png'
+      urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
+            uncertainty: 127,
+      minrange: 0,
+      maxrange: 255
     },
   init: function(layer, options, map) {
       this.presenter = new Presenter(this);
       this._super(layer, options, map);
       this.threshold = options.threshold || this.options.threshold;
+      this.uncertainty = (!isNaN(options.uncertainty)&&options.uncertainty !== 127) ? options.uncertainty : this.options.uncertainty,
+      this._super(layer, options, map);
+      this.minrange = options.minrange || this.options.minrange;
+      this.maxrange = options.maxrange || this.options.maxrange;
     },
 
     /**
@@ -53,20 +60,19 @@ define([
       for(var i = 0 |0; i < w; ++i) {
         for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
-
-             // intensity = imgdata[pixelPos+2]-(imgdata[pixelPos+3]*imgdata[pixelPos+2]/100) |0;
-              intensity = imgdata[pixelPos+2];
-             //if (intensity>255) intensity=255;
-             //if (intensity<0) intensity=0;
-             imgdata[pixelPos + 3] = 0;
+              intensity = imgdata[pixelPos+2],
+              alpha = imgdata[pixelPos + 3];
+          imgdata[pixelPos + 3] = 0;
 
           var intensity_scaled = myscale(intensity) |0,
-          bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
+              bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
 
-          imgdata[pixelPos] = 255-intensity;
-          imgdata[pixelPos + 1] = 128;
-          imgdata[pixelPos + 2] = 0;
-          if(intensity>0){imgdata[pixelPos + 3] = intensity};
+          if (intensity > this.minrange && intensity < this.maxrange && alpha > this.uncertainty) {
+            imgdata[pixelPos] = 255-intensity;
+            imgdata[pixelPos + 1] = 128;
+            imgdata[pixelPos + 2] = 0;
+            imgdata[pixelPos + 3] = intensity
+          };
         }
       }
     },
@@ -79,6 +85,31 @@ define([
     _getUrl: function(x, y, z) {
       return new UriTemplate(this.options.urlTemplate)
         .fillFromObject({x: x, y: y, z: z, threshold: this.threshold});
+    },
+    _updateUncertainty: function(uncertainty) {
+      switch(uncertainty) {
+        case 'min':
+          this.uncertainty = 0;
+        break;
+        case 'max':
+          this.uncertainty = 254;
+        break;
+        case 'avg':
+        default:
+          this.uncertainty = 127;
+        break;
+      }
+      this.presenter.updateLayer();
+    },
+
+    // Cross multiplying to get x:
+    // userinput ----- 917
+    // x         ----- 255
+    _updateRange: function(range) {
+      this.minrange = (range[0]/500)*255;
+      this.maxrange = (range[1]/500)*255;
+
+      this.presenter.updateLayer();
     }
 
   });
