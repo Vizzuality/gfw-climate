@@ -33,8 +33,11 @@ Rails.application.routes.draw do
 
   # Countries - jurisdiction routes
   get 'pantropical',         to: 'countries#pantropical', as: :pantropical
-  get 'embed/pantropical',   to: 'embed#pantropical',     as: :pantropical_embed
   get 'countries/:id/:id_1', to: 'countries#show',        as: :jurisdiction
+
+  # Embed countries routes
+  get 'embed/pantropical',   to: 'embed#pantropical',     as: :pantropical_embed
+  get 'embed/countries(/*path)', to: 'embed#countries', as: :countries_embed
 
   # Insights
   get 'insights', to: 'insights', as: :insights

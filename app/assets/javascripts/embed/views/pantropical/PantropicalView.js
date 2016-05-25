@@ -7,7 +7,7 @@ define([
 
   'use strict';
 
-  var CountryShowView = Backbone.View.extend({
+  var PantropicalView = Backbone.View.extend({
 
     el: '.pantropical-vis',
 
@@ -302,6 +302,6 @@ define([
 
   });
 
-  return CountryShowView;
+  return PantropicalView;
 
 });

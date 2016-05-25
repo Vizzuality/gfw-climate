@@ -5,10 +5,12 @@ require([
   'jquery',
   'underscore',
   'backbone',
+  'handlebars',
+  'helpers/handlebarsPlugins',
   'countries/router',
   'countries/views/CountryShowView',
   'countries/views/CountryIndexView'
-], function($, _, Backbone, RouterView, CountryShowView, CountryIndexView) {
+], function($, _, Backbone, Handlebars, HandlebarsPlugins, RouterView, CountryShowView, CountryIndexView) {
 
   'use strict';
 
@@ -37,7 +39,7 @@ require([
 
     _initRouter: function() {
       this.router = new RouterView();
-    }
+    },
 
   });
 

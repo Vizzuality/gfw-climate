@@ -16,17 +16,18 @@ define([
     events: {
       'click .close'   : '_close',
       'click .info'    : '_info',
-      'click .share'   : '_share',
       'click .tab-li'  : '_changeTab',
       'change .tab-selector'  : '_changeTab'
     },
 
     initialize: function(setup) {
       this.presenter = new WidgetPresenter(this, setup);
+      // Chack if it's an embed
+      this.embed = $('body').hasClass('is-embed-page');
 
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
-          this.mobile = true;
+          this.mobile = (!this.embed) ? true : false;
           this.render();
         },this)
       });
@@ -55,6 +56,7 @@ define([
       this.$el.html(this.template({
         id: this.presenter.model.get('id'),
         slug: this.presenter.model.get('slug'),
+        slugshare: this.setKeyFromLocation(),
         tabs: this.presenter.model.get('tabs'),
         name: this.presenter.model.get('name'),
         isMobile: this.mobile
@@ -138,8 +140,6 @@ define([
 
     _info: function(e) {},
 
-    _share: function(e) {},
-
     destroy: function() {
       if (!!this.tab) {
         this.tab.destroy();
@@ -150,6 +150,11 @@ define([
       this.$el.remove();
       this.remove();
       Backbone.View.prototype.remove.call(this);
+    },
+
+    setKeyFromLocation: function() {
+      var location = this.presenter.model.get('location');
+      return location.iso + '+' + location.jurisdiction + '+' + location.area;
     }
 
   });
