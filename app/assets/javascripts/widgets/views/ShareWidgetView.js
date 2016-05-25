@@ -79,12 +79,14 @@ define([
     
     // Show, hide and toggle //
     show: function(e) {
+      e && e.preventDefault();
       this.model.set('widget', $(e.currentTarget).data('widget'));
       this.model.set('slugshare', $(e.currentTarget).data('slugshare'));
       this.model.set('hidden', false);
     },
 
-    hide: function() {
+    hide: function(e) {
+      e && e.preventDefault();
       this.model.set('hidden', true);
       this.model.set('type', 'link');
     },

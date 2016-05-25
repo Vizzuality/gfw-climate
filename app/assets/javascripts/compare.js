@@ -3,9 +3,10 @@
  */
 require([
   'backbone',
+  'handlebars',  
   'compare/router',
   'compare/views/CompareIndexView'
-], function(Backbone, RouterView, CompareIndexView) {
+], function(Backbone, Handlebars, RouterView, CompareIndexView) {
 
   'use strict';
 
@@ -14,6 +15,7 @@ require([
     el: document.body,
 
     initialize: function() {
+      this._handlebarsPlugins();
       this._initRouter();
       this._initViews();
       this._initApp();
@@ -34,7 +36,35 @@ require([
 
     _initViews: function() {
       new CompareIndexView();
+    },
+
+    _handlebarsPlugins: function() {
+      Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+        switch (operator) {
+          case '==':
+            return (v1 == v2) ? options.fn(this) : options.inverse(this);
+          case '===':
+            return (v1 === v2) ? options.fn(this) : options.inverse(this);
+          case '!==':
+            return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+          case '<':
+            return (v1 < v2) ? options.fn(this) : options.inverse(this);
+          case '<=':
+            return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+          case '>':
+            return (v1 > v2) ? options.fn(this) : options.inverse(this);
+          case '>=':
+            return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+          case '&&':
+            return (v1 && v2) ? options.fn(this) : options.inverse(this);
+          case '||':
+            return (v1 || v2) ? options.fn(this) : options.inverse(this);
+          default:
+            return options.inverse(this);
+        }
+      });
     }
+
 
   });
 

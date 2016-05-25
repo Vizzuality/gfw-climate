@@ -16,7 +16,6 @@ define([
     events: {
       'click .close'   : '_close',
       'click .info'    : '_info',
-      'click .share'   : '_share',
       'click .tab-li'  : '_changeTab',
       'change .tab-selector'  : '_changeTab'
     },
@@ -140,9 +139,6 @@ define([
     },
 
     _info: function(e) {},
-
-    _share: function(e) {
-    },
 
     destroy: function() {
       if (!!this.tab) {
