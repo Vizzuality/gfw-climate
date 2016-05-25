@@ -331,7 +331,7 @@
         width: 100%;
         .button-wrapper {
           display: block;
-          margin: 5px 0;
+          margin: 5px 0 15px;
         }
         .canopy-button {
           float: none;
@@ -350,7 +350,6 @@
           }
         }
         &.minavgmax {
-          padding: 10px 0 15px 0;
           position: relative;
           .canopy-button {
             background: $white;
