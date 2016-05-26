@@ -65,7 +65,7 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,wdpaid,begin,end,threshold,dont_analyze}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,wdpaid,begin,end,threshold,dont_analyze,rangearray}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -178,6 +178,7 @@ define([
       p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
       p.subscribe_alerts = (p.subscribe_alerts === 'subscribe') ? true : null;
+      p.rangearray = p.rangearray ? JSON.parse(atob(encodeURI(p.rangearray))) : null;
       p.referral = p.referral;
       return p;
     },
@@ -204,6 +205,7 @@ define([
       p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
       p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
+      p.rangearray = p.rangearray ? encodeURI(btoa(JSON.stringify(p.rangearray))) : null;
       return p;
     },
 
@@ -220,7 +222,6 @@ define([
       _.each(presenters, function(presenter) {
         _.extend(p, presenter.getPlaceParams());
       }, this);
-
       return p;
     }
 
