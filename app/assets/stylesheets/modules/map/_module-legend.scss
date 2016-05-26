@@ -331,7 +331,7 @@
         width: 100%;
         .button-wrapper {
           display: block;
-          margin: 5px 0;
+          margin: 5px 0 15px;
         }
         .canopy-button {
           float: none;
@@ -350,13 +350,12 @@
           }
         }
         &.minavgmax {
-          padding: 10px 0 15px 0;
           position: relative;
           .canopy-button {
             background: $white;
             color: #5b80A0;
             box-shadow: 0 0 0 1px #5B80A0;
-            padding: 1px 0;
+            padding: 0;
             span {
               padding: 0 5px;
 
@@ -366,6 +365,7 @@
               color: $white;
               border-radius: 10px;
               padding: 0px 6px;
+              display: inline-block;
             }
           }
         }
@@ -446,6 +446,7 @@
 
     .total-carbon-bar {
       margin-top: 4px;
+      position: relative;
     }
 
     .labels {
@@ -457,7 +458,11 @@
       li:first-child {float: left;}
       li:last-child {float: right;width: 50%;text-align: right;}
     }
-
+    .range-bar {
+      display: none;
+      position: absolute;
+      color: lightblue;
+    }
     .quartile-bar {
       clear: both;
       height: 12px;
