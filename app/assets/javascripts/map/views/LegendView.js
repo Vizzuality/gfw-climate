@@ -197,11 +197,12 @@ define([
         if (this.detailsTemplates[layer.slug]) {
           if(layer.slug === 'biomass_loss') {var layer_range = ['0','917']};
           if(layer.slug === 'carbon_stocks') {var layer_range = ['0','500']};
+
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             layerTitle: layer.title,
-            minrange: options.minrange || ((!!layer_range) ? layer_range[0] : null),
-            maxrange: options.maxrange || ((!!layer_range) ? layer_range[1] : null)
+            minrange: (!!options.rangearray && options.rangearray[layer.slug]) ? options.rangearray[layer.slug].minrange : false || ((!!layer_range) ? layer_range[0] : null),
+            maxrange: (!!options.rangearray && options.rangearray[layer.slug]) ? options.rangearray[layer.slug].maxrange : false || ((!!layer_range) ? layer_range[1] : null)
           });
         }
         if (layer.iso) {
@@ -407,6 +408,21 @@ define([
       range_bars.first().css('left',range[0]*100/layer_range[1]+'%');
       range_bars.last().css('left',range[1]*100/layer_range[1]+'%');
       range_bars.show();
+
+      this.presenter._updateRangeArray(this.createRangeArray(layer,range,layer_range),layer);
+      
+    },
+
+    createRangeArray: function(layer,range,layer_range) {
+      var rangearray = {}
+      rangearray[layer] = {
+        'minrange': range[0],
+        'maxrange': range[1],
+        'TOTALMIN': layer_range[0],
+        'TOTALMAX': layer_range[1]
+      };
+
+      return rangearray;
     }
 
   });
