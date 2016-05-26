@@ -1,0 +1,44 @@
+<div class="overlay js-close-share"></div>
+<div class="content-share mini-modal-content">
+  <a href="#" class="close js-close-share"><svg><use xlink:href="#shape-close"></use></svg></a>
+  <header>
+    <h2>Share this view</h2>
+    <div>
+      {{#ifCond this.type "==" 'link'}}
+        <p>Click and paste link in email or IM</p>
+      {{/ifCond}}         
+
+      {{#ifCond this.type "==" 'embed'}}
+        <p>Click and paste HTML to embed in website.</p>
+      {{/ifCond}}         
+
+    </div>
+  </header>
+  <div class="mini-modal-input">
+    {{#ifCond this.type "==" 'link'}}
+      <ul class="button-container">
+        <li><button class="js-type-share btn gray uppercase" data-type="embed">Embed</button></li>
+        <li><button class="js-type-share btn blue uppercase" data-type="link">Link</button></li>
+      </ul>
+      <input class='field js-input-share input-share' type='text' id='share-field' value="" readonly />
+      <button class="btn gray uppercase js-copy-share copy-share">Copy</button>
+      <div class="share-sozial">
+        <ul>
+          <li><a href="#" target="_blank" class="js-social-share google_plus popup"><svg class="icon"><use xlink:href="#icon-googleplus"></use></svg></a></li>
+          <li><a href="#" target="_blank" class="js-social-share twitter popup"><svg class="icon"><use xlink:href="#icon-twitter"></use></svg></a></li>
+          <li><a href="#" target="_blank" class="js-social-share facebook popup"><svg class="icon"><use xlink:href="#icon-facebook"></use></svg></a></li>
+        </ul>
+      </div>      
+    {{/ifCond}}         
+
+    {{#ifCond this.type "==" 'embed'}}
+      <ul class="button-container">
+        <li><button class="js-type-share btn blue uppercase" data-type="embed">Embed</button></li>
+        <li><button class="js-type-share btn gray uppercase" data-type="link">Link</button></li>
+      </ul>
+      <input class='field js-input-share input-share' type='text' id='share-field' value="" readonly />
+      <button class="btn gray uppercase js-copy-share copy-share">Copy</button>
+      <div id="share-iframe-box" class="share-iframe"></div>
+    {{/ifCond}}         
+  </div>
+</div>

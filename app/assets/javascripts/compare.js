@@ -3,9 +3,11 @@
  */
 require([
   'backbone',
+  'handlebars',  
+  'helpers/handlebarsPlugins',  
   'compare/router',
   'compare/views/CompareIndexView'
-], function(Backbone, RouterView, CompareIndexView) {
+], function(Backbone, Handlebars, HandlebarsPlugins, RouterView, CompareIndexView) {
 
   'use strict';
 
@@ -34,7 +36,7 @@ require([
 
     _initViews: function() {
       new CompareIndexView();
-    }
+    },
 
   });
 

@@ -52,7 +52,7 @@ define([
         }
       },this));
       // backdrop
-      this.$backdrop.on('click', _.bind(function() {
+      this.$el.on('click', '.modal-backdrop', _.bind(function() {
         this.hide();
       },this));
     },

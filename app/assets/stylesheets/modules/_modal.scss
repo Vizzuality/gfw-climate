@@ -627,7 +627,6 @@ $height: auto;
 }
 
 .mini-modal-content {
-  width: 300px;
   padding: 20px;
   position: fixed;
   top: 50%;
@@ -712,9 +711,10 @@ $height: auto;
   }
 
   .button-container {
-    margin: 10px 0 0;
     display: flex;
     justify-content: space-between;
+    width: 260px;
+    margin: 0 auto 15px;    
 
     li{
       width: 48%;
@@ -738,15 +738,18 @@ $height: auto;
 
   .mini-modal-input{
     padding: 15px 0 0;
-    .copy_url{
+    // Button
+    .copy-share{
       border-radius: 0;
       height: 39px;
       line-height: 39px;
       width: 30%;
       display: block;
     }
+
+    // Input
     input{
-      &.copy-input{
+      &.input-share{
         width: 70%;
         border-right: none;
         float: left;
@@ -765,7 +768,7 @@ $height: auto;
   }
 
   .share-sozial {
-    padding: 50px 0 0;
+    padding: 30px 0 0;
 
     ul {
       display: flex;
@@ -794,6 +797,10 @@ $height: auto;
         }
       }
     }
+  }
+
+  .share-iframe {
+    margin: 20px 0 0;
   }
 }
 

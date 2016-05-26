@@ -1,67 +1,23 @@
 /**
- * The PlaceService class manages places in the application.
- *
- * A place is just the current state of the application which can be
- * represented as an Object or a URL. For example, the place associated with:
- *
- *   http://localhost:5000/map/6/2/17/ALL/terrain/loss
- *
- * Can also be represented like this:
- *
- *  zoom - 6
- *  lat - 2
- *  lng - 17
- *  iso - ALL
- *  maptype - terrain
- *  baselayers - loss
- *
- * The PlaceService class handles the following use cases:
- *
- * 1) New route updates views
- *
- *   The Router receives a new URL and all application views need to be updated
- *   with the state encoded in the URL.
- *
- *   Here the router publishes the "Place/update" event passing in the route
- *   name and route parameters. The PlaceService handles the event by
- *   standardizing the route parameters and publishing them in a "Place/go"
- *   event. Any presenters listening to the event receives the updated
- *   application state and can update their views.
- *
- * 2) Updated view updates URL
- *
- *   A View state changes (e.g., a new map zoom) and the URL needs to be
- *   updated, not only with its new state, but from the state of all views in
- *   the application that provide state for URLs.
- *
- *   Here presenters publishe the "Place/register" event passing in a
- *   reference to themselves. The PlaceService subscribes to the
- *   "Place/register" event so that it can keep references to all presenters
- *   that provide state. Then the view publishes the "Place/update" event
- *   passing in a "go" parameter. If "go" is false, the PlaceService will
- *   update the URL. Otherwise it will publish the "Place/go" event which will
- *   notify all subscribed presenters.
- *
- * @return {PlaceService} The PlaceService class
+  PlaceService
  */
 define([
   'underscore',
   'mps',
   'uri',
-  'compare/presenters/PresenterClass',
+  'embed/presenters/PresenterClass',
 ], function (_, mps, UriTemplate, PresenterClass) {
 
   'use strict';
 
   var urlDefaultsParams = {
-    view: 'national'
+    location: null,
+    widget: null,
   };
-
-  var widgetStatus = {};
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: 'countries/{country}/{view}{?options}',
+    _uriTemplate:'{name}{/location}{/widget}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -71,7 +27,7 @@ define([
     init: function(router) {
       this.router = router;
       this._presenters = [];
-      this.params = {};
+      this._name = null;
       this._super();
     },
 
@@ -95,7 +51,8 @@ define([
      * @param  {String} name   Place name
      * @param  {Object} params Url params
      */
-    initPlace: function(params) {
+    initPlace: function(name, params) {
+      this._name = name;
       this._newPlace(params);
     },
 
@@ -107,12 +64,8 @@ define([
       params = this._destandardizeParams(
         this._getPresenterParams(this._presenters));
 
-
       route = this._getRoute(params);
       this.router.navigate(route, {silent: true});
-
-      mps.publish('Place/store', [this._standardizeParams(params)]);
-
     },
 
     /**
@@ -144,15 +97,22 @@ define([
      */
     _standardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
+      p.name = this._name ? this._name : null;
+      p.widget = (p.widget) ? parseInt(p.widget) : null;
+      p.globalThresh = (p.globalThresh) ? p.globalThresh : 30;
 
-      p.country = {
-        iso: p.country
-      };
-
-      p.view = p.view;
-
-      p.options = p.options ? JSON.parse(atob(p.options)) : null;
-
+      // We have to develop this with our params
+      if (p.location) {
+        var location = p.location.split('+');
+        p.location = {
+          iso: location[0],
+          jurisdiction: ~~location[1],
+          area: location[2],
+        }
+      }
+      if (p.options) {
+        p.options = JSON.parse(atob(p.options));
+      }
       return p;
     },
 
@@ -164,18 +124,18 @@ define([
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
-      if (params && this.params.options) {
-        this.params.options.areas = params.options.areas;
-        this.params.options.jurisdictions = params.options.jurisdictions;
-        this.params.options.widgets = params.options.widgets ? params.options.widgets : null;
-        this.params.options.activeWidgets = params.options.activeWidgets ? params.options.activeWidgets : null;
+      var p = _.extendNonNull({}, urlDefaultsParams, this.params, params);
+      p.name = this._name ? this._name : null;
+      p.widget = (p.widget) ? parseInt(p.widget) : null;
+      p.globalThresh = (p.globalThresh) ? p.globalThresh : 30;
+
+      // We have to develop this with our params
+      p.location = (p.location) ? p.location.iso + '+' + p.location.jurisdiction + '+' + p.location.area : null;
+
+      if (p.options) {
+        p.options = params.options;
+        p.options = btoa(JSON.stringify(p.options));
       }
-
-      var p = _.extendNonNull({}, this.params, params);
-
-      p.country = p.country.iso;
-      p.view = p.options.view;
-      p.options = p.options ? btoa(JSON.stringify(p.options)) : null;
 
       return p;
     },

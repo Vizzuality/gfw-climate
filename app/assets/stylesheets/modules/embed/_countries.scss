@@ -1,0 +1,148 @@
+.embed-container {
+	max-width: 500px;
+	margin: 0 auto;
+	border: 1px solid #CCC;
+	border-top: none;	
+}
+
+// HEADER
+.embed-header {
+	background: $dark-grey;
+
+	header {
+		position: relative;
+		min-height: 90px;
+	}
+
+	.header-title {
+		padding: 15px 20px;
+		padding-right: 100px;
+		
+		> * {
+			margin: 0 0 10px;
+			&:last-child {
+				margin: 0;
+			}
+		}
+	}
+
+	h1 {
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    right: 0;
+		text-indent: -9999px;
+    z-index: 11;
+    margin: 0;
+    background-image: url("/assets/logo-new.svg");
+    background-size: contain;
+
+		a {
+			display: block;
+			height: 100%;
+			width: 100%;
+		}
+	}
+	
+	h2 {
+		color: $white;
+		font-size: 32px;
+	}
+
+	h3 {
+		color: $font-color-4;
+		text-transform: uppercase;
+		font-size: 14px;
+
+		> span {
+			position: relative;
+			padding-right: 24px;
+		}
+
+		.source {
+			display: inline-block;
+			position: absolute;
+			top: 50%;
+			right: 0;
+	    width: 16px;
+			height: 16px;
+			border: 1px solid $font-color-4;
+			border-radius: 50%;
+			margin: -9px 0 0;
+
+
+			svg {
+				position: absolute;
+				top: 0%;
+				left: 0%;
+				display: inline-block;
+				width: 10px;
+				height: 10px;	
+		    margin: 2px 0 0 2px;
+				fill: $font-color-4;
+			}
+
+			&:hover {
+				border-color: $white;
+				svg {
+					fill: $white;
+				}
+			}
+		}
+	}
+}
+
+// WIDGET
+.embed-widget {
+	background: $white;
+
+	.m-widget {
+		> .m-widget-header {
+			display: none;
+		}
+
+		> .m-widget-content {
+			margin: 0;
+
+			.tab-ul {
+		    display: flex !important;
+		    visibility: visible;
+
+				.tab-li {
+					background: $dark;
+					color: $white;
+					border: none;
+
+					.subname, .ipcc {
+						color: $white;
+					}
+
+					&.-selected {
+						color: $dark;
+						background: $white;
+			
+						.subname, .ipcc {
+							color: $dark;
+						}
+					}
+				}
+			}
+			
+			.m-tab {
+				padding: 0 15px 15px;
+
+				.sup-options {
+					margin: 25px 0 10px 0;
+					display: block;
+				}
+
+			}			
+		}
+	}
+
+}
+
+// FOOTER
+.embed-footer {
+}
