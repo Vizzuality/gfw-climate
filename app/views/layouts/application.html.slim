@@ -28,6 +28,15 @@ html
 
     = render 'shared/gfw_assets'
 
+    javascript:
+      window.liveSettings= { api_key:"35ae26e6686249dea297972fc1978922",
+        picker: '#ma-div-temp-for-collection',
+        detectlang: false,
+        autocollect: true,
+        staging: false};
+
+    javascript type="text/javascript" src="//cdn.transifex.com/live.js"
+
   body class="is-#{params[:controller]}-page is-#{params[:action]}-action"
 
     = render 'shared/svg_icons'
