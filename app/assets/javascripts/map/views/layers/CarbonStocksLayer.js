@@ -42,37 +42,35 @@ define([
       // More info here: http://asmjs.org/spec/latest/
       var components = 4 | 0,
           w = w |0,
-          j = j |0,
-          zoom = this.map.getZoom(),
-          exp = zoom < 11 ? 0.3 + ((zoom - 3) / 20) : 1 | 0;
-
-      var myscale = d3.scale.pow()
-            .exponent(exp)
-            .domain([0,256])
-            .range([0,256]);
-      var c = [112, 168, 256, // first bucket
-               76,  83,  122,
-               210, 31,  38,
-               241, 152, 19,
-               255, 208, 11]; // last bucket
-      var countBuckets = c.length / 3 |0; //3: three bands
+          j = j |0;
 
       for(var i = 0 |0; i < w; ++i) {
         for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
-              intensity = imgdata[pixelPos+2],
-              alpha = imgdata[pixelPos + 3];
-          imgdata[pixelPos + 3] = 0;
+          // intensity = imgdata[pixelPos+2]-(imgdata[pixelPos+3]*imgdata[pixelPos+2]/100) |0;
+          intensity = imgdata[pixelPos+2];
+          //if (intensity>255) intensity=255;
+          //if (intensity<0) intensity=0;
+          var uncer = imgdata[pixelPos + 3];
+          uncer = uncer > 100 ? 100 : (uncer < 0 ? 0 : uncer);
 
-          var intensity_scaled = myscale(intensity) |0,
-              bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
 
-          if (intensity > this.minrange && intensity < this.maxrange && alpha > this.uncertainty) {
+          if(intensity >= this.minrange && intensity <= this.maxrange) {
+            if(this.uncertainty === 0) {
+              // min uncertainty subtract the percentage of uncertainty
+              intensity = intensity - (uncer*intensity/100);
+              intensity = intensity < 1 ? 1 : intensity;
+            } else if(this.uncertainty === 254) {
+              // max uncertainty sum the uncertainty value
+              intensity = intensity + (uncer*intensity/100);
+            }
             imgdata[pixelPos] = 255-intensity;
             imgdata[pixelPos + 1] = 128;
             imgdata[pixelPos + 2] = 0;
-            imgdata[pixelPos + 3] = intensity
-          };
+            imgdata[pixelPos + 3] = intensity;
+          } else {
+            imgdata[pixelPos + 3] = 0;
+          }
         }
       }
     },

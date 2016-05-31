@@ -10,6 +10,9 @@ class EmbedController < ApplicationController
     response.headers.delete "X-Frame-Options"
   end
 
+  def countries
+  end
+
   def countries_show_info
     @employees = @country['employment']
   end

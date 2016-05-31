@@ -197,11 +197,12 @@ define([
         if (this.detailsTemplates[layer.slug]) {
           if(layer.slug === 'biomass_loss') {var layer_range = ['0','917']};
           if(layer.slug === 'carbon_stocks') {var layer_range = ['0','500']};
+
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             layerTitle: layer.title,
-            minrange: options.minrange || layer_range[0],
-            maxrange: options.maxrange || layer_range[1]
+            minrange: (!!options.rangearray && options.rangearray[layer.slug]) ? options.rangearray[layer.slug].minrange : false || ((!!layer_range) ? layer_range[0] : null),
+            maxrange: (!!options.rangearray && options.rangearray[layer.slug]) ? options.rangearray[layer.slug].maxrange : false || ((!!layer_range) ? layer_range[1] : null)
           });
         }
         if (layer.iso) {
@@ -355,12 +356,19 @@ define([
       $(e).siblings('.toggle-legend-option').toggle('250');
     },
     updateRange: function(e) {
-      var newrange = this.$el.find('input');
-      var targets = this.$el.find('.labels em');
-      newrange = [newrange[0].value,newrange[1].value];
       var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
-      if(layer === 'biomass_loss') {var layer_range = ['0','917']};
-      if(layer === 'carbon_stocks') {var layer_range = ['0','500']};
+      
+      if(layer === 'biomass_loss') {
+        var newrange = this.$el.find('.layer-details-biomass_loss input');
+        var targets = this.$el.find('.layer-details-biomass_loss .labels em');
+        var layer_range = ['0','917'];
+      }
+      if(layer === 'carbon_stocks') {
+        var newrange = this.$el.find('.layer-details-carbon_stocks input');
+        var targets = this.$el.find('.layer-details-carbon_stocks .labels em');
+        var layer_range = ['0','500'];
+      }
+      newrange = [newrange[0].value,newrange[1].value];
       if (~~newrange[0] < 0) return this.resetRanges('min',e);
       if (~~newrange[0] > layer_range[1]) return this.resetRanges('min',e);
       if (~~newrange[1] > layer_range[1]) return this.resetRanges('max',e);
@@ -387,16 +395,34 @@ define([
     },
     updateRangeBar: function(range,e) {
       var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
+      var range_bars = $(e.target).parents('.layer-details').find('.range-bar');
       if(layer === 'biomass_loss') {
-        var $bar = this.$el.find('.quartile-bar-loss-biomass');
         var layer_range = ['0','917'];
-        $bar.css('background', 'linear-gradient(to right, #ff1f26 0%, #d21f26 '+range[0]*100/layer_range[1]+'%, #d21f26 52%, #f19813 '+range[1]*100/layer_range[1]+'%, #ffd00b 100%)');
-      };
+      }
       if(layer === 'carbon_stocks') {
-        var $bar = this.$el.find('.quartile-bar-biomass');
         var layer_range = ['0','500'];
-        $bar.css('background', 'linear-gradient(to right, #895122 10%, #957F4F 35%, #9DB38A 75%, #39A401 100%)');
+      }
+      if (range[0] == layer_range[0] && range[1] == layer_range[1]) {
+        return  range_bars.hide();
+      }
+      range_bars.first().css('left',range[0]*100/layer_range[1]+'%');
+      range_bars.last().css('left',range[1]*100/layer_range[1]+'%');
+      range_bars.show();
+
+      this.presenter._updateRangeArray(this.createRangeArray(layer,range,layer_range),layer);
+      
+    },
+
+    createRangeArray: function(layer,range,layer_range) {
+      var rangearray = {}
+      rangearray[layer] = {
+        'minrange': range[0],
+        'maxrange': range[1],
+        'TOTALMIN': layer_range[0],
+        'TOTALMAX': layer_range[1]
       };
+
+      return rangearray;
     }
 
   });

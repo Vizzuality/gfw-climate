@@ -10,7 +10,9 @@ define([
   // Common views
   'views/SourceModalView',
   'views/ToolbarView',
-], function(Backbone, CompareSelectorsView, CompareGridView, CompareModalView, CompareFixedHeaderView, CompareGridButtonBoxView, CompareWidgetsModalView, CompareSwitcherView, SourceModalView, ToolbarView) {
+  'widgets/views/ShareWidgetView',
+
+], function(Backbone, CompareSelectorsView, CompareGridView, CompareModalView, CompareFixedHeaderView, CompareGridButtonBoxView, CompareWidgetsModalView, CompareSwitcherView, SourceModalView, ToolbarView, ShareWidgetView) {
 
   var CompareIndexView = Backbone.View.extend({
 
@@ -35,7 +37,9 @@ define([
       // Common views
       new SourceModalView();
       new ToolbarView();
-      
+      new ShareWidgetView();
+
+
       if (this.mobile) {
         new CompareSwitcherView();
       } else {

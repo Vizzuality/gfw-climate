@@ -9,10 +9,11 @@ define([
   // Common views
   'views/SourceModalView',
   'views/ToolbarView',
+  'widgets/views/ShareWidgetView',
 
 ], function(Backbone, FixedHeaderView,
   CountryShowHeaderView, TabsView, CountryWidgetsModalView, WidgetGridView, CountryGridButtonBoxView,
-  SourceModalView, ToolbarView) {
+  SourceModalView, ToolbarView, ShareWidgetView) {
   'use strict';
 
   var CountryShowView = Backbone.View.extend({
@@ -27,6 +28,7 @@ define([
       // Common views
       new SourceModalView();
       new ToolbarView();
+      new ShareWidgetView();
     }
 
   });

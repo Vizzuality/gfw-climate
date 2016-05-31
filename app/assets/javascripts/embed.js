@@ -4,20 +4,20 @@
 require([
   'jquery',
   'd3',
+  'handlebars',
+  'helpers/handlebarsPlugins',  
   'backbone',
-  'compare/router',
-  'embed/PantropicalView'
-], function($, d3, Backbone, RouterView, PantropicalView) {
+  'embed/router'
+], function($, d3, Handlebars, HandlebarsPlugins, Backbone, RouterView) {
 
   'use strict';
 
-  var ComparePage = Backbone.View.extend({
+  var EmbedPage = Backbone.View.extend({
 
     el: document.body,
 
     initialize: function() {
       this._initRouter();
-      this._initViews();
       this._initApp();
     },
 
@@ -26,7 +26,10 @@ require([
      */
     _initApp: function() {
       if (!Backbone.History.started) {
-        Backbone.history.start({pushState: true});
+        Backbone.history.start({
+          pushState: true,
+          root: '/embed'
+        });
       }
     },
 
@@ -34,12 +37,8 @@ require([
       this.router = new RouterView();
     },
 
-    _initViews: function() {
-      new PantropicalView();
-    }
-
   });
 
-  new ComparePage();
+  new EmbedPage();
 
 });
