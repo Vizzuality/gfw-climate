@@ -383,6 +383,10 @@ define([
           })
           .attr('cy', function(d) {
             return _this.y2(d[_this.dataColumns.dots.y])
+          })
+          .style('transform-origin', function(d) {
+            return ( Math.round( _this.x2(d[_this.dataColumns.dots.x]) ) ) + 'px ' +
+                   ( Math.round( _this.y2(d[_this.dataColumns.dots.y]) ) ) + 'px';
           });
     },
 
@@ -553,7 +557,6 @@ define([
       var domain = _this._getDomain();
       var xDomain = domain.x2;
 
-      // if (this.currentStep < xDomain[1]) {
       if (this.currentStep < this.maxDomain) {
         var data = _.clone(this.solidLineData);
         this.graphLine
@@ -569,7 +572,6 @@ define([
       current++;
 
       if (current > this.maxDomain) {
-        // this.currentStep = 1;
         this._setHandlePosition();
         Backbone.Events.trigger('insights:glad:stopTimeline');
       } else {

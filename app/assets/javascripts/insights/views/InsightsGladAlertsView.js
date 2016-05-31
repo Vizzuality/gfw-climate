@@ -12,8 +12,7 @@ define([
   var InsightsGladAlerts = Backbone.View.extend({
 
     events: {
-      'click .js-selector-main': '_changeMainVis',
-      'click .js-selector-compare': '_changeCompareVis',
+      'click .js-selector': '_changeVisualizations',
       'click .js-timeline-button': '_toggleTimeline'
     },
 
@@ -30,6 +29,8 @@ define([
       isPlayingClassEl: '-is-playing',
       timelineClassEl: 'timeline-button',
       loadingClassEl: 'is-loading',
+      mainVisSwitchEl: 'main-vis-switch',
+      compareVisSwitchEl: 'compare-vis-switch',
       loadedClassEl: 'loaded',
       timelineInterval: 500
     },
@@ -123,11 +124,11 @@ define([
 
       el.innerHTML = this.templateLegend({
         isDesforestation: filter === this.defaults.desforestationFilter,
-        emissions: (current.cumulative_emissions * 1).toFixed(2),
-        annual_budget: (current.emissions_target * 1).toFixed(2),
-        deforestation: this._toThousands(current.cumulative_deforestation),
-        deforestation_cap: this._toThousands(current.deforestation_target),
-        alerts: this._toThousands(current.alerts)
+        emissions: Math.round(current.cumulative_emissions * 1),
+        annual_budget: Math.round(current.emissions_target * 1),
+        deforestation: Math.round(current.cumulative_deforestation),
+        deforestation_cap: Math.round(current.deforestation_target),
+        alerts: Math.round(current.alerts)
       });
     },
 
@@ -140,50 +141,50 @@ define([
       }
     },
 
-    _changeMainVis: function(ev) {
+    _changeVisualizations: function(ev) {
       var current = ev.currentTarget;
       var filter = current.dataset.filter;
 
-      if (!current.classList.contains(this.defaults.selectedClassEl)) {
-        this._toggleFilter(current);
-        this.visMain.updateByFilter(filter);
+      this._changeMainVis(filter);
+      this._changeCompareVis(filter);
+    },
 
-        var legend = _.findWhere(this.legends, {
-          category: 'main'
-        });
+    _changeMainVis: function(filter) {
+      this._toggleFilter(this.defaults.mainVisSwitchEl, filter);
+
+      this.visMain.updateByFilter(filter);
+
+      var legend = _.findWhere(this.legends, {
+        category: 'main'
+      });
+      legend.filter = filter;
+
+      this._renderLegend(legend.element, legend.data, legend.filter);
+    },
+
+    _changeCompareVis: function(filter) {
+      this._toggleFilter(this.defaults.compareVisSwitchEl, filter);
+
+      var legends = _.where(this.legends, { category: 'compare' });
+      this.compareVisList.forEach(function(vis, i) {
+        vis.updateByFilter(filter);
+
+        var legend = legends[i];
         legend.filter = filter;
 
         this._renderLegend(legend.element, legend.data, legend.filter);
-      }
+      }.bind(this));
     },
 
-    _changeCompareVis: function(ev) {
-      var current = ev.currentTarget;
-      var filter = current.dataset.filter;
+    _toggleFilter: function(element, filter) {
+      var parent = this.el.querySelector('.' + element);
+      var selected = parent.querySelector('.' + this.defaults.selectedClassEl);
+      var newSelection = parent.querySelector('[data-filter="'+ filter +'"]');
 
-
-      if (!current.classList.contains(this.defaults.selectedClassEl)) {
-        this._toggleFilter(current);
-        var legends = _.where(this.legends, { category: 'compare' });
-        this.compareVisList.forEach(function(vis, i) {
-          vis.updateByFilter(filter);
-
-          var legend = legends[i];
-          legend.filter = filter;
-
-          this._renderLegend(legend.element, legend.data, legend.filter);
-        }.bind(this));
-      }
-    },
-
-    _toggleFilter: function(element) {
-      var previousSelected = element.parentNode.querySelector('.' + this.defaults.selectedClassEl);
-      previousSelected.classList.remove(this.defaults.selectedClassEl);
-
-      element.classList.add(this.defaults.selectedClassEl);
+      selected.classList.remove(this.defaults.selectedClassEl);
+      newSelection.classList.add(this.defaults.selectedClassEl);
 
       this._stopTimeline();
-      // Backbone.Events.trigger('insights:glad:setStep', 1);
     },
 
     _toThousands: function(number) {

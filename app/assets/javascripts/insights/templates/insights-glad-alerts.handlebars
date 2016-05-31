@@ -1,11 +1,21 @@
 <div class="glad-vis">
+  <div class="year-selector">
+    <div class="label">Year:</div>
+    <div class="action">
+      <select>
+        <option selected>2016</option>
+        <option>2015</option>
+      </select>
+    </div>
+  </div>
+
   <div id="visMain" class="main-chart is-loading">
     <div class="heading">
       <h3>Peru</h3>
     </div>
-    <div class="selectors">
-      <div class="action carbon-emissions -selected js-selector-main" data-filter="carbon_emissions">CO2 Emissions</div>
-      <div class="action deforestation js-selector-main" data-filter="deforestation">Deforestation Area</div>
+    <div class="selectors main-vis-switch">
+      <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>
+      <div class="action deforestation js-selector" data-filter="deforestation">Deforestation Area</div>
     </div>
 
     <div class="selectors -highlight">
@@ -23,7 +33,19 @@
         </button>
       </div>
     </div>
-    <div class="legend -main"></div>
+
+    <div class="legend-container">
+      <div class="level-indicator">
+        <div class="icon">
+          <div class="level"></div>
+        </div>
+        <div class="labels">
+          <div class="text">1000 t C0<sub>2</sub></div>
+          <div class="text">500 t C0<sub>2</sub></div>
+        </div>
+      </div>
+      <div class="legend -main"></div>
+    </div>
   </div>
 
   <div class="compare-list">
@@ -41,9 +63,9 @@
       </div>
     </div>
 
-    <div class="selectors">
-      <div class="action carbon-emissions -selected js-selector-compare" data-filter="carbon_emissions">CO2 Emissions</div>
-      <div class="action deforestation js-selector-compare" data-filter="deforestation">Deforestation Area</div>
+    <div class="selectors compare-vis-switch">
+      <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>
+      <div class="action deforestation js-selector" data-filter="deforestation">Deforestation Area</div>
     </div>
 
     <div class="selectors -highlight">
