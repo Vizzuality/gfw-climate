@@ -183,7 +183,7 @@ define([
       element.classList.add(this.defaults.selectedClassEl);
 
       this._stopTimeline();
-      Backbone.Events.trigger('insights:glad:setStep', 1);
+      // Backbone.Events.trigger('insights:glad:setStep', 1);
     },
 
     _toThousands: function(number) {

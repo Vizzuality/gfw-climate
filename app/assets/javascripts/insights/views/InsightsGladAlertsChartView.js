@@ -149,6 +149,9 @@ define([
         return d[this.dataColumns.dots.r];
       }.bind(this));
 
+      var maxDomainXData = this.dotsData[this.dotsData.length - 1];
+      this.maxDomain = maxDomainXData[this.dataColumns.dots.x];
+
       this.solidLineData = _.filter(this.chartData, function(d){
         return d[this.dataColumns.dots.y];
       }.bind(this));
@@ -407,17 +410,17 @@ define([
      */
     _drawSolidLine: function() {
       var _this = this;
-      var solidLine = this.svg.append('g')
+      var solidLineGroup = this.svg.append('g')
         .attr('class', 'line-solid-group')
         .attr('transform', 'translate( 0,'+ -this.defaults.paddingAxisLabels + ')');
 
-      var line = d3.svg.line()
+      this.linePath = d3.svg.line()
         .x(function(d) { return _this.x2(d[_this.dataColumns.line.x]); })
         .y(function(d) { return _this.y(d[_this.dataColumns.line.y]); })
         .interpolate(this.defaults.interpolate);
 
-      solidLine.append('path')
-        .attr('d', line(this.solidLineData))
+      this.graphLine = solidLineGroup.append('path')
+        .attr('d', this.linePath(this.solidLineData))
         .attr('class', 'line-solid-path');
     },
 
@@ -522,6 +525,7 @@ define([
         this.handleLabel.text('Week ' + Math.round(this.currentStep));
       }
       this._updateDots();
+      this._updateLine();
     },
 
     _updateDots: function() {
@@ -544,6 +548,19 @@ define([
         });
     },
 
+    _updateLine() {
+      var _this = this;
+      var domain = _this._getDomain();
+      var xDomain = domain.x2;
+
+      // if (this.currentStep < xDomain[1]) {
+      if (this.currentStep < this.maxDomain) {
+        var data = _.clone(this.solidLineData);
+        this.graphLine
+          .attr('d', this.linePath(data.splice(0, Math.round(_this.currentStep))));
+      }
+    },
+
     _changeStep: function() {
       var domain = this._getDomain();
       var x2Domain = domain.x2;
@@ -551,8 +568,7 @@ define([
 
       current++;
 
-      // if (current > x2Domain[1]) {
-      if (current > 18) {
+      if (current > this.maxDomain) {
         // this.currentStep = 1;
         this._setHandlePosition();
         Backbone.Events.trigger('insights:glad:stopTimeline');
@@ -588,7 +604,7 @@ define([
 
         this.svg.remove();
         this.svg = null;
-        this.currentStep = 1;
+        // this.currentStep = 1;
         this.el.classList.remove(this.filter);
         this.el.removeChild(svgContainer);
         // this.unsetListeners();
