@@ -18,7 +18,7 @@
 
   @media (min-width: $br-mobileMap){
     width: 283px;
-    top: 110px;
+    top: 112px;
     bottom: auto;
     left: 35px;
     padding: 0;
@@ -316,8 +316,8 @@
       z-index: 0;
       &:before {
         content: '.';
-        width: 15px; 
-        height: 15px; 
+        width: 15px;
+        height: 15px;
         background-color: $white;
         color: $white;
         transform: rotate(45deg);
@@ -369,7 +369,7 @@
             }
           }
         }
-      } 
+      }
     }
     sup {
       vertical-align: top;
