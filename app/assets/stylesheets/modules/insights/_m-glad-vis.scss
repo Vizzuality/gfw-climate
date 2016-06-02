@@ -1,11 +1,62 @@
 .glad-vis {
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
+
+  .year-selector {
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .label {
+      font-size: 14px;
+      color: #555555;
+      margin-right: 10px;
+    }
+
+    .action {
+      width: 60px;
+      height: 30px;
+      border-radius: 30px;
+      border: 1px solid #5B80A0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      select {
+        background: transparent;
+        border: 0;
+        -webkit-appearance:none;
+        -moz-appearance: none;
+        font-size: 12px;
+        font-weight: 600;
+        color: #555555;
+        padding: 7px 4px;
+        cursor: pointer;
+      }
+    }
+  }
+
   .main-chart {
     width: 100%;
     border-bottom: 1px solid #E0E0E0;
     padding-bottom: 40px;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 60px;
+    margin-top: 0px;
     position: relative;
 
     .chart-container {
@@ -119,12 +170,22 @@
     .visualizations {
       width:100%;
       display:flex;
+
+      @media only screen and (max-width: $br-mobile) {
+        flex-direction: column;
+      }
     }
 
     .compare-chart {
       width:31.333333333%;
       height: 220px;
       margin-right: 3%;
+
+      @media only screen and (max-width: $br-mobile) {
+        width: 100%;
+        height: 500px;
+        margin: 0;
+      }
 
       &:last-child {
         margin-right: 0;
@@ -133,6 +194,10 @@
       .chart {
         width: 100%;
         height: inherit;
+
+        @media only screen and (max-width: $br-mobile) {
+          height: 220px;
+        }
       }
     }
   }
@@ -186,14 +251,74 @@
     }
   }
 
+  .legend-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .level-indicator {
+    width: 120px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 26px;
+    margin-top: 15px;
+
+    .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      border: 1px solid #B6B6B6;
+      flex-shrink: 0;
+      position: relative;
+
+      .level {
+        width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        border: 1px solid #B6B6B6;
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+    }
+
+    .labels {
+      margin-left: 10px;
+      margin-top: 3.5px;
+
+      .text {
+        font-size: 14px;
+        color: #555555;
+        margin-bottom: 3px;
+      }
+    }
+  }
+
   .legend {
     width: 75%;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
 
     &.-main{
-      width: 55%;
+      width: 560px;
       margin: 0 0 0 auto;
+    }
+
+    .btn-map {
+      margin-left: auto;
+      margin-right: 30px;
+      margin-top: 20px;
+
+      .btn {
+        padding-left: 25px;
+        padding-right: 25px;
+        text-transform: uppercase;
+        font-weight: 400;
+      }
     }
 
     .list {
@@ -289,42 +414,28 @@
         }
       }
 
-      &.deforestation{
-        .item {
-          .value {
-            color: #FF6398;
-          }
 
-          &.-highlight {
-            .value {
-              color: #EDB04A;
-            }
-          }
-
-          .icon {
-            &.-line {
-              &:after {
-                background: #FF6398;
-              }
-            }
-
-            &.-dashed {
-              &:before {
-                background: #FF6398;
-              }
-              &:after {
-                background: #FF6398;
-              }
-            }
-          }
-        }
-      }
     }
 
     &.-compare {
+      align-items: center;
+      justify-content: center;
+
+      .btn-map{
+        margin-top: 15px;
+
+        @media only screen and (max-width: $br-mobile) {
+          margin-left: 0;
+        }
+      }
+
       .list {
         flex-direction: column;
         flex-direction: column-reverse;
+
+        @media only screen and (max-width: $br-mobile) {
+          width: 180px;
+        }
 
         .item {
           display: flex;

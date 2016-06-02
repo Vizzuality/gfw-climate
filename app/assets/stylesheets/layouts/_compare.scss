@@ -3,9 +3,17 @@ $l-padding: 50px;
 .l-header {
   padding-top: 70px;
   background-color: $dark-grey;
-  
+
+  &.-narrow {
+    padding-top: 36px;
+  }
+
   @media screen and (min-width: $br-mobile) {
     padding: 70px 0 25px;
+
+    &.-narrow {
+      padding: 36px 0 4px;
+    }
   }
 }
 
@@ -13,7 +21,7 @@ $l-padding: 50px;
   display: none;
   padding: 10px 0;
   background-color: $extra-light-grey;
-  
+
   @media screen and (min-width: $br-mobile) {
     //We dont have design for this.. so for the moment...
     display: block;
@@ -43,7 +51,7 @@ $l-padding: 50px;
   @media screen and (min-width: $br-mobile) {
     display: flex;
     justify-content: space-between;
-    
+
     margin: 40px 0;
   }
 }
@@ -65,7 +73,7 @@ $l-padding: 50px;
 
   padding: 8px 20px;
   background-color: #404040;
-  
+
   &.is-fixed {
     position: fixed;
     top: 0;

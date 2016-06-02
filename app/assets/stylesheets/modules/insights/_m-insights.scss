@@ -11,7 +11,7 @@
     color: rgba($white, 0.7);
     text-align: center;
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 34px;
   }
 }
 
@@ -68,7 +68,13 @@
     position: relative;
 
     &.loaded {
-      height: 1150px;
+      height: auto;
+      padding-bottom: 300px;
+
+      @media only screen and (max-width: $br-mobile) {
+        padding-bottom: 0;
+        height: 2400px;
+      }
     }
   }
 }
