@@ -74,10 +74,9 @@ define([
       for(var i = 0 |0; i < w; ++i) {
        for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
-              intensity = imgdata[pixelPos+1] |0,
-              alpha = imgdata[pixelPos + 3];
+              intensity = imgdata[pixelPos+1] |0;
               imgdata[pixelPos + 3] = 0 |0;
-          if (intensity > this.minrange && intensity < this.maxrange && alpha > this.uncertainty) {
+          if (intensity >= this.minrange && intensity <= this.maxrange) {
             var intensity_scaled = myscale(intensity) |0,
                 yearLoss = 2000 + imgdata[pixelPos] |0;
             if (yearLoss >= yearStart && yearLoss <= yearEnd) {
