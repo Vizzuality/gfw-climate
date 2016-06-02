@@ -141,11 +141,25 @@
                     <div class="action"><button class="btn gray"><%= link_to "DOWNLOAD", "https://dl.dropboxusercontent.com/s/rfdjln8se1ii463/Zarin_et_al-2016-Global_Change_Biology.pdf", target:'_blank', :class =>'block' %></button></div>
                   </div>
                 </div>
-                <div class="links">
-                  <a target="_blank" href="http://blog.globalforestwatch.org/?s=Climate">View GFW Climate Blogs</a>
+              </div>
+            </div>
+
+            <header>
+              <h2>Blogs</h2>
+            </header>
+            <div class="content">
+              <div class="publications">
+                <div class="item">
+                  <div class="image"><img src="<%= image_url("publications/publications_gfw_blogs.jpg")%>" /></div>
+                  <div class="detail">
+                    <h3 class="title">Climate posts in GFW Blog</h3>
+                    <div class="text">The GFW blog catalyzes conversations around improved forest management by providing timely, credible analysis on threats to global forests.</div>
+                    <div class="action"><button class="btn gray"><%= link_to "GO TO GFW BLOG", "http://blog.globalforestwatch.org/?s=Climate", target:'_blank', :class =>'block' %></button></div>
+                  </div>
                 </div>
               </div>
             </div>
+
           </article>
           <article id='tutorials' class="source-article" style="display: <%= params[:page] == "tutorials" ? "block" : "none" %>;">
             <header>
