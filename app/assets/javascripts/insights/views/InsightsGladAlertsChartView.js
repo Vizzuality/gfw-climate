@@ -2,8 +2,9 @@ define([
   'backbone',
   'underscore',
   'd3',
-  'moment'
-], function(Backbone, _, d3, moment) {
+  'moment',
+  'text!insights/templates/insights-glad-alerts-tooltip.handlebars',
+], function(Backbone, _, d3, moment, tplTooltip) {
 
   'use strict';
 
@@ -11,20 +12,23 @@ define([
 
     el: '#vis-glad',
 
+    templateTooltip: Handlebars.compile(tplTooltip),
+
     defaults: {
       chartClass: 'chart-glad',
       interpolate: 'linear',
       paddingAxisLabels: 10,
       paddingXAxisLabels: 20,
-      paddingYAxisLabels: 30,
+      paddingYAxisLabels: 25,
+      tooltipPadding: 22,
       dateFormat: '%b',
       margin: {
         top: 35,
-        right: 75,
+        right: 15,
         bottom: 65,
         left: 60
       },
-      circleRadiusRange: [6, 18],
+      circleRadius: 5,
       filter: 'carbon_emissions',
       chartConfig: {
         'carbon_emissions': {
@@ -33,15 +37,15 @@ define([
             x2: 'week',
             y: [
               'cumulative_emissions',
-              'emissions_target'
+              'emissions_target',
+              'baseline_emissions'
             ],
-            y2: 'alerts',
             r: 'alerts'
           },
           dataColumns: {
             dots: {
               x: 'week',
-              y: 'alerts',
+              y: 'cumulative_emissions',
               r: 'alerts'
             },
             line: {
@@ -49,6 +53,10 @@ define([
               y: 'cumulative_emissions'
             },
             dashed: {
+              x: 'week',
+              y: 'baseline_emissions'
+            },
+            semiDashed: {
               x: 'week',
               y: 'emissions_target'
             }
@@ -60,15 +68,15 @@ define([
             x2: 'week',
             y: [
               'cumulative_deforestation',
-              'deforestation_target'
+              'deforestation_target',
+              'deforestation_baseline'
             ],
-            y2: 'alerts',
             r: 'alerts'
           },
           dataColumns: {
             dots: {
               x: 'week',
-              y: 'alerts',
+              y: 'cumulative_deforestation',
               r: 'alerts'
             },
             line: {
@@ -76,6 +84,10 @@ define([
               y: 'cumulative_deforestation'
             },
             dashed: {
+              x: 'week',
+              y: 'deforestation_baseline'
+            },
+            semiDashed: {
               x: 'week',
               y: 'deforestation_target'
             }
@@ -88,10 +100,9 @@ define([
 
     initialize: function(settings) {
       this.defaults = _.extend({}, this.defaults, settings.params);
-      this.compact = this.defaults.compact || false;
       this.data = this.defaults.data;
       this.filter = this.defaults.filter;
-      this.currentStep = 1;
+      this.currentStep = this.defaults.currentStep;
 
       this._initChart();
 
@@ -106,16 +117,17 @@ define([
       this.refreshEvent = _.debounce(_.bind(this._update, this), 30);
       window.addEventListener('resize', this.refreshEvent, false);
 
-      Backbone.Events.on('insights:glad:update', this._changeStepByValue.bind(this));
-      Backbone.Events.on('insights:glad:updateByTimeline', this._changeStep.bind(this));
-      Backbone.Events.on('insights:glad:setStep', this._setStep.bind(this));
+      this.hoverEvent = this._onHoverOut.bind(this);
+      this.$el.on('mouseleave', this.hoverEvent);
     },
 
     unsetListeners: function() {
       window.removeEventListener('resize', this.refreshEvent, false);
 
-      Backbone.Events.off('insights:glad:update', this._changeStepByValue.bind(this));
-      Backbone.Events.off('insigh¡ts:glad:updateByTimeline', this._changeStep.bind(this));
+      this.$el.off('mouseleave', this.hoverEvent);
+
+      this.refreshEvent = null;
+      this.hoverEvent = null;
     },
 
     _initChart: function() {
@@ -145,8 +157,9 @@ define([
         d.date = moment().week(d.week).toDate();
       });
 
-      this.dotsData = _.filter(this.chartData, function(d){
-        return d[this.dataColumns.dots.r];
+      this.dotsData = _.filter(this.chartData, function(d) {
+        var value = d[this.dataColumns.dots.r];
+        return value && value > 0;
       }.bind(this));
 
       var maxDomainXData = this.dotsData[this.dotsData.length - 1];
@@ -173,9 +186,10 @@ define([
      *  Renders the chart after a resize
      */
     _update: function() {
-      this.remove();
+      this.remove({
+        keepEvents: true
+      });
       this.render();
-      // this.setListeners();
     },
 
     /**
@@ -210,11 +224,7 @@ define([
       var yTickFormat = function(d) {
         return d > 999 ? (d / 1000).toFixed(1) + 'k' : d;
       };
-      var yNumTicks = !this.compact ? 8 : 4;
-
-      if (this.compact) {
-        xTickFormat = '';
-      }
+      var yNumTicks = 8;
 
       this.x = d3.time.scale()
         .range([0, this.cWidth]);
@@ -224,12 +234,6 @@ define([
 
       this.y = d3.scale.linear()
         .range([this.cHeight, 0]).nice();
-
-      this.y2 = d3.scale.linear()
-        .range([this.cHeight, 0]).nice();
-
-      this.r = d3.scale.linear()
-        .range(this.defaults.circleRadiusRange);
 
       this.xAxis = d3.svg.axis()
         .scale(this.x)
@@ -246,14 +250,6 @@ define([
         .outerTickSize(0)
         .ticks(yNumTicks)
         .tickFormat(yTickFormat);
-
-      this.y2Axis = d3.svg.axis()
-        .scale(this.y2)
-        .orient('right')
-        .innerTickSize(-this.cWidth)
-        .outerTickSize(0)
-        .ticks(yNumTicks)
-        .tickFormat(yTickFormat);
     },
 
     /**
@@ -264,13 +260,11 @@ define([
       var xValues = [];
       var x2Values = [];
       var yValues = [];
-      var y2Values = [];
       var rValues = [];
 
       this.chartData.forEach(function(d) {
         xValues.push((d[_this.dataDomain.x] * 1));
         x2Values.push((d[_this.dataDomain.x2] * 1));
-        y2Values.push((d[_this.dataDomain.y2] * 1));
         rValues.push((d[_this.dataDomain.r] * 1));
       });
 
@@ -288,7 +282,6 @@ define([
         x: d3.extent(xValues, function(d) { return d; }),
         x2: d3.extent(x2Values, function(d) { return d; }),
         y: d3.extent(yValues, function(d) { return d; }),
-        y2: d3.extent(y2Values, function(d) { return d; }),
         r: d3.extent(rValues, function(d) { return d; })
       };
     },
@@ -300,13 +293,10 @@ define([
       this.x.domain(this.domain.x);
       this.x2.domain(this.domain.x2);
       this.y.domain(this.domain.y);
-      this.y2.domain(this.domain.y2);
-      this.r.domain(this.domain.r);
 
       // Add extra padding to Y domain
-      var numTicks = !this.compact ? 10 : 7;
+      var numTicks = 10;
       this.y.domain([this.domain.y[0], d3.max(this.y.ticks(numTicks)) + this.y.ticks(numTicks)[2]]);
-      this.y2.domain([this.domain.y2[0], d3.max(this.y2.ticks(numTicks)) + this.y2.ticks(numTicks)[2]]);
     },
 
     /**
@@ -332,14 +322,6 @@ define([
         .selectAll('text')
           .attr('x', -_this.defaults.paddingAxisLabels);
 
-      // Y2 Axis
-      this.svg.append('g')
-        .attr('class', 'y axis')
-        .attr('transform', 'translate('+ (_this.cWidth + (_this.defaults.margin.right / 2)) + ','+ -_this.defaults.paddingAxisLabels + ')')
-        .call(this.y2Axis)
-        .selectAll('text')
-          .attr('x', -_this.defaults.paddingAxisLabels);
-
       // Custom domain
       this.svg.append('g')
         .attr('class', 'custom-domain-group')
@@ -356,10 +338,13 @@ define([
      * Draws the entire graph
      */
     _drawGraph: function() {
+      this._drawHandle();
+      this._drawSemiDashedLine();
       this._drawDashedLine();
       this._drawSolidLine();
       this._drawDots();
       this._drawBrush();
+      this._renderTooltip();
     },
 
     /**
@@ -374,19 +359,19 @@ define([
       dotsGroup.selectAll('.dot')
         .data(this.dotsData)
         .enter().append('circle')
-          .attr('class', 'dot')
-          .attr('r', function(d) {
-            return _this.r(d[_this.dataColumns.dots.r])
+          .attr('class', function(d) {
+            return 'dot dot-' + d.week;
           })
+          .attr('r', _this.defaults.circleRadius)
           .attr('cx', function(d) {
             return _this.x2(d[_this.dataColumns.dots.x])
           })
           .attr('cy', function(d) {
-            return _this.y2(d[_this.dataColumns.dots.y])
+            return _this.y(d[_this.dataColumns.dots.y])
           })
           .style('transform-origin', function(d) {
             return ( Math.round( _this.x2(d[_this.dataColumns.dots.x]) ) ) + 'px ' +
-                   ( Math.round( _this.y2(d[_this.dataColumns.dots.y]) ) ) + 'px';
+                   ( Math.round( _this.y(d[_this.dataColumns.dots.y]) ) ) + 'px';
           });
     },
 
@@ -397,7 +382,7 @@ define([
       var _this = this;
       var dashedLine = this.svg.append('g')
         .attr('class', 'line-dashed-group')
-        .attr('transform', 'translate( 0,'+ -this.defaults.paddingAxisLabels + ')');
+        .attr('transform', 'translate( 0,' + -this.defaults.paddingAxisLabels + ')');
 
       var line = d3.svg.line()
         .x(function(d) { return _this.x2(d[_this.dataColumns.dashed.x]); })
@@ -407,6 +392,22 @@ define([
       dashedLine.append('path')
         .attr('d', line(this.chartData))
         .attr('class', 'dash-line-path');
+    },
+
+    _drawSemiDashedLine: function() {
+      var _this = this;
+      var dashedLine = this.svg.append('g')
+        .attr('class', 'line-semidashed-group')
+        .attr('transform', 'translate( 0,' + -this.defaults.paddingAxisLabels + ')');
+
+      var line = d3.svg.line()
+        .x(function(d) { return _this.x2(d[_this.dataColumns.semiDashed.x]); })
+        .y(function(d) { return _this.y(d[_this.dataColumns.semiDashed.y]); })
+        .interpolate(this.defaults.interpolate);
+
+      dashedLine.append('path')
+        .attr('d', line(this.chartData))
+        .attr('class', 'semidash-line-path');
     },
 
     /**
@@ -428,64 +429,42 @@ define([
         .attr('class', 'line-solid-path');
     },
 
+    _renderTooltip: function() {
+      d3.select(this.el)
+        .insert('div', 'svg')
+          .attr('class', 'tooltip')
+
+      var tooltip = this.el.querySelector('.tooltip');
+      tooltip.innerHTML = this.templateTooltip({});
+      this.tooltip = this.el.querySelector('.insights-glad-alerts-tooltip');
+    },
+
+    _updateTooltip: function(step) {
+      var data = _.findWhere(this.chartData, { week: step.toString() });
+
+      if (data) {
+        var tooltip = this.el.querySelector('.tooltip');
+        tooltip.innerHTML = this.templateTooltip({
+          value: data.alerts
+        });
+        this.tooltip = this.el.querySelector('.insights-glad-alerts-tooltip');
+      }
+    },
+
     /**
      * Sets up the brush feature
      * of the graph
      */
     _drawBrush: function() {
-      var _this = this;
-      var domain = _this._getDomain();
-      var xDomain = domain.x2;
-
       this.brush = d3.svg.brush()
         .x(this.x2)
         .extent([0, 0])
         .on('brush', function() {
-          if (d3.event.sourceEvent) {
-            d3.event.sourceEvent.stopPropagation();
-          }
-
-          var value =  Math.round(_this.brush.extent()[0]);
-
-          if (d3.event.sourceEvent) {
-            value = _this.x2.invert(d3.mouse(this)[0]);
-            _this.brush.extent([value, value]);
-          }
-
-          if (value < xDomain[0]) {
-            value = xDomain[0];
-          }
-
-          if (value > xDomain[1]) {
-            value = xDomain[1];
-          }
-
-          _this.currentStep = value;
-          _this._setHandlePosition();
-          Backbone.Events.trigger('insights:glad:update', Math.round(_this.currentStep));
-
-        })
+          this._onBrush();
+        }.bind(this))
         .on('brushend', function() {
-          if (!d3.event.sourceEvent) return;
-          var extent0 = _this.brush.extent(),
-              extent1 = extent0;
-          var current = Math.round(extent1[0]);
-
-          if (extent1 < xDomain[0]) {
-            current = xDomain[0];
-          }
-
-          if (extent1 > xDomain[1]) {
-            current = xDomain[1];
-          }
-
-          _this.currentStep = current;
-
-          d3.select(this).transition()
-            .duration(0)
-            .call(_this.brush.extent(extent1))
-            .call(_this.brush.event);
-        });
+          this._onBrushEnd();
+        }.bind(this));
 
       this.slider = this.svg.append('g')
         .attr('class', 'handles')
@@ -497,15 +476,113 @@ define([
       this.slider.select('.background')
         .attr('height', this.cHeight + this.defaults.margin.bottom);
 
-      this.handle = this.slider.append('rect')
-        .attr('class', 'handle')
-        .attr('width', this.defaults.handleWidth)
-        .attr('height', this.cHeight + (this.defaults.margin.top / 2));
-
-      this.handleLabel = this.slider.append('text')
-        .attr('class', 'handle-label');
+      this._setHoverEvent();
 
       this._setHandlePosition();
+    },
+
+    _onBrush: function() {
+      var domain = this._getDomain();
+      var xDomain = domain.x2;
+      var value =  Math.round(this.brush.extent()[0]);
+      var element = this.el.querySelector('svg .handles');
+
+      if (d3.event.sourceEvent) {
+        d3.event.sourceEvent.stopPropagation();
+
+        value = this.x2.invert(d3.mouse(element)[0]);
+        this.brush.extent([value, value]);
+      }
+
+      if (value < xDomain[0]) {
+        value = xDomain[0];
+      }
+
+      if (value > xDomain[1]) {
+        value = xDomain[1];
+      }
+
+      this.currentStep = value;
+      this._setHandlePosition();
+    },
+
+    _onBrushEnd: function() {
+      if (!d3.event.sourceEvent) return;
+      var domain = this._getDomain();
+      var xDomain = domain.x2;
+      var element = this.el.querySelector('svg .handles');
+      var extent0 = this.brush.extent(),
+          extent1 = extent0;
+      var current = Math.round(extent1[0]);
+
+      if (extent1 < xDomain[0]) {
+        current = xDomain[0];
+      }
+
+      if (extent1 > xDomain[1]) {
+        current = xDomain[1];
+      }
+
+      this.currentStep = current;
+
+      d3.select(element).transition()
+        .duration(0)
+        .call(this.brush.extent(extent1))
+        .call(this.brush.event);
+    },
+
+    _setHoverEvent: function() {
+      var _this = this;
+      d3.select('svg .background')
+        .on('mousemove', function() {
+          var value = Math.round(_this.x2.invert(d3.mouse(this)[0]));
+          _this._changeStepByValue(value);
+          _this._updateTooltip(value);
+
+          d3.selectAll('svg .dot')
+            .classed('hovered', false);
+
+          Backbone.Events.trigger('insights:glad:update', value);
+
+          var current = d3.select('svg .dot-'+value);
+          if (current) {
+            current.classed('hovered', true);
+
+            if (current.node()) {
+              var cords = current.node().getBBox();
+              var left = cords.x + _this.defaults.margin.left + (cords.width / 2);
+              var top = cords.y + _this.defaults.margin.top - (cords.height / 2);
+              var width = _this.tooltip.clientWidth;
+              var height = _this.tooltip.clientHeight;
+
+              _this.tooltip.style.left = left - (width / 2) + 'px';
+              _this.tooltip.style.top = top - height - _this.defaults.tooltipPadding + 'px';
+              _this._showTooltip();
+            } else {
+              _this._hideTooltip();
+            }
+          } else {
+            _this._hideTooltip();
+          }
+        });
+    },
+
+    _drawHandle: function() {
+      this.handleContainer = this.svg.append('g');
+
+      this.handle = this.handleContainer.append('rect')
+        .attr('class', 'handle')
+        .attr('width', this.defaults.handleWidth + 'px')
+        .attr('height', this.cHeight + (this.defaults.margin.top / 2));
+
+      this.handleLabel = this.svg.append('text')
+        .attr('class', 'handle-label');
+
+      var triangle = d3.svg.symbol().type('triangle-down').size(90);
+
+      this.handleContainer.append('path')
+        .attr('class', 'handle-triangle')
+        .attr('d', triangle)
     },
 
     /**
@@ -515,7 +592,7 @@ define([
     _setHandlePosition: function() {
       var _this = this;
 
-      this.handle.attr('transform', function() {
+      this.handleContainer.attr('transform', function() {
         return 'translate('+ (_this.x2(_this.currentStep) -
           (_this.defaults.handleWidth / 2)) + ', ' + -((_this.defaults.margin.top / 2)) + ')';
       });
@@ -525,60 +602,7 @@ define([
           (_this.defaults.handleWidth / 2)) + ', ' + (_this.cHeight + (_this.defaults.paddingXAxisLabels / 1.4)) + ')';
       });
 
-      if (!this.compact) {
-        this.handleLabel.text('Week ' + Math.round(this.currentStep));
-      }
-      this._updateDots();
-      this._updateLine();
-    },
-
-    _updateDots: function() {
-      var _this = this;
-
-      this.svg.selectAll('.dot')
-        .style('fill-opacity', function(d) {
-          if ((d.week * 1) > _this.currentStep) {
-            return 0;
-          } else {
-            return 1;
-          }
-        })
-        .style('transform', function(d) {
-          if ((d.week * 1) > _this.currentStep) {
-            return 'scale(0)';
-          } else {
-            return 'scale(1)';
-          }
-        });
-    },
-
-    _updateLine() {
-      var _this = this;
-      var domain = _this._getDomain();
-      var xDomain = domain.x2;
-
-      if (this.currentStep < this.maxDomain) {
-        var data = _.clone(this.solidLineData);
-        this.graphLine
-          .attr('d', this.linePath(data.splice(0, Math.round(_this.currentStep))));
-      }
-    },
-
-    _changeStep: function() {
-      var domain = this._getDomain();
-      var x2Domain = domain.x2;
-      var current = this.currentStep;
-
-      current++;
-
-      if (current > this.maxDomain) {
-        this._setHandlePosition();
-        Backbone.Events.trigger('insights:glad:stopTimeline');
-      } else {
-        this.currentStep = current;
-        this._setHandlePosition();
-      }
-      Backbone.Events.trigger('insights:glad:currentStep', Math.round(this.currentStep));
+      this.handleLabel.text('Week ' + Math.round(this.currentStep));
     },
 
     _changeStepByValue: function(step) {
@@ -587,29 +611,47 @@ define([
     },
 
     updateByFilter: function(filter) {
-      this.remove();
+      this.remove({
+        keepEvents: true
+      });
 
       this.filter = filter;
       this._initChart();
     },
 
-    _setStep: function(step) {
-      this.currentStep = step;
+    _onHoverOut: function() {
+      this._hideTooltip();
+    },
+
+    _hideTooltip: function() {
+      this.tooltip.classList.remove('-visible');
+
+      d3.select('.' + this.defaults.chartClass)
+        .classed('hovering', false);
+    },
+
+    _showTooltip: function() {
+      this.tooltip.classList.add('-visible');
+
+      d3.select('.' + this.defaults.chartClass)
+        .classed('hovering', true);
     },
 
     /**
      * Removes the SVG
      */
-    remove: function() {
+    remove: function(params) {
       if(this.svg) {
         var svgContainer = this.el.querySelector('svg');
 
+        if (params && !params.keepEvents) {
+          this.unsetListeners();
+          this.stopListening();
+        }
         this.svg.remove();
         this.svg = null;
-        // this.currentStep = 1;
         this.el.classList.remove(this.filter);
         this.el.removeChild(svgContainer);
-        // this.unsetListeners();
       }
     },
 
