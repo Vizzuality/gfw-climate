@@ -1,25 +1,8 @@
 .glad-vis {
-  sub, sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-  }
-
-  sup {
-    top: -0.5em;
-  }
-
-  sub {
-    bottom: -0.25em;
-  }
+  position: relative;
 
   .year-selector {
-    width: 100%;
-    margin-top: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-top: 3px;
 
     .label {
       font-size: 14px;
@@ -28,8 +11,8 @@
     }
 
     .action {
-      width: 60px;
-      height: 30px;
+      width: 78px;
+      height: 35px;
       border-radius: 30px;
       border: 1px solid #5B80A0;
       display: flex;
@@ -41,10 +24,10 @@
         border: 0;
         -webkit-appearance:none;
         -moz-appearance: none;
-        font-size: 12px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 400;
         color: #555555;
-        padding: 7px 4px;
+        padding: 8px 11px;
         cursor: pointer;
       }
     }
@@ -52,7 +35,6 @@
 
   .main-chart {
     width: 100%;
-    border-bottom: 1px solid #E0E0E0;
     padding-bottom: 40px;
     display: flex;
     flex-wrap: wrap;
@@ -61,7 +43,7 @@
 
     .chart-container {
       width: 100%;
-      height: 350px;
+      height: 450px;
       position: relative;
 
       .chart {
@@ -70,133 +52,53 @@
       }
     }
 
-    .heading {
-      width: 100%;
-
-      h3 {
-        font-size: 35px;
-        font-weight: 300;
-        color: #555555;
-        margin-bottom: 22px;
-      }
-    }
-
-    .timeline-button {
-      width: 34px;
-      height: 34px;
-      background: #FFFFFF;
-      border: 1px solid #5B80A0;
-      border-radius: 26px;
-      position: absolute;
-      bottom: 13px;
-      left: 26px;
-
-      .icon {
-        @extend %reset-btn;
-        border: 0;
-        width: 34px;
-        height: 34px;
-        border-radius: 26px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .play {
-        width: 10px;
-        height: 14px;
-        fill: #555555;
-        margin-left: 1px;
-        margin-bottom: 2px;
-      }
-
-      .pause {
-        width: 10px;
-        height: 14px;
-        fill: #555555;
-        margin-right: 2px;
-        margin-top: 2px;
-      }
-
-      .pause-icon {
-        display: none;
-      }
-
-      &.-is-playing {
-        .play-icon {
-          display: none;
-        }
-        .pause-icon {
-          display: block;
-        }
-      }
-    }
-  }
-
-  .compare-list {
-    width:100%;
-    padding-top: 50px;
-    display: flex;
-    flex-wrap: wrap;
-
-    .country-selectors {
+    > .heading {
       width: 100%;
       display: flex;
-      margin-bottom: 22px;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 60px;
 
-      .country {
-        width:31.333333333%;
-        margin-right: 3%;
+      .country-selector {
+        position: relative;
 
-        &:last-child {
-          margin-right: 0;
-        }
-
-        h3 {
+        .label {
           font-size: 35px;
           font-weight: 300;
           color: #555555;
-          margin-left: 18px;
-        }
+          margin-bottom: 25px;
+          padding-right: 25px;
 
-        &:first-child {
-          h3 {
-            margin-left: 0;
+          &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 22%;
+            right: 0;
+            width: 8px;
+            height: 8px;
+            border-bottom: 2px solid #5B80A0;
+            border-right: 2px solid #5B80A0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
           }
         }
-      }
-    }
 
-    .visualizations {
-      width:100%;
-      display:flex;
-
-      @media only screen and (max-width: $br-mobile) {
-        flex-direction: column;
-      }
-    }
-
-    .compare-chart {
-      width:31.333333333%;
-      height: 220px;
-      margin-right: 3%;
-
-      @media only screen and (max-width: $br-mobile) {
-        width: 100%;
-        height: 500px;
-        margin: 0;
-      }
-
-      &:last-child {
-        margin-right: 0;
-      }
-
-      .chart {
-        width: 100%;
-        height: inherit;
-
-        @media only screen and (max-width: $br-mobile) {
-          height: 220px;
+        .action {
+          width: 100%;
+          position: absolute;
+          top: 0;
+          border: 0;
+          -webkit-appearance:none;
+          -moz-appearance: none;
+          font-size: 14px;
+          font-weight: 400;
+          color: #555555;
+          padding: 8px 11px;
+          background: transparent;
+          opacity: 0;
+          cursor: pointer;
         }
       }
     }
@@ -232,20 +134,6 @@
 
         &.deforestation {
           background: #FF6398;
-        }
-      }
-    }
-
-    &.-highlight{
-      width: auto;
-      border-radius: 100px;
-      margin-left: auto;
-      box-shadow: none;
-
-      .action {
-        &.-selected {
-          background: #EDB04A;
-          color: #FFFFFF;
         }
       }
     }
@@ -304,21 +192,8 @@
     flex-direction: column;
 
     &.-main{
-      width: 560px;
+      width: 695px;
       margin: 0 0 0 auto;
-    }
-
-    .btn-map {
-      margin-left: auto;
-      margin-right: 30px;
-      margin-top: 20px;
-
-      .btn {
-        padding-left: 25px;
-        padding-right: 25px;
-        text-transform: uppercase;
-        font-weight: 400;
-      }
     }
 
     .list {
@@ -334,11 +209,12 @@
           flex-direction: row;
 
           .icon {
-            width: 18px;
+            width: 20px;
             height: 15px;
             flex-shrink: 0;
             margin-right: 5px;
-            position: relative;;
+            position: relative;
+            overflow: hidden;
 
             &.-line {
               &:after {
@@ -355,7 +231,7 @@
               &:before {
                 content: '';
                 width: 35%;
-                height: 3px;
+                height: 2px;
                 background: #5B80A0;
                 position: absolute;
                 top: 5px;
@@ -364,11 +240,35 @@
               &:after {
                 content: '';
                 width: 40%;
-                height: 3px;
+                height: 2px;
                 background: #5B80A0;
                 position: absolute;
                 top: 5px;
                 right: 0;
+              }
+            }
+
+            &.-semidashed {
+              &:before {
+                content: '';
+                width: 100%;
+                height: 3px;
+                border-bottom: 2px dashed #5B80A0;
+                position: absolute;
+                top: 5px;
+                transform: scale(0.6, 1);
+                left: -57%;
+              }
+
+              &:after {
+                content: '';
+                width: 100%;
+                height: 3px;
+                border-bottom: 2px dashed #5B80A0;
+                position: absolute;
+                top: 5px;
+                transform: scale(0.6, 1);
+                right: -4px;
               }
             }
 
@@ -390,7 +290,7 @@
           .label {
             font-size: 14px;
             color: #555555;
-            height: 30px;
+            height: 46px;
           }
         }
 
@@ -401,12 +301,6 @@
           margin-left: 20px;
         }
 
-        &.-highlight {
-          .value {
-            color: #EDB04A;
-          }
-        }
-
         &.-no-icon {
           .value {
             margin-left: 0;
@@ -414,45 +308,139 @@
         }
       }
 
+      &.deforestation {
+        .item {
+          .heading {
+            .icon {
+              &.-line {
+                &:after {
+                  background: #FF6398;
+                }
+              }
 
+              &.-dashed {
+                &:before {
+                  background: #FF6398;;
+                }
+                &:after {
+                  background: #FF6398;
+                }
+              }
+
+              &.-semidashed {
+                &:before {
+                  border-color: #FF6398;
+                }
+                &:after {
+                  border-color: #FF6398;
+                }
+              }
+            }
+          }
+          .value {
+            color: #FF6398;
+
+            &.default {
+              color: #5B80A0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .insights-glad-alerts-tooltip {
+    width: 300px;
+    height: 170px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.30);
+    border-radius: 3px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateZ(0);
+
+    &:after {
+      content: '▼';
+      position: absolute;
+      bottom: -13px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      text-align: center;
+      color: #FFFFFF;
+      text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+      transform: scale(-1.5, 1);
     }
 
-    &.-compare {
-      align-items: center;
-      justify-content: center;
+    .tooltip-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
 
-      .btn-map{
-        margin-top: 15px;
+      .data {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 15px;
 
-        @media only screen and (max-width: $br-mobile) {
-          margin-left: 0;
+        .thumbnail {
+          width: 150px;
+          flex-shrink: 0;
+
+          .image {
+            width: 148px;
+            height: 96px;
+            background: #ececec;
+          }
+        }
+
+        .detail {
+          margin-left: 20px;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+
+          .value {
+            font-size: 29px;
+            color: #5B80A0;
+            font-weight: 500;
+          }
+
+          .label {
+            color: #555555;
+            font-size: 14px;
+            margin-top: 2px;
+          }
         }
       }
 
-      .list {
-        flex-direction: column;
-        flex-direction: column-reverse;
+      .btn-map {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        @media only screen and (max-width: $br-mobile) {
-          width: 180px;
+        .btn {
+          padding-left: 25px;
+          padding-right: 25px;
+          text-transform: uppercase;
+          font-weight: 400;
+          pointer-events: none;
         }
+      }
+    }
 
-        .item {
-          display: flex;
-          margin-bottom: 15px;
+    &.-visible {
+      opacity: 1;
 
-          .heading {
-            width: 136px;
-            flex-shrink: 0;
-          }
-
-          &.-no-icon {
-            .label {
-              margin-left: 20px;
-            }
-            .value {
-              margin-left: 20px;
-            }
+      .tooltip-content {
+        .btn-map {
+          .btn {
+            pointer-events: all;
           }
         }
       }
