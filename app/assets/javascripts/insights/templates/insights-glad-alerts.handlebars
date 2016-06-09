@@ -1,92 +1,42 @@
 <div class="glad-vis">
-  <div class="year-selector">
-    <div class="label">Year:</div>
-    <div class="action">
-      <select>
-        <option selected>2016</option>
-        <option>2015</option>
-      </select>
-    </div>
-  </div>
-
   <div id="visMain" class="main-chart is-loading">
     <div class="heading">
-      <h3>Peru</h3>
+      <div class="country-selector">
+        <div class="label js-country-label">Republic of Congo</div>
+        <select class="action js-country-selector">
+          <option value="PER" data-iso="PER">Peru</option>
+          <option value="BRA" data-iso="BRA">Brazil</option>
+          <option value="COD" data-iso="COD">Republic of Congo</option>
+          <option value="IND" data-iso="IND">Kalimantan</option>
+        </select>
+      </div>
+      <div class="year-selector">
+        <div class="action">
+          <select>
+            <option selected>YEAR</option>
+            <option>2016</option>
+            <option>2015</option>
+          </select>
+        </div>
+      </div>
+      <!-- <a class="btn-action source" href="#" data-source="source-{{this.slug}}">
+        <svg>
+          <use xlink:href="#shape-info"></use>
+        </svg>
+        <span class="tooltip1 dark">Read more</span>
+      </a> -->
     </div>
     <div class="selectors main-vis-switch">
       <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>
       <div class="action deforestation js-selector" data-filter="deforestation">Deforestation Area</div>
     </div>
 
-    <div class="selectors -highlight">
-      <div class="action -selected">Glad Alerts</div>
-    </div>
-
     <div class="chart-container">
       <div class="chart"></div>
-      <div class="timeline-button">
-        <button class="icon play-icon js-timeline-button">
-          <svg class="play"><use xlink:href="#icon-play"></use></svg>
-        </button>
-        <button class="icon pause-icon js-timeline-button">
-          <svg class="pause"><use xlink:href="#icon-pause"></use></svg>
-        </button>
-      </div>
     </div>
 
     <div class="legend-container">
-      <div class="level-indicator">
-        <div class="icon">
-          <div class="level"></div>
-        </div>
-        <div class="labels">
-          <div class="text">1000 t C0<sub>2</sub></div>
-          <div class="text">500 t C0<sub>2</sub></div>
-        </div>
-      </div>
       <div class="legend -main"></div>
-    </div>
-  </div>
-
-  <div class="compare-list">
-    <div class="country-selectors">
-      <div class="country">
-        <h3>Brazil</h3>
-      </div>
-
-      <div class="country">
-        <h3>Republic of Congo</h3>
-      </div>
-
-      <div class="country">
-        <h3>Kalimantan</h3>
-      </div>
-    </div>
-
-    <div class="selectors compare-vis-switch">
-      <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>
-      <div class="action deforestation js-selector" data-filter="deforestation">Deforestation Area</div>
-    </div>
-
-    <div class="selectors -highlight">
-      <div class="action -selected">Glad Alerts</div>
-    </div>
-
-    <div class="visualizations">
-      <div id="vis1" class="compare-chart">
-        <div class="chart"></div>
-        <div class="legend -compare"></div>
-      </div>
-
-      <div id="vis2" class="compare-chart">
-        <div class="chart"></div>
-        <div class="legend -compare"></div>
-      </div>
-
-      <div id="vis3" class="compare-chart">
-        <div class="chart"></div>
-        <div class="legend -compare"></div>
-      </div>
     </div>
   </div>
 </div>
