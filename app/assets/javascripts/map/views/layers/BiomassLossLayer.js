@@ -18,7 +18,10 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 12,
-      urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png'
+      urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
+      uncertainty: 127,
+      minrange: 0,
+      maxrange: 255
     },
 
     init: function(layer, options, map) {
@@ -31,7 +34,10 @@ define([
       }
       this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
       this.threshold = options.threshold || this.options.threshold;
+      this.uncertainty = (!isNaN(options.uncertainty)&&options.uncertainty !== 127) ? options.uncertainty : this.options.uncertainty,
       this._super(layer, options, map);
+      this.minrange = options.minrange || this.options.minrange;
+      this.maxrange = options.maxrange || this.options.maxrange;
     },
 
     /**
@@ -42,7 +48,6 @@ define([
       "use asm";
       // We'll force the use of a 32bit integer wit `value |0`
       // More info here: http://asmjs.org/spec/latest/
-
       var components = 4 | 0,
           w = w |0,
           j = j |0,
@@ -60,7 +65,7 @@ define([
          .exponent(exp)
          .domain([0,256])
          .range([0,256]);
-      var c = [255, 31,  38, // first bucket
+      var c = [255, 31,  38, // first bucket R G B
                210, 31,  38,
                210, 31,  38,
                241, 152, 19,
@@ -70,16 +75,16 @@ define([
        for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
               intensity = imgdata[pixelPos+1] |0;
-          imgdata[pixelPos + 3] = 0 |0;
-          if (intensity > 0) {
+              imgdata[pixelPos + 3] = 0 |0;
+          if (intensity >= this.minrange && intensity <= this.maxrange) {
             var intensity_scaled = myscale(intensity) |0,
-                yearLoss = 2001 + imgdata[pixelPos] |0;
+                yearLoss = 2000 + imgdata[pixelPos] |0;
             if (yearLoss >= yearStart && yearLoss <= yearEnd) {
               var bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
-              imgdata[pixelPos] = c[bucket];
-              imgdata[pixelPos + 1] = c[bucket + 1];
-              imgdata[pixelPos + 2] = c[bucket + 2];
-              imgdata[pixelPos + 3] = intensity_scaled | 0;
+              imgdata[pixelPos] = c[bucket]; //R 0-255
+              imgdata[pixelPos + 1] = c[bucket + 1]; //G 0-255
+              imgdata[pixelPos + 2] = c[bucket + 2]; //B 0-255
+              imgdata[pixelPos + 3] = intensity_scaled | 0; //alpha channel 0-255
             }
           }
         }
@@ -104,6 +109,31 @@ define([
     _getUrl: function(x, y, z) {
       return new UriTemplate(this.options.urlTemplate)
         .fillFromObject({x: x, y: y, z: z, threshold: this.threshold});
+    },
+    _updateUncertainty: function(uncertainty) {
+      switch(uncertainty) {
+        case 'min':
+          this.uncertainty = 0;
+        break;
+        case 'max':
+          this.uncertainty = 254;
+        break;
+        case 'avg':
+        default:
+          this.uncertainty = 127;
+        break;
+      }
+      this.presenter.updateLayer();
+    },
+
+    // Cross multiplying to get x:
+    // userinput ----- 917
+    // x         ----- 255
+    _updateRange: function(range) {
+      this.minrange = (range[0]/917)*255;
+      this.maxrange = (range[1]/917)*255;
+
+      this.presenter.updateLayer();
     }
 
   });

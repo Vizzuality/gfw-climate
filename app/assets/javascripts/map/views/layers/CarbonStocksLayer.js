@@ -17,12 +17,19 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 12,
-      urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png'
+      urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
+            uncertainty: 127,
+      minrange: 0,
+      maxrange: 255
     },
   init: function(layer, options, map) {
       this.presenter = new Presenter(this);
       this._super(layer, options, map);
       this.threshold = options.threshold || this.options.threshold;
+      this.uncertainty = (!isNaN(options.uncertainty)&&options.uncertainty !== 127) ? options.uncertainty : this.options.uncertainty,
+      this._super(layer, options, map);
+      this.minrange = options.minrange || this.options.minrange;
+      this.maxrange = options.maxrange || this.options.maxrange;
     },
 
     /**
@@ -35,38 +42,35 @@ define([
       // More info here: http://asmjs.org/spec/latest/
       var components = 4 | 0,
           w = w |0,
-          j = j |0,
-          zoom = this.map.getZoom(),
-          exp = zoom < 11 ? 0.3 + ((zoom - 3) / 20) : 1 | 0;
-
-      var myscale = d3.scale.pow()
-            .exponent(exp)
-            .domain([0,256])
-            .range([0,256]);
-      var c = [112, 168, 256, // first bucket
-               76,  83,  122,
-               210, 31,  38,
-               241, 152, 19,
-               255, 208, 11]; // last bucket
-      var countBuckets = c.length / 3 |0; //3: three bands
+          j = j |0;
 
       for(var i = 0 |0; i < w; ++i) {
         for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
+          // intensity = imgdata[pixelPos+2]-(imgdata[pixelPos+3]*imgdata[pixelPos+2]/100) |0;
+          intensity = imgdata[pixelPos+2];
+          //if (intensity>255) intensity=255;
+          //if (intensity<0) intensity=0;
+          var uncer = imgdata[pixelPos + 3];
+          uncer = uncer > 100 ? 100 : (uncer < 0 ? 0 : uncer);
 
-             // intensity = imgdata[pixelPos+2]-(imgdata[pixelPos+3]*imgdata[pixelPos+2]/100) |0;
-              intensity = imgdata[pixelPos+2];
-             //if (intensity>255) intensity=255;
-             //if (intensity<0) intensity=0;
-             imgdata[pixelPos + 3] = 0;
 
-          var intensity_scaled = myscale(intensity) |0,
-          bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
-
-          imgdata[pixelPos] = 255-intensity;
-          imgdata[pixelPos + 1] = 128;
-          imgdata[pixelPos + 2] = 0;
-          if(intensity>0){imgdata[pixelPos + 3] = intensity};
+          if(intensity >= this.minrange && intensity <= this.maxrange) {
+            if(this.uncertainty === 0) {
+              // min uncertainty subtract the percentage of uncertainty
+              intensity = intensity - (uncer*intensity/100);
+              intensity = intensity < 1 ? 1 : intensity;
+            } else if(this.uncertainty === 254) {
+              // max uncertainty sum the uncertainty value
+              intensity = intensity + (uncer*intensity/100);
+            }
+            imgdata[pixelPos] = 255-intensity;
+            imgdata[pixelPos + 1] = 128;
+            imgdata[pixelPos + 2] = 0;
+            imgdata[pixelPos + 3] = intensity;
+          } else {
+            imgdata[pixelPos + 3] = 0;
+          }
         }
       }
     },
@@ -79,6 +83,31 @@ define([
     _getUrl: function(x, y, z) {
       return new UriTemplate(this.options.urlTemplate)
         .fillFromObject({x: x, y: y, z: z, threshold: this.threshold});
+    },
+    _updateUncertainty: function(uncertainty) {
+      switch(uncertainty) {
+        case 'min':
+          this.uncertainty = 0;
+        break;
+        case 'max':
+          this.uncertainty = 254;
+        break;
+        case 'avg':
+        default:
+          this.uncertainty = 127;
+        break;
+      }
+      this.presenter.updateLayer();
+    },
+
+    // Cross multiplying to get x:
+    // userinput ----- 917
+    // x         ----- 255
+    _updateRange: function(range) {
+      this.minrange = (range[0]/500)*255;
+      this.maxrange = (range[1]/500)*255;
+
+      this.presenter.updateLayer();
     }
 
   });

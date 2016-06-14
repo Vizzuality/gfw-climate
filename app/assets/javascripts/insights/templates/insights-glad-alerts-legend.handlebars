@@ -1,0 +1,83 @@
+<div class="list {{#if isDesforestation}}deforestation{{/if}}">
+
+  {{#if isDesforestation}}
+    <div class="item">
+      <div class="heading">
+        <div class="icon -dashed"></div>
+        <div class="label">2001 - 2013 average</div>
+      </div>
+      <div class="value">{{average}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -semidashed"></div>
+        <div class="label">2020 target (NYDF)</div>
+      </div>
+      <div class="value">{{target}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -line"></div>
+        <div class="label">Deforestation (ha)</div>
+      </div>
+      <div class="value">{{deforestation}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -no-icon"></div>
+        <div class="label">Deforestation Cap (ha)</div>
+      </div>
+      <div class="value default">{{deforestation_cap}}</div>
+    </div>
+
+    <div class="item -no-icon">
+      <div class="heading">
+        <div class="label">Deforestation target</div>
+      </div>
+      <div class="value default">-</div>
+    </div>
+  {{else}}
+    <div class="item">
+      <div class="heading">
+        <div class="icon -dashed"></div>
+        <div class="label">2001 - 2013 average</div>
+      </div>
+      <div class="value">{{average}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -semidashed"></div>
+        <div class="label">2020 target (NYDF)</div>
+      </div>
+      <div class="value">{{target}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -line"></div>
+        <div class="label">Cumulative Emissions to date (MtCO<sub>2</sub>)</div>
+      </div>
+      <div class="value">{{emissions}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -no-icon"></div>
+        <div class="label">Annual Budget (MtCO<sub>2</sub>)</div>
+      </div>
+      <div class="value default">{{annual_budget}}</div>
+    </div>
+
+    <div class="item -no-icon">
+      <div class="heading">
+        <div class="label">Budget used to date</div>
+      </div>
+      <div class="value default">-</div>
+    </div>
+  {{/if}}
+
+</div>
