@@ -1,6 +1,14 @@
 <div class="list {{#if isDesforestation}}deforestation{{/if}}">
 
   {{#if isDesforestation}}
+    <div class="item glad-alerts">
+      <div class="heading">
+        <div class="icon -no-icon"></div>
+        <div class="label">Confirmed alerts</div>
+      </div>
+      <div class="value default">{{alerts}}</div>
+    </div>
+
     <div class="item">
       <div class="heading">
         <div class="icon -dashed"></div>
@@ -33,13 +41,22 @@
       <div class="value default">{{deforestation_cap}}</div>
     </div>
 
-    <div class="item -no-icon">
+    <div class="item">
       <div class="heading">
+        <div class="icon -no-icon"></div>
         <div class="label">Deforestation target</div>
       </div>
       <div class="value default">-</div>
     </div>
   {{else}}
+    <div class="item glad-alerts">
+      <div class="heading">
+        <div class="icon -no-icon"></div>
+        <div class="label">Confirmed alerts</div>
+      </div>
+      <div class="value default">{{alerts}}</div>
+    </div>
+
     <div class="item">
       <div class="heading">
         <div class="icon -dashed"></div>
@@ -72,8 +89,9 @@
       <div class="value default">{{annual_budget}}</div>
     </div>
 
-    <div class="item -no-icon">
+    <div class="item">
       <div class="heading">
+        <div class="icon -no-icon"></div>
         <div class="label">Budget used to date</div>
       </div>
       <div class="value default">-</div>

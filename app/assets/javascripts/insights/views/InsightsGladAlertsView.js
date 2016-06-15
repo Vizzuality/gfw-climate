@@ -16,7 +16,7 @@ define([
       'change .js-country-selector': '_changeDataByCountry'
     },
 
-    el: '#vis-glad',
+    el: '#insights',
 
     template: Handlebars.compile(tpl),
 
@@ -115,6 +115,7 @@ define([
         annual_budget: Math.round(current.emissions_target * 1),
         deforestation: Math.round(current.cumulative_deforestation),
         deforestation_cap: Math.round(current.deforestation_target),
+        alerts: Math.round(current.alerts)
       });
     },
 

@@ -1,42 +1,57 @@
-<div class="glad-vis">
-  <div id="visMain" class="main-chart is-loading">
-    <div class="heading">
-      <div class="country-selector">
-        <div class="label js-country-label">Republic of Congo</div>
-        <select class="action js-country-selector">
-          <option value="PER" data-iso="PER">Peru</option>
-          <option value="BRA" data-iso="BRA">Brazil</option>
-          <option value="COD" data-iso="COD">Republic of Congo</option>
-          <option value="IND" data-iso="IND">Kalimantan</option>
-        </select>
-      </div>
-      <div class="year-selector">
-        <div class="action">
-          <select>
-            <option selected>YEAR</option>
-            <option>2016</option>
-            <option>2015</option>
-          </select>
+<div class="l-header -narrow">
+  <div class="inner insights-title">
+    <h2>Monitor progress in near real-time</h2>
+    <h3>Track deforestation and emissions against country targets with weekly GLAD alerts.</h3>
+  </div>
+</div>
+
+<div class="inner">
+  <div class="insights">
+    <div id="vis-glad">
+
+      <div class="glad-vis">
+        <div id="visMain" class="main-chart is-loading">
+          <div class="heading">
+            <div class="country-selector">
+              <div class="label js-country-label">Republic of Congo</div>
+              <select class="action js-country-selector">
+                <option value="PER" data-iso="PER">Peru</option>
+                <option value="BRA" data-iso="BRA">Brazil</option>
+                <option value="COD" data-iso="COD">Republic of Congo</option>
+                <option value="IND" data-iso="IND">Kalimantan</option>
+              </select>
+            </div>
+            <div class="year-selector">
+              <div class="action">
+                <select>
+                  <option selected>YEAR</option>
+                  <option>2016</option>
+                  <option>2015</option>
+                </select>
+              </div>
+            </div>
+            <!-- <a class="btn-action source" href="#" data-source="source-{{this.slug}}">
+              <svg>
+                <use xlink:href="#shape-info"></use>
+              </svg>
+              <span class="tooltip1 dark">Read more</span>
+            </a> -->
+          </div>
+          <div class="selectors main-vis-switch">
+            <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>
+            <div class="action deforestation js-selector" data-filter="deforestation">Deforestation Area</div>
+          </div>
+
+          <div class="chart-container">
+            <div class="chart"></div>
+          </div>
+
+          <div class="legend-container">
+            <div class="legend -main"></div>
+          </div>
         </div>
       </div>
-      <!-- <a class="btn-action source" href="#" data-source="source-{{this.slug}}">
-        <svg>
-          <use xlink:href="#shape-info"></use>
-        </svg>
-        <span class="tooltip1 dark">Read more</span>
-      </a> -->
-    </div>
-    <div class="selectors main-vis-switch">
-      <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>
-      <div class="action deforestation js-selector" data-filter="deforestation">Deforestation Area</div>
-    </div>
 
-    <div class="chart-container">
-      <div class="chart"></div>
-    </div>
-
-    <div class="legend-container">
-      <div class="legend -main"></div>
     </div>
   </div>
 </div>

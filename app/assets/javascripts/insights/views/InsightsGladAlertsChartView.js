@@ -95,7 +95,8 @@ define([
         }
       },
       handleWidth: 1,
-      timelineButtonRadius: 15
+      timelineButtonRadius: 15,
+      maxWidth: 600
     },
 
     initialize: function(settings) {
@@ -133,6 +134,7 @@ define([
     _initChart: function() {
       // Data parsing and initialization
       this._parseData(this.data);
+      this._checkIsEmbed();
       this._start();
     },
 
@@ -189,7 +191,16 @@ define([
       this.remove({
         keepEvents: true
       });
+      this._checkIsEmbed();
       this.render();
+    },
+
+    _checkIsEmbed: function() {
+      if (document.body.clientWidth < this.defaults.maxWidth) {
+        this.isEmbed = true;
+      } else {
+        this.isEmbed = false;
+      }
     },
 
     /**
@@ -225,6 +236,7 @@ define([
         return d > 999 ? (d / 1000).toFixed(1) + 'k' : d;
       };
       var yNumTicks = 8;
+      var xNumTicks = this.isEmbed ? 5 : 12;
 
       this.x = d3.time.scale()
         .range([0, this.cWidth]);
@@ -240,6 +252,7 @@ define([
         .orient('bottom')
         .innerTickSize(6)
         .tickValues(this.months)
+        .ticks(xNumTicks)
         .outerTickSize(0)
         .tickFormat(xTickFormat);
 
@@ -502,7 +515,12 @@ define([
         value = xDomain[1];
       }
 
-      this.currentStep = value;
+      this.currentStep = Math.round(value);
+
+      if (this.isEmbed) {
+        Backbone.Events.trigger('insights:glad:update', this.currentStep);
+      }
+
       this._setHandlePosition();
     },
 
@@ -525,6 +543,10 @@ define([
 
       this.currentStep = current;
 
+      if (this.isEmbed) {
+        Backbone.Events.trigger('insights:glad:update', current);
+      }
+
       d3.select(element).transition()
         .duration(0)
         .call(this.brush.extent(extent1))
@@ -535,34 +557,36 @@ define([
       var _this = this;
       d3.select('svg .background')
         .on('mousemove', function() {
-          var value = Math.round(_this.x2.invert(d3.mouse(this)[0]));
-          _this._changeStepByValue(value);
-          _this._updateTooltip(value);
+          if (!_this.isEmbed) {
+            var value = Math.round(_this.x2.invert(d3.mouse(this)[0]));
+            _this._changeStepByValue(value);
+            _this._updateTooltip(value);
 
-          d3.selectAll('svg .dot')
-            .classed('hovered', false);
+            d3.selectAll('svg .dot')
+              .classed('hovered', false);
 
-          Backbone.Events.trigger('insights:glad:update', value);
+            Backbone.Events.trigger('insights:glad:update', value);
 
-          var current = d3.select('svg .dot-'+value);
-          if (current) {
-            current.classed('hovered', true);
+            var current = d3.select('svg .dot-'+value);
+            if (current) {
+              current.classed('hovered', true);
 
-            if (current.node()) {
-              var cords = current.node().getBBox();
-              var left = cords.x + _this.defaults.margin.left + (cords.width / 2);
-              var top = cords.y + _this.defaults.margin.top - (cords.height / 2);
-              var width = _this.tooltip.clientWidth;
-              var height = _this.tooltip.clientHeight;
+              if (current.node()) {
+                var cords = current.node().getBBox();
+                var left = cords.x + _this.defaults.margin.left + (cords.width / 2);
+                var top = cords.y + _this.defaults.margin.top - (cords.height / 2);
+                var width = _this.tooltip.clientWidth;
+                var height = _this.tooltip.clientHeight;
 
-              _this.tooltip.style.left = left - (width / 2) + 'px';
-              _this.tooltip.style.top = top - height - _this.defaults.tooltipPadding + 'px';
-              _this._showTooltip();
+                _this.tooltip.style.left = left - (width / 2) + 'px';
+                _this.tooltip.style.top = top - height - _this.defaults.tooltipPadding + 'px';
+                _this._showTooltip();
+              } else {
+                _this._hideTooltip();
+              }
             } else {
               _this._hideTooltip();
             }
-          } else {
-            _this._hideTooltip();
           }
         });
     },
