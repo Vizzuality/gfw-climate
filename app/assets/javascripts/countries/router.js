@@ -16,7 +16,7 @@ define([
     routes: {
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
-      'insights(/)(:insight)'               : '_initInishgts',
+      'insights(/)(:insight)'               : '_initInsights',
       'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
 
@@ -45,7 +45,7 @@ define([
       new CountryPantropicalView();
     },
 
-    _initInishgts: function(insight) {
+    _initInsights: function(insight) {
       new InsightsView({
         insight: insight
       });
