@@ -5,8 +5,7 @@ class InsightsController < ApplicationController
   def index
   end
 
-  def glad_alerts
-    @title = 'Glad Alerts'
+  def detail
   end
 
 end
