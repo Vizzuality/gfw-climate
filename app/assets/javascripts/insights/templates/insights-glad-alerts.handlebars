@@ -1,6 +1,6 @@
 <div class="l-header -narrow">
   <div class="inner insights-title">
-    <h2>Monitor progress in near real-time</h2>
+    <h2 class="-width-margin">Monitor progress in near real-time</h2>
     <h3>Track deforestation and emissions against country targets with weekly GLAD alerts.</h3>
   </div>
 </div>
@@ -21,21 +21,31 @@
                 <option value="IND" data-iso="IND">Kalimantan</option>
               </select>
             </div>
-            <div class="year-selector">
-              <div class="action">
-                <select>
-                  <option selected>YEAR</option>
-                  <option>2016</option>
-                  <option>2015</option>
-                </select>
+            <div class="nav-options">
+              <div class="year-selector">
+                <div class="action">
+                  <select>
+                    <option selected>YEAR</option>
+                    <option>2016</option>
+                    <option>2015</option>
+                  </select>
+                </div>
+              </div>
+              <div class="extra-selector">
+                <div class="action -info">
+                  <a class="btn-action source" href="#" data-source="source-insights-glad-alerts">
+                    <svg>
+                      <use xlink:href="#shape-info"></use>
+                    </svg>
+                  </a>
+                </div>
+                <div class="action -share js-share">
+                  <svg>
+                    <use xlink:href="#shape-share"></use>
+                  </svg>
+                </div>
               </div>
             </div>
-            <!-- <a class="btn-action source" href="#" data-source="source-{{this.slug}}">
-              <svg>
-                <use xlink:href="#shape-info"></use>
-              </svg>
-              <span class="tooltip1 dark">Read more</span>
-            </a> -->
           </div>
           <div class="selectors main-vis-switch">
             <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>

@@ -3,9 +3,13 @@ define([
   'handlebars',
   'd3',
   'insights/views/InsightsGladAlertsChartView',
+  'views/ShareView',
+  'views/SourceModalView',
+  'helpers/NumbersHelper',
   'text!insights/templates/insights-glad-alerts.handlebars',
   'text!insights/templates/insights-glad-alerts-legend.handlebars',
-], function(Backbone, Handlebars, d3, InsightsGladAlertsChart, tpl, tplLegend) {
+], function(Backbone, Handlebars, d3, InsightsGladAlertsChart,
+  ShareView, SourceModalView, NumbersHelper, tpl, tplLegend) {
 
   'use strict';
 
@@ -13,6 +17,7 @@ define([
 
     events: {
       'click .js-selector': '_changeVisualizations',
+      'click .js-share': '_openShare',
       'change .js-country-selector': '_changeDataByCountry'
     },
 
@@ -41,6 +46,9 @@ define([
       this.filter = this.defaults.filter;
       this.render();
       this._setListeners();
+
+      // Info window
+      new SourceModalView();
     },
 
     render: function() {
@@ -109,13 +117,13 @@ define([
 
       el.innerHTML = this.templateLegend({
         isDesforestation: filter === this.defaults.desforestationFilter,
-        average: Math.round(current.percent_to_emissions_target * 1),
-        target: Math.round(current.baseline_emissions * 1),
-        emissions: Math.round(current.cumulative_emissions * 1),
-        annual_budget: Math.round(current.emissions_target * 1),
-        deforestation: Math.round(current.cumulative_deforestation),
-        deforestation_cap: Math.round(current.deforestation_target),
-        alerts: Math.round(current.alerts)
+        average: NumbersHelper.addNumberDecimals(Math.round(current.percent_to_emissions_target * 1)),
+        target: NumbersHelper.addNumberDecimals(Math.round(current.baseline_emissions * 1)),
+        emissions: NumbersHelper.addNumberDecimals(Math.round(current.cumulative_emissions * 1)),
+        annual_budget: NumbersHelper.addNumberDecimals(Math.round(current.emissions_target * 1)),
+        deforestation: NumbersHelper.addNumberDecimals(Math.round(current.cumulative_deforestation)),
+        deforestation_cap: NumbersHelper.addNumberDecimals(Math.round(current.deforestation_target)),
+        alerts: NumbersHelper.addNumberDecimals(Math.round(current.alerts))
       });
     },
 
@@ -169,9 +177,10 @@ define([
       this.filter = filter;
     },
 
-    _toThousands: function(number) {
-      return number > 999 ? (number/ 1000).toFixed(1) + 'k' : (number * 1).toFixed(2);
-    }
+    _openShare: function(event) {
+      var shareView = new ShareView().share(event);
+      $('body').append(shareView.el);
+    },
   });
 
   return InsightsGladAlerts;

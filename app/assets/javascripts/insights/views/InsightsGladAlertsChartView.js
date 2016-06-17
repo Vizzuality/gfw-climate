@@ -3,8 +3,9 @@ define([
   'underscore',
   'd3',
   'moment',
+  'helpers/NumbersHelper',
   'text!insights/templates/insights-glad-alerts-tooltip.handlebars',
-], function(Backbone, _, d3, moment, tplTooltip) {
+], function(Backbone, _, d3, moment, NumbersHelper, tplTooltip) {
 
   'use strict';
 
@@ -458,7 +459,7 @@ define([
       if (data) {
         var tooltip = this.el.querySelector('.tooltip');
         tooltip.innerHTML = this.templateTooltip({
-          value: data.alerts
+          value: NumbersHelper.addNumberDecimals(data.alerts)
         });
         this.tooltip = this.el.querySelector('.insights-glad-alerts-tooltip');
       }
