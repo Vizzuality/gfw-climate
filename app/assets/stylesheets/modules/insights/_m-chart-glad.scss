@@ -65,6 +65,10 @@
       fill: transparent;
       stroke-width: 3;
       transition: .2s ease;
+
+      @media only screen and (max-width: $br-mobile) {
+        stroke-width: 1.5;
+      }
     }
   }
 
@@ -72,6 +76,10 @@
     .dot {
       fill: rgba(237, 176, 74, 1);
       transition: .2s ease;
+
+      @media only screen and (max-width: $br-mobile) {
+        transform: scale(0.5, 0.5);
+      }
     }
   }
 

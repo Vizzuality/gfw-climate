@@ -714,7 +714,7 @@ $height: auto;
     display: flex;
     justify-content: space-between;
     width: 260px;
-    margin: 0 auto 15px;    
+    margin: 0 auto 15px;
 
     li{
       width: 48%;
@@ -738,6 +738,12 @@ $height: auto;
 
   .mini-modal-input{
     padding: 15px 0 0;
+
+    .field-container {
+      display: flex;
+      margin-bottom: 16px;
+    }
+
     // Button
     .copy-share{
       border-radius: 0;
@@ -764,6 +770,11 @@ $height: auto;
       margin: 0;
       display: block;
       border: 1px solid $border;
+      margin-right: 8px;
+
+      &.-full-width {
+        margin-right: 0;
+      }
     }
   }
 
