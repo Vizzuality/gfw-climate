@@ -31,6 +31,7 @@ html
       var gfw = window.gfw = {
         config: {
           GFW_API_HOST: "#{ENV['GFW_API_HOST']}",
+          GFW_DATA_S3: "#{ENV['GFW_DATA_S3']}",
           GFW_MOBILE: 850
         }
       };
@@ -44,6 +45,6 @@ html
 
     = render 'shared/modal'
     = render 'shared/sources_widgets'
-    
+
     = requirejs_include_tag "embed"
     = render "shared/js_footer"

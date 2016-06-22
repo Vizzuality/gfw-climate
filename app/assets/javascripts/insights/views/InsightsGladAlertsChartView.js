@@ -105,6 +105,7 @@ define([
       this.data = this.defaults.data;
       this.filter = this.defaults.filter;
       this.currentStep = this.defaults.currentStep;
+      this.iso = this.defaults.iso;
 
       this._initChart();
 
@@ -459,7 +460,9 @@ define([
       if (data) {
         var tooltip = this.el.querySelector('.tooltip');
         tooltip.innerHTML = this.templateTooltip({
-          value: NumbersHelper.addNumberDecimals(data.alerts)
+          value: NumbersHelper.addNumberDecimals(data.alerts),
+          // image: window.gfw.config.GFW_DATA_S3
+          image: 'http://gfw2-data.s3.amazonaws.com/climate/glad_maps/roc_2016_25.png'
         });
         this.tooltip = this.el.querySelector('.insights-glad-alerts-tooltip');
       }

@@ -491,13 +491,20 @@
         margin-bottom: 15px;
 
         .thumbnail {
-          width: 150px;
+          width: 116px;
           flex-shrink: 0;
 
           .image {
-            width: 148px;
+            width: 95px;
             height: 96px;
-            background: #ececec;
+            overflow: hidden;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            img {
+              width: 100%;
+            }
           }
         }
 
