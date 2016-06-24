@@ -22,6 +22,7 @@
           <li><%= link_to 'About GFW Climate', "#{about_path}?page=about", :"data-slug" => 'about-gfw-climate', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw-climate selected' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'FAQ', "#{about_path}?page=faq", :"data-slug" => 'faq', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item faq' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'PUBLICATIONS AND BLOGS', "#{about_path}?page=publications", :"data-slug" => 'publications', :"data-interesting" => 'publications, faqs', :class => 'nav-item publications-blogs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'TECHNICAL NOTES', "#{about_path}?page=technical-notes", :"data-slug" => 'technical-notes', :"data-interesting" => 'technical-notes', :class => 'nav-item technical-notes' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'TUTORIAL VIDEOS', "#{about_path}?page=tutorials", :"data-slug" => 'tutorials', :"data-interesting" => 'tutorial videos', :class => 'nav-item tutorials' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
@@ -132,9 +133,9 @@
               <h2>Publications</h2>
             </header>
             <div class="content">
-              <div class="publications">
+              <div class="content-list">
                 <div class="item">
-                  <div class="image"><img src="<%= image_url("publications/publications_can_carbon_emissions_from_tropical.jpg")%>" /></div>
+                  <div class="image"><img src="<%= image_url("about/publications/publications_can_carbon_emissions_from_tropical.jpg")%>" /></div>
                   <div class="detail">
                     <h3 class="title">Can carbon emissions from tropical deforestation drop by 50% in 5 years?</h3>
                     <div class="text">Halving carbon emissions from tropical deforestation by 2020 could help bring the international community closer to the agreed goal of <2 degree increase in global average temperature change...</div>
@@ -148,9 +149,9 @@
               <h2>Blogs</h2>
             </header>
             <div class="content">
-              <div class="publications">
+              <div class="content-list">
                 <div class="item">
-                  <div class="image"><img src="<%= image_url("publications/publications_gfw_blogs.jpg")%>" /></div>
+                  <div class="image"><img src="<%= image_url("about/publications/publications_gfw_blogs.jpg")%>" /></div>
                   <div class="detail">
                     <h3 class="title">Climate posts in GFW Blog</h3>
                     <div class="text">The GFW blog catalyzes conversations around improved forest management by providing timely, credible analysis on threats to global forests.</div>
@@ -161,6 +162,25 @@
             </div>
 
           </article>
+
+          <article id='technical-notes' class="source-article" style="display: <%= params[:page] == "technical-notes" ? "block" : "none" %>;">
+            <header>
+              <h2>Technical Notes</h2>
+            </header>
+            <div class="content">
+              <div class="content-list">
+                <div class="item">
+                  <div class="image"><img src="<%= image_url("about/technical-notes/technical-note.jpg")%>" /></div>
+                  <div class="detail">
+                    <h3 class="title">Global forest watch climate: summary of methods and data</h3>
+                    <div class="text">The Global Forest Watch (GFW) Climate online platform catalyzes action on climate change by providing timely and credible answers to questions about the impacts of tropical deforestation on global climate change. Its wealth of data and analytical tools allow...</div>
+                    <div class="action"><button class="btn gray"><%= link_to "DOWNLOAD", "downloads/about/technical-notes/wri15_TECH_GFW-Climate-v3.pdf", target:'_blank', :class =>'block' %></button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
           <article id='tutorials' class="source-article" style="display: <%= params[:page] == "tutorials" ? "block" : "none" %>;">
             <header>
               <h2>Tutorial videos</h2>
