@@ -142,6 +142,14 @@
           top: -2px;
           left: 0;
         }
+
+        .subtitle {
+          font-size: 11px;
+          padding: 5px 8px 0 0px;
+          display: block;
+          color: #AAA;
+          word-wrap: break-word;
+        }
       }
       .layer-sublayer {
         cursor: pointer;
@@ -258,6 +266,17 @@
       margin-bottom: 4px;
       &:last-child {
         margin-bottom: 0;
+      }
+
+      i {
+        padding: 0;
+        display: block;
+        font-style: italic;
+        font-size: 11px;
+
+        &.circle {
+          display: inline-block;
+        }
       }
     }
 
