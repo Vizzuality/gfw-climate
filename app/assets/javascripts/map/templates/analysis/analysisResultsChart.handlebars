@@ -1,6 +1,18 @@
 <div id="loss-carbon-chart" class="graph-line-bar">
   <div id="loss-carbon-chart-legend" class="graph-legend"></div>
 </div>
+<ul class="analysis-stats -compact">
+  <li>
+    <span class="stats-title">Average of the aboveground live biomass</span>
+    <span class="stats-count"><strong>{{averageAbovegroundBiomass}}</strong> Mg ha<sup>-1</sup></span>
+  </li>
+
+  <li>
+    <span class="stats-title">Average of carbon stored in aboveground live biomass</span>
+    <span class="stats-count"><strong>{{averageCarbonAbovegroundBiomass}}</strong> Mg C ha<sup>-1</sup></span>
+  </li>
+</ul>
+</div>
 {{#if iso}}
 <div class="m-btncontainer">
   <a class="btn blue uppercase full-width" href="/countries/{{iso}}">Country profile</a>
