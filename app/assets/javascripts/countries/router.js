@@ -5,9 +5,9 @@ define([
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView',
   'countries/views/CountryPantropicalView',
-  'insights/views/InsightsGladAlertsView'
+  'insights/views/InsightsView'
 ], function(Backbone, utils, PlaceService, CountryIndexView,
-  CountryShowView, CountryPantropicalView, InsightsGladAlertsView) {
+  CountryShowView, CountryPantropicalView, InsightsView) {
 
   'use strict';
 
@@ -16,7 +16,7 @@ define([
     routes: {
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
-      'insights/glad-alerts'                : '_initGladAlerts',
+      'insights(/)(:insight)'               : '_initInsights',
       'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
 
@@ -45,8 +45,10 @@ define([
       new CountryPantropicalView();
     },
 
-    _initGladAlerts: function() {
-      new InsightsGladAlertsView();
+    _initInsights: function(insight) {
+      new InsightsView({
+        insight: insight
+      });
     }
   });
 

@@ -1,16 +1,11 @@
 class EmbedController < ApplicationController
   # before_action :check_country_iso, :only => [:countries_show, :countries_show_info]
+  before_action :fix_headers, only: [:pantropical, :insights, :countries]
+
   layout 'embed'
 
   # GET /embed/country/:id
   def index
-  end
-
-  def pantropical
-    response.headers.delete "X-Frame-Options"
-  end
-
-  def countries
   end
 
   def countries_show_info
@@ -18,6 +13,10 @@ class EmbedController < ApplicationController
   end
 
   private
+    def fix_headers
+      response.headers.delete 'X-Frame-Options'
+    end
+
     def find_countries
       response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", headers: {"Accept" => "application/json"})
       if response.success?

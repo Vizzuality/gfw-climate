@@ -5,7 +5,7 @@ require([
   'jquery',
   'd3',
   'handlebars',
-  'helpers/handlebarsPlugins',  
+  'helpers/handlebarsPlugins',
   'backbone',
   'embed/router'
 ], function($, d3, Handlebars, HandlebarsPlugins, Backbone, RouterView) {
