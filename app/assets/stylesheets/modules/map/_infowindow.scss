@@ -45,7 +45,7 @@
       width: 36px;
       height: 26px;
       padding: 0;
-      background: image-url('svg-icons/close.svg') no-repeat center;
+      background: image-url('svg-map/close.svg') no-repeat center;
       background-size: 16px 16px;
       text-indent: -9999px;
       font-size: 0;
@@ -132,6 +132,10 @@
           }
           line-height: 1.25;
           padding: 0 0 10px;
+
+          &:empty {
+            padding: 0;
+          }
         }
         h4{
           color: $dark;
