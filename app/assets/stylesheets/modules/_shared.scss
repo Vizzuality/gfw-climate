@@ -320,6 +320,10 @@
     padding: 70px 0;
   }
 
+  &:empty {
+    padding: 0;
+  }
+
   .section-title{
     color: $blue;
     text-align: center;
