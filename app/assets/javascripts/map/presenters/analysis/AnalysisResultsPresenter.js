@@ -330,6 +330,20 @@ define([
         p.totalArea = this._getTotalArea();
       }
 
+      /**
+       * Average of the aboveground live biomass
+       */
+      if (results.biomass) {
+        p.averageAbovegroundBiomass = Math.round(results.biomass / parseInt(p.totalArea, 10));
+      }
+
+      /**
+       * Average of carbon stored in aboveground live biomass
+       */
+      if (p.averageAbovegroundBiomass) {
+        p.averageCarbonAbovegroundBiomass = Math.round(p.averageAbovegroundBiomass * 0.5);
+      }
+
       return p;
     },
 
