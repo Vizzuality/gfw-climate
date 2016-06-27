@@ -1,0 +1,25 @@
+#global_mangroves_biomass{
+  polygon-opacity: 0.7;
+  line-width: 1;
+  line-opacity: 1;
+}
+#global_mangroves_biomass [ bm_t_ha <= 399.326721191406] {
+   polygon-fill: #0dffb5;
+   line-color: #0dffb5;
+}
+#global_mangroves_biomass [ bm_t_ha < 200] {
+   polygon-fill: #10e2a4;
+   line-color: #10e2a4;
+}
+#global_mangroves_biomass [ bm_t_ha < 170] {
+   polygon-fill: #02cf9c;
+   line-color: #02cf9c;
+}
+#global_mangroves_biomass [ bm_t_ha < 160] {
+   polygon-fill: #05ae90;
+   line-color: #05ae90;
+}
+#global_mangroves_biomass [ bm_t_ha < 150] {
+   polygon-fill: #008b72;
+   line-color: #008b72;
+}
