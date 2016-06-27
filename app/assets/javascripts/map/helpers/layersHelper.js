@@ -97,7 +97,6 @@ define([
   'map/views/layers/BraMiningLayer',
   'map/views/layers/PerMinamCoverLayer',
   'map/views/layers/WMSLayer',
-  'map/views/layers/MangroveBiomassLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -198,7 +197,6 @@ define([
   BraMiningLayer,
   PerMinamCoverLayer,
   WMSLayer,
-  MangroveBiomassLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -492,9 +490,6 @@ define([
     },
     WMSLayer :{
       view: WMSLayer
-    },
-    global_mangroves_biomass: {
-      view: MangroveBiomassLayer
     },
     
     nothing: {
