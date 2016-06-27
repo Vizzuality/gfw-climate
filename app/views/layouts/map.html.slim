@@ -26,7 +26,7 @@ html
     = stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all'
     = stylesheet_link_tag "map", :media => "all"
     = csrf_meta_tags
-    
+
     = render 'shared/gfw_assets'
     = render 'shared/transifex_setup'
 
@@ -34,6 +34,7 @@ html
       var gfw = window.gfw = {
         config: {
           GFW_API_HOST: "#{ENV['GFW_API_HOST']}",
+          GFW_DATA_S3: "#{ENV['GFW_DATA_S3']}",
           GFW_MOBILE: 1000
         },
         cacheVersion: "#{ENV['CACHE_VERSION']}",
