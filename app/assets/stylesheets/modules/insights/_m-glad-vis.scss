@@ -491,13 +491,31 @@
         margin-bottom: 15px;
 
         .thumbnail {
-          width: 150px;
+          width: 116px;
           flex-shrink: 0;
 
           .image {
-            width: 148px;
+            width: 95px;
             height: 96px;
-            background: #ececec;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            text-align: center;
+            font-weight: 400;
+
+            .loader {
+              width: 20px;
+              height: 20px;
+              @include spinner (20px, 3px, $color-1);
+              pointer-events: none;
+            }
+
+            img {
+              width: 100%;
+            }
           }
         }
 
