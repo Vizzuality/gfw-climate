@@ -45,9 +45,10 @@ define([
   'text!map/templates/legend/mysPA.handlebars',
   'text!map/templates/legend/per_mining.handlebars',
   'text!map/templates/legend/raisg_mining.handlebars',
+  'text!map/templates/legend/mangrove_biomass.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, idn_peatTPL,hsdwTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl,peatland_drainageTpl,colombiaForestChangeTpl, us_land_coverTpl, bra_biomesTpl, gtm_forest_changeTpl, gtm_forest_coverTpl, gtm_forest_densityTpl, khm_eco_land_concTpl, usa_forest_ownershipTpl, mysPATpl, per_miningTpl,raisg_miningTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, idn_peatTPL,hsdwTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl,peatland_drainageTpl,colombiaForestChangeTpl, us_land_coverTpl, bra_biomesTpl, gtm_forest_changeTpl, gtm_forest_coverTpl, gtm_forest_densityTpl, khm_eco_land_concTpl, usa_forest_ownershipTpl, mysPATpl, per_miningTpl,raisg_miningTpl, mangrove_biomassTpl) {
 
   'use strict';
 
@@ -125,7 +126,7 @@ define([
       mys_protected_areas:Handlebars.compile(mysPATpl),
       bra_mining:Handlebars.compile(raisg_miningTpl),
       per_mining:Handlebars.compile(per_miningTpl),
-
+      global_mangroves_biomass:Handlebars.compile(mangrove_biomassTpl),
 
     },
 
