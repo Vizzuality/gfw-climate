@@ -97,7 +97,8 @@ define([
       },
       handleWidth: 1,
       timelineButtonRadius: 15,
-      maxWidth: 600
+      maxWidth: 600,
+      imageURI: window.gfw.config.GFW_DATA_S3 + 'climate/glad_maps/roc_2016_'
     },
 
     initialize: function(settings) {
@@ -106,6 +107,8 @@ define([
       this.filter = this.defaults.filter;
       this.currentStep = this.defaults.currentStep;
       this.iso = this.defaults.iso;
+      this.imageURI = this.defaults.imageURI;
+      this.images = {};
 
       this._initChart();
 
@@ -444,6 +447,9 @@ define([
         .attr('class', 'line-solid-path');
     },
 
+    /**
+     * Renders the tooltip of the visualization
+     */
     _renderTooltip: function() {
       d3.select(this.el)
         .insert('div', 'svg')
@@ -452,19 +458,100 @@ define([
       var tooltip = this.el.querySelector('.tooltip');
       tooltip.innerHTML = this.templateTooltip({});
       this.tooltip = this.el.querySelector('.insights-glad-alerts-tooltip');
+      this.tooltipImage = this.tooltip.querySelector('.image');
     },
 
+    /**
+     * Updates the tooltip of the current step
+     * @param  {Number} current step
+     */
     _updateTooltip: function(step) {
       var data = _.findWhere(this.chartData, { week: step.toString() });
 
       if (data) {
         var tooltip = this.el.querySelector('.tooltip');
         tooltip.innerHTML = this.templateTooltip({
-          value: NumbersHelper.addNumberDecimals(data.alerts),
-          // image: window.gfw.config.GFW_DATA_S3
-          image: 'http://gfw2-data.s3.amazonaws.com/climate/glad_maps/roc_2016_25.png'
+          value: NumbersHelper.addNumberDecimals(data.alerts)
         });
         this.tooltip = this.el.querySelector('.insights-glad-alerts-tooltip');
+        this.tooltipImage = this.tooltip.querySelector('.image');
+
+        this.showImage();
+      }
+    },
+
+    /**
+     * Shows the image of the current step
+     */
+    showImage: function() {
+      if (!this.images[this.currentStep]) {
+        var image = new Image();
+        var currentStep = this.currentStep;
+
+        image.onload = this._onImageLoad(currentStep, image);
+        image.onerror = this._onImageError(currentStep);
+        image.src = this.imageURI + this.currentStep + '.png';
+      } else {
+        var img = this.images[this.currentStep];
+
+        if (img && img.image) {
+          this._renderTooltipImage(img.image);
+        } else {
+          this._renderTooltipImage(false);
+        }
+      }
+    },
+
+    /**
+     * On image error
+     * @param  {Number} current step
+     */
+    _onImageError: function(currentStep) {
+      return (function(step) {
+        return function(e) {
+          this.images[step] = {
+            loaded: false,
+            image: null
+          };
+
+          if (step === this.currentStep) {
+            this._renderTooltipImage(false);
+          }
+        }.bind(this);
+      }.bind(this))(currentStep);
+    },
+
+    /**
+     * Updates the tooltip of the current step
+     * @param  {Number} current step
+     * @param  {Object} image object
+     */
+    _onImageLoad: function(currentStep, image) {
+      return (function(step, image) {
+        return function(e) {
+          this.images[step] = {
+            loaded: true,
+            image: image
+          };
+
+          if (step === this.currentStep) {
+            this._renderTooltipImage(image);
+          }
+        }.bind(this);
+      }.bind(this))(currentStep, image);
+    },
+
+    /**
+     * Renders the image or the error message
+     * @param  {Object} image object
+     */
+    _renderTooltipImage: function(image) {
+      this.tooltipImage.innerHTML = '';
+
+      if (image) {
+        this.tooltipImage.appendChild(image);
+      } else {
+        this.tooltipImage.innerHTML = 'Not available';
       }
     },
 
