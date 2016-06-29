@@ -22,6 +22,19 @@
         <li><button id="start-analysis" class="btn blue uppercase">Start drawing</button></li>
         <li class="hidden"><button id="done-analysis" class="btn blue uppercase">Analyze</button></li>
       </ul>
+      <p class="p-center">or</p>
+      <div class="dropable">
+        <div id="drop-shape-analysis" class="shape-droppable">
+          <input type="file" id="analysis-file-upload">
+          <div class="drop-shape-text">
+            <span>Click to pick a file or drop one here</span>
+            <a href="#" data-source="drop-shapefile" class="source">
+              <svg><use xlink:href="#shape-info"></use></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <p class="-terms">By uploading data you agree to the <a href="/terms" target="_blank">GFW Terms of Service</a></p>
     </div>
     <div id="country-tab" class="analysis-tab-content country-tab">
       <select data-placeholder="Select country" class="chosen-select default notranslate" id="analysis-country-select"><option></option></select>
