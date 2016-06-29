@@ -38,8 +38,8 @@ define([
             x2: 'week',
             y: [
               'cumulative_emissions',
-              'emissions_target',
-              'baseline_emissions'
+              '2001_2013_average',
+              '2020_target'
             ],
             r: 'alerts'
           },
@@ -55,11 +55,11 @@ define([
             },
             dashed: {
               x: 'week',
-              y: 'baseline_emissions'
+              y: '2020_target'
             },
             semiDashed: {
               x: 'week',
-              y: 'emissions_target'
+              y: '2001_2013_average'
             }
           }
         },
@@ -69,8 +69,8 @@ define([
             x2: 'week',
             y: [
               'cumulative_deforestation',
-              'deforestation_target',
-              'deforestation_baseline'
+              '2001_2013_average_deforestation',
+              '2020_target_deforestation'
             ],
             r: 'alerts'
           },
@@ -86,11 +86,11 @@ define([
             },
             dashed: {
               x: 'week',
-              y: 'deforestation_baseline'
+              y: '2020_target_deforestation'
             },
             semiDashed: {
               x: 'week',
-              y: 'deforestation_target'
+              y: '2001_2013_average_deforestation'
             }
           }
         }
@@ -98,7 +98,7 @@ define([
       handleWidth: 1,
       timelineButtonRadius: 15,
       maxWidth: 600,
-      imageURI: window.gfw.config.GFW_DATA_S3 + 'climate/glad_maps/roc_2016_'
+      imageURI: window.gfw.config.GFW_DATA_S3 + 'climate/glad_maps/'
     },
 
     initialize: function(settings) {
@@ -107,6 +107,7 @@ define([
       this.filter = this.defaults.filter;
       this.currentStep = this.defaults.currentStep;
       this.iso = this.defaults.iso;
+      this.year = this.defaults.year;
       this.imageURI = this.defaults.imageURI;
       this.images = {};
 
@@ -490,7 +491,8 @@ define([
 
         image.onload = this._onImageLoad(currentStep, image);
         image.onerror = this._onImageError(currentStep);
-        image.src = this.imageURI + this.currentStep + '.png';
+        image.src = this.imageURI + '/' + this.iso.toLowerCase() +
+          '_' + this.year + '_' + this.currentStep + '.png';
       } else {
         var img = this.images[this.currentStep];
 
