@@ -40,9 +40,9 @@
   .line-dashed-group {
     .dash-line-path {
       shape-rendering: crispEdges;
-      stroke: rgba(91, 128, 160, 0.70);
+      stroke: #5B80A0;
       fill: transparent;
-      stroke-width: 1;
+      stroke-width: 2;
       stroke-dasharray: 13, 6;
       transition: .2s ease;
     }
@@ -51,7 +51,7 @@
   .line-semidashed-group {
     .semidash-line-path {
       shape-rendering: crispEdges;
-      stroke: rgba(91, 128, 160, 0.70);
+      stroke: #5B80A0;
       fill: transparent;
       stroke-width: 1;
       stroke-dasharray: 3, 3;
@@ -61,7 +61,7 @@
 
   .line-solid-group {
     .line-solid-path {
-      stroke: rgba(91, 128, 160, 0.70);
+      stroke: #5B80A0;
       fill: transparent;
       stroke-width: 3;
       transition: .2s ease;

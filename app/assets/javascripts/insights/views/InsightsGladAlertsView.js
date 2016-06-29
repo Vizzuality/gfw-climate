@@ -18,7 +18,8 @@ define([
     events: {
       'click .js-selector': '_changeVisualizations',
       'click .js-share': '_openShare',
-      'change .js-country-selector': '_changeDataByCountry'
+      'change .js-country-selector': '_changeDataByCountry',
+      'change .js-year-selector': '_changeDataByYear'
     },
 
     el: '#insights',
@@ -30,7 +31,8 @@ define([
     defaults: {
       selectedClassEl: '-selected',
       filter: 'carbon_emissions',
-      country: 'COD',
+      country: 'PER',
+      year: 2016,
       weekStep: 1,
       desforestationFilter: 'deforestation',
       loadingClassEl: 'is-loading',
@@ -43,6 +45,7 @@ define([
       this.legends = [];
       this.currentStep = this.defaults.weekStep;
       this.currentCountry = this.defaults.country;
+      this.currentYear = this.defaults.year;
       this.filter = this.defaults.filter;
       this.render();
       this._setListeners();
@@ -68,9 +71,10 @@ define([
       var chartEl = el.querySelector('.chart');
       var legendEl = el.querySelector('.legend');
 
-      d3.csv('/data_glad_' + this.currentCountry + '.csv', function(data) {
+      d3.csv('/insights_glad_alerts/' + this.currentCountry + '_' + this.currentYear + '.csv', function(data) {
         if (this.visMain) {
           this.visMain.remove();
+          this.legends = [];
         }
 
         this._setMaxWeek(data);
@@ -81,7 +85,8 @@ define([
             data: data,
             filter: this.filter,
             currentStep: this.currentStep,
-            iso: this.country
+            iso: this.currentCountry,
+            year: this.currentYear
           }
         });
 
@@ -116,15 +121,30 @@ define([
         return (d.week * 1) === this.currentStep;
       }.bind(this))[0];
 
+      if (current) {
+        var average = Math.round(current['2001_2013_average'] * 1);
+        var target = Math.round(current['2020_target'] * 1);
+        var emissions = Math.round(current.cumulative_emissions * 1);
+        var deforestation = Math.round(current.cumulative_deforestation * 1);
+        var average_deforestation = Math.round(current['2001_2013_average_deforestation'] * 1);
+        var target_deforestation = Math.round(current['2020_target_deforestation'] * 1);
+        var alerts = Math.round(current.alerts);
+        var annual_budget = Math.round(((emissions / target) * 100));
+        var annual_budget_deforestation = Math.round(((deforestation / target_deforestation) * 100));
+      }
+
       el.innerHTML = this.templateLegend({
         isDesforestation: filter === this.defaults.desforestationFilter,
-        average: NumbersHelper.addNumberDecimals(Math.round(current.percent_to_emissions_target * 1)),
-        target: NumbersHelper.addNumberDecimals(Math.round(current.baseline_emissions * 1)),
-        emissions: NumbersHelper.addNumberDecimals(Math.round(current.cumulative_emissions * 1)),
-        annual_budget: NumbersHelper.addNumberDecimals(Math.round(current.emissions_target * 1)),
-        deforestation: NumbersHelper.addNumberDecimals(Math.round(current.cumulative_deforestation)),
-        deforestation_cap: NumbersHelper.addNumberDecimals(Math.round(current.deforestation_target)),
-        alerts: NumbersHelper.addNumberDecimals(Math.round(current.alerts))
+        hasDifferentLabel: this.currentCountry === 'BRA',
+        average: NumbersHelper.addNumberDecimals(average),
+        target: NumbersHelper.addNumberDecimals(target),
+        emissions: NumbersHelper.addNumberDecimals(emissions),
+        annual_budget:  NumbersHelper.addNumberDecimals(annual_budget),
+        annual_budget_deforestation: NumbersHelper.addNumberDecimals(annual_budget_deforestation),
+        deforestation: NumbersHelper.addNumberDecimals(deforestation),
+        average_deforestation:  NumbersHelper.addNumberDecimals(average_deforestation),
+        target_deforestation:  NumbersHelper.addNumberDecimals(target_deforestation),
+        alerts: NumbersHelper.addNumberDecimals(alerts)
       });
     },
 
@@ -165,6 +185,13 @@ define([
 
       label.innerHTML = selected.text;
       this.currentCountry = value;
+      this._renderMainChart();
+    },
+
+    _changeDataByYear: function(ev) {
+      var current = ev.currentTarget;
+      this.currentYear = parseInt(current.value, 10);
+
       this._renderMainChart();
     },
 

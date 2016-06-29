@@ -25,6 +25,10 @@
   font-weight: 600;
 }
 
+.is-bold-slim {
+  font-weight: 500;
+}
+
 .is-mobile-hidden {
   @media only screen and (max-width: $br-mobile) {
     display: none !important;

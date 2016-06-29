@@ -1,4 +1,4 @@
-week,alerts,above_ground_carbon_loss,cumulative_emissions,baseline_emissions,emissions_target,percent_to_emissions_target,area,cumulative_deforestation,deforestation_baseline,deforestation_target,percent_to_deforestation_target
+week,alerts,above_ground_carbon_loss,cumulative_emissions,2001_2013_average,2020_target,percent_to_emissions_target,area,cumulative_deforestation,2001_2013_average_deforestation,2020_target_deforestation,percent_to_deforestation_target
 1,14281,0.5552130665,0.5552130665,46.92503745,23.46251872,2.366383052,1073.229234,1073.229234,135053.3513,67526.67565,1.589341137
 2,27308,1.178875925,1.734088992,46.92503745,23.46251872,7.390890177,2078.411865,3151.6411,135053.3513,67526.67565,4.667253451
 3,7124,0.2870890307,2.021178022,46.92503745,23.46251872,8.614497216,544.5447002,3696.1858,135053.3513,67526.67565,5.473667649
