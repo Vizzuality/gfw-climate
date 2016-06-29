@@ -37,7 +37,9 @@
     "keymaster": "~1.6.3",
     "enquire": "~2.1.2",
     "chosen": "~1.4.2",
-    "slick-carousel": "~1.5.8"
+    "slick-carousel": "~1.5.8",
+    "bluebird": "~3.1.1",
+    "turf": "~2.0.2"
   },
   "resolutions": {
     "jquery": "1.11.1"

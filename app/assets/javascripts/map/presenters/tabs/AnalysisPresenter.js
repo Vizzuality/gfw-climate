@@ -9,10 +9,13 @@ define([
   'backbone',
   'mps',
   'topojson',
+  'bluebird',
   'helpers/geojsonUtilsHelper',
   'map/services/CountryService',
-  'map/services/RegionService'
-], function(PresenterClass, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService) {
+  'map/services/RegionService',
+  'map/services/GeostoreService'
+], function(PresenterClass, _, Backbone, mps, topojson, bluebird,
+  geojsonUtilsHelper, countryService, regionService, GeostoreService) {
 
   'use strict';
 
@@ -55,6 +58,11 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
+      'Geostore/go': function(geostore) {
+        this.status.set('geostore', geostore.id);
+        this._handlePlaceGo(geostore);
+      }
+    }, {
       'Place/go': function(place) {
         this._setBaselayer(place.layerSpec.getBaselayers());
         this.status.set('date', [place.params.begin, place.params.end]);
@@ -154,6 +162,11 @@ define([
         this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
       }
     },{
+      'Analysis/upload': function(geojson) {
+        ga('send', 'event', 'Map', 'Analysis', 'Upload Shapefile');
+        this._saveAndAnalyzeGeojson(geojson, {draw: true});
+      }
+    },{
       'Subscribe/end' : function(){
         this.view.setStyle();
       }
@@ -180,20 +193,24 @@ define([
       // this.deleteAnalysis();
 
       //Open analysis tab
-      if ((!this.status.get('dont_analyze') && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
+      if ((!this.status.get('dont_analyze') && (params.iso &&
+        params.iso.country && params.iso.country !== 'ALL')) ||
+        (params.analyze || params.geojson || params.wdpaid)) {
         mps.publish('Tab/open', ['#analysis-tab-button']);
       }
 
       //Select analysis type by params given
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
-      } else if (params.iso.country && params.iso.country !== 'ALL') {
+      } else if (params.iso && params.iso.country && params.iso.country !== 'ALL') {
         if (params.geojson) {
           this._analyzeIso(params.iso);
           this._analyzeGeojson(params.geojson);
         }else{
           this._analyzeIso(params.iso);
         }
+      } else if (params.geostore) {
+         this.status.set('geostore', params.geostore);
       } else if (params.geojson) {
         this._analyzeGeojson(params.geojson);
       } else if (params.wdpaid) {
@@ -216,7 +233,6 @@ define([
       };
       resource = this._buildResource(resource);
 
-
       // Draw geojson if needed.
       if (options.draw) {
         this.view.drawPaths(
@@ -226,6 +242,14 @@ define([
       // Publish analysis
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Polygon: true');
       this._publishAnalysis(resource);
+    },
+
+    _saveAndAnalyzeGeojson: function(geojson, options) {
+      mps.publish('Spinner/start');
+      GeostoreService.save(geojson).then(function(geostoreId) {
+        this.status.set('geostore', geostoreId);
+        this._analyzeGeojson(geojson, options);
+      }.bind(this));
     },
 
     /**
@@ -393,7 +417,8 @@ define([
       var geojson = geojsonUtilsHelper.pathToGeojson(paths);
 
       this.view.setEditable(overlay, false);
-      this._analyzeGeojson(geojson, {draw: false});
+      // this._analyzeGeojson(geojson, {draw: false});
+      this._saveAndAnalyzeGeojson(geojson, {draw: false});
     },
 
     /**
@@ -410,6 +435,10 @@ define([
       // and display a 'unsupported layer' message.
       if (!baselayer) {
         return resource;
+      }
+
+      if (this.status.get('geostore')) {
+        resource.geostore = this.status.get('geostore');
       }
 
       if (baselayer.slug !== 'forestgain') {
@@ -609,6 +638,8 @@ define([
         p.iso = {};
         p.iso.country = resource.iso;
         p.iso.region = resource.id1 ? resource.id1 : null;
+      } else if (resource.geostore) {
+        p.geostore = resource.geostore;
       } else if (resource.geojson) {
         p.geojson = encodeURIComponent(resource.geojson);
       } else if (resource.wdpaid) {

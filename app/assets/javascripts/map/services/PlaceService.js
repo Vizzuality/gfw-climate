@@ -49,8 +49,10 @@ define([
   'mps',
   'uri',
   'map/presenters/PresenterClass',
-  'map/services/LayerSpecService'
-], function (_, mps, UriTemplate, PresenterClass, layerSpecService) {
+  'map/services/LayerSpecService',
+  'map/services/GeostoreService'
+], function (_, mps, UriTemplate, PresenterClass, layerSpecService,
+  GeostoreService) {
 
   'use strict';
 
@@ -65,7 +67,7 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,wdpaid,begin,end,threshold,dont_analyze,rangearray}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,rangearray}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -137,6 +139,12 @@ define([
           mps.publish('Place/go', [place]);
         }, this)
       );
+
+      if (place.params.geostore) {
+        GeostoreService.get(place.params.geostore).then(function(geostore) {
+          mps.publish('Geostore/go', [geostore]);
+        });
+      }
     },
 
     /**

@@ -35,6 +35,10 @@ define([
         this._onPlaceGo(place);
       }
     }, {
+      'Geostore/go': function(geostore) {
+        this.status.set('geostore', geostore);
+      }
+    }, {
       'LayerNav/change': function(layerSpec) {
         this._setLayers(layerSpec.getLayers());
         this._fitToLayers(layerSpec.getLayers());
@@ -109,6 +113,10 @@ define([
       this._updateStatusModel(place.params);
       this._setLayers(place.layerSpec.getLayers(), layerOptions);
 
+      if (!!place.params.fit_to_geom && !!this.status.get('geostore') && !!this.status.get('geostore').geojson) {
+        this._fitToGeostore(this.status.get('geostore'));
+      }
+
       // Very weird my friend (if if if if if if)
       if ((!!place.params.iso && !!place.params.iso.country && place.params.iso.country == 'ALL') && ! !!place.params.wdpaid && ! !!place.params.geojson) {
         this.view.autolocateQuestion();
@@ -173,6 +181,16 @@ define([
           bounds = new google.maps.LatLngBounds(southWest, northEast);
 
       this.view.fitBounds(bounds);
+    },
+
+    _fitToGeostore: function(geostore) {
+      if (this.status.get('fit_to_geom') === true) {
+        var paths = geojsonUtilsHelper.geojsonToPath(geostore.geojson),
+            bounds = new google.maps.LatLngBounds();
+
+        paths.forEach(function(point) { bounds.extend(point); });
+        this.view.map.fitBounds(bounds);
+      }
     },
 
     /**
