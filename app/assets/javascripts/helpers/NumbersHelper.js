@@ -10,7 +10,12 @@ define([
      * @return {string} String
      */
     addNumberDecimals: function(number) {
-      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      var formattedNumber = '-';
+
+      if (number) {
+        formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+      return formattedNumber;
     },
 
     /**

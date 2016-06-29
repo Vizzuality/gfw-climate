@@ -11,42 +11,36 @@
 
     <div class="item">
       <div class="heading">
-        <div class="icon -dashed"></div>
-        <div class="label">2001 - 2013 average</div>
-      </div>
-      <div class="value">{{average}}</div>
-    </div>
-
-    <div class="item">
-      <div class="heading">
-        <div class="icon -semidashed"></div>
-        <div class="label">2020 target (NYDF)</div>
-      </div>
-      <div class="value">{{target}}</div>
-    </div>
-
-    <div class="item">
-      <div class="heading">
         <div class="icon -line"></div>
-        <div class="label">Deforestation (ha)</div>
+        <div class="label">Deforestation to Date (ha)</div>
       </div>
       <div class="value">{{deforestation}}</div>
     </div>
 
     <div class="item">
       <div class="heading">
-        <div class="icon -no-icon"></div>
-        <div class="label">Deforestation Cap (ha)</div>
+        <div class="icon -semidashed"></div>
+        <div class="label">
+          {{#if hasDifferentLabel}}2012{{else}}2001 - 2013{{/if}} Average (Mt CO<sub>2</sub>/yr)
+        </div>
       </div>
-      <div class="value default">{{deforestation_cap}}</div>
+      <div class="value">{{average_deforestation}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -dashed"></div>
+        <div class="label">2020 Target (ha/yr)</div>
+      </div>
+      <div class="value">{{target_deforestation}}</div>
     </div>
 
     <div class="item">
       <div class="heading">
         <div class="icon -no-icon"></div>
-        <div class="label">Deforestation target</div>
+        <div class="label">Annual Budget Used to Date (%)</div>
       </div>
-      <div class="value default">-</div>
+      <div class="value">{{annual_budget_deforestation}}</div>
     </div>
   {{else}}
     <div class="item glad-alerts">
@@ -59,43 +53,38 @@
 
     <div class="item">
       <div class="heading">
-        <div class="icon -dashed"></div>
-        <div class="label">2001 - 2013 average</div>
-      </div>
-      <div class="value">{{average}}</div>
-    </div>
-
-    <div class="item">
-      <div class="heading">
-        <div class="icon -semidashed"></div>
-        <div class="label">2020 target (NYDF)</div>
-      </div>
-      <div class="value">{{target}}</div>
-    </div>
-
-    <div class="item">
-      <div class="heading">
         <div class="icon -line"></div>
-        <div class="label">Cumulative Emissions to date (MtCO<sub>2</sub>)</div>
+        <div class="label">Cumulative Emissions to Date (MtCO<sub>2</sub>)</div>
       </div>
       <div class="value">{{emissions}}</div>
     </div>
 
     <div class="item">
       <div class="heading">
-        <div class="icon -no-icon"></div>
-        <div class="label">Annual Budget (MtCO<sub>2</sub>)</div>
+        <div class="icon -semidashed"></div>
+        <div class="label">
+          {{#if hasDifferentLabel}}2012{{else}}2001 - 2013{{/if}} Average (Mt CO<sub>2</sub>/yr)
+        </div>
       </div>
-      <div class="value default">{{annual_budget}}</div>
+      <div class="value">{{average}}</div>
+    </div>
+
+    <div class="item">
+      <div class="heading">
+        <div class="icon -dashed"></div>
+        <div class="label">2020 Target (Mt CO<sub>2</sub>/yr)</div>
+      </div>
+      <div class="value">{{target}}</div>
     </div>
 
     <div class="item">
       <div class="heading">
         <div class="icon -no-icon"></div>
-        <div class="label">Budget used to date</div>
+        <div class="label">Annual Budget Used to Date (%)</div>
       </div>
-      <div class="value default">-</div>
+      <div class="value default">{{annual_budget}}</div>
     </div>
+
   {{/if}}
 
 </div>
