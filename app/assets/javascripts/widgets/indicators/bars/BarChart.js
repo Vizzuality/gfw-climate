@@ -131,7 +131,7 @@ define([
     d3.select(elem+' .graph-legend')
       .html(legendTemplate({
         lineTotalValue: d3.format(".2s")(_.reduce(data, function(memo, d){ return memo + d.z; }, 0)),
-        barsTotalValue: d3.format(".2s")(_.reduce(data, function(memo, d){ return memo + d.y; }, 0))
+        barsTotalValue: d3.format(".1f")(_.reduce(data, function(memo, d){ return memo + d.y; }, 0))
       }));
 
     // Toolttio
@@ -158,7 +158,7 @@ define([
         .select('.tooltip-year')
         .html(tooltipTemplate({
           lineValue: d3.format(",f")(d.z),
-          barValue: d3.format(",f")(d.y),
+          barValue: d3.format(",.2f")(d.y),
           year: d.x
         }));
     });
