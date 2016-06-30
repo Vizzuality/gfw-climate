@@ -2,16 +2,18 @@
   width: 100%;
   position: relative;
 
-  @media only screen and (max-width: $br-mobile) {
-    overflow: hidden;
-  }
-
   @media only screen and (max-width: $br-mobile-portrait ) {
-    height: 940px;
+    height: 790px;
 
     .is-embed-page & {
       height: auto;
     }
+  }
+
+  @media only screen and (min-width: $br-mobile-portrait)
+   and (max-width: $br-mobile) {
+    height: 660px;
+    overflow: hidden;
   }
 
   .year-selector {
@@ -200,11 +202,16 @@
     flex-direction: row;
 
     .is-embed-page & {
-      height: 200px;
+      flex-direction: column-reverse;
     }
 
-    @media only screen and (max-width: $br-mobile) {
-      height: 200px;
+    @media only screen and (max-width: $br-mobile-portrait) {
+      flex-direction: column-reverse;
+    }
+
+    @media only screen and (min-width: $br-mobile-portrait)
+      and (max-width: $br-mobile) {
+      flex-direction: column-reverse;
     }
   }
 
@@ -245,6 +252,31 @@
         color: #555555;
         margin-bottom: 3px;
       }
+    }
+  }
+
+  .caveat {
+    width: 300px;
+    flex-shrink: 0;
+    margin-left: 57px;
+
+    .content {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 14px;
+      color: #555555;
+    }
+
+    .is-embed-page & {
+      width: auto;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+
+    @media only screen and (max-width: $br-mobile) {
+      width: auto;
+      margin-left: 20px;
+      margin-right: 20px;
     }
   }
 
@@ -406,10 +438,10 @@
       }
     }
 
-    @media only screen and (max-width: $br-mobile) {
+    @media only screen and (max-width: $br-mobile-portrait ) {
       .list {
         justify-content: flex-start;
-        padding-left: 30px;
+        padding-left: 10%;
 
         .item {
           margin-bottom: 25px;
@@ -433,9 +465,31 @@
       }
     }
 
-    @media only screen and (max-width: $br-mobile-portrait ) {
+    @media only screen and (min-width: $br-mobile-portrait)
+      and (max-width: $br-mobile) {
       .list {
+        justify-content: flex-start;
         padding-left: 0;
+
+        .item {
+          margin-bottom: 25px;
+
+          &.glad-alerts {
+            display: block;
+          }
+
+          .heading {
+            .label {
+              font-size: 13px;
+              height: auto;
+              margin-bottom: 10px;
+            }
+          }
+
+          .value {
+            font-size: 25px;
+          }
+        }
       }
     }
   }
