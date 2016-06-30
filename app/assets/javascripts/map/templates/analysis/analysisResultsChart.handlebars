@@ -4,12 +4,24 @@
 <ul class="analysis-stats -compact">
   <li>
     <span class="stats-title">Average of the aboveground live biomass</span>
-    <span class="stats-count"><strong>{{averageAbovegroundBiomass}}</strong> Mg ha<sup>-1</sup></span>
+    <span class="stats-count">
+      {{#if averageAbovegroundBiomass}}
+        <strong>{{averageAbovegroundBiomass}}</strong> Mg biomass/ha
+      {{else}}
+        -
+      {{/if}}
+    </span>
   </li>
 
   <li>
-    <span class="stats-title">Average of carbon stored in aboveground live biomass</span>
-    <span class="stats-count"><strong>{{averageCarbonAbovegroundBiomass}}</strong> Mg C ha<sup>-1</sup></span>
+    <span class="stats-title">Average aboveground carbon density</span>
+    <span class="stats-count">
+      {{#if averageCarbonAbovegroundBiomass}}
+        <strong>{{averageCarbonAbovegroundBiomass}}</strong> Mg C/ha
+      {{else}}
+        -
+      {{/if}}
+    </span>
   </li>
 </ul>
 </div>
