@@ -39,9 +39,11 @@ define([
         }.bind(this));
 
         this.$dropable.addEventListener('click', function(event) {
-          if (event.currentTarget.classList.contains('source')) {
-             return true;
+          if (event.target.classList.contains('source')) {
+            return true;
           }
+
+          $(this.$fileSelector).trigger('click');
         }.bind(this));
 
         this.$dropable.ondragover = function () {

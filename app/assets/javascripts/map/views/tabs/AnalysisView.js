@@ -443,8 +443,7 @@ define([
     drawPaths: function(paths) {
       var overlay = new google.maps.Polygon(
         _.extend({}, {paths: paths}, this.style));
-
-        console.log(overlay);
+      
       overlay.setMap(this.map);
       this.presenter.setOverlay(overlay);
     },

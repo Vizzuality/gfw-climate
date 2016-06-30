@@ -23,8 +23,7 @@ define([
         },
         analysis: {
           strokeWeight: 2,
-          fillOpacity: 1,
-          fillColor: '#FFF',
+          fillOpacity: 0,
           strokeColor: '#5B80A0',
           strokeOpacity: 1,
           icon: {
