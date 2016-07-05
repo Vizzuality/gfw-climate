@@ -9,12 +9,13 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/AnalysisPresenter',
+  'map/views/tabs/AnalysisShapeUploadView',
   'map/services/CountriesService',
   'map/views/GeoStylingView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, CountriesService,
-  GeoStylingView, tpl, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, AnalysisShapeUpload,
+  CountriesService, GeoStylingView, tpl, tplMobile) {
 
   'use strict';
 
@@ -70,6 +71,8 @@ define([
         },this)
       });
 
+      // Custom shape upload handleling
+      this._initShapeUpload();
     },
 
     cacheVars: function(){
@@ -95,10 +98,6 @@ define([
 
       //delete
       this.timeout = null;
-
-    },
-
-    setListeners: function(){
 
     },
 
@@ -129,6 +128,19 @@ define([
       //other
       this.png = '/assets/map/infowindow-example.png';
       this.gif = this.loadImg('/assets/map/infowindow-example.gif');
+    },
+
+    /*
+     * Initializes the view that handles custom shape uploads
+     */
+    _initShapeUpload: function() {
+      this.analysisShapeUpload = new AnalysisShapeUpload();
+
+      // Events
+      this.analysisShapeUpload.listenTo(this.analysisShapeUpload,
+        'analysis:shapeUpload:draw', this.drawCustomShape.bind(this));
+      this.analysisShapeUpload.listenTo(this.analysisShapeUpload,
+        'analysis:shapeUpload:fitBounds', this.map.fitBounds.bind(this.map));
     },
 
     // navigate between tabs
@@ -431,9 +443,20 @@ define([
     drawPaths: function(paths) {
       var overlay = new google.maps.Polygon(
         _.extend({}, {paths: paths}, this.style));
-
+      
       overlay.setMap(this.map);
       this.presenter.setOverlay(overlay);
+    },
+
+    /**
+     * Draw a custom geojson on the map.
+     *
+     * @param  {Object} geojson
+     */
+    drawCustomShape: function(customGeojson) {
+      var geojson = this.setGeojson(customGeojson);
+      var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.presenter.setMultipolygon(multipolygon, geojson);
     },
 
     /**

@@ -1,7 +1,7 @@
 /**
  * GeoJSON Styling
  * Applies styles for different types
- * of geojson. 
+ * of geojson.
  */
 define([
   'underscore',
@@ -24,8 +24,7 @@ define([
         analysis: {
           strokeWeight: 2,
           fillOpacity: 0,
-          fillColor: '#FFF',
-          strokeColor: '#5B80A0', 
+          strokeColor: '#5B80A0',
           strokeOpacity: 1,
           icon: {
             url: '/assets/icons/marker_exclamation.png',
@@ -60,7 +59,7 @@ define([
       this.map.data.setStyle(_.bind(function(feature){
         for (var current in this.styles) {
           var style = this.styles[current];
-          
+
           if (style && feature.getProperty('polyType') === current) {
             if (style.icon) {
               style.icon = this._getIcon(style.icon);
@@ -68,7 +67,7 @@ define([
             return style;
           }
         }
-      }, this )); 
+      }, this ));
     },
 
     getStyles: function(type) {
@@ -84,7 +83,7 @@ define([
     _getIcon: function(params) {
       var icon;
       var iconData = params;
-      
+
       if (iconData.size && iconData.offset) {
         icon = new google.maps.MarkerImage(
           iconData.url,

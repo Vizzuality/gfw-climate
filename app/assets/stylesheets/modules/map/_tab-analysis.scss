@@ -211,6 +211,18 @@
 //DRAW TAB
 .analysis-tab-content.draw-tab,
 .subscription-tab-content.draw-tab{
+
+  .p-center {
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .-terms {
+    font-size: 10px;
+    margin: 8px 0 0;
+    text-align: center;
+  }
+
   .image{
     position: relative;
     max-width: 50%;
@@ -422,7 +434,7 @@
         display: flex;
 
         .stats-title {
-          width: 70%;
+          width: 63%;
           font-weight: 400;
           color: $font-color-1;
           font-size: 12px;
@@ -430,7 +442,7 @@
         }
 
         .stats-count {
-          width: 30%;
+          width: 43%;
           margin-left: auto;
           flex-shrink: 0;
           text-align: right;

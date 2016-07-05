@@ -1,7 +1,7 @@
 <div class="tab-analysis scroll-dark">
   <nav id="analysis-nav" class="analysis-nav noselect">
     <ul>
-      <li id="draw-tab-button" data-analysis="draw-tab"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw shape</li>
+      <li id="draw-tab-button" data-analysis="draw-tab"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw or upload shape</li>
       <li id="country-tab-button" data-analysis="country-tab"><svg><use xlink:href="#icon-analysis-country"></use></svg>Country or region</li>
       <li id="data-tab-button" data-analysis="data-tab"><svg><use xlink:href="#icon-analysis-data"></use></svg>Other data layers</li>
     </ul>
@@ -17,11 +17,23 @@
         <h2>Draw in the map the area you want to analyze</h2>
         {{!-- <p>Learn more <a href="#" data-source="regular_dialog" class="source btn gray uppercase little">Click here</a></p> --}}
       </header>
-      <div class="image"><div><svg><use xlink:href="#icon-analysis-draw"></use></svg></div></div>
       <ul id="draw-analysis" class="button-container one">
         <li><button id="start-analysis" class="btn blue uppercase">Start drawing</button></li>
         <li class="hidden"><button id="done-analysis" class="btn blue uppercase">Analyze</button></li>
       </ul>
+      <p class="p-center">or</p>
+      <div class="dropable">
+        <div id="drop-shape-analysis" class="shape-droppable">
+          <input type="file" id="analysis-file-upload">
+          <div class="drop-shape-text">
+            <span>Click to pick a file or drop one here</span>
+            <a href="#" data-source="drop-shapefile" class="source">
+              <svg><use xlink:href="#shape-info"></use></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <p class="-terms">By uploading data you agree to the <a href="http://www.globalforestwatch.org/terms" target="_blank">GFW Terms of Service</a></p>
     </div>
     <div id="country-tab" class="analysis-tab-content country-tab">
       <select data-placeholder="Select country" class="chosen-select default notranslate" id="analysis-country-select"><option></option></select>

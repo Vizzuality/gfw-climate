@@ -34,12 +34,22 @@ define([
      * @param  {object} geojson
      * @return {array} paths
      */
-    geojsonToPath: function(geojson) {
-      var coords = geojson.coordinates[0];
-      return _.map(coords, function(g) {
-        return new google.maps.LatLng(g[1], g[0]);
-      });
-    },
+     geojsonToPath: function(geojson) {
+       if (geojson.type === 'Polygon') {
+         var coords = geojson.coordinates[0];
+         return _.map(coords, function(g) {
+           return new google.maps.LatLng(g[1], g[0]);
+         });
+       } else if (geojson.type === 'MultiPolygon') {
+         return geojson.coordinates.map(function(polygon) {
+           return polygon[0].map(function(coords) {
+             return new google.maps.LatLng(coords[1], coords[0]);
+           });
+         });
+       } else {
+         return false;
+       }
+     },
 
     /**
      * Get Bounds from the suplied geojson.
@@ -69,7 +79,7 @@ define([
      * @return {String} hectares
      */
     getHectares: function(geojson) {
-      return Math.round((geojsonArea(geojson) / 10000)).toLocaleString();
+      return Math.round((geojsonArea(geojson) / 10000));
       // changed function to calculate areas in cartodb instead of using the google library
 
       // var area;
