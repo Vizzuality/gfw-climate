@@ -492,7 +492,8 @@ define([
         image.onload = this._onImageLoad(currentStep, image);
         image.onerror = this._onImageError(currentStep);
         image.src = this.imageURI + '/' + this.iso.toLowerCase() +
-          '_' + this.year + '_' + this.currentStep + '.png';
+          '_' + this.year + '_' +
+          NumbersHelper.padNumberToTwo(this.currentStep) + '.png';
       } else {
         var img = this.images[this.currentStep];
 
