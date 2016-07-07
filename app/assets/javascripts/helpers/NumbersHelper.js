@@ -27,6 +27,10 @@ define([
     toThousands: function(number) {
       return number > 999 ? (number/ 1000).toFixed(1) + 'k' : (number * 1).toFixed(2);
     },
+
+    padNumberToTwo: function(number) {
+      return ("0" + number.toString()).slice(-2);
+    }
   };
 
   return numbersHelper;
