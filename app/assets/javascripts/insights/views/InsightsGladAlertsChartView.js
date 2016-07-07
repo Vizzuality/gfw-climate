@@ -98,7 +98,7 @@ define([
       handleWidth: 1,
       timelineButtonRadius: 15,
       maxWidth: 600,
-      imageURI: window.gfw.config.GFW_DATA_S3 + 'climate/glad_maps/'
+      imageURI: window.gfw.config.GFW_DATA_S3 + 'climate/glad_maps'
     },
 
     initialize: function(settings) {
