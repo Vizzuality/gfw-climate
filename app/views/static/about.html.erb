@@ -22,7 +22,6 @@
           <li><%= link_to 'About GFW Climate', "#{about_path}?page=about", :"data-slug" => 'about-gfw-climate', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw-climate selected' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'FAQ', "#{about_path}?page=faq", :"data-slug" => 'faq', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item faq' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'PUBLICATIONS AND BLOGS', "#{about_path}?page=publications", :"data-slug" => 'publications', :"data-interesting" => 'publications, faqs', :class => 'nav-item publications-blogs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'TECHNICAL NOTE', "#{about_path}?page=technical-note", :"data-slug" => 'technical-note', :"data-interesting" => 'technical-note', :class => 'nav-item technical-note' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'TUTORIAL VIDEOS', "#{about_path}?page=tutorials", :"data-slug" => 'tutorials', :"data-interesting" => 'tutorial videos', :class => 'nav-item tutorials' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
@@ -146,6 +145,22 @@
             </div>
 
             <header>
+              <h2>Technical Note</h2>
+            </header>
+            <div class="content">
+              <div class="content-list">
+                <div class="item">
+                  <div class="image"><img src="<%= image_url("about/technical-note/technical-note.jpg")%>" /></div>
+                  <div class="detail">
+                    <h3 class="title">Global forest watch climate: summary of methods and data</h3>
+                    <div class="text">The Global Forest Watch (GFW) Climate online platform catalyzes action on climate change by providing timely and credible answers to questions about the impacts of tropical deforestation on global climate change. Its wealth of data and analytical tools allow...</div>
+                    <div class="action"><button class="btn gray"><%= link_to "DOWNLOAD", "downloads/about/technical-note/wri15_TECH_GFW-Climate-v3.pdf", target:'_blank', :class =>'block' %></button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <header>
               <h2>Blogs</h2>
             </header>
             <div class="content">
@@ -161,24 +176,6 @@
               </div>
             </div>
 
-          </article>
-
-          <article id='technical-note' class="source-article" style="display: <%= params[:page] == "technical-note" ? "block" : "none" %>;">
-            <header>
-              <h2>Technical Note</h2>
-            </header>
-            <div class="content">
-              <div class="content-list">
-                <div class="item">
-                  <div class="image"><img src="<%= image_url("about/technical-note/technical-note.jpg")%>" /></div>
-                  <div class="detail">
-                    <h3 class="title">Global forest watch climate: summary of methods and data</h3>
-                    <div class="text">The Global Forest Watch (GFW) Climate online platform catalyzes action on climate change by providing timely and credible answers to questions about the impacts of tropical deforestation on global climate change. Its wealth of data and analytical tools allow...</div>
-                    <div class="action"><button class="btn gray"><%= link_to "DOWNLOAD", "downloads/about/technical-note/wri15_TECH_GFW-Climate-v3.pdf", target:'_blank', :class =>'block' %></button></div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </article>
 
           <article id='tutorials' class="source-article" style="display: <%= params[:page] == "tutorials" ? "block" : "none" %>;">
