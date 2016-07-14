@@ -26,9 +26,7 @@ define([
 
   'use strict';
 
-  var URL = window.gfw.config.GFW_API_HOST + '/forest-change';
-  //var URL = 'http://localhost:8080/forest-change';
-
+  var URL = window.gfw.config.GFW_API_HOST_V2;
 
   var AnalysisService = Class.extend({
 
@@ -105,7 +103,7 @@ define([
         _.each(this._urls(dataset), function(url, id) {
           var cache = this._cacheConfig;
           var config = {
-            cache: cache, url: url, type: 'POST',
+            cache: cache, url: url, type: 'GET',
             dataType: 'json'};
           ds.define(id, config);
         }, this);
@@ -146,6 +144,7 @@ define([
         _.str.sprintf('%s/%s/use/{use}/{useid}%s', URL, dataset, params),
         _.str.sprintf('%s/%s/wdpa/{wdpaid}%s', URL, dataset, params)
       ];
+
       return _.object(ids, urls);
     },
 

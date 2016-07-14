@@ -1,9 +1,10 @@
 define([
   'd3',
   'handlebars',
+  'helpers/NumbersHelper',
   'text!widgets/templates/indicators/bars/barschart-tooltip.handlebars',
   'text!widgets/templates/indicators/bars/barschart-legend.handlebars'
-], function(d3, Handlebars, tooltipTpl, legendTpl) {
+], function(d3, Handlebars, NumbersHelper, tooltipTpl, legendTpl) {
 
   var tooltipTemplate = Handlebars.compile(tooltipTpl);
   var legendTemplate = Handlebars.compile(legendTpl);
@@ -128,10 +129,12 @@ define([
     }
 
     // Legend
+    var totalLine = _.reduce(data, function(memo, d){ return memo + d.z; }, 0);
+    var totalBars = _.reduce(data, function(memo, d){ return memo + d.y; }, 0);
     d3.select(elem+' .graph-legend')
       .html(legendTemplate({
-        lineTotalValue: d3.format(".2s")(_.reduce(data, function(memo, d){ return memo + d.z; }, 0)),
-        barsTotalValue: d3.format(".1f")(_.reduce(data, function(memo, d){ return memo + d.y; }, 0))
+        lineTotalValue: NumbersHelper.addNumberDecimals(d3.format(".1f")(totalLine)),
+        barsTotalValue: NumbersHelper.addNumberDecimals(d3.format(".1f")(totalBars))
       }));
 
     // Toolttio

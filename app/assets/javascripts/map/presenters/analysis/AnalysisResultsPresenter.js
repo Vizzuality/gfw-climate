@@ -243,105 +243,44 @@ define([
 
     _getAnalysisResource: function(results, layer) {
       var p = {};
+      var params = this.status.attributes.resource;
+      var data = results.data.attributes;
 
       p[layer.slug] = true;
       p.layer = layer;
-      p.download = results.download_urls;
+      p.download = data.download_urls;
+
       if (p.download) {
         p.download.cdb = (p.download.kml) ? encodeURIComponent(p.download.kml + '&filename=GFW_Analysis_Results') : null;
       }
 
-      p.alertsName = results.meta.name;
-
-      if (results.params.iso) {
-        p.iso = results.params.iso;
+      if (params.iso) {
+        p.iso = params.iso;
       }
 
-      var dateRange = [moment(results.params.begin),
-        moment(results.params.end)];
+      var dateRange = [moment(params.begin),
+        moment(params.end)];
 
       p.dateRange = '{0} to {1}'.format(dateRange[0].format('MMM-YYYY'),
         dateRange[1].format('MMM-YYYY'));
 
-      if (results.params.geojson) {
-        p.totalArea = geojsonUtilsHelper.getHectares(results.params.geojson);
-      } else if (results.params.iso) {
-        p.totalArea = this.status.get('isoTotalArea') ? this.status.get('isoTotalArea') : 0;
+      if (data.areaHa) {
+        p.totalArea = data.areaHa;
       }
 
       /**
-       * Fires params
-       *   - dateRange (get it from the results as string)
+       * Tree biomass loss
        */
-      if (layer.slug === 'fires') {
-        p.dateRange = _.isArray(results.period) ? results.period[0] : results.period;
-      }
-
-      /**
-       * UMD Loss and gain params.
-       *   - lossDateRange
-       *   - lossAlerts
-       *   - gainAlerts
-       *   - extent
-       */
-      if (layer.slug === 'loss' || layer.slug === 'forestgain') {
-        p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
-        p.extent = p.gainAlerts = p.lossAlerts = 0;
-        p.threshold  = results.params.thresh || 30;
-        p.both = this.status.get('both');
-        // The api returns all the loss and gain alerts.
-        if (results.years) {
-          p.gainAlerts = results.years[results.years.length-1].gain * 12;
-          p.extent = results.years[results.years.length-1].extent;
-          var years = _.range(dateRange[1].diff(dateRange[0], 'years'));
-          _.each(years, function(i) {
-            var year = _.findWhere(results.years, {year: dateRange[0].year() + i});
-            if (!year) {return;}
-            p.lossAlerts += year.loss;
-          });
+      if (layer.slug == 'biomass_loss') {
+        // Average of the aboveground live biomass
+        if (data.biomass) {
+          p.averageAbovegroundBiomass = Math.round(data.biomass / parseInt(p.totalArea, 10));
         }
-        p.lossAlerts = (results.loss) ? this.roundNumber(results.loss) : this.roundNumber(p.lossAlerts);
-        p.gainAlerts = (results.gain) ? this.roundNumber(results.gain) : this.roundNumber(p.gainAlerts);
-        p.extent     = (results["tree-extent"]) ? this.roundNumber(results["tree-extent"]) : this.roundNumber(p.extent);
 
-      }
-
-      /**
-       * Imazon params
-       *   - totalAlerts
-       *   - degrad
-       *   - defor
-       *   - color
-       */
-      if (layer.slug !== 'imazon') {
-        p.totalAlerts = (results.value) ? Math.round(results.value).toLocaleString() : 0;
-      };
-
-      if (layer.slug === 'imazon') {
-        p.degrad = (results.value[0]) ? Math.round(results.value[0].value).toLocaleString() : 0;
-        p.defor = (results.value[1]) ? Math.round(results.value[1].value).toLocaleString() : 0;
-        p.layer.category_color = '#FFACC8';
-      }
-      /**
-       * WDPA, FOREST USE params
-       *   - totalArea
-       */
-      if (results.params.wdpaid || results.params.useid) {
-        p.totalArea = this._getTotalArea();
-      }
-
-      /**
-       * Average of the aboveground live biomass
-       */
-      if (results.biomass) {
-        p.averageAbovegroundBiomass = Math.round(results.biomass / parseInt(p.totalArea, 10));
-      }
-
-      /**
-       * Average of carbon stored in aboveground live biomass
-       */
-      if (p.averageAbovegroundBiomass) {
-        p.averageCarbonAbovegroundBiomass = Math.round(p.averageAbovegroundBiomass * 0.5);
+        // Average of carbon stored in aboveground live biomass
+        if (p.averageAbovegroundBiomass) {
+          p.averageCarbonAbovegroundBiomass = Math.round(p.averageAbovegroundBiomass * 0.5);
+        }
       }
 
       return p;
