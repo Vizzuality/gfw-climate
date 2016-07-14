@@ -21,6 +21,7 @@ define([
       paddingAxisLabels: 10,
       paddingXAxisLabels: 20,
       paddingYAxisLabels: 25,
+      paddingLinesLabels: 6,
       tooltipPadding: 22,
       dateFormat: '%b',
       margin: {
@@ -399,6 +400,9 @@ define([
      */
     _drawDashedLine: function() {
       var _this = this;
+      var allYData = _.pluck(this.chartData, this.dataColumns.dashed.y);
+      var allXData = _.pluck(this.chartData, this.dataColumns.dashed.x);
+
       var dashedLine = this.svg.append('g')
         .attr('class', 'line-dashed-group')
         .attr('transform', 'translate( 0,' + -this.defaults.paddingAxisLabels + ')');
@@ -411,13 +415,23 @@ define([
       dashedLine.append('path')
         .attr('d', line(this.chartData))
         .attr('class', 'dash-line-path');
+
+      dashedLine.append('text')
+        .attr('x', this.x2(allXData[allXData.length - 1]))
+        .attr('y', this.y(_.max(allYData)))
+        .attr('class', 'line-label')
+        .attr('dy', -this.defaults.paddingLinesLabels)
+        .text('2020 Target: ' + Math.round(_.max(allYData)));
     },
 
     _drawSemiDashedLine: function() {
       var _this = this;
+      var allYData = _.pluck(this.chartData, this.dataColumns.semiDashed.y);
+      var allXData = _.pluck(this.chartData, this.dataColumns.semiDashed.x);
+
       var dashedLine = this.svg.append('g')
         .attr('class', 'line-semidashed-group')
-        .attr('transform', 'translate( 0,' + -this.defaults.paddingAxisLabels + ')');
+        .attr('transform', 'translate( 0,' + -this.defaults.paddingLinesLabels + ')');
 
       var line = d3.svg.line()
         .x(function(d) { return _this.x2(d[_this.dataColumns.semiDashed.x]); })
@@ -427,6 +441,13 @@ define([
       dashedLine.append('path')
         .attr('d', line(this.chartData))
         .attr('class', 'semidash-line-path');
+
+      dashedLine.append('text')
+        .attr('x', this.x2(allXData[allXData.length - 1]))
+        .attr('y', this.y(_.max(allYData)))
+        .attr('class', 'line-label')
+        .attr('dy', -this.defaults.paddingLinesLabels)
+        .text('2001 - 2013 Average: ' + Math.round(_.max(allYData)));
     },
 
     /**

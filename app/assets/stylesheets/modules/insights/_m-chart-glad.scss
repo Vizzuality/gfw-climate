@@ -37,6 +37,12 @@
     }
   }
 
+  .line-label {
+    text-anchor: end;
+    fill: #555555;
+    font-size: 13px;
+  }
+
   .line-dashed-group {
     .dash-line-path {
       shape-rendering: crispEdges;
