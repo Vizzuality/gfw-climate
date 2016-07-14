@@ -59,8 +59,8 @@ define([
      */
     _subscriptions: [{
       'Geostore/go': function(geostore) {
-        this.status.set('geostore', geostore.id);
-        this._handlePlaceGo(geostore);
+        this.status.set('geostore', geostore.data.attributes.hash);
+        this._handlePlaceGo(geostore.data.attributes);
       }
     }, {
       'Place/go': function(place) {
@@ -212,10 +212,22 @@ define([
       } else if (params.geostore) {
          this.status.set('geostore', params.geostore);
       } else if (params.geojson) {
-        this._analyzeGeojson(params.geojson);
+        var geojson = this._getGeomFromGeoJSON(params.geojson);
+        if (geojson) {
+          this._analyzeGeojson(geojson);
+        }
       } else if (params.wdpaid) {
         this._analyzeWdpai(params.wdpaid);
       }
+    },
+
+    _getGeomFromGeoJSON: function(geojson) {
+      var geom = {};
+
+      if (geojson && geojson.features && geojson.features[0]) {
+        geom = _.clone(geojson.features[0].geometry);
+      }
+      return geom;
     },
 
     /**
@@ -348,11 +360,9 @@ define([
               properties: {},
               type: 'Feature'
             };
-            mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
-
+            
             this._geojsonFitBounds(geojson);
             this.view.drawMultipolygon(geojson);
-            // resource.geom = geojson;
             this._publishAnalysis(resource);
 
             this.wdpaid = null;
@@ -394,13 +404,9 @@ define([
             type: 'Feature'
           };
 
-          mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
-
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
-          resource.geom = geojson;
           this._publishAnalysis(resource);
-
         } else {
           this._publishAnalysis(resource, true);
         }
@@ -415,10 +421,11 @@ define([
       var overlay = this.status.get('overlay');
       var paths = overlay.getPath().getArray();
       var geojson = geojsonUtilsHelper.pathToGeojson(paths);
+      var wrappedGeoJSON = geojsonUtilsHelper.wrapInCollection(geojson);
 
       this.view.setEditable(overlay, false);
       // this._analyzeGeojson(geojson, {draw: false});
-      this._saveAndAnalyzeGeojson(geojson, {draw: false});
+      this._saveAndAnalyzeGeojson(wrappedGeoJSON, {draw: false});
     },
 
     /**
@@ -453,6 +460,8 @@ define([
         date[0] = (date[0] != null) ? ((!!date[0]._isAMomentObject) ? date[0] : date[0].substr(0,10)) : '2001-01-01';
         date[1] = (date[1] != null) ? ((!!date[1]._isAMomentObject) ? date[1] : date[1].substr(0,10)) : '2014-12-31';
         resource.period = '{0},{1}'.format(date[0].format(dateFormat), date[1].format(dateFormat));
+        resource.begin = date[0];
+        resource.end = date[1];
 
         // this is super ugly
         if (baselayer.slug === 'biomass_loss') {
