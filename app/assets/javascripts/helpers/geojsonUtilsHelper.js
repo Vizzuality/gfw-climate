@@ -72,6 +72,24 @@ define([
       return bounds;
     },
 
+    wrapInCollection: function(geojson) {
+      var wrap = {
+        features: [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: {}
+          }
+        ],
+        type: 'FeatureCollection'
+      };
+
+      var wrapped = _.clone(wrap);
+      wrapped.features[0].geometry = geojson;
+
+      return wrapped;
+    },
+
     /**
      * Get total hectares from a geojson.
      *

@@ -95,9 +95,10 @@ define([
       });
     },
 
-    parseData: function(data) {
-      var barValues = _.map(data.co2_loss_by_year,function(v,k){return {year:k,value:v}});
-      var lineValues = _.map(data.tree_loss_by_year,function(v,k){return {year:k,value:v}});
+    parseData: function(res) {
+      var data = res.data.attributes;
+      var barValues = _.map(data.co2LossByYear,function(v,k){return {year:k,value:v}});
+      var lineValues = _.map(data.treeLossByYear,function(v,k){return {year:k,value:v}});
       var dataParsed = [];
 
       $.each(barValues, function(v,i) {
