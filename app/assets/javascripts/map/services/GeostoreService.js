@@ -8,7 +8,7 @@ define([
   var GET_REQUEST_ID = 'GeostoreService:get',
       SAVE_REQUEST_ID = 'GeostoreService:save';
 
-  var URL = window.gfw.config.GFW_API_HOST + '/geostore/{id}';
+  var URL = window.gfw.config.GFW_API_HOST_V2 + '/geostore/{id}';
 
   var GeostoreService = Class.extend({
 
@@ -40,14 +40,17 @@ define([
 
       ds.define(SAVE_REQUEST_ID, {
         url: url,
-        type: 'POST'
+        type: 'POST',
+        contentType: 'application/json'
       });
 
       var requestConfig = {
         resourceId: SAVE_REQUEST_ID,
-        data: JSON.stringify(geojson),
+        data: JSON.stringify({
+          geojson: geojson,
+        }),
         success: function(response) {
-          resolve(response.id);
+          resolve(response.data.attributes.hash);
         },
         error: reject
       };
