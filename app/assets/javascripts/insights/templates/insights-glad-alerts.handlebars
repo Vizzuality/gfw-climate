@@ -1,7 +1,7 @@
 <div class="l-header -narrow">
   <div class="inner insights-title">
     <h2 class="-width-margin">Monitor progress in near real-time</h2>
-    <h3>Use weekly forest disturbance alerts to track deforestation and emissions against <br> the New York Declaration goal to halve the rate of natural forest loss globally by 2020.</h3>
+    <h3>Use weekly forest disturbance alerts to track forest loss and emissions against <br> the New York Declaration goal to halve the rate of natural forest loss globally by 2020.</h3>
   </div>
 </div>
 
@@ -13,12 +13,11 @@
         <div id="visMain" class="main-chart is-loading">
           <div class="heading">
             <div class="country-selector">
-              <div class="label js-country-label">Peru</div>
+              <div class="label js-country-label"></div>
               <select class="action js-country-selector">
-                <option value="PER" data-iso="PER" selected>Peru</option>
-                <option value="BRA" data-iso="BRA">Brazil</option>
-                <option value="COD" data-iso="COD">Republic of Congo</option>
-                <option value="IND" data-iso="IND">Kalimantan</option>
+                {{#each locations}}
+                  <option value="{{iso}}" data-iso="{{iso}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                {{/each}}
               </select>
             </div>
             <div class="nav-options">
@@ -48,7 +47,7 @@
           </div>
           <div class="selectors main-vis-switch">
             <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>
-            <div class="action deforestation js-selector" data-filter="deforestation">Deforestation Area</div>
+            <div class="action deforestation js-selector" data-filter="deforestation">Area of Loss</div>
           </div>
 
           <div class="chart-container">
@@ -58,10 +57,11 @@
           <div class="legend-container">
             <div class="caveat">
               <div class="content">
-                <span class="is-bold-slim">Note</span>: Estimates are based on a conservative forest disturbance alert system meant to provide near real-time information. These are indicative only; they do not reflect or replace annual estimates of area or emissions.
+                <span class="is-bold-slim">Note</span>: Estimates are based on a conservative forest disturbance alert system meant to provide near real-time information. These are indicative only; the sum of alerts does not reflect or replace annual estimates of area or emissions.
+                <p><br><a href="">Know more about this visualization</a></p>
               </div>
             </div>
-            <div class="legend -main"></div>
+            <div class="legend -main js-legend"></div>
           </div>
         </div>
       </div>

@@ -8,18 +8,23 @@
       </div>
 
       <div class="detail">
-        <div class="value">
-          {{value}}
+        <div class="item">
+          <div class="label">
+            <span class="value">{{value}}</span> confirmed alerts.
+          </div>
         </div>
 
-        <div class="label">
-          confirmed alerts
+        <div class="item">
+          <div class="label">
+            This week are roughly equivalent to the average annual CO<sub>2</sub> emissions of <span class="value">{{co2Equivalency}}</span> passenger vehicles.
+          </div>
         </div>
       </div>
     </div>
 
     <div class="btn-map">
-      <button class="btn gray">View on map</button>
+      <button class="btn gray"><a class="map-link" target="_blank" href="http://www.globalforestwatch.org/map/3/7.13/-31.68/{{iso}}/grayscale/umd_as_it_happens?tab=analysis-tab&begin={{begin}}&end={{end}}
+">View on map</a></button>
     </div>
   </div>
 </div>

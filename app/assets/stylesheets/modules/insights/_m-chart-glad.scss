@@ -1,5 +1,8 @@
 .chart-glad {
   $hoverOpacity: 0.4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   .axis {
     &.y {
@@ -43,6 +46,10 @@
     font-size: 13px;
   }
 
+  .underscript {
+    font-size: 10px;
+  }
+
   .line-dashed-group {
     .dash-line-path {
       shape-rendering: crispEdges;
@@ -80,7 +87,9 @@
 
   .dots-group {
     .dot {
-      fill: rgba(237, 176, 74, 1);
+      stroke: #FFFFFF;
+      stroke-width: 2;
+      fill: #5B80A0;
       transition: .2s ease;
 
       @media only screen and (max-width: $br-mobile) {
@@ -120,6 +129,12 @@
     .semidash-line-path {
       stroke: #FF6398;
     }
+
+    .dots-group {
+      .dot {
+        fill: #FF6398;
+      }
+    }
   }
 
   &.hovering {
@@ -140,6 +155,9 @@
     }
     .semidash-line-path {
       stroke-opacity: $hoverOpacity;
+    }
+    .line-label {
+      opacity: $hoverOpacity;
     }
   }
 }
