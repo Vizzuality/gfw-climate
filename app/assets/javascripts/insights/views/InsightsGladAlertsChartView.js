@@ -9,6 +9,8 @@ define([
 
   'use strict';
 
+  var WEEKS_YEAR = 52;
+
   var GladAlertsVis = Backbone.View.extend({
 
     el: '#vis-glad',
@@ -21,8 +23,11 @@ define([
       paddingAxisLabels: 10,
       paddingXAxisLabels: 20,
       paddingYAxisLabels: 25,
+      paddingLinesLabels: 6,
       tooltipPadding: 22,
+      underscriptPadding: 1.5,
       dateFormat: '%b',
+      underscript: '2',
       margin: {
         top: 35,
         right: 15,
@@ -38,8 +43,8 @@ define([
             x2: 'week',
             y: [
               'cumulative_emissions',
-              '2001_2013_average',
-              '2020_target'
+              'carbon_average',
+              'carbon_target'
             ],
             r: 'alerts'
           },
@@ -55,11 +60,11 @@ define([
             },
             dashed: {
               x: 'week',
-              y: '2020_target'
+              y: 'carbon_target'
             },
             semiDashed: {
               x: 'week',
-              y: '2001_2013_average'
+              y: 'carbon_average'
             }
           }
         },
@@ -69,8 +74,8 @@ define([
             x2: 'week',
             y: [
               'cumulative_deforestation',
-              '2001_2013_average_deforestation',
-              '2020_target_deforestation'
+              'deforestation_average',
+              'deforestation_target'
             ],
             r: 'alerts'
           },
@@ -86,14 +91,18 @@ define([
             },
             dashed: {
               x: 'week',
-              y: '2020_target_deforestation'
+              y: 'deforestation_target'
             },
             semiDashed: {
               x: 'week',
-              y: '2001_2013_average_deforestation'
+              y: 'deforestation_average'
             }
           }
         }
+      },
+      units: {
+        'carbon_emissions': 'CO2/yr',
+        'deforestation': 'ha/yr'
       },
       handleWidth: 1,
       timelineButtonRadius: 15,
@@ -109,6 +118,7 @@ define([
       this.iso = this.defaults.iso;
       this.year = this.defaults.year;
       this.imageURI = this.defaults.imageURI;
+      this.locations = this.defaults.locations;
       this.images = {};
 
       this._initChart();
@@ -160,6 +170,7 @@ define([
       this.chartData = data;
       this.dataColumns = this.defaults.chartConfig[this.filter].dataColumns;
       this.dataDomain = this.defaults.chartConfig[this.filter].domain;
+      this.unit = this.defaults.units[this.filter];
 
       this.chartData.forEach(function(d) {
         d.date = moment().week(d.week).toDate();
@@ -399,6 +410,9 @@ define([
      */
     _drawDashedLine: function() {
       var _this = this;
+      var allYData = _.pluck(this.chartData, this.dataColumns.dashed.y);
+      var allXData = _.pluck(this.chartData, this.dataColumns.dashed.x);
+
       var dashedLine = this.svg.append('g')
         .attr('class', 'line-dashed-group')
         .attr('transform', 'translate( 0,' + -this.defaults.paddingAxisLabels + ')');
@@ -411,13 +425,25 @@ define([
       dashedLine.append('path')
         .attr('d', line(this.chartData))
         .attr('class', 'dash-line-path');
+
+      var dashLineLabel = dashedLine.append('text')
+        .attr('x', this.x2(allXData[allXData.length - 1]))
+        .attr('y', this.y(_.max(allYData)))
+        .attr('class', 'line-label')
+        .attr('dy', -this.defaults.paddingLinesLabels)
+        .text('2020 Target: ');
+
+      this._addLineLabel(dashLineLabel, _.max(allYData));
     },
 
     _drawSemiDashedLine: function() {
       var _this = this;
+      var allYData = _.pluck(this.chartData, this.dataColumns.semiDashed.y);
+      var allXData = _.pluck(this.chartData, this.dataColumns.semiDashed.x);
+
       var dashedLine = this.svg.append('g')
         .attr('class', 'line-semidashed-group')
-        .attr('transform', 'translate( 0,' + -this.defaults.paddingAxisLabels + ')');
+        .attr('transform', 'translate( 0,' + -this.defaults.paddingLinesLabels + ')');
 
       var line = d3.svg.line()
         .x(function(d) { return _this.x2(d[_this.dataColumns.semiDashed.x]); })
@@ -427,6 +453,15 @@ define([
       dashedLine.append('path')
         .attr('d', line(this.chartData))
         .attr('class', 'semidash-line-path');
+
+      var dashLineLabel =  dashedLine.append('text')
+        .attr('x', this.x2(allXData[allXData.length - 1]))
+        .attr('y', this.y(_.max(allYData)))
+        .attr('class', 'line-label')
+        .attr('dy', -this.defaults.paddingLinesLabels)
+        .text('2001 - 2013 Average: ');
+
+      this._addLineLabel(dashLineLabel, _.max(allYData));
     },
 
     /**
@@ -448,13 +483,36 @@ define([
         .attr('class', 'line-solid-path');
     },
 
+    _addLineLabel: function(el, value) {
+      el.append('tspan')
+        .text(NumbersHelper.addNumberDecimals(Math.round(value)) + ' ');
+
+      if (this.unit.search(this.defaults.underscript) !== -1) {
+        var unit = this.unit.split(this.defaults.underscript);
+        for (var x = 0; x < unit.length; x++) {
+          el.append('tspan')
+            .text(unit[x]);
+
+          if (x === 0) {
+            el.append('tspan')
+              .attr('class', 'underscript')
+              .attr('dy', this.defaults.underscriptPadding)
+              .text(this.defaults.underscript);
+          }
+        }
+      } else {
+        el.append('tspan')
+          .text(this.unit);
+      }
+    },
+
     /**
      * Renders the tooltip of the visualization
      */
     _renderTooltip: function() {
       d3.select(this.el)
         .insert('div', 'svg')
-          .attr('class', 'tooltip')
+          .attr('class', 'tooltip');
 
       var tooltip = this.el.querySelector('.tooltip');
       tooltip.innerHTML = this.templateTooltip({});
@@ -471,9 +529,30 @@ define([
 
       if (data) {
         var tooltip = this.el.querySelector('.tooltip');
+        var co2Equivalency = Math.round(((data.above_ground_carbon_loss * 1) * 10000000) / 4.7);
+
+        var date = moment.utc().year(this.year);
+        var weeksInYear = date.weeksInYear();
+        var currentWeek = weeksInYear > WEEKS_YEAR ? (step + 1) : step;
+        var dateWithWeek = date.week(currentWeek);
+
+        if (weeksInYear > WEEKS_YEAR) {
+          dateWithWeek.subtract(1, 'days');
+        } else {
+          dateWithWeek.add(1, 'days');
+        }
+
+        var begin = dateWithWeek.clone().format('YYYY-MM-DD');
+        var end = dateWithWeek.clone().add(6, 'days').format('YYYY-MM-DD');
+
         tooltip.innerHTML = this.templateTooltip({
-          value: NumbersHelper.addNumberDecimals(data.alerts)
+          value: NumbersHelper.addNumberDecimals(data.alerts),
+          co2Equivalency: NumbersHelper.addNumberDecimals(co2Equivalency),
+          begin: begin,
+          end: end,
+          iso: this.iso
         });
+
         this.tooltip = this.el.querySelector('.insights-glad-alerts-tooltip');
         this.tooltipImage = this.tooltip.querySelector('.image');
 
@@ -485,7 +564,8 @@ define([
      * Shows the image of the current step
      */
     showImage: function() {
-      if (!this.images[this.currentStep]) {
+      if (!this.images[this.currentStep] &&
+        (this.currentStep < this.maxDomain)) {
         var image = new Image();
         var currentStep = this.currentStep;
 
@@ -771,7 +851,7 @@ define([
         this.el.classList.remove(this.filter);
         this.el.removeChild(svgContainer);
       }
-    },
+    }
 
   });
 
