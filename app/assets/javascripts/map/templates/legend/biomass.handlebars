@@ -1,9 +1,9 @@
 {{#if threshold}}
-  <div class="layer-details layer-details-carbon_stocks">
+  <div class="layer-details layer-details-carbon_stocks" data-layer-group="carbon_stocks">
     <div class="total-carbon-bar">
       <ul class="labels">
-        <li><em>{{minrange}}</em></li>
-        <li><em>{{maxrange}}</em><span class="units"> t CO<sub>2</sub> ha<sup>-1</sup></span></li>
+        <li><em class="js-min-label">{{minrange}}</em></li>
+        <li><em class="js-max-label">{{maxrange}} </em> <span class="units js-unit">{{unit}}</span></li>
       </ul>
       <span class="range-bar">|</span>
       <span class="range-bar">|</span>
@@ -11,10 +11,41 @@
     </div>
     <p class="canopy toggle-title">layer settings <span>►</span></p>
     <div class="toggle-legend-option" data-layer-toggle="biomass">
-      <p class="canopy range">Show values between <span class="button-wrapper"><span class="canopy-button range min"><input type="number" min="{{minrange}}" max="{{maxrange}}" step="1" value="{{minrange}}"/></span> and <span class="canopy-button range max"><input type="number" min="{{minrange}}" max="{{maxrange}}" step="1" value="{{maxrange}}"/></span></span></p>
-      <p class="canopy">Show areas with tree cover <span class="button-wrapper"><span class="canopy-button"> > {{threshold}} %</span></span></p>
-      <p style="display:none" class="thislayer">carbon_stocks</p>
-      <p class="canopy minavgmax">Uncertainty considered <span class="button-wrapper"><span class="canopy-button minavgmax"> <span data-quantity="min">min</span><span class="current" data-quantity="avg">mean</span><span data-quantity="max">max</span></span></span></p>
+      <p class="canopy range">
+        Show values between
+        <span class="button-wrapper">
+          <span class="canopy-button range min">
+            <input type="number" class="js-min" min="{{minrange}}" max="{{maxrange}}" step="1" value="{{minrange}}"/>
+          </span>
+           and
+          <span class="canopy-button range max">
+            <input type="number" class="js-max" min="{{minrange}}" max="{{maxrange}}" step="1" value="{{maxrange}}"/>
+          </span>
+        </span>
+      </p>
+      {{#if units}}
+        <select class="js-units-selector" data-layer="carbon_stocks">
+          {{#each units}}
+            <option{{#if selected}} selected{{/if}} value="{{value}}">{{name}}</option>
+          {{/each}}
+        </select>
+      {{/if}}
+      <p class="canopy">
+        Show areas with tree cover
+        <span class="button-wrapper">
+          <span class="canopy-button"> > {{threshold}} %</span>
+        </span>
+      </p>
+      <p class="canopy minavgmax">
+        Uncertainty considered
+        <span class="button-wrapper">
+          <span class="canopy-button minavgmax">
+            <span data-quantity="min">min</span>
+            <span class="current" data-quantity="avg">mean</span>
+            <span data-quantity="max">max</span>
+          </span>
+        </span>
+      </p>
     </div>
   </div>
 {{/if}}
