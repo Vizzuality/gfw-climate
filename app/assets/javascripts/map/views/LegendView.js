@@ -10,27 +10,18 @@ define([
   'text!map/templates/legend/legend.handlebars',
   'text!map/templates/legend/biomass_loss.handlebars',
   'text!map/templates/legend/biomass.handlebars',
-  'text!map/templates/legend/imazon.handlebars',
-  'text!map/templates/legend/fires.handlebars',
-  'text!map/templates/legend/forest2000.handlebars',
-  'text!map/templates/legend/pantropical.handlebars',
   'text!map/templates/legend/idnPrimary.handlebars',
   'text!map/templates/legend/intact2013.handlebars',
   'text!map/templates/legend/grump.handlebars',
   'text!map/templates/legend/stories.handlebars',
-  'text!map/templates/legend/terra_i.handlebars',
   'text!map/templates/legend/concesiones_forestales.handlebars',
   'text!map/templates/legend/concesiones_forestalesType.handlebars',
   'text!map/templates/legend/hondurasForest.handlebars',
   'text!map/templates/legend/colombiaForestChange.handlebars',
-  'text!map/templates/legend/tigers.handlebars',
   'text!map/templates/legend/dam_hotspots.handlebars',
   'text!map/templates/legend/us_land_cover.handlebars',
-  'text!map/templates/legend/global_land_cover.handlebars',
-  'text!map/templates/legend/forma.handlebars',
   'text!map/templates/legend/bra_biomes.handlebars',
   'text!map/templates/legend/idn_peat.handlebars',
-  'text!map/templates/legend/hsdw.handlebars',
   'text!map/templates/legend/plantations_by_type.handlebars',
   'text!map/templates/legend/plantations_by_species.handlebars',
   'text!map/templates/legend/peatland_drainage.handlebars',
@@ -47,8 +38,7 @@ define([
   'text!map/templates/legend/raisg_mining.handlebars',
   'text!map/templates/legend/mangrove_biomass.handlebars',
 
-], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL, idn_peatTPL,hsdwTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl,peatland_drainageTpl,colombiaForestChangeTpl, us_land_coverTpl, bra_biomesTpl, gtm_forest_changeTpl, gtm_forest_coverTpl, gtm_forest_densityTpl, khm_eco_land_concTpl, usa_forest_ownershipTpl, mysPATpl, per_miningTpl,raisg_miningTpl, mangrove_biomassTpl) {
+], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, dam_hotspotsTPL, us_land_coverTPL, bra_biomesTPL, idn_peatTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl,peatland_drainageTpl,colombiaForestChangeTpl, us_land_coverTpl, bra_biomesTpl, gtm_forest_changeTpl, gtm_forest_coverTpl, gtm_forest_densityTpl, khm_eco_land_concTpl, usa_forest_ownershipTpl, mysPATpl, per_miningTpl,raisg_miningTpl, mangrove_biomassTpl) {
 
   'use strict';
 
@@ -59,13 +49,63 @@ define([
     }
   });
 
-
-
   var LegendView = Backbone.View.extend({
 
     el: '#module-legend',
 
     template: Handlebars.compile(tpl),
+
+    defaults: {
+      layersConfig: {
+        biomass_loss: {
+          ranges: [
+            {
+              min: '0',
+              max: '917'
+            }
+          ]
+        },
+        carbon_stocks: {
+          ranges: {
+            biomass: {
+              min: '0',
+              max: '500'
+            },
+            carbon: {
+              min: '0',
+              max: '250'
+            }
+          },
+          units: [
+            {
+              name: 'Mg biomass/ha',
+              value: 'biomass'
+            },
+            {
+              name: 'Mg C/ha',
+              value: 'carbon'
+            }
+          ],
+          selectedUnit: 'biomass'
+        }
+      }
+    },
+
+    options: {
+      hidden: true
+    },
+
+    events: {
+      'click .category-name': '_toogleCategory',
+      'click .layer-sublayer': '_toggleLayer',
+      'click .canopy-button': '_showCanopy',
+      'click .layer-close': '_removeLayer',
+      'click .close': 'toogleLegend',
+      'click #title-dialog-legend': 'toogleEmbedLegend',
+      'click .toggle-title': 'toggleLegendOptions',
+      'change input': 'updateRange',
+      'change .js-units-selector': '_changeUnit'
+    },
 
     /**
      * Optional layers detail templates.
@@ -73,28 +113,19 @@ define([
     detailsTemplates: {
       biomass_loss: Handlebars.compile(biomass_lossTpl),
       carbon_stocks: Handlebars.compile(biomassTpl),
-      imazon: Handlebars.compile(imazonTpl),
-      fires: Handlebars.compile(firesTpl),
-      forest2000: Handlebars.compile(forest2000Tpl),
-      pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
       grump2000: Handlebars.compile(grumpTpl),
       user_stories:  Handlebars.compile(storiesTpl),
-      terrailoss: Handlebars.compile(terra_iTpl),
       concesiones_forestales: Handlebars.compile(concesionesTpl),
       concesiones_forestalesNS: Handlebars.compile(concesionesTypeTpl),
       WMSLayer: Handlebars.compile(hondurasForestTPL),
       colombia_forest_change: Handlebars.compile(colombiaForestChangeTPL),
-      tigers: Handlebars.compile(tigersTPL),
       dam_hotspots: Handlebars.compile(dam_hotspotsTPL),
       us_land_cover: Handlebars.compile(us_land_coverTPL),
-      global_land_cover : Handlebars.compile(global_land_coverTPL),
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
-      forma : Handlebars.compile(formaTPL),
       bra_biomes : Handlebars.compile(bra_biomesTPL),
       idn_peat_lands : Handlebars.compile(idn_peatTPL),
-      hwsd : Handlebars.compile(hsdwTPL),
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
       plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
       peatland_drainage: Handlebars.compile(peatland_drainageTpl),
@@ -127,22 +158,6 @@ define([
       bra_mining:Handlebars.compile(raisg_miningTpl),
       per_mining:Handlebars.compile(per_miningTpl),
       global_mangroves_biomass:Handlebars.compile(mangrove_biomassTpl),
-
-    },
-
-    options: {
-      hidden: true
-    },
-
-    events: {
-      'click .category-name' : '_toogleCategory',
-      'click .layer-sublayer': '_toggleLayer',
-      'click .canopy-button' : '_showCanopy',
-      'click .layer-close'   : '_removeLayer',
-      'click .close' : 'toogleLegend',
-      'click #title-dialog-legend' : 'toogleEmbedLegend',
-      'click .toggle-title' : 'toggleLegendOptions',
-      'change input'        : 'updateRange'
     },
 
     initialize: function() {
@@ -150,6 +165,7 @@ define([
       this.presenter = new Presenter(this);
       this.model = new LegendModel();
       this.embed = $('body').hasClass('is-embed-action');
+      this.layersConfig = this.defaults.layersConfig;
       this.$el.removeClass('hide');
       this.setListeners();
     },
@@ -196,14 +212,15 @@ define([
       _.each(layers, function(layer) {
         layer.source = (layer.slug === 'nothing') ? null : layer.slug;
         if (this.detailsTemplates[layer.slug]) {
-          if(layer.slug === 'biomass_loss') {var layer_range = ['0','917']};
-          if(layer.slug === 'carbon_stocks') {var layer_range = ['0','500']};
+          var layerData = this._getLayerData(layer, options);
 
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             layerTitle: layer.title,
-            minrange: (!!options.rangearray && options.rangearray[layer.slug]) ? options.rangearray[layer.slug].minrange : false || ((!!layer_range) ? layer_range[0] : null),
-            maxrange: (!!options.rangearray && options.rangearray[layer.slug]) ? options.rangearray[layer.slug].maxrange : false || ((!!layer_range) ? layer_range[1] : null)
+            minrange: layerData.min,
+            maxrange: layerData.max,
+            units: layerData.units,
+            unit: layerData.unit
           });
         }
         if (layer.iso) {
@@ -350,82 +367,193 @@ define([
       var $opt = this.$el.find('[data-quantity="'+type+'"]');
       $opt.addClass('current').siblings('.current').removeClass('current');
     },
+
+    _getLayerData: function(layer, opts) {
+      var unitsList = [];
+      var selectedUnit = !!opts.rangearray && opts.rangearray[layer.slug] ? opts.rangearray[layer.slug].unit : this.layersConfig[layer.slug].selectedUnit;
+      var defaultRange = this.layersConfig[layer.slug].ranges[selectedUnit];
+      var units = this.layersConfig[layer.slug].units;
+      var currentUnit = _.findWhere(units, { value: selectedUnit });
+      var values = {};
+
+      values.min = (!!opts.rangearray && opts.rangearray[layer.slug]) ?
+        opts.rangearray[layer.slug].minrange : false || ((!!defaultRange) ? defaultRange.min : null);
+
+      values.max = (!!opts.rangearray && opts.rangearray[layer.slug]) ?
+        opts.rangearray[layer.slug].maxrange : false || ((!!defaultRange) ? defaultRange.max : null);
+
+      var unit = (!!opts.rangearray && opts.rangearray[layer.slug]) ?
+        opts.rangearray[layer.slug].unit : false || ((!!currentUnit) ? currentUnit.value : null);
+
+      var units = this.layersConfig[layer.slug] && this.layersConfig[layer.slug].units ?
+        this.layersConfig[layer.slug].units : null;
+
+      // var values = this._formatValues(layer.slug, values, selectedUnit);
+
+      if (units) {
+        _.map(units, function(unit) {
+          unit.selected = unit.value === selectedUnit
+        });
+      }
+
+      return {
+        min: values.min,
+        max: values.max,
+        unit: unit,
+        units: units
+      };
+    },
+
     toggleLegendOptions: function(e) {
       if (e.target.tagName === 'SPAN') e = e.target.parentNode;
       else e = e.target;
       $(e).find('span').toggleClass('active');
       $(e).siblings('.toggle-legend-option').toggle('250');
     },
-    updateRange: function(e) {
-      var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
-      
-      if(layer === 'biomass_loss') {
-        var newrange = this.$el.find('.layer-details-biomass_loss input');
-        var targets = this.$el.find('.layer-details-biomass_loss .labels em');
-        var layer_range = ['0','917'];
-      }
-      if(layer === 'carbon_stocks') {
-        var newrange = this.$el.find('.layer-details-carbon_stocks input');
-        var targets = this.$el.find('.layer-details-carbon_stocks .labels em');
-        var layer_range = ['0','500'];
-      }
-      newrange = [newrange[0].value,newrange[1].value];
-      if (~~newrange[0] < 0) return this.resetRanges('min',e);
-      if (~~newrange[0] > layer_range[1]) return this.resetRanges('min',e);
-      if (~~newrange[1] > layer_range[1]) return this.resetRanges('max',e);
-      if (~~newrange[1] < 0) return this.resetRanges('max',e);
-      targets.first().html(newrange[0]);
-      targets.last().html(newrange[1]);
-      this.updateRangeBar(newrange,e);
-      this.presenter.setNewRange([newrange[0],newrange[1]],$(e.target).parents('.layer-details').find('.thislayer').html());
-    },
-    resetRanges: function(end,e) {
-      var newrange = this.$el.find('input');
-      var targets = this.$el.find('.labels em');
-      var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
-      if(layer === 'biomass_loss') {var layer_range = ['0','917']};
-      if(layer === 'carbon_stocks') {var layer_range = ['0','500']};
-      if (end === 'min'){
-        newrange[0].value = layer_range[0];
-        targets.first().html(layer_range[0]);
-      }
-      if (end === 'max'){
-        newrange[1].value = layer_range[1];
-        targets.last().html(layer_range[1]);
-      }
-    },
-    updateRangeBar: function(range,e) {
-      var layer = $(e.target).parents('.layer-details').find('.thislayer').html();
-      var range_bars = $(e.target).parents('.layer-details').find('.range-bar');
-      if(layer === 'biomass_loss') {
-        var layer_range = ['0','917'];
-      }
-      if(layer === 'carbon_stocks') {
-        var layer_range = ['0','500'];
-      }
-      if (range[0] == layer_range[0] && range[1] == layer_range[1]) {
-        return  range_bars.hide();
-      }
-      range_bars.first().css('left',range[0]*100/layer_range[1]+'%');
-      range_bars.last().css('left',range[1]*100/layer_range[1]+'%');
-      range_bars.show();
 
-      this.presenter._updateRangeArray(this.createRangeArray(layer,range,layer_range),layer);
-      
+    updateRange: function(ev) {
+      var parent = $(ev.target).parents('.layer-details');
+      var slug = parent.data('layer-group');
+      var values = this._getCurrentRangeFromLayer(slug);
+
+      console.log(values);
+
+      this._setRangeLabels(slug, values);
+      this._updateRangeBar(slug, values);
+      this._updateLayerRange(slug);
     },
 
-    createRangeArray: function(layer,range,layer_range) {
-      var rangearray = {}
-      rangearray[layer] = {
-        'minrange': range[0],
-        'maxrange': range[1],
-        'TOTALMIN': layer_range[0],
-        'TOTALMAX': layer_range[1]
+    _getCurrentRangeFromLayer: function(slug) {
+      var parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
+      var $minEl = parent.querySelector('.js-min');
+      var $maxEl = parent.querySelector('.js-max');
+      var $unitEl = parent.querySelector('.js-unit');
+      var min = $minEl.value;
+      var max = $maxEl.value;
+      var unit = $unitEl.value;
+      var selectedUnit = this.layersConfig[slug].selectedUnit;
+      var layerRange = this.layersConfig[slug].ranges[selectedUnit];
+      var units = this.layersConfig[slug].units;
+      var currentUnit = _.findWhere(units, { value: selectedUnit });
+
+      if (min < 0 || min > layerRange.max) {
+        min = layerRange.min;
+        $minEl.value = layerRange.min;
+      }
+
+      if (max < 0 || max > layerRange.max || max < min) {
+        max = layerRange.max;
+        $maxEl.value = layerRange.max;
+      }
+
+      return {
+        min: min,
+        max: max,
+        unit: unit ? unit : currentUnit.value
       };
+    },
 
-      return rangearray;
+    _setRangeLabels: function(slug, values) {
+      var parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
+      var minLabel = parent.querySelector('.js-min-label');
+      var maxLabel = parent.querySelector('.js-max-label');
+      var unitLabel = parent.querySelector('.js-unit');
+
+      minLabel.innerHTML = values.min;
+      maxLabel.innerHTML = values.max;
+      unitLabel.innerHTML = values.unit;
+    },
+
+    _updateRangeBar: function(slug, range) {
+      var parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
+      var rangeBars = parent.querySelectorAll('.range-bar');
+      var layerRange = this.layersConfig[slug].ranges[range.unit];
+
+      if (range.min == layerRange.min && range.max == layerRange.max) {
+        rangeBars[0].classList.remove('-visible');
+        rangeBars[1].classList.remove('-visible');
+      }
+
+      rangeBars[0].style.left = ((range.min * 100) / layerRange.max) + '%';
+      rangeBars[0].classList.add('-visible');
+      rangeBars[1].style.left = ((range.max * 100) / layerRange.max) + '%';
+      rangeBars[1].classList.add('-visible');
+    },
+
+    _formatValues: function(slug, values, unit, toStore) {
+      // if (slug === 'carbon_stocks') {
+      //   if (unit === 'carbon') {
+      //     if (toStore) {
+      //       values.min = values.min * 2;
+      //       values.max = values.max * 2;
+      //     } else {
+      //       values.min = values.min / 2;
+      //       values.max = values.max / 2;
+      //     }
+      //   }
+      // }
+      return values;
+    },
+
+    _changeUnit: function(ev) {
+      var current = ev.currentTarget;
+      var value = current.value;
+      var slug = current.dataset.layer;
+      var selectedUnit = this.layersConfig[slug].selectedUnit;
+
+      if (slug === 'carbon_stocks') {
+        this._setInputsValues(slug, selectedUnit);
+      }
+
+      this.layersConfig[slug].selectedUnit = value;
+
+      var currentParams = this._getCurrentRangeFromLayer(slug);
+      this._setRangeLabels(slug, currentParams);
+      this._updateLayerRange(slug);
+    },
+
+    _setInputsValues: function(slug, selectedUnit) {
+      var parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
+      var $minEl = parent.querySelector('.js-min');
+      var $maxEl = parent.querySelector('.js-max');
+      var min = $minEl.value;
+      var max = $maxEl.value;
+      //
+      // if (selectedUnit === 'biomass') {
+      //   min = min / 2;
+      //   max = max / 2;
+      // } else if (selectedUnit === 'carbon') {
+      //   min = min * 2;
+      //   max = max * 2;
+      // }
+
+      $minEl.value = min;
+      $maxEl.value = max;
+    },
+
+    _createRangeArray: function(slug, range) {
+      var layerRange = this.layersConfig[slug].ranges[range.unit];
+      var rangeArray = {};
+
+      rangeArray[slug] = {
+        'minrange': range.min,
+        'maxrange': range.max,
+        'TOTALMIN': layerRange.min,
+        'TOTALMAX': layerRange.max,
+        'unit': range.unit
+      };
+      return rangeArray;
+    },
+
+    _updateLayerRange: function(slug) {
+      var values = this._getCurrentRangeFromLayer(slug);
+      values = this._formatValues(slug, values, values.unit, true);
+      var rangeArray = this._createRangeArray(slug, values);
+
+      console.log(rangeArray);
+      this.presenter._updateRangeArray(rangeArray, slug);
+      this.presenter.setNewRange([values.min, values.max], slug);
     }
-
   });
 
   return LegendView;

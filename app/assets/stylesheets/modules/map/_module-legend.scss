@@ -481,6 +481,10 @@
       display: none;
       position: absolute;
       color: lightblue;
+
+      &.-visible {
+        display: block;
+      }
     }
     .quartile-bar {
       clear: both;

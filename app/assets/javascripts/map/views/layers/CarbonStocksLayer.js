@@ -18,18 +18,16 @@ define([
       threshold: 30,
       dataMaxZoom: 12,
       urlTemplate: 'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
-            uncertainty: 127,
+      uncertainty: 127,
       minrange: 0,
       maxrange: 255
     },
-  init: function(layer, options, map) {
+    init: function(layer, options, map) {
       this.presenter = new Presenter(this);
       this._super(layer, options, map);
       this.threshold = options.threshold || this.options.threshold;
-      this.uncertainty = (!isNaN(options.uncertainty)&&options.uncertainty !== 127) ? options.uncertainty : this.options.uncertainty,
-      this._super(layer, options, map);
-      this.minrange = options.minrange || this.options.minrange;
-      this.maxrange = options.maxrange || this.options.maxrange;
+      this.uncertainty = (!isNaN(options.uncertainty)&&options.uncertainty !== 127) ? options.uncertainty : this.options.uncertainty;
+      this._setRanges(layer, options);
     },
 
     /**
@@ -73,6 +71,7 @@ define([
           }
         }
       }
+
     },
 
     setThreshold: function(threshold) {
@@ -100,12 +99,28 @@ define([
       this.presenter.updateLayer();
     },
 
+    _setRanges: function(layer, opts) {
+      var optsRange = opts.rangearray ? opts.rangearray[layer.slug] : null;
+
+      if (optsRange) {
+        this.minrange = this._getRange(optsRange.minrange);
+        this.maxrange = this._getRange(optsRange.maxrange);
+      } else {
+        this.minrange = opts.minrange || this.options.minrange;
+        this.maxrange = opts.maxrange || this.options.maxrange;
+      }
+    },
+
     // Cross multiplying to get x:
     // userinput ----- 917
     // x         ----- 255
+    _getRange: function(value) {
+      return (value/500)*255;
+    },
+
     _updateRange: function(range) {
-      this.minrange = (range[0]/500)*255;
-      this.maxrange = (range[1]/500)*255;
+      this.minrange = this._getRange(range[0]);
+      this.maxrange = this._getRange(range[1]);
 
       this.presenter.updateLayer();
     }

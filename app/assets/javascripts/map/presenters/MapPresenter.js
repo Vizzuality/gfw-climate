@@ -135,6 +135,9 @@ define([
       if (params.threshold) {
         this.status.set('threshold', params.threshold);
       }
+      if (params.rangearray) {
+        this.status.set('rangearray', params.rangearray);
+      }
     },
 
     _resizeSetLayers: function(){
@@ -157,7 +160,7 @@ define([
       // a layer first time from url. When changing between layers
       // there is no date so it will be set to the default layer date.
       var options = _.extend(_.pick(this.status.toJSON(),
-        'threshold'), layerOptions);
+        'threshold', 'rangearray'), layerOptions);
       this.status.set('layers',layers);
       this.view.setLayers(layers, options);
     },
