@@ -2,16 +2,22 @@ define([
   'backbone',
   'handlebars',
   'd3',
+  'underscore',
+  '_string',
   'insights/views/InsightsGladAlertsChartView',
   'views/ShareView',
   'views/SourceModalView',
   'helpers/NumbersHelper',
   'text!insights/templates/insights-glad-alerts.handlebars',
   'text!insights/templates/insights-glad-alerts-legend.handlebars',
-], function(Backbone, Handlebars, d3, InsightsGladAlertsChart,
+], function(Backbone, Handlebars, d3, _, _string, InsightsGladAlertsChart,
   ShareView, SourceModalView, NumbersHelper, tpl, tplLegend) {
 
   'use strict';
+
+  var API = window.gfw.config.GFW_API_HOST_V2;
+  var ENDPOINT_CONFIG = '/query/b0c709f0-d1a6-42a0-a750-df8bdb0895f3?sql=SELECT * FROM data';
+  var ENDPOINT_DATA = '/query/4447a410-78d4-41d6-9364-213cfa176313?sql=SELECT * FROM data WHERE country_iso in (\'%s\') and year in (\'%s\')';
 
   var InsightsGladAlerts = Backbone.View.extend({
 
@@ -38,15 +44,35 @@ define([
       loadingClassEl: 'is-loading',
       mainVisSwitchEl: 'main-vis-switch',
       loadedClassEl: 'loaded',
-      countryLabelClassEl: 'js-country-label'
+      countryLabelClassEl: 'js-country-label',
+      countrySelectorClassEl: 'js-country-selector',
+      legendSelectoClassEl: 'js-legend',
+      noDataClassEl: 'no-data'
     },
 
     initialize: function() {
       this.legends = [];
+      this.chartConfig = [];
+      this.locations = [];
       this.currentStep = this.defaults.weekStep;
       this.currentCountry = this.defaults.country;
       this.currentYear = this.defaults.year;
       this.filter = this.defaults.filter;
+
+      // Get the visualization's configuration
+      $.when(this._getConfig())
+        .done(this._initVisualization.bind(this));
+    },
+
+    _getConfig: function() {
+      return $.ajax({
+        url: API + ENDPOINT_CONFIG,
+        type: 'GET'
+      });
+    },
+
+    _initVisualization: function(config) {
+      this.config = this._parseConfig(config);
       this.render();
       this._setListeners();
 
@@ -54,10 +80,31 @@ define([
       new SourceModalView();
     },
 
+    _parseConfig: function(config) {
+      var data = config && config.data &&
+        config.data[0] ? config.data[0] : {};
+
+      if (data) {
+        this.chartConfig = JSON.parse(data.vizsetup);
+        this.locations = JSON.parse(data.locations);
+      }
+    },
+
     render: function() {
-      this.$el.html(this.template({}));
+      this.$el.html(this.template({
+        locations: this.locations
+      }));
       this.$el.removeClass(this.defaults.loadingClassEl);
       this.$el.addClass(this.defaults.loadedClassEl);
+
+      // Set default selection from the config
+      var defaultCountry = _.findWhere(this.locations, {
+        iso: this.chartConfig.defaultSelection
+      });
+
+      if (defaultCountry) {
+        this._setCurrentCountry(defaultCountry.name, defaultCountry.iso);
+      }
 
       this._renderMainChart();
     },
@@ -69,29 +116,80 @@ define([
     _renderMainChart: function() {
       var el = this.el.querySelector('#visMain');
       var chartEl = el.querySelector('.chart');
+      var iso = this.currentCountry;
+      var year = this.currentYear;
+
+      this._clearVisualization();
+
+      chartEl.innerHTML = '';
+      chartEl.classList.add(this.defaults.loadingClassEl);
+
+      $.ajax({
+        url: API + _.str.sprintf(ENDPOINT_DATA, iso, year),
+        type: 'GET',
+        success: function(res) {
+          var data = res.data;
+
+          if (data.length) {
+            el.classList.remove(this.defaults.noDataClassEl);
+            this._createVisualization(data);
+          } else {
+            el.classList.add(this.defaults.noDataClassEl);
+            this._renderNoDataPlaceHolder();
+          }
+
+          chartEl.classList.remove(this.defaults.loadingClassEl);
+        }.bind(this)
+      });
+    },
+
+    _createVisualization: function(data) {
+      var el = this.el.querySelector('#visMain');
+      var chartEl = el.querySelector('.chart');
       var legendEl = el.querySelector('.legend');
 
-      d3.csv('/insights_glad_alerts/' + this.currentCountry + '_' + this.currentYear + '.csv', function(data) {
-        if (this.visMain) {
-          this.visMain.remove();
-          this.legends = [];
+      this._setMaxWeek(data);
+
+      this.visMain = new InsightsGladAlertsChart({
+        el: chartEl,
+        params: {
+          data: this._parseData(data),
+          filter: this.filter,
+          currentStep: this.currentStep,
+          iso: this.currentCountry,
+          year: this.currentYear
         }
+      });
 
-        this._setMaxWeek(data);
+      el.classList.remove(this.defaults.loadingClassEl);
+      this._createLegend(legendEl, data, 'main');
+    },
 
-        this.visMain = new InsightsGladAlertsChart({
-          el: chartEl,
-          params: {
-            data: data,
-            filter: this.filter,
-            currentStep: this.currentStep,
-            iso: this.currentCountry,
-            year: this.currentYear
-          }
+    _renderNoDataPlaceHolder: function() {
+      var el = this.el.querySelector('#visMain');
+      var chartEl = el.querySelector('.chart');
+
+      chartEl.innerHTML = 'There\'s no data available for this selection';
+    },
+
+    _parseData: function(data) {
+      return _.map(data, function(d) {
+        var locationData = _.findWhere(this.locations, {
+          iso: d.country_iso
         });
 
-        el.classList.remove(this.defaults.loadingClassEl);
-        this._createLegend(legendEl, data, 'main');
+        if (locationData) {
+          d.carbon_average = locationData.targets['carbon_emissions'].average;
+          d.carbon_target = locationData.targets['carbon_emissions'].target;
+          d.deforestation_average = locationData.targets['deforestation'].average;
+          d.deforestation_target = locationData.targets['deforestation'].target;
+        }
+
+        if (d.iso === this.chartConfig.defaultSelection) {
+          d.selected = true;
+        }
+
+        return d;
       }.bind(this));
     },
 
@@ -122,12 +220,10 @@ define([
       }.bind(this))[0];
 
       if (current) {
-        var average = Math.round(current['2001_2013_average'] * 1);
-        var target = Math.round(current['2020_target'] * 1);
+        var target = Math.round(current.carbon_target * 1);
         var emissions = Math.round(current.cumulative_emissions * 1);
         var deforestation = Math.round(current.cumulative_deforestation * 1);
-        var average_deforestation = Math.round(current['2001_2013_average_deforestation'] * 1);
-        var target_deforestation = Math.round(current['2020_target_deforestation'] * 1);
+        var target_deforestation = Math.round(current.deforestation_target * 1);
         var alerts = Math.round(current.alerts);
         var annual_budget = Math.round(((emissions / target) * 100));
         var annual_budget_deforestation = Math.round(((deforestation / target_deforestation) * 100));
@@ -135,15 +231,10 @@ define([
 
       el.innerHTML = this.templateLegend({
         isDesforestation: filter === this.defaults.desforestationFilter,
-        hasDifferentLabel: this.currentCountry === 'BRA',
-        average: NumbersHelper.addNumberDecimals(average),
-        target: NumbersHelper.addNumberDecimals(target),
         emissions: NumbersHelper.addNumberDecimals(emissions),
         annual_budget:  NumbersHelper.addNumberDecimals(annual_budget),
         annual_budget_deforestation: NumbersHelper.addNumberDecimals(annual_budget_deforestation),
         deforestation: NumbersHelper.addNumberDecimals(deforestation),
-        average_deforestation:  NumbersHelper.addNumberDecimals(average_deforestation),
-        target_deforestation:  NumbersHelper.addNumberDecimals(target_deforestation),
         alerts: NumbersHelper.addNumberDecimals(alerts)
       });
     },
@@ -177,15 +268,32 @@ define([
       this._renderLegend(legend.element, legend.data, legend.filter);
     },
 
+    _clearVisualization: function() {
+      if (this.visMain) {
+        this.visMain.remove();
+        this.legends = [];
+
+        var legend = this.el.querySelector('.' + this.defaults.legendSelectoClassEl);
+        legend.innerHTML = '';
+      }
+    },
+
     _changeDataByCountry: function(ev) {
       var current = ev.currentTarget;
-      var label = this.el.querySelector('.' + this.defaults.countryLabelClassEl);
       var value = current.value;
       var selected = current.querySelector('[data-iso="'+ value +'"]');
 
-      label.innerHTML = selected.text;
-      this.currentCountry = value;
+      this._setCurrentCountry(selected.text, value);
       this._renderMainChart();
+    },
+
+    _setCurrentCountry: function(text, iso) {
+      var label = this.el.querySelector('.' + this.defaults.countryLabelClassEl);
+      var selector = this.el.querySelector('.' + this.defaults.countrySelectorClassEl);
+      label.innerHTML = text;
+      selector.value = iso;
+
+      this.currentCountry = iso;
     },
 
     _changeDataByYear: function(ev) {
