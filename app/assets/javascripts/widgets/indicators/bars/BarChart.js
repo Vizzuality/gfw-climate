@@ -133,8 +133,8 @@ define([
     var totalBars = _.reduce(data, function(memo, d){ return memo + d.y; }, 0);
     d3.select(elem+' .graph-legend')
       .html(legendTemplate({
-        lineTotalValue: NumbersHelper.addNumberDecimals(d3.format(".1f")(totalLine)),
-        barsTotalValue: NumbersHelper.addNumberDecimals(d3.format(".1f")(totalBars))
+        lineTotalValue: NumbersHelper.addNumberDecimals(Math.round(d3.format(".1f")(totalLine))),
+        barsTotalValue: NumbersHelper.addNumberDecimals(Math.round(d3.format(".1f")(totalBars)))
       }));
 
     // Toolttio
@@ -161,7 +161,7 @@ define([
         .select('.tooltip-year')
         .html(tooltipTemplate({
           lineValue: d3.format(",f")(d.z),
-          barValue: d3.format(",.2f")(d.y),
+          barValue: d3.format(",f")(d.y),
           year: d.x
         }));
     });
