@@ -277,6 +277,10 @@
           <h4>Emissions:</h4>
           <p>{{content.data.emisc02ha}} tons of CO<sub>2</sub> ha<sup>-1</sup> yr<sup>-1</sup></p>
         {{/if}}
+        {{#if content.data.bm_t_ha}}
+          <h4>Aboveground biomass density:</h4>
+          <p>{{content.data.bm_t_ha}} tonnes ha<sup>-1</sup></p>
+        {{/if}}
         {{#if content.data.area_ha}}
           <h4>Area HA:</h4>
           <p>{{content.data.area_ha}}</p>
@@ -285,4 +289,3 @@
     </div>
   </div>
 </div>
-

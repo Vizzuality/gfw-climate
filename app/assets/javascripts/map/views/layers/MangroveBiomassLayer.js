@@ -13,13 +13,13 @@ define([
   var MangroveBiomassLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, bm_t_ha, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
+      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, round(bm_t_ha) AS bm_t_ha, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
       infowindow: true,
       interactivity: 'cartodb_id, tablename, bm_t_ha, analysis',
-      analysis: true,
+      analysis: false,
       cartocss: mangrove_biomassCartocss
     }
-    
+
 
 
   });
