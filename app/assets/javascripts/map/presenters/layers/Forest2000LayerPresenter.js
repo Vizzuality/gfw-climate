@@ -36,6 +36,10 @@ define([
       }
     }],
 
+    layerRendered: function() {
+      mps.publish('Layer/rendered');
+    },
+
     updateLayer: function() {
       mps.publish('Layer/update', [this.view.getName()]);
     }
