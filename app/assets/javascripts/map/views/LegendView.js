@@ -58,35 +58,42 @@ define([
     defaults: {
       layersConfig: {
         biomass_loss: {
-          ranges: [
-            {
-              min: '0',
-              max: '917'
-            }
-          ]
-        },
-        carbon_stocks: {
           ranges: {
-            biomass: {
-              min: '0',
-              max: '500'
-            },
-            carbon: {
-              min: '0',
-              max: '250'
+            tco: {
+              min: 0,
+              max: 917
             }
           },
           units: [
             {
-              name: 'Mg biomass/ha',
+              name: 't CO2 ha<sup>-1</sup>',
+              value: 'tco'
+            }
+          ],
+          selectedUnit: 'tco'
+        },
+        carbon_stocks: {
+          ranges: {
+            biomass: {
+              min: 0,
+              max: 500
+            },
+            carbon: {
+              min: 0,
+              max: 250
+            }
+          },
+          units: [
+            {
+              name: 'Mg biomass ha<sup>-1</sup>',
               value: 'biomass'
             },
             {
-              name: 'Mg C/ha',
+              name: 'Mg C ha<sup>-1</sup>',
               value: 'carbon'
             }
           ],
-          selectedUnit: 'biomass'
+          selectedUnit: 'carbon'
         }
       }
     },
@@ -104,7 +111,7 @@ define([
       'click #title-dialog-legend': 'toogleEmbedLegend',
       'click .toggle-title': 'toggleLegendOptions',
       'change input': 'updateRange',
-      'change .js-units-selector': '_changeUnit'
+      'click .js-units-selector': '_changeUnit'
     },
 
     /**
@@ -211,14 +218,14 @@ define([
       // Append details template to layer.
       _.each(layers, function(layer) {
         layer.source = (layer.slug === 'nothing') ? null : layer.slug;
-        if (this.detailsTemplates[layer.slug]) {
+        if (this.layersConfig[layer.slug]) {
           var layerData = this._getLayerData(layer, options);
 
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             layerTitle: layer.title,
-            minrange: layerData.min,
-            maxrange: layerData.max,
+            minvalue: layerData.min,
+            maxvalue: layerData.max,
             units: layerData.units,
             unit: layerData.unit
           });
@@ -388,7 +395,11 @@ define([
       var units = this.layersConfig[layer.slug] && this.layersConfig[layer.slug].units ?
         this.layersConfig[layer.slug].units : null;
 
-      // var values = this._formatValues(layer.slug, values, selectedUnit);
+      this.layersConfig[layer.slug].selectedUnit = selectedUnit;
+
+      if (opts && opts.rangearray) {
+        values = this._formatValues(layer.slug, values, selectedUnit);
+      }
 
       if (units) {
         _.map(units, function(unit) {
@@ -399,7 +410,7 @@ define([
       return {
         min: values.min,
         max: values.max,
-        unit: unit,
+        unit: currentUnit.name,
         units: units
       };
     },
@@ -411,25 +422,34 @@ define([
       $(e).siblings('.toggle-legend-option').toggle('250');
     },
 
+    /**
+     * Updates the range when the user changes the values
+     *
+     * @param  {object} event
+     */
     updateRange: function(ev) {
       var parent = $(ev.target).parents('.layer-details');
       var slug = parent.data('layer-group');
       var values = this._getCurrentRangeFromLayer(slug);
-
-      console.log(values);
 
       this._setRangeLabels(slug, values);
       this._updateRangeBar(slug, values);
       this._updateLayerRange(slug);
     },
 
+    /**
+     * Returns the current values and validates the limits
+     *
+     * @param  {String} layer id name
+     * @return {Object} values and unit
+     */
     _getCurrentRangeFromLayer: function(slug) {
       var parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
       var $minEl = parent.querySelector('.js-min');
       var $maxEl = parent.querySelector('.js-max');
       var $unitEl = parent.querySelector('.js-unit');
-      var min = $minEl.value;
-      var max = $maxEl.value;
+      var min = $minEl.value * 1;
+      var max = $maxEl.value * 1;
       var unit = $unitEl.value;
       var selectedUnit = this.layersConfig[slug].selectedUnit;
       var layerRange = this.layersConfig[slug].ranges[selectedUnit];
@@ -453,17 +473,39 @@ define([
       };
     },
 
+    /**
+     * Sets the new values in the labels
+     *
+     * @param  {String} layer id name
+     * @param  {Object} min and max values
+     */
     _setRangeLabels: function(slug, values) {
-      var parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
-      var minLabel = parent.querySelector('.js-min-label');
-      var maxLabel = parent.querySelector('.js-max-label');
-      var unitLabel = parent.querySelector('.js-unit');
+      var $parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
+      var $minLabel = $parent.querySelector('.js-min-label');
+      var $maxLabel = $parent.querySelector('.js-max-label');
+      var $unitLabel = $parent.querySelector('.js-unit');
+      var $selectorLabel = $parent.querySelector('.js-units-selector');
+      var units = this.layersConfig[slug].units;
+      var unitName = _.findWhere(units, { value: values.unit });
 
-      minLabel.innerHTML = values.min;
-      maxLabel.innerHTML = values.max;
-      unitLabel.innerHTML = values.unit;
+      $minLabel.innerHTML = values.min;
+      $maxLabel.innerHTML = values.max;
+
+      if (unitName) {
+        $($unitLabel).html(unitName.name);
+
+        if ($selectorLabel) {
+          $($selectorLabel).html(unitName.name);
+        }
+      }
     },
 
+    /**
+     * Updates the range bar handles
+     *
+     * @param  {String} layer id name
+     * @param  {Object} min and max values
+     */
     _updateRangeBar: function(slug, range) {
       var parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
       var rangeBars = parent.querySelectorAll('.range-bar');
@@ -480,27 +522,53 @@ define([
       rangeBars[1].classList.add('-visible');
     },
 
+    /**
+     * Extra values formatting for some layers
+     *
+     * @param  {String} layer id name
+     * @param  {Object} min and max values
+     * @param  {String} unit
+     * @param  {Boolean} store in the url
+     */
     _formatValues: function(slug, values, unit, toStore) {
-      // if (slug === 'carbon_stocks') {
-      //   if (unit === 'carbon') {
-      //     if (toStore) {
-      //       values.min = values.min * 2;
-      //       values.max = values.max * 2;
-      //     } else {
-      //       values.min = values.min / 2;
-      //       values.max = values.max / 2;
-      //     }
-      //   }
-      // }
+      if (slug === 'carbon_stocks') {
+        if (unit === 'carbon') {
+          if (toStore) {
+            values.min = values.min * 2;
+            values.max = values.max * 2;
+          } else {
+            values.min = values.min / 2;
+            values.max = values.max / 2;
+          }
+        }
+      }
       return values;
     },
 
+    /**
+     * When the user changes the unit it updates
+     * the values and range
+     *
+     * @param  {Object} event
+     */
     _changeUnit: function(ev) {
-      var current = ev.currentTarget;
-      var value = current.value;
-      var slug = current.dataset.layer;
+      var slug = ev.currentTarget.dataset.layer;
+      var $parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
+      var $unitsList = $parent.querySelector('.js-units-list');
+      var $options = $unitsList.querySelectorAll('.js-item');
+      var current = $unitsList.value;
       var selectedUnit = this.layersConfig[slug].selectedUnit;
+      var value;
 
+      for (var x = 0; x < $options.length; x++) {
+        var item = $options[x];
+        if (item.value !== current) {
+          $unitsList.value = item.value;
+          value = item.value;
+        }
+      }
+
+      // Special case for this layer
       if (slug === 'carbon_stocks') {
         this._setInputsValues(slug, selectedUnit);
       }
@@ -512,25 +580,43 @@ define([
       this._updateLayerRange(slug);
     },
 
+    /**
+     * Updates the inputs with the new values
+     * some formatting might be done for some layers
+     *
+     * @param  {String} layer id name
+     * @param  {String} unit
+     */
     _setInputsValues: function(slug, selectedUnit) {
       var parent = this.el.querySelector('[data-layer-group="'+ slug +'"]');
       var $minEl = parent.querySelector('.js-min');
       var $maxEl = parent.querySelector('.js-max');
       var min = $minEl.value;
       var max = $maxEl.value;
-      //
-      // if (selectedUnit === 'biomass') {
-      //   min = min / 2;
-      //   max = max / 2;
-      // } else if (selectedUnit === 'carbon') {
-      //   min = min * 2;
-      //   max = max * 2;
-      // }
+
+      // Special case for this layer
+      if (slug === 'carbon_stocks') {
+        if (selectedUnit === 'biomass') {
+          min = min / 2;
+          max = max / 2;
+        } else if (selectedUnit === 'carbon') {
+          min = min * 2;
+          max = max * 2;
+        }
+      }
 
       $minEl.value = min;
       $maxEl.value = max;
     },
 
+    /**
+     * Creates a new range array
+     * with the selected data
+     *
+     * @param  {String} layer id name
+     * @param  {Object} range values
+     * @return  {Object} new range
+     */
     _createRangeArray: function(slug, range) {
       var layerRange = this.layersConfig[slug].ranges[range.unit];
       var rangeArray = {};
@@ -545,12 +631,18 @@ define([
       return rangeArray;
     },
 
+    /**
+     * Updates the new data in the url
+     * with the selected data and also
+     * updates the layer
+     *
+     * @param  {String} layer id name
+     */
     _updateLayerRange: function(slug) {
       var values = this._getCurrentRangeFromLayer(slug);
       values = this._formatValues(slug, values, values.unit, true);
       var rangeArray = this._createRangeArray(slug, values);
 
-      console.log(rangeArray);
       this.presenter._updateRangeArray(rangeArray, slug);
       this.presenter.setNewRange([values.min, values.max], slug);
     }
