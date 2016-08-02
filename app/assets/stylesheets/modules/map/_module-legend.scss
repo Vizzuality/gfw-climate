@@ -11,6 +11,7 @@
   background: $white;
   transition: all 0.25s $easeInOutSine;
   transform: translate(0,100%);
+  overflow-x: hidden;
 
   &.active{
     transform: translate(0,0);
@@ -303,7 +304,7 @@
           }
         }
       }
-      .canopy-button{
+      .canopy-button {
         background: $blue;
         color: $white;
         display: inline-block;
@@ -320,8 +321,48 @@
           background: darken($blue,5%);
           box-shadow: 0 0 0 1px darken($blue,5%);
         }
+
+        &.-wp {
+          padding: 3px 9px 1px 9px;
+        }
       }
     }
+
+    .toggle-selector {
+      width: 100px;
+      position: relative;
+      height: 22px;
+      padding-top: 1px;
+      overflow: hidden;
+      padding-left: 1px;
+      margin-top: 5px;
+      margin-left: 7px;
+
+      > .label {
+        width: 98px;
+        background: $white;
+        color: $font-color-1;
+        display: inline-block;
+        padding: 4px 6px 3px 6px;
+        margin: 0;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 0 1px $blue;
+        font-size: 11px;
+        font-weight: 500;
+        position: absolute;
+        z-index: 1;
+        text-align: center;
+      }
+
+      > .selector {
+        width: 50px;
+        height: 19px;
+        position: absolute;
+        z-index: 0;
+      }
+    }
+
     .toggle-legend-option {
       display: none;
       background-color: #eee;
@@ -329,7 +370,7 @@
       position: relative;
       left: -35px;
       width: 284px;
-      padding: 17px 35px 7px;
+      padding: 17px 16px 7px;
       margin: 7px 0 0;
       box-shadow: inset 0 2px 5px #cecece;
       z-index: 0;
@@ -346,8 +387,19 @@
         display: block;
         z-index: -1;
       }
+
+      .toggle-container {
+        width: 265px;
+        display: flex;
+        align-items: center;
+      }
+
       .canopy {
-        width: 100%;
+        width: auto;
+        color: $font-color-1;
+        font-size: 10px;
+        font-weight: 400;
+
         .button-wrapper {
           display: block;
           margin: 5px 0 15px;
@@ -357,32 +409,40 @@
           top: initial;
           right: initial;
           background: $white;
-          color: $blue;
+          color: $font-color-1;
           min-width: 48px;
           text-align: center;
+          font-size: 10px;
+
           input {
             width: 43px;
             border: none;
+            border-radius: 10px;
             text-align: right;
-            color: #5b80A0;
-            padding: 0 0 0 7px;
+            color: $font-color-1;
+            padding: 2px 0 3px 0;
+            font-weight: 500;
+            font-size: 10px;
           }
         }
         &.minavgmax {
           position: relative;
           .canopy-button {
             background: $white;
-            color: #5b80A0;
+            color: $font-color-1;
             box-shadow: 0 0 0 1px #5B80A0;
             padding: 0;
+            font-size: 10px;
+            line-height: 18px;
+
             span {
-              padding: 0 5px;
+              padding: 0 15px;
 
             }
             .current {
               background: $blue;
               color: $white;
-              border-radius: 10px;
+              border-radius: 9px;
               padding: 0px 6px;
               display: inline-block;
             }
@@ -481,6 +541,10 @@
       display: none;
       position: absolute;
       color: lightblue;
+
+      &.-visible {
+        display: block;
+      }
     }
     .quartile-bar {
       clear: both;
