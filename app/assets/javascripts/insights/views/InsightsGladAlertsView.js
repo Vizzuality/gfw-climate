@@ -82,7 +82,8 @@ define([
 
     _parseConfig: function(config) {
       var data = config && config.data &&
-        config.data[0] ? config.data[0] : {};
+        config.data.attributes && config.data.attributes.rows &&
+        config.data.attributes.rows[0] ? config.data.attributes.rows[0] : {};
 
       if (data) {
         this.chartConfig = JSON.parse(data.vizsetup);
@@ -128,7 +129,9 @@ define([
         url: API + _.str.sprintf(ENDPOINT_DATA, iso, year),
         type: 'GET',
         success: function(res) {
-          var data = res.data;
+          var data = res && res.data &&
+            res.data.attributes && res.data.attributes.rows &&
+            res.data.attributes.rows.length ? res.data.attributes.rows : {};
 
           if (data.length) {
             el.classList.remove(this.defaults.noDataClassEl);
