@@ -76,7 +76,7 @@ $slider-height-mb: 550px;
       }
     }
 
-    li.slick-active button, 
+    li.slick-active button,
     li:hover button {
       opacity: 1;
       transform: scale(1);
@@ -91,7 +91,7 @@ $slider-height-mb: 550px;
       justify-content: space-between;
       height: 300px;
       transform: translate(50%, 185%);
-      
+
       li {
         flex-basis: 48%;
         margin: 0;
@@ -150,7 +150,7 @@ $slider-height-mb: 550px;
         line-height: 40px;
       }
     }
-  
+
     @media screen and (max-width: $br-mobile) {
       left: 20px;
       right: 20px;
@@ -198,7 +198,7 @@ $slider-height-mb: 550px;
         }
 
         .description-container {
-          margin-top: 0; 
+          margin-top: 0;
         }
       }
 
