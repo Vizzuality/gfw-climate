@@ -9,8 +9,6 @@ define([
 
   'use strict';
 
-  var WEEKS_YEAR = 52;
-
   var GladAlertsVis = Backbone.View.extend({
 
     el: '#vis-glad',
@@ -22,19 +20,20 @@ define([
       interpolate: 'linear',
       paddingAxisLabels: 10,
       paddingXAxisLabels: 20,
-      paddingYAxisLabels: 25,
+      paddingYAxisLabels: 18,
       paddingLinesLabels: 6,
-      tooltipPadding: 22,
+      tooltipPadding: 16,
       underscriptPadding: 1.5,
       dateFormat: '%b',
       underscript: '2',
       margin: {
-        top: 35,
-        right: 15,
-        bottom: 65,
-        left: 60
+        top: 50,
+        right: 55,
+        bottom: 35,
+        left: 55
       },
-      circleRadius: 5,
+      circleRadius: 6,
+      triangleSize: 200,
       filter: 'carbon_emissions',
       chartConfig: {
         'carbon_emissions': {
@@ -107,7 +106,6 @@ define([
       handleWidth: 1,
       timelineButtonRadius: 15,
       maxWidth: 600,
-      imageURI: window.gfw.config.GFW_DATA_S3 + 'climate/glad_maps'
     },
 
     initialize: function(settings) {
@@ -119,7 +117,6 @@ define([
       this.year = this.defaults.year;
       this.imageURI = this.defaults.imageURI;
       this.locations = this.defaults.locations;
-      this.images = {};
 
       this._initChart();
 
@@ -193,8 +190,8 @@ define([
       this._setUpGraph();
       this._setAxisScale();
       this._setDomain();
-      this._drawGraph();
       this._drawAxis();
+      this._drawGraph();
      },
 
     _renderNoData: function() {
@@ -236,11 +233,26 @@ define([
       this.cWidth = this.cWidth - margin.left - margin.right;
       this.cHeight = this.cHeight - margin.top - margin.bottom;
 
-      this.svg = d3.select(el).append('svg')
+      var svg = d3.select(el).append('svg')
         .attr('width', this.cWidth + margin.left + margin.right + 'px')
-        .attr('height', this.cHeight + margin.top + margin.bottom + 'px')
-        .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .attr('height', this.cHeight + margin.top + margin.bottom + 'px');
+
+      var yAxisLabel = svg.append('g')
+        .attr('transform', 'translate(0, 12)')
+        .append('text')
+        .attr('class', 'y-label')
+        .text('Cumulative Emissions to Date (MtCO');
+
+      yAxisLabel.append('tspan')
+        .attr('class', 'underscript')
+        .attr('dy', this.defaults.underscriptPadding)
+        .text(this.defaults.underscript);
+
+      yAxisLabel.append('tspan')
+        .text(')');
+
+      this.svg = svg.append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
     },
 
     /**
@@ -252,7 +264,7 @@ define([
       var yTickFormat = function(d) {
         return d > 999 ? (d / 1000).toFixed(1) + 'k' : d;
       };
-      var yNumTicks = 8;
+      var yNumTicks = 4;
       var xNumTicks = this.isEmbed ? 5 : 12;
 
       this.x = d3.time.scale()
@@ -267,10 +279,11 @@ define([
       this.xAxis = d3.svg.axis()
         .scale(this.x)
         .orient('bottom')
-        .innerTickSize(6)
+        .innerTickSize(-this.cHeight)
         .tickValues(this.months)
         .ticks(xNumTicks)
         .outerTickSize(0)
+        .tickPadding(10)
         .tickFormat(xTickFormat);
 
       this.yAxis = d3.svg.axis()
@@ -336,21 +349,38 @@ define([
       var _this = this;
 
       // X Axis
-      this.svg.append('g')
+      var xAxis = this.svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', 'translate(0,' + (this.cHeight) + ')')
-        .call(this.xAxis)
-        .selectAll('text')
+        .call(this.xAxis);
+
+        xAxis.selectAll('text')
           .attr('x', _this.defaults.paddingXAxisLabels)
-          .attr('y', _this.defaults.paddingYAxisLabels);
+          .attr('y', -this.cHeight - _this.defaults.paddingYAxisLabels);
+
+        xAxis.selectAll('line')
+          .attr('x1', _this.defaults.paddingXAxisLabels)
+          .attr('x2', _this.defaults.paddingXAxisLabels);
+
 
       // Y Axis
-      this.svg.append('g')
+      var yAxis = this.svg.append('g')
         .attr('class', 'y axis')
-        .attr('transform', 'translate('+ (-_this.defaults.paddingAxisLabels) + ','+ -_this.defaults.paddingAxisLabels + ')')
+        .attr('transform', 'translate('+ (-_this.defaults.paddingAxisLabels) +
+          ','+ -_this.defaults.paddingAxisLabels + ')');
+
+      yAxis.append('g')
         .call(this.yAxis)
         .selectAll('text')
           .attr('x', -_this.defaults.paddingAxisLabels);
+
+      // yAxis.append('g')
+      //   .attr('transform', 'translate(-43, -15)')
+      //   .append('text')
+      //   .attr('class', 'y-label')
+      //   .text('Cumulative Emissions to Date (MtCO');
+
+      // Cumulative Emissions to Date (MtCO2)
 
       // Custom domain
       this.svg.append('g')
@@ -517,7 +547,6 @@ define([
       var tooltip = this.el.querySelector('.tooltip');
       tooltip.innerHTML = this.templateTooltip({});
       this.tooltip = this.el.querySelector('.insights-glad-alerts-tooltip');
-      this.tooltipImage = this.tooltip.querySelector('.image');
     },
 
     /**
@@ -529,112 +558,23 @@ define([
 
       if (data) {
         var tooltip = this.el.querySelector('.tooltip');
-        var co2Equivalency = Math.round(((data.above_ground_carbon_loss * 1) * 10000000) / 4.7);
-
-        var date = moment.utc().year(this.year);
-        var weeksInYear = date.weeksInYear();
-        var currentWeek = weeksInYear > WEEKS_YEAR ? (step + 1) : step;
-        var dateWithWeek = date.week(currentWeek);
-
-        if (weeksInYear > WEEKS_YEAR) {
-          dateWithWeek.subtract(1, 'days');
-        } else {
-          dateWithWeek.add(1, 'days');
-        }
-
-        var begin = dateWithWeek.clone().format('YYYY-MM-DD');
-        var end = dateWithWeek.clone().add(6, 'days').format('YYYY-MM-DD');
+        var emissions = Math.round(data.cumulative_emissions * 1);
+        var deforestation = Math.round(data.cumulative_deforestation * 1);
 
         tooltip.innerHTML = this.templateTooltip({
-          value: NumbersHelper.addNumberDecimals(data.alerts),
-          co2Equivalency: NumbersHelper.addNumberDecimals(co2Equivalency),
-          begin: begin,
-          end: end,
-          iso: this.iso
+          isDesforestation: this.filter === this.defaults.desforestationFilter,
+          emissions: NumbersHelper.addNumberDecimals(emissions),
+          deforestation: NumbersHelper.addNumberDecimals(deforestation)
         });
 
         this.tooltip = this.el.querySelector('.insights-glad-alerts-tooltip');
-        this.tooltipImage = this.tooltip.querySelector('.image');
-
-        this.showImage();
       }
     },
 
-    /**
-     * Shows the image of the current step
-     */
-    showImage: function() {
-      if (!this.images[this.currentStep] &&
-        (this.currentStep < this.maxDomain)) {
-        var image = new Image();
-        var currentStep = this.currentStep;
-
-        image.onload = this._onImageLoad(currentStep, image);
-        image.onerror = this._onImageError(currentStep);
-        image.src = this.imageURI + '/' + this.iso.toLowerCase() +
-          '_' + this.year + '_' +
-          NumbersHelper.padNumberToTwo(this.currentStep) + '.png';
-      } else {
-        var img = this.images[this.currentStep];
-
-        if (img && img.image) {
-          this._renderTooltipImage(img.image);
-        } else {
-          this._renderTooltipImage(false);
-        }
-      }
-    },
-
-    /**
-     * On image error
-     * @param  {Number} current step
-     */
-    _onImageError: function(currentStep) {
-      return (function(step) {
-        return function(e) {
-          this.images[step] = {
-            loaded: false,
-            image: null
-          };
-
-          if (step === this.currentStep) {
-            this._renderTooltipImage(false);
-          }
-        }.bind(this);
-      }.bind(this))(currentStep);
-    },
-
-    /**
-     * Updates the tooltip of the current step
-     * @param  {Number} current step
-     * @param  {Object} image object
-     */
-    _onImageLoad: function(currentStep, image) {
-      return (function(step, image) {
-        return function(e) {
-          this.images[step] = {
-            loaded: true,
-            image: image
-          };
-
-          if (step === this.currentStep) {
-            this._renderTooltipImage(image);
-          }
-        }.bind(this);
-      }.bind(this))(currentStep, image);
-    },
-
-    /**
-     * Renders the image or the error message
-     * @param  {Object} image object
-     */
-    _renderTooltipImage: function(image) {
-      this.tooltipImage.innerHTML = '';
-
-      if (image) {
-        this.tooltipImage.appendChild(image);
-      } else {
-        this.tooltipImage.innerHTML = 'Not available';
+    _getCurrentState(step) {
+      return {
+        step: step,
+        maxData: this.maxDomain
       }
     },
 
@@ -692,7 +632,7 @@ define([
       this.currentStep = Math.round(value);
 
       if (this.isEmbed) {
-        Backbone.Events.trigger('insights:glad:update', this.currentStep);
+        Backbone.Events.trigger('insights:glad:update', this._getCurrentState(this.currentStep));
       }
 
       this._setHandlePosition();
@@ -718,7 +658,7 @@ define([
       this.currentStep = current;
 
       if (this.isEmbed) {
-        Backbone.Events.trigger('insights:glad:update', current);
+        Backbone.Events.trigger('insights:glad:update', this._getCurrentState(current));
       }
 
       d3.select(element).transition()
@@ -739,7 +679,7 @@ define([
             d3.selectAll('svg .dot')
               .classed('hovered', false);
 
-            Backbone.Events.trigger('insights:glad:update', value);
+            Backbone.Events.trigger('insights:glad:update', _this._getCurrentState(value));
 
             var current = d3.select('svg .dot-'+value);
             if (current) {
@@ -747,13 +687,11 @@ define([
 
               if (current.node()) {
                 var cords = current.node().getBBox();
-                var left = cords.x + _this.defaults.margin.left + (cords.width / 2);
-                var top = cords.y + _this.defaults.margin.top - (cords.height / 2);
+                var left = cords.x + _this.defaults.margin.left + cords.width;
                 var width = _this.tooltip.clientWidth;
                 var height = _this.tooltip.clientHeight;
 
-                _this.tooltip.style.left = left - (width / 2) + 'px';
-                _this.tooltip.style.top = top - height - _this.defaults.tooltipPadding + 'px';
+                _this.tooltip.style.left = left - width - _this.defaults.tooltipPadding + 'px';
                 _this._showTooltip();
               } else {
                 _this._hideTooltip();
@@ -773,14 +711,21 @@ define([
         .attr('width', this.defaults.handleWidth + 'px')
         .attr('height', this.cHeight + (this.defaults.margin.top / 2));
 
-      this.handleLabel = this.svg.append('text')
-        .attr('class', 'handle-label');
-
-      var triangle = d3.svg.symbol().type('triangle-down').size(90);
+      var triangle = d3.svg.symbol()
+        .type('triangle-up')
+        .size(this.defaults.triangleSize);
 
       this.handleContainer.append('path')
         .attr('class', 'handle-triangle')
         .attr('d', triangle)
+        .attr('transform', 'translate(0, ' +
+          (this.cHeight + (this.defaults.margin.bottom / 2)) +') scale(1.5, 1)');
+
+      this.handleContainer.append('path')
+        .attr('class', 'handle-triangle -fill')
+        .attr('d', triangle)
+        .attr('transform', 'translate(0, ' +
+          (this.cHeight + (this.defaults.margin.bottom / 2) + 2) +') scale(1.5, 0.9)');
     },
 
     /**
@@ -792,15 +737,8 @@ define([
 
       this.handleContainer.attr('transform', function() {
         return 'translate('+ (_this.x2(_this.currentStep) -
-          (_this.defaults.handleWidth / 2)) + ', ' + -((_this.defaults.margin.top / 2)) + ')';
+          (_this.defaults.handleWidth / 2)) + ', 0)';
       });
-
-      this.handleLabel.attr('transform', function() {
-        return 'translate('+ (_this.x2(_this.currentStep) -
-          (_this.defaults.handleWidth / 2)) + ', ' + (_this.cHeight + (_this.defaults.paddingXAxisLabels / 1.4)) + ')';
-      });
-
-      this.handleLabel.text('Week ' + Math.round(this.currentStep));
     },
 
     _changeStepByValue: function(step) {

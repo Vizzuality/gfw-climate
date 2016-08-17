@@ -18,6 +18,7 @@ define([
   var API = window.gfw.config.GFW_API_HOST_V2;
   var ENDPOINT_CONFIG = '/query/b0c709f0-d1a6-42a0-a750-df8bdb0895f3?sql=SELECT * FROM data';
   var ENDPOINT_DATA = '/query/4447a410-78d4-41d6-9364-213cfa176313?sql=SELECT * FROM data WHERE country_iso in (\'%s\') and year in (\'%s\')';
+  var WEEKS_YEAR = 52;
 
   var InsightsGladAlerts = Backbone.View.extend({
 
@@ -47,17 +48,20 @@ define([
       countryLabelClassEl: 'js-country-label',
       countrySelectorClassEl: 'js-country-selector',
       legendSelectoClassEl: 'js-legend',
-      noDataClassEl: 'no-data'
+      noDataClassEl: 'no-data',
+      imageURI: window.gfw.config.GFW_DATA_S3 + 'climate/glad_maps'
     },
 
     initialize: function() {
       this.legends = [];
       this.chartConfig = [];
       this.locations = [];
+      this.images = {};
       this.currentStep = this.defaults.weekStep;
       this.currentCountry = this.defaults.country;
       this.currentYear = this.defaults.year;
       this.filter = this.defaults.filter;
+      this.imageURI = this.defaults.imageURI;
 
       // Get the visualization's configuration
       $.when(this._getConfig())
@@ -82,8 +86,7 @@ define([
 
     _parseConfig: function(config) {
       var data = config && config.data &&
-        config.data.attributes && config.data.attributes.rows &&
-        config.data.attributes.rows[0] ? config.data.attributes.rows[0] : {};
+      config.data[0] ? config.data[0] : {};
 
       if (data) {
         this.chartConfig = JSON.parse(data.vizsetup);
@@ -129,9 +132,7 @@ define([
         url: API + _.str.sprintf(ENDPOINT_DATA, iso, year),
         type: 'GET',
         success: function(res) {
-          var data = res && res.data &&
-            res.data.attributes && res.data.attributes.rows &&
-            res.data.attributes.rows.length ? res.data.attributes.rows : {};
+          var data = res.data;
 
           if (data.length) {
             el.classList.remove(this.defaults.noDataClassEl);
@@ -160,7 +161,8 @@ define([
           filter: this.filter,
           currentStep: this.currentStep,
           iso: this.currentCountry,
-          year: this.currentYear
+          year: this.currentYear,
+          desforestationFilter: this.defaults.desforestationFilter,
         }
       });
 
@@ -230,21 +232,43 @@ define([
         var alerts = Math.round(current.alerts);
         var annual_budget = Math.round(((emissions / target) * 100));
         var annual_budget_deforestation = Math.round(((deforestation / target_deforestation) * 100));
-      }
+        var co2Equivalency = Math.round(((current.above_ground_carbon_loss * 1) * 10000000) / 4.7);
 
-      el.innerHTML = this.templateLegend({
-        isDesforestation: filter === this.defaults.desforestationFilter,
-        emissions: NumbersHelper.addNumberDecimals(emissions),
-        annual_budget:  NumbersHelper.addNumberDecimals(annual_budget),
-        annual_budget_deforestation: NumbersHelper.addNumberDecimals(annual_budget_deforestation),
-        deforestation: NumbersHelper.addNumberDecimals(deforestation),
-        alerts: NumbersHelper.addNumberDecimals(alerts)
-      });
+        var date = moment.utc().year(this.currentYear);
+        var weeksInYear = date.weeksInYear();
+        var currentWeek = weeksInYear > WEEKS_YEAR ? (this.currentStep + 1) : this.currentStep;
+        var dateWithWeek = date.week(currentWeek);
+
+        if (weeksInYear > WEEKS_YEAR) {
+          dateWithWeek.subtract(1, 'days');
+        } else {
+          dateWithWeek.add(1, 'days');
+        }
+
+        var begin = dateWithWeek.clone().format('YYYY-MM-DD');
+        var end = dateWithWeek.clone().add(6, 'days').format('YYYY-MM-DD');
+
+        el.innerHTML = this.templateLegend({
+          isDesforestation: filter === this.defaults.desforestationFilter,
+          annual_budget:  NumbersHelper.addNumberDecimals(annual_budget),
+          annual_budget_deforestation: NumbersHelper.addNumberDecimals(annual_budget_deforestation),
+          alerts: NumbersHelper.addNumberDecimals(alerts),
+          co2Equivalency: NumbersHelper.addNumberDecimals(co2Equivalency),
+          begin: begin,
+          end: end,
+          iso: this.currentCountry,
+          week: this.currentStep
+        });
+
+        this.legendImage = el.querySelector('.image');
+        this.showImage();
+      }
     },
 
-    _updateLegends: function(step) {
-      if (this.currentStep !== step) {
-        this.currentStep = step;
+    _updateLegends: function(state) {
+      if (this.currentStep !== state.step) {
+        this.currentStep = state.step;
+        this.maxData = state.maxData;
         this.legends.forEach(function(legend) {
           this._renderLegend(legend.element, legend.data, legend.filter);
         }.bind(this));
@@ -319,6 +343,86 @@ define([
     _openShare: function(event) {
       var shareView = new ShareView().share(event);
       $('body').append(shareView.el);
+    },
+
+    /**
+     * Shows the image of the current step
+     */
+    showImage: function() {
+      if (!this.images[this.currentStep] &&
+        (this.currentStep < this.maxData)) {
+        var image = new Image();
+        var currentStep = this.currentStep;
+
+        image.onload = this._onImageLoad(currentStep, image);
+        image.onerror = this._onImageError(currentStep);
+        image.src = this.imageURI + '/' + this.currentCountry.toLowerCase() +
+          '_' + this.currentYear + '_' +
+          NumbersHelper.padNumberToTwo(this.currentStep) + '.png';
+      } else {
+        var img = this.images[this.currentStep];
+
+        if (img && img.image) {
+          this._renderLegendImage(img.image);
+        } else {
+          this._renderLegendImage(false);
+        }
+      }
+    },
+
+    /**
+     * On image error
+     * @param  {Number} current step
+     */
+    _onImageError: function(currentStep) {
+      return (function(step) {
+        return function(e) {
+          this.images[step] = {
+            loaded: false,
+            image: null
+          };
+
+          if (step === this.currentStep) {
+            this._renderLegendImage(false);
+          }
+        }.bind(this);
+      }.bind(this))(currentStep);
+    },
+
+    /**
+     * Updates the tooltip of the current step
+     * @param  {Number} current step
+     * @param  {Object} image object
+     */
+    _onImageLoad: function(currentStep, image) {
+      return (function(step, image) {
+        return function(e) {
+          this.images[step] = {
+            loaded: true,
+            image: image
+          };
+
+          if (step === this.currentStep) {
+            this._renderLegendImage(image);
+          }
+        }.bind(this);
+      }.bind(this))(currentStep, image);
+    },
+
+    /**
+     * Renders the image or the error message
+     * @param  {Object} image object
+     */
+    _renderLegendImage: function(image) {
+      this.legendImage.innerHTML = '';
+      this.legendImage.classList.remove('-no-data');
+
+      if (image) {
+        this.legendImage.appendChild(image);
+      } else {
+        this.legendImage.innerHTML = 'Not available';
+        this.legendImage.classList.add('-no-data');
+      }
     },
   });
 
