@@ -10,17 +10,25 @@
     <div id="vis-glad">
 
       <div class="glad-vis">
-        <div id="visMain" class="main-chart is-loading">
+        <div id="visMain" class="main-chart">
           <div class="heading">
-            <div class="country-selector">
-              <div class="label js-country-label"></div>
-              <select class="action js-country-selector">
-                {{#each locations}}
-                  <option value="{{iso}}" data-iso="{{iso}}" {{#if selected}}selected{{/if}}>{{name}}</option>
-                {{/each}}
-              </select>
+            <div class="countries">
+              <div class="country-selector">
+                <div class="label js-country-label"></div>
+                <select class="action js-country-selector">
+                  {{#each locations}}
+                    <option value="{{iso}}" data-iso="{{iso}}" {{#if selected}}selected{{/if}}>{{name}}</option>
+                  {{/each}}
+                </select>
+              </div>
             </div>
-            <div class="nav-options">
+
+            <div class="filters">
+              <div class="selectors main-vis-switch">
+                <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>
+                <div class="action deforestation js-selector" data-filter="deforestation">Area of Loss</div>
+              </div>
+
               <div class="year-selector">
                 <div class="action">
                   <select class="js-year-selector">
@@ -29,6 +37,9 @@
                   </select>
                 </div>
               </div>
+            </div>
+
+            <div class="nav-options">
               <div class="extra-selector">
                 <div class="action -info">
                   <a class="btn-action source" href="#" data-source="source-insights-glad-alerts">
@@ -45,23 +56,20 @@
               </div>
             </div>
           </div>
-          <div class="selectors main-vis-switch">
-            <div class="action carbon-emissions -selected js-selector" data-filter="carbon_emissions">CO<sub>2</sub> Emissions</div>
-            <div class="action deforestation js-selector" data-filter="deforestation">Area of Loss</div>
-          </div>
 
           <div class="chart-container">
             <div class="chart"></div>
           </div>
 
           <div class="legend-container">
-            <div class="caveat">
-              <div class="content">
-                <span class="is-bold-slim">Note</span>: Estimates are based on a conservative forest disturbance alert system meant to provide near real-time information. These are indicative only; the sum of alerts does not reflect or replace annual estimates of area or emissions.
-                <p><br><a href="">Know more about this visualization</a></p>
-              </div>
-            </div>
             <div class="legend -main js-legend"></div>
+          </div>
+
+          <div class="caveat">
+            <div class="content">
+              <span class="is-bold-slim">Note</span>: Estimates are based on a conservative forest disturbance alert system meant to provide near real-time information. These are indicative only; the sum of alerts does not reflect or replace annual estimates of area or emissions.
+              <p><br><a href="">Know more about this visualization</a></p>
+            </div>
           </div>
         </div>
       </div>
