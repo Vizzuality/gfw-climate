@@ -60,7 +60,6 @@
 
   .line-dashed-group {
     .dash-line-path {
-      shape-rendering: crispEdges;
       stroke: #999999;
       fill: transparent;
       stroke-width: 2;
@@ -88,7 +87,7 @@
       transition: .2s ease;
 
       @media only screen and (max-width: $br-mobile) {
-        stroke-width: 1.5;
+        // stroke-width: 1.5;
       }
     }
   }
@@ -108,7 +107,7 @@
       }
 
       @media only screen and (max-width: $br-mobile) {
-        transform: scale(0.5, 0.5);
+        // transform: scale(0.5, 0.5);
       }
     }
   }

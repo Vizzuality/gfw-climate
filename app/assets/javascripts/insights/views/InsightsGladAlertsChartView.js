@@ -225,7 +225,8 @@ define([
       var margin = this.defaults.margin;
 
       this.el.innerHTML = '';
-      this.el.classList.add(this.defaults.chartClass, this.filter);
+      this.el.classList.add(this.defaults.chartClass);
+      this.el.classList.add(this.filter);
 
       this.cWidth = el.clientWidth;
       this.cHeight = el.clientHeight;
@@ -374,14 +375,6 @@ define([
         .selectAll('text')
           .attr('x', -_this.defaults.paddingAxisLabels);
 
-      // yAxis.append('g')
-      //   .attr('transform', 'translate(-43, -15)')
-      //   .append('text')
-      //   .attr('class', 'y-label')
-      //   .text('Cumulative Emissions to Date (MtCO');
-
-      // Cumulative Emissions to Date (MtCO2)
-
       // Custom domain
       this.svg.append('g')
         .attr('class', 'custom-domain-group')
@@ -405,6 +398,8 @@ define([
       this._drawDots();
       this._drawBrush();
       this._renderTooltip();
+      this._updateTooltip();
+      this._setCurrentTooltip();
     },
 
     /**
@@ -554,7 +549,8 @@ define([
      * @param  {Number} current step
      */
     _updateTooltip: function(step) {
-      var data = _.findWhere(this.chartData, { week: step.toString() });
+      var currentStep = step || this.currentStep;
+      var data = _.findWhere(this.chartData, { week: currentStep.toString() });
 
       if (data) {
         var tooltip = this.el.querySelector('.tooltip');
@@ -571,7 +567,7 @@ define([
       }
     },
 
-    _getCurrentState(step) {
+    _getCurrentState: function(step) {
       return {
         step: step,
         maxData: this.maxDomain
@@ -657,9 +653,9 @@ define([
 
       this.currentStep = current;
 
-      if (this.isEmbed) {
+      // if (this.isEmbed) {
         Backbone.Events.trigger('insights:glad:update', this._getCurrentState(current));
-      }
+      // }
 
       d3.select(element).transition()
         .duration(0)
@@ -681,26 +677,39 @@ define([
 
             Backbone.Events.trigger('insights:glad:update', _this._getCurrentState(value));
 
-            var current = d3.select('svg .dot-'+value);
-            if (current) {
-              current.classed('hovered', true);
-
-              if (current.node()) {
-                var cords = current.node().getBBox();
-                var left = cords.x + _this.defaults.margin.left + cords.width;
-                var width = _this.tooltip.clientWidth;
-                var height = _this.tooltip.clientHeight;
-
-                _this.tooltip.style.left = left - width - _this.defaults.tooltipPadding + 'px';
-                _this._showTooltip();
-              } else {
-                _this._hideTooltip();
-              }
-            } else {
-              _this._hideTooltip();
-            }
+            _this._setCurrentTooltip(value);
           }
         });
+    },
+
+    _setCurrentTooltip: function(value) {
+      var currentStep = value || this.currentStep;
+      var current = d3.select('svg .dot-' + currentStep);
+      if (current) {
+        current.classed('hovered', true);
+
+        if (current.node()) {
+          var cords = current.node().getBBox();
+          var left = cords.x + this.defaults.margin.left + cords.width;
+          var width = this.tooltip.clientWidth;
+          var height = this.tooltip.clientHeight;
+          var leftPos = left - width - this.defaults.tooltipPadding;
+
+          if (leftPos < 0) {
+            leftPos = left + this.defaults.tooltipPadding;
+            this.tooltip.classList.add('-right');
+          } else {
+            this.tooltip.classList.remove('-right');
+          }
+
+          this.tooltip.style.left = leftPos + 'px';
+          this._showTooltip();
+        } else {
+          this._hideTooltip();
+        }
+      } else {
+        this._hideTooltip();
+      }
     },
 
     _drawHandle: function() {
