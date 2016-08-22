@@ -310,6 +310,7 @@ define([
       if (this.visMain) {
         this.visMain.remove();
         this.legends = [];
+        this.images = {}
 
         var legend = this.el.querySelector('.' + this.defaults.legendSelectoClassEl);
         legend.innerHTML = '';
@@ -344,6 +345,7 @@ define([
     _changeYear: function(ev) {
       var action = ev.currentTarget.dataset.action;
       var $selector = ev.currentTarget.parentNode.querySelector('.js-year-selector');
+      var options = $selector.options;
       var current = $selector.selectedIndex;
       var max = $selector.length - 1;
       var newIndex = current;
@@ -360,7 +362,9 @@ define([
         newIndex = 0;
       }
       $selector.selectedIndex = newIndex;
+      this.currentYear = parseInt(options[newIndex].text, 10);
 
+      this._renderMainChart();
     },
 
     _toggleFilter: function(element, filter) {
