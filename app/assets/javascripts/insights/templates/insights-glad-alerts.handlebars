@@ -31,10 +31,12 @@
 
               <div class="year-selector">
                 <div class="action">
+                  <div class="nav js-year-nav" data-action="sub"><</div>
                   <select class="js-year-selector">
-                    <option value="2016" selected>2016</option>
                     <option value="2015">2015</option>
+                    <option value="2016" selected>2016</option>
                   </select>
+                  <div class="nav js-year-nav" data-action="add">></div>
                 </div>
               </div>
             </div>
@@ -57,18 +59,19 @@
             </div>
           </div>
 
-          <div class="chart-container">
-            <div class="chart"></div>
-          </div>
+          <div class="visualization is-loading">
+            <div class="chart-container">
+              <div class="chart"></div>
+            </div>
 
-          <div class="legend-container">
-            <div class="legend -main js-legend"></div>
-          </div>
+            <div class="legend-container">
+              <div class="legend -main js-legend"></div>
 
-          <div class="caveat">
-            <div class="content">
-              <span class="is-bold-slim">Note</span>: Estimates are based on a conservative forest disturbance alert system meant to provide near real-time information. These are indicative only; the sum of alerts does not reflect or replace annual estimates of area or emissions.
-              <p><br><a href="">Know more about this visualization</a></p>
+              <div class="caveat">
+                <div class="content">
+                  <span class="is-bold-slim">Note</span>: Estimates are based on a conservative forest disturbance alert system meant to provide near real-time information. These are indicative only; the sum of alerts does not reflect or replace annual estimates of area or emissions.
+                </div>
+              </div>
             </div>
           </div>
         </div>

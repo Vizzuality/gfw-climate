@@ -8,7 +8,7 @@
       font-size: 26px;
 
       &.-width-margin {
-        margin-top: 37px;
+        margin-top: 0px;
       }
 
       .is-embed-page & {
@@ -25,12 +25,12 @@
     color: rgba($white, 0.7);
     text-align: center;
     margin-top: 10px;
-    margin-bottom: 34px;
+    margin-bottom: 10px;
     padding-bottom: 23px;
     line-height: 20px;
 
     @media only screen and (max-width: $br-mobile) {
-      font-size: 16px;
+      font-size: 14px;
       margin-bottom: 0;
     }
   }
@@ -123,6 +123,10 @@
     width: 30%;
     display: flex;
     justify-content: flex-end;
+
+    @media only screen and (max-width: $br-mobile) {
+      width: auto;
+    }
   }
 
   .extra-selector {
@@ -179,7 +183,7 @@
     }
 
     @media only screen and (max-width: $br-mobile) {
-      height: 26px;
+      // height: 26px;
 
       > .action {
         &.-share {
