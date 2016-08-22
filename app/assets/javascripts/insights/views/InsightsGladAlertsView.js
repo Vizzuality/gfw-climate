@@ -17,7 +17,8 @@ define([
 
   var API = window.gfw.config.GFW_API_HOST_V2;
   var ENDPOINT_CONFIG = '/query/b0c709f0-d1a6-42a0-a750-df8bdb0895f3?sql=SELECT * FROM data';
-  var ENDPOINT_DATA = '/query/4447a410-78d4-41d6-9364-213cfa176313?sql=SELECT * FROM data WHERE country_iso in (\'%s\') and year in (\'%s\')';
+  var ENDPOINT_DATA = '/query/9ed18255-89a9-4ccd-bdd6-fe7ffa1b1595?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE ((country_iso IN (\'%s\') OR state_iso IN (\'%s\')) AND year IN (\'%s\') AND week::int < 52) GROUP BY year, country_iso, week ORDER BY week::int ASC';
+
   var WEEKS_YEAR = 52;
 
   var InsightsGladAlerts = Backbone.View.extend({
@@ -25,6 +26,7 @@ define([
     events: {
       'click .js-selector': '_changeVisualizations',
       'click .js-share': '_openShare',
+      'click .js-year-nav': '_changeYear',
       'change .js-country-selector': '_changeDataByCountry',
       'change .js-year-selector': '_changeDataByYear'
     },
@@ -38,7 +40,7 @@ define([
     defaults: {
       selectedClassEl: '-selected',
       filter: 'carbon_emissions',
-      country: 'PER',
+      country: 'BRA',
       year: 2016,
       weekStep: 1,
       desforestationFilter: 'deforestation',
@@ -118,31 +120,32 @@ define([
     },
 
     _renderMainChart: function() {
-      var el = this.el.querySelector('#visMain');
-      var chartEl = el.querySelector('.chart');
+      var $el = this.el.querySelector('#visMain');
+      var $vis = $el.querySelector('.visualization');
+      var $chartEl = $el.querySelector('.chart');
       var iso = this.currentCountry;
       var year = this.currentYear;
 
       this._clearVisualization();
 
-      chartEl.innerHTML = '';
-      chartEl.classList.add(this.defaults.loadingClassEl);
+      $chartEl.innerHTML = '';
+      $vis.classList.add(this.defaults.loadingClassEl);
 
       $.ajax({
-        url: API + _.str.sprintf(ENDPOINT_DATA, iso, year),
+        url: API + _.str.sprintf(ENDPOINT_DATA, iso, iso, year),
         type: 'GET',
         success: function(res) {
           var data = res.data;
 
           if (data.length) {
-            el.classList.remove(this.defaults.noDataClassEl);
+            $el.classList.remove(this.defaults.noDataClassEl);
             this._createVisualization(data);
           } else {
-            el.classList.add(this.defaults.noDataClassEl);
+            $el.classList.add(this.defaults.noDataClassEl);
             this._renderNoDataPlaceHolder();
           }
 
-          chartEl.classList.remove(this.defaults.loadingClassEl);
+          $vis.classList.remove(this.defaults.loadingClassEl);
         }.bind(this)
       });
     },
@@ -180,7 +183,7 @@ define([
     _parseData: function(data) {
       return _.map(data, function(d) {
         var locationData = _.findWhere(this.locations, {
-          iso: d.country_iso
+          iso: this.currentCountry
         });
 
         if (locationData) {
@@ -199,13 +202,21 @@ define([
     },
 
     _setMaxWeek: function(data) {
-      var lastAlertsValues = _.filter(data, function(d) {
-        return d.alerts === '0' || d.alerts === '';
-      });
+      var lastValue = data && data[data.length - 1] ?
+        data[data.length - 1] : [];
 
-      if (lastAlertsValues && lastAlertsValues[0]) {
-        this.currentStep = (lastAlertsValues[0].week * 1) - 1;
+      if (lastValue) {
+        this.currentStep = (lastValue.week * 1);
       }
+    },
+
+    _getIso: function() {
+      var country = this.currentCountry;
+      var re = /(\d+)/g;
+      var subst = '-$1';
+
+      country = country.replace(re, subst);
+      return country;
     },
 
     _createLegend: function(el, data, category) {
@@ -256,7 +267,7 @@ define([
           co2Equivalency: NumbersHelper.addNumberDecimals(co2Equivalency),
           begin: begin,
           end: end,
-          iso: this.currentCountry,
+          iso: this._getIso(),
           week: this.currentStep
         });
 
@@ -299,6 +310,7 @@ define([
       if (this.visMain) {
         this.visMain.remove();
         this.legends = [];
+        this.images = {}
 
         var legend = this.el.querySelector('.' + this.defaults.legendSelectoClassEl);
         legend.innerHTML = '';
@@ -330,6 +342,31 @@ define([
       this._renderMainChart();
     },
 
+    _changeYear: function(ev) {
+      var action = ev.currentTarget.dataset.action;
+      var $selector = ev.currentTarget.parentNode.querySelector('.js-year-selector');
+      var options = $selector.options;
+      var current = $selector.selectedIndex;
+      var max = $selector.length - 1;
+      var newIndex = current;
+
+      if (action === 'add') {
+        newIndex++;
+      } else if (action === 'sub') {
+        newIndex--;
+      }
+
+      if (newIndex < 0) {
+        newIndex = max;
+      } else if (newIndex > max) {
+        newIndex = 0;
+      }
+      $selector.selectedIndex = newIndex;
+      this.currentYear = parseInt(options[newIndex].text, 10);
+
+      this._renderMainChart();
+    },
+
     _toggleFilter: function(element, filter) {
       var parent = this.el.querySelector('.' + element);
       var selected = parent.querySelector('.' + this.defaults.selectedClassEl);
@@ -349,8 +386,10 @@ define([
      * Shows the image of the current step
      */
     showImage: function() {
+      var maxData = this.maxData || this.currentStep;
+
       if (!this.images[this.currentStep] &&
-        (this.currentStep < this.maxData)) {
+        (this.currentStep <= maxData)) {
         var image = new Image();
         var currentStep = this.currentStep;
 
