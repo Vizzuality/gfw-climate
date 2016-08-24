@@ -1,3 +1,9 @@
+# 1.3.0 (24/08/2016)
+
+* Adds new GLAD visualizations
+* Adds new item to home page carousel
+* Reorganizes pantropical into INSIGHTS together with Glad Visualization
+
 # 0.5.1
 
 * New data on countries endpoints
