@@ -248,6 +248,12 @@ define([
     _setUpGraph: function() {
       var el = this.el;
       var margin = this.defaults.margin;
+      var isDesforestation = this.filter === this.defaults.desforestationFilter;
+      var label = 'Cumulative Emissions to Date (MtCO';
+
+      if (isDesforestation) {
+        label = 'Cumulative Area of Loss to Date (ha)';
+      }
 
       if (this.isEmbed) {
         margin = this.defaults.marginEmbed;
@@ -271,15 +277,17 @@ define([
         .attr('transform', 'translate(0, 12)')
         .append('text')
         .attr('class', 'y-label')
-        .text('Cumulative Emissions to Date (MtCO');
+        .text(label);
 
-      yAxisLabel.append('tspan')
-        .attr('class', 'underscript')
-        .attr('dy', this.defaults.underscriptPadding)
-        .text(this.defaults.underscript);
+      if (!isDesforestation) {
+        yAxisLabel.append('tspan')
+          .attr('class', 'underscript')
+          .attr('dy', this.defaults.underscriptPadding)
+          .text(this.defaults.underscript);
 
-      yAxisLabel.append('tspan')
-        .text(')');
+        yAxisLabel.append('tspan')
+          .text(')');
+      }
 
       this.svg = svg.append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
