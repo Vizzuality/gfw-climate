@@ -494,6 +494,11 @@ define([
       var _this = this;
       var allYData = _.pluck(this.chartData, this.dataColumns.semiDashed.y);
       var allXData = _.pluck(this.chartData, this.dataColumns.semiDashed.x);
+      var label = '2001 - 2013 Average';
+
+      if (this.iso === 'BRA') {
+        label = '2012 Average';
+      }
 
       var dashedLine = this.svg.append('g')
         .attr('class', 'line-semidashed-group')
@@ -513,7 +518,7 @@ define([
         .attr('y', this.y(_.max(allYData)))
         .attr('class', 'line-label')
         .attr('dy', -this.defaults.paddingLinesLabels)
-        .text('2001 - 2013 Average: ');
+        .text(label + ' ');
 
       this._addLineLabel(dashLineLabel, _.max(allYData));
     },
