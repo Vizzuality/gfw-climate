@@ -15,6 +15,7 @@ define([
 
   'use strict';
 
+  var GFW_URL = window.gfw.config.GFW_URL;
   var API = window.gfw.config.GFW_API_HOST_V2;
   var ENDPOINT_CONFIG = '/query/b0c709f0-d1a6-42a0-a750-df8bdb0895f3?sql=SELECT * FROM data';
   var ENDPOINT_DATA = '/query/9ed18255-89a9-4ccd-bdd6-fe7ffa1b1595?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE ((country_iso IN (\'%s\') OR state_iso IN (\'%s\')) AND year IN (\'%s\') AND week::int < 52) GROUP BY year, country_iso, week ORDER BY week::int ASC';
@@ -270,7 +271,8 @@ define([
           begin: begin,
           end: end,
           iso: this._getIso(),
-          week: this.currentStep
+          week: this.currentStep,
+          url: GFW_URL
         });
 
         this.legendImage = el.querySelector('.image');
