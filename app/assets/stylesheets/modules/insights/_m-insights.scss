@@ -4,11 +4,19 @@
     color: $white;
     text-align: center;
 
-    @media only screen and (max-width: $br-mobile) {
+    @media only screen and (max-width: $br-mobile-portrait) {
       font-size: 26px;
 
       &.-width-margin {
-        margin-top: 0px;
+        margin-top: 40px;
+      }
+    }
+
+    @media only screen and (min-width: $br-mobile-portrait) and (max-width: $br-mobile) {
+      font-size: 26px;
+
+      &.-width-margin {
+        margin-top: 0;
       }
 
       .is-embed-page & {
@@ -126,6 +134,16 @@
 
     @media only screen and (max-width: $br-mobile) {
       width: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      .is-embed-page & {
+        width: auto;
+        position: relative;
+        right: auto;
+        top: auto;
+      }
     }
   }
 
@@ -183,8 +201,6 @@
     }
 
     @media only screen and (max-width: $br-mobile) {
-      // height: 26px;
-
       > .action {
         &.-share {
           display: none;

@@ -7,6 +7,13 @@
 
     <div class="main-data">
       {{#if isDesforestation}}
+        <div class="item -mobile">
+          <div class="heading">
+            <div class="label">Deforestation to Date (ha)</div>
+          </div>
+          <div class="value">{{deforestation}}</div>
+        </div>
+
         <div class="item">
           <div class="heading">
             <div class="label">Annual Budget Used to Date (%)</div>
@@ -14,6 +21,13 @@
           <div class="value">{{annual_budget_deforestation}}</div>
         </div>
       {{else}}
+        <div class="item -mobile">
+          <div class="heading">
+            <div class="label">Cumulative Emissions to Date (MtCO<sub>2</sub>)</div>
+          </div>
+          <div class="value">{{emissions}}</div>
+        </div>
+
         <div class="item">
           <div class="heading">
             <div class="label">Annual Budget Used to Date (%)</div>

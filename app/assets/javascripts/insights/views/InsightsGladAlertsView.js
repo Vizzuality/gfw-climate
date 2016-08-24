@@ -17,7 +17,7 @@ define([
 
   var API = window.gfw.config.GFW_API_HOST_V2;
   var ENDPOINT_CONFIG = '/query/b0c709f0-d1a6-42a0-a750-df8bdb0895f3?sql=SELECT * FROM data';
-  var ENDPOINT_DATA = '/query/9ed18255-89a9-4ccd-bdd6-fe7ffa1b1595?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE ((country_iso IN (\'%s\') OR state_iso IN (\'%s\')) AND year IN (\'%s\') AND week::int < 52) GROUP BY year, country_iso, week ORDER BY week::int ASC';
+  var ENDPOINT_DATA = '/query/9ed18255-89a9-4ccd-bdd6-fe7ffa1b1595?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE ((country_iso IN (\'%s\') OR state_iso IN (\'%s\')) AND year IN (\'%s\') AND week::int < 52) GROUP BY year, country_iso, week ORDER BY week::int ASC';
 
   var WEEKS_YEAR = 52;
 
@@ -261,6 +261,8 @@ define([
 
         el.innerHTML = this.templateLegend({
           isDesforestation: filter === this.defaults.desforestationFilter,
+          emissions: NumbersHelper.addNumberDecimals(emissions),
+          deforestation: NumbersHelper.addNumberDecimals(deforestation),
           annual_budget:  NumbersHelper.addNumberDecimals(annual_budget),
           annual_budget_deforestation: NumbersHelper.addNumberDecimals(annual_budget_deforestation),
           alerts: NumbersHelper.addNumberDecimals(alerts),
@@ -344,11 +346,15 @@ define([
 
     _changeYear: function(ev) {
       var action = ev.currentTarget.dataset.action;
-      var $selector = ev.currentTarget.parentNode.querySelector('.js-year-selector');
+      var $parent = ev.currentTarget.parentNode;
+      var $selector = $parent.querySelector('.js-year-selector');
       var options = $selector.options;
       var current = $selector.selectedIndex;
       var max = $selector.length - 1;
       var newIndex = current;
+      var $add = $parent.querySelector('.-js-year-nav-right');
+      var $sub = $parent.querySelector('.-js-year-nav-left');
+
 
       if (action === 'add') {
         newIndex++;
@@ -361,6 +367,18 @@ define([
       } else if (newIndex > max) {
         newIndex = 0;
       }
+
+      if (newIndex < max) {
+        $add.classList.remove('-disabled');
+      } else {
+        $add.classList.add('-disabled');
+      }
+      if (newIndex === 0) {
+        $sub.classList.add('-disabled');
+      } else {
+        $sub.classList.remove('-disabled');
+      }
+
       $selector.selectedIndex = newIndex;
       this.currentYear = parseInt(options[newIndex].text, 10);
 
