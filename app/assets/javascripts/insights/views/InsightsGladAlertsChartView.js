@@ -9,6 +9,8 @@ define([
 
   'use strict';
 
+  var WEEKS_YEAR = 52;
+
   var GladAlertsVis = Backbone.View.extend({
 
     el: '#vis-glad',
@@ -31,6 +33,12 @@ define([
         right: 55,
         bottom: 35,
         left: 55
+      },
+      marginEmbed: {
+        top: 50,
+        right: 25,
+        bottom: 35,
+        left: 45
       },
       circleRadius: 6,
       triangleSize: 200,
@@ -164,14 +172,31 @@ define([
      *  Parses the data for the chart
      */
     _parseData: function(data) {
+      var range = _.range(WEEKS_YEAR);
       this.chartData = data;
       this.dataColumns = this.defaults.chartConfig[this.filter].dataColumns;
       this.dataDomain = this.defaults.chartConfig[this.filter].domain;
       this.unit = this.defaults.units[this.filter];
 
-      this.chartData.forEach(function(d) {
-        d.date = moment().week(d.week).toDate();
-      });
+      range.forEach(function(d) {
+        var week = d + 1;
+        var data = this.chartData[d];
+
+        if (data) {
+          data.date = moment().week(data.week).toDate();
+        } else {
+          var mainData = this.chartData[0];
+          this.chartData.push({
+            date: moment().week(week).toDate(),
+            carbon_average: mainData.carbon_average,
+            carbon_target: mainData.carbon_target,
+            deforestation_average: mainData.deforestation_average,
+            deforestation_target: mainData.deforestation_target,
+            year: mainData.year,
+            week: week.toString()
+          });
+        }
+      }.bind(this));
 
       this.dotsData = _.filter(this.chartData, function(d) {
         var value = d[this.dataColumns.dots.r];
@@ -210,7 +235,7 @@ define([
     },
 
     _checkIsEmbed: function() {
-      if (document.body.clientWidth < this.defaults.maxWidth) {
+      if (document.body.clientWidth <= this.defaults.maxWidth) {
         this.isEmbed = true;
       } else {
         this.isEmbed = false;
@@ -223,6 +248,10 @@ define([
     _setUpGraph: function() {
       var el = this.el;
       var margin = this.defaults.margin;
+
+      if (this.isEmbed) {
+        margin = this.defaults.marginEmbed;
+      }
 
       this.el.innerHTML = '';
       this.el.classList.add(this.defaults.chartClass);
@@ -661,30 +690,32 @@ define([
         .duration(0)
         .call(this.brush.extent(extent1))
         .call(this.brush.event);
+
+      this._updateTooltip();
+      this._setCurrentTooltip();
     },
 
     _setHoverEvent: function() {
       var _this = this;
       d3.select('svg .background')
         .on('mousemove', function() {
-          if (!_this.isEmbed) {
             var value = Math.round(_this.x2.invert(d3.mouse(this)[0]));
             _this._changeStepByValue(value);
             _this._updateTooltip(value);
 
-            d3.selectAll('svg .dot')
-              .classed('hovered', false);
-
             Backbone.Events.trigger('insights:glad:update', _this._getCurrentState(value));
 
             _this._setCurrentTooltip(value);
-          }
         });
     },
 
     _setCurrentTooltip: function(value) {
       var currentStep = value || this.currentStep;
       var current = d3.select('svg .dot-' + currentStep);
+
+      d3.selectAll('svg .dot')
+        .classed('hovered', false);
+
       if (current) {
         current.classed('hovered', true);
 
@@ -700,6 +731,10 @@ define([
             this.tooltip.classList.add('-right');
           } else {
             this.tooltip.classList.remove('-right');
+          }
+
+          if (this.isEmbed) {
+            leftPos = leftPos - (this.defaults.tooltipPadding / 2);
           }
 
           this.tooltip.style.left = leftPos + 'px';
