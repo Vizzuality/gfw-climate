@@ -108,7 +108,7 @@ define([
         }
       },
       units: {
-        'carbon_emissions': 'CO2/yr',
+        'carbon_emissions': 'Mt CO2/yr',
         'deforestation': 'ha/yr'
       },
       handleWidth: 1,
@@ -505,7 +505,7 @@ define([
       var label = '2001 - 2013 Average:';
 
       if (this.iso === 'BRA') {
-        label = '2012 Average:';
+        label = '2013 Average:';
       }
 
       var dashedLine = this.svg.append('g')
