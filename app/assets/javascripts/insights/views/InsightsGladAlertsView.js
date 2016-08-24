@@ -415,7 +415,7 @@ define([
 
         image.onload = this._onImageLoad(currentStep, image);
         image.onerror = this._onImageError(currentStep);
-        image.src = this.imageURI + '/' + this.currentCountry.toLowerCase() +
+        image.src = this.imageURI + '/' + this.currentCountry.toUpperCase() +
           '_' + this.currentYear + '_' +
           NumbersHelper.padNumberToTwo(this.currentStep) + '.png';
       } else {
