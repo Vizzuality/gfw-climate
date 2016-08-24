@@ -3,7 +3,7 @@
   position: relative;
 
   @media only screen and (max-width: $br-mobile-portrait ) {
-    height: 1150px;
+    height: 1250px;
   }
 
   @media only screen and (min-width: $br-mobile-portrait ) and (max-width: $br-mobile) {
@@ -12,8 +12,12 @@
 
   @media only screen and (min-width: $br-mobile-portrait)
    and (max-width: $br-mobile) {
-    height: 760px;
+    height: 820px;
     overflow: hidden;
+
+    .is-embed-page & {
+      height: 910px;
+    }
   }
 
   .year-selector {
@@ -43,6 +47,12 @@
         color: $font-color-3;
         text-align: center;
         cursor: pointer;
+
+        &.-disabled {
+          color: $font-color-1;
+          opacity: 0.4;
+          pointer-events: none;
+        }
       }
 
       select {
@@ -61,15 +71,6 @@
         &::-ms-expand {
           display: none;
         }
-
-        @media only screen and (max-width: $br-mobile) {
-          // font-size: 11px;
-          // padding-bottom: 9px;
-        }
-      }
-
-      @media only screen and (max-width: $br-mobile) {
-        // height: 25px;
       }
     }
 
@@ -187,6 +188,10 @@
 
             @media only screen and (max-width: $br-mobile) {
               opacity: 0;
+
+              .is-embed-page & {
+                opacity: 1;
+              }
             }
           }
         }
@@ -215,6 +220,13 @@
 
       @media only screen and (max-width: $br-mobile) {
         margin-top: 20px;
+        flex-direction: column-reverse;
+        position: relative;
+
+        .is-embed-page & {
+          flex-direction: row;
+          margin-top: 25px;
+        }
       }
 
       .countries {
@@ -239,6 +251,10 @@
 
             @media only screen and (max-width: $br-mobile) {
               @include ellipsis(270px);
+
+              .is-embed-page & {
+                @include ellipsis(250px);
+              }
             }
 
             &:after {
@@ -254,11 +270,6 @@
               -webkit-transform: rotate(45deg);
               -ms-transform: rotate(45deg);
               transform: rotate(45deg);
-
-              // @media only screen and (max-width: $br-mobile) {
-              //   top: 13%;
-              //   right: 10px;
-              // }
             }
           }
 
@@ -276,11 +287,6 @@
             background: transparent;
             opacity: 0;
             cursor: pointer;
-
-            // @media only screen and (max-width: $br-mobile) {
-            //   padding-bottom: 4px;
-            //   padding-top: 4px;
-            // }
           }
         }
       }
@@ -292,14 +298,21 @@
         justify-content: center;
 
         @media only screen and (max-width: $br-mobile) {
+          width: 88%;
           justify-content: flex-end;
+          margin-bottom: 23px;
+
+          .is-embed-page & {
+            width: 52%;
+          }
         }
       }
     }
 
     &.no-data {
       .main-vis-switch {
-        display: none;
+        pointer-events: none;
+        opacity: 0.5;
       }
 
       .legend-container {
@@ -349,7 +362,6 @@
 
   .legend-container {
     width: 100%;
-    // height: 310px;
     display: flex;
     flex-direction: column;
     background: #F9F9F9;
@@ -358,19 +370,6 @@
     position: relative;
     z-index: 0;
     top: -9px;
-
-    // .is-embed-page & {
-    //   flex-direction: column-reverse;
-    // }
-    //
-    // @media only screen and (max-width: $br-mobile-portrait) {
-    //   flex-direction: column-reverse;
-    // }
-    //
-    // @media only screen and (min-width: $br-mobile-portrait)
-    //   and (max-width: $br-mobile) {
-    //   flex-direction: column-reverse;
-    // }
   }
 
   .level-indicator {
@@ -433,18 +432,6 @@
       line-height: 14px;
       color: #555555;
     }
-
-    // .is-embed-page & {
-    //   width: auto;
-    //   margin-left: 20px;
-    //   margin-right: 20px;
-    // }
-
-    // @media only screen and (max-width: $br-mobile) {
-    //   width: auto;
-    //   margin-left: 20px;
-    //   margin-right: 20px;
-    // }
   }
 
   .legend {
@@ -457,6 +444,11 @@
     @media only screen and (max-width: $br-mobile-portrait ) {
       flex-direction: column;
       padding-left: 0;
+
+      .is-embed-page & {
+        flex-direction: row;
+        padding-left: 20px;
+      }
     }
 
     .stats {
@@ -479,6 +471,12 @@
           margin-bottom: 25px;
           padding-left: 10%;
           margin-left: 0;
+        }
+
+        .is-embed-page & {
+          > .label {
+            padding-left: 0;
+          }
         }
       }
 
@@ -521,8 +519,20 @@
             width: 120px;
             margin-right: 20px;
 
+            &.-mobile {
+              display: none;
+            }
+
             @media only screen and (max-width: $br-mobile-portrait ) {
               width: 100%;
+
+              &.-mobile {
+                display: block;
+
+                .is-embed-page & {
+                  display: none;
+                }
+              }
             }
 
             .heading {
