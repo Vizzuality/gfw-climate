@@ -410,7 +410,7 @@ define([
       yAxis.append('g')
         .call(this.yAxis)
         .selectAll('text')
-          .attr('x', -_this.defaults.paddingAxisLabels);
+          .attr('x', 0);
 
       // Custom domain
       this.svg.append('g')
