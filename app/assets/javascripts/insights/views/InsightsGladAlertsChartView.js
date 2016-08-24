@@ -494,10 +494,10 @@ define([
       var _this = this;
       var allYData = _.pluck(this.chartData, this.dataColumns.semiDashed.y);
       var allXData = _.pluck(this.chartData, this.dataColumns.semiDashed.x);
-      var label = '2001 - 2013 Average';
+      var label = '2001 - 2013 Average:';
 
       if (this.iso === 'BRA') {
-        label = '2012 Average';
+        label = '2012 Average:';
       }
 
       var dashedLine = this.svg.append('g')
