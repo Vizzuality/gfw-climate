@@ -229,6 +229,11 @@ define([
             units: layerData.units,
             unit: layerData.unit
           });
+        } else if (this.detailsTemplates[layer.slug]) {
+          layer.detailsTpl = this.detailsTemplates[layer.slug]({
+            threshold: options.threshold || 30,
+            layerTitle: layer.title
+          });
         }
         if (layer.iso) {
           var countries = amplify.store('countries');
