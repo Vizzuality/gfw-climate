@@ -18,7 +18,7 @@ define([
   var GFW_URL = window.gfw.config.GFW_URL;
   var API = window.gfw.config.GFW_API_HOST_V2;
   var ENDPOINT_CONFIG = '/query/b0c709f0-d1a6-42a0-a750-df8bdb0895f3?sql=SELECT * FROM data';
-  var ENDPOINT_DATA = '/query/9ed18255-89a9-4ccd-bdd6-fe7ffa1b1595?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE ((country_iso IN (\'%s\') OR state_iso IN (\'%s\')) AND year IN (\'%s\') AND week::int < 52) GROUP BY year, country_iso, week ORDER BY week::int ASC';
+  var ENDPOINT_DATA = '/query/9ed18255-89a9-4ccd-bdd6-fe7ffa1b1595?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE ((country_iso IN (\'%s\') OR state_iso IN (%s)) AND year IN (\'%s\') AND week::int < 52) GROUP BY year, country_iso, week ORDER BY week::int ASC';
 
   var WEEKS_YEAR = 52;
 
@@ -124,8 +124,7 @@ define([
       var $el = this.el.querySelector('#visMain');
       var $vis = $el.querySelector('.visualization');
       var $chartEl = $el.querySelector('.chart');
-      var iso = this.currentCountry;
-      var year = this.currentYear;
+      var url = this._getDataQuery();
 
       this._clearVisualization();
 
@@ -133,7 +132,7 @@ define([
       $vis.classList.add(this.defaults.loadingClassEl);
 
       $.ajax({
-        url: API + _.str.sprintf(ENDPOINT_DATA, iso, iso, year),
+        url: url,
         type: 'GET',
         success: function(res) {
           var data = res.data;
@@ -149,6 +148,21 @@ define([
           $vis.classList.remove(this.defaults.loadingClassEl);
         }.bind(this)
       });
+    },
+
+    _getDataQuery: function() {
+      var iso = this.currentCountry;
+      var year = this.currentYear;
+      var stateIso = iso;
+      var locationData = _.findWhere(this.locations, {
+        iso: iso
+      });
+
+      if (locationData && locationData.groupBy) {
+        stateIso = locationData.groupBy.join('\', \'');
+      }
+
+      return API + _.str.sprintf(ENDPOINT_DATA, iso, '\'' + stateIso + '\'', year);
     },
 
     _createVisualization: function(data) {
