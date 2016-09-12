@@ -22,6 +22,7 @@ define([
   'text!map/templates/legend/us_land_cover.handlebars',
   'text!map/templates/legend/bra_biomes.handlebars',
   'text!map/templates/legend/idn_peat.handlebars',
+  'text!map/templates/legend/hsdw.handlebars',
   'text!map/templates/legend/plantations_by_type.handlebars',
   'text!map/templates/legend/plantations_by_species.handlebars',
   'text!map/templates/legend/peatland_drainage.handlebars',
@@ -38,7 +39,15 @@ define([
   'text!map/templates/legend/raisg_mining.handlebars',
   'text!map/templates/legend/mangrove_biomass.handlebars',
 
-], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, dam_hotspotsTPL, us_land_coverTPL, bra_biomesTPL, idn_peatTPL, gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl,peatland_drainageTpl,colombiaForestChangeTpl, us_land_coverTpl, bra_biomesTpl, gtm_forest_changeTpl, gtm_forest_coverTpl, gtm_forest_densityTpl, khm_eco_land_concTpl, usa_forest_ownershipTpl, mysPATpl, per_miningTpl,raisg_miningTpl, mangrove_biomassTpl) {
+], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl,
+  idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, concesionesTpl,
+  concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL,
+  dam_hotspotsTPL, us_land_coverTPL, bra_biomesTPL, idn_peatTPL, hsdwTPL,
+  gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, peatland_drainageTpl,
+  colombiaForestChangeTpl, us_land_coverTpl, bra_biomesTpl,
+  gtm_forest_changeTpl, gtm_forest_coverTpl, gtm_forest_densityTpl,
+  khm_eco_land_concTpl, usa_forest_ownershipTpl, mysPATpl,
+  per_miningTpl, raisg_miningTpl, mangrove_biomassTpl) {
 
   'use strict';
 
@@ -133,6 +142,7 @@ define([
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
       bra_biomes : Handlebars.compile(bra_biomesTPL),
       idn_peat_lands : Handlebars.compile(idn_peatTPL),
+      hwsd : Handlebars.compile(hsdwTPL),
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
       plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),
       peatland_drainage: Handlebars.compile(peatland_drainageTpl),
