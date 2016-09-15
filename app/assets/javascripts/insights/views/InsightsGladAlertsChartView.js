@@ -9,7 +9,7 @@ define([
 
   'use strict';
 
-  var WEEKS_YEAR = 52;
+  var WEEKS_YEAR = 53;
 
   var GladAlertsVis = Backbone.View.extend({
 
