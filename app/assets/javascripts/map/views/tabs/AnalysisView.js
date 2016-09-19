@@ -308,6 +308,10 @@ define([
         }
         this.$countryButton.addClass('disabled');
         this.presenter.setAnalyzeIso(iso);
+        // record in Google Analytics
+        var countryName = this.$countrySelect.find("option[value='"+this.iso+"']").text();
+        var regionName = this.area ? " - " + this.$regionSelect.find("option[value='"+this.area+"']").text() : "" ;
+        ga('send', 'event', 'Map', 'Analyse', countryName + regioName);
       }
     },
 

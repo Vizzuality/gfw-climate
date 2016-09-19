@@ -289,6 +289,9 @@ define([
       this.iso = iso.country;
       this.commonIsoChanges();
       this.$countrySelect.val(this.iso).trigger("chosen:updated");
+      // record event
+      var countryName = this.$countrySelect.find("option[value='"+this.iso+"']").text();
+      ga('send', 'event', 'Map', 'Search', countryName);
       if (this.mobile) {
         this.filterByLetter(null);
       }
