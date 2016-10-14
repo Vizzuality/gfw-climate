@@ -84,14 +84,15 @@ define([
         mapTypeId: 'dark',
         center: new google.maps.LatLng(15, 27),
       };
-
-      this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
+      var mapOptions = _.extend({}, this.options, params);
+      this.map = new google.maps.Map(this.el, mapOptions);
       this.allowedBounds = new google.maps.LatLngBounds(
          new google.maps.LatLng(-85, -180),
          new google.maps.LatLng(85, 180)
       ); // why (-85, -180)? Well, because f*ck you, Google: http://stackoverflow.com/questions/5405539/google-maps-v3-why-is-latlngbounds-contains-returning-false
       this.lastValidCenter = this.map.getCenter();
       this._checkDialogs();
+      this._checkCustomLabelLayer(mapOptions.mapTypeId);
 
       this.resize();
       this._setMaptypes();
@@ -383,6 +384,7 @@ define([
         this.map.setOptions({styles: styles});
       }
       this._setBasemapStyles(maptype);
+      this._checkCustomLabelLayer(maptype);
       this.presenter.onMaptypeChange(maptype);
     },
 
@@ -523,6 +525,37 @@ define([
         sessionStorage.removeItem('DIALOG');
         window.setTimeout(function(){$('.backdrop').css('opacity', '0.3');},500);
       });
+    },
+
+    _checkCustomLabelLayer: function(mapTypeId){
+      if (mapTypeId === 'dark') {
+        this.setCustomLabelLayer(true);
+      } else {
+        this.setCustomLabelLayer(false);
+      }
+    },
+
+    setCustomLabelLayer: function(add){
+      var layer = {
+        slug: 'custom_dark_labels',
+        position: 0
+      };
+      var options = {};
+      if (add) {
+        console.log('add custom labels layer');
+        if (layer && !!layersHelper[layer.slug]) {
+          if ((!layersHelper[layer.slug].view || this.layerInst[layer.slug])) {
+            return;
+          }
+          var layerView = this.layerInst[layer.slug] = new layersHelper[layer.slug].view(layer, options, this.map);
+
+          layerView.addLayer(layer.position);
+        }
+      }
+      else {
+        console.log('remove custom labels layer');
+        this._removeLayer(layer.slug);
+      }
     },
 
     overlayToggle: function(bool){
