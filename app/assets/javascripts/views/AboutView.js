@@ -1,7 +1,8 @@
 define([
   'jquery',
   'backbone',
-], function($,Backbone) {
+  'views/SidebarNavView'
+], function($,Backbone, SidebarNavView) {
 
   'use strict';
 
@@ -20,6 +21,12 @@ define([
 
       var opts = settings && settings.options ? settings.options : {};
       this.options = _.extend({}, this.defaults, opts);
+
+      this.initModules();
+    },
+
+    initModules: function(e) {
+      new SidebarNavView();
     },
 
     // UI events
