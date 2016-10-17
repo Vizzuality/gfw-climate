@@ -13,9 +13,6 @@ define([
       'click .downloadDoc': 'onDownloadDoc'
     },
 
-    model: new (Backbone.Model.extend()),
-
-
     initialize: function(settings) {
       if (!this.el) {
         return;
