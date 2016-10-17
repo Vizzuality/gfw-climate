@@ -182,7 +182,7 @@ define([
      */
     setLayers: function(layers, options) {
       _.each(this.layerInst, function(inst, layerSlug) {
-        !layers[layerSlug] && this._removeLayer(layerSlug);
+        layerSlug !== 'custom_dark_labels' && !layers[layerSlug] && this._removeLayer(layerSlug);
       }, this);
 
       layers = _.sortBy(_.values(layers), 'position');
@@ -538,11 +538,10 @@ define([
     setCustomLabelLayer: function(add){
       var layer = {
         slug: 'custom_dark_labels',
-        position: 0
+        position: 1000
       };
       var options = {};
       if (add) {
-        console.log('add custom labels layer');
         if (layer && !!layersHelper[layer.slug]) {
           if ((!layersHelper[layer.slug].view || this.layerInst[layer.slug])) {
             return;
@@ -553,7 +552,6 @@ define([
         }
       }
       else {
-        console.log('remove custom labels layer');
         this._removeLayer(layer.slug);
       }
     },
