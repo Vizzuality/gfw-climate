@@ -6,8 +6,8 @@ require([
   'underscore',
   'Class',
   'backbone',
-  'views/AboutView'
-], function($, _, Class, Backbone, AboutView) {
+  'views/SidebarNavView'
+], function($, _, Class, Backbone, SidebarNavView) {
 
   'use strict';
 
@@ -34,7 +34,7 @@ require([
      * you are not completely sure.
      */
     _initViews: function() {
-      new AboutView();
+      new SidebarNavView();
     }
 
   });
