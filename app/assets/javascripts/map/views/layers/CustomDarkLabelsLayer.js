@@ -11,10 +11,8 @@ define([
 
   var CustomDarkLabelsLayer = ImageLayerClass.extend({
 
-    //TODO: update url with this format
-    // “https://{username}.carto.com/api/v1/map/named/{template_id}/{layer}/{z}/{x}/{y}.png”
     options: {
-      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gain_alpha{/z}{/x}{/y}.png' //example
+      urlTemplate: 'https://wri-01.carto.com/api/v1/map/named/dark_baselabel_test/0/{z}/{x}/{y}.png'
     }
 
   });
