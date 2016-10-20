@@ -12,7 +12,7 @@ define([
   var CustomDarkLabelsLayer = ImageLayerClass.extend({
 
     options: {
-      urlTemplate: 'https://wri-01.carto.com/api/v1/map/named/dark_baselabel_test/0/{z}/{x}/{y}.png'
+      urlTemplate: 'https://wri-01.carto.com/api/v1/map/named/dark_baselabel/0/{z}/{x}/{y}.png'
     }
 
   });
