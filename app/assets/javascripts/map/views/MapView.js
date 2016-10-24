@@ -182,7 +182,9 @@ define([
      */
     setLayers: function(layers, options) {
       _.each(this.layerInst, function(inst, layerSlug) {
-        layerSlug !== 'custom_dark_labels' && !layers[layerSlug] && this._removeLayer(layerSlug);
+        layerSlug !== 'custom_dark_base_labels' &&
+        layerSlug !== 'custom_dark_only_labels' &&
+        !layers[layerSlug] && this._removeLayer(layerSlug);
       }, this);
 
       layers = _.sortBy(_.values(layers), 'position');
@@ -529,17 +531,20 @@ define([
 
     _checkCustomLabelLayer: function(mapTypeId){
       if (mapTypeId === 'dark') {
-        this.setCustomLabelLayer(true);
+        this.setCustomLabelLayer('custom_dark_base_labels', true);
+        this.setCustomLabelLayer('custom_dark_only_labels', true);
       } else {
-        this.setCustomLabelLayer(false);
+        this.setCustomLabelLayer('custom_dark_base_labels', false)
+        this.setCustomLabelLayer('custom_dark_only_labels', false);
       }
     },
 
-    setCustomLabelLayer: function(add){
+    setCustomLabelLayer: function(slug, add) {
       var layer = {
-        slug: 'custom_dark_labels',
+        slug: slug,
         position: 1000
       };
+
       var options = {};
       if (add) {
         if (layer && !!layersHelper[layer.slug]) {

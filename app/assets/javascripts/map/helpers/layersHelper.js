@@ -98,7 +98,8 @@ define([
   'map/views/layers/PerMinamCoverLayer',
   'map/views/layers/WMSLayer',
   'map/views/layers/MangroveBiomassLayer',
-  'map/views/layers/CustomDarkLabelsLayer',
+  'map/views/layers/CustomDarkBaseLabelsLayer',
+  'map/views/layers/CustomDarkOnlyLabelsLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -200,7 +201,8 @@ define([
   PerMinamCoverLayer,
   WMSLayer,
   MangroveBiomassLayer,
-  CustomDarkLabelsLayer,
+  CustomDarkBaseLabelsLayer,
+  CustomDarkOnlyLabelsLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -209,8 +211,11 @@ define([
   'use strict';
 
   var layersHelper = {
-    custom_dark_labels: {
-      view: CustomDarkLabelsLayer
+    custom_dark_base_labels: {
+      view: CustomDarkBaseLabelsLayer
+    },
+    custom_dark_only_labels: {
+      view: CustomDarkOnlyLabelsLayer
     },
     biomass_loss: {
       view: BiomassLoss,
