@@ -5,9 +5,18 @@ define([
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView',
   'countries/views/CountryPantropicalView',
+  'countries/views/CountryReportView',
   'insights/views/InsightsView'
-], function(Backbone, utils, PlaceService, CountryIndexView,
-  CountryShowView, CountryPantropicalView, InsightsView) {
+], function(
+  Backbone,
+  utils,
+  PlaceService,
+  CountryIndexView,
+  CountryShowView,
+  CountryPantropicalView,
+  CountryReportView,
+  InsightsView
+) {
 
   'use strict';
 
@@ -17,6 +26,7 @@ define([
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
       'insights(/)(:insight)'               : '_initInsights',
+      'countries/:country/report'           : '_initReport',
       'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
 
@@ -38,6 +48,10 @@ define([
       }, _.parseUrl());
 
       this.placeService.initPlace(params);
+    },
+
+    _initReport: function(country) {
+      new CountryReportView();
     },
 
     _initPantropical: function() {
