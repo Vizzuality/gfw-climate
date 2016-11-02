@@ -166,13 +166,11 @@ define([
         return _.str.sprintf('%s:national', dataset);
       } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
         return _.str.sprintf('%s:subnational', dataset);
-      } else if (_.has(config, 'geostore')) {
-        return _.str.sprintf('%s:world', dataset);
-      } else if (_.has(config, 'use')) {
+      } else if (_.has(config, 'use') && config.use !== null) {
         return _.str.sprintf('%s:use', dataset);
-      } else if (_.has(config, 'wdpaid')) {
+      } else if (_.has(config, 'wdpaid') && config.wdpaid !== null) {
         return _.str.sprintf('%s:wdpa', dataset);
-      } else if (_.has(config, 'geojson')) {
+      } else if (_.has(config, 'geojson') || _.has(config, 'geostore')) {
         return _.str.sprintf('%s:world', dataset);
       }
 
