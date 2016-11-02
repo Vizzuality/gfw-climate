@@ -349,7 +349,8 @@ define([
       if (this.wdpaidBool) {
         var resource = this._buildResource({
           wdpaid: wdpaid,
-          type: 'other'
+          type: 'other',
+          geostore: null
         });
 
         ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Wdpaid: ' + resource.wdpaid);
