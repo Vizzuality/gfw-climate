@@ -12,7 +12,7 @@ define([
   var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
 
   var APIURLS = {
-    'indicator': '/api/indicators/{indicator}{?thresh,iso,id_1,area}'
+    'indicator': '/api/indicators/{indicator}{?thresh,iso}'
   };
 
   var ReportService = Class.extend({

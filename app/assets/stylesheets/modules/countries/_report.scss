@@ -1,3 +1,18 @@
 .m-report {
   min-height: 300px;
+  padding-bottom: 40px;
+
+  .block {
+    width: 100%;
+    border-bottom: 1px solid #E5E5E5;
+    padding: 80px 0;
+
+    > .title {
+      width: 100%;
+      font-size: 50px;
+      color: $font-color-1;
+      text-align: left;
+      margin-bottom: 50px;
+    }
+  }
 }

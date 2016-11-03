@@ -1,9 +1,11 @@
 define([
   'backbone',
+  'mps',
   'countries/services/ReportService',
   'text!countries/templates/countryReport.handlebars',
 ], function(
   Backbone,
+  mps,
   ReportService,
   tpl
 ) {
@@ -16,6 +18,10 @@ define([
     template: Handlebars.compile(tpl),
 
     defaults: {
+      settings: {
+        'thresh': 30
+      },
+
       indicators: [
         {
           id: 1,
@@ -27,19 +33,35 @@ define([
         },
         {
           id: 11,
-          slug: 'aboveground'
+          slug: 'abovegroundCDensity'
         },
         {
           id: 39,
-          slug: 'biomass'
+          slug: 'belowgroundCDensity'
+        },
+        {
+          id: 5,
+          slug: 'abovegroundCStocks'
+        },
+        {
+          id: 7,
+          slug: 'belowgroundCStocks'
         }
       ]
     },
 
     initialize: function(params) {
-      this.indicatorsList = this.defaults.indicators;
+      this.options = _.extend(this.defaults, params);
+      this.indicatorsList = this.options.indicators;
+      this.defaultSettings= this.options.settings;
+      this.iso = this.options.iso;
       this.indicatorsData = [];
-      this.render();
+
+      if (_.isEmpty(this.options.params)) {
+        this._setDefaultParams();
+      } else {
+        this.render();
+      }
     },
 
     render: function() {
@@ -47,6 +69,10 @@ define([
       this.$el.html(this.template({}));
 
       this._getIndicators();
+    },
+
+    _setDefaultParams: function() {
+      mps.publish('Router/change', [this.defaultSettings]);
     },
 
     _getIndicators: function() {
@@ -69,9 +95,7 @@ define([
       var params = {
         indicator: indicator.id,
         thresh: 30,
-        iso: 'BRA',
-        id_1: '',
-        area: ''
+        iso: this.iso
       };
 
       ReportService.get(params)
