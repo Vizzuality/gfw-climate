@@ -409,8 +409,7 @@ define([
 
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
-
-          if (!!useid && this.usenames.indexOf(useid) === -1) {
+          if (!!layerSlug && this.usenames.indexOf(layerSlug) === -1) {
             var provider = {
               table: layerSlug,
               filter: 'cartodb_id = ' + useid,
