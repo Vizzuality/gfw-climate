@@ -1,34 +1,7 @@
 <div class="layout-content">
-  <div class="l-toolbar">
-    <div class="inner">
-      <div class="m-toolbar" id="toolbarView">
-        <ul class="options">
-          <li class="options_item btn-share" data-hideembed="true">
-            <svg><use xlink:href="#shape-share"></use></svg><button id="share-country">share</button>
-          </li>
-          <li class="options_item -disabled btn-save">
-            <svg><use xlink:href="#shape-share"></use></svg><button id="print-country">save/print report</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
   <section data-iso="<%= @iso %>" id="countryReportView">
     <div class="container-country">
-      <!-- <div class="container-country__header-country" id="headerCountry">
-        <div class="inner">
-          <div class="container-country__content">
-            <div class="header-country__title-country">
-              <h1>
-                <%= @country_name %>'s report
-              </h1>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <div class="container-country__content-country">
-        <section id="report" class="m-report is-loading"></section>
-      </div>
+      <section id="report" class="m-report is-loading"></section>
     </div>
   </section>
 </div>

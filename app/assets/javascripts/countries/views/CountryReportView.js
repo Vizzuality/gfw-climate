@@ -2,11 +2,13 @@ define([
   'backbone',
   'mps',
   'countries/services/ReportService',
+  'countries/views/report/SummaryChartView',
   'text!countries/templates/countryReport.handlebars',
 ], function(
   Backbone,
   mps,
   ReportService,
+  SummaryChartView,
   tpl
 ) {
   'use strict';
@@ -69,6 +71,7 @@ define([
       this.$el.html(this.template({}));
 
       this._getIndicators();
+      this._initModules();
     },
 
     _setDefaultParams: function() {
@@ -105,6 +108,10 @@ define([
         }.bind(this));
 
       return $promise.promise();
+    },
+
+    _initModules: function() {
+      this.summaryChart = new SummaryChartView();
     }
   });
 
