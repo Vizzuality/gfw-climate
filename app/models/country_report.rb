@@ -66,9 +66,8 @@ class CountryReport
         t["year"] <= @reference_end_year
     end
     response[:emissions][:reference][:years] = values.map{|t| t["year"]}
-    response[:emissions][:reference][:average] = values.
-      inject(0){|sum,t| sum += t["value"]} / values.size
-
+    response[:emissions][:reference][:total] = values.inject(0){|sum,t| sum += t["value"]}
+    response[:emissions][:reference][:average] = response[:emissions][:reference][:total] / values.size
     response[:emissions][:reference][:values] = values
 
     response[:emissions][:monitor] = {}
@@ -80,8 +79,8 @@ class CountryReport
         t["year"] <= @monitor_end_year
     end
     response[:emissions][:monitor][:years] = values.map{|t| t["year"]}
-    response[:emissions][:monitor][:average] = values.
-      inject(0){|sum,t| sum += t["value"]} / values.size
+    response[:emissions][:monitor][:total] = values.inject(0){|sum,t| sum += t["value"]}
+    response[:emissions][:monitor][:average] = response[:emissions][:monitor][:total] / values.size
     response[:emissions][:monitor][:values] = values
 
     response[:forest_loss] = {}
@@ -94,8 +93,8 @@ class CountryReport
         t["year"] <= @reference_end_year
     end
     response[:forest_loss][:reference][:years] = values.map{|t| t["year"]}
-    response[:forest_loss][:reference][:average] = values.
-      inject(0){|sum,t| sum += t["value"]} / values.size
+    response[:forest_loss][:reference][:total] = values.inject(0){|sum,t| sum += t["value"]}
+    response[:forest_loss][:reference][:average] = response[:forest_loss][:reference][:total] / values.size
     response[:forest_loss][:reference][:values] = values
 
 
@@ -108,8 +107,8 @@ class CountryReport
         t["year"] <= @monitor_end_year
     end
     response[:forest_loss][:monitor][:years] = values.map{|t| t["year"]}
-    response[:forest_loss][:monitor][:average] = values.
-      inject(0){|sum,t| sum += t["value"]} / values.size
+    response[:forest_loss][:monitor][:total] = values.inject(0){|sum,t| sum += t["value"]}
+    response[:forest_loss][:monitor][:average] = response[:forest_loss][:monitor][:total] / values.size
     response[:forest_loss][:monitor][:values] = values
     response
   end
