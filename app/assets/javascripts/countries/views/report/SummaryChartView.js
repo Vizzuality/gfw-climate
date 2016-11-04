@@ -21,7 +21,7 @@ define([
       paddingAxisLabels: 10,
       paddingXAxisLabels: 20,
       paddingYAxisLabels: 10,
-      circleRadius: 5,
+      circleRadius: 4.5,
       margin: {
         top: 50,
         right: 55,
