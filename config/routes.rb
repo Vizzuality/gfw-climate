@@ -32,12 +32,13 @@ Rails.application.routes.draw do
   end
 
   # Countries - jurisdiction routes
-  get 'pantropical',         to: 'countries#pantropical', as: :pantropical
-  get 'countries/:id/:id_1', to: 'countries#show',        as: :jurisdiction
+  get 'pantropical',            to: 'countries#pantropical', as: :pantropical
+  get 'countries/:id/report',   to: 'countries#report',      as: :report
+  get 'countries/:id/:id_1',    to: 'countries#show',        as: :jurisdiction
 
   # Embed countries routes
-  get 'embed/pantropical',   to: 'embed#pantropical',     as: :pantropical_embed
-  get 'embed/countries(/*path)', to: 'embed#countries', as: :countries_embed
+  get 'embed/pantropical',       to: 'embed#pantropical', as: :pantropical_embed
+  get 'embed/countries(/*path)', to: 'embed#countries',   as: :countries_embed
 
 
   # Embed insights routes
@@ -62,6 +63,8 @@ Rails.application.routes.draw do
         list_show_only.resources :countries
         list_show_only.resources :widgets
       end
+
+      resources :reports, only: [:index]
 
       get 'countries/:id/:id_1',       to: 'countries#show_jurisdiction', as: :jurisdiction
       get 'indicators/:id/:iso',       to: 'indicators#show',             as: :country_indicator

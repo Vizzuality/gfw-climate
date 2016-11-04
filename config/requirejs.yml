@@ -32,6 +32,7 @@ paths:
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
   keymaster: "keymaster/keymaster"
   enquire: "enquire/dist/enquire"
+  urijs: "urijs/src"
 
   wax: "wax.g.min"
   store: "store"
