@@ -29,11 +29,11 @@ class CountryReport
 
   def initialize options
     @iso = options[:iso] || "BRA"
-    @reference_start_year = options[:reference_start_year] || 2001
-    @reference_end_year = options[:reference_end_year] || 2010
-    @monitor_start_year = options[:monitor_start_year] || 2011
-    @monitor_end_year = options[:monitor_end_year] || 2014
-    @thresh = options[:thresh] || 30
+    @reference_start_year = options[:reference_start_year].try(:to_i) || 2001
+    @reference_end_year = options[:reference_end_year].try(:to_i) || 2010
+    @monitor_start_year = options[:monitor_start_year].try(:to_i) || 2011
+    @monitor_end_year = options[:monitor_end_year].try(:to_i) || 2014
+    @thresh = options[:thresh].try(:to_i) || 30
     @above = options[:above] || true
     @below = options[:below] || true
     @primary_forest = options[:primary_forest] || false
