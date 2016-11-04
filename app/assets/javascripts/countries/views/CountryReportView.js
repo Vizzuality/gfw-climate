@@ -50,13 +50,22 @@ define([
     },
 
     render: function() {
+      var totalReference = this.data.emissions.reference.total;
+      var totalMonitoring = this.data.emissions.monitor.total;
+      var increase = Math.round(((totalMonitoring - totalReference) / totalReference) * 100);
+      var hasIncreased = increase > -1;
+
       this.$el.removeClass('is-loading');
       this.$el.html(this.template({
         country: this.data.country,
         monitorStart: this.status.get('monitor_start_year'),
         monitorEnd: this.status.get('monitor_end_year'),
         referenceStart: this.status.get('reference_start_year'),
-        referenceEnd: this.status.get('reference_end_year')
+        referenceEnd: this.status.get('reference_end_year'),
+        totalReference: totalReference.toFixed(2),
+        totalMonitoring: totalMonitoring.toFixed(2),
+        increase: increase,
+        hasIncreased: hasIncreased
       }));
 
       this._initModules();

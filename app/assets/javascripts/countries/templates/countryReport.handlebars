@@ -33,7 +33,7 @@
 
       <div class="row">
         <div class="col -wide-text">
-          <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} (Y Mt CO2 yr-1) were x% [higher/lower] than the historical average of X Mt CO2 yr-1 ({{referenceStart}} - {{referenceEnd}}). This is [good/bad] news for forests and climate change in {{country}}! The largest proportion of this [increase/decrease] occurred within [Admin Name 1] (x%) and [Admin Name 2 (y%)]</p>
+          <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} ({{totalMonitoring}} Mt CO2 yr<sup>-1</sup>) were {{increase}}% {{#if hasIncreased}}higher{{else}}lower{{/if}} than the historical average of {{totalReference}} Mt CO2 yr<sup>-1</sup> ({{referenceStart}} - {{referenceEnd}}). This is {{#if hasIncreased}}bad{{else}}good{{/if}} news for forests and climate change in {{country}}! The largest proportion of this {{#if hasIncreased}}increase{{else}}decrease{{/if}} occurred within [Admin Name 1] (x%) and [Admin Name 2 (y%)]</p>
         </div>
       </div>
 

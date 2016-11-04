@@ -97,8 +97,11 @@
             font-size: 14px;
             line-height: 22px;
             color: $font-color-1;
-
             margin-bottom: 25px;
+
+            sup {
+              top: -0.5em;
+            }
           }
         }
       }
