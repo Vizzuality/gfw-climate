@@ -19,37 +19,20 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    status: new (Backbone.Model.extend()),
+
     defaults: {
       settings: {
-        'thresh': 30
-      },
-
-      indicators: [
-        {
-          id: 1,
-          slug: 'loss'
-        },
-        {
-          id: 14,
-          slug: 'emissions'
-        },
-        {
-          id: 11,
-          slug: 'abovegroundCDensity'
-        },
-        {
-          id: 39,
-          slug: 'belowgroundCDensity'
-        },
-        {
-          id: 5,
-          slug: 'abovegroundCStocks'
-        },
-        {
-          id: 7,
-          slug: 'belowgroundCStocks'
-        }
-      ]
+        'reference_start_year': '2001',
+        'reference_end_year': '2010',
+        'monitor_start_year': '2011',
+        'monitor_end_year': '2014',
+        'thresh': '30',
+        'above': 'true',
+        'below': 'true',
+        'primary_forest': 'false',
+        'tree_plantations': 'false'
+      }
     },
 
     initialize: function(params) {
@@ -57,61 +40,49 @@ define([
       this.indicatorsList = this.options.indicators;
       this.defaultSettings= this.options.settings;
       this.iso = this.options.iso;
-      this.indicatorsData = [];
 
       if (_.isEmpty(this.options.params)) {
         this._setDefaultParams();
       } else {
-        this.render();
+        this.status.clear({ silent: true }).set(this.options.params);
+        this._getData();
       }
     },
 
     render: function() {
       this.$el.removeClass('is-loading');
-      this.$el.html(this.template({}));
+      this.$el.html(this.template({
+        country: this.data.country,
+        monitorStart: this.status.get('monitor_start_year'),
+        monitorEnd: this.status.get('monitor_end_year'),
+        referenceStart: this.status.get('reference_start_year'),
+        referenceEnd: this.status.get('reference_end_year')
+      }));
 
-      this._getIndicators();
       this._initModules();
     },
 
     _setDefaultParams: function() {
       mps.publish('Router/change', [this.defaultSettings]);
+      this.status.clear({ silent: true }).set(this.defaultSettings);
     },
 
-    _getIndicators: function() {
-      var promises = [];
-      this.indicatorsData = [];
-
-      for (var x = 0; x < this.indicatorsList.length; x++) {
-        promises.push(this._getIndicatorRequest(this.indicatorsList[x]));
-      }
-
-      $.when.apply($, promises).then(function(schemas) {
-        console.log(this.indicatorsData);
-      }.bind(this), function(e) {
-        console.log('Error');
-      });
-    },
-
-    _getIndicatorRequest: function(indicator) {
-      var $promise = $.Deferred();
-      var params = {
-        indicator: indicator.id,
-        thresh: 30,
+    _getData: function() {
+      this.status.set({
         iso: this.iso
-      };
+      }, { silent: true });
 
-      ReportService.get(params)
+      ReportService.get(this.status.toJSON())
         .then(function(data) {
-          this.indicatorsData[indicator.slug] = data.values;
-          $promise.resolve();
+          this.data =  data;
+          this.render();
         }.bind(this));
-
-      return $promise.promise();
     },
 
     _initModules: function() {
-      this.summaryChart = new SummaryChartView();
+      this.summaryChart = new SummaryChartView({
+        data: _.clone(this.data.emissions)
+      });
     }
   });
 

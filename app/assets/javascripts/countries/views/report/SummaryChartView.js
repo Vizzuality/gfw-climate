@@ -1,11 +1,13 @@
 define([
   'backbone',
   'underscore',
-  'd3'
+  'd3',
+  'text!countries/templates/report/summary-chart.handlebars'
 ], function(
   Backbone,
   _,
-  d3
+  d3,
+  tpl
 ) {
 
   'use strict';
@@ -14,7 +16,10 @@ define([
 
     el: '#summary-chart',
 
+    template: Handlebars.compile(tpl),
+
     defaults: {
+      chartEl: 'summary-chart-svg',
       chartClass: 'js-summary-chart',
       interpolate: 'linear',
       dateFormat: '%Y',
@@ -23,15 +28,16 @@ define([
       paddingYAxisLabels: 10,
       circleRadius: 4.5,
       margin: {
-        top: 50,
-        right: 55,
+        top: 20,
+        right: 35,
         bottom: 35,
-        left: 55
+        left: 35
       }
     },
 
     initialize: function(settings) {
       this.defaults = _.extend({}, this.defaults, settings);
+      this.data = this.defaults.data;
 
       this._initChart();
 
@@ -41,18 +47,26 @@ define([
 
     _initChart: function() {
       // Data parsing and initialization
-      this._parseData(this.data);
+      this._parseData();
 
       this._start();
     },
 
     _start: function() {
-      // if (this.chartData.length) {
-        // Render the component on initialize
-        this.render();
-      // } else {
-      //   this._renderNoData();
-      // }
+      var referenceAvg = this.referenceData.average;
+      var monitoringAvg = this.monitoringData.average;
+      var increase = Math.round(((monitoringAvg - referenceAvg) / referenceAvg) * 100);
+      var hasIncreased = increase > -1;
+
+      this.$el.html(this.template({
+        hasData: this.chartData.length,
+        referenceAvg: referenceAvg.toFixed(2),
+        monitoringAvg: monitoringAvg.toFixed(2),
+        increase: increase,
+        hasIncreased: hasIncreased
+      }));
+
+      this.render();
     },
 
     render: function() {
@@ -62,10 +76,6 @@ define([
       this._drawAxis();
       this._drawGraph();
      },
-
-    _renderNoData: function() {
-      this.$el.html(this.template({}));
-    },
 
     /**
      * Sets the listeners for the component
@@ -84,94 +94,42 @@ define([
     /**
      *  Parses the data for the chart
      */
-    _parseData: function(data) {
+    _parseData: function() {
       var dates = [];
-      this.dotsData = [];
-      this.chartData = [
-        [
-          {
-            year: '2002',
-            value: 140000
-          },
-          {
-            year: '2003',
-            value: 130000
-          },
-          {
-            year: '2004',
-            value: 120000
-          },
-          {
-            year: '2005',
-            value: 125000
-          },
-          {
-            year: '2006',
-            value: 110000
-          },
-          {
-            year: '2007',
-            value: 125000
-          },
-          {
-            year: '2008',
-            value: 130000
-          },
-          {
-            year: '2009',
-            value: 140000
-          },
-          {
-            year: '2010',
-            value: 145000
-          }
-        ],
-        [
-          {
-            year: '2010',
-            value: 145000
-          },
-          {
-            year: '2011',
-            value: 130000
-          },
-          {
-            year: '2012',
-            value: 120000
-          },
-          {
-            year: '2013',
-            value: 150000
-          },
-          {
-            year: '2014',
-            value: 160000
-          }
-        ]
-      ];
+      this.chartData = [];
 
-      this.chartData.forEach(function(data) {
-        data.forEach(function(current) {
-          current.year = new Date(current.year);
-          dates.push(current.year);
-        });
-        this.dotsData.push(data);
-      }.bind(this));
+      for (var indictator in this.data) {
+        var current = this.data[indictator];
+        if (current && current.values) {
+          current.values.forEach(function(data) {
+            data.year = new Date(data.year.toString());
+            dates.push(data.year);
+            this.chartData.push(data);
+          }.bind(this));
+        }
+      }
 
-      this.referenceData = this.chartData[0];
-      this.monitoringData = this.chartData[1];
+      this.referenceData = this.data['reference'];
+      this.monitoringData = this.data['monitor'];
       this.dates = dates;
+
+      // Copy the last value from the reference period as the
+      // first on in the monitor
+      this.monitoringData.values.unshift(
+        this.referenceData.values[this.referenceData.values.length - 1]
+      );
     },
 
     /**
      *  Sets up the SVG for the graph
      */
     _setUpGraph: function() {
-      var el = this.el;
+      this.chartEl = this.el.querySelector('#' + this.defaults.chartEl);
+      var el = this.chartEl
       var margin = this.defaults.margin;
 
-      this.el.innerHTML = '';
-      this.el.classList.add(this.defaults.chartClass);
+      el.innerHTML = '';
+      el.classList.add(this.defaults.chartClass);
 
       this.cWidth = el.clientWidth;
       this.cHeight = el.clientHeight;
@@ -243,10 +201,8 @@ define([
       var yValues = [];
 
       this.chartData.forEach(function(data) {
-        data.forEach(function(current) {
-          xValues.push(current.year);
-          yValues.push(current.value);
-        });
+        xValues.push(data.year);
+        yValues.push(data.value);
       });
 
       return {
@@ -323,11 +279,11 @@ define([
         .interpolate(this.defaults.interpolate);
 
       this.graphLine = solidLineGroup.append('path')
-        .attr('d', this.linePath(this.referenceData))
+        .attr('d', this.linePath(this.referenceData.values))
         .attr('class', 'line-reference');
 
       this.graphLine = solidLineGroup.append('path')
-        .attr('d', this.linePath(this.monitoringData))
+        .attr('d', this.linePath(this.monitoringData.values))
         .attr('class', 'line-monitoring');
     },
 
@@ -341,7 +297,7 @@ define([
         .attr('transform', 'translate('+ _this.defaults.paddingXAxisLabels +', '+ -this.defaults.paddingAxisLabels + ')');
 
       dotsGroup.selectAll('.dot.monitoring')
-        .data(this.dotsData[1])
+        .data(this.monitoringData.values)
         .enter().append('circle')
           .attr('class', 'dot monitoring')
           .attr('r', _this.defaults.circleRadius)
@@ -353,7 +309,7 @@ define([
           });
 
       dotsGroup.selectAll('.dot.reference')
-        .data(this.dotsData[0])
+        .data(this.referenceData.values)
         .enter().append('circle')
           .attr('class', 'dot reference')
           .attr('r', _this.defaults.circleRadius)
@@ -380,7 +336,7 @@ define([
      */
     remove: function(params) {
       if(this.svg) {
-        var svgContainer = this.el.querySelector('svg');
+        var svgContainer = this.chartEl.querySelector('svg');
 
         if (params && !params.keepEvents) {
           this.unsetListeners();
@@ -388,7 +344,7 @@ define([
         }
         this.svg.remove();
         this.svg = null;
-        this.el.removeChild(svgContainer);
+        this.chartEl.removeChild(svgContainer);
       }
     }
 

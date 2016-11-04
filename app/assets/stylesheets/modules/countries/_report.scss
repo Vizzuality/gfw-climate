@@ -83,6 +83,11 @@
             margin-right: 50%;
           }
 
+          &.-wide-text {
+            width: 100%;
+            margin: 0;
+          }
+
           .blank {
             width: 100%;
             height: 200px;
@@ -97,6 +102,12 @@
           }
         }
       }
+    }
+  }
+
+  .inner:last-child {
+    .block {
+      border-bottom: 0;
     }
   }
 }

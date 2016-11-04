@@ -12,7 +12,7 @@ define([
   var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
 
   var APIURLS = {
-    'indicator': '/api/indicators/{indicator}{?thresh,iso}'
+    'indicators': '/api/reports/{?iso,reference_start_year,reference_end_year,monitor_start_year,monitor_end_year,thresh,above,below,primary_forest,tree_plantations}'
   };
 
   var ReportService = Class.extend({
@@ -51,13 +51,24 @@ define([
           }
         };
 
-        ds.request(requestConfig);
+        this.abortRequest();
+        this.currentRequest = ds.request(requestConfig);
 
       }.bind(this));
     },
 
     getUrl: function() {
-      return new UriTemplate(APIURLS['indicator']).fillFromObject(this.report);
+      return new UriTemplate(APIURLS['indicators']).fillFromObject(this.report);
+    },
+
+    /**
+     * Abort the current request if it exists.
+     */
+    abortRequest: function() {
+      if (this.currentRequest) {
+        this.currentRequest.abort();
+        this.currentRequest = null;
+      }
     }
 
   });
