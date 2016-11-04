@@ -1,0 +1,116 @@
+.m-report {
+  min-height: 300px;
+  padding-bottom: 40px;
+  position: relative;
+
+  .cover {
+    background: #EEEEEE;
+
+    .header {
+      width: 100%;
+      border-bottom: 1px solid #E5E5E5;
+      padding-bottom: 20px;
+      margin-bottom: 50px;
+
+      .title {
+        width: 75%;
+        font-size: 47px;
+        color: $font-color-1;
+        text-align: center;
+        line-height: 56px;
+        margin: 0 auto;
+        margin-bottom: 15px;
+      }
+
+      .subtitle {
+        width: 100%;
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 15px;
+        color: $font-color-1;
+        font-weight: 300;
+      }
+    }
+
+    .action {
+      width: 100%;
+      text-align: center;
+      margin-top: 40px;
+    }
+  }
+
+  .map {
+    width: 100%;
+    height: 390px;
+    border-bottom: 1px solid #E5E5E5;
+  }
+
+  .block {
+    width: 100%;
+    border-bottom: 1px solid #E5E5E5;
+    padding: 65px 0;
+
+    .inner-content {
+      margin-left: 60px;
+      margin-right: 60px;
+
+      > .title {
+        width: 100%;
+        font-size: 50px;
+        color: $font-color-1;
+        text-align: left;
+        margin-bottom: 40px;
+      }
+
+      .subtitle {
+        font-size: 19px;
+        color: $font-color-3;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+
+      > .row {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        > .col {
+          width: 48%;
+          margin-bottom: 30px;
+
+          &.-wide {
+            margin-right: 50%;
+          }
+
+          &.-wide-text {
+            width: 100%;
+            margin: 0;
+          }
+
+          .blank {
+            width: 100%;
+            height: 200px;
+          }
+
+          p {
+            font-size: 14px;
+            line-height: 22px;
+            color: $font-color-1;
+            margin-bottom: 25px;
+
+            sup {
+              top: -0.5em;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .inner:last-child {
+    .block {
+      border-bottom: 0;
+    }
+  }
+}

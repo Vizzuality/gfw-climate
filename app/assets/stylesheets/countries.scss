@@ -26,11 +26,16 @@
 @import "modules/countries/header-show";
 @import "modules/countries/indicators-modal";
 @import "modules/countries/show";
+@import 'modules/countries/report';
 @import "modules/countries/no-indicators";
 @import 'modules/countries/tabs.scss';
 @import 'modules/countries/charts/line_chart';
 @import "modules/select";
 @import "modules/gridgraphs";
+
+// Report modules
+@import "modules/countries/report/table-list";
+@import "modules/countries/report/summary-chart";
 
 // Grids
 @import "modules/countries/grid";

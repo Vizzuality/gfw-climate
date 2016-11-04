@@ -39,7 +39,8 @@
     "chosen": "~1.4.2",
     "slick-carousel": "~1.5.8",
     "bluebird": "~3.1.1",
-    "turf": "~2.0.2"
+    "turf": "~2.0.2",
+    "urijs": "URIjs#^1.18.2"
   },
   "resolutions": {
     "jquery": "1.11.1"
