@@ -63,6 +63,8 @@ Rails.application.routes.draw do
         list_show_only.resources :widgets
       end
 
+      resources :reports, only: [:index]
+
       get 'countries/:id/:id_1',       to: 'countries#show_jurisdiction', as: :jurisdiction
       get 'indicators/:id/:iso',       to: 'indicators#show',             as: :country_indicator
       get 'indicators/:id/:iso/:id_1', to: 'indicators#show',             as: :jurisdiction_indicator
