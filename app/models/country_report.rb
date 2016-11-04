@@ -46,17 +46,8 @@ class CountryReport
     url += where_clause
 
     results = {}
+    results = CountryReport.get(url)["rows"]
 
-    timeouts do
-      item_caching("country-report", @iso, @thresh) do
-        result = CountryReport.get(url)["rows"]
-        results = if result
-                    result
-                  else
-                    []
-                  end
-      end
-    end
     prepare_response(results)
   end
 
