@@ -45,6 +45,8 @@ class CountryReport
     url += select_query
     url += where_clause
 
+    puts url
+
     results = {}
     results = CountryReport.get(url)["rows"]
 
@@ -52,7 +54,7 @@ class CountryReport
   end
 
   def prepare_response results
-    return {} if results.empty?
+    return {} if !results || results.empty?
     response = {}
     response[:iso] = @iso
     response[:country] = results.first["country"]
@@ -110,6 +112,44 @@ class CountryReport
     response[:forest_loss][:monitor][:total] = values.inject(0){|sum,t| sum += t["value"]}
     response[:forest_loss][:monitor][:average] = response[:forest_loss][:monitor][:total] / values.size
     response[:forest_loss][:monitor][:values] = values
+
+    response[:emission_factors] = emission_factors_from results
+
+    response
+  end
+
+  # only for historical at this stage
+  def emission_factors_from data
+    response = {}
+
+    total = 0
+    above = if @above
+              val = data.select do |t|
+                t["boundary"] == ADMIN_BOUNDARY &&
+                  t["indicator_id"] == ABOVE_C_DENSITY &&
+                  t["sub_nat_id"] == nil &&
+                  t["year"] = 0
+              end.first["value"]
+              total += val
+              val
+            else
+              nil
+            end
+    below = if @below
+              val = data.select do |t|
+                t["boundary"] == ADMIN_BOUNDARY &&
+                  t["indicator_id"] == BELOW_C_DENSITY &&
+                  t["sub_nat_id"] == nil &&
+                  t["year"] = 0
+              end.first["value"]
+              total += val
+              val
+            else
+              nil
+            end
+    response[:aboveground] = above
+    response[:belowground] = below
+    response[:total] = total
     response
   end
 
@@ -134,6 +174,9 @@ class CountryReport
         AND indicator_id IN (#{INDICATORS.join(",")})
         AND thresh IN (#{@thresh}, 0)
         AND boundary IN (#{BOUNDARIES.map{|t| "'#{t}'"}.join(",")})
+        AND ((values.year >= #{@reference_start_year}
+        AND values.year <= #{@monitor_end_year})
+        OR values.year = 0)
     SQL
   end
 
