@@ -36,8 +36,10 @@ class CountryReport
     @thresh = options[:thresh].try(:to_i) || 30
     @above = options[:above] || true
     @below = options[:below] || true
-    @primary_forest = options[:primary_forest] || false
-    @tree_plantations = options[:tree_plantations] || false
+    @primary_forest = options[:primary_forest] && options[:primary_forest] == "true"
+    @tree_plantations = options[:tree_plantations] && options[:tree_plantations] == "true"
+
+    @use_boundary = @primary_forest ? PRIMARY_FOREST_BOUNDARY : ADMIN_BOUNDARY
   end
 
   def fetch
@@ -58,10 +60,13 @@ class CountryReport
     response = {}
     response[:iso] = @iso
     response[:country] = results.first["country"]
+    response[:primary_forest_only] = @primary_forest
+    response[:exclude_tree_plantations] = @tree_plantations
+
     response[:emissions] = {}
     response[:emissions][:reference] = {}
     values = results.select do |t|
-      t["boundary"] == ADMIN_BOUNDARY &&
+      t["boundary"] == @use_boundary &&
         t["indicator_id"] == EMISSIONS &&
         t["sub_nat_id"] == nil &&
         t["year"] >= @reference_start_year &&
@@ -69,12 +74,12 @@ class CountryReport
     end
     response[:emissions][:reference][:years] = values.map{|t| t["year"]}
     response[:emissions][:reference][:total] = values.inject(0){|sum,t| sum += t["value"]}
-    response[:emissions][:reference][:average] = response[:emissions][:reference][:total] / values.size
+    response[:emissions][:reference][:average] = values.empty? ? 0 : response[:emissions][:reference][:total] / values.size
     response[:emissions][:reference][:values] = values
 
     response[:emissions][:monitor] = {}
     values = results.select do |t|
-      t["boundary"] == ADMIN_BOUNDARY &&
+      t["boundary"] == @use_boundary &&
         t["indicator_id"] == EMISSIONS &&
         t["sub_nat_id"] == nil &&
         t["year"] >= @monitor_start_year &&
@@ -82,13 +87,13 @@ class CountryReport
     end
     response[:emissions][:monitor][:years] = values.map{|t| t["year"]}
     response[:emissions][:monitor][:total] = values.inject(0){|sum,t| sum += t["value"]}
-    response[:emissions][:monitor][:average] = response[:emissions][:monitor][:total] / values.size
+    response[:emissions][:monitor][:average] = values.empty? ? 0 : response[:emissions][:monitor][:total] / values.size
     response[:emissions][:monitor][:values] = values
 
     response[:forest_loss] = {}
     response[:forest_loss][:reference] = {}
     values = results.select do |t|
-      t["boundary"] == ADMIN_BOUNDARY &&
+      t["boundary"] == @use_boundary &&
         t["indicator_id"] == FOREST_LOSS &&
         t["sub_nat_id"] == nil &&
         t["year"] >= @reference_start_year &&
@@ -96,13 +101,13 @@ class CountryReport
     end
     response[:forest_loss][:reference][:years] = values.map{|t| t["year"]}
     response[:forest_loss][:reference][:total] = values.inject(0){|sum,t| sum += t["value"]}
-    response[:forest_loss][:reference][:average] = response[:forest_loss][:reference][:total] / values.size
+    response[:forest_loss][:reference][:average] = values.empty? ? 0 : response[:forest_loss][:reference][:total] / values.size
     response[:forest_loss][:reference][:values] = values
 
 
     response[:forest_loss][:monitor] = {}
     values = results.select do |t|
-      t["boundary"] == ADMIN_BOUNDARY &&
+      t["boundary"] == @use_boundary &&
         t["indicator_id"] == FOREST_LOSS &&
         t["sub_nat_id"] == nil &&
         t["year"] >= @monitor_start_year &&
@@ -125,25 +130,25 @@ class CountryReport
     total = 0
     above = if @above
               val = data.select do |t|
-                t["boundary"] == ADMIN_BOUNDARY &&
+                t["boundary"] == @use_boundary &&
                   t["indicator_id"] == ABOVE_C_DENSITY &&
                   t["sub_nat_id"] == nil &&
                   t["year"] = 0
-              end.first["value"]
-              total += val
-              val
+              end.first
+              total += (val ? val["value"] : 0)
+              val and  val["value"] or nil
             else
               nil
             end
     below = if @below
               val = data.select do |t|
-                t["boundary"] == ADMIN_BOUNDARY &&
+                t["boundary"] == @use_boundary &&
                   t["indicator_id"] == BELOW_C_DENSITY &&
                   t["sub_nat_id"] == nil &&
                   t["year"] = 0
-              end.first["value"]
-              total += val
-              val
+              end.first
+              total += (val ? val["value"] : 0)
+              val and val["value"] or nil
             else
               nil
             end
