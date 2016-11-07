@@ -52,8 +52,8 @@ define([
           var uncer = imgdata[pixelPos + 3];
           uncer = uncer > 100 ? 100 : (uncer < 0 ? 0 : uncer);
 
-
           if(intensity >= this.minrange && intensity <= this.maxrange) {
+            // debugger
             if(this.uncertainty === 0) {
               // min uncertainty subtract the percentage of uncertainty
               intensity = intensity - (uncer*intensity/100);
@@ -62,10 +62,24 @@ define([
               // max uncertainty sum the uncertainty value
               intensity = intensity + (uncer*intensity/100);
             }
-            imgdata[pixelPos] = 255-intensity;
-            imgdata[pixelPos + 1] = 128;
-            imgdata[pixelPos + 2] = 0;
-            imgdata[pixelPos + 3] = intensity;
+
+            // create buckets
+            var c = [39, 11,  3, // first bucket R G B
+                     83, 44,  8,
+                     130, 104,  26,
+                     174, 176, 49,
+                     173, 209, 81,
+                     179, 249, 122]; // last bucket
+
+            // Calc bucket from intensity as a factor of 6 (returns decimal)
+            var bucket = (intensity + 3) / 43;
+            // Find floor to give bucket index
+            var bucketIndex = Math.floor(bucket);
+
+            imgdata[pixelPos] = c[bucketIndex * 3];
+            imgdata[pixelPos + 1] = c[bucketIndex * 3 + 1];
+            imgdata[pixelPos + 2] = c[bucketIndex * 3 + 2];
+            imgdata[pixelPos + 3] = 255;
           } else {
             imgdata[pixelPos + 3] = 0;
           }
