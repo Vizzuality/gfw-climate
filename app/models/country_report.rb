@@ -36,7 +36,7 @@ class CountryReport
     @thresh = options[:thresh].try(:to_i) || 30
     @above = options[:above] && options[:above] == "true"
     @below = options[:below] && options[:below] == "true"
-    @above_below_adjust = @above && @below ? 1.26 : 1
+    @above_below_adjust = @above && @below ? BELOWGROUND_EMISSIONS_FACTOR : 1
     @primary_forest = options[:primary_forest] && options[:primary_forest] == "true"
     @tree_plantations = options[:tree_plantations] && options[:tree_plantations] == "true"
 
@@ -132,23 +132,108 @@ class CountryReport
     response
   end
 
+  #starting with just historical
   def emissions_per_provinces data
-    return {}
     result = {}
-    result[:reference] = {}
-    result[:monitor] = {}
 
-    response[:provinces][:forest_loss] = {}
-    values = results.select do |t|
-      t["boundary"] == @use_boundary &&
+    result[:forest_loss] = {}
+    values = data.select do |t|
+      t["boundary"] == ADMIN_BOUNDARY &&
         t["indicator_id"] == FOREST_LOSS &&
         !t["sub_nat_id"].nil? &&
         t["year"] >= @monitor_start_year &&
         t["year"] <= @monitor_end_year
     end.group_by{|t| t["sub_nat_id"]}
+    provinces = []
+    values.each do |sub_nat_id, vals|
+      r = {}
+      sample = vals.first
+      r[:sub_nat_id] = sub_nat_id
+      r[:province] = sample["province"]
+      r[:indicator_id] = sample["indicator_id"]
+      r[:boundary] = sample["boundary"]
+      r[:thresh] = sample["thresh"]
+      r[:boundary_name] = sample["boundary_name"]
+      r[:value] = vals.inject(0){|sum,t| sum += t["value"]}
+      provinces << r
+    end
+    provinces = provinces.sort{|a,b| b[:value] <=> a[:value]}
+    result[:forest_loss][:top_five] = provinces[0,5]
+    result[:forest_loss][:others] = {}
+    if provinces.size > 5
+      result[:forest_loss][:others] = {
+        size: provinces.size - 5,
+        value: provinces[6, provinces.size].inject(0){|sum, t| sum += t[:value]}
+      }
+    end
 
-    response[:provinces][:c_stocks] = {}
-    response[:provinces][:emissions] = {}
+    result[:emissions] = {}
+
+    values = data.select do |t|
+      t["boundary"] == ADMIN_BOUNDARY &&
+        t["indicator_id"] == EMISSIONS &&
+        !t["sub_nat_id"].nil? &&
+        t["year"] >= @monitor_start_year &&
+        t["year"] <= @monitor_end_year
+    end.group_by{|t| t["sub_nat_id"]}
+    provinces = []
+    values.each do |sub_nat_id, vals|
+      r = {}
+      sample = vals.first
+      r[:sub_nat_id] = sub_nat_id
+      r[:province] = sample["province"]
+      r[:indicator_id] = sample["indicator_id"]
+      r[:boundary] = sample["boundary"]
+      r[:thresh] = sample["thresh"]
+      r[:boundary_name] = sample["boundary_name"]
+      r[:value] = vals.inject(0){|sum,t| sum += t["value"]}
+      provinces << r
+    end
+    provinces = provinces.sort{|a,b| b[:value] <=> a[:value]}
+    result[:emissions][:top_five] = provinces[0,5]
+    result[:emissions][:others] = {}
+    if provinces.size > 5
+      result[:emissions][:others] = {
+        size: provinces.size - 5,
+        value: provinces[6, provinces.size].inject(0){|sum, t| sum += t[:value]}
+      }
+    end
+
+    result[:c_stocks] = {}
+
+    indicators = []
+    indicators << ABOVE_C_STOCKS if @above
+    indicators << BELOW_C_STOCKS if @below
+
+    values = data.select do |t|
+      t["boundary"] == ADMIN_BOUNDARY &&
+        indicators.include?(t["indicator_id"]) &&
+        !t["sub_nat_id"].nil? &&
+        t["year"] = 0
+    end.group_by{|t| t["sub_nat_id"]}
+    provinces = []
+    values.each do |sub_nat_id, vals|
+      r = {}
+      sample = vals.first
+      r[:sub_nat_id] = sub_nat_id
+      r[:province] = sample["province"]
+      r[:indicator_id] = sample["indicator_id"]
+      r[:boundary] = sample["boundary"]
+      r[:thresh] = sample["thresh"]
+      r[:boundary_name] = sample["boundary_name"]
+      r[:value] = vals.inject(0){|sum,t| sum += t["value"]}
+      provinces << r
+    end
+    provinces = provinces.sort{|a,b| b[:value] <=> a[:value]}
+    result[:c_stocks][:top_five] = provinces[0,5]
+    result[:c_stocks][:others] = {}
+    if provinces.size > 5
+      result[:c_stocks][:others] = {
+        size: provinces.size - 5,
+        value: provinces[6, provinces.size].inject(0){|sum, t| sum += t[:value]}
+      }
+    end
+    result
   end
 
   def emission_factors_from data
