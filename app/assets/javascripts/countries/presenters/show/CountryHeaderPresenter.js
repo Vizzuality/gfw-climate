@@ -14,6 +14,8 @@ define([
 
       this.status = new (Backbone.Model.extend()),
 
+      this._setListeners();
+
       mps.publish('Place/register', [this]);
     },
 
@@ -22,9 +24,13 @@ define([
      */
     _subscriptions: [{
       'Place/go': function(place) {
-        // this._onPlaceGo(place);
+        this._onPlaceGo(place);
       }
     }],
+
+    _setListeners: function() {
+      this.status.on('change:iso', this.view.start, this.view);
+    },
 
     /**
      * Used by PlaceService to get the current iso/area params.
@@ -43,7 +49,6 @@ define([
      */
     _onPlaceGo: function(place) {
       this._setCountry(place.country.iso);
-      this.view.start();
     },
 
     _setCountry: function(country) {

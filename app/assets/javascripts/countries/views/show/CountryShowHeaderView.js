@@ -26,8 +26,8 @@ define([
 
       if (!iso) { return;}
 
-      if($('#figure-' + iso.toLowerCase()[0])) {
-        $('#figure-' + iso.toLowerCase()).html('');
+      if($('#figure-' + iso)) {
+        $('#figure-' + iso).html('');
       }
 
       sql = ['SELECT ST_GeomFromText(topojson) AS the_geom',
@@ -36,7 +36,7 @@ define([
              '&format=topojson'].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, _.bind(function(error, topology) {
-        this.helper.draw(topology, 0, 'figure-' + iso.toLowerCase(), { alerts: true });
+        this.helper.draw(topology, 0, 'figure-' + iso, { alerts: true }, {width: 225, height: 225});
       }, this ));
     }
 

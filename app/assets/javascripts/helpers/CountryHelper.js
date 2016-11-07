@@ -6,11 +6,17 @@ define([
 
   var CountryHelper = {
 
-    draw: function(topology, c, iso, options) {
-      var country = topojson.feature(topology, topology.objects[c]);
+    draw: function(topology, c, iso, options, size) {
       var width = 300,
           height = 300,
           el = "#"+iso;
+
+      var country = topojson.feature(topology, topology.objects[c]);
+
+      if (size) {
+        width = size.width;
+        height = size.height;
+      }
 
       if ($('body').hasClass('is-compare-page')) {
         var width = 150,
