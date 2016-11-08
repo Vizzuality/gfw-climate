@@ -63,7 +63,8 @@ class CountryReport
     response[:country] = results.first["country"]
     response[:primary_forest_only] = @primary_forest
     response[:exclude_tree_plantations] = @exclude_plantations
-
+    response[:exclude_tree_plantations_available] = results.
+      select{|t| t["boundary"] == INSIDE_PLANTATIONS_BOUNDARY}.present?
     response[:emissions] = {}
     response[:emissions][:reference] = parse_country_data_for(results,
                                                               EMISSIONS,
