@@ -30,7 +30,7 @@ define([
         'monitor_start_year': '2011',
         'monitor_end_year': '2014',
         'thresh': '30',
-        'below': 'true',
+        'below': 'false',
         'primary_forest': 'false',
         'exclude_plantations': 'false'
       }
@@ -51,8 +51,8 @@ define([
     },
 
     render: function() {
-      var totalReference = this.data.emissions.reference.total;
-      var totalMonitoring = this.data.emissions.monitor.total;
+      var totalReference = this.data.emissions.reference.average;
+      var totalMonitoring = this.data.emissions.monitor.average;
       var increase = Math.round(((totalMonitoring - totalReference) / totalReference) * 100);
       var hasIncreased = increase > -1;
 
@@ -90,9 +90,9 @@ define([
     },
 
     _initModules: function() {
-      // this.summaryChart = new SummaryChartView({
-      //   data: _.clone(this.data.emissions)
-      // });
+      this.summaryChart = new SummaryChartView({
+        data: _.clone(this.data.emissions)
+      });
 
       this.historicalTrendChart = new HistoricalTrendChartView({
         data: _.clone(this.data.forest_loss)
