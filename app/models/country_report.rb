@@ -63,75 +63,52 @@ class CountryReport
     response[:exclude_tree_plantations] = @tree_plantations
 
     response[:emissions] = {}
-    response[:emissions][:reference] = {}
-    values = results.select do |t|
-      t["boundary"] == @use_boundary &&
-        t["indicator_id"] == EMISSIONS &&
-        t["sub_nat_id"] == nil &&
-        t["year"] >= @reference_start_year &&
-        t["year"] <= @reference_end_year
-    end
-    if @below
-      values.each do |t|
-        t["value"] = t["value"] * BELOWGROUND_EMISSIONS_FACTOR
-      end
-    end
-    response[:emissions][:reference][:years] = values.map{|t| t["year"]}
-    response[:emissions][:reference][:total] = values.inject(0){|sum,t| sum += t["value"]}
-    response[:emissions][:reference][:average] = values.empty? ? 0 : response[:emissions][:reference][:total] / values.size
-    response[:emissions][:reference][:values] = values
+    response[:emissions][:reference] = parse_country_data_for(results,
+                                                              EMISSIONS,
+                                                              :reference)
 
-    response[:emissions][:monitor] = {}
-    values = results.select do |t|
-      t["boundary"] == @use_boundary &&
-        t["indicator_id"] == EMISSIONS &&
-        t["sub_nat_id"] == nil &&
-        t["year"] >= @monitor_start_year &&
-        t["year"] <= @monitor_end_year
-    end
-    if @below
-      values.each do |t|
-        t["value"] = t["value"] * BELOWGROUND_EMISSIONS_FACTOR
-      end
-    end
-    response[:emissions][:monitor][:years] = values.map{|t| t["year"]}
-    response[:emissions][:monitor][:total] = values.inject(0){|sum,t| sum += t["value"]}
-    response[:emissions][:monitor][:average] = values.empty? ? 0 : response[:emissions][:monitor][:total] / values.size
-    response[:emissions][:monitor][:values] = values
+    response[:emissions][:monitor] = parse_country_data_for(results,
+                                                            EMISSIONS,
+                                                            :monitor)
 
     response[:forest_loss] = {}
-    response[:forest_loss][:reference] = {}
-    values = results.select do |t|
-      t["boundary"] == @use_boundary &&
-        t["indicator_id"] == FOREST_LOSS &&
-        t["sub_nat_id"] == nil &&
-        t["year"] >= @reference_start_year &&
-        t["year"] <= @reference_end_year
-    end
-    response[:forest_loss][:reference][:years] = values.map{|t| t["year"]}
-    response[:forest_loss][:reference][:total] = values.inject(0){|sum,t| sum += t["value"]}
-    response[:forest_loss][:reference][:average] = values.empty? ? 0 : response[:forest_loss][:reference][:total] / values.size
-    response[:forest_loss][:reference][:values] = values
+    response[:forest_loss][:reference] = parse_country_data_for(results,
+                                                                FOREST_LOSS,
+                                                                :reference)
 
-
-    response[:forest_loss][:monitor] = {}
-    values = results.select do |t|
-      t["boundary"] == @use_boundary &&
-        t["indicator_id"] == FOREST_LOSS &&
-        t["sub_nat_id"] == nil &&
-        t["year"] >= @monitor_start_year &&
-        t["year"] <= @monitor_end_year
-    end
-    response[:forest_loss][:monitor][:years] = values.map{|t| t["year"]}
-    response[:forest_loss][:monitor][:total] = values.inject(0){|sum,t| sum += t["value"]}
-    response[:forest_loss][:monitor][:average] = values.empty? ? 0 : response[:forest_loss][:monitor][:total] / values.size
-    response[:forest_loss][:monitor][:values] = values
+    response[:forest_loss][:monitor] = parse_country_data_for(results,
+                                                              FOREST_LOSS,
+                                                              :monitor)
 
     response[:emission_factors] = emission_factors_from results
 
     response[:provinces] = emissions_per_provinces results
 
     response
+  end
+
+  def parse_country_data_for(data, indicator, period=:reference)
+    result = {}
+    start_year = period == :reference ? @reference_start_year : @monitor_start_year
+    end_year = period == :reference ? @reference_end_year : @monitor_end_year
+
+    values = data.select do |t|
+      t["boundary"] == @use_boundary &&
+        t["indicator_id"] == indicator &&
+        t["sub_nat_id"] == nil &&
+        t["year"] >= start_year &&
+        t["year"] <= end_year
+    end
+    if @below && indicator == EMISSIONS
+      values.each do |t|
+        t["value"] = t["value"] * BELOWGROUND_EMISSIONS_FACTOR
+      end
+    end
+    result[:years] = values.map{|t| t["year"]}
+    result[:total] = values.inject(0){|sum,t| sum += t["value"]}
+    result[:average] = values.empty? ? 0 : result[:total] / values.size
+    result[:values] = values
+    result
   end
 
   def get_province_vals_for(data, indicator, period=:reference)
