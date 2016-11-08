@@ -62,7 +62,7 @@ class CountryReport
     response[:iso] = @iso
     response[:country] = results.first["country"]
     response[:primary_forest_only] = @primary_forest
-    response[:exclude_tree_plantations] = @tree_plantations
+    response[:exclude_tree_plantations] = @exclude_plantations
 
     response[:emissions] = {}
     response[:emissions][:reference] = parse_country_data_for(results,
@@ -106,6 +106,23 @@ class CountryReport
         t["value"] = t["value"] * BELOWGROUND_EMISSIONS_FACTOR
       end
     end
+
+    if @exclude_plantations
+      excluded_vals = data.select do |t|
+        t["boundary"] == INSIDE_PLANTATIONS_BOUNDARY &&
+          t["indicator_id"] == indicator &&
+          t["sub_nat_id"] == nil &&
+          t["year"] >= start_year &&
+          t["year"] <= end_year
+      end
+      values.each do |t|
+        exclude = excluded_vals.select{|p| p["year"] == t["year"]}.first
+        if exclude && exclude["value"]
+          t["value"] = t["value"] - exclude["value"]
+        end
+      end
+    end
+
     result[:years] = values.map{|t| t["year"]}
     result[:total] = values.inject(0){|sum,t| sum += t["value"]}
     result[:average] = values.empty? ? 0 : result[:total] / values.size
@@ -135,6 +152,23 @@ class CountryReport
       r[:boundary] = sample["boundary"]
       r[:thresh] = sample["thresh"]
       r[:boundary_name] = sample["boundary_name"]
+
+      if @exclude_plantations
+        excluded_vals = data.select do |t|
+          t["boundary"] == INSIDE_PLANTATIONS_BOUNDARY &&
+            t["indicator_id"] == indicator &&
+            t["sub_nat_id"] == sub_nat_id &&
+            t["year"] >= start_year &&
+            t["year"] <= end_year
+        end
+        vals.each do |t|
+          exclude = excluded_vals.select{|p| p["year"] == t["year"]}.first
+          if exclude && exclude["value"]
+            t["value"] = t["value"] - exclude["value"]
+          end
+        end
+      end
+
       r[:value] = vals.inject(0){|sum,t| sum += t["value"]}
       if @below && indicator == EMISSIONS
         r[:value] = r[:value] * BELOWGROUND_EMISSIONS_FACTOR
