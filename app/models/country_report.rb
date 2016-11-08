@@ -35,8 +35,10 @@ class CountryReport
     @monitor_end_year = options[:monitor_end_year].try(:to_i) || 2014
     @thresh = options[:thresh].try(:to_i) || 30
     @below = options[:below] && options[:below] == "true"
-    @primary_forest = options[:primary_forest] && options[:primary_forest] == "true"
-    @tree_plantations = options[:tree_plantations] && options[:tree_plantations] == "true"
+    @primary_forest = options[:primary_forest] &&
+      options[:primary_forest] == "true"
+    @exclude_plantations = options[:exclude_plantations] &&
+      options[:exclude_plantations] == "true"
 
     @use_boundary = @primary_forest ? PRIMARY_FOREST_BOUNDARY : ADMIN_BOUNDARY
   end
@@ -123,12 +125,6 @@ class CountryReport
         t["year"] <= end_year
     end.group_by{|t| t["sub_nat_id"]}
 
-    if @below && indicator == EMISSIONS
-      values.each do |t|
-        t["value"] = t["value"] * BELOWGROUND_EMISSIONS_FACTOR
-      end
-    end
-
     provinces = []
     values.each do |sub_nat_id, vals|
       r = {}
@@ -140,6 +136,9 @@ class CountryReport
       r[:thresh] = sample["thresh"]
       r[:boundary_name] = sample["boundary_name"]
       r[:value] = vals.inject(0){|sum,t| sum += t["value"]}
+      if @below && indicator == EMISSIONS
+        r[:value] = r[:value] * BELOWGROUND_EMISSIONS_FACTOR
+      end
       provinces << r
     end
     provinces.sort{|a,b| b[:value] <=> a[:value]}
