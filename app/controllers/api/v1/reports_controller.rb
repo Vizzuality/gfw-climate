@@ -10,7 +10,7 @@ module Api::V1
     def filter_params
       params.permit(:iso, :reference_start_year, :reference_end_year,
                     :monitor_start_year, :monitor_end_year, :thresh,
-                    :above, :below, :primary_forest, :tree_plantations)
+                    :below, :primary_forest, :exclude_plantations)
     end
   end
 end

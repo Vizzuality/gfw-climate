@@ -1,8 +1,13 @@
 .container-country__header-country {
   position: relative;
-  overflow: hidden;
   padding: 25px 0 0;
   background-color: #333;
+
+  &.-has-stats {
+    .container-country__content .header-country__title-country{
+      padding-bottom: 15px;
+    }
+  }
 
   .container-country__content {
     width: 100%;
@@ -21,7 +26,7 @@
         color: $white;
         font-size: 47px;
         font-weight: 300;
-        
+
         @media screen and (max-width: $br-mobile) {
           padding: 0 0 0 15px;
         }

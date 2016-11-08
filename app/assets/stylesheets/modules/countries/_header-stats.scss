@@ -1,0 +1,85 @@
+.header-country__stats {
+  margin: 15px 0 30px;
+
+  > h2 {
+    font-size: 14px;
+    color: rgba($font-color-2, 0.7);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  > .stats {
+    display: flex;
+    > .stat {
+      margin-right: 40px;
+
+      > .logo {
+        display: block;
+        height: 41px;
+        margin-bottom: 2px;
+
+        &.-economy-wide-target {
+          background: image-url('countries/economy-wide-target.svg') no-repeat left;
+        }
+
+        &.-lu-excluded {
+          background: image-url('countries/land-use-excluded.svg') no-repeat left;
+        }
+
+        &.-lu-ghg {
+          background: image-url('countries/land-use-ghg.svg') no-repeat left;
+        }
+
+        &.-lu-non-ghg {
+          background: image-url('countries/land-use-non-ghg.svg') no-repeat left;
+        }
+      }
+
+      > .description {
+        line-height: 16px;
+        font-size: 12px;
+        color: rgba($font-color-2, 0.7);
+        display: flex;
+        align-items: center;
+      }
+
+      .btn-tooltip {
+        position: relative;
+        margin-left: 5px;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #595959;
+        color: rgba($font-color-2, 0.7);
+        border-radius: 8px;
+
+        svg {
+          width: 10px;
+          height: 10px;
+          fill: rgba($font-color-2, 0.7);
+          margin: 0 !important;
+        }
+
+        .tooltip1 {
+          display: block;
+          font-size: 12px;
+          max-width: 800px;
+          word-wrap: normal;
+          white-space: normal;
+          min-width: 500px;
+          width: 100%;
+        }
+
+        &:hover {
+          .tooltip1 {
+            visibility: visible;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,8 +2,9 @@ define([
   'backbone',
   'd3',
   'countries/presenters/show/CountryHeaderPresenter',
-  'helpers/CountryHelper'
-], function(Backbone, d3, CountryHeaderPresenter, CountryHelper) {
+  'helpers/CountryHelper',
+  'text!countries/templates/country-stats.handlebars'
+], function(Backbone, d3, CountryHeaderPresenter, CountryHelper, statsTpl) {
 
   'use strict';
 
@@ -11,13 +12,24 @@ define([
 
     el: '#headerCountry',
 
+    templateStats: Handlebars.compile(statsTpl),
+
     initialize: function() {
       this.presenter = new CountryHeaderPresenter(this);
       this.helper = CountryHelper;
+      this.$statsContainer = this.$('#headerCountryStats');
     },
 
     start: function() {
       this._drawCountry();
+    },
+
+    drawStats: function(stats) {
+      delete stats.indcvsndc;
+      if (stats) {
+        this.$el.addClass('-has-stats');
+        this.$statsContainer.html(this.templateStats(stats));
+      }
     },
 
     _drawCountry: function() {
