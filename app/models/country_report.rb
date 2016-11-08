@@ -12,8 +12,10 @@ class CountryReport
   ABOVE_C_STOCKS = 5
   BELOW_C_STOCKS = 7
 
+  COUNTRY_AREA = 1000_00000
+
   INDICATORS = [FOREST_LOSS, EMISSIONS, ABOVE_C_DENSITY, BELOW_C_DENSITY,
-                ABOVE_C_STOCKS, BELOW_C_STOCKS]
+                ABOVE_C_STOCKS, BELOW_C_STOCKS, COUNTRY_AREA]
 
   BELOWGROUND_EMISSIONS_FACTOR = 1.26
   PRIMARY_FOREST_BOUNDARY = "prf"
@@ -61,10 +63,14 @@ class CountryReport
     response = {}
     response[:iso] = @iso
     response[:country] = results.first["country"]
+    area_val = results.select{|t| t["indicator_id"] == COUNTRY_AREA}.first
+    response[:area] = area_val && area_val["value"] or nil
+
     response[:primary_forest_only] = @primary_forest
     response[:exclude_tree_plantations] = @exclude_plantations
     response[:exclude_tree_plantations_available] = results.
       select{|t| t["boundary"] == INSIDE_PLANTATIONS_BOUNDARY}.present?
+
     response[:emissions] = {}
     response[:emissions][:reference] = parse_country_data_for(results,
                                                               EMISSIONS,
@@ -279,7 +285,7 @@ class CountryReport
         t["year"] = 0
     end.first
     total += (val ? val["value"] : 0)
-    above = val and val["value"] or nil
+    above = val && val["value"] or nil
 
     below = if @below
               val = data.select do |t|
@@ -289,7 +295,7 @@ class CountryReport
                   t["year"] = 0
               end.first
               total += (val ? val["value"] : 0)
-              val and val["value"] or nil
+              val && val["value"] or nil
             else
               nil
             end
