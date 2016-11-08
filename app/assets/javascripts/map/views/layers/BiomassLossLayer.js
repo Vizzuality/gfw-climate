@@ -74,9 +74,11 @@ define([
       for(var i = 0 |0; i < w; ++i) {
        for(var j = 0 |0; j < h; ++j) {
           var pixelPos  = ((j * w + i) * components) |0,
-              intensity = imgdata[pixelPos+1] |0;
+          // drop year=0 values from loop opcacity = 0 and exit
+              intensity = imgdata[pixelPos + 1] |0,
+              bla = imgdata[pixelPos + 2] |0;
               imgdata[pixelPos + 3] = 0 |0;
-          if (intensity >= this.minrange && intensity <= this.maxrange) {
+          if (bla >= this.minrange && bla <= this.maxrange) {
             var intensity_scaled = myscale(intensity) |0,
                 yearLoss = 2000 + imgdata[pixelPos] |0;
             if (yearLoss >= yearStart && yearLoss <= yearEnd) {

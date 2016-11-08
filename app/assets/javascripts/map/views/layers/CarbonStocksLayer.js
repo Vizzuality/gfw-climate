@@ -59,8 +59,8 @@ define([
 
           // get values
           // var carbonStock = imgdata[pixelPos + 2];
-          var intensity = imgdata[pixelPos + 2];
-          var uncertainty = imgdata[pixelPos + 3];
+          var intensity = imgdata[pixelPos + 2] | 0;
+          var uncertainty = imgdata[pixelPos + 3] | 0;
 
           // scale values
           uncertainty = uncertainty > 100 ? 100 : (uncertainty < 0 ? 0 : uncertainty);
