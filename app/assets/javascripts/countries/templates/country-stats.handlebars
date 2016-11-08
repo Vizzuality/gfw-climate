@@ -1,0 +1,63 @@
+<div class="header-country__stats">
+  {{#if indcvsndc}}
+    <h2> {{indcvsndc}} </h2>
+  {{/if}}
+  <div class="stats">
+    {{#if economywidetarget}}
+      <div class="stat">
+        <span class="logo -economy-wide-target"></span>
+        <span class="description">
+          Economy-Wide Target
+          {{#if economywidetargetdescription}}
+          <a class="btn-tooltip" href="#">
+            <svg> <use xlink:href="#shape-info"></use> </svg>
+            <span class="tooltip1">{{economywidetargetdescription}}</span>
+          </a>
+          {{/if}}
+        </span>
+      </div>
+    {{/if}}
+    {{#if landuseghg}}
+      <div class="stat">
+        <span class="logo -lu-ghg"></span>
+        <span class="description">
+          Land Use GHG Target
+          {{#if landuseghgdescription}}
+          <a class="btn-tooltip" href="#">
+            <svg> <use xlink:href="#shape-info"></use> </svg>
+            <span class="tooltip1">{{landuseghgdescription}}</span>
+          </a>
+          {{/if}}
+        </span>
+      </div>
+    {{/if}}
+    {{#if landusenonghg}}
+      <div class="stat">
+        <span class="logo -lu-non-ghg"></span>
+        <span class="description">
+          Land Use non-GHG Target
+          {{#if landusenonghgdescription}}
+          <a class="btn-tooltip" href="#">
+            <svg> <use xlink:href="#shape-info"></use> </svg>
+            <span class="tooltip1">{{landusenonghgdescription}}</span>
+          </a>
+          {{/if}}
+        </span>
+      </div>
+    {{/if}}
+    {{#if landuseexcluded}}
+      <div class="stat">
+        <span class="logo -lu-excluded"></span>
+        <span class="description">
+          Land Use Excluded
+          {{#if landuseexcludeddescription}}
+          <a class="btn-tooltip" href="#">
+            <svg> <use xlink:href="#shape-info"></use> </svg>
+            <span class="tooltip1">{{landuseexcludeddescription}}</span>
+          </a>
+          {{/if}}
+        </span>
+      </div>
+    {{/if}}
+  </div>
+</div>
