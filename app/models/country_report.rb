@@ -17,11 +17,11 @@ class CountryReport
 
   BELOWGROUND_EMISSIONS_FACTOR = 1.26
   PRIMARY_FOREST_BOUNDARY = "prf"
-  OUTSIDE_TREE_PLANTATIONS_BOUNDARY = "opl"
+  INSIDE_PLANTATIONS_BOUNDARY = "plt"
   ADMIN_BOUNDARY = "admin"
 
   BOUNDARIES = [ADMIN_BOUNDARY, PRIMARY_FOREST_BOUNDARY,
-                OUTSIDE_TREE_PLANTATIONS_BOUNDARY]
+                INSIDE_PLANTATIONS_BOUNDARY]
 
   def base_path
     "#{ENV["CDB_API_HOST"]}?q="
@@ -34,9 +34,7 @@ class CountryReport
     @monitor_start_year = options[:monitor_start_year].try(:to_i) || 2011
     @monitor_end_year = options[:monitor_end_year].try(:to_i) || 2014
     @thresh = options[:thresh].try(:to_i) || 30
-    @above = options[:above] && options[:above] == "true"
     @below = options[:below] && options[:below] == "true"
-    @above_below_adjust = @above && @below ? BELOWGROUND_EMISSIONS_FACTOR : 1
     @primary_forest = options[:primary_forest] && options[:primary_forest] == "true"
     @tree_plantations = options[:tree_plantations] && options[:tree_plantations] == "true"
 
@@ -73,8 +71,10 @@ class CountryReport
         t["year"] >= @reference_start_year &&
         t["year"] <= @reference_end_year
     end
-    values.each do |t|
-      t["value"] = t["value"] * @above_below_adjust
+    if @below
+      values.each do |t|
+        t["value"] = t["value"] * BELOWGROUND_EMISSIONS_FACTOR
+      end
     end
     response[:emissions][:reference][:years] = values.map{|t| t["year"]}
     response[:emissions][:reference][:total] = values.inject(0){|sum,t| sum += t["value"]}
@@ -89,8 +89,10 @@ class CountryReport
         t["year"] >= @monitor_start_year &&
         t["year"] <= @monitor_end_year
     end
-    values.each do |t|
-      t["value"] = t["value"] * @above_below_adjust
+    if @below
+      values.each do |t|
+        t["value"] = t["value"] * BELOWGROUND_EMISSIONS_FACTOR
+      end
     end
     response[:emissions][:monitor][:years] = values.map{|t| t["year"]}
     response[:emissions][:monitor][:total] = values.inject(0){|sum,t| sum += t["value"]}
@@ -143,6 +145,12 @@ class CountryReport
         t["year"] >= start_year &&
         t["year"] <= end_year
     end.group_by{|t| t["sub_nat_id"]}
+
+    if @below && indicator == EMISSIONS
+      values.each do |t|
+        t["value"] = t["value"] * BELOWGROUND_EMISSIONS_FACTOR
+      end
+    end
 
     provinces = []
     values.each do |sub_nat_id, vals|
@@ -253,18 +261,15 @@ class CountryReport
     response = {}
 
     total = 0
-    above = if @above
-              val = data.select do |t|
-                t["boundary"] == @use_boundary &&
-                  t["indicator_id"] == ABOVE_C_DENSITY &&
-                  t["sub_nat_id"] == nil &&
-                  t["year"] = 0
-              end.first
-              total += (val ? val["value"] : 0)
-              val and  val["value"] or nil
-            else
-              nil
-            end
+    val = data.select do |t|
+      t["boundary"] == @use_boundary &&
+        t["indicator_id"] == ABOVE_C_DENSITY &&
+        t["sub_nat_id"] == nil &&
+        t["year"] = 0
+    end.first
+    total += (val ? val["value"] : 0)
+    above = val and val["value"] or nil
+
     below = if @below
               val = data.select do |t|
                 t["boundary"] == @use_boundary &&
