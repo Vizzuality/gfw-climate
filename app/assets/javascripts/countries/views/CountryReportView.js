@@ -3,12 +3,14 @@ define([
   'mps',
   'countries/services/ReportService',
   'countries/views/report/SummaryChartView',
+  'countries/views/report/HistoricalTrendChartView',
   'text!countries/templates/countryReport.handlebars',
 ], function(
   Backbone,
   mps,
   ReportService,
   SummaryChartView,
+  HistoricalTrendChartView,
   tpl
 ) {
   'use strict';
@@ -28,10 +30,9 @@ define([
         'monitor_start_year': '2011',
         'monitor_end_year': '2014',
         'thresh': '30',
-        'above': 'true',
         'below': 'true',
         'primary_forest': 'false',
-        'tree_plantations': 'false'
+        'exclude_plantations': 'false'
       }
     },
 
@@ -89,8 +90,12 @@ define([
     },
 
     _initModules: function() {
-      this.summaryChart = new SummaryChartView({
-        data: _.clone(this.data.emissions)
+      // this.summaryChart = new SummaryChartView({
+      //   data: _.clone(this.data.emissions)
+      // });
+
+      this.historicalTrendChart = new HistoricalTrendChartView({
+        data: _.clone(this.data.forest_loss)
       });
     }
   });
