@@ -54,12 +54,18 @@
       margin-left: 60px;
       margin-right: 60px;
 
-      > .title {
+      .title {
         width: 100%;
         font-size: 50px;
         color: $font-color-1;
         text-align: left;
         margin-bottom: 40px;
+
+        &.-medium {
+          font-size: 32px;
+          font-weight: 300;
+          margin-bottom: 15px;
+        }
       }
 
       .subtitle {
@@ -77,7 +83,7 @@
 
         > .col {
           width: 48%;
-          margin-bottom: 30px;
+          margin-bottom: 20px;
 
           &.-wide {
             margin-right: 50%;
@@ -86,6 +92,10 @@
           &.-wide-text {
             width: 100%;
             margin: 0;
+          }
+
+          &.-no-margin {
+            margin-bottom: 0;
           }
 
           .blank {
@@ -102,6 +112,35 @@
             sup {
               top: -0.5em;
             }
+          }
+        }
+      }
+
+      .table {
+        width: 100%;
+        border: 1px solid #E5E5DF;
+        padding: 30px 50px;
+
+        .item {
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 25px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .label {
+            width: 45%;
+            margin-right: 10%;
+            font-size: 14px;
+            color: $font-color-1;
+          }
+
+          .value {
+            font-size: 17px;
+            color: $font-color-1;
+            display: flex;
           }
         }
       }
