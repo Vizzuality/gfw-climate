@@ -55,6 +55,9 @@ define([
       var totalMonitoring = this.data.emissions.monitor.average;
       var increase = Math.round(((totalMonitoring - totalReference) / totalReference) * 100);
       var hasIncreased = increase > -1;
+      var factorAbovegroundBiomass = this.data.emission_factors.aboveground;
+      var factorBelowgroundBiomass = this.data.emission_factors.belowground;
+      var factorTotalEmission = this.data.emission_factors.total;
 
       this.$el.removeClass('is-loading');
       this.$el.html(this.template({
@@ -66,7 +69,10 @@ define([
         totalReference: totalReference.toFixed(2),
         totalMonitoring: totalMonitoring.toFixed(2),
         increase: increase,
-        hasIncreased: hasIncreased
+        hasIncreased: hasIncreased,
+        factorAbovegroundBiomass: factorAbovegroundBiomass.toFixed(2),
+        factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass.toFixed(2) : '',
+        factorTotalEmission: factorTotalEmission.toFixed(2)
       }));
 
       this._initModules();

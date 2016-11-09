@@ -27,7 +27,7 @@ define([
       paddingXAxisLabels: 20,
       paddingYAxisLabels: 10,
       margin: {
-        top: 20,
+        top: 10,
         right: 35,
         bottom: 35,
         left: 20
@@ -354,7 +354,7 @@ define([
       deviationGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          return '-';
+          return '';//'-';
         })
         .attr('dx', function() {
           return (((deviationLabel.width * this.cWidthGrid) / 100) / 2) -
