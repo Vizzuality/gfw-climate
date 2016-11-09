@@ -3,12 +3,14 @@ define([
   'mps',
   'countries/services/ReportService',
   'countries/views/report/SummaryChartView',
+  'countries/views/report/HistoricalTrendChartView',
   'text!countries/templates/countryReport.handlebars',
 ], function(
   Backbone,
   mps,
   ReportService,
   SummaryChartView,
+  HistoricalTrendChartView,
   tpl
 ) {
   'use strict';
@@ -28,10 +30,9 @@ define([
         'monitor_start_year': '2011',
         'monitor_end_year': '2014',
         'thresh': '30',
-        'above': 'true',
-        'below': 'true',
+        'below': 'false',
         'primary_forest': 'false',
-        'tree_plantations': 'false'
+        'exclude_plantations': 'false'
       }
     },
 
@@ -50,10 +51,13 @@ define([
     },
 
     render: function() {
-      var totalReference = this.data.emissions.reference.total;
-      var totalMonitoring = this.data.emissions.monitor.total;
+      var totalReference = this.data.emissions.reference.average;
+      var totalMonitoring = this.data.emissions.monitor.average;
       var increase = Math.round(((totalMonitoring - totalReference) / totalReference) * 100);
       var hasIncreased = increase > -1;
+      var factorAbovegroundBiomass = this.data.emission_factors.aboveground;
+      var factorBelowgroundBiomass = this.data.emission_factors.belowground;
+      var factorTotalEmission = this.data.emission_factors.total;
 
       this.$el.removeClass('is-loading');
       this.$el.html(this.template({
@@ -65,7 +69,10 @@ define([
         totalReference: totalReference.toFixed(2),
         totalMonitoring: totalMonitoring.toFixed(2),
         increase: increase,
-        hasIncreased: hasIncreased
+        hasIncreased: hasIncreased,
+        factorAbovegroundBiomass: factorAbovegroundBiomass.toFixed(2),
+        factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass.toFixed(2) : '',
+        factorTotalEmission: factorTotalEmission.toFixed(2)
       }));
 
       this._initModules();
@@ -91,6 +98,10 @@ define([
     _initModules: function() {
       this.summaryChart = new SummaryChartView({
         data: _.clone(this.data.emissions)
+      });
+
+      this.historicalTrendChart = new HistoricalTrendChartView({
+        data: _.clone(this.data.forest_loss)
       });
     }
   });

@@ -94,6 +94,41 @@
         </div>
       </div>
 
+      <div class="row">
+        <div class="col -wide -no-margin">
+          <h2 class="title -medium">Activity Data</h2>
+          <h3 class="subtitle">Historical Trend in Forest Loss</h3>
+        </div>
+      </div>
+
+      <div id="historical-trend-chart" class="m-historical-trend-chart"></div>
+
+      <div class="row">
+        <div class="col">
+          <h3 class="subtitle">Emission Factors</h3>
+          <p>Gross emissions disclaimer text. Lorem ipsum fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.</p>
+        </div>
+
+        <div class="col">
+          <div class="table">
+            <div class="item">
+              <div class="label">Aboveground biomass</div>
+              <div class="value">{{factorAbovegroundBiomass}} t C/ha</div>
+            </div>
+
+            <div class="item">
+              <div class="label">Belowground biomass</div>
+              <div class="value">{{#if factorBelowgroundBiomass}}{{factorBelowgroundBiomass}} t C/ha{{else}}Not Applicable{{/if}}</div>
+            </div>
+
+            <div class="item">
+              <div class="label">Total Emission Factor</div>
+              <div class="value">{{factorTotalEmission}} t C/ha</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
