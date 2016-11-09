@@ -3,9 +3,10 @@
     <h2> {{indcvsndc}} </h2>
   {{/if}}
   <div class="stats">
-    {{#if economywidetarget}}
       <div class="stat">
-        <span class="logo -economy-wide-target"></span>
+        <span class="logo{{#unless economywidetarget}} -disabled{{/unless}}">
+          <svg><use xlink:href="#icon-economy-wide-target"></use></svg>
+        </span>
         <span class="description">
           Economy-Wide Target
           {{#if economywidetargetdescription}}
@@ -16,10 +17,10 @@
           {{/if}}
         </span>
       </div>
-    {{/if}}
-    {{#if landuseghg}}
       <div class="stat">
-        <span class="logo -lu-ghg"></span>
+        <span class="logo{{#unless landuseghg}} -disabled{{/unless}}">
+          <svg><use xlink:href="#icon-land-use-ghg"></use></svg>
+        </span>
         <span class="description">
           Land Use GHG Target
           {{#if landuseghgdescription}}
@@ -30,10 +31,10 @@
           {{/if}}
         </span>
       </div>
-    {{/if}}
-    {{#if landusenonghg}}
       <div class="stat">
-        <span class="logo -lu-non-ghg"></span>
+        <span class="logo{{#unless landusenonghg}} -disabled{{/unless}}">
+          <svg><use xlink:href="#icon-land-use-non-ghg"></use></svg>
+        </span>
         <span class="description">
           Land Use non-GHG Target
           {{#if landusenonghgdescription}}
@@ -44,10 +45,10 @@
           {{/if}}
         </span>
       </div>
-    {{/if}}
-    {{#if landuseexcluded}}
       <div class="stat">
-        <span class="logo -lu-excluded"></span>
+        <span class="logo{{#unless landuseexcluded}} -disabled{{/unless}}">
+          <svg><use xlink:href="#icon-land-use-excluded"></use></svg>
+        </span>
         <span class="description">
           Land Use Excluded
           {{#if landuseexcludeddescription}}
@@ -58,6 +59,5 @@
           {{/if}}
         </span>
       </div>
-    {{/if}}
   </div>
 </div>

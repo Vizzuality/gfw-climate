@@ -14,25 +14,30 @@
     > .stat {
       margin-right: 40px;
 
+      &:hover {
+        cursor: default;
+
+        .tooltip1 {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+
       > .logo {
         display: block;
         height: 41px;
         margin-bottom: 2px;
 
-        &.-economy-wide-target {
-          background: image-url('countries/economy-wide-target.svg') no-repeat left;
+        > svg {
+          width: 41px;
+          height: 41px;
+          fill: $color-1;
         }
 
-        &.-lu-excluded {
-          background: image-url('countries/land-use-excluded.svg') no-repeat left;
-        }
-
-        &.-lu-ghg {
-          background: image-url('countries/land-use-ghg.svg') no-repeat left;
-        }
-
-        &.-lu-non-ghg {
-          background: image-url('countries/land-use-non-ghg.svg') no-repeat left;
+        &.-disabled {
+          svg {
+            fill: #595959;
+          }
         }
       }
 
@@ -55,6 +60,7 @@
         background-color: #595959;
         color: rgba($font-color-2, 0.7);
         border-radius: 8px;
+        pointer-events: none;
 
         svg {
           width: 10px;
@@ -71,13 +77,7 @@
           white-space: normal;
           min-width: 500px;
           width: 100%;
-        }
-
-        &:hover {
-          .tooltip1 {
-            visibility: visible;
-            opacity: 1;
-          }
+          text-transform: none;
         }
       }
     }

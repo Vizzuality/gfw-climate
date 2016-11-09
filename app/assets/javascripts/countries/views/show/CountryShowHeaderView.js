@@ -25,7 +25,6 @@ define([
     },
 
     drawStats: function(stats) {
-      delete stats.indcvsndc;
       if (stats) {
         this.$el.addClass('-has-stats');
         this.$statsContainer.html(this.templateStats(stats));
