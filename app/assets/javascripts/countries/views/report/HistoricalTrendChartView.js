@@ -323,7 +323,7 @@ define([
       lossGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          return NumbersHelper.addNumberDecimals(d.value);
+          return NumbersHelper.addNumberDecimals(Math.round(d.value));
         })
         .attr('dx', function() {
           return (((lossLabel.width * this.cWidthGrid) / 100) / 2) -
@@ -437,7 +437,7 @@ define([
           this.defaults.rowHeight * (this.chartData.length + 1) + ')')
         .append('text')
           .attr('class', 'value')
-          .text(NumbersHelper.addNumberDecimals(this.referenceData.total))
+          .text(NumbersHelper.addNumberDecimals(Math.round(this.referenceData.average)))
           .attr('dx', function() {
             return (((lossLabel.width * this.cWidthGrid) / 100) / 2) -
             (((lossLabel.width * this.cWidthGrid) / 100) / 3);
@@ -452,7 +452,7 @@ define([
           this.defaults.rowHeight * (this.chartData.length + 2) + ')')
         .append('text')
           .attr('class', 'value')
-          .text(NumbersHelper.addNumberDecimals(this.monitoringData.total))
+          .text(NumbersHelper.addNumberDecimals(Math.round(this.monitoringData.average)))
           .attr('dx', function() {
             return (((lossLabel.width * this.cWidthGrid) / 100) / 2) -
             (((lossLabel.width * this.cWidthGrid) / 100) / 3);
