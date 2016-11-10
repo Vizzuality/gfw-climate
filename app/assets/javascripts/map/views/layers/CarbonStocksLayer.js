@@ -61,9 +61,10 @@ define([
           // get values from imgdata
           carbonStock = imgdata[pixelPos + 2] | 0,
           uncertainty = imgdata[pixelPos + 3] | 0;
-
           // scale values
           uncertainty = uncertainty > 100 ? 100 : (uncertainty < 0 ? 0 : uncertainty);
+          // init set alpha to 0
+          imgdata[pixelPos + 3] = 0;
 
           if(carbonStock >= this.minrange && carbonStock <= this.maxrange) {
             if(this.uncertainty === 0) {
@@ -74,18 +75,14 @@ define([
               // max uncertainty sum the uncertainty value
               carbonStock = carbonStock + (uncertainty * carbonStock / 100);
             }
-
             // Calc bucket from carbonStock as a factor of bucket number
             var bucket = (carbonStock * countBuckets) / this.options.maxrange;
             // Find floor to give bucket index
             var bucketIndex = ~~bucket;
-
             imgdata[pixelPos] = buckets[bucketIndex * 3];
             imgdata[pixelPos + 1] = buckets[bucketIndex * 3 + 1];
             imgdata[pixelPos + 2] = buckets[bucketIndex * 3 + 2];
             imgdata[pixelPos + 3] = carbonStock;
-          } else {
-            imgdata[pixelPos + 3] = 0;
           }
         }
       }
