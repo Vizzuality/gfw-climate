@@ -49,41 +49,41 @@ define([
                174, 176, 49,
                173, 209, 81,
                179, 249, 122]; // last bucket
-      var countBuckets = buckets.length / 3;
+      // cache bucket length
+      var countBuckets = buckets.length / 3 |0;
 
       for(var i = 0 |0; i < w; ++i) {
         for(var j = 0 |0; j < h; ++j) {
 
           // find pixel position
-          var pixelPos = ((j * w + i) * components) | 0;
+          var pixelPos = ((j * w + i) * components) | 0,
 
-          // get values
-          // var carbonStock = imgdata[pixelPos + 2];
-          var intensity = imgdata[pixelPos + 2] | 0;
-          var uncertainty = imgdata[pixelPos + 3] | 0;
+          // get values from imgdata
+          carbonStock = imgdata[pixelPos + 2] | 0,
+          uncertainty = imgdata[pixelPos + 3] | 0;
 
           // scale values
           uncertainty = uncertainty > 100 ? 100 : (uncertainty < 0 ? 0 : uncertainty);
 
-          if(intensity >= this.minrange && intensity <= this.maxrange) {
+          if(carbonStock >= this.minrange && carbonStock <= this.maxrange) {
             if(this.uncertainty === 0) {
               // min uncertainty subtract the percentage of uncertainty
-              intensity = intensity - (uncertainty * intensity / 100);
-              intensity = intensity < 1 ? 1 : intensity;
+              carbonStock = carbonStock - (uncertainty * carbonStock / 100);
+              carbonStock = carbonStock < 1 ? 1 : carbonStock;
             } else if(this.uncertainty === 254) {
               // max uncertainty sum the uncertainty value
-              intensity = intensity + (uncertainty * intensity / 100);
+              carbonStock = carbonStock + (uncertainty * carbonStock / 100);
             }
 
-            // Calc bucket from intensity as a factor of bucket no
-            var bucket = (intensity * countBuckets) / this.options.maxrange;
+            // Calc bucket from carbonStock as a factor of bucket number
+            var bucket = (carbonStock * countBuckets) / this.options.maxrange;
             // Find floor to give bucket index
             var bucketIndex = ~~bucket;
 
             imgdata[pixelPos] = buckets[bucketIndex * 3];
             imgdata[pixelPos + 1] = buckets[bucketIndex * 3 + 1];
             imgdata[pixelPos + 2] = buckets[bucketIndex * 3 + 2];
-            imgdata[pixelPos + 3] = intensity;
+            imgdata[pixelPos + 3] = carbonStock;
           } else {
             imgdata[pixelPos + 3] = 0;
           }

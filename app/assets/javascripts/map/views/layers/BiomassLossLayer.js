@@ -65,32 +65,39 @@ define([
          .exponent(exp)
          .domain([0,256])
          .range([0,256]);
-      var c = [255, 31,  38, // first bucket R G B
+
+      var buckets = [255, 31,  38, // first bucket R G B
                210, 31,  38,
                210, 31,  38,
                241, 152, 19,
                255, 208, 11]; // last bucket
-      var countBuckets = c.length / 3 |0; //3: three bands
+      var countBuckets = buckets.length / 3 |0; //3: three bands
+
       for(var i = 0 |0; i < w; ++i) {
        for(var j = 0 |0; j < h; ++j) {
-          var pixelPos  = ((j * w + i) * components) |0,
-          // drop year=0 values from loop opcacity = 0 and exit
-              intensity = imgdata[pixelPos + 1] |0,
-              bla = imgdata[pixelPos + 2] |0;
-              imgdata[pixelPos + 3] = 0 |0;
-          if (bla >= this.minrange && bla <= this.maxrange) {
-            var intensity_scaled = myscale(intensity) |0,
-                yearLoss = 2000 + imgdata[pixelPos] |0;
-            if (yearLoss >= yearStart && yearLoss <= yearEnd) {
-              var bucket = (~~(countBuckets * intensity_scaled / 256) * 3);
-              imgdata[pixelPos] = c[bucket]; //R 0-255
-              imgdata[pixelPos + 1] = c[bucket + 1]; //G 0-255
-              imgdata[pixelPos + 2] = c[bucket + 2]; //B 0-255
-              imgdata[pixelPos + 3] = intensity_scaled | 0; //alpha channel 0-255
+          var pixelPos  = ((j * w + i) * components) |0;
+          // exit if year = 0 to reduce memory use
+          if ( imgdata[pixelPos] === 0 ) {
+            imgdata[pixelPos + 3] = 0 |0; //alpha channel 0-255
+          } else {
+            // get values from data
+            var intensity = imgdata[pixelPos + 1] |0,
+                intensity = myscale(intensity) |0;
+                imgdata[pixelPos + 3] = 0 |0;
+            // filter range from dashboard
+            if (intensity >= this.minrange && intensity <= this.maxrange) {
+                  var yearLoss = 2000 + imgdata[pixelPos] |0;
+              if (yearLoss >= yearStart && yearLoss <= yearEnd) {
+                var bucket = (~~(countBuckets * intensity / 256) * 3);
+                imgdata[pixelPos] = buckets[bucket]; //R 0-255
+                imgdata[pixelPos + 1] = buckets[bucket + 1]; //G 0-255
+                imgdata[pixelPos + 2] = buckets[bucket + 2]; //B 0-255
+                imgdata[pixelPos + 3] = intensity | 0; //alpha channel 0-255
+              }
             }
           }
         }
-       }
+      }
     },
 
     /**
