@@ -12,7 +12,9 @@
   .container-country__content {
     width: 100%;
     // min-height: 380px;
-    padding-right: 300px;
+    @media (min-width: $br-mobile){
+      padding-right: 300px;
+    }
 
     .header-country__title-country {
       padding: 35px 0 50px;

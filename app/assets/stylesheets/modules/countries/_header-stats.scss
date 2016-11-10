@@ -1,5 +1,10 @@
 .header-country__stats {
   margin: 15px 0 30px;
+  padding: 15px;
+
+  @media (min-width: $br-mobile){
+    padding: 0;
+  }
 
   > h2 {
     font-size: 14px;
@@ -11,8 +16,21 @@
 
   > .stats {
     display: flex;
+    flex-wrap: wrap;
+
+    @media (min-width: $br-mobile){
+      flex-wrap: nowrap;
+    }
+
     > .stat {
-      margin-right: 40px;
+      display: flex;
+      flex-basis: 50%;
+      flex-direction: column;
+
+      @media (min-width: $br-mobile){
+        flex: 1 1 auto;
+        margin-right: 20px;
+      }
 
       &:hover {
         cursor: default;
