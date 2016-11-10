@@ -4,6 +4,7 @@ define([
   'countries/services/ReportService',
   'countries/views/report/SummaryChartView',
   'countries/views/report/HistoricalTrendChartView',
+  'countries/views/report/PieChartView',
   'text!countries/templates/countryReport.handlebars',
 ], function(
   Backbone,
@@ -11,6 +12,7 @@ define([
   ReportService,
   SummaryChartView,
   HistoricalTrendChartView,
+  PieChartView,
   tpl
 ) {
   'use strict';
@@ -51,13 +53,13 @@ define([
     },
 
     render: function() {
-      var totalReference = this.data.emissions.reference.average;
-      var totalMonitoring = this.data.emissions.monitor.average;
+      var totalReference = Math.round(this.data.emissions.reference.average);
+      var totalMonitoring = Math.round(this.data.emissions.monitor.average);
       var increase = Math.round(((totalMonitoring - totalReference) / totalReference) * 100);
       var hasIncreased = increase > -1;
-      var factorAbovegroundBiomass = this.data.emission_factors.aboveground;
-      var factorBelowgroundBiomass = this.data.emission_factors.belowground;
-      var factorTotalEmission = this.data.emission_factors.total;
+      var factorAbovegroundBiomass = Math.round(this.data.emission_factors.aboveground);
+      var factorBelowgroundBiomass = Math.round(this.data.emission_factors.belowground);
+      var factorTotalEmission = Math.round(this.data.emission_factors.total);
 
       this.$el.removeClass('is-loading');
       this.$el.html(this.template({
@@ -66,13 +68,13 @@ define([
         monitorEnd: this.status.get('monitor_end_year'),
         referenceStart: this.status.get('reference_start_year'),
         referenceEnd: this.status.get('reference_end_year'),
-        totalReference: totalReference.toFixed(2),
-        totalMonitoring: totalMonitoring.toFixed(2),
+        totalReference: totalReference,
+        totalMonitoring: totalMonitoring,
         increase: increase,
         hasIncreased: hasIncreased,
-        factorAbovegroundBiomass: factorAbovegroundBiomass.toFixed(2),
-        factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass.toFixed(2) : '',
-        factorTotalEmission: factorTotalEmission.toFixed(2)
+        factorAbovegroundBiomass: factorAbovegroundBiomass,
+        factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass : '',
+        factorTotalEmission: factorTotalEmission
       }));
 
       this._initModules();
@@ -102,6 +104,24 @@ define([
 
       this.historicalTrendChart = new HistoricalTrendChartView({
         data: _.clone(this.data.forest_loss)
+      });
+
+      this.historicalLosstByProvinceChart = new PieChartView({
+        el: '#historical-loss-province-chart',
+        data: _.clone(this.data.provinces.forest_loss.reference),
+        legendLabels: {
+          name: 'Province',
+          value: 'Loss (ha)'
+        }
+      });
+
+      this.cStocksByProvinceChart = new PieChartView({
+        el: '#c-stock-province-chart',
+        data: _.clone(this.data.provinces.c_stocks),
+        legendLabels: {
+          name: 'Province',
+          value: 'C Stocks'
+        }
       });
     }
   });

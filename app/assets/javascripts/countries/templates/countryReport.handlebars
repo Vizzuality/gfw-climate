@@ -11,9 +11,10 @@
         <div class="m-table-list">
           <ul class="list">
             <li class="item"><span class="text">Summary</span></li>
-            <li class="item"><span class="text">Scope and Boundaries</span></li>
-            <li class="item"><span class="text">Independent Reference Level</span></li>
-            <li class="item"><span class="text">Independent Monitoring Results</span></li>
+            <li class="item"><span class="text">Scope and boundaries</span></li>
+            <li class="item"><span class="text">Activity data</span></li>
+            <li class="item"><span class="text">Emission factors</span></li>
+            <li class="item"><span class="text">CO<sub>2</sub> emissions</span></li>
             <li class="item"><span class="text">About the data</span></li>
           </ul>
         </div>
@@ -104,13 +105,17 @@
       <div id="historical-trend-chart" class="m-historical-trend-chart"></div>
 
       <div class="row">
+        <div class="col -wide">
+          <h2 class="title -medium">Emission Factors</h2>
+        </div>
+
         <div class="col">
-          <h3 class="subtitle">Emission Factors</h3>
+          <p></p>
           <p>Gross emissions disclaimer text. Lorem ipsum fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.</p>
         </div>
 
         <div class="col">
-          <div class="table">
+          <div class="table -justify">
             <div class="item">
               <div class="label">Aboveground biomass</div>
               <div class="value">{{factorAbovegroundBiomass}} t C/ha</div>
@@ -126,6 +131,18 @@
               <div class="value">{{factorTotalEmission}} t C/ha</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col -space-break">
+          <h2 class="title -medium">Historical Loss by Province</h2>
+          <div id="historical-loss-province-chart" class="m-report-pie-chart"></div>
+        </div>
+
+        <div class="col -space-break">
+          <h2 class="title -medium">C Stocks by Province</h2>
+          <div id="c-stock-province-chart" class="m-report-pie-chart"></div>
         </div>
       </div>
 

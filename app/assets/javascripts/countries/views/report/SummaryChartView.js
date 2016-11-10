@@ -53,15 +53,15 @@ define([
     },
 
     _start: function() {
-      var referenceAvg = this.referenceData.average;
-      var monitoringAvg = this.monitoringData.average;
+      var referenceAvg = Math.round(this.referenceData.average);
+      var monitoringAvg = Math.round(this.monitoringData.average);
       var increase = Math.round(((monitoringAvg - referenceAvg) / referenceAvg) * 100);
       var hasIncreased = increase > -1;
 
       this.$el.html(this.template({
         hasData: this.chartData.length,
-        referenceAvg: referenceAvg.toFixed(2),
-        monitoringAvg: monitoringAvg.toFixed(2),
+        referenceAvg: referenceAvg,
+        monitoringAvg: monitoringAvg,
         increase: increase,
         hasIncreased: hasIncreased
       }));
