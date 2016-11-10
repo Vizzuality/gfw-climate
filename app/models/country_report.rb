@@ -240,8 +240,12 @@ class CountryReport
     result[:c_stocks] = {}
 
     indicators = []
-    indicators << ABOVE_C_STOCKS if @above
-    indicators << BELOW_C_STOCKS if @below
+    if @below.present?
+      indicators << BELOW_C_STOCKS
+    else
+      indicators << ABOVE_C_STOCKS
+    end
+    indicators
 
     values = data.select do |t|
       t["boundary"] == @use_boundary &&
@@ -249,7 +253,9 @@ class CountryReport
         !t["sub_nat_id"].nil? &&
         t["year"] = 0
     end.group_by{|t| t["sub_nat_id"]}
+
     provinces = []
+
     values.each do |sub_nat_id, vals|
       r = {}
       sample = vals.first
