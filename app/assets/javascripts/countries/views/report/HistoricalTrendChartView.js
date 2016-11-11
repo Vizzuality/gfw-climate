@@ -80,21 +80,25 @@ define([
       // Data parsing and initialization
       this._parseData();
 
+      this._setCustomLabels();
       this._start();
     },
 
-    _start: function() {
-      var referenceAvg = this.referenceData.average;
-      var monitoringAvg = this.monitoringData.average;
-      var increase = Math.round(((monitoringAvg - referenceAvg) / referenceAvg) * 100);
-      var hasIncreased = increase > -1;
+    _setCustomLabels:  function() {
+      if (this.defaults.customLabels) {
+        this.defaults.customLabels.forEach(function(custom) {
+          var label = _.findWhere(this.defaults.labels, { slug : custom.slug });
 
+          if (label) {
+            label.name = custom.name;
+          }
+        }.bind(this));
+      }
+    },
+
+    _start: function() {
       this.$el.html(this.template({
-        hasData: this.chartData.length,
-        referenceAvg: referenceAvg.toFixed(2),
-        monitoringAvg: monitoringAvg.toFixed(2),
-        increase: increase,
-        hasIncreased: hasIncreased
+        hasData: this.chartData.length
       }));
 
       this.render();
@@ -368,10 +372,10 @@ define([
     },
 
     _drawDeviation: function() {
-      var total = _.reduce(this.chartData, function(memo, data){
+      var total = _.reduce(this.referenceData.values, function(memo, data){
         return memo + data.value;
       }, 0);
-      var average = total / this.chartData.length;
+      var average = total / this.referenceData.values.length;
       var deviationGroup = this.svg.select('.deviation');
       var deviationLabel = _.findWhere(this.defaults.labels, { slug: 'deviation' });
       var deviationLabelWidth = (deviationLabel.width * this.cWidthGrid) / 100;
@@ -555,7 +559,7 @@ define([
         })
         .attr('height', this.defaults.barHeight)
         .attr('width', function(d) {
-          return this.x2(d.value);
+          return this.x(d.value);
         }.bind(this))
         .attr('y', function() {
           return ((rowOffset * 1.25) / 2)
@@ -598,10 +602,10 @@ define([
       var deviationGroup = this.svg.select('.deviation');
       var deviationLabel = _.findWhere(this.defaults.labels, { slug: 'deviation' });
       var deviationLabelWidth = (deviationLabel.width * this.cWidthGrid) / 100;
-      var total = _.reduce(this.chartData, function(memo, data){
+      var total = _.reduce(this.referenceData.values, function(memo, data){
         return memo + data.value;
       }, 0);
-      var average = total / this.chartData.length;
+      var average = total / this.referenceData.values.length;
       var deviationContent = this.svg.append('g')
         .attr('transform', 'translate('+
           (d3.transform(deviationGroup.attr('transform')).translate[0]) + ', ' +
