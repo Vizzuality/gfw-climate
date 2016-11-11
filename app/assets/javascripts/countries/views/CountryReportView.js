@@ -103,6 +103,7 @@ define([
       });
 
       this.historicalTrendChart = new HistoricalTrendChartView({
+        el: '#historical-trend-chart',
         data: _.clone(this.data.forest_loss)
       });
 
@@ -122,6 +123,11 @@ define([
           name: 'Province',
           value: 'C Stocks'
         }
+      });
+
+      this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
+        el: '#forest-related-emissions-chart',
+        data: _.clone(this.data.emissions)
       });
     }
   });

@@ -61,6 +61,10 @@
         text-align: left;
         margin-bottom: 40px;
 
+        sup {
+          top: -0.5em;
+        }
+
         &.-medium {
           font-size: 32px;
           font-weight: 300;

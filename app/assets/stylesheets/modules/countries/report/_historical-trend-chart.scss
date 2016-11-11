@@ -10,6 +10,12 @@
       font-size: 14px;
       fill: $font-color-1;
       font-weight: 500;
+      text-anchor: end;
+
+      &.subtitle {
+        font-size: 11px;
+        font-weight: 400;
+      }
     }
 
     .yAxis {
@@ -37,7 +43,7 @@
     .year {
       font-size: 14px;
       fill: $font-color-1;
-      text-anchor: start;
+      text-anchor: end;
       font-weight: 400;
     }
 
