@@ -73,28 +73,55 @@
               </div>
               <div class="col">
                 <p> Height </p>
-                <span> 5m </span>
+                <div id="height-slider"></div>
               </div>
             </div>
             <div class="">
-              <p> Area </p>
+              <p> Crown Cover </p>
               <div id="crown-cover-slider"></div>
             </div>
             <div class="">
-              <label class="report-checkbox" for="tree-plantation-excluded">
-                <input id="tree-plantation-excluded" type="checkbox" name="treeplantations" value="below">
+              <label class="report-checkbox -disabled" for="tree-plantation-excluded">
+                <input id="tree-plantation-excluded" type="checkbox" disabled="disabled" name="tree_plantations">
                 Tree Plantations Excluded
               </label>
-              <label class="report-checkbox" for="primary-forest-only">
-                <input id="primary-forest-only" type="checkbox" name="primaryforest" value="below">
-                Tree Plantations Excluded
+              <label class="report-checkbox -disabled" for="primary-forest-only">
+                <input id="primary-forest-only" type="checkbox" disabled="disabled" name="primaryforest">
+                Primary Forest Only
               </label>
             </div>
           </div>
 
           <div class="col">
             <h3 class="subtitle">Forest Carbon Pools Included</h3>
-            <div class="blank"></div>
+            <div class="">
+              <label class="report-radio" for="aboveground-live">
+                <input id="aboveground-live" type="radio" name="woody_biomass" value="aboveground">
+                Aboveground live woody biomass
+              </label>
+              <label class="report-radio" for="belowground-live">
+                <input id="belowground-live" type="radio" name="woody_biomass" value="belowground">
+                Belowground live woody biomass
+              </label>
+            </div>
+            <div class="">
+              <label class="report-checkbox -disabled" for="dead-wood">
+                <input id="dead-wood" type="checkbox" disabled="disabled" name="deadwoo">
+                Dead wood
+              </label>
+              <label class="report-checkbox -disabled" for="litter">
+                <input id="litter" type="checkbox" disabled="disabled" name="litter">
+                Litter
+              </label>
+              <label class="report-checkbox -disabled" for="soil-organic-carbon">
+                <input id="soil-organic-carbon" type="checkbox" disabled="disabled" name="soil_organic_carbon">
+                Soil organic carbon
+              </label>
+              <label class="report-checkbox -disabled" for="wood-products">
+                <input id="wood-products" type="checkbox" disabled="disabled" name="wood_products">
+                Wood products
+              </label>
+            </div>
           </div>
 
           <div class="col">
@@ -104,7 +131,20 @@
 
           <div class="col">
             <h3 class="subtitle">Greenhouse Gases Covered</h3>
-            <div class="blank"></div>
+            <div class="">
+              <label class="report-checkbox" for="co2">
+                <input id="co2" type="checkbox" name="co2">
+                CO<sub>2</sub>
+              </label>
+              <label class="report-checkbox -disabled" for="ch4">
+                <input id="ch4" type="checkbox" disabled="disabled" name="ch4">
+                CH<sub>4</sub>
+              </label>
+              <label class="report-checkbox -disabled" for="n2o">
+                <input id="n2o" type="checkbox" disabled="disabled" name="n2o">
+                N<sub>2</sub>O
+              </label>
+            </div>
           </div>
         </div>
 

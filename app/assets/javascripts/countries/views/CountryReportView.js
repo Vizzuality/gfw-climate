@@ -5,7 +5,7 @@ define([
   'countries/views/report/SummaryChartView',
   'countries/views/report/HistoricalTrendChartView',
   'countries/views/report/PieChartView',
-  'countries/views/report/SliderView',
+  'countries/views/report/SlidersView',
   'text!countries/templates/countryReport.handlebars',
 ], function(
   Backbone,
@@ -14,7 +14,7 @@ define([
   SummaryChartView,
   HistoricalTrendChartView,
   PieChartView,
-  SliderView,
+  SlidersView,
   tpl
 ) {
   'use strict';
@@ -100,9 +100,7 @@ define([
     },
 
     _initModules: function() {
-      this.slider = new SliderView({
-        el: '#crown-cover-slider'
-      })
+      this.sliders = new SlidersView()
 
       this.summaryChart = new SummaryChartView({
         data: _.clone(this.data.emissions)
