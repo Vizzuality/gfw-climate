@@ -368,6 +368,11 @@ define([
     },
 
     _drawDeviation: function() {
+      var total = _.reduce(this.chartData, function(memo, data){
+        return memo + data.value;
+      }, 0);
+      var average = total / this.chartData.length;
+
       var deviationGroup = this.svg.select('.deviation');
       var deviationLabel = _.findWhere(this.defaults.labels, { slug: 'deviation' });
       var deviationLabelWidth = (deviationLabel.width * this.cWidthGrid) / 100;
@@ -375,10 +380,10 @@ define([
       var lossContent = this.svg.append('g')
         .attr('transform', 'translate('+
           (d3.transform(deviationGroup.attr('transform')).translate[0] + deviationLabelWidth) + ', ' +
-          this.defaults.rowHeight + ')');
+          (this.defaults.rowHeight * (this.referenceData.values.length + 1)) + ')');
 
       var deviationGroup = lossContent.selectAll('g')
-        .data(this.chartData)
+        .data(this.monitoringData.values)
         .enter().append('g')
         .attr('transform', function(d, i) {
           return 'translate(0, ' + (this.defaults.rowHeight * i) + ')';
@@ -387,7 +392,13 @@ define([
       deviationGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          return '';//'-';
+          var value = Math.round((((d.value - average) / average) * 100));
+          var displayValue = value;
+
+          if (value > 0) {
+            displayValue = '+' + value;
+          }
+          return displayValue + '%';
         })
         .attr('dx', function() {
           return (((deviationLabel.width * this.cWidthGrid) / 100) / 2) -
