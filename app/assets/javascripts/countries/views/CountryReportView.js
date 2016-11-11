@@ -133,7 +133,13 @@ define([
 
       this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
         el: '#forest-related-emissions-chart',
-        data: _.clone(this.data.emissions)
+        data: _.clone(this.data.emissions),
+        customLabels: [
+          {
+            name: 'Emissions',
+            slug: 'loss'
+          }
+        ]
       });
     }
   });
