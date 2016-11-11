@@ -1,20 +1,20 @@
 define([
   'backbone',
   'mps',
+  'nouislider',
   'countries/services/ReportService',
   'countries/views/report/SummaryChartView',
   'countries/views/report/HistoricalTrendChartView',
   'countries/views/report/PieChartView',
-  'countries/views/report/SlidersView',
   'text!countries/templates/countryReport.handlebars',
 ], function(
   Backbone,
   mps,
+  nouislider,
   ReportService,
   SummaryChartView,
   HistoricalTrendChartView,
   PieChartView,
-  SlidersView,
   tpl
 ) {
   'use strict';
@@ -36,8 +36,14 @@ define([
         'thresh': '30',
         'below': 'false',
         'primary_forest': 'false',
-        'exclude_plantations': 'false'
+        'exclude_plantations': 'false',
+        'co2': 'false'
       }
+    },
+
+    events: {
+      'change .js-report-param' : '_handleReportParamsChange',
+      'click #update-report-btn' : '_updateReport',
     },
 
     initialize: function(params) {
@@ -79,6 +85,7 @@ define([
         factorTotalEmission: factorTotalEmission
       }));
 
+      this.updateBox = this.$('.updates-box');
       this._initModules();
     },
 
@@ -100,7 +107,7 @@ define([
     },
 
     _initModules: function() {
-      this.sliders = new SlidersView()
+      this._initSlides();
 
       this.summaryChart = new SummaryChartView({
         data: _.clone(this.data.emissions)
@@ -133,6 +140,71 @@ define([
         el: '#forest-related-emissions-chart',
         data: _.clone(this.data.emissions)
       });
+    },
+
+    _initSlides: function() {
+      this.heightSlider = document.getElementById('height-slider');
+      nouislider.create(this.heightSlider, {
+        start: 5,
+        step: 1,
+        animate: true,
+        orientation: 'vertical',
+        connect: [false, true],
+        tooltips: {
+      	  to: function ( value ) {
+      		  return value + 'm';
+      	  }
+      	},
+      	range: {
+      		min: 0,
+      		max: 10
+      	}
+      });
+      this.heightSlider.setAttribute('disabled', true);
+
+      this.crownSlider = document.getElementById('crown-cover-slider');
+      nouislider.create(this.crownSlider, {
+        start: this.defaults.settings['thresh'],
+        step: 10,
+      	animate: true,
+        connect: [false, true],
+        tooltips: {
+      	  to: function ( value ) {
+      		  return '> ' + (100 - value) + '%';
+      	  }
+      	},
+      	range: {
+      		min: 0,
+      		max: 100
+      	}
+      });
+      this.crownSlider.noUiSlider.on('change', function(value){
+      	this.defaults.settings['thresh'] = parseInt(value[0]);
+        this.updateBox.removeClass('-hide');
+      }.bind(this));
+    },
+
+    _handleReportParamsChange: function(e) {
+      if (this.defaults.settings[e.target.name]) {
+        if (e.target.type === 'checkbox') {
+          this.defaults.settings[e.target.name] = e.target.checked;
+        } else {
+          this.defaults.settings[e.target.name] = e.target.value;
+        }
+      }
+
+      this._checkInputsDiff()
+        ? this.updateBox.removeClass('-hide')
+        : this.updateBox.addClass('');
+    },
+
+    _checkInputsDiff:function() {
+      //TODO: remove the update button if there aren't inputs changes
+      return true;
+    },
+
+    _updateReport:function() {
+      this._getData();
     }
   });
 
