@@ -97,17 +97,8 @@ define([
     },
 
     _start: function() {
-      var referenceAvg = this.referenceData.average;
-      var monitoringAvg = this.monitoringData.average;
-      var increase = Math.round(((monitoringAvg - referenceAvg) / referenceAvg) * 100);
-      var hasIncreased = increase > -1;
-
       this.$el.html(this.template({
-        hasData: this.chartData.length,
-        referenceAvg: referenceAvg.toFixed(2),
-        monitoringAvg: monitoringAvg.toFixed(2),
-        increase: increase,
-        hasIncreased: hasIncreased
+        hasData: this.chartData.length
       }));
 
       this.render();
@@ -568,7 +559,7 @@ define([
         })
         .attr('height', this.defaults.barHeight)
         .attr('width', function(d) {
-          return this.x2(d.value);
+          return this.x(d.value);
         }.bind(this))
         .attr('y', function() {
           return ((rowOffset * 1.25) / 2)
