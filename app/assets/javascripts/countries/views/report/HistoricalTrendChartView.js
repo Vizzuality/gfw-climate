@@ -546,7 +546,7 @@ define([
         })
         .attr('height', this.defaults.barHeight)
         .attr('width', function(d) {
-          return this.x2(d.value);
+          return this.x(d.value);
         }.bind(this))
         .attr('y', function() {
           return ((rowOffset * 1.25) / 2)

@@ -48,18 +48,18 @@ define([
           name: '',
           footerName: '',
           slug: 'average',
-          width: 52
+          width: 60
         },
         {
           name: 'ha/yr',
           footerName: '',
-          slug: 'value',
-          width: 18
+          slug: 'loss',
+          width: 10
         },
         {
           name: 'Change',
           footerName: '',
-          slug: 'change',
+          slug: 'deviation',
           width: 10
         }
       ]
@@ -117,7 +117,6 @@ define([
      */
     _parseData: function() {
       this.chartData = this.data;
-      console.log(this.data);
     },
 
     /**
@@ -132,7 +131,7 @@ define([
       el.classList.add(this.defaults.chartClass);
 
       this.cWidth = el.clientWidth;
-      this.cHeight = (this.chartData.length + 2) * (this.defaults.rowHeight * 2);
+      this.cHeight = (this.chartData.length + 1) * (this.defaults.rowHeight * 2);
       this.domain = this._getDomain();
 
       this.yAxisWidth = this.defaults.yAxisWidth;
@@ -193,8 +192,12 @@ define([
      *  Get the domain values
      */
     _getDomain: function() {
+      var maxValues = [];
+      maxValues.push({value: d3.max(this.chartData, function(d) { return d.avg; })});
+      maxValues.push({value: d3.max(this.chartData, function(d) { return d.monitoring_avg; })});
+
       return {
-        x: [0, d3.max(this.chartData, function(d) { return d.avg; })],
+        x: [0, d3.max(maxValues, function(d) { return d.value; })],
         x2: [0, d3.max(this.chartData, function(d) { return d.monitoring_avg; })],
         y: [0, this.chartData.length]
       };
@@ -205,9 +208,9 @@ define([
      */
     _drawGraph: function() {
       this._drawProvinces();
-      // this._drawLoss();
-      // this._drawDeviation();
-      // this._drawBars();
+      this._drawLoss();
+      this._drawDeviation();
+      this._drawBars();
     },
 
     _drawGrid: function() {
@@ -303,47 +306,54 @@ define([
         .data(this.chartData)
         .enter().append('g')
         .attr('transform', function(d, i) {
-          return 'translate(0, ' + (this.defaults.rowHeight * i) + ')';
+          return 'translate(0, ' + ((this.defaults.rowHeight * 2) * i) + ')';
         }.bind(this));
 
       lossGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          return NumbersHelper.addNumberDecimals(Math.round(d.value));
+          return NumbersHelper.addNumberDecimals(Math.round(d.avg));
         })
         .attr('dx', function() {
           return lossLabelWidth - this.defaults.paddingXAxisLabels
         }.bind(this))
         .attr('dy', function() {
-          return (this.defaults.rowHeight / 2) + this.defaults.barHeight;
+          return (this.defaults.rowHeight / 2) + this.defaults.barHeight + (this.defaults.barHeight / 2);
+        }.bind(this));
+
+      lossGroup.append('text')
+        .attr('class', 'value')
+        .text(function(d) {
+          return NumbersHelper.addNumberDecimals(Math.round(d.monitoring_avg));
+        })
+        .attr('dx', function() {
+          return lossLabelWidth - this.defaults.paddingXAxisLabels
+        }.bind(this))
+        .attr('dy', function() {
+          return (this.defaults.rowHeight / 2) + (this.defaults.barHeight * 5);
         }.bind(this));
     },
 
     _drawDeviation: function() {
-      var total = _.reduce(this.chartData, function(memo, data){
-        return memo + data.value;
-      }, 0);
-      var average = total / this.chartData.length;
       var deviationGroup = this.svg.select('.deviation');
       var deviationLabel = _.findWhere(this.defaults.labels, { slug: 'deviation' });
       var deviationLabelWidth = (deviationLabel.width * this.cWidthGrid) / 100;
-
       var deviationContent = this.svg.append('g')
         .attr('transform', 'translate('+
           d3.transform(deviationGroup.attr('transform')).translate[0] + ', ' +
-          (this.defaults.rowHeight * (this.referenceData.values.length + 1)) + ')');
+          (this.defaults.rowHeight) + ')');
 
       var deviationGroup = deviationContent.selectAll('g')
-        .data(this.monitoringData.values)
+        .data(this.chartData)
         .enter().append('g')
         .attr('transform', function(d, i) {
-          return 'translate(0, ' + (this.defaults.rowHeight * i) + ')';
+          return 'translate(0, ' + ((this.defaults.rowHeight * 2) * i) + ')';
         }.bind(this));
 
       deviationGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          var value = Math.round((((d.value - average) / average) * 100));
+          var value = Math.round(d.delta_perc);
           var displayValue = value;
 
           if (value > 0) {
@@ -355,7 +365,7 @@ define([
           return deviationLabelWidth - this.defaults.paddingXAxisLabels
         }.bind(this))
         .attr('dy', function() {
-          return (this.defaults.rowHeight / 2) + this.defaults.barHeight;
+          return (this.defaults.rowHeight / 2) + (this.defaults.barHeight * 5);
         }.bind(this));
     },
 
@@ -371,24 +381,27 @@ define([
         .data(this.chartData)
         .enter().append('g')
         .attr('transform', function(d, i) {
-          return 'translate(0, ' + (this.defaults.rowHeight * i) + ')';
+          return 'translate(0, ' + ((this.defaults.rowHeight * 2) * i) + ')';
         }.bind(this));
 
       barGroup.append('rect')
-        .attr('class', function(d) {
-          return 'bar ' + d.type;
-        })
+        .attr('class', 'bar reference')
         .attr('height', this.defaults.barHeight)
         .attr('width', function(d) {
-          var value = this.x(d.value);
-          if (value === 0) {
-            return this.defaults.defaultZeroValue;
-          } else {
-            return this.x(d.value);
-          }
+          return this.x(d.avg);
         }.bind(this))
         .attr('y', function() {
-          return (this.defaults.rowHeight / 2) - (this.defaults.barHeight / 2);
+          return (this.defaults.rowHeight / 2) + (this.defaults.barHeight / 2);
+        }.bind(this));
+
+      barGroup.append('rect')
+        .attr('class', 'bar monitor')
+        .attr('height', this.defaults.barHeight)
+        .attr('width', function(d) {
+          return this.x(d.monitoring_avg);
+        }.bind(this))
+        .attr('y', function() {
+          return (this.defaults.rowHeight / 2) + (this.defaults.barHeight / 2) + (this.defaults.barHeight * 2) ;
         }.bind(this));
     },
 

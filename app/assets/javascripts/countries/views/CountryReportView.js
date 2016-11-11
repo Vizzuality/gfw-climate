@@ -80,7 +80,8 @@ define([
         hasIncreased: hasIncreased,
         factorAbovegroundBiomass: factorAbovegroundBiomass,
         factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass : '',
-        factorTotalEmission: factorTotalEmission
+        factorTotalEmission: factorTotalEmission,
+        forestLossProvinces: this.forestLossProvinceData
       }));
 
       this._initModules();
@@ -99,47 +100,52 @@ define([
       ReportService.get(this.status.toJSON())
         .then(function(data) {
           this.data =  data;
+          this._getProvinceLossData();
+        }.bind(this));
+    },
+
+    _getProvinceLossData: function() {
+      var indicator = 1;
+      $.when(this._getProvincesData(indicator))
+        .then(function(data) {
+          this.forestLossProvinceData = data.rows;
           this.render();
         }.bind(this));
     },
 
     _initModules: function() {
-      // this.slider = new SliderView({
-      //   el: '#crown-cover-slider'
-      // })
-      //
-      // this.summaryChart = new SummaryChartView({
-      //   data: _.clone(this.data.emissions)
-      // });
-      //
-      // this.historicalTrendChart = new HistoricalTrendChartView({
-      //   el: '#historical-trend-chart',
-      //   data: _.clone(this.data.forest_loss)
-      // });
-      //
-      this._historicalLoss();
+      this.slider = new SliderView({
+        el: '#crown-cover-slider'
+      })
 
-      // this.cStocksByProvinceChart = new PieChartView({
-      //   el: '#c-stock-province-chart',
-      //   data: _.clone(this.data.provinces.c_stocks),
-      //   legendLabels: {
-      //     name: 'Province',
-      //     value: 'C Stocks'
-      //   }
-      // });
-      //
-      // this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
-      //   el: '#forest-related-emissions-chart',
-      //   data: _.clone(this.data.emissions)
-      // });
+      this.summaryChart = new SummaryChartView({
+        data: _.clone(this.data.emissions)
+      });
+
+      this.historicalTrendChart = new HistoricalTrendChartView({
+        el: '#historical-trend-chart',
+        data: _.clone(this.data.forest_loss)
+      });
+
+      this.forestLossByProvinceChart = new ProvincesTopChartView({
+        el: '#forest-loss-province-chart',
+        data: this.forestLossProvinceData
+      });
+
+      this._co2EmissionsByProvince();
+
+      this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
+        el: '#forest-related-emissions-chart',
+        data: _.clone(this.data.emissions)
+      });
     },
 
-    _historicalLoss: function() {
-      var indicator = 1;
+    _co2EmissionsByProvince: function() {
+      var indicator = 14;
       $.when(this._getProvincesData(indicator))
         .then(function(data) {
-          this.historicalLosstByProvinceChart = new ProvincesTopChartView({
-            el: '#historical-loss-province-chart',
+          this.co2EmissionsByProvinceChart = new ProvincesTopChartView({
+            el: '#co2-emissions-province-chart',
             data: data.rows
           });
         }.bind(this));
@@ -149,7 +155,7 @@ define([
     _getProvincesData: function(indicator) {
       var $deffered = jQuery.Deferred();
       var params = this.status.toJSON();
-      var url = CARTO_ENDPOINT + '?q=with r as (select distinct on(sub_nat_id) sub_nat_id, avg(value) FILTER ( WHERE year < '+ params.monitor_start_year +' ) over (partition by sub_nat_id),  avg(value) FILTER ( WHERE year > '+ params.reference_end_year +' ) over (partition by sub_nat_id) as monitoring_avg, subnat.name_1 as province from indicators_values LEFT JOIN gadm27_adm1 AS subnat ON sub_nat_id  = subnat.id_1 AND indicators_values.iso = subnat.iso where indicator_id = '+ indicator +' and indicators_values.iso = \''+ params.iso +'\' and year !=0 and thresh= '+ params.thresh +' and sub_nat_id is not null and boundary =\'admin\') select avg, monitoring_avg, (((monitoring_avg-avg)/avg)*100) as delta_perc, sub_nat_id, province from r where (((monitoring_avg-avg)/avg)*100) is not null order by 3 desc limit 5';
+      var url = CARTO_ENDPOINT + '?q=with r as (select distinct on(sub_nat_id) sub_nat_id, avg(value) FILTER ( WHERE year < '+ params.monitor_start_year +' ) over (partition by sub_nat_id),  avg(value) FILTER ( WHERE year > '+ params.reference_end_year +' ) over (partition by sub_nat_id) as monitoring_avg, sum(value) FILTER ( WHERE year < 2011 ) over (partition by sub_nat_id) as total_reference, sum(value) FILTER ( WHERE year > 2010 ) over (partition by sub_nat_id) as total_monitoring, subnat.name_1 as province from indicators_values LEFT JOIN gadm27_adm1 AS subnat ON sub_nat_id  = subnat.id_1 AND indicators_values.iso = subnat.iso where indicator_id = '+ indicator +' and indicators_values.iso = \''+ params.iso +'\' and year !=0 and thresh= '+ params.thresh +' and sub_nat_id is not null and boundary =\'admin\') select avg, monitoring_avg, (((monitoring_avg-avg)/avg)*100) as delta_perc, total_reference, total_monitoring, sub_nat_id, province from r where (((monitoring_avg-avg)/avg)*100) is not null order by delta_perc desc limit 5';
 
       $.ajax({
         url: url,
