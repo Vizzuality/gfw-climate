@@ -5,6 +5,7 @@ define([
   'countries/views/report/SummaryChartView',
   'countries/views/report/HistoricalTrendChartView',
   'countries/views/report/PieChartView',
+  'countries/views/report/ProvincesTopChartView',
   'countries/views/report/SliderView',
   'text!countries/templates/countryReport.handlebars',
 ], function(
@@ -14,10 +15,13 @@ define([
   SummaryChartView,
   HistoricalTrendChartView,
   PieChartView,
+  ProvincesTopChartView,
   SliderView,
   tpl
 ) {
   'use strict';
+
+  var CARTO_ENDPOINT = 'https://wri-01.cartodb.com/api/v2/sql';
 
   var CountryReportView = Backbone.View.extend({
 
@@ -100,41 +104,61 @@ define([
     },
 
     _initModules: function() {
-      this.slider = new SliderView({
-        el: '#crown-cover-slider'
-      })
+      // this.slider = new SliderView({
+      //   el: '#crown-cover-slider'
+      // })
+      //
+      // this.summaryChart = new SummaryChartView({
+      //   data: _.clone(this.data.emissions)
+      // });
+      //
+      // this.historicalTrendChart = new HistoricalTrendChartView({
+      //   el: '#historical-trend-chart',
+      //   data: _.clone(this.data.forest_loss)
+      // });
+      //
+      this._historicalLoss();
 
-      this.summaryChart = new SummaryChartView({
-        data: _.clone(this.data.emissions)
-      });
+      // this.cStocksByProvinceChart = new PieChartView({
+      //   el: '#c-stock-province-chart',
+      //   data: _.clone(this.data.provinces.c_stocks),
+      //   legendLabels: {
+      //     name: 'Province',
+      //     value: 'C Stocks'
+      //   }
+      // });
+      //
+      // this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
+      //   el: '#forest-related-emissions-chart',
+      //   data: _.clone(this.data.emissions)
+      // });
+    },
 
-      this.historicalTrendChart = new HistoricalTrendChartView({
-        el: '#historical-trend-chart',
-        data: _.clone(this.data.forest_loss)
-      });
+    _historicalLoss: function() {
+      var indicator = 1;
+      $.when(this._getProvincesData(indicator))
+        .then(function(data) {
+          this.historicalLosstByProvinceChart = new ProvincesTopChartView({
+            el: '#historical-loss-province-chart',
+            data: data.rows
+          });
+        }.bind(this));
+    },
 
-      this.historicalLosstByProvinceChart = new PieChartView({
-        el: '#historical-loss-province-chart',
-        data: _.clone(this.data.provinces.forest_loss.reference),
-        legendLabels: {
-          name: 'Province',
-          value: 'Loss (ha)'
+    // To include in the API
+    _getProvincesData: function(indicator) {
+      var $deffered = jQuery.Deferred();
+      var params = this.status.toJSON();
+      var url = CARTO_ENDPOINT + '?q=with r as (select distinct on(sub_nat_id) sub_nat_id, avg(value) FILTER ( WHERE year < '+ params.monitor_start_year +' ) over (partition by sub_nat_id),  avg(value) FILTER ( WHERE year > '+ params.reference_end_year +' ) over (partition by sub_nat_id) as monitoring_avg, subnat.name_1 as province from indicators_values LEFT JOIN gadm27_adm1 AS subnat ON sub_nat_id  = subnat.id_1 AND indicators_values.iso = subnat.iso where indicator_id = '+ indicator +' and indicators_values.iso = \''+ params.iso +'\' and year !=0 and thresh= '+ params.thresh +' and sub_nat_id is not null and boundary =\'admin\') select avg, monitoring_avg, (((monitoring_avg-avg)/avg)*100) as delta_perc, sub_nat_id, province from r where (((monitoring_avg-avg)/avg)*100) is not null order by 3 desc limit 5';
+
+      $.ajax({
+        url: url,
+        success: function(data) {
+          $deffered.resolve(data);
         }
       });
 
-      this.cStocksByProvinceChart = new PieChartView({
-        el: '#c-stock-province-chart',
-        data: _.clone(this.data.provinces.c_stocks),
-        legendLabels: {
-          name: 'Province',
-          value: 'C Stocks'
-        }
-      });
-
-      this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
-        el: '#forest-related-emissions-chart',
-        data: _.clone(this.data.emissions)
-      });
+      return $deffered.promise();
     }
   });
 
