@@ -110,7 +110,9 @@ define([
       }
 
       this.referenceData = this.data['reference'];
-      this.monitoringData = this.data['monitor'];
+      this.monitoringData = [];
+      this.monitoringData.values = _.clone(this.data['monitor'].values);
+      this.monitoringData.average = _.clone(this.data['monitor'].average);
       this.dates = dates;
 
       // Copy the last value from the reference period as the
@@ -187,10 +189,6 @@ define([
     _setDomain: function() {
       this.x.domain(this.domain.x);
       this.y.domain(this.domain.y);
-
-      // Add extra padding to Y domain
-      // var numTicks = 12;
-      // this.y.domain([this.domain.y[0], d3.max(this.y.ticks(numTicks)) + this.y.ticks(numTicks)[1]]);
     },
 
     /**

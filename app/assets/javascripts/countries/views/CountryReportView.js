@@ -116,7 +116,7 @@ define([
     _initModules: function() {
       this.slider = new SliderView({
         el: '#crown-cover-slider'
-      })
+      });
 
       this.summaryChart = new SummaryChartView({
         data: _.clone(this.data.emissions)
