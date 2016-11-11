@@ -106,9 +106,6 @@ define([
       this._setAxisScale();
       this._setDomain();
       this._drawGraph();
-      this._drawGridFooter();
-      this._drawFooterBars();
-      this._drawFooterAverages();
      },
 
     /**
@@ -248,7 +245,10 @@ define([
       this._drawDeviation();
       this._drawBars();
       this._drawGridFooter();
-      this._drawGridFooterLabels();
+      this._drawFooterLabels();
+      this._drawFooterBars();
+      this._drawFooterAverages();
+      this._drawFooterDeviation();
     },
 
     _drawGrid: function() {
@@ -372,17 +372,16 @@ define([
         return memo + data.value;
       }, 0);
       var average = total / this.chartData.length;
-
       var deviationGroup = this.svg.select('.deviation');
       var deviationLabel = _.findWhere(this.defaults.labels, { slug: 'deviation' });
       var deviationLabelWidth = (deviationLabel.width * this.cWidthGrid) / 100;
 
-      var lossContent = this.svg.append('g')
+      var deviationContent = this.svg.append('g')
         .attr('transform', 'translate('+
-          (d3.transform(deviationGroup.attr('transform')).translate[0] + deviationLabelWidth) + ', ' +
+          d3.transform(deviationGroup.attr('transform')).translate[0] + ', ' +
           (this.defaults.rowHeight * (this.referenceData.values.length + 1)) + ')');
 
-      var deviationGroup = lossContent.selectAll('g')
+      var deviationGroup = deviationContent.selectAll('g')
         .data(this.monitoringData.values)
         .enter().append('g')
         .attr('transform', function(d, i) {
@@ -401,8 +400,7 @@ define([
           return displayValue + '%';
         })
         .attr('dx', function() {
-          return (((deviationLabel.width * this.cWidthGrid) / 100) / 2) -
-          (((deviationLabel.width * this.cWidthGrid) / 100) / 1.5);
+          return deviationLabelWidth - this.defaults.paddingXAxisLabels
         }.bind(this))
         .attr('dy', function() {
           return (this.defaults.rowHeight / 2) + this.defaults.barHeight;
@@ -487,7 +485,7 @@ define([
         .attr('y', rowOffset / 2.5);
     },
 
-    _drawGridFooterLabels: function() {
+    _drawFooterLabels: function() {
       var rowOffset = this.defaults.rowHeight;
       var yearGroup = this.svg.select('.year');
       var yearLabel = _.findWhere(this.defaults.labels, { slug: 'year' });
@@ -593,8 +591,42 @@ define([
         .attr('dy', function() {
           return (rowOffset * 1.25) / 2;
         }.bind(this));
+    },
 
-        // ((rowOffset * 1.25) / 2)
+    _drawFooterDeviation: function() {
+      var rowOffset = this.defaults.rowHeight;
+      var deviationGroup = this.svg.select('.deviation');
+      var deviationLabel = _.findWhere(this.defaults.labels, { slug: 'deviation' });
+      var deviationLabelWidth = (deviationLabel.width * this.cWidthGrid) / 100;
+      var total = _.reduce(this.chartData, function(memo, data){
+        return memo + data.value;
+      }, 0);
+      var average = total / this.chartData.length;
+      var deviationContent = this.svg.append('g')
+        .attr('transform', 'translate('+
+          (d3.transform(deviationGroup.attr('transform')).translate[0]) + ', ' +
+            ((this.defaults.rowHeight * (this.chartData.length + 1.5)) + rowOffset) + ')');
+
+      var contentGroup = deviationContent.selectAll('g')
+        .data(this.averageData)
+        .enter().append('g')
+        .attr('transform', 'translate(0, ' + (this.defaults.rowHeight * 2.5) + ')');
+
+      contentGroup.append('text')
+        .attr('class', 'value')
+        .text(function() {
+          var value = Math.round((((this.monitoringData.average - average) / average) * 100));
+          var displayValue = value;
+
+          if (value > 0) {
+            displayValue = '+' + value;
+          }
+          return displayValue + '%';
+        }.bind(this))
+        .attr('dx', function() {
+          return deviationLabelWidth - this.defaults.paddingXAxisLabels
+        }.bind(this))
+        .attr('dy', 0);
     },
 
     /**
