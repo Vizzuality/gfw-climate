@@ -102,8 +102,8 @@ define([
         var current = this.data[indictator];
         if (current && current.values) {
           current.values.forEach(function(data) {
-            data.year = new Date(data.year.toString());
-            dates.push(data.year);
+            data.date = new Date(data.year.toString());
+            dates.push(data.date);
             this.chartData.push(data);
           }.bind(this));
         }
@@ -201,7 +201,7 @@ define([
       var yValues = [];
 
       this.chartData.forEach(function(data) {
-        xValues.push(data.year);
+        xValues.push(data.date);
         yValues.push(data.value);
       });
 
@@ -274,7 +274,7 @@ define([
         .attr('transform', 'translate('+ _this.defaults.paddingXAxisLabels +' ,'+ -this.defaults.paddingAxisLabels + ')');
 
       this.linePath = d3.svg.line()
-        .x(function(d) { return _this.x(d.year); })
+        .x(function(d) { return _this.x(d.date); })
         .y(function(d) { return _this.y(d.value); })
         .interpolate(this.defaults.interpolate);
 
@@ -302,7 +302,7 @@ define([
           .attr('class', 'dot monitoring')
           .attr('r', _this.defaults.circleRadius)
           .attr('cx', function(d) {
-            return _this.x(d.year)
+            return _this.x(d.date)
           })
           .attr('cy', function(d) {
             return _this.y(d.value)
@@ -314,7 +314,7 @@ define([
           .attr('class', 'dot reference')
           .attr('r', _this.defaults.circleRadius)
           .attr('cx', function(d) {
-            return _this.x(d.year)
+            return _this.x(d.date)
           })
           .attr('cy', function(d) {
             return _this.y(d.value)
