@@ -36,7 +36,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({}));
-      this._renderGeo();
+      // this._renderGeo();
     },
 
     _renderGeo: function() {
