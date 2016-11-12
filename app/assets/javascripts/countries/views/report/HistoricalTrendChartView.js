@@ -37,6 +37,8 @@ define([
       barMargin: 10,
       defaultZeroValue: 5,
       yAxisWidth: 30,
+      underscriptPadding: 1.5,
+      underscript: '2',
       labels: [
         {
           name: 'Year',
@@ -48,10 +50,10 @@ define([
           name: '',
           footerName: '',
           slug: 'average',
-          width: 56
+          width: 58
         },
         {
-          name: 'Loss (ha)',
+          name: 'Loss (ha/yr)',
           footerName: 'Average',
           slug: 'loss',
           width: 14
@@ -61,7 +63,7 @@ define([
           subtitle: 'from historical average',
           footerName: '',
           slug: 'deviation',
-          width: 18
+          width: 16
         }
       ]
     },
@@ -294,11 +296,20 @@ define([
           .attr('class', label.slug);
 
         if (!label.subtitle) {
-          group.append('text')
-            .attr('class', 'label')
-            .attr('y', this.defaults.rowHeight / 2)
-            .attr('x', margin - this.defaults.paddingXAxisLabels)
-            .text(label.name);
+          if (this.defaults.customLabel && label.slug === 'loss') {
+            var customLabel = group.append('text')
+              .attr('class', 'label')
+              .attr('y', this.defaults.rowHeight / 2)
+              .attr('x', margin - this.defaults.paddingXAxisLabels);
+
+            this._setCustomLabel(this.defaults.customLabel, customLabel);
+          } else {
+            group.append('text')
+              .attr('class', 'label')
+              .attr('y', this.defaults.rowHeight / 2)
+              .attr('x', margin - this.defaults.paddingXAxisLabels)
+              .text(label.name);
+          }
         } else {
           group.append('text')
             .attr('class', 'label')
@@ -323,6 +334,23 @@ define([
         .attr('height', this.chartData.length * this.defaults.rowHeight)
         .attr('x', d3.transform(averageGroup.attr('transform')).translate[0])
         .attr('y', 0);
+    },
+
+    _setCustomLabel: function(label, group) {
+      if (label.search(this.defaults.underscript) !== -1) {
+        var unit = label.split(this.defaults.underscript);
+        for (var x = 0; x < unit.length; x++) {
+          group.append('tspan')
+            .text(unit[x]);
+
+          if (x === 0) {
+            group.append('tspan')
+              .attr('class', 'underscript')
+              .attr('dy', this.defaults.underscriptPadding)
+              .text(this.defaults.underscript);
+          }
+        }
+      }
     },
 
     _drawYears: function() {

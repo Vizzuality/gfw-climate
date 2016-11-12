@@ -77,7 +77,8 @@ define([
     render: function() {
       var totalReference = Math.round(this.data.emissions.reference.average);
       var totalMonitoring = Math.round(this.data.emissions.monitor.average);
-      var increase = Math.abs(Math.round(((totalMonitoring - totalReference) / totalReference) * 100));
+      var increase = Math.round(((totalMonitoring - totalReference) / totalReference) * 100);
+      var increaseDisplay = Math.abs(increase);
       var hasIncreased = increase > -1;
       var factorAbovegroundBiomass = Math.round(this.data.emission_factors.aboveground);
       var factorBelowgroundBiomass = Math.round(this.data.emission_factors.belowground);
@@ -95,6 +96,7 @@ define([
         totalReference: totalReference,
         totalMonitoring: totalMonitoring,
         increase: increase,
+        increaseDisplay: increaseDisplay,
         hasIncreased: hasIncreased,
         factorAbovegroundBiomass: factorAbovegroundBiomass,
         factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass : '',
@@ -160,17 +162,14 @@ define([
       this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
         el: '#forest-related-emissions-chart',
         data: this.data.emissions,
-        customLabels: [
-          {
-            name: 'Emissions',
-            slug: 'loss'
-          }
-        ]
+        customLabel: 'Emissions (Mt CO2/yr)'
       });
 
       this.countryGeo = new CountryGeoView({
         el: '#report-country-geo',
-        iso: this.iso
+        iso: this.iso,
+        country: this.data.country,
+        ha: this.data.area
       })
     },
 

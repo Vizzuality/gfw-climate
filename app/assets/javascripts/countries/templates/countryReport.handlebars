@@ -35,7 +35,7 @@
 
         <div class="row">
           <div class="col -wide-text">
-            <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} ({{totalMonitoring}} Mt CO2 yr<sup>-1</sup>) were {{increase}}% {{#if hasIncreased}}higher{{else}}lower{{/if}} than the historical average of {{totalReference}} Mt CO2 yr<sup>-1</sup> ({{referenceStart}} - {{referenceEnd}}). This is {{#if hasIncreased}}bad{{else}}good{{/if}} news for forests and climate change in {{country}}!
+            <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} ({{totalMonitoring}} Mt CO2 yr<sup>-1</sup>) were {{increaseDisplay}}% {{#if hasIncreased}}higher{{else}}lower{{/if}} than the historical average of {{totalReference}} Mt CO2 yr<sup>-1</sup> ({{referenceStart}} - {{referenceEnd}}). This is {{#if hasIncreased}}bad{{else}}good{{/if}} news for forests and climate change in {{country}}!
             {{#if hasIncreased}}
               The largest proportion of this overall increase occurred within {{co2EmissionsByProvinces.0.province}} and {{co2EmissionsByProvinces.1.province}}.
             {{else}}
@@ -73,38 +73,28 @@
 
           <div class="col">
             <h3 class="subtitle">Geographical Area Covered</h3>
-            <div id="report-country-geo"></div>
+            <div id="report-country-geo" class="m-geo-chart"></div>
           </div>
 
           <div class="col">
             <h3 class="subtitle">Forest Definition Used</h3>
             <div class="content">
               <div class="col">
-                <p> Area </p>
+                <h4 class="heading">Area</h4>
                 <div class="m-area">
-                  <span class="measure"> 0.1ha </span>
-                  <span class="height"> 30m </span>
-                  <span class="width"> 30m </span>
+                  <span class="measure">0.1ha</span>
+                  <span class="height">30m</span>
+                  <span class="width">30m</span>
                 </div>
               </div>
               <div class="col">
-                <p> Height </p>
-                <div id="height-slider"></div>
+                <h4 class="heading">Height</h4>
+                <div id="height-slider" class="m-height"></div>
               </div>
             </div>
             <div class="">
-              <p> Crown Cover </p>
-              <div id="crown-cover-slider"></div>
-            </div>
-            <div class="">
-              <label class="report-checkbox -disabled" for="tree-plantation-excluded">
-                <input class="js-report-param" id="tree-plantation-excluded" type="checkbox" disabled="disabled" name="tree_plantations">
-                Tree Plantations Excluded
-              </label>
-              <label class="report-checkbox -disabled" for="primary-forest-only">
-                <input class="js-report-param" id="primary-forest-only" type="checkbox" disabled="disabled" name="primaryforest">
-                Primary Forest Only
-              </label>
+              <h4 class="heading">Crown Cover</h4>
+              <div id="crown-cover-slider" class="m-crown-cover"></div>
             </div>
           </div>
 
@@ -120,7 +110,7 @@
                 Belowground live woody biomass
               </label>
             </div>
-            <div class="">
+            <div class="m-carbon-pools">
               <label class="report-checkbox -disabled" for="dead-wood">
                 <input class="js-report-param" id="dead-wood" type="checkbox" disabled="disabled" name="deadwoo">
                 Dead wood
@@ -141,11 +131,22 @@
           </div>
 
           <div class="col">
+            <div class="m-plantations">
+              <label class="report-checkbox -disabled" for="tree-plantation-excluded">
+                <input class="js-report-param" id="tree-plantation-excluded" type="checkbox" disabled="disabled" name="tree_plantations">
+                Tree Plantations Excluded
+              </label>
+              <label class="report-checkbox -disabled" for="primary-forest-only">
+                <input class="js-report-param" id="primary-forest-only" type="checkbox" disabled="disabled" name="primaryforest">
+                Primary Forest Only
+              </label>
+            </div>
+
             <h3 class="subtitle">Deforestation Definition Used</h3>
             <p>GFW’s satellite-based forest monitoring system detects and reports all instances of gross tree cover loss, regardless of whether the loss will be permanent (deforestation) or temporary (loss occurring within managed forests). GFW does not seek to define deforestation but rather allows users to filter available loss data based on their preferred definition of forest and deforestation.</p>
           </div>
 
-          <div class="col">
+          <div class="col -no-margin">
             <h3 class="subtitle">Greenhouse Gases Covered</h3>
             <div class="">
               <label class="report-checkbox" for="co2">
