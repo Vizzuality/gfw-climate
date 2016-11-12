@@ -154,9 +154,10 @@
 .noUi-value {
 	position: absolute;
 	text-align: center;
+  font-size: 10px;
+  color: $font-color-1;
 }
 .noUi-value-sub {
-	color: #ccc;
 	font-size: 10px;
 }
 
@@ -165,13 +166,13 @@
  */
 .noUi-marker {
 	position: absolute;
-	background: #CCC;
+	background: transparent;
 }
 .noUi-marker-sub {
-	background: #AAA;
+	background: transparent;
 }
 .noUi-marker-large {
-	background: #AAA;
+	background: transparent;
 }
 
 /* Horizontal layout;

@@ -42,7 +42,9 @@ define([
         'primary_forest': 'false',
         'exclude_plantations': 'false',
         'co2': 'true'
-      }
+      },
+      minYear: 2001,
+      maxYear: 2014
     },
 
     events: {
@@ -62,6 +64,12 @@ define([
         this.status.clear({ silent: true }).set(this.options.params);
         this._getData();
       }
+    },
+
+    _cache: function() {
+      this.yearSelector = this.el.querySelector('.js-year-selector');
+      this.yearSelectorReference = this.el.querySelector('.js-reference-slider');
+      this.yearSelectorMonitor = this.el.querySelector('.js-monitor-slider');
     },
 
     render: function() {
@@ -93,6 +101,7 @@ define([
       }));
 
       this.updateBox = this.$('.updates-box');
+      this._cache();
       this._initModules();
     },
 
@@ -158,6 +167,122 @@ define([
     },
 
     _initSlides: function() {
+      this._initReferenceSlider();
+      this._initMonitorSlider();
+      this._initHeightSlider();
+      this._initCrownSlider();
+    },
+
+    _initReferenceSlider: function() {
+      this.referenceSlider = document.getElementById('reference-slider');
+      var startYear = parseInt(this.status.get('reference_start_year'), 10);
+      var endYear = parseInt(this.status.get('reference_end_year'), 10);
+
+      this._setSliderWidth('reference');
+
+      nouislider.create(this.referenceSlider, {
+        start: [startYear, endYear],
+      	animate: true,
+        connect: true,
+        margin: 1,
+        step: 1,
+      	range: {
+          min: this.defaults.minYear,
+          max: endYear
+      	},
+        pips: {
+          mode: 'steps',
+          stepped: false,
+          density: 1
+        }
+      });
+
+      this.referenceSlider.noUiSlider.on('slide', function(value) {
+        var start = parseInt(value[0], 10);
+        var end = parseInt(value[1], 10);
+        var startMonitor = end + 1;
+
+        this.status.set({
+          reference_start_year: start.toString(),
+          reference_end_year: end.toString(),
+          monitor_start_year: startMonitor.toString()
+        }, { silent: true });
+      }.bind(this));
+
+      this.referenceSlider.noUiSlider.on('change', function(value) {
+        this.updateBox.removeClass('-hide');
+        this.referenceSlider.noUiSlider.destroy();
+        this.monitorSlider.noUiSlider.destroy();
+        this._initReferenceSlider();
+        this._initMonitorSlider();
+      }.bind(this));
+    },
+
+    _initMonitorSlider: function() {
+      this.monitorSlider = document.getElementById('monitor-slider');
+      var startYear = parseInt(this.status.get('monitor_start_year'), 10);
+      var endYear = parseInt(this.status.get('monitor_end_year'), 10);
+
+      this._setSliderWidth('monitor');
+
+      nouislider.create(this.monitorSlider, {
+        start: [startYear, endYear],
+      	animate: true,
+        connect: true,
+        margin: 1,
+        step: 1,
+      	range: {
+          min: startYear,
+          max: this.defaults.maxYear
+      	},
+        pips: {
+          mode: 'steps',
+          stepped: false,
+          density: 1
+        }
+      });
+
+      this.monitorSlider.noUiSlider.on('slide', function(value) {
+        var start = parseInt(value[0], 10);
+        var end = parseInt(value[1], 10);
+        var endReference = start - 1;
+
+        this.status.set({
+          monitor_start_year: start.toString(),
+          monitor_end_year: end.toString(),
+          reference_end_year: endReference.toString()
+        }, { silent: true });
+      }.bind(this));
+
+      this.monitorSlider.noUiSlider.on('change', function(value) {
+        this.updateBox.removeClass('-hide');
+        this.referenceSlider.noUiSlider.destroy();
+        this.monitorSlider.noUiSlider.destroy();
+        this._initReferenceSlider();
+        this._initMonitorSlider();
+      }.bind(this));
+    },
+
+    _setSliderWidth: function (type) {
+      var totalYears = this.defaults.maxYear - this.defaults.minYear;
+      var contentWidth = this.yearSelector.clientWidth;
+
+      if (type === 'reference') {
+        var numYears = this.status.get('reference_end_year') -
+          this.defaults.minYear;
+
+        var width = (numYears * contentWidth) / 100;
+        this.yearSelectorReference.style.width = width + '%';
+      } else if (type === 'monitor') {
+        var numYears = this.defaults.maxYear -
+          this.status.get('monitor_start_year');
+
+        var width = (numYears * contentWidth) / 100;
+        this.yearSelectorMonitor.style.width = width + '%';
+      }
+    },
+
+    _initHeightSlider: function() {
       this.heightSlider = document.getElementById('height-slider');
       nouislider.create(this.heightSlider, {
         start: 5,
@@ -176,7 +301,9 @@ define([
       	}
       });
       this.heightSlider.setAttribute('disabled', true);
+    },
 
+    _initCrownSlider: function() {
       this.crownSlider = document.getElementById('crown-cover-slider');
       nouislider.create(this.crownSlider, {
         start: this.status.get('thresh'),
