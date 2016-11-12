@@ -167,7 +167,9 @@ define([
 
       this.countryGeo = new CountryGeoView({
         el: '#report-country-geo',
-        iso: this.iso
+        iso: this.iso,
+        country: this.data.country,
+        ha: this.data.area
       })
     },
 

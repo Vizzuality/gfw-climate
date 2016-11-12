@@ -1,0 +1,49 @@
+.m-geo-chart {
+  .legend {
+    .content {
+      width: 100%;
+      display: flex;
+      margin-bottom: 20px;
+
+      .shape {
+        path {
+          fill: #AAC95B;
+        }
+      }
+
+      .stats {
+        margin-left: 30px;
+
+        .name {
+          font-size: 16px;
+          color: rgba($font-color-1, 0.7);
+          font-weight: 500;
+          margin-top: 15px;
+          margin-bottom: 10px;
+        }
+
+        .km {
+          font-size: 25px;
+          font-weight: 500;
+          color: #98BB47;
+          margin-bottom: 10px;
+
+          .unit {
+            font-size: 14px;
+            font-weight: 300;
+
+            sup {
+              top: -0.5em;
+            }
+          }
+        }
+
+        .ha {
+          font-size: 14px;
+          color: #98BB47;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
