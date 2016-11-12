@@ -83,6 +83,14 @@
         margin-bottom: 20px;
       }
 
+      .heading {
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba($font-color-1, 0.7);
+        margin-top: 15px;
+        margin-bottom: 10px;
+      }
+
       > .row {
         width: 100%;
         display: flex;
@@ -120,7 +128,6 @@
           }
 
           > .content {
-            min-height: 200px;
             display: flex;
 
             span {
@@ -198,6 +205,8 @@
     width: 84px;
     height: 60px;
     border: 5px solid #E5E5E5;
+    margin-top: 15px;
+    margin-bottom: 60px;
 
     .height {
       position: absolute;
@@ -215,6 +224,22 @@
     .block {
       border-bottom: 0;
     }
+  }
+
+  .m-height {
+    margin-left: 5px;
+  }
+
+  .m-crown-cover {
+    margin-top: 35px;
+  }
+
+  .m-plantations {
+    margin-bottom: 55px;
+  }
+
+  .m-carbon-pools {
+    margin-top: 35px;
   }
 
   .updates-box {
