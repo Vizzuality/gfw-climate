@@ -144,7 +144,8 @@ define([
 
       this.co2EmissionsByProvinceChart = new ProvincesTopChartView({
         el: '#co2-emissions-province-chart',
-        data: this.co2EmissionsByProvinceData
+        data: this.co2EmissionsByProvinceData,
+        customLabel: 'Mt CO2/yr'
       });
 
       this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
