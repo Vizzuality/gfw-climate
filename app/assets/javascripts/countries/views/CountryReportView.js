@@ -76,6 +76,8 @@ define([
         monitorEnd: this.status.get('monitor_end_year'),
         referenceStart: this.status.get('reference_start_year'),
         referenceEnd: this.status.get('reference_end_year'),
+        below: this.status.get('below') === 'true',
+        co2: this.status.get('co2') === 'true' ,
         totalReference: totalReference,
         totalMonitoring: totalMonitoring,
         increase: increase,
@@ -92,6 +94,10 @@ define([
     _setDefaultParams: function() {
       mps.publish('Router/change', [this.defaultSettings]);
       this.status.clear({ silent: true }).set(this.defaultSettings);
+    },
+
+    _updateParams: function() {
+      mps.publish('Router/change', [this.status.attributes]);
     },
 
     _getData: function() {
@@ -164,7 +170,7 @@ define([
 
       this.crownSlider = document.getElementById('crown-cover-slider');
       nouislider.create(this.crownSlider, {
-        start: this.defaults.settings['thresh'],
+        start: this.status.get('thresh'),
         step: 10,
       	animate: true,
         connect: [false, true],
@@ -179,23 +185,29 @@ define([
       	}
       });
       this.crownSlider.noUiSlider.on('change', function(value){
-      	this.defaults.settings['thresh'] = parseInt(value[0]);
+        this.status.set({
+          thresh: parseInt(value[0])
+        }, { silent: true });
         this.updateBox.removeClass('-hide');
       }.bind(this));
     },
 
     _handleReportParamsChange: function(e) {
       if (this.defaults.settings[e.target.name]) {
+        var status = {};
         if (e.target.type === 'checkbox') {
-          this.defaults.settings[e.target.name] = e.target.checked;
+          status[e.target.name] = e.target.checked;
         } else {
-          this.defaults.settings[e.target.name] = e.target.value;
+          status[e.target.name] = e.target.value;
         }
+        this.status.set(status, { silent: true });
       }
 
-      this._checkInputsDiff()
+      if (this.updateBox) {
+        this._checkInputsDiff()
         ? this.updateBox.removeClass('-hide')
         : this.updateBox.addClass('');
+      }
     },
 
     _checkInputsDiff:function() {
@@ -204,7 +216,19 @@ define([
     },
 
     _updateReport:function() {
+      this._remove();
+      this.$el.addClass('is-loading');
+      this._updateParams();
       this._getData();
+    },
+
+    _remove() {
+      this.$el.empty();
+      this.summaryChart && this.summaryChart.remove();
+      this.historicalTrendChart && this.historicalTrendChart.remove();
+      this.historicalLosstByProvinceChart && this.historicalLosstByProvinceChart.remove();
+      this.cStocksByProvinceChart && this.cStocksByProvinceChart.remove();
+      this.forestRelatedEmissionsChart && this.forestRelatedEmissionsChart.remove();
     }
   });
 

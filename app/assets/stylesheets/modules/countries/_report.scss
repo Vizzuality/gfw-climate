@@ -219,7 +219,7 @@
 
   .updates-box {
     position: fixed;
-    bottom: 0;
+    bottom: 50px;
     width: 100%;
     height: 60px;
     display: flex;
@@ -229,6 +229,10 @@
     background-color: $color-1;
     transition: transform 0.6 ease;
     transform: translateY(0);
+
+    @media (min-width: $br-mobile) {
+      bottom: 0;
+    }
 
     &.-hide {
       transform: translateY(60px);

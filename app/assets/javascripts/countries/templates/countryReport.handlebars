@@ -96,11 +96,11 @@
             <h3 class="subtitle">Forest Carbon Pools Included</h3>
             <div class="">
               <label class="report-radio" for="aboveground-live">
-                <input class="js-report-param" id="aboveground-live" type="radio" name="below" value="false">
+                <input class="js-report-param" id="aboveground-live" type="radio" name="below" value="false" {{#unless below}}checked="checked"{{/unless}}>
                 Aboveground live woody biomass
               </label>
               <label class="report-radio" for="belowground-live">
-                <input class="js-report-param" id="belowground-live" type="radio" name="below" value="true">
+                <input class="js-report-param" id="belowground-live" type="radio" name="below" value="true" {{#if below}}checked="checked"{{/if}}>
                 Belowground live woody biomass
               </label>
             </div>
@@ -133,7 +133,7 @@
             <h3 class="subtitle">Greenhouse Gases Covered</h3>
             <div class="">
               <label class="report-checkbox" for="co2">
-                <input class="js-report-param" id="co2" type="checkbox" name="co2">
+                <input class="js-report-param" id="co2" type="checkbox" name="co2" {{#if co2}}checked="checked"{{/if}}>
                 CO<sub>2</sub>
               </label>
               <label class="report-checkbox -disabled" for="ch4">
