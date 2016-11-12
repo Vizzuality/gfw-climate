@@ -1,22 +1,22 @@
 define([
   'backbone',
   'mps',
+  'nouislider',
   'countries/services/ReportService',
   'countries/views/report/SummaryChartView',
   'countries/views/report/HistoricalTrendChartView',
   'countries/views/report/PieChartView',
   'countries/views/report/ProvincesTopChartView',
-  'countries/views/report/SliderView',
   'text!countries/templates/countryReport.handlebars',
 ], function(
   Backbone,
   mps,
+  nouislider,
   ReportService,
   SummaryChartView,
   HistoricalTrendChartView,
   PieChartView,
   ProvincesTopChartView,
-  SliderView,
   tpl
 ) {
   'use strict';
@@ -40,8 +40,14 @@ define([
         'thresh': '30',
         'below': 'false',
         'primary_forest': 'false',
-        'exclude_plantations': 'false'
+        'exclude_plantations': 'false',
+        'co2': 'false'
       }
+    },
+
+    events: {
+      'change .js-report-param' : '_handleReportParamsChange',
+      'click #update-report-btn' : '_updateReport',
     },
 
     initialize: function(params) {
@@ -74,6 +80,8 @@ define([
         monitorEnd: this.status.get('monitor_end_year'),
         referenceStart: this.status.get('reference_start_year'),
         referenceEnd: this.status.get('reference_end_year'),
+        below: this.status.get('below') === 'true',
+        co2: this.status.get('co2') === 'true' ,
         totalReference: totalReference,
         totalMonitoring: totalMonitoring,
         increase: increase,
@@ -84,6 +92,7 @@ define([
         forestLossProvinces: this.forestLossProvinceData
       }));
 
+      this.updateBox = this.$('.updates-box');
       this._initModules();
     },
 
@@ -92,11 +101,15 @@ define([
       this.status.clear({ silent: true }).set(this.defaultSettings);
     },
 
+    _updateParams: function() {
+      mps.publish('Router/change', [this.status.attributes]);
+    },
+
     _getData: function() {
       this.status.set({
         iso: this.iso
       }, { silent: true });
-      
+
       ReportService.get(this.status.toJSON())
         .then(function(data) {
           this.data =  data;
@@ -114,9 +127,7 @@ define([
     },
 
     _initModules: function() {
-      this.slider = new SliderView({
-        el: '#crown-cover-slider'
-      });
+      this._initSlides();
 
       this.summaryChart = new SummaryChartView({
         data: _.clone(this.data.emissions)
@@ -144,6 +155,89 @@ define([
           }
         ]
       });
+    },
+
+    _initSlides: function() {
+      this.heightSlider = document.getElementById('height-slider');
+      nouislider.create(this.heightSlider, {
+        start: 5,
+        step: 1,
+        animate: true,
+        orientation: 'vertical',
+        connect: [false, true],
+        tooltips: {
+      	  to: function ( value ) {
+      		  return value + 'm';
+      	  }
+      	},
+      	range: {
+      		min: 0,
+      		max: 10
+      	}
+      });
+      this.heightSlider.setAttribute('disabled', true);
+
+      this.crownSlider = document.getElementById('crown-cover-slider');
+      nouislider.create(this.crownSlider, {
+        start: this.status.get('thresh'),
+        step: 10,
+      	animate: true,
+        connect: [false, true],
+        tooltips: {
+      	  to: function ( value ) {
+      		  return '> ' + (100 - value) + '%';
+      	  }
+      	},
+      	range: {
+      		min: 0,
+      		max: 100
+      	}
+      });
+      this.crownSlider.noUiSlider.on('change', function(value){
+        this.status.set({
+          thresh: parseInt(value[0])
+        }, { silent: true });
+        this.updateBox.removeClass('-hide');
+      }.bind(this));
+    },
+
+    _handleReportParamsChange: function(e) {
+      if (this.defaults.settings[e.target.name]) {
+        var status = {};
+        if (e.target.type === 'checkbox') {
+          status[e.target.name] = e.target.checked;
+        } else {
+          status[e.target.name] = e.target.value;
+        }
+        this.status.set(status, { silent: true });
+      }
+
+      if (this.updateBox) {
+        this._checkInputsDiff()
+        ? this.updateBox.removeClass('-hide')
+        : this.updateBox.addClass('');
+      }
+    },
+
+    _checkInputsDiff:function() {
+      //TODO: remove the update button if there aren't inputs changes
+      return true;
+    },
+
+    _updateReport:function() {
+      this._remove();
+      this.$el.addClass('is-loading');
+      this._updateParams();
+      this._getData();
+    },
+
+    _remove() {
+      this.$el.empty();
+      this.summaryChart && this.summaryChart.remove();
+      this.historicalTrendChart && this.historicalTrendChart.remove();
+      this.historicalLosstByProvinceChart && this.historicalLosstByProvinceChart.remove();
+      this.cStocksByProvinceChart && this.cStocksByProvinceChart.remove();
+      this.forestRelatedEmissionsChart && this.forestRelatedEmissionsChart.remove();
     },
 
     _co2EmissionsByProvince: function() {

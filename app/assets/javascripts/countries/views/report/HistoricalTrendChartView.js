@@ -79,9 +79,14 @@ define([
     _initChart: function() {
       // Data parsing and initialization
       this._parseData();
+      this.hasData = this.chartData && this.chartData.length;
 
-      this._setCustomLabels();
-      this._start();
+      if (this.hasData) {
+        this._setCustomLabels();
+        this._start();
+      } else {
+        this._renderNoData();
+      }
     },
 
     _setCustomLabels:  function() {
@@ -102,6 +107,12 @@ define([
       }));
 
       this.render();
+    },
+
+    _renderNoData: function() {
+      this.$el.html(this.template({
+        hasData: this.hasData,
+      }));
     },
 
     render: function() {
@@ -137,11 +148,12 @@ define([
         var current = this.data[indicator];
         if (current && current.values) {
           current.total = Math.round(current.total);
-
           current.values.forEach(function(data) {
-            data.value = Math.round(data.value);
-            data.type = indicator;
-            this.chartData.push(data);
+            if (data) {
+              data.value = Math.round(data.value);
+              data.type = indicator;
+              this.chartData.push(data);
+            }
           }.bind(this));
         }
       }
