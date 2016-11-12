@@ -64,7 +64,7 @@
 	height: 12px;
   border-radius: 2px;
 	left: -6px;
-	top: -6px;
+	top: -4px;
 }
 .noUi-vertical {
 	width: 4px;
@@ -73,7 +73,7 @@
 .noUi-vertical .noUi-handle {
 	width: 12px;
 	height: 12px;
-	left: -6px;
+	left: -4px;
 	top: -6px;
 }
 
@@ -235,12 +235,13 @@
 	padding: 5px;
 	text-align: center;
   white-space: nowrap;
+  font-size: 13px;
 }
 .noUi-horizontal .noUi-tooltip {
 -webkit-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     left: 50%;
-    bottom: 120%;
+    bottom: 90%;
 }
 .noUi-vertical .noUi-tooltip {
 -webkit-transform: translate(0, -50%);

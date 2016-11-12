@@ -41,7 +41,7 @@ define([
         'below': 'false',
         'primary_forest': 'false',
         'exclude_plantations': 'false',
-        'co2': 'false'
+        'co2': 'true'
       }
     },
 
@@ -89,7 +89,7 @@ define([
         factorAbovegroundBiomass: factorAbovegroundBiomass,
         factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass : '',
         factorTotalEmission: factorTotalEmission,
-        forestLossProvinces: this.forestLossProvinceData
+        co2EmissionsByProvinces: this.co2EmissionsByProvinceData
       }));
 
       this.updateBox = this.$('.updates-box');
@@ -113,15 +113,15 @@ define([
       ReportService.get(this.status.toJSON())
         .then(function(data) {
           this.data =  data;
-          this._getProvinceLossData();
+          this._getProvinceEmissionsData();
         }.bind(this));
     },
 
-    _getProvinceLossData: function() {
-      var indicator = 1;
+    _getProvinceEmissionsData: function() {
+      var indicator = 14;
       $.when(this._getProvincesData(indicator))
         .then(function(data) {
-          this.forestLossProvinceData = data.rows;
+          this.co2EmissionsByProvinceData = data.rows;
           this.render();
         }.bind(this));
     },
@@ -130,24 +130,24 @@ define([
       this._initSlides();
 
       this.summaryChart = new SummaryChartView({
-        data: _.clone(this.data.emissions)
+        data: this.data.emissions
       });
 
       this.historicalTrendChart = new HistoricalTrendChartView({
         el: '#historical-trend-chart',
-        data: _.clone(this.data.forest_loss)
+        data: this.data.forest_loss
       });
 
-      this.forestLossByProvinceChart = new ProvincesTopChartView({
-        el: '#forest-loss-province-chart',
-        data: this.forestLossProvinceData
-      });
+      this._forestLossByProvince();
 
-      this._co2EmissionsByProvince();
+      this.co2EmissionsByProvinceChart = new ProvincesTopChartView({
+        el: '#co2-emissions-province-chart',
+        data: this.co2EmissionsByProvinceData
+      });
 
       this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
         el: '#forest-related-emissions-chart',
-        data: _.clone(this.data.emissions),
+        data: this.data.emissions,
         customLabels: [
           {
             name: 'Emissions',
@@ -180,17 +180,22 @@ define([
       this.crownSlider = document.getElementById('crown-cover-slider');
       nouislider.create(this.crownSlider, {
         start: this.status.get('thresh'),
-        step: 10,
       	animate: true,
         connect: [false, true],
         tooltips: {
       	  to: function ( value ) {
-      		  return '> ' + (100 - value) + '%';
+      		  return '> ' + value + '%';
       	  }
       	},
+        snap: true,
       	range: {
-      		min: 0,
-      		max: 100
+          min: 10,
+          '15%': 15,
+          '20%': 20,
+          '25%': 25,
+          '30%': 30,
+          '50%': 50,
+          max: 75
       	}
       });
       this.crownSlider.noUiSlider.on('change', function(value){
@@ -240,15 +245,15 @@ define([
       this.forestRelatedEmissionsChart && this.forestRelatedEmissionsChart.remove();
     },
 
-    _co2EmissionsByProvince: function() {
-      var indicator = 14;
+    _forestLossByProvince: function() {
+      var indicator = 1;
       $.when(this._getProvincesData(indicator))
         .then(function(data) {
-          this.co2EmissionsByProvinceChart = new ProvincesTopChartView({
-            el: '#co2-emissions-province-chart',
+          this.forestLossByProvinceChart = new ProvincesTopChartView({
+            el: '#forest-loss-province-chart',
             data: data.rows
           });
-        }.bind(this));
+      }.bind(this));
     },
 
     // To include in the API
