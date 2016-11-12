@@ -7,6 +7,7 @@ define([
   'countries/views/report/HistoricalTrendChartView',
   'countries/views/report/PieChartView',
   'countries/views/report/ProvincesTopChartView',
+  'countries/views/report/CountryGeoView',
   'text!countries/templates/countryReport.handlebars',
 ], function(
   Backbone,
@@ -17,6 +18,7 @@ define([
   HistoricalTrendChartView,
   PieChartView,
   ProvincesTopChartView,
+  CountryGeoView,
   tpl
 ) {
   'use strict';
@@ -155,6 +157,11 @@ define([
           }
         ]
       });
+
+      this.countryGeo = new CountryGeoView({
+        el: '#report-country-geo',
+        iso: this.iso
+      })
     },
 
     _initSlides: function() {
