@@ -171,14 +171,21 @@
         <div class="row">
           <div class="col -wide -no-margin">
             <h2 class="title -medium">Activity Data</h2>
-            <h3 class="subtitle">Historical Trend in Forest Loss</h3>
+            <h3 class="subtitle">Trends in Forest Loss</h3>
           </div>
         </div>
 
         <div id="historical-trend-chart" class="m-historical-trend-chart"></div>
 
         <div class="row">
-          <div class="col -wide">
+          <div class="col -wide-text -no-margin">
+            <h3 class="subtitle">Largest Increases by Province</h3>
+            <div id="forest-loss-province-chart" class="m-provinces-top-chart"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col -space-break -wide">
             <h2 class="title -medium">Emission Factors</h2>
           </div>
 
@@ -208,31 +215,25 @@
         </div>
 
         <div class="row">
-          <div class="col -wide -no-margin">
-            <h2 class="title -medium">Largest Increases by Province</h2>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col -space-break -wide-text -no-margin">
-            <h3 class="subtitle">Forest Loss by Province</h3>
-            <div id="forest-loss-province-chart" class="m-provinces-top-chart"></div>
-          </div>
-
-          <div class="col -space-break -wide-text">
-            <h3 class="subtitle">CO<sub>2</sub> Emissions by Province</h3>
-            <div id="co2-emissions-province-chart" class="m-provinces-top-chart"></div>
-          </div>
-        </div>
-
-        <div class="row">
           <div class="col -space-break -no-margin">
             <h2 class="title -medium">Forest-related emissions in {{country}} between {{referenceStart}} and {{referenceEnd}} (tCO<sub>2</sub>-e yr<sup>-1</sup>)</h2>
             <p>Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
           </div>
         </div>
 
-        <div id="forest-related-emissions-chart" class="m-historical-trend-chart"></div>
+        <div class="row">
+          <div class="col -wide-text">
+            <h3 class="subtitle">Trends in CO<sub>2</sub> Emissions</h3>
+            <div id="forest-related-emissions-chart" class="m-historical-trend-chart"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col -wide-text">
+            <h3 class="subtitle">Largest Increases by Province</h3>
+            <div id="co2-emissions-province-chart" class="m-provinces-top-chart"></div>
+          </div>
+        </div>
 
       </div>
     </div>
