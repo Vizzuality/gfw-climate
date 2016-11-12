@@ -35,7 +35,23 @@
 
         <div class="row">
           <div class="col -wide-text">
-            <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} ({{totalMonitoring}} Mt CO2 yr<sup>-1</sup>) were {{increase}}% {{#if hasIncreased}}higher{{else}}lower{{/if}} than the historical average of {{totalReference}} Mt CO2 yr<sup>-1</sup> ({{referenceStart}} - {{referenceEnd}}). This is {{#if hasIncreased}}bad{{else}}good{{/if}} news for forests and climate change in {{country}}! The largest proportion of this {{#if hasIncreased}}increase{{else}}decrease{{/if}} occurred within {{forestLossProvinces.0.province}} and {{forestLossProvinces.1.province}}.</p>
+            <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} ({{totalMonitoring}} Mt CO2 yr<sup>-1</sup>) were {{increase}}% {{#if hasIncreased}}higher{{else}}lower{{/if}} than the historical average of {{totalReference}} Mt CO2 yr<sup>-1</sup> ({{referenceStart}} - {{referenceEnd}}). This is {{#if hasIncreased}}bad{{else}}good{{/if}} news for forests and climate change in {{country}}!
+            {{#if hasIncreased}}
+              The largest proportion of this overall increase occurred within {{co2EmissionsByProvinces.0.province}} and {{co2EmissionsByProvinces.1.province}}.
+            {{else}}
+              Despite this overall decrease, emissions increased most in {{co2EmissionsByProvinces.0.province}} and {{co2EmissionsByProvinces.1.province}}.
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="m-year-selector js-year-selector">
+          <div class="slider reference js-reference-slider">
+            <div class="label">Reference period</div>
+            <div id="reference-slider"></div>
+          </div>
+          <div class="slider monitor js-monitor-slider">
+            <div class="label">Monitoring period</div>
+            <div id="monitor-slider"></div>
           </div>
         </div>
 
@@ -57,7 +73,7 @@
 
           <div class="col">
             <h3 class="subtitle">Geographical Area Covered</h3>
-            <div class="blank"></div>
+            <div id="report-country-geo"></div>
           </div>
 
           <div class="col">
@@ -73,28 +89,55 @@
               </div>
               <div class="col">
                 <p> Height </p>
-                <span> 5m </span>
+                <div id="height-slider"></div>
               </div>
             </div>
             <div class="">
-              <p> Area </p>
+              <p> Crown Cover </p>
               <div id="crown-cover-slider"></div>
             </div>
             <div class="">
-              <label class="report-checkbox" for="tree-plantation-excluded">
-                <input id="tree-plantation-excluded" type="checkbox" name="treeplantations" value="below">
+              <label class="report-checkbox -disabled" for="tree-plantation-excluded">
+                <input class="js-report-param" id="tree-plantation-excluded" type="checkbox" disabled="disabled" name="tree_plantations">
                 Tree Plantations Excluded
               </label>
-              <label class="report-checkbox" for="primary-forest-only">
-                <input id="primary-forest-only" type="checkbox" name="primaryforest" value="below">
-                Tree Plantations Excluded
+              <label class="report-checkbox -disabled" for="primary-forest-only">
+                <input class="js-report-param" id="primary-forest-only" type="checkbox" disabled="disabled" name="primaryforest">
+                Primary Forest Only
               </label>
             </div>
           </div>
 
           <div class="col">
             <h3 class="subtitle">Forest Carbon Pools Included</h3>
-            <div class="blank"></div>
+            <div class="">
+              <label class="report-radio" for="aboveground-live">
+                <input class="js-report-param" id="aboveground-live" type="radio" name="below" value="false" {{#unless below}}checked="checked"{{/unless}}>
+                Aboveground live woody biomass
+              </label>
+              <label class="report-radio" for="belowground-live">
+                <input class="js-report-param" id="belowground-live" type="radio" name="below" value="true" {{#if below}}checked="checked"{{/if}}>
+                Belowground live woody biomass
+              </label>
+            </div>
+            <div class="">
+              <label class="report-checkbox -disabled" for="dead-wood">
+                <input class="js-report-param" id="dead-wood" type="checkbox" disabled="disabled" name="deadwoo">
+                Dead wood
+              </label>
+              <label class="report-checkbox -disabled" for="litter">
+                <input class="js-report-param" id="litter" type="checkbox" disabled="disabled" name="litter">
+                Litter
+              </label>
+              <label class="report-checkbox -disabled" for="soil-organic-carbon">
+                <input class="js-report-param" id="soil-organic-carbon" type="checkbox" disabled="disabled" name="soil_organic_carbon">
+                Soil organic carbon
+              </label>
+              <label class="report-checkbox -disabled" for="wood-products">
+                <input class="js-report-param" id="wood-products" type="checkbox" disabled="disabled" name="wood_products">
+                Wood products
+              </label>
+            </div>
           </div>
 
           <div class="col">
@@ -104,7 +147,20 @@
 
           <div class="col">
             <h3 class="subtitle">Greenhouse Gases Covered</h3>
-            <div class="blank"></div>
+            <div class="">
+              <label class="report-checkbox" for="co2">
+                <input class="js-report-param" id="co2" type="checkbox" name="co2" {{#if co2}}checked="checked"{{/if}}>
+                CO<sub>2</sub>
+              </label>
+              <label class="report-checkbox -disabled" for="ch4">
+                <input class="js-report-param" id="ch4" type="checkbox" disabled="disabled" name="ch4">
+                CH<sub>4</sub>
+              </label>
+              <label class="report-checkbox -disabled" for="n2o">
+                <input class="js-report-param" id="n2o" type="checkbox" disabled="disabled" name="n2o">
+                N<sub>2</sub>O
+              </label>
+            </div>
           </div>
         </div>
 
@@ -126,14 +182,21 @@
         <div class="row">
           <div class="col -wide -no-margin">
             <h2 class="title -medium">Activity Data</h2>
-            <h3 class="subtitle">Historical Trend in Forest Loss</h3>
+            <h3 class="subtitle">Trends in Forest Loss</h3>
           </div>
         </div>
 
         <div id="historical-trend-chart" class="m-historical-trend-chart"></div>
 
         <div class="row">
-          <div class="col -wide">
+          <div class="col -wide-text -no-margin">
+            <h3 class="subtitle">Largest Increases by Province</h3>
+            <div id="forest-loss-province-chart" class="m-provinces-top-chart"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col -space-break -wide">
             <h2 class="title -medium">Emission Factors</h2>
           </div>
 
@@ -163,31 +226,25 @@
         </div>
 
         <div class="row">
-          <div class="col -wide -no-margin">
-            <h2 class="title -medium">Largest Increases by Province</h2>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col -space-break -wide-text -no-margin">
-            <h3 class="subtitle">Forest Loss by Province</h3>
-            <div id="forest-loss-province-chart" class="m-provinces-top-chart"></div>
-          </div>
-
-          <div class="col -space-break -wide-text">
-            <h3 class="subtitle">CO<sub>2</sub> Emissions by Province</h3>
-            <div id="co2-emissions-province-chart" class="m-provinces-top-chart"></div>
-          </div>
-        </div>
-
-        <div class="row">
           <div class="col -space-break -no-margin">
             <h2 class="title -medium">Forest-related emissions in {{country}} between {{referenceStart}} and {{referenceEnd}} (tCO<sub>2</sub>-e yr<sup>-1</sup>)</h2>
             <p>Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
           </div>
         </div>
 
-        <div id="forest-related-emissions-chart" class="m-historical-trend-chart"></div>
+        <div class="row">
+          <div class="col -wide-text">
+            <h3 class="subtitle">Trends in CO<sub>2</sub> Emissions</h3>
+            <div id="forest-related-emissions-chart" class="m-historical-trend-chart"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col -wide-text">
+            <h3 class="subtitle">Largest Increases by Province</h3>
+            <div id="co2-emissions-province-chart" class="m-provinces-top-chart"></div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -282,5 +339,9 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="updates-box -hide">
+    <button id="update-report-btn"class="btn gray" type="button" name="button">Update report</button>
   </div>
 </div>

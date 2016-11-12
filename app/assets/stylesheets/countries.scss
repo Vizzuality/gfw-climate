@@ -33,8 +33,10 @@
 @import 'modules/countries/charts/line_chart';
 @import "modules/select";
 @import "modules/gridgraphs";
+@import "modules/slider";
 
 // Report modules
+@import "modules/countries/report/year-selector";
 @import "modules/countries/report/table-list";
 @import "modules/countries/report/summary-chart";
 @import "modules/countries/report/historical-trend-chart";

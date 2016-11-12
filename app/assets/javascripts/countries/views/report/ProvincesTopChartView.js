@@ -37,6 +37,8 @@ define([
       barMargin: 10,
       defaultZeroValue: 5,
       yAxisWidth: 30,
+      underscriptPadding: 1.5,
+      underscript: '2',
       labels: [
         {
           name: 'Province',
@@ -78,8 +80,13 @@ define([
     _initChart: function() {
       // Data parsing and initialization
       this._parseData();
+      this.hasData = this.chartData && this.chartData.length;
 
-      this._start();
+      if (this.hasData) {
+        this._start();
+      } else {
+        this._renderNoData();
+      }
     },
 
     _start: function() {
@@ -88,6 +95,12 @@ define([
       }));
 
       this.render();
+    },
+
+    _renderNoData: function() {
+      this.$el.html(this.template({
+        hasData: this.hasData
+      }));
     },
 
     render: function() {
@@ -247,11 +260,20 @@ define([
             .style('text-anchor', 'start')
             .text(label.name);
         } else {
-          group.append('text')
-            .attr('class', 'label')
-            .attr('y', this.defaults.rowHeight / 2)
-            .attr('x', margin - this.defaults.paddingXAxisLabels)
-            .text(label.name);
+          if (this.defaults.customLabel && label.slug === 'loss') {
+            var customLabel = group.append('text')
+              .attr('class', 'label')
+              .attr('y', this.defaults.rowHeight / 2)
+              .attr('x', margin - this.defaults.paddingXAxisLabels);
+
+            this._setCustomLabel(this.defaults.customLabel, customLabel);
+          } else {
+            group.append('text')
+              .attr('class', 'label')
+              .attr('y', this.defaults.rowHeight / 2)
+              .attr('x', margin - this.defaults.paddingXAxisLabels)
+              .text(label.name);
+          }
         }
         marginOffset += margin;
       }.bind(this));
@@ -264,6 +286,23 @@ define([
         .attr('height', this.chartData.length * (this.defaults.rowHeight * 2))
         .attr('x', d3.transform(averageGroup.attr('transform')).translate[0])
         .attr('y', 0);
+    },
+
+    _setCustomLabel: function(label, group) {
+      if (label.search(this.defaults.underscript) !== -1) {
+        var unit = label.split(this.defaults.underscript);
+        for (var x = 0; x < unit.length; x++) {
+          group.append('tspan')
+            .text(unit[x]);
+
+          if (x === 0) {
+            group.append('tspan')
+              .attr('class', 'underscript')
+              .attr('dy', this.defaults.underscriptPadding)
+              .text(this.defaults.underscript);
+          }
+        }
+      }
     },
 
     _drawProvinces: function() {
