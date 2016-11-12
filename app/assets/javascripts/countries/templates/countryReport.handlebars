@@ -35,7 +35,12 @@
 
         <div class="row">
           <div class="col -wide-text">
-            <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} ({{totalMonitoring}} Mt CO2 yr<sup>-1</sup>) were {{increase}}% {{#if hasIncreased}}higher{{else}}lower{{/if}} than the historical average of {{totalReference}} Mt CO2 yr<sup>-1</sup> ({{referenceStart}} - {{referenceEnd}}). This is {{#if hasIncreased}}bad{{else}}good{{/if}} news for forests and climate change in {{country}}! The largest proportion of this {{#if hasIncreased}}increase{{else}}decrease{{/if}} occurred within {{forestLossProvinces.0.province}} and {{forestLossProvinces.1.province}}.</p>
+            <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} ({{totalMonitoring}} Mt CO2 yr<sup>-1</sup>) were {{increase}}% {{#if hasIncreased}}higher{{else}}lower{{/if}} than the historical average of {{totalReference}} Mt CO2 yr<sup>-1</sup> ({{referenceStart}} - {{referenceEnd}}). This is {{#if hasIncreased}}bad{{else}}good{{/if}} news for forests and climate change in {{country}}! 
+            {{#if hasIncreased}}
+              The largest proportion of this overall increase occurred within {{forestLossProvinces.0.province}} and {{forestLossProvinces.1.province}}.
+            {{else}}
+              Despite this overall decrease, emissions increased most in {{forestLossProvinces.0.province}} and {{forestLossProvinces.1.province}}.
+            {{/if}}
           </div>
         </div>
 
