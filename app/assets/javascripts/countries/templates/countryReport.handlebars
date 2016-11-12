@@ -35,7 +35,7 @@
 
         <div class="row">
           <div class="col -wide-text">
-            <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} ({{totalMonitoring}} Mt CO2 yr<sup>-1</sup>) were {{increase}}% {{#if hasIncreased}}higher{{else}}lower{{/if}} than the historical average of {{totalReference}} Mt CO2 yr<sup>-1</sup> ({{referenceStart}} - {{referenceEnd}}). This is {{#if hasIncreased}}bad{{else}}good{{/if}} news for forests and climate change in {{country}}! The largest proportion of this {{#if hasIncreased}}increase{{else}}decrease{{/if}} occurred within [Admin Name 1] (x%) and [Admin Name 2 (y%)]</p>
+            <p>Emissions from deforestation in {{country}} in {{monitorStart}}-{{monitorEnd}} ({{totalMonitoring}} Mt CO2 yr<sup>-1</sup>) were {{increase}}% {{#if hasIncreased}}higher{{else}}lower{{/if}} than the historical average of {{totalReference}} Mt CO2 yr<sup>-1</sup> ({{referenceStart}} - {{referenceEnd}}). This is {{#if hasIncreased}}bad{{else}}good{{/if}} news for forests and climate change in {{country}}! The largest proportion of this {{#if hasIncreased}}increase{{else}}decrease{{/if}} occurred within {{forestLossProvinces.0.province}} and {{forestLossProvinces.1.province}}.</p>
           </div>
         </div>
 
@@ -203,19 +203,25 @@
         </div>
 
         <div class="row">
-          <div class="col -space-break">
-            <h2 class="title -medium">Historical Loss by Province</h2>
-            <div id="historical-loss-province-chart" class="m-report-pie-chart"></div>
-          </div>
-
-          <div class="col -space-break">
-            <h2 class="title -medium">C Stocks by Province</h2>
-            <div id="c-stock-province-chart" class="m-report-pie-chart"></div>
+          <div class="col -wide -no-margin">
+            <h2 class="title -medium">Largest Increases by Province</h2>
           </div>
         </div>
 
         <div class="row">
-          <div class="col -space-break">
+          <div class="col -space-break -wide-text -no-margin">
+            <h3 class="subtitle">Forest Loss by Province</h3>
+            <div id="forest-loss-province-chart" class="m-provinces-top-chart"></div>
+          </div>
+
+          <div class="col -space-break -wide-text">
+            <h3 class="subtitle">CO<sub>2</sub> Emissions by Province</h3>
+            <div id="co2-emissions-province-chart" class="m-provinces-top-chart"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col -space-break -no-margin">
             <h2 class="title -medium">Forest-related emissions in {{country}} between {{referenceStart}} and {{referenceEnd}} (tCO<sub>2</sub>-e yr<sup>-1</sup>)</h2>
             <p>Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
           </div>
