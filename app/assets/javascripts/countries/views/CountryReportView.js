@@ -238,6 +238,7 @@ define([
     },
 
     _updateReport:function() {
+      window.scrollTo(0, 0);
       this._remove();
       this.$el.addClass('is-loading');
       this._updateParams();
