@@ -1,10 +1,20 @@
-<div class="cover">
+<div class="m-cover-intro cover">
+  <div class="logo"></div>
+  <div class="header">
+    <h2 class="title">
+      <br>Independent Baseline  and<br>Forest Monitoring Report</h2>
+    <h3 class="subtitle">{{country}} {{year}}</h3>
+    <h4 class="citation">Accessed online at climate.globalforestwatch.org on {{date}}</h4>
+  </div>
+</div>
+
+<div class="cover m-cover">
   <div class="inner">
     <div class="block">
 
       <div class="header">
         <h2 class="title">Independent Baseline <br>and Forest Monitoring Report</h2>
-        <h3 class="subtitle">{{country}} 2016</h3>
+        <h3 class="subtitle">{{country}} {{year}}</h3>
       </div>
 
       <div class="inner-content">
@@ -24,11 +34,8 @@
   </div>
 </div>
 
-<!-- <div class="map">
-</div> -->
-
 <div class="content">
-  <div class="inner">
+  <div class="inner m-summary">
     <div class="block">
       <div class="inner-content">
         <h2 class="title">Summary</h2>
@@ -61,7 +68,7 @@
     </div>
   </div>
 
-  <div class="inner">
+  <div class="inner m-scope">
     <div class="block">
       <div class="inner-content">
         <h2 class="title">Scope and Boundaries</h2>
@@ -128,25 +135,7 @@
                 Wood products
               </label>
             </div>
-          </div>
 
-          <div class="col">
-            <div class="m-plantations">
-              <label class="report-checkbox -disabled" for="tree-plantation-excluded">
-                <input class="js-report-param" id="tree-plantation-excluded" type="checkbox" disabled="disabled" name="tree_plantations">
-                Tree Plantations Excluded
-              </label>
-              <label class="report-checkbox -disabled" for="primary-forest-only">
-                <input class="js-report-param" id="primary-forest-only" type="checkbox" disabled="disabled" name="primaryforest">
-                Primary Forest Only
-              </label>
-            </div>
-
-            <h3 class="subtitle">Deforestation Definition Used</h3>
-            <p>GFW’s satellite-based forest monitoring system detects and reports all instances of gross tree cover loss, regardless of whether the loss will be permanent (deforestation) or temporary (loss occurring within managed forests). GFW does not seek to define deforestation but rather allows users to filter available loss data based on their preferred definition of forest and deforestation.</p>
-          </div>
-
-          <div class="col -no-margin">
             <h3 class="subtitle">Greenhouse Gases Covered</h3>
             <div class="">
               <label class="report-checkbox" for="co2">
@@ -163,6 +152,25 @@
               </label>
             </div>
           </div>
+
+          <div class="col">
+            <div class="m-plantations">
+              <label class="report-checkbox -disabled" for="tree-plantation-excluded">
+                <input class="js-report-param" id="tree-plantation-excluded" type="checkbox" disabled="disabled" name="tree_plantations">
+                Tree Plantations Excluded
+              </label>
+              <label class="report-checkbox -disabled" for="primary-forest-only">
+                <input class="js-report-param" id="primary-forest-only" type="checkbox" disabled="disabled" name="primaryforest">
+                Primary Forest Only
+              </label>
+            </div>
+
+            <h3 class="subtitle">Deforestation Definition Used</h3>
+            <p>GFW’s satellite-based forest monitoring system detects and reports all instances of gross tree cover loss, regardless of whether the loss will be permanent (deforestation) or temporary (loss occurring within managed forests). Thus loss of tree cover in one year does not necessarily lead to a deforestation event.</p>
+
+            <p>Efforts are currently underway by GFW partners to address this issue by identifying drivers of change and subsequent land use. At this time, users are encouraged to filter available tree cover extent and loss data to meet their specific monitoring objective.</p>
+          </div>
+
         </div>
 
       </div>
