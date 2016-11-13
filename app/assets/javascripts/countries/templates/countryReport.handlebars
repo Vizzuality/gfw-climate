@@ -184,7 +184,7 @@
 
         <div class="row">
           <div class="col">
-            <p>Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
+            <p class="-print">Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
           </div>
         </div>
 
@@ -209,12 +209,7 @@
             <h2 class="title -medium">Emission Factors</h2>
           </div>
 
-          <div class="col">
-            <p></p>
-            <p>Gross emissions disclaimer text. Lorem ipsum fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.</p>
-          </div>
-
-          <div class="col">
+          <div class="col -center">
             <div class="table -justify">
               <div class="item">
                 <div class="label">Aboveground biomass</div>
@@ -237,12 +232,13 @@
         <div class="row">
           <div class="col -space-break -no-margin">
             <h2 class="title -medium">Forest-related emissions in {{country}} between {{referenceStart}} and {{referenceEnd}} (tCO<sub>2</sub>-e yr<sup>-1</sup>)</h2>
-            <p>Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
+
+            <p class="-print">Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
           </div>
         </div>
 
         <div class="row">
-          <div class="col -wide-text">
+          <div class="col -wide-text -space-break">
             <h3 class="subtitle">Trends in CO<sub>2</sub> Emissions</h3>
             <div id="forest-related-emissions-chart" class="m-historical-trend-chart"></div>
           </div>
@@ -267,48 +263,54 @@
         <h2 class="title">About the data</h2>
 
         <div class="row">
+          <div class="col -wide-text -no-margin -width-padding">
+            <h2 class="title -medium">Greenhouse gas emissions</h2>
+          </div>
+        </div>
+
+        <div class="row">
           <div class="col">
-            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras mattis consectetur purus sit amet fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elit libero, a pharetra augue.</p>
+            <p>Annual GHG emission estimates included in this report reflect the gross loss of biomass carbon from land to atmosphere (as CO<sub>2</sub>) resulting from disturbances observed to occur within stands of living trees. Estimates reflect gross rather than net emissions because accumulation of biomass carbon after disturbance is not currently taken into account.</p>
+          </div>
+
+          <div class="col">
+            <p>CO<sub>2</sub> is the only greenhouse gas included in the estimates; methane (CH<sub>4</sub>) and nitrous oxide (N<sub>2</sub>O) are currently excluded. Emissions are computed using a simplified IPCC Tier 1 method as the product of activity data and emission factors.</p>
           </div>
         </div>
 
         <div class="row">
           <div class="col -wide-text -no-margin -width-padding">
-            <h2 class="title -medium">Methods used for estimating deforestation rate</h2>
+            <h2 class="title -medium">Activity data</h2>
           </div>
         </div>
 
         <div class="row">
           <div class="col">
-            <p>Eas justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+            <p>Activity data used to generate annual emission estimates in this report represent total hectares of tree cover loss per year, derived from version 1.2 of the Hansen et al. (2013)<sup>1</sup> global tree cover and tree cover loss products available on GFW.</p>
 
-            <p>Cras mattis consectetur purus sit amet fermentum. Cim sociis natoque penatibus et magnis dis parturient montes. Nulla vitae elit libero, a pharetra augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>"Loss" indicates the removal or mortality of trees within areas defined as forest by the user for a 2000 base year. Estimates reflect gross loss rather than net loss because areas gaining tree cover over the same time period are not taken into account.</p>
           </div>
 
           <div class="col">
-            <p>Eas justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+            <p>Loss of tree cover observed in one year does not necessarily lead to a deforestation event; efforts are currently underway by GFW partners to spatially attribute drivers of change and identify the subsequent land use, which will enable more complete GHG accounting in the future.</p>
 
-            <p>Cras mattis consectetur purus sit amet fermentum. Cim sociis natoque penatibus et magnis dis parturient montes. Nulla vitae elit libero, a pharetra augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>{{accuracyData.text}}<sup>2</sup></p>
           </div>
         </div>
 
         <div class="row">
           <div class="col -wide-text -no-margin -width-padding">
-            <h2 class="title -medium">Methods used for estimating emission factors</h2>
+            <h2 class="title -medium">Emission factors</h2>
           </div>
         </div>
 
         <div class="row">
           <div class="col">
-            <p>Eas justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-
-            <p>Cras mattis consectetur purus sit amet fermentum. Cim sociis natoque penatibus et magnis dis parturient montes. Nulla vitae elit libero, a pharetra augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Emission factors included in this report reflect the average carbon stored in trees per area of disturbed forest before the disturbance was observed as a loss of tree cover. Estimates of carbon stored in aboveground biomass prior to disturbance are derived from a 30-m resolution map representative of the year 2000 produced by Woods Hole Research Center<sup>3</sup>.</p>
           </div>
 
           <div class="col">
-            <p>Eas justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-
-            <p>Cras mattis consectetur purus sit amet fermentum. Cim sociis natoque penatibus et magnis dis parturient montes. Nulla vitae elit libero, a pharetra augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Belowground biomass is estimated as 26% of aboveground biomass<sup>4</sup>, carbon as 50% of biomass<sup>5</sup>, and carbon mass is converted to CO<sub>2</sub> emissions using a 44/12 conversion factor. Dead organic matter and soil carbon pools are currently excluded. GFW is currently in the process of calculating uncertainty in these estimates.</p>
           </div>
         </div>
 
@@ -316,29 +318,29 @@
     </div>
   </div>
 
-  <div class="inner">
+  <div class="inner m-data-list">
     <div class="block -divide">
       <div class="inner-content">
-        <h2 class="title">Abstract</h2>
 
         <div class="row">
-          <div class="col">
-            <p>Eas justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+          <div class="col -wide-text">
+            <p><sup>1</sup> Hansen, M.C. et al. 2013. 2013. High resolution global maps of 21<sup>st</sup> century forest cover change. <span class="italic">Science</span> 342: 850-853.</p>
 
-            <p>Cras mattis consectetur purus sit amet fermentum. Cim sociis natoque penatibus et magnis dis parturient montes. Nulla vitae elit libero, a pharetra augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
+            <p><sup>2</sup> Tyukavina, A. et al. 2015. Aboveground carbon loss in natural and managed tropical forests from 2000 to 2012. <span class="italic">Environmental Research Letters</span> 10: 074002.</p>
 
-          <div class="col">
-            <p>Eas justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+            <p><sup>3</sup> Zarin, D. et al. 2016. Can carbon emissions from tropical deforestation drop by 50% in 5 years? <span class="italic">Global Change Biology</span> 22: 1336-1347.</p>
 
-            <p>Cras mattis consectetur purus sit amet fermentum. Cim sociis natoque penatibus et magnis dis parturient montes. Nulla vitae elit libero, a pharetra augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p><sup>4</sup> Mokany, K. et al. 2006. Critical analysis of root:shoot ratios in terrestrial biomes. <span class="italic">Global Change Biology</span> 12: 84-96.</p>
+
+            <p><sup>5</sup> Intergovernmental Panel on Climate Change (IPCC). 2000. Penman J. et al. (Eds). Good Practice Guidance and Uncertainty Management in National Greenhouse Gas Inventories. IPCC/OECD/IEA/IGES, Hayama, Japan.</p>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
-  <div class="inner">
+  <div class="inner m-footer">
     <div class="block">
       <div class="inner-content">
         <div class="row">

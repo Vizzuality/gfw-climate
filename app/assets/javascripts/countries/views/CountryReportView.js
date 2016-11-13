@@ -3,6 +3,8 @@ define([
   'mps',
   'nouislider',
   'moment',
+  'underscore',
+  '_string',
   'countries/services/ReportService',
   'countries/views/report/SummaryChartView',
   'countries/views/report/HistoricalTrendChartView',
@@ -15,6 +17,8 @@ define([
   mps,
   nouislider,
   moment,
+  _,
+  _string,
   ReportService,
   SummaryChartView,
   HistoricalTrendChartView,
@@ -25,7 +29,7 @@ define([
 ) {
   'use strict';
 
-  var CARTO_ENDPOINT = 'https://wri-01.cartodb.com/api/v2/sql';
+  var ENDPOINT_ACCURACY = '/query/a1669972-d748-4542-8fa9-94f446f65c11?sql=SELECT * FROM data WHERE (iso IN (\'%s\'))';
 
   var CountryReportView = Backbone.View.extend({
 
@@ -106,7 +110,8 @@ define([
         factorAbovegroundBiomass: factorAbovegroundBiomass,
         factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass : '',
         factorTotalEmission: factorTotalEmission,
-        co2EmissionsByProvinces: this.co2EmissionsByProvinceData
+        co2EmissionsByProvinces: this.co2EmissionsByProvinceData,
+        accuracyData: this.accuracyData
       }));
 
       this.updateBox = this.$('.updates-box');
@@ -137,9 +142,10 @@ define([
 
     _getProvinceEmissionsData: function() {
       var indicator = 14;
-      $.when(this._getProvincesData(indicator))
-        .then(function(data) {
-          this.co2EmissionsByProvinceData = data.rows;
+      $.when(this._getProvincesData(indicator), this._getAccuracyData())
+        .then(function(dataProvinces, dataAccuracy) {
+          this.co2EmissionsByProvinceData = dataProvinces[0].rows;
+          this.accuracyData = dataAccuracy[0].data[0];
           this.render();
         }.bind(this));
     },
@@ -396,21 +402,18 @@ define([
       }.bind(this));
     },
 
+    _getAccuracyData: function() {
+      var url = window.gfw.config.GFW_API_HOST_V2 +  _.str.sprintf(ENDPOINT_ACCURACY, this.iso);
+      return $.getJSON(url);
+    },
+
     // To include in the API
     _getProvincesData: function(indicator) {
-      var $deffered = jQuery.Deferred();
       var params = this.status.toJSON();
 
-      var url = CARTO_ENDPOINT + '?q=with r as (select distinct on(sub_nat_id) sub_nat_id, avg(value) FILTER ( WHERE year < '+ params.monitor_start_year +' ) over (partition by sub_nat_id),  avg(value) FILTER ( WHERE year > '+ params.reference_end_year +' ) over (partition by sub_nat_id) as monitoring_avg, sum(value) FILTER ( WHERE year < 2011 ) over (partition by sub_nat_id) as total_reference, sum(value) FILTER ( WHERE year > 2010 ) over (partition by sub_nat_id) as total_monitoring, subnat.name_1 as province from indicators_values LEFT JOIN gadm27_adm1 AS subnat ON sub_nat_id  = subnat.id_1 AND indicators_values.iso = subnat.iso where indicator_id = '+ indicator +' and indicators_values.iso = \''+ this.iso +'\' and year !=0 and thresh= '+ params.thresh +' and sub_nat_id is not null and boundary =\'admin\') select avg, monitoring_avg, (((monitoring_avg-avg)/avg)*100) as delta_perc, (monitoring_avg-avg) as absolute, total_reference, total_monitoring, sub_nat_id, province from r where (((monitoring_avg-avg)/avg)*100) is not null order by 4 desc limit 5';
+      var url = window.gfw.config.CDB_API_HOST + '?q=with r as (select distinct on(sub_nat_id) sub_nat_id, avg(value) FILTER ( WHERE year < '+ params.monitor_start_year +' ) over (partition by sub_nat_id),  avg(value) FILTER ( WHERE year > '+ params.reference_end_year +' ) over (partition by sub_nat_id) as monitoring_avg, sum(value) FILTER ( WHERE year < 2011 ) over (partition by sub_nat_id) as total_reference, sum(value) FILTER ( WHERE year > 2010 ) over (partition by sub_nat_id) as total_monitoring, subnat.name_1 as province from indicators_values LEFT JOIN gadm27_adm1 AS subnat ON sub_nat_id  = subnat.id_1 AND indicators_values.iso = subnat.iso where indicator_id = '+ indicator +' and indicators_values.iso = \''+ this.iso +'\' and year !=0 and thresh= '+ params.thresh +' and sub_nat_id is not null and boundary =\'admin\') select avg, monitoring_avg, (((monitoring_avg-avg)/avg)*100) as delta_perc, (monitoring_avg-avg) as absolute, total_reference, total_monitoring, sub_nat_id, province from r where (((monitoring_avg-avg)/avg)*100) is not null order by 4 desc limit 5';
 
-      $.ajax({
-        url: url,
-        success: function(data) {
-          $deffered.resolve(data);
-        }
-      });
-
-      return $deffered.promise();
+      return $.getJSON(url);
     }
   });
 
