@@ -151,6 +151,10 @@
             margin-top: 30px;
           }
 
+          &.-center {
+            margin: 0 auto;
+          }
+
           .blank {
             width: 100%;
             height: 200px;
@@ -178,6 +182,10 @@
 
             sup {
               top: -0.5em;
+            }
+
+            .italic {
+              font-style: italic;
             }
           }
         }
@@ -220,6 +228,10 @@
           }
         }
       }
+    }
+
+    .-print {
+      display: none;
     }
   }
 
@@ -270,6 +282,29 @@
   .m-carbon-pools {
     margin-top: 35px;
     margin-bottom: 45px;
+  }
+
+  .m-data-list {
+    .block {
+      padding-top: 15px;
+      padding-bottom: 60px;
+      border-bottom: 0;
+
+      .inner-content {
+        .row {
+          .col {
+            p {
+              margin-bottom: 2px;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .m-footer {
+    display: none;
   }
 
   .updates-box {
