@@ -1,0 +1,40 @@
+@media print {
+  @page {
+    size: A4 portrait;
+  }
+
+  body.is-report-action {
+    width: 210mm !important;
+    -webkit-print-color-adjust: exact;
+
+    .layout-header,
+    .footer-share-container,
+    .updates-box,
+    .m-cover {
+      display: none;
+    }
+
+    .m-report {
+      .block {
+        border: 0;
+      }
+    }
+
+    .m-cover-intro {
+      page-break-after: always !important;
+      display: block;
+
+      .logo {
+        margin-top: 18mm;
+      }
+    }
+
+    .m-summary {
+      page-break-after: always !important;
+    }
+
+    .m-scope {
+      page-break-after: always !important;
+    }
+  }
+}

@@ -2,6 +2,7 @@ define([
   'backbone',
   'mps',
   'nouislider',
+  'moment',
   'countries/services/ReportService',
   'countries/views/report/SummaryChartView',
   'countries/views/report/HistoricalTrendChartView',
@@ -13,6 +14,7 @@ define([
   Backbone,
   mps,
   nouislider,
+  moment,
   ReportService,
   SummaryChartView,
   HistoricalTrendChartView,
@@ -75,6 +77,7 @@ define([
     },
 
     render: function() {
+      var currentDate = moment();
       var totalReference = Math.round(this.data.emissions.reference.average);
       var totalMonitoring = Math.round(this.data.emissions.monitor.average);
       var increase = Math.round(((totalMonitoring - totalReference) / totalReference) * 100);
@@ -87,6 +90,8 @@ define([
       this.$el.removeClass('is-loading');
       this.$el.html(this.template({
         country: this.data.country,
+        date: currentDate.format('MM/DD/YYYY'),
+        year: currentDate.year(),
         monitorStart: this.status.get('monitor_start_year'),
         monitorEnd: this.status.get('monitor_end_year'),
         referenceStart: this.status.get('reference_start_year'),
