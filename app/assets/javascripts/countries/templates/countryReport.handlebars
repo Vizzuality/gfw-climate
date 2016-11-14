@@ -17,6 +17,12 @@
         <h3 class="subtitle">{{country}} {{year}}</h3>
       </div>
 
+      <div class="header -for-print">
+        <div class="inner-content">
+          <h2 class="title">Table of contents</h2>
+        </div>
+      </div>
+
       <div class="inner-content">
         <div class="m-table-list">
           <ul class="list">
@@ -74,8 +80,11 @@
         <h2 class="title">Scope and Boundaries</h2>
 
         <div class="row">
-          <div class="col -wide">
+          <div class="col -wide-text text-print">
             <p>These selections were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org and generate a new report.</p>
+          </div>
+          <div class="col -wide text">
+            <p>Default selections are selected. If desired, change settings below and click "Update report"</p>
           </div>
 
           <div class="col">
@@ -180,74 +189,84 @@
   <div class="inner">
     <div class="block">
       <div class="inner-content">
-        <h2 class="title">Independent Forest</h2>
 
-        <div class="row">
-          <div class="col">
-            <p class="-print">Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
+        <div class="m-activity">
+          <h2 class="title">Activity Data</h2>
+
+          <div class="row">
+            <div class="col -wide -no-margin">
+              <h3 class="subtitle">Trends in Forest Loss</h3>
+            </div>
           </div>
+
+          <div class="row -print">
+            <div class="col">
+              <p>Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
+            </div>
+          </div>
+
+          <div id="historical-trend-chart" class="m-historical-trend-chart"></div>
         </div>
 
-        <div class="row">
-          <div class="col -wide -no-margin">
-            <h2 class="title -medium">Activity Data</h2>
-            <h3 class="subtitle">Trends in Forest Loss</h3>
-          </div>
-        </div>
-
-        <div id="historical-trend-chart" class="m-historical-trend-chart"></div>
-
-        <div class="row">
-          <div class="col -wide-text -no-margin">
-            <h3 class="subtitle">Largest Increases by Province</h3>
-            <div id="forest-loss-province-chart" class="m-provinces-top-chart"></div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col -space-break -wide">
-            <h2 class="title -medium">Emission Factors</h2>
+        <div class="m-activity -print-margin">
+          <div class="row">
+            <div class="col -wide-text -no-margin">
+              <h3 class="subtitle">Largest Increases by Province</h3>
+              <div id="forest-loss-province-chart" class="m-provinces-top-chart"></div>
+            </div>
           </div>
 
-          <div class="col -center">
-            <div class="table -justify">
-              <div class="item">
-                <div class="label">Aboveground biomass</div>
-                <div class="value">{{factorAbovegroundBiomass}} t C/ha</div>
-              </div>
+          <div class="row">
+            <div class="col -space-break -wide-text">
+              <h2 class="title">Emission Factors</h2>
+            </div>
+          </div>
 
-              <div class="item">
-                <div class="label">Belowground biomass</div>
-                <div class="value">{{#if factorBelowgroundBiomass}}{{factorBelowgroundBiomass}} t C/ha{{else}}Not Applicable{{/if}}</div>
-              </div>
+          <div class="row">
+            <div class="col -center">
+              <div class="table -justify">
+                <div class="item">
+                  <div class="label">Aboveground biomass</div>
+                  <div class="value">{{factorAbovegroundBiomass}} t C/ha</div>
+                </div>
 
-              <div class="item">
-                <div class="label">Total Emission Factor</div>
-                <div class="value">{{factorTotalEmission}} t C/ha</div>
+                <div class="item">
+                  <div class="label">Belowground biomass</div>
+                  <div class="value">{{#if factorBelowgroundBiomass}}{{factorBelowgroundBiomass}} t C/ha{{else}}Not Applicable{{/if}}</div>
+                </div>
+
+                <div class="item">
+                  <div class="label">Total Emission Factor</div>
+                  <div class="value">{{factorTotalEmission}} t C/ha</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col -space-break -no-margin">
-            <h2 class="title -medium">Forest-related emissions in {{country}} between {{referenceStart}} and {{referenceEnd}} (tCO<sub>2</sub>-e yr<sup>-1</sup>)</h2>
+        <div class="m-activity">
+          <div class="row">
+            <div class="col -space-break -no-margin -wide-text">
+              <h2 class="title">Forest Related Emissions</h2>
 
-            <p class="-print">Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
+              <p class="-print">Reference and monitoring periods shown were chosen by the user in the automatic report generation process. To change these selections, go to climate.globalforestwatch.org/countries and generate a new report.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col -wide-text">
+              <h3 class="subtitle">Trends in CO<sub>2</sub> Emissions</h3>
+              <div id="forest-related-emissions-chart" class="m-historical-trend-chart"></div>
+            </div>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col -wide-text -space-break">
-            <h3 class="subtitle">Trends in CO<sub>2</sub> Emissions</h3>
-            <div id="forest-related-emissions-chart" class="m-historical-trend-chart"></div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col -wide-text">
-            <h3 class="subtitle">Largest Increases by Province</h3>
-            <div id="co2-emissions-province-chart" class="m-provinces-top-chart"></div>
+        <div class="m-activity -print-margin">
+          <div class="row">
+            <div class="col -wide-text">
+              <h3 class="subtitle">Largest Increases by Province</h3>
+              <div id="co2-emissions-province-chart" class="m-provinces-top-chart"></div>
+            </div>
           </div>
         </div>
 
@@ -256,61 +275,76 @@
   </div>
 </div>
 
-<div class="cover">
+<div class="cover m-cover-footer">
   <div class="inner">
     <div class="block -divide">
       <div class="inner-content">
-        <h2 class="title">About the data</h2>
+        <div class="m-data">
+          <h2 class="title">About the data</h2>
 
-        <div class="row">
-          <div class="col -wide-text -no-margin -width-padding">
-            <h2 class="title -medium">Greenhouse gas emissions</h2>
+          <div class="row">
+            <div class="col">
+              <p>Global Forest Watch (GFW) Climate strives to deliver timely, transparent, open and accurate data on forest carbon in a way that unlocks insights for governments, REDD+ donors, the private sector, civil 1 society organizations, and the general public.</p>
+            </div>
+
+            <div class="col">
+              <p>GFW is a growing partnership of organizations contributing data, technology, funding, and expertise to achieve better forest management
+          outcomes worldwide.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col -wide-text -no-margin -width-padding">
+              <h2 class="title -medium">Greenhouse gas emissions</h2>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <p>Annual GHG emission estimates included in this report reflect the gross loss of biomass carbon from land to atmosphere (as CO<sub>2</sub>) resulting from disturbances observed to occur within stands of living trees. Estimates reflect gross rather than net emissions because accumulation of biomass carbon after disturbance is not currently taken into account.</p>
+            </div>
+
+            <div class="col">
+              <p>CO<sub>2</sub> is the only greenhouse gas included in the estimates; methane (CH<sub>4</sub>) and nitrous oxide (N<sub>2</sub>O) are currently excluded. Emissions are computed using a simplified IPCC Tier 1 method as the product of activity data and emission factors.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col -wide-text -no-margin -width-padding">
+              <h2 class="title -medium">Activity data</h2>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <p>Activity data used to generate annual emission estimates in this report represent total hectares of tree cover loss per year, derived from version 1.2 of the Hansen et al. (2013)<sup>1</sup> global tree cover and tree cover loss products available on GFW.</p>
+
+              <p>"Loss" indicates the removal or mortality of trees within areas defined as forest by the user for a 2000 base year. Estimates reflect gross loss rather than net loss because areas gaining tree cover over the same time period are not taken into account.</p>
+            </div>
+
+            <div class="col">
+              <p>Loss of tree cover observed in one year does not necessarily lead to a deforestation event; efforts are currently underway by GFW partners to spatially attribute drivers of change and identify the subsequent land use, which will enable more complete GHG accounting in the future.</p>
+
+              <p>{{accuracyData.text}}<sup>2</sup></p>
+            </div>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col">
-            <p>Annual GHG emission estimates included in this report reflect the gross loss of biomass carbon from land to atmosphere (as CO<sub>2</sub>) resulting from disturbances observed to occur within stands of living trees. Estimates reflect gross rather than net emissions because accumulation of biomass carbon after disturbance is not currently taken into account.</p>
+        <div class="-print-margin">
+          <div class="row">
+            <div class="col -wide-text -no-margin -width-padding">
+              <h2 class="title -medium">Emission factors</h2>
+            </div>
           </div>
 
-          <div class="col">
-            <p>CO<sub>2</sub> is the only greenhouse gas included in the estimates; methane (CH<sub>4</sub>) and nitrous oxide (N<sub>2</sub>O) are currently excluded. Emissions are computed using a simplified IPCC Tier 1 method as the product of activity data and emission factors.</p>
-          </div>
-        </div>
+          <div class="row">
+            <div class="col">
+              <p>Emission factors included in this report reflect the average carbon stored in trees per area of disturbed forest before the disturbance was observed as a loss of tree cover. Estimates of carbon stored in aboveground biomass prior to disturbance are derived from a 30-m resolution map representative of the year 2000 produced by Woods Hole Research Center<sup>3</sup>.</p>
+            </div>
 
-        <div class="row">
-          <div class="col -wide-text -no-margin -width-padding">
-            <h2 class="title -medium">Activity data</h2>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col">
-            <p>Activity data used to generate annual emission estimates in this report represent total hectares of tree cover loss per year, derived from version 1.2 of the Hansen et al. (2013)<sup>1</sup> global tree cover and tree cover loss products available on GFW.</p>
-
-            <p>"Loss" indicates the removal or mortality of trees within areas defined as forest by the user for a 2000 base year. Estimates reflect gross loss rather than net loss because areas gaining tree cover over the same time period are not taken into account.</p>
-          </div>
-
-          <div class="col">
-            <p>Loss of tree cover observed in one year does not necessarily lead to a deforestation event; efforts are currently underway by GFW partners to spatially attribute drivers of change and identify the subsequent land use, which will enable more complete GHG accounting in the future.</p>
-
-            <p>{{accuracyData.text}}<sup>2</sup></p>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col -wide-text -no-margin -width-padding">
-            <h2 class="title -medium">Emission factors</h2>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col">
-            <p>Emission factors included in this report reflect the average carbon stored in trees per area of disturbed forest before the disturbance was observed as a loss of tree cover. Estimates of carbon stored in aboveground biomass prior to disturbance are derived from a 30-m resolution map representative of the year 2000 produced by Woods Hole Research Center<sup>3</sup>.</p>
-          </div>
-
-          <div class="col">
-            <p>Belowground biomass is estimated as 26% of aboveground biomass<sup>4</sup>, carbon as 50% of biomass<sup>5</sup>, and carbon mass is converted to CO<sub>2</sub> emissions using a 44/12 conversion factor. Dead organic matter and soil carbon pools are currently excluded. GFW is currently in the process of calculating uncertainty in these estimates.</p>
+            <div class="col">
+              <p>Belowground biomass is estimated as 26% of aboveground biomass<sup>4</sup>, carbon as 50% of biomass<sup>5</sup>, and carbon mass is converted to CO<sub>2</sub> emissions using a 44/12 conversion factor. Dead organic matter and soil carbon pools are currently excluded. GFW is currently in the process of calculating uncertainty in these estimates.</p>
+            </div>
           </div>
         </div>
 
