@@ -42,7 +42,7 @@ Rails.application.routes.draw do
 
 
   # Embed insights routes
-  get 'embed/insights(/*path)', to: 'embed#insights', as: :embed_insights
+  get 'embed/insights/:insight/:iso', to: 'embed#insights', as: :embed_insights
 
   # Insights
   get 'insights', to: 'insights#index', as: :insights
