@@ -44,13 +44,13 @@ define([
           name: 'Year',
           footerName: '',
           slug: 'year',
-          width: 12
+          width: 16
         },
         {
           name: '',
           footerName: '',
           slug: 'average',
-          width: 58
+          width: 50
         },
         {
           name: 'Loss (ha/yr)',
@@ -63,7 +63,7 @@ define([
           subtitle: 'from historical average',
           footerName: '',
           slug: 'deviation',
-          width: 16
+          width: 20
         }
       ]
     },
