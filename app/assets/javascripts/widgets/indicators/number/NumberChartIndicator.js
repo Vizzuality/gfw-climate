@@ -38,6 +38,7 @@ define([
       this.constructor.__super__.initialize.apply(this, [setup]);
       // Enable params when we have API data
       this.model = new IndicatorModel(setup.model);
+      this.data = setup.data;
 
       // Fetch values
       this.$el.addClass('is-loading');
@@ -53,7 +54,7 @@ define([
       var tpl = this.model.get('template');
 
       // TODO: remove after data fixed
-      if (this.model.attributes.id === 75) {
+      if (this.model.attributes.id === 75 && this.data.id_1) {
         this.$el.html(this.templates['nodata']({ classname: 'number' }));
         return;
       }
