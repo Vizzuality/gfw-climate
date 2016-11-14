@@ -1,5 +1,6 @@
 define([
   'backbone',
+  'mps',
   'handlebars',
   'd3',
   'underscore',
@@ -10,7 +11,7 @@ define([
   'helpers/NumbersHelper',
   'text!insights/templates/insights-glad-alerts.handlebars',
   'text!insights/templates/insights-glad-alerts-legend.handlebars',
-], function(Backbone, Handlebars, d3, _, _string, InsightsGladAlertsChart,
+], function(Backbone, mps, Handlebars, d3, _, _string, InsightsGladAlertsChart,
   ShareView, SourceModalView, NumbersHelper, tpl, tplLegend) {
 
   'use strict';
@@ -41,7 +42,7 @@ define([
     defaults: {
       selectedClassEl: '-selected',
       filter: 'carbon_emissions',
-      country: 'BRA',
+      country: '',
       year: 2016,
       weekStep: 1,
       desforestationFilter: 'deforestation',
@@ -55,7 +56,8 @@ define([
       imageURI: window.gfw.config.GFW_DATA_S3 + 'climate/glad_maps'
     },
 
-    initialize: function() {
+    initialize: function(params) {
+      this.defaults = _.extend(this.defaults, params);
       this.legends = [];
       this.chartConfig = [];
       this.locations = [];
@@ -95,6 +97,10 @@ define([
         this.chartConfig = JSON.parse(data.vizsetup);
         this.locations = JSON.parse(data.locations);
       }
+
+      if (!this.currentCountry) {
+        this.currentCountry = this.chartConfig.defaultSelection;
+      }
     },
 
     render: function() {
@@ -106,7 +112,7 @@ define([
 
       // Set default selection from the config
       var defaultCountry = _.findWhere(this.locations, {
-        iso: this.chartConfig.defaultSelection
+        iso: this.currentCountry
       });
 
       if (defaultCountry) {
@@ -208,7 +214,7 @@ define([
           d.deforestation_target = locationData.targets['deforestation'].target;
         }
 
-        if (d.iso === this.chartConfig.defaultSelection) {
+        if (d.iso === this.currentCountry) {
           d.selected = true;
         }
 
@@ -337,10 +343,11 @@ define([
 
     _changeDataByCountry: function(ev) {
       var current = ev.currentTarget;
-      var value = current.value;
-      var selected = current.querySelector('[data-iso="'+ value +'"]');
+      var iso = current.value;
+      var selected = current.querySelector('[data-iso="'+ iso +'"]');
 
-      this._setCurrentCountry(selected.text, value);
+      mps.publish('Router/goInsight', [iso]);
+      this._setCurrentCountry(selected.text, iso);
       this._renderMainChart();
     },
 
