@@ -42,32 +42,47 @@ define([
           w = w |0,
           j = j |0;
 
+      // create buckets
+      var buckets = [39, 11,  3, // first bucket R G B
+               83, 44,  8,
+               130, 104,  26,
+               174, 176, 49,
+               173, 209, 81,
+               179, 249, 122]; // last bucket
+      // cache bucket length
+      var countBuckets = buckets.length / 3 |0;
+
       for(var i = 0 |0; i < w; ++i) {
         for(var j = 0 |0; j < h; ++j) {
-          var pixelPos  = ((j * w + i) * components) |0,
-          // intensity = imgdata[pixelPos+2]-(imgdata[pixelPos+3]*imgdata[pixelPos+2]/100) |0;
-          intensity = imgdata[pixelPos+2];
-          //if (intensity>255) intensity=255;
-          //if (intensity<0) intensity=0;
-          var uncer = imgdata[pixelPos + 3];
-          uncer = uncer > 100 ? 100 : (uncer < 0 ? 0 : uncer);
 
+          // find pixel position
+          var pixelPos = ((j * w + i) * components) | 0,
 
-          if(intensity >= this.minrange && intensity <= this.maxrange) {
+          // get values from imgdata
+          carbonStock = imgdata[pixelPos + 2] | 0,
+          uncertainty = imgdata[pixelPos + 3] | 0;
+          // scale values
+          uncertainty = uncertainty > 100 ? 100 : (uncertainty < 0 ? 0 : uncertainty);
+          // init set alpha to 0
+          imgdata[pixelPos + 3] = 0;
+
+          if(carbonStock >= this.minrange && carbonStock <= this.maxrange) {
             if(this.uncertainty === 0) {
               // min uncertainty subtract the percentage of uncertainty
-              intensity = intensity - (uncer*intensity/100);
-              intensity = intensity < 1 ? 1 : intensity;
+              carbonStock = carbonStock - (uncertainty * carbonStock / 100);
+              carbonStock = carbonStock < 1 ? 1 : carbonStock;
             } else if(this.uncertainty === 254) {
               // max uncertainty sum the uncertainty value
-              intensity = intensity + (uncer*intensity/100);
+              carbonStock = carbonStock + (uncertainty * carbonStock / 100);
             }
-            imgdata[pixelPos] = 255-intensity;
-            imgdata[pixelPos + 1] = 128;
-            imgdata[pixelPos + 2] = 0;
-            imgdata[pixelPos + 3] = intensity;
-          } else {
-            imgdata[pixelPos + 3] = 0;
+            // Calc bucket from carbonStock as a factor of bucket number
+            var bucket = (carbonStock * countBuckets) / this.options.maxrange;
+            // Find floor to give bucket index
+            var bucketIndex = ~~bucket;
+            imgdata[pixelPos] = buckets[bucketIndex * 3];
+            imgdata[pixelPos + 1] = buckets[bucketIndex * 3 + 1];
+            imgdata[pixelPos + 2] = buckets[bucketIndex * 3 + 2];
+            imgdata[pixelPos + 3] = carbonStock;
           }
         }
       }
