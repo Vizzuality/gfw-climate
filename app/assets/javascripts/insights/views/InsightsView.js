@@ -8,6 +8,7 @@ define([
 
     initialize: function(params) {
       this.insight = params.insight;
+      this.iso = params.iso;
 
       this.render();
     },
@@ -19,7 +20,9 @@ define([
     renderInsight: function() {
       switch(this.insight) {
         case 'glad-alerts':
-          new InsightsGladAlertsView();
+          new InsightsGladAlertsView({
+            country: this.iso
+          });
           return;
         default:
       }

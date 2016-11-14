@@ -31,7 +31,7 @@ define([
     routes: {
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
-      'insights(/)(:insight)'               : '_initInsights',
+      'insights(/)(:insight)(/)(:iso)'      : '_initInsights',
       'countries/:country/report'           : '_initReport',
       'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
@@ -45,6 +45,7 @@ define([
 
     setSubscriptions: function() {
       mps.subscribe('Router/change', this.setParams.bind(this));
+      mps.subscribe('Router/goInsight', this.updateInsight.bind(this));
     },
 
     setEvents: function() {
@@ -74,6 +75,13 @@ define([
       var params = _.omit(this.getParams(), 'vars', 'defaults','params');
       uri.query(this._serializeParams(params));
       this.navigate(uri.path().slice(1) + uri.search(), { trigger: true });
+    },
+
+    /**
+     * Update the country insight
+     */
+    updateInsight: function(iso) {
+      this.navigate('/insights/' + this.insight + '/' + iso, { trigger: false });
     },
 
     /**
@@ -137,9 +145,11 @@ define([
       new CountryPantropicalView();
     },
 
-    _initInsights: function(insight) {
+    _initInsights: function(insight, iso) {
+      this.insight = insight;
       new InsightsView({
-        insight: insight
+        insight: insight,
+        iso: iso
       });
     },
 
