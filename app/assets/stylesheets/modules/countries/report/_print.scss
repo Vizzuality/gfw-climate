@@ -80,6 +80,10 @@
 
     .m-summary {
       page-break-after: always !important;
+
+      .text {
+        display: none;
+      }
     }
 
     .m-scope {
