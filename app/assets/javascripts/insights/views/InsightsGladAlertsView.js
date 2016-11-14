@@ -100,6 +100,7 @@ define([
 
       if (!this.currentCountry) {
         this.currentCountry = this.chartConfig.defaultSelection;
+        mps.publish('Router/goInsight', [this.currentCountry]);
       }
     },
 
