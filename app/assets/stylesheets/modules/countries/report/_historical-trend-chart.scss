@@ -5,7 +5,9 @@
   .chart {
     min-height: 250px;
     display: block;
-
+    max-width: 180mm !important;
+    margin: 0 auto;
+    
     .label {
       font-size: 14px;
       fill: $font-color-1;

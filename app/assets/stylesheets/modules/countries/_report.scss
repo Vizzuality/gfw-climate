@@ -2,6 +2,10 @@
   min-height: 600px;
   position: relative;
 
+  .inner {
+    max-width: 840px;
+  }
+
   .cover {
     background: #EEEEEE;
 
@@ -28,6 +32,16 @@
         margin-bottom: 15px;
         color: $font-color-1;
         font-weight: 300;
+      }
+
+      &.-for-print {
+        border-bottom: 0;
+        margin-bottom: 10px;
+
+        .title {
+          width: 100%;
+          text-align: left;
+        }
       }
     }
 
@@ -120,13 +134,17 @@
         margin-bottom: 10px;
       }
 
-      > .row {
+      .row {
         width: 100%;
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
 
-        > .col {
+        &.-print {
+          display: none;
+        }
+
+        .col {
           width: 48%;
           margin-bottom: 20px;
 
@@ -148,7 +166,7 @@
           }
 
           &.-space-break {
-            margin-top: 30px;
+            margin-top: 50px;
           }
 
           &.-center {
@@ -160,7 +178,7 @@
             height: 200px;
           }
 
-          > .content {
+          >.content {
             display: flex;
 
             span {
@@ -233,6 +251,10 @@
     .-print {
       display: none;
     }
+
+    .-for-print {
+      display: none;
+    }
   }
 
   .noUi-target {
@@ -264,6 +286,12 @@
   .inner:last-child {
     .block {
       border-bottom: 0;
+    }
+  }
+
+  .m-scope {
+    .text-print {
+      display: none;
     }
   }
 
