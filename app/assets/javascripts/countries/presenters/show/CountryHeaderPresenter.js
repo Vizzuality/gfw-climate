@@ -1,8 +1,9 @@
 define([
   'mps',
   'backbone',
-  'countries/presenters/PresenterClass'
-], function(mps, Backbone, PresenterClass) {
+  'countries/presenters/PresenterClass',
+  'countries/services/CountryStatsService'
+], function(mps, Backbone, PresenterClass, CountryStatsService) {
 
   'use strict';
 
@@ -10,11 +11,11 @@ define([
 
     init: function(view) {
       this._super();
-      this.view = view
+      this.view = view;
+      this.service = CountryStatsService;
 
       this.status = new (Backbone.Model.extend()),
-
-      mps.publish('Place/register', [this]);
+        mps.publish('Place/register', [this]);
     },
 
     /**
@@ -22,7 +23,7 @@ define([
      */
     _subscriptions: [{
       'Place/go': function(place) {
-        // this._onPlaceGo(place);
+        this._onPlaceGo(place);
       }
     }],
 
@@ -43,7 +44,28 @@ define([
      */
     _onPlaceGo: function(place) {
       this._setCountry(place.country.iso);
-      this.view.start();
+      // this.view.start();
+      this.requestStats();
+    },
+
+    requestStats: function() {
+      var iso = this.status.get('iso');
+
+      this.service.execute(
+        iso,
+        _.bind(this.onSuccess, this),
+        _.bind(this.onError, this)
+      );
+    },
+
+    onSuccess: function(meta) {
+      if (meta.data && !meta.data.error && meta.data.length) {
+        this.view.drawStats(meta.data[0])
+      }
+    },
+
+    onError: function(err) {
+      throw err;
     },
 
     _setCountry: function(country) {

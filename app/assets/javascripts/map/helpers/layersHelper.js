@@ -98,6 +98,8 @@ define([
   'map/views/layers/PerMinamCoverLayer',
   'map/views/layers/WMSLayer',
   'map/views/layers/MangroveBiomassLayer',
+  'map/views/layers/CustomDarkBaseLabelsLayer',
+  'map/views/layers/CustomDarkOnlyLabelsLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -199,6 +201,8 @@ define([
   PerMinamCoverLayer,
   WMSLayer,
   MangroveBiomassLayer,
+  CustomDarkBaseLabelsLayer,
+  CustomDarkOnlyLabelsLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -207,9 +211,15 @@ define([
   'use strict';
 
   var layersHelper = {
+    custom_dark_base_labels: {
+      view: CustomDarkBaseLabelsLayer
+    },
+    custom_dark_only_labels: {
+      view: CustomDarkOnlyLabelsLayer
+    },
     biomass_loss: {
       view: BiomassLoss,
-      timelineView: LossTimeline 
+      timelineView: LossTimeline
     },
     idn_primary: {
       view: IdnPrimaryLayer
@@ -479,11 +489,11 @@ define([
     mex_mining: {
       view:  MexMiningLayer
     },
-    
+
     per_mining: {
       view:  PerMiningLayer
     },
-    
+
     bra_mining: {
       view:  BraMiningLayer
     },
@@ -496,7 +506,7 @@ define([
     global_mangroves_biomass: {
       view: MangroveBiomassLayer
     },
-    
+
     nothing: {
     }
   };

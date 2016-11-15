@@ -6,8 +6,9 @@
           <li class="options_item btn-share" data-hideembed="true">
             <svg><use xlink:href="#shape-share"></use></svg><button id="share-country">share</button>
           </li>
-          <li class="options_item -disabled btn-save">
-            <svg><use xlink:href="#shape-share"></use></svg><button id="print-country">save/print report</button>
+          <li class="options_item btn-report">
+            <svg><use xlink:href="#shape-report"></use></svg>
+            <a href="/countries/<%= @iso %>/report" class="action" id="analyze-country">Create monitoring report</a>
           </li>
           <li class="options_item btn-analyze">
             <svg><use xlink:href="#shape-country"></use></svg>
@@ -27,6 +28,7 @@
                 <%= @name %>
               </h1>
             </div>
+            <div id="headerCountryStats"></div>
             <div class="header-country__preview-country">
               <div id="figure-<%= @iso %>"></div>
             </div>
@@ -60,7 +62,7 @@
               <h3>
                 Don't see what you're looking for?
               </h3>
-              <button class="addIndicators btn medium white" data-source="indicators">Customize report</button>
+              <button class="addIndicators btn medium white" data-source="indicators">Customize indicators</button>
             </div>
           </section>
         </section>

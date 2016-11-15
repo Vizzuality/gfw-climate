@@ -29,7 +29,8 @@ define([
       'click .source_header' : 'toggleSources',
       'click .source_dropdown_header' : 'toggleDropdown',
       'click .source_dropdown_menu a' : 'showSubContent',
-      'click #back-btn' : 'returnBack'
+      'click #back-btn' : 'returnBack',
+      'click .downloadDoc': 'onDownloadDoc'
     },
 
     initialize: function() {
@@ -258,6 +259,11 @@ define([
 
       this.$htmlbody.removeClass('active').animate({ scrollTop: this.$sideBarAside.offset().top },0);
 
+    },
+
+    onDownloadDoc: function(e) {
+      ga('send', 'event', 'About', 'Download',$(e.target).data('type'));
+      return true;
     },
 
     scrollTo: function(e){

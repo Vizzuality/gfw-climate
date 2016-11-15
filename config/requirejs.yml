@@ -32,6 +32,8 @@ paths:
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
   keymaster: "keymaster/keymaster"
   enquire: "enquire/dist/enquire"
+  urijs: "urijs/src"
+  nouislider: "nouislider/distribute/nouislider.min"
 
   wax: "wax.g.min"
   store: "store"
@@ -79,6 +81,8 @@ shim:
     exports: "Class"
   uri:
     exports: "UriTemplate"
+  nouislider:
+    exports: "nouislider"
   handlebars:
     exports: "Handlebars"
   geojson:

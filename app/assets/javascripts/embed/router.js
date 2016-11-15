@@ -16,7 +16,7 @@ define([
     routes: {
       'pantropical'                         : '_initPantropical',
       'countries(/)(:location)(/)(:widget)' : '_initShow',
-      'insights(/)(:insight)(/)' : '_initInsights',
+      'insights(/)(:insight)(/)(:iso)'      : '_initInsights'
     },
 
     initialize: function() {
@@ -43,9 +43,10 @@ define([
       this.placeService.initPlace(this.name, params);
     },
 
-    _initInsights: function(insight) {
+    _initInsights: function(insight, iso) {
       new EmbedInsightsView({
-        insight: insight
+        insight: insight,
+        iso: iso
       });
     }
 

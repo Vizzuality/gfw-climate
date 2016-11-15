@@ -26,6 +26,7 @@ Rails.application.config.assets.precompile += %w( embed.css )
 Rails.application.config.assets.precompile += %w( embed.js )
 
 # Static pages
+Rails.application.config.assets.precompile += %w( static.js )
 Rails.application.config.assets.precompile += %w( static.css )
 
 unless Rails.env.production?

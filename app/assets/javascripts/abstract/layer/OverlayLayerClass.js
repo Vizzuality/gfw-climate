@@ -34,7 +34,9 @@ define([
         if (this.options.infowindow && this.options.interactivity) {
           this.setInfowindow(layer);
         }
-        success();
+        if (success) {
+          success();
+        }
       }, this));
 
     },

@@ -1,0 +1,36 @@
+{{#if hasData}}
+  <div id="summary-chart-svg" class="chart"></div>
+  <div class="legend">
+    <div class="content">
+      <ul class="list">
+        <li class="item -reference"><span class="icon"></span>Reference period</li>
+        <li class="item -monitoring"><span class="icon"></span>Monitoring period</li>
+      </ul>
+
+      <div class="table">
+        <div class="item">
+          <div class="label">Historical Average</div>
+          <div class="value">{{referenceAvg}} Mt CO2 yr<sup>-1</sup></div>
+        </div>
+
+        <div class="item">
+          <div class="label">Monitoring Period</div>
+          <div class="value">{{monitoringAvg}} Mt CO2 yr<sup>-1</sup></div>
+        </div>
+
+        <div class="item">
+          <div class="label">
+            {{#if hasIncreased}}
+              Increase
+            {{else}}
+              Decrease
+            {{/if}}
+          </div>
+          <div class="value">{{increase}}%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{else}}
+  No data
+{{/if}}

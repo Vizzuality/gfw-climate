@@ -1,6 +1,6 @@
 class CountriesController < ApplicationController
 
-  before_action :set_country, only: :show
+  before_action :set_country, only: [:show, :report]
 
   def index
     @title = 'Country data'
@@ -15,6 +15,12 @@ class CountriesController < ApplicationController
 
   def pantropical
     @title = 'Carbon Emissions for Tropical Deforestation'
+  end
+
+  def report
+    @name = 'Country report: ' + @country['name']
+    @country_name = @country['name']
+    @iso  = @country['iso']
   end
 
   private

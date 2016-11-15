@@ -1,0 +1,23 @@
+{{#if hasData}}
+  <div id="pie-chart-svg" class="chart"></div>
+  <div class="legend">
+    <div class="content">
+
+      <div class="list">
+        <div class="header">
+          <div class="label">{{labels.name}}</div>
+          <div class="value">{{labels.value}}</div>
+        </div>
+
+        {{#each data}}
+          <div class="item">
+            <div class="label"><span class="icon" style="background-color:{{color}};"></span>{{name}}</div>
+            <div class="value">{{displayValue}}</div>
+          </div>
+        {{/each}}
+    </div>
+
+  </div>
+{{else}}
+  No data
+{{/if}}

@@ -10,13 +10,15 @@ define([
 
     initialize: function(params) {
       this.insight = params.insight;
+      this.iso = params.iso;
 
       this.render();
     },
 
     render: function() {
       new InsightsView({
-        insight: this.insight
+        insight: this.insight,
+        iso: this.iso
       })
     }
   });

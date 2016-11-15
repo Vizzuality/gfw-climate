@@ -1,0 +1,127 @@
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body.is-report-action {
+    width: 210mm !important;
+    margin: 0 auto;
+    -webkit-print-color-adjust: exact;
+
+    .layout-header,
+    .footer-share-container,
+    .updates-box,
+    #headerGfw,
+    #footerGfw,
+    #window,
+    #notifications,
+    #window-bottom,
+    #backdrop,
+    #shareWidgetView,
+    #contactGfw {
+      display: none;
+    }
+
+    .-print-margin {
+      margin-top: 18mm;
+    }
+
+    .-print {
+      display: block !important;
+    }
+
+    .m-report {
+      .block {
+        border: 0;
+
+        .-for-print {
+          display: block;
+        }
+      }
+    }
+
+    .layout-content,
+    .m-report {
+      width: 100% !important;
+    }
+
+    .m-cover-intro {
+      page-break-after: always !important;
+      display: block;
+
+      .logo {
+        margin-top: 18mm;
+      }
+    }
+
+    .m-cover {
+      background: none;
+      page-break-after: always !important;
+
+      .header {
+        display: none;
+
+        &.-for-print {
+          display: block;
+
+          .title {
+            margin-bottom: 20px;
+          }
+        }
+      }
+
+      .m-table-list {
+        .list {
+          column-count: 1;
+        }
+      }
+    }
+
+    .m-summary {
+      page-break-after: always !important;
+
+      .text {
+        display: none;
+      }
+    }
+
+    .m-scope {
+      page-break-after: always !important;
+
+      .block {
+        padding-bottom: 0;
+      }
+
+      .text-print {
+        display: block;
+      }
+
+      .text {
+        display: none;
+      }
+    }
+
+    .m-activity {
+      page-break-after: always !important;
+    }
+
+    .m-historical-trend-chart {
+      .chart {
+        .label {
+          &.subtitle {
+            font-size: 9px;
+          }
+        }
+      }
+    }
+
+    .m-cover-footer {
+      background: none;
+    }
+
+    .m-data {
+      page-break-after: always !important;
+    }
+  }
+}
