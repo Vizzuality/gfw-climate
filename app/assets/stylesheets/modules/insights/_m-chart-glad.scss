@@ -50,6 +50,10 @@
     text-anchor: start;
     fill: #555555;
     font-size: 13px;
+
+    .light {
+      fill: rgba(#555555, 0.6);
+    }
   }
 
   .line-label {

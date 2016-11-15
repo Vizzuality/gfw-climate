@@ -289,6 +289,12 @@ define([
           .text(')');
       }
 
+      if (this.iso === 'IDN13') {
+        yAxisLabel.append('tspan')
+          .attr('class', 'light')
+          .text(' *data reflect loss occurring within primary forests only, rather than all tree cover loss');
+      }
+
       this.svg = svg.append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
     },

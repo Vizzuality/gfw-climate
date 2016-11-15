@@ -6,7 +6,6 @@ node do |value|
     cartodb_id:           value['cartodb_id'],
     iso:                  value['iso'],
     id_1:                 value['sub_nat_id'],
-    iso_and_sub_nat:      value['iso_and_sub_nat'],
     boundary:             value['boundary'],
     boundary_id:          value['boundary_id'],
     thresh:               value['thresh'],

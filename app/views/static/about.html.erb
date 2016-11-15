@@ -138,7 +138,14 @@
                   <div class="detail">
                     <h3 class="title">Can carbon emissions from tropical deforestation drop by 50% in 5 years?</h3>
                     <div class="text">Halving carbon emissions from tropical deforestation by 2020 could help bring the international community closer to the agreed goal of <2 degree increase in global average temperature change...</div>
-                    <div class="action"><button class="btn gray"><%= link_to "DOWNLOAD", "https://dl.dropboxusercontent.com/s/rfdjln8se1ii463/Zarin_et_al-2016-Global_Change_Biology.pdf", target:'_blank', :class =>'block' %></button></div>
+                    <div class="action">
+                      <button class="btn gray">
+                        <%= link_to "DOWNLOAD",
+                          "https://dl.dropboxusercontent.com/s/rfdjln8se1ii463/Zarin_et_al-2016-Global_Change_Biology.pdf",
+                          target:'_blank', :class =>'downloadDoc block',
+                          data: { type: "Publication" }%>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -154,7 +161,14 @@
                   <div class="detail">
                     <h3 class="title">Global forest watch climate: summary of methods and data</h3>
                     <div class="text">The Global Forest Watch (GFW) Climate online platform catalyzes action on climate change by providing timely and credible answers to questions about the impacts of tropical deforestation on global climate change. Its wealth of data and analytical tools allow...</div>
-                    <div class="action"><button class="btn gray"><%= link_to "DOWNLOAD", "downloads/about/technical-note/wri15_TECH_GFW-Climate-v3.pdf", target:'_blank', :class =>'block' %></button></div>
+                    <div class="action">
+                      <button class="btn gray">
+                        <%= link_to "DOWNLOAD",
+                          "downloads/about/technical-note/wri15_TECH_GFW-Climate-v3.pdf",
+                          target:'_blank', :class =>'downloadDoc block',
+                          data: { type: "Technical Note" }%>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

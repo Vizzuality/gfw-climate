@@ -84,14 +84,15 @@ define([
         mapTypeId: 'dark',
         center: new google.maps.LatLng(15, 27),
       };
-
-      this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
+      var mapOptions = _.extend({}, this.options, params);
+      this.map = new google.maps.Map(this.el, mapOptions);
       this.allowedBounds = new google.maps.LatLngBounds(
          new google.maps.LatLng(-85, -180),
          new google.maps.LatLng(85, 180)
       ); // why (-85, -180)? Well, because f*ck you, Google: http://stackoverflow.com/questions/5405539/google-maps-v3-why-is-latlngbounds-contains-returning-false
       this.lastValidCenter = this.map.getCenter();
       this._checkDialogs();
+      this._checkCustomLabelLayer(mapOptions.mapTypeId);
 
       this.resize();
       this._setMaptypes();
@@ -181,6 +182,8 @@ define([
      */
     setLayers: function(layers, options) {
       _.each(this.layerInst, function(inst, layerSlug) {
+        layerSlug !== 'custom_dark_base_labels' &&
+        layerSlug !== 'custom_dark_only_labels' &&
         !layers[layerSlug] && this._removeLayer(layerSlug);
       }, this);
 
@@ -383,6 +386,7 @@ define([
         this.map.setOptions({styles: styles});
       }
       this._setBasemapStyles(maptype);
+      this._checkCustomLabelLayer(maptype);
       this.presenter.onMaptypeChange(maptype);
     },
 
@@ -523,6 +527,38 @@ define([
         sessionStorage.removeItem('DIALOG');
         window.setTimeout(function(){$('.backdrop').css('opacity', '0.3');},500);
       });
+    },
+
+    _checkCustomLabelLayer: function(mapTypeId){
+      if (mapTypeId === 'dark') {
+        this.setCustomLabelLayer('custom_dark_base_labels', true);
+        this.setCustomLabelLayer('custom_dark_only_labels', true);
+      } else {
+        this.setCustomLabelLayer('custom_dark_base_labels', false)
+        this.setCustomLabelLayer('custom_dark_only_labels', false);
+      }
+    },
+
+    setCustomLabelLayer: function(slug, add) {
+      var layer = {
+        slug: slug,
+        position: 1000
+      };
+
+      var options = {};
+      if (add) {
+        if (layer && !!layersHelper[layer.slug]) {
+          if ((!layersHelper[layer.slug].view || this.layerInst[layer.slug])) {
+            return;
+          }
+          var layerView = this.layerInst[layer.slug] = new layersHelper[layer.slug].view(layer, options, this.map);
+
+          layerView.addLayer(layer.position);
+        }
+      }
+      else {
+        this._removeLayer(layer.slug);
+      }
     },
 
     overlayToggle: function(bool){

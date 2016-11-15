@@ -1,0 +1,112 @@
+.m-historical-trend-chart {
+  width: 100%;
+  margin-bottom: 40px;
+
+  .chart {
+    min-height: 250px;
+    display: block;
+    max-width: 180mm !important;
+    margin: 0 auto;
+    
+    .label {
+      font-size: 14px;
+      fill: $font-color-1;
+      font-weight: 500;
+      text-anchor: end;
+
+      &.subtitle {
+        font-size: 11px;
+        font-weight: 400;
+      }
+    }
+
+    .yAxis {
+      fill: #E5E5DF;
+      shape-rendering: crispEdges;
+    }
+
+    .xAxis {
+      fill: #E5E5DF;
+      shape-rendering: crispEdges;
+    }
+
+    .bar {
+      shape-rendering: crispEdges;
+
+      &.reference {
+        fill: #5B80A0;
+      }
+
+      &.monitor {
+        fill: #EDB04A;
+      }
+    }
+
+    .year {
+      font-size: 14px;
+      fill: $font-color-1;
+      text-anchor: end;
+      font-weight: 400;
+    }
+
+    .year-total {
+      font-size: 14px;
+      fill: $font-color-1;
+      text-anchor: end;
+      font-weight: 400;
+    }
+
+    .value {
+      font-size: 14px;
+      fill: $font-color-1;
+      text-anchor: end;
+      font-weight: 400;
+    }
+  }
+
+  .legend {
+    width: 100%;
+    margin-top: 10px;
+
+    .content {
+      width: 370px;
+      margin: 0 auto;
+
+      .list {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 30px;
+
+        > .item {
+          font-size: 14px;
+          color: $font-color-1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          > .icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 12px;
+            margin-right: 7px;
+            margin-bottom: 2px;
+          }
+
+          &.-reference {
+            > .icon {
+              background: #5B80A0;
+            }
+          }
+
+          &.-monitoring {
+            > .icon {
+              background: #EDB04A;
+            }
+          }
+        }
+      }
+    }
+  }
+}

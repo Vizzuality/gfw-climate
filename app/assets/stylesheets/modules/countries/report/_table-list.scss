@@ -1,0 +1,25 @@
+.m-table-list {
+  > .list {
+    width: 100%;
+    list-style-type: decimal;
+    list-style-position: inside;
+    column-count: 2;
+    margin: 0;
+    padding: 0;
+
+    > .item {
+      margin-bottom: 25px;
+      color: $font-color-3;
+      font-weight: 500;
+      font-size: 18px;
+
+      > .text {
+        color: $font-color-1;
+        font-weight: 300;
+        font-size: 20px;
+        padding-left: 20px;
+      }
+
+    }
+  }
+}

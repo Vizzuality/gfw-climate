@@ -1,5 +1,6 @@
 define([
   'backbone',
+  'mps',
   'handlebars',
   'd3',
   'underscore',
@@ -10,7 +11,7 @@ define([
   'helpers/NumbersHelper',
   'text!insights/templates/insights-glad-alerts.handlebars',
   'text!insights/templates/insights-glad-alerts-legend.handlebars',
-], function(Backbone, Handlebars, d3, _, _string, InsightsGladAlertsChart,
+], function(Backbone, mps, Handlebars, d3, _, _string, InsightsGladAlertsChart,
   ShareView, SourceModalView, NumbersHelper, tpl, tplLegend) {
 
   'use strict';
@@ -18,7 +19,7 @@ define([
   var GFW_URL = window.gfw.config.GFW_URL;
   var API = window.gfw.config.GFW_API_HOST_V2;
   var ENDPOINT_CONFIG = '/query/b0c709f0-d1a6-42a0-a750-df8bdb0895f3?sql=SELECT * FROM data';
-  var ENDPOINT_DATA = '/query/9ed18255-89a9-4ccd-bdd6-fe7ffa1b1595?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE ((country_iso IN (\'%s\') OR state_iso IN (%s)) AND year IN (\'%s\') AND week::int <= 53) GROUP BY year, country_iso, week ORDER BY week::int ASC';
+  var ENDPOINT_DATA = '/query/3d170908-043f-49db-b26b-9e9bfaaa40ce?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss_ha::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE ((country_iso IN (\'%s\') OR state_iso IN (%s)) AND year IN (\'%s\') AND week::int <= 53) GROUP BY year, country_iso, week ORDER BY week::int ASC';
 
   var WEEKS_YEAR = 53;
 
@@ -41,7 +42,7 @@ define([
     defaults: {
       selectedClassEl: '-selected',
       filter: 'carbon_emissions',
-      country: 'BRA',
+      country: '',
       year: 2016,
       weekStep: 1,
       desforestationFilter: 'deforestation',
@@ -55,7 +56,8 @@ define([
       imageURI: window.gfw.config.GFW_DATA_S3 + 'climate/glad_maps'
     },
 
-    initialize: function() {
+    initialize: function(params) {
+      this.defaults = _.extend(this.defaults, params);
       this.legends = [];
       this.chartConfig = [];
       this.locations = [];
@@ -95,6 +97,11 @@ define([
         this.chartConfig = JSON.parse(data.vizsetup);
         this.locations = JSON.parse(data.locations);
       }
+
+      if (!this.currentCountry) {
+        this.currentCountry = this.chartConfig.defaultSelection;
+        mps.publish('Router/goInsight', [this.currentCountry]);
+      }
     },
 
     render: function() {
@@ -106,7 +113,7 @@ define([
 
       // Set default selection from the config
       var defaultCountry = _.findWhere(this.locations, {
-        iso: this.chartConfig.defaultSelection
+        iso: this.currentCountry
       });
 
       if (defaultCountry) {
@@ -208,7 +215,7 @@ define([
           d.deforestation_target = locationData.targets['deforestation'].target;
         }
 
-        if (d.iso === this.chartConfig.defaultSelection) {
+        if (d.iso === this.currentCountry) {
           d.selected = true;
         }
 
@@ -337,10 +344,11 @@ define([
 
     _changeDataByCountry: function(ev) {
       var current = ev.currentTarget;
-      var value = current.value;
-      var selected = current.querySelector('[data-iso="'+ value +'"]');
+      var iso = current.value;
+      var selected = current.querySelector('[data-iso="'+ iso +'"]');
 
-      this._setCurrentCountry(selected.text, value);
+      mps.publish('Router/goInsight', [iso]);
+      this._setCurrentCountry(selected.text, iso);
       this._renderMainChart();
     },
 
