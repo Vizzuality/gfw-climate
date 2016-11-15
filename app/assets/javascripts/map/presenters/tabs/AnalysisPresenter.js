@@ -47,6 +47,8 @@ define([
       'biomass_loss': 'biomass-loss',
     },
 
+    usenames: ['mining', 'oilpalm', 'fiber', 'logging'],
+
     init: function(view) {
       this.view = view;
       this.status = new StatusModel();
@@ -347,7 +349,8 @@ define([
       if (this.wdpaidBool) {
         var resource = this._buildResource({
           wdpaid: wdpaid,
-          type: 'other'
+          type: 'other',
+          geostore: null
         });
 
         ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Wdpaid: ' + resource.wdpaid);
@@ -360,7 +363,7 @@ define([
               properties: {},
               type: 'Feature'
             };
-            
+
             this._geojsonFitBounds(geojson);
             this.view.drawMultipolygon(geojson);
             this._publishAnalysis(resource);
@@ -406,7 +409,28 @@ define([
 
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
-          this._publishAnalysis(resource);
+          if (!!layerSlug && this.usenames.indexOf(layerSlug) === -1) {
+            var provider = {
+              table: layerSlug,
+              filter: 'cartodb_id = ' + useid,
+              user: 'wri-01',
+              type: 'carto'
+            };
+            GeostoreService.use(provider).then(function(useGeostoreId) {
+              if (useGeostoreId) {
+                resource.use = null;
+                resource.useid = null;
+                resource.type = 'world';
+                resource.geostore = useGeostoreId;
+                this._publishAnalysis(resource);
+              } else {
+                this._publishAnalysis(resource, true);
+              }
+            }.bind(this));
+          } else {
+            this._publishAnalysis(resource);
+          }
+
         } else {
           this._publishAnalysis(resource, true);
         }

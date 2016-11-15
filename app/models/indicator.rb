@@ -62,7 +62,6 @@ class Indicator
         values.iso, values.sub_nat_id, values.boundary, values.boundary_id,
         values.thresh, values.the_geom, values.the_geom_webmercator,
         values.admin0_name, values.year, values.value, values.text_value,
-        values.iso_and_sub_nat,
         subnat.name_1 AS sub_nat_name,
         boundaries.boundary_name
         FROM #{CDB_INDICATORS_VALUES_TABLE} AS values
