@@ -110,7 +110,7 @@ define([
         factorAbovegroundBiomass: factorAbovegroundBiomass,
         factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass : '',
         factorTotalEmission: factorTotalEmission,
-        co2EmissionsByProvinces: this.co2EmissionsByProvinceData,
+        co2EmissionsByProvinces: this.data.provinces.emissions.top_five,
         accuracyData: this.accuracyData
       }));
 
@@ -136,16 +136,15 @@ define([
       ReportService.get(this.status.toJSON())
         .then(function(data) {
           this.data =  data;
-          this._getProvinceEmissionsData();
+          this._getAccuracyData();
         }.bind(this));
     },
 
-    _getProvinceEmissionsData: function() {
-      var indicator = 14;
-      $.when(this._getProvincesData(indicator), this._getAccuracyData())
-        .then(function(dataProvinces, dataAccuracy) {
-          this.co2EmissionsByProvinceData = dataProvinces[0].rows;
-          this.accuracyData = dataAccuracy[0].data[0];
+    _getAccuracyData: function() {
+      var url = window.gfw.config.GFW_API_HOST_V2 +  _.str.sprintf(ENDPOINT_ACCURACY, this.iso);
+      $.when($.getJSON(url))
+        .then(function(res) {
+          this.accuracyData = res.data[0];
           this.render();
         }.bind(this));
     },
@@ -162,11 +161,14 @@ define([
         data: this.data.forest_loss
       });
 
-      this._forestLossByProvince();
+      this.forestLossByProvinceChart = new ProvincesTopChartView({
+        el: '#forest-loss-province-chart',
+        data: this.data.provinces.forest_loss.top_five
+      });
 
       this.co2EmissionsByProvinceChart = new ProvincesTopChartView({
         el: '#co2-emissions-province-chart',
-        data: this.co2EmissionsByProvinceData,
+        data: this.data.provinces.emissions.top_five,
         customLabel: 'Mt CO2/yr'
       });
 
@@ -389,31 +391,6 @@ define([
       this.historicalLosstByProvinceChart && this.historicalLosstByProvinceChart.remove();
       this.cStocksByProvinceChart && this.cStocksByProvinceChart.remove();
       this.forestRelatedEmissionsChart && this.forestRelatedEmissionsChart.remove();
-    },
-
-    _forestLossByProvince: function() {
-      var indicator = 1;
-      $.when(this._getProvincesData(indicator))
-        .then(function(data) {
-          this.forestLossByProvinceChart = new ProvincesTopChartView({
-            el: '#forest-loss-province-chart',
-            data: data.rows
-          });
-      }.bind(this));
-    },
-
-    _getAccuracyData: function() {
-      var url = window.gfw.config.GFW_API_HOST_V2 +  _.str.sprintf(ENDPOINT_ACCURACY, this.iso);
-      return $.getJSON(url);
-    },
-
-    // To include in the API
-    _getProvincesData: function(indicator) {
-      var params = this.status.toJSON();
-
-      var url = window.gfw.config.CDB_API_HOST + '?q=with r as (select distinct on(sub_nat_id) sub_nat_id, avg(value) FILTER ( WHERE year < '+ params.monitor_start_year +' ) over (partition by sub_nat_id),  avg(value) FILTER ( WHERE year > '+ params.reference_end_year +' ) over (partition by sub_nat_id) as monitoring_avg, sum(value) FILTER ( WHERE year < 2011 ) over (partition by sub_nat_id) as total_reference, sum(value) FILTER ( WHERE year > 2010 ) over (partition by sub_nat_id) as total_monitoring, subnat.name_1 as province from indicators_values LEFT JOIN gadm27_adm1 AS subnat ON sub_nat_id  = subnat.id_1 AND indicators_values.iso = subnat.iso where indicator_id = '+ indicator +' and indicators_values.iso = \''+ this.iso +'\' and year !=0 and thresh= '+ params.thresh +' and sub_nat_id is not null and boundary =\'admin\') select avg, monitoring_avg, (((monitoring_avg-avg)/avg)*100) as delta_perc, (monitoring_avg-avg) as absolute, total_reference, total_monitoring, sub_nat_id, province from r where (((monitoring_avg-avg)/avg)*100) is not null order by 4 desc limit 5';
-
-      return $.getJSON(url);
     }
   });
 
