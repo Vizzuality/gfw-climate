@@ -65,6 +65,11 @@ class CountryReport
     response[:country] = results.first["country"]
     area_val = results.select{|t| t["indicator_id"] == COUNTRY_AREA}.first
     response[:area] = area_val && area_val["value"] or nil
+    response[:thresh] = @thresh
+    response[:reference_start_year] = @reference_start_year
+    response[:reference_end_year] = @reference_end_year
+    response[:monitor_start_year] = @monitor_start_year
+    response[:monitor_end_year] = @monitor_end_year
 
     response[:primary_forest_only] = @primary_forest
     response[:exclude_tree_plantations] = @exclude_plantations
@@ -133,26 +138,34 @@ class CountryReport
     result[:years] = values.map{|t| t["year"]}
     result[:total] = values.inject(0){|sum,t| sum += t["value"]}
     result[:average] = values.empty? ? 0 : result[:total] / values.size
-    result[:values] = values
+    result[:values] = values.map do |t|
+      {
+        indicator_id: t["indicator_id"],
+        cartodb_id: t["cartodb_id"],
+        year: t["year"],
+        value: t["value"],
+        country: t["country"],
+        iso: t["iso"],
+        boundary: t["boundary"],
+        boundary_name: t["boundary_name"]
+      }
+    end
     result
   end
 
-  def get_province_vals_for(data, indicator, period=:reference)
-    start_year = period == :reference ? @reference_start_year : @monitor_start_year
-    end_year = period == :reference ? @reference_end_year : @monitor_end_year
+  def get_province_vals_for(data, indicator)
 
     values = data.select do |t|
       t["boundary"] == @use_boundary &&
         t["indicator_id"] == indicator &&
-        !t["sub_nat_id"].nil? &&
-        t["year"] >= start_year &&
-        t["year"] <= end_year
+        !t["sub_nat_id"].nil?
     end.group_by{|t| t["sub_nat_id"]}
 
     provinces = []
     values.each do |sub_nat_id, vals|
       r = {}
       sample = vals.first
+
       r[:sub_nat_id] = sub_nat_id
       r[:province] = sample["province"]
       r[:indicator_id] = sample["indicator_id"]
@@ -175,108 +188,37 @@ class CountryReport
           end
         end
       end
+      ref_vals = vals.select{|t| t["year"] >= @reference_start_year && t["year"] <= @reference_end_year }
+      r[:reference_avg] = ref_vals.empty? ? nil : ref_vals.inject(0){|sum,t| sum += t["value"]} / ref_vals.size
 
-      r[:value] = vals.inject(0){|sum,t| sum += t["value"]}
+      monit_vals = vals.select{|t| t["year"] >= @monitor_start_year && t["year"] <= @monitor_end_year }
+      r[:monitor_avg] = monit_vals.empty? ? nil : monit_vals.inject(0){|sum,t| sum += t["value"]} / monit_vals.size
+
+      next unless r[:reference_avg] && r[:monitor_avg]
+
+      r[:delta_perc] = (((r[:monitor_avg]-r[:reference_avg])/r[:reference_avg])*100)
+
       if @below && indicator == EMISSIONS
-        r[:value] = r[:value] * BELOWGROUND_EMISSIONS_FACTOR
+        r[:reference_avg] = r[:reference_avg] * BELOWGROUND_EMISSIONS_FACTOR
+        r[:monitor_avg] = r[:monitor_avg] * BELOWGROUND_EMISSIONS_FACTOR
       end
       provinces << r
     end
-    provinces.sort{|a,b| b[:value] <=> a[:value]}
+    provinces.sort{|a,b| (b[:monitor_avg]-b[:reference_avg]) <=> (a[:monitor_avg]-a[:reference_avg])}
   end
 
   def emissions_per_provinces data
     result = {}
 
     result[:forest_loss] = {}
+    provinces = get_province_vals_for(data, FOREST_LOSS)
+    result[:forest_loss][:top_five] = provinces[0,5]
 
-    result[:forest_loss][:reference] = {}
-    provinces = get_province_vals_for(data, FOREST_LOSS, :reference)
-    result[:forest_loss][:reference][:top_five] = provinces[0,5]
-    result[:forest_loss][:reference][:others] = {}
-    if provinces.size > 5
-      result[:forest_loss][:reference][:others] = {
-        size: provinces.size - 5,
-        value: provinces[6, provinces.size].inject(0){|sum, t| sum += t[:value]}
-      }
-    end
-
-    result[:forest_loss][:monitor] = {}
-    provinces = get_province_vals_for(data, FOREST_LOSS, :monitor)
-    result[:forest_loss][:monitor][:top_five] = provinces[0,5]
-    result[:forest_loss][:monitor][:others] = {}
-    if provinces.size > 5
-      result[:forest_loss][:monitor][:others] = {
-        size: provinces.size - 5,
-        value: provinces[6, provinces.size].inject(0){|sum, t| sum += t[:value]}
-      }
-    end
 
     result[:emissions] = {}
+    provinces = get_province_vals_for(data, EMISSIONS)
+    result[:emissions][:top_five] = provinces[0,5]
 
-    result[:emissions][:reference] = {}
-    provinces = get_province_vals_for(data, EMISSIONS, :reference)
-    result[:emissions][:reference][:top_five] = provinces[0,5]
-    result[:emissions][:reference][:others] = {}
-    if provinces.size > 5
-      result[:emissions][:reference][:others] = {
-        size: provinces.size - 5,
-        value: provinces[6, provinces.size].inject(0){|sum, t| sum += t[:value]}
-      }
-    end
-
-    result[:emissions][:monitor] = {}
-    provinces = get_province_vals_for(data, EMISSIONS, :monitor)
-    result[:emissions][:monitor][:top_five] = provinces[0,5]
-    result[:emissions][:monitor][:others] = {}
-    if provinces.size > 5
-      result[:emissions][:monitor][:others] = {
-        size: provinces.size - 5,
-        value: provinces[6, provinces.size].inject(0){|sum, t| sum += t[:value]}
-      }
-    end
-
-    # No reference as there's no years
-    result[:c_stocks] = {}
-
-    indicators = []
-    if @below.present?
-      indicators << BELOW_C_STOCKS
-    else
-      indicators << ABOVE_C_STOCKS
-    end
-    indicators
-
-    values = data.select do |t|
-      t["boundary"] == @use_boundary &&
-        indicators.include?(t["indicator_id"]) &&
-        !t["sub_nat_id"].nil? &&
-        t["year"] = 0
-    end.group_by{|t| t["sub_nat_id"]}
-
-    provinces = []
-
-    values.each do |sub_nat_id, vals|
-      r = {}
-      sample = vals.first
-      r[:sub_nat_id] = sub_nat_id
-      r[:province] = sample["province"]
-      r[:indicator_id] = sample["indicator_id"]
-      r[:boundary] = sample["boundary"]
-      r[:thresh] = sample["thresh"]
-      r[:boundary_name] = sample["boundary_name"]
-      r[:value] = vals.inject(0){|sum,t| sum += t["value"]}
-      provinces << r
-    end
-    provinces = provinces.sort{|a,b| b[:value] <=> a[:value]}
-    result[:c_stocks][:top_five] = provinces[0,5]
-    result[:c_stocks][:others] = {}
-    if provinces.size > 5
-      result[:c_stocks][:others] = {
-        size: provinces.size - 5,
-        value: provinces[6, provinces.size].inject(0){|sum, t| sum += t[:value]}
-      }
-    end
     result
   end
 
