@@ -65,6 +65,11 @@ class CountryReport
     response[:country] = results.first["country"]
     area_val = results.select{|t| t["indicator_id"] == COUNTRY_AREA}.first
     response[:area] = area_val && area_val["value"] or nil
+    response[:thresh] = @thresh
+    response[:reference_start_year] = @reference_start_year
+    response[:reference_end_year] = @reference_end_year
+    response[:monitor_start_year] = @monitor_start_year
+    response[:monitor_end_year] = @monitor_end_year
 
     response[:primary_forest_only] = @primary_forest
     response[:exclude_tree_plantations] = @exclude_plantations
@@ -133,7 +138,18 @@ class CountryReport
     result[:years] = values.map{|t| t["year"]}
     result[:total] = values.inject(0){|sum,t| sum += t["value"]}
     result[:average] = values.empty? ? 0 : result[:total] / values.size
-    result[:values] = values
+    result[:values] = values.map do |t|
+      {
+        indicator_id: t["indicator_id"],
+        cartodb_id: t["cartodb_id"],
+        year: t["year"],
+        value: t["value"],
+        country: t["country"],
+        iso: t["iso"],
+        boundary: t["boundary"],
+        boundary_name: t["boundary_name"]
+      }
+    end
     result
   end
 
@@ -149,6 +165,7 @@ class CountryReport
     values.each do |sub_nat_id, vals|
       r = {}
       sample = vals.first
+
       r[:sub_nat_id] = sub_nat_id
       r[:province] = sample["province"]
       r[:indicator_id] = sample["indicator_id"]
@@ -172,10 +189,12 @@ class CountryReport
         end
       end
       ref_vals = vals.select{|t| t["year"] >= @reference_start_year && t["year"] <= @reference_end_year }
-      r[:reference_avg] = ref_vals.inject(0){|sum,t| sum += t["value"]} / ref_vals.size
+      r[:reference_avg] = ref_vals.empty? ? nil : ref_vals.inject(0){|sum,t| sum += t["value"]} / ref_vals.size
 
       monit_vals = vals.select{|t| t["year"] >= @monitor_start_year && t["year"] <= @monitor_end_year }
-      r[:monitor_avg] = monit_vals.inject(0){|sum,t| sum += t["value"]} / monit_vals.size
+      r[:monitor_avg] = monit_vals.empty? ? nil : monit_vals.inject(0){|sum,t| sum += t["value"]} / monit_vals.size
+
+      next unless r[:reference_avg] && r[:monitor_avg]
 
       r[:dealt_perc] = (((r[:monitor_avg]-r[:reference_avg])/r[:reference_avg])*100)
 
