@@ -33,3 +33,4 @@ unless Rails.env.production?
   Rails.application.config.assets.precompile += %w( teaspoon.css )
   Rails.application.config.assets.precompile += %w( teaspoon-teaspoon.js )
 end
+Rails.application.config.assets.precompile += %w( spec_helper.js )
