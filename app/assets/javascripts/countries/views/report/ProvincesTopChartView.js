@@ -206,12 +206,12 @@ define([
      */
     _getDomain: function() {
       var maxValues = [];
-      maxValues.push({value: d3.max(this.chartData, function(d) { return d.avg; })});
-      maxValues.push({value: d3.max(this.chartData, function(d) { return d.monitoring_avg; })});
+      maxValues.push({value: d3.max(this.chartData, function(d) { return d.reference_avg; })});
+      maxValues.push({value: d3.max(this.chartData, function(d) { return d.monitor_avg; })});
 
       return {
         x: [0, d3.max(maxValues, function(d) { return d.value; })],
-        x2: [0, d3.max(this.chartData, function(d) { return d.monitoring_avg; })],
+        x2: [0, d3.max(this.chartData, function(d) { return d.monitor_avg; })],
         y: [0, this.chartData.length]
       };
     },
@@ -351,7 +351,7 @@ define([
       lossGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          return NumbersHelper.addNumberDecimals(Math.round(d.avg));
+          return NumbersHelper.addNumberDecimals(Math.round(d.reference_avg));
         })
         .attr('dx', function() {
           return lossLabelWidth - this.defaults.paddingXAxisLabels
@@ -363,7 +363,7 @@ define([
       lossGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          return NumbersHelper.addNumberDecimals(Math.round(d.monitoring_avg));
+          return NumbersHelper.addNumberDecimals(Math.round(d.monitor_avg));
         })
         .attr('dx', function() {
           return lossLabelWidth - this.defaults.paddingXAxisLabels
@@ -427,7 +427,7 @@ define([
         .attr('class', 'bar reference')
         .attr('height', this.defaults.barHeight)
         .attr('width', function(d) {
-          return this.x(d.avg);
+          return this.x(d.reference_avg);
         }.bind(this))
         .attr('y', function() {
           return (this.defaults.rowHeight / 2) + (this.defaults.barHeight / 2);
@@ -437,7 +437,7 @@ define([
         .attr('class', 'bar monitor')
         .attr('height', this.defaults.barHeight)
         .attr('width', function(d) {
-          return this.x(d.monitoring_avg);
+          return this.x(d.monitor_avg);
         }.bind(this))
         .attr('y', function() {
           return (this.defaults.rowHeight / 2) + (this.defaults.barHeight / 2) + (this.defaults.barHeight * 2) ;
