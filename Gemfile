@@ -31,11 +31,11 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry'
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'teaspoon-mocha'
   gem 'rspec_api_documentation'
