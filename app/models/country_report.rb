@@ -196,7 +196,7 @@ class CountryReport
 
       next unless r[:reference_avg] && r[:monitor_avg]
 
-      r[:dealt_perc] = (((r[:monitor_avg]-r[:reference_avg])/r[:reference_avg])*100)
+      r[:delta_perc] = (((r[:monitor_avg]-r[:reference_avg])/r[:reference_avg])*100)
 
       if @below && indicator == EMISSIONS
         r[:reference_avg] = r[:reference_avg] * BELOWGROUND_EMISSIONS_FACTOR
