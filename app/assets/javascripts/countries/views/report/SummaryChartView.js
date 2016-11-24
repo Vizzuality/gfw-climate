@@ -2,11 +2,13 @@ define([
   'backbone',
   'underscore',
   'd3',
+  'moment',
   'text!countries/templates/report/summary-chart.handlebars'
 ], function(
   Backbone,
   _,
   d3,
+  moment,
   tpl
 ) {
 
@@ -107,6 +109,7 @@ define([
      *  Parses the data for the chart
      */
     _parseData: function() {
+      var tzOffset = new Date().getTimezoneOffset();
       var dates = [];
       this.chartData = [];
 
@@ -114,7 +117,7 @@ define([
         var current = this.data[indictator];
         if (current && current.values) {
           current.values.forEach(function(data) {
-            data.date = new Date(data.year.toString());
+            data.date = moment(data.year.toString()).add(tzOffset, 'minutes').toDate();
             dates.push(data.date);
             this.chartData.push(data);
           }.bind(this));
