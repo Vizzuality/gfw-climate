@@ -10,6 +10,7 @@ define([
 
   var CountryModalWidgetsPresenter = PresenterClass.extend({
 
+    maxSelection: 10,
     status: new (Backbone.Model.extend({})),
 
     init: function(view) {
@@ -165,6 +166,7 @@ define([
       (remove) ? widgets = _.without(widgets,widgetId) : widgets.push(widgetId);
       this.status.set('widgetsActive', widgets);
       this.view.setWidgetsStatus();
+      this.checkSelectionReached();
     },
 
     changeActiveJurisdictions: function(jurisdictionId, remove) {
@@ -172,6 +174,7 @@ define([
       (remove) ? jurisdictions = _.without(jurisdictions,jurisdictionId) : jurisdictions.push(jurisdictionId);
       this.status.set('jurisdictionsIds', jurisdictions);
       this.view.setJurisdictionStatus();
+      this.checkSelectionReached();
     },
 
     changeActiveAreas: function(areasId, remove) {
@@ -179,6 +182,15 @@ define([
       (remove) ? areas = _.without(areas, areasId) : areas.push(areasId);
       this.status.set('areasIds', areas);
       this.view.setAreasStatus();
+      this.checkSelectionReached();
+    },
+
+    checkSelectionReached: function() {
+      if ((this.status.get('widgetsActive').length + this.status.get('jurisdictionsIds').length + this.status.get('areasIds').length) > this.maxSelection) {
+        this.view.disableSelection();
+      } else {
+        this.view.enableSelection();
+      }
     },
 
     setActiveWidgets: function() {

@@ -62,6 +62,14 @@ define([
       }, this ));
     },
 
+    enableSelection: function() {
+      this.$el.removeClass('-disabled');
+    },
+
+    disableSelection: function() {
+      this.$el.addClass('-disabled');
+    },
+
     hide: function(e) {
       e && e.preventDefault();
       this.model.set('hidden', true);
