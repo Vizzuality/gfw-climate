@@ -191,7 +191,7 @@ define([
       var min = _.min(values, function(o){return o.value;}).value;
       var max = _.max(values, function(o){return o.value;}).value;
       // We add the 20º part of the max and the min value to prevent the y-axis disappear,
-      return [min - (min/20), max + (max/20)];
+      return [min - Math.abs(min/20), max + Math.abs(max/20)];
     },
 
     getDataLength: function() {

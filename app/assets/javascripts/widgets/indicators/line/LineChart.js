@@ -18,7 +18,6 @@ var LineChart = function(options) {
   this.unitname = options.unitname;
   this.range = options.range;
   this.templateTooltip = Handlebars.compile(tooltipTpl);
-
   this.color = ['#5B80A0','#bebcc2','#E98300'];
 
   this.sizing = options.sizing;
