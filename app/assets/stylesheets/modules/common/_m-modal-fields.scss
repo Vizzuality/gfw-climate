@@ -32,7 +32,7 @@
   }
 
   .m-field {
-   
+
     &.-scroll {
       position: absolute;
       top: 0;
@@ -116,6 +116,14 @@
 
     @media screen and (min-width: $br-mobile-portrait) {
       flex-direction: row;
+    }
+
+    &.-disabled {
+      .m-field-list-item:not(.is-active) {
+        opacity: 0.6;
+        pointer-events: none;
+        background-color: rgba($black, .2);
+      }
     }
 
     .m-field-list-item {
@@ -236,4 +244,3 @@
     }
   }
 }
-

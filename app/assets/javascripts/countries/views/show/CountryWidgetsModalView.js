@@ -79,6 +79,8 @@ define([
       this.$checkboxes = this.$el.find('.js-field-list-checkbox-widget');
       this.$jurisdictionsBoxes = this.$el.find('.js-field-list-checkbox-jurisdiction');
       this.$areasBoxes = this.$el.find('.js-field-list-checkbox-area');
+      this.$page1 = this.$el.find('.page-1');
+      this.$page2 = this.$el.find('.page-2');
     },
 
     setWidgetsStatus: function() {
@@ -124,6 +126,14 @@ define([
       this.presenter.changeActiveAreas($(e.currentTarget).data('id'),$(e.currentTarget).hasClass('is-active'));
     },
 
+    enableSelection: function() {
+      this.$el.find('.m-field-list').removeClass('-disabled');
+    },
+
+    disableSelection: function() {
+      this.$el.find('.m-field-list').addClass('-disabled');
+    },
+
     _nextStep: function() {
       var view = this.status.get('view');
 
@@ -137,24 +147,24 @@ define([
           break;
       }
 
-      this.$el.find('.page-1').toggleClass('is-hidden');
-      this.$el.find('.page-2').toggleClass('is-hidden');
+      this.$page1.toggleClass('is-hidden');
+      this.$page2.toggleClass('is-hidden');
     },
 
     _prevStep: function() {
-      this.$el.find('.page-1').toggleClass('is-hidden');
-      this.$el.find('.page-2').toggleClass('is-hidden');
+      this.$page1.toggleClass('is-hidden');
+      this.$page2.toggleClass('is-hidden');
     },
 
     _resetPagesPosition: function() {
       var view = this.presenter.status.get('view');
 
       if(view !== 'national') {
-        this.$el.find('.page-1').removeClass('is-hidden');
-        this.$el.find('.page-2').addClass('is-hidden');
+        this.$page1.removeClass('is-hidden');
+        this.$page2.addClass('is-hidden');
       } else {
-        this.$el.find('.page-1').addClass('is-hidden');
-        this.$el.find('.page-2').removeClass('is-hidden');
+        this.$page1.addClass('is-hidden');
+        this.$page2.removeClass('is-hidden');
       }
     },
 
