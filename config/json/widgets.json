@@ -1156,7 +1156,7 @@
     "type": "Forest and Carbon Data",
     "type_chart": "number",
     "default_thresh": "25",
-    "default": true,
+    "default": false,
     "tabs": [
       {
         "position": 1,
@@ -1164,7 +1164,7 @@
         "subname": "(IPCC Tier 1)",
         "type": "number",
         "template" : "emissions-peat-drainage",
-        "default": true,
+        "default": false,
         "switch" : [
           {
             "unit": "mt-co2",
