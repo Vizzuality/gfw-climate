@@ -1,5 +1,5 @@
-module Api::V!
-  class DownloadsController < BaseControllerV!
+module Api::V1
+  class DownloadsController < BaseControllerV1
     def index
       zip_file = Download.new(download_params).as_zip
     end

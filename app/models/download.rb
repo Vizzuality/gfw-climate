@@ -18,6 +18,15 @@ class Download
   end
 
   def as_zip
+    validate_download
     []
+  end
+
+
+  def validate_download
+    raise "Please specify a country, param: iso" unless @iso
+    if !@indicator_ids
+      raise "Please specify at least one indicator, param: indicator_ids[]"
+    end
   end
 end
