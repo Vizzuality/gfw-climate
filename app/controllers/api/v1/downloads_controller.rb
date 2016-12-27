@@ -2,6 +2,8 @@ module Api::V1
   class DownloadsController < BaseControllerV1
     def index
       zip_file = Download.new(download_params).as_zip
+      zip_data = File.read(zip_file.path)
+      send_data(zip_data, type: 'application/zip', filename: "download.zip")
     end
 
     private
