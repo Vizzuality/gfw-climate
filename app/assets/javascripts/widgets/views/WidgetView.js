@@ -1,11 +1,12 @@
 define([
   'backbone',
   'handlebars',
+  'mps',
   'enquire',
   'widgets/presenters/WidgetPresenter',
   'widgets/views/TabView',
   'text!widgets/templates/widget.handlebars',
-], function(Backbone, Handlebars, enquire, WidgetPresenter, TabView, tpl) {
+], function(Backbone, Handlebars, mps, enquire, WidgetPresenter, TabView, tpl) {
 
   'use strict';
 
@@ -17,7 +18,8 @@ define([
       'click .close'   : '_close',
       'click .info'    : '_info',
       'click .tab-li'  : '_changeTab',
-      'change .tab-selector'  : '_changeTab'
+      'change .tab-selector'  : '_changeTab',
+      'click .download'  : '_download'
     },
 
     initialize: function(setup) {
@@ -83,7 +85,7 @@ define([
       var position = this.presenter.status.get('tabs').position;
       // UI
       this.$tablink.removeClass('-selected');
-      
+
       if (this.mobile) {
         //Mobile
         this.$tabgrid.find('.tab-li[data-position="' + position + '"]').attr('selected');
@@ -126,6 +128,10 @@ define([
       } else {
         this.presenter.changeTab($(e.currentTarget).data('position'));
       }
+    },
+
+    _download: function(e) {
+      this.presenter.openDownload();
     },
 
     changeStatus: function(status) {
