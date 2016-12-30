@@ -9,6 +9,11 @@ module Api::V1
       respond_with @countries
     end
 
+    def shapes
+      @countries = Country.all_shapes
+      respond_with @countries
+    end
+
     def show
       respond_with @country
     end

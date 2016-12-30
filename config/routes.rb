@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     # Set APIVersion.new(version: X, default: true) for dafault API version
     scope module: :v1, constraints: APIVersion.new(version: 1, current: true) do
 
+      get 'countries/shapes',          to: 'countries#shapes',            as: :shapes
       with_options only: [:index, :show] do |list_show_only|
         list_show_only.resources :indicators
         list_show_only.resources :countries
