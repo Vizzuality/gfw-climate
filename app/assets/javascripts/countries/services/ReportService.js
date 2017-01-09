@@ -9,7 +9,7 @@ define([
 
   var GET_REQUEST_ID = 'ReportService:get';
 
-  var APIURL = window.gfw.config.GFW_API_HOST_NEW_API;
+  var APIURL = window.gfw.config.GFW_API_HOST_V2;
 
   var APIURLS = {
     'indicators': '/api/reports/{?iso,reference_start_year,reference_end_year,monitor_start_year,monitor_end_year,thresh,above,below,primary_forest,tree_plantations}'
