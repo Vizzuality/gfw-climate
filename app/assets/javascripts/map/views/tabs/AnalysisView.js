@@ -350,10 +350,14 @@ define([
      */
     _onClickDone: function() {
       if (!this.$done.hasClass('disabled')) {
-        ga('send', 'event', 'Map', 'Analysis', 'Click: done');
-        this._stopDrawing();
-        this.presenter.doneDrawing();
-        this.toggleAnalysis(true);
+        if (this.presenter.isValidDraw()) {
+          ga('send', 'event', 'Map', 'Analysis', 'Click: done');
+          this._stopDrawing();
+          this.presenter.doneDrawing();
+          this.toggleAnalysis(true);
+        } else {
+          this.presenter.notificate('analyze-invalid-shape');
+        }
       }
     },
 
@@ -447,7 +451,7 @@ define([
     drawPaths: function(paths) {
       var overlay = new google.maps.Polygon(
         _.extend({}, {paths: paths}, this.style));
-      
+
       overlay.setMap(this.map);
       this.presenter.setOverlay(overlay);
     },
