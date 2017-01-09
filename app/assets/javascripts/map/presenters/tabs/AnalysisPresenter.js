@@ -438,6 +438,14 @@ define([
     },
 
     /**
+     * Get the geojson from the current geom and check valid size
+     */
+    isValidDraw: function() {
+      var overlay = this.status.get('overlay');
+      return overlay.getPath().getArray().length >= 3; // LinearRing of coordinates needs to have four or more positions
+    },
+
+    /**
      * Get the geojson from the current and analyze
      * that geojson without drawing again the geom.
      */
