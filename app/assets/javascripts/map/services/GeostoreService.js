@@ -33,7 +33,7 @@ define([
       });
     },
 
-    save: function(geojson) {
+    save: function(geojson, timeout) {
       return new Promise(function(resolve, reject) {
 
         var url = new UriTemplate(URL).fillFromObject({});
@@ -57,7 +57,7 @@ define([
 
         ds.request(requestConfig);
 
-      });
+      }).timeout(timeout || 15000);
     },
 
     use: function(provider) {
