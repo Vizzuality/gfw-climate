@@ -10,17 +10,17 @@
       <h2 class='modal-title'>{{title}}</h2>
       <h3 class="modal-subtitle">{{subtitle}}</h3>
       <div>
-        <div class="m-select rounded -center">
+        <div class="m-select rounded">
           <span class="label">Canopy density</span>
           <div class="select-wrapper">
             <select data-attribute="treshold" class="chosen-select js-select">
               {{#each treshold}}
-                <option value="{{this.value}}" {{#if selected}}selected{{/if}}>{{this.label}}</option>
+                <option value="{{this.value}}" {{#if selected}}selected{{/if}}>> {{this.label}}%</option>
               {{/each}}
             </select>
           </div>
         </div>
-        <div class="m-select rounded -center">
+        <div class="m-select rounded">
           <span class="label">Data</span>
           <div class="select-wrapper">
             <select data-attribute="data" class="chosen-select js-select">
@@ -30,7 +30,7 @@
             </select>
           </div>
         </div>
-        <div class="m-select rounded -center">
+        <div class="m-select rounded">
           <span class="label">Data average</span>
           <div class="select-wrapper">
             <select data-attribute="start_date" class="chosen-select js-select">
@@ -39,8 +39,16 @@
               {{/each}}
             </select>
           </div>
+          <span class="separator">to</span>
+          <div class="select-wrapper">
+            <select data-attribute="start_date" class="chosen-select js-select">
+              {{#each start_date}}
+                <option value="{{this.value}}" {{#if selected}}selected{{/if}}>{{this.label}}</option>
+              {{/each}}
+            </select>
+          </div>
         </div>
-        <div class="m-select rounded -center">
+        <div class="m-select rounded">
           <span class="label">Unit</span>
           <div class="select-wrapper">
             <select data-attribute="unit" class="chosen-select djs-efault">

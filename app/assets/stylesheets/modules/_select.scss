@@ -291,15 +291,19 @@
 
     // Rounded theme
   &.rounded {
-     >.label {
-      width: 50%;
-      display: block;
-      text-align: right;
-      font-size: 12px;
-    }
+    display: flex;
+    justify-content: flex-start;
 
-    .select-wrapper {
-      width: 50%;
+    > span {
+      font-size: 12px;
+      &.label {
+        flex-basis: 48%;
+        display: block;
+        text-align: right;
+      }
+      &.separator {
+        margin: 0 5px;
+      }
     }
 
     select {
@@ -312,6 +316,7 @@
       font-size: 12px;
       width: auto!important;
       min-width: 100px;
+      overflow: hidden;
 
       .chosen-single {
         padding: 10px;
@@ -324,10 +329,14 @@
       }
     }
 
-    .chosen-with-drop .chosen-single {
-      border-bottom: none;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+    .chosen-with-drop {
+      overflow: visible;
+
+      .chosen-single {
+        border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
 
     .chosen-results {
