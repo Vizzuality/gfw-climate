@@ -260,10 +260,14 @@ define([
 
     _saveAndAnalyzeGeojson: function(geojson, options) {
       mps.publish('Spinner/start');
-      GeostoreService.save(geojson).then(function(geostoreId) {
-        this.status.set('geostore', geostoreId);
-        this._analyzeGeojson(geojson, options);
-      }.bind(this));
+      GeostoreService.save(geojson)
+        .then(function(geostoreId) {
+          this.status.set('geostore', geostoreId);
+          this._analyzeGeojson(geojson, options);
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('AnalysisService/results', [{unavailable: true}]);
+        })
     },
 
     /**
