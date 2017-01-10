@@ -6,6 +6,21 @@
     <svg><use xlink:href="#shape-close"></use></svg>
   </a>
   <div class="modal-wrapper scroll-dark">
+    {{#if showFeedback}}
+      <div class="modal-content">
+        <h2 class='modal-title'>{{title}}</h2>
+        <h3 class="modal-subtitle">{{subtitle}}</h3>
+        <div class="feedback">
+          <p>Your download would be ready in a few seconds</p>
+          <p>In case of problem, please click <a href={{downloadLink}} target="_blank">here</a> to start download manually.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="m-btncontainer is-center">
+          <button class="btn medium blue js-back">Back</button>
+        </div>
+      </div>
+    {{else}}
     <div class="modal-content">
       <h2 class='modal-title'>{{title}}</h2>
       <h3 class="modal-subtitle">{{subtitle}}</h3>
@@ -63,8 +78,9 @@
     <div class="modal-footer">
       <div class="m-btncontainer is-center">
         <a href="http://opendata.arcgis.com/" target="_blank" class="">OPEN DATA PORTAL</a>
-        <button href="http://localhost:5000/api/downloads?iso=BRA&indicator_ids[]=1" target="_blank" class="btn medium blue js-submit">Continue</button>
+        <button class="btn medium blue js-submit">Download</button>
       </div>
     </div>
+    {{/if}}
   </div>
 </div>

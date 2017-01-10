@@ -22,6 +22,16 @@
     color: #999;
   }
 
+  .modal-content .feedback {
+    margin-top: 50px;
+    text-align: center;
+
+    p {
+      line-height: 1;
+      margin: 5px 0;
+    }
+  }
+
   .modal-footer {
     .btn {
       margin-left: 30px;

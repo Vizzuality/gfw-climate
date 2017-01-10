@@ -323,8 +323,17 @@
         border-radius: 17px;
         border-color: $blue;
         text-transform: capitalize;
+        span {
+          padding-right: 30px;
+        }
+
         div {
+          width: 30px;
           border-left: none;
+
+          b {
+            width: 12px;
+          }
         }
       }
     }

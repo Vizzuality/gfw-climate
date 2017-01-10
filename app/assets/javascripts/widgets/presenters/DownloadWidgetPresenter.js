@@ -14,7 +14,8 @@ define([
   var DownloadModel = Backbone.Model.extend({
 
     defaults: {
-      title: 'Download',
+      showFeedback: false,
+      title: 'Download data',
       subtitle: '',
       iso: '',
       indicators: [],
@@ -42,7 +43,7 @@ define([
       this.model.set(status);
     },
 
-    submit: function() {
+    getDownloadLink: function() {
       var model = this.model.toJSON();
       var data = {
         iso: model.iso,
@@ -58,13 +59,19 @@ define([
       data['indicator_ids[]'] = _.map(filteredIndicators, function(indicator) {
         return indicator.id;
       }).join(',');
+      return window.gfw.config.CLIMATE_API_HOST + '/api/downloads?' + $.param(data);
+    },
 
-      var url = window.gfw.config.CLIMATE_API_HOST + '/downloads?' + $.param(data);
-      var download = window.open(url, '_blank');
+    goBack: function() {
+      this.model.set({ showFeedback: false });
+      this.view.render(this.parseData(this.widget));
+    },
 
-      download.onbeforeunload = function() {
-        console.log('TODO: download succesfull');
-      }
+    submit: function() {
+      this.model.set({ showFeedback: true });
+      this.view.render(this.parseData(this.widget));
+      var url = this.getDownloadLink();
+      var download = window.open(url);
     },
 
     parseDates: function(dates, current) {
@@ -98,9 +105,11 @@ define([
     parseData: function(widget) {
       var model = this.model.toJSON();
       var data = {
-        treshold: this.parseTreshold(),
         title: model.title,
         subtitle: widget.name,
+        treshold: this.parseTreshold(),
+        showFeedback: model.showFeedback,
+        downloadLink: this.getDownloadLink(),
         data: [],
       };
       widget.tabs.forEach(function(tab) {
@@ -123,11 +132,12 @@ define([
     //  */
     _subscriptions: [{
       'DownloadWidget/open': function(status, widget) {
+        this.widget = widget;
         var data = status;
         data.iso = widget.slugw;
         data.indicators = widget.indicators;
         this.updateStatus(data);
-        this.view.render(this.parseData(widget));
+        this.view.render(this.parseData(this.widget));
         this.view.show();
       }
     }]

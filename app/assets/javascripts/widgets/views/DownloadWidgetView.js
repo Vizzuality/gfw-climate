@@ -52,11 +52,13 @@ define([
     setListeners: function(e) {
       this.$el.on('change', '.js-select', _.bind(this.handleSelectChange, this ));
       this.$el.on('click', '.js-submit', _.bind(this.handleSubmit, this ));
+      this.$el.on('click', '.js-back', _.bind(this.handleBack, this ));
     },
 
     unsetListeners: function(e) {
       this.$el.off('change', '.js-select', _.bind(this.handleSelectChange, this ));
       this.$el.off('click', '.js-submit', _.bind(this.handleSubmit, this ));
+      this.$el.on('click', '.js-back', _.bind(this.handleBack, this ));
     },
 
     handleSelectChange: function(e) {
@@ -69,6 +71,10 @@ define([
     handleSubmit: function(e) {
       e.preventDefault();
       this.presenter.submit();
+    },
+
+    handleBack: function(index){
+      this.presenter.goBack();
     },
 
     render: function(data) {
