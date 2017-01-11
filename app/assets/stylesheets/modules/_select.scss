@@ -64,7 +64,8 @@
     display: inline-block;
     margin: 3px 0;
 
-    .chosen-single {
+    .chosen-single,
+    .chosen-choices {
       height: auto;
       position: relative;
       display: block;
@@ -94,6 +95,49 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         padding-right: 40px;
+      }
+    }
+
+    .chosen-choices {
+      .search-choice {
+        max-width: 200px;
+        margin-bottom: 2px;
+        position: relative;
+
+        .search-choice-close {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 12px;
+          height: 12px;
+          opacity: 0.3;
+          &:hover {
+            opacity: 1;
+          }
+          &:before,
+          &:after {
+            position: absolute;
+            left: 6px;
+            content: ' ';
+            height: 12px;
+            width: 2px;
+            background-color: $dark;
+          }
+          &:before {
+            transform: rotate(45deg);
+          }
+          &:after {
+            transform: rotate(-45deg);
+          }
+        }
+      }
+
+      input {
+        display: block;
+        outline: none;
+        width: 100%!important;
+        color: $dark;
+        border: none;
       }
     }
 
@@ -297,12 +341,22 @@
     > span {
       font-size: 12px;
       &.label {
-        flex-basis: 48%;
+        flex-basis: calc(50% - 10px);
+        flex-shrink: 0;
         display: block;
         text-align: right;
       }
       &.separator {
         margin: 0 5px;
+      }
+    }
+
+    .select-wrapper {
+      flex-basis: 50%;
+      flex-shrink: 0;
+
+      &.-inline {
+        flex-basis: auto;
       }
     }
 
@@ -312,13 +366,14 @@
       min-width: 100px;
     }
 
-    .chosen-container-single {
+    .chosen-container {
       font-size: 12px;
       width: auto!important;
       min-width: 100px;
       overflow: hidden;
 
-      .chosen-single {
+      .chosen-single,
+      .chosen-choices {
         padding: 10px;
         border-radius: 17px;
         border-color: $blue;
@@ -341,7 +396,8 @@
     .chosen-with-drop {
       overflow: visible;
 
-      .chosen-single {
+      .chosen-single,
+      .chosen-choices {
         border-bottom: none;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
@@ -436,7 +492,8 @@
     zoom: 1;
     *display: inline;
     margin: 3px 0;
-    .chosen-single {
+    .chosen-single,
+    .chosen-chosen-multi {
       height: auto;
       position: relative;
       display: block;

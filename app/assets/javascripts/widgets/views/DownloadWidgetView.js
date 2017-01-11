@@ -50,27 +50,25 @@ define([
     },
 
     setListeners: function(e) {
-      this.$el.on('change', '.js-select', _.bind(this.handleSelectChange, this ));
       this.$el.on('click', '.js-submit', _.bind(this.handleSubmit, this ));
       this.$el.on('click', '.js-back', _.bind(this.handleBack, this ));
     },
 
     unsetListeners: function(e) {
-      this.$el.off('change', '.js-select', _.bind(this.handleSelectChange, this ));
       this.$el.off('click', '.js-submit', _.bind(this.handleSubmit, this ));
       this.$el.on('click', '.js-back', _.bind(this.handleBack, this ));
     },
 
-    handleSelectChange: function(e) {
-      var status = {};
-      var target = e.currentTarget;
-      status[target.dataset.attribute] = target.options[target.selectedIndex].value;
-      this.presenter.updateStatus(status);
-    },
-
     handleSubmit: function(e) {
       e.preventDefault();
-      this.presenter.submit();
+      var indicators = this.$('#download-indicators').val();
+      var data = {
+        indicators: indicators || [],
+        start_date: this.$('#download-start-date').val(),
+        end_date: this.$('#download-end-date').val(),
+        thresh: this.$('#download-thresh').val()
+      };
+      this.presenter.submit(data);
     },
 
     handleBack: function(index){

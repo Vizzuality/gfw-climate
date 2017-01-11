@@ -20,9 +20,9 @@ define([
       iso: '',
       indicators: [],
       data: '',
-      threshold: 15,
-      start_date: 2000,
-      end_date: 2015,
+      thresh: 30,
+      start_date: '',
+      end_date: '',
       unit: 'Ha'
     },
 
@@ -49,16 +49,10 @@ define([
         iso: model.iso,
         start_date: model.start_date,
         end_date: model.end_date,
-        threshold: model.threshold,
+        thresh: model.thresh,
       };
 
-      var filteredIndicators = _.filter(model.indicators, function(indicator) {
-        return indicator.tab == model.position;
-      });
-
-      data['indicator_ids[]'] = _.map(filteredIndicators, function(indicator) {
-        return indicator.id;
-      }).join(',');
+      data['indicator_ids[]'] = model.indicators.join(',') || '';
       return window.gfw.config.CLIMATE_API_HOST + '/api/downloads?' + $.param(data);
     },
 
@@ -67,8 +61,9 @@ define([
       this.view.render(this.parseData(this.widget));
     },
 
-    submit: function() {
-      this.model.set({ showFeedback: true });
+    submit: function(data) {
+      data.showFeedback= true;
+      this.model.set(data);
       this.view.render(this.parseData(this.widget));
       var url = this.getDownloadLink();
       var download = window.open(url);
@@ -84,46 +79,54 @@ define([
       });
     },
 
-    parseSwitchs: function(switchs, current) {
-      return _.map(switchs, function(item) {
-        return {
-          selected: item.unitname === current,
-          label: item.unitname,
-          value: item.unit
-        }
-      });
-    },
-
     parseTreshold: function() {
-      // TODO: make it dynamic
-      return [
-        { selected: true, label: 15, value: 15 },
-        { selected: false, label: 30, value: 30 }
-      ]
+      var model = this.model.toJSON();
+      var threshs = [10, 15, 20, 25, 30];
+      return threshs.map(function(thresh) {
+        return {
+          selected: thresh === model.thresh,
+          label: thresh,
+          value: thresh
+        }
+      })
     },
 
     parseData: function(widget) {
+      if (!widget) return {
+        title: model.title,
+        subtitle: 'No data download available'
+      };
+
       var model = this.model.toJSON();
       var data = {
         title: model.title,
         subtitle: widget.name,
         treshold: this.parseTreshold(),
         showFeedback: model.showFeedback,
-        downloadLink: this.getDownloadLink(),
-        data: [],
+        data: []
       };
-      widget.tabs.forEach(function(tab) {
-        if (tab.name === model.name) {
-          data.start_date = this.parseDates(tab.range, model.start_date);
-          data.end_date = this.parseDates(tab.range, model.end_date);
-          data.units = this.parseSwitchs(tab.switch, model.unit);
+      if (model.showFeedback) {
+        data.downloadLink = this.getDownloadLink();
+      }
+
+      widget.indicators.forEach(function(indicator, index) {
+        if (indicator.name === model.name) {
+          data.start_date = this.parseDates(indicator.range, model.start_date);
+          data.end_date = this.parseDates(indicator.range, model.end_date);
         }
+        var selected = !model.indicators.length && index === 0
+          ? true
+          : model.indicators.indexOf(''+indicator.id) > -1
         data.data.push({
-          selected: tab.name === model.name,
-          label: tab.name,
-          value: tab.name
+          selected: selected,
+          label: indicator.name + ' (' + indicator.unit + ')',
+          value: indicator.id
         });
       }, this);
+      if (!data.start_date || !data.end_date) {
+        data.start_date = this.parseDates(widget.tabs[0].range)
+        data.end_date = this.parseDates(widget.tabs[0].range)
+      }
       return data;
     },
 
@@ -132,10 +135,10 @@ define([
     //  */
     _subscriptions: [{
       'DownloadWidget/open': function(status, widget) {
+        if (this.model.attributes.showFeedback) this.model.set({ showFeedback: false });
         this.widget = widget;
         var data = status;
         data.iso = widget.slugw;
-        data.indicators = widget.indicators;
         this.updateStatus(data);
         this.view.render(this.parseData(this.widget));
         this.view.show();
