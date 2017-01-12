@@ -94,9 +94,11 @@ define([
     // SETTERS
     setStatusValues: function() {
       var t = this.presenter.status.get('tabs');
-      (!!t.start_date && !!t.end_date) ? this.setDates() : null;
-      (!!t.thresh) ? this.$threshold.val(t.thresh) : null;
-      (!!t.unit) ? this.$switcher.find('li[data-unit='+t.unit+ ']').addClass('is-active') : null;
+      if (t) {
+        (!!t.start_date && !!t.end_date) ? this.setDates() : null;
+        (!!t.thresh) ? this.$threshold.val(t.thresh) : null;
+        (!!t.unit) ? this.$switcher.find('li[data-unit='+t.unit+ ']').addClass('is-active') : null;
+      }
     },
 
     // SETTERS: dates
@@ -130,98 +132,99 @@ define([
     // SETTERS: indicator
     setIndicator: function() {
       var t = this.presenter.status.get('tabs');
-      switch(t.type) {
-        case 'line':
-          var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
-          if (!!indicators.length) {
-            this.indicator = new MultiLineChartIndicator({
-              el: this.$graphContainer,
-              tab: this,
-              className: 'is-line',
-              model: {
-                indicators: indicators,
-                unit: t.unit,
-                unitname: _.findWhere(this.presenter.model.get('data').switch, { unit: t.unit }).unitname,
-                start_date: t.start_date,
-                end_date: t.end_date,
-                type: 'line',
-                slugw: this.presenter.model.get('slugw'),
-                // Compare model params
-                lock: t.lock,
-                location_compare: this.presenter.model.get('location_compare'),
-                slugw_compare: this.presenter.model.get('slugw_compare'),
-              },
-              data: {
-                location: this.presenter.model.get('location'),
-                thresh: t.thresh,
-              }
-            });
-          }
-          break;
+      if (t && t.type) {
+        switch(t.type) {
+          case 'line':
+            var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
+            if (!!indicators.length) {
+              this.indicator = new MultiLineChartIndicator({
+                el: this.$graphContainer,
+                tab: this,
+                className: 'is-line',
+                model: {
+                  indicators: indicators,
+                  unit: t.unit,
+                  unitname: _.findWhere(this.presenter.model.get('data').switch, { unit: t.unit }).unitname,
+                  start_date: t.start_date,
+                  end_date: t.end_date,
+                  type: 'line',
+                  slugw: this.presenter.model.get('slugw'),
+                  // Compare model params
+                  lock: t.lock,
+                  location_compare: this.presenter.model.get('location_compare'),
+                  slugw_compare: this.presenter.model.get('slugw_compare'),
+                },
+                data: {
+                  location: this.presenter.model.get('location'),
+                  thresh: t.thresh,
+                }
+              });
+            }
+            break;
 
-        case 'list':
-          var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
-          if (!!indicators.length) {
-            this.indicator = new ListChartIndicator({
-              el: this.$graphContainer,
-              tab: this,
-              className: 'is-list',
-              model: {
-                indicators: indicators,
-                type: 'list',
-              },
-              data: {
-                location: this.presenter.model.get('location'),
-                thresh: t.thresh,
-              }
-            });
-          }
-          break;
+          case 'list':
+            var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
+            if (!!indicators.length) {
+              this.indicator = new ListChartIndicator({
+                el: this.$graphContainer,
+                tab: this,
+                className: 'is-list',
+                model: {
+                  indicators: indicators,
+                  type: 'list',
+                },
+                data: {
+                  location: this.presenter.model.get('location'),
+                  thresh: t.thresh,
+                }
+              });
+            }
+            break;
 
-        case 'pie':
-          var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
-          if (!!indicators.length) {
-            this.indicator = new PieChartIndicator({
-              el: this.$graphContainer,
-              tab: this,
-              className: 'is-pie',
-              model: {
-                indicators: indicators,
-                section: t.section,
-                sectionswitch: this.presenter.model.get('data').sectionswitch,
-                template: t.template,
-                type: 'pie',
-              },
-              data: {
-                location: this.presenter.model.get('location'),
-                thresh: t.thresh,
-              }
-            });
-          }
-          break;
+          case 'pie':
+            var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
+            if (!!indicators.length) {
+              this.indicator = new PieChartIndicator({
+                el: this.$graphContainer,
+                tab: this,
+                className: 'is-pie',
+                model: {
+                  indicators: indicators,
+                  section: t.section,
+                  sectionswitch: this.presenter.model.get('data').sectionswitch,
+                  template: t.template,
+                  type: 'pie',
+                },
+                data: {
+                  location: this.presenter.model.get('location'),
+                  thresh: t.thresh,
+                }
+              });
+            }
+            break;
 
-        case 'number':
-          var indicators = _.where(this.presenter.model.get('indicators'),{ tab: t.position});
-          if (!!indicators.length) {
-            this.indicator = new NumberChartIndicator({
-              el: this.$graphContainer,
-              tab: this,
-              className: 'is-number',
-              model: {
-                id: (!!t.unit) ? _.findWhere(indicators, { unit: t.unit }).id : indicators[0].id,
-                template: t.template,
-                type: 'number',
-              },
-              data: {
-                location: this.presenter.model.get('location'),
-                thresh: t.thresh,
-              }
-            });
-          }
-          break;
+          case 'number':
+            var indicators = _.where(this.presenter.model.get('indicators'),{ tab: t.position});
+            if (!!indicators.length) {
+              this.indicator = new NumberChartIndicator({
+                el: this.$graphContainer,
+                tab: this,
+                className: 'is-number',
+                model: {
+                  id: (!!t.unit) ? _.findWhere(indicators, { unit: t.unit }).id : indicators[0].id,
+                  template: t.template,
+                  type: 'number',
+                },
+                data: {
+                  location: this.presenter.model.get('location'),
+                  thresh: t.thresh,
+                }
+              });
+            }
+            break;
 
-      };
-
+        };
+      }
     },
 
     destroy: function() {
