@@ -82,7 +82,8 @@ define([
      * SETTERS
      */
     setTab: function() {
-      var position = this.presenter.status.get('tabs').position;
+      var tabs = this.presenter.status.get('tabs');
+      var position = tabs ? tabs.position : 0;
       // UI
       this.$tablink.removeClass('-selected');
 
