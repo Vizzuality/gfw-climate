@@ -24,6 +24,8 @@ gem 'rabl'
 gem 'oj'
 gem 'responders', '~> 2.0'
 
+gem 'rubyzip'
+
 gem 'raddocs'
 
 group :development do

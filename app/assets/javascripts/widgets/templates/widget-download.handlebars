@@ -1,0 +1,76 @@
+{{!-- BACKDROP --}}
+<div class="modal-backdrop"></div>
+{{!-- WINDOW --}}
+<div class="modal-window">
+  <a href="#" class="modal-close">
+    <svg><use xlink:href="#shape-close"></use></svg>
+  </a>
+  <div class="modal-wrapper scroll-dark">
+    {{#if showFeedback}}
+      <div class="modal-content">
+        <h2 class='modal-title'>{{title}}</h2>
+        <h3 class="modal-subtitle">{{subtitle}}</h3>
+        <div class="feedback">
+          <p>Your download should be ready in a few seconds</p>
+          <p>In case of problem, please click <a href={{downloadLink}} target="_blank">here</a> to start download manually.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="m-btncontainer is-center">
+          <button class="btn medium blue js-back">Back</button>
+        </div>
+      </div>
+    {{else}}
+    <div class="modal-content">
+      <h2 class='modal-title'>{{title}}</h2>
+      <h3 class="modal-subtitle">{{subtitle}}</h3>
+      <div>
+        <div class="m-select rounded">
+          <span class="label">Canopy density</span>
+          <div class="select-wrapper">
+            <select id="download-thresh" data-attribute="thresh" class="chosen-select js-select">
+              {{#each treshold}}
+                <option value="{{this.value}}" {{#if selected}}selected{{/if}}>> {{this.label}}%</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+        <div class="m-select rounded">
+          <span class="label">Data</span>
+          <div class="select-wrapper">
+            <select id="download-indicators" data-attribute="data" class="chosen-select js-select" multiple  style="width:100%;">
+              {{#each data}}
+                <option value="{{this.value}}" {{#if selected}}selected{{/if}}>{{this.label}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+        <div class="m-select rounded">
+          <span class="label">Data average</span>
+          <div class="select-wrapper -inline">
+            <select id="download-start-date" data-attribute="start_date" class="chosen-select js-select">
+              {{#each start_date}}
+                <option value="{{this.value}}" {{#if selected}}selected{{/if}}>{{this.label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <span class="separator">to</span>
+          <div class="select-wrapper -inline">
+            <select id="download-end-date" data-attribute="end_date" class="chosen-select js-select">
+              {{#each start_date}}
+                <option value="{{this.value}}" {{#if selected}}selected{{/if}}>{{this.label}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="m-btncontainer is-center">
+        <a href="http://opendata.arcgis.com/" target="_blank" class="">OPEN DATA PORTAL</a>
+        <button class="btn medium blue js-submit">Download</button>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
