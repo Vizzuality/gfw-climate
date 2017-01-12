@@ -1,7 +1,7 @@
 /**
- * The SourceMobileFriendlyPresenter class for the SourceMobileFriendlyPresenter view.
+ * The NotificationsPresenter class for the NotificationsPresenter view.
  *º
- * @return SourceMobileFriendlyPresenter class.
+ * @return NotificationsPresenter class.
  */
 define([
   'underscore',
@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var SourceMobileFriendlyPresenter = PresenterClass.extend({
+  var NotificationsPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
@@ -28,5 +28,5 @@ define([
     }]
   });
 
-  return SourceMobileFriendlyPresenter;
+  return NotificationsPresenter;
 });

@@ -260,10 +260,14 @@ define([
 
     _saveAndAnalyzeGeojson: function(geojson, options) {
       mps.publish('Spinner/start');
-      GeostoreService.save(geojson).then(function(geostoreId) {
-        this.status.set('geostore', geostoreId);
-        this._analyzeGeojson(geojson, options);
-      }.bind(this));
+      GeostoreService.save(geojson)
+        .then(function(geostoreId) {
+          this.status.set('geostore', geostoreId);
+          this._analyzeGeojson(geojson, options);
+        }.bind(this))
+        .catch(function(e) {
+          mps.publish('AnalysisService/results', [{unavailable: true}]);
+        })
     },
 
     /**
@@ -435,6 +439,14 @@ define([
           this._publishAnalysis(resource, true);
         }
       }, this));
+    },
+
+    /**
+     * Get the geojson from the current geom and check valid size
+     */
+    isValidDraw: function() {
+      var overlay = this.status.get('overlay');
+      return overlay.getPath().getArray().length >= 3; // LinearRing of coordinates needs to have four or more positions
     },
 
     /**

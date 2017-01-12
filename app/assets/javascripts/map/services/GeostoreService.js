@@ -8,7 +8,7 @@ define([
   var GET_REQUEST_ID = 'GeostoreService:get',
       SAVE_REQUEST_ID = 'GeostoreService:save';
 
-  var URL = window.gfw.config.GFW_API_HOST_NEW_API + '/geostore/{id}';
+  var URL = window.gfw.config.GFW_API_HOST_V2 + '/geostore/{id}';
 
   var GeostoreService = Class.extend({
 
@@ -33,7 +33,7 @@ define([
       });
     },
 
-    save: function(geojson) {
+    save: function(geojson, timeout) {
       return new Promise(function(resolve, reject) {
 
         var url = new UriTemplate(URL).fillFromObject({});
@@ -57,7 +57,7 @@ define([
 
         ds.request(requestConfig);
 
-      });
+      }).timeout(timeout || 15000);
     },
 
     use: function(provider) {

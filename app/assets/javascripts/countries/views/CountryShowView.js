@@ -10,10 +10,11 @@ define([
   'views/SourceModalView',
   'views/ToolbarView',
   'widgets/views/ShareWidgetView',
-  'widgets/views/DownloadWidgetView'
+  'widgets/views/DownloadWidgetView',
+  'views/NotificationsView'
 ], function(Backbone, FixedHeaderView,
   CountryShowHeaderView, TabsView, CountryWidgetsModalView, WidgetGridView, CountryGridButtonBoxView,
-  SourceModalView, ToolbarView, ShareWidgetView, DownloadWidgetView) {
+  SourceModalView, ToolbarView, ShareWidgetView, DownloadWidgetView, NotificationsView) {
   'use strict';
 
   var CountryShowView = Backbone.View.extend({
@@ -30,6 +31,7 @@ define([
       new ToolbarView();
       new ShareWidgetView();
       new DownloadWidgetView();
+      new NotificationsView();
     }
 
   });
