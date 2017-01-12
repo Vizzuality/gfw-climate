@@ -20,6 +20,5 @@ module Api::V1
       def set_indicator
         @indicator = Indicator.find_indicator(filter_params)
       end
-
   end
 end
