@@ -1,0 +1,1 @@
+#layer {raster-opacity:1; raster-scaling:near; raster-colorizer-default-mode:discrete; raster-colorizer-default-color:  transparent; raster-colorizer-epsilon:0.41; raster-colorizer-stops: stop(0, transparent) stop(3, #ffffcc) stop(53, #ffffcc) stop(103, #c2e699) stop(153, #78c679) stop(203, #31a354) stop(220, #006837) stop(255, #006837)}
