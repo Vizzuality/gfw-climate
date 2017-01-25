@@ -98,6 +98,11 @@ define([
   'map/views/layers/PerMinamCoverLayer',
   'map/views/layers/WMSLayer',
   'map/views/layers/MangroveBiomassLayer',
+  'map/views/layers/UptakeTotalSGCarbonGainLayer',
+  'map/views/layers/UptakeCropsCarbonGainLayer',
+  'map/views/layers/UptakeYSGCarbonGainLayer',
+  'map/views/layers/UptakePasturesCarbonGainLayer',
+  // Basemaps
   'map/views/layers/CustomDarkBaseLabelsLayer',
   'map/views/layers/CustomDarkOnlyLabelsLayer',
   // Layer dialog templates
@@ -201,6 +206,11 @@ define([
   PerMinamCoverLayer,
   WMSLayer,
   MangroveBiomassLayer,
+  UptakeTotalSGCarbonGainLayer,
+  UptakeCropsCarbonGainLayer,
+  UptakeYSGCarbonGainLayer,
+  UptakePasturesCarbonGainLayer,
+  // Basemaps
   CustomDarkBaseLabelsLayer,
   CustomDarkOnlyLabelsLayer,
   // Layer dialog templates
@@ -505,6 +515,18 @@ define([
     },
     global_mangroves_biomass: {
       view: MangroveBiomassLayer
+    },
+    total_sg: {
+      view: UptakeTotalSGCarbonGainLayer
+    },
+    crops_1: {
+      view: UptakeCropsCarbonGainLayer
+    },
+    ysg_msg: {
+      view: UptakeYSGCarbonGainLayer
+    },
+    pastures: {
+      view: UptakePasturesCarbonGainLayer
     },
 
     nothing: {
