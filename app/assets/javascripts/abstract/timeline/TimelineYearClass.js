@@ -28,7 +28,8 @@ define([
       dateRange: [moment([2001]), moment()],
       playSpeed: 400,
       width: 750,
-      height: 50
+      height: 50,
+      disabled: false
     },
 
     events: {
@@ -208,13 +209,7 @@ define([
       // Set brush and listeners
       this.brush = d3.svg.brush()
           .x(this.xscale)
-          .extent([0, 0])
-          .on('brush', function() {
-            self.onBrush(this);
-          })
-          .on('brushend', function() {
-            self.onBrushEnd(this);
-          });
+          .extent([0, 0]);
 
       // Set SVG
       var timelineWidth = width + margin.left + margin.right;
@@ -272,8 +267,8 @@ define([
           .attr('y', handleY);
 
       this.handlers.right = this.handlers.left
-         .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-         .attr('x', this.xscale(this.currentDate[1].year()));
+        .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+        .attr('x', this.xscale(this.currentDate[1].year()));
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
@@ -301,12 +296,6 @@ define([
       this.hiddenBrush = d3.svg.brush()
           .x(this.xscale)
           .extent([0, 0])
-          .on('brush', function() {
-            self.onAnimationBrush(this);
-          })
-          .on('brushend', function() {
-            self.onAnimationBrushEnd(this);
-          });
 
       this.svg.selectAll('.extent,.resize')
           .remove();
@@ -317,11 +306,29 @@ define([
         .attr('x1', this.handlers.left.attr('x'))
         .attr('x2', this.handlers.right.attr('x'));
 
-      d3.select('.xaxis-years')
-          .selectAll('.tick')
-          .on('click',_.bind(function(value){
-            this.selectYear(value);
-          }, this ))
+      if (this.options.disabled) {
+        this.$timeline.addClass('-disabled');
+      } else {
+        this.brush
+          .on('brush', function() {
+            self.onBrush(this);
+          })
+          .on('brushend', function() {
+            self.onBrushEnd(this);
+          });
+        this.hiddenBrush
+          .on('brush', function() {
+            self.onAnimationBrush(this);
+          })
+          .on('brushend', function() {
+            self.onAnimationBrushEnd(this);
+          });
+        d3.select('.xaxis-years')
+            .selectAll('.tick')
+            .on('click',_.bind(function(value){
+              this.selectYear(value);
+            }, this ))
+      }
       this.formatXaxis();
     },
 

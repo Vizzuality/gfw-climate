@@ -168,7 +168,7 @@ define([
      * @return {object} baselayers
      */
     getBaselayers: function() {
-      return this.positionizer(this.get('carbon_loss') || {});
+      return this.positionizer(this.get('carbon_loss') || this.get('carbon_gain') || {});
     },
 
     /**
