@@ -18,9 +18,8 @@ define([
 
   var GFW_URL = window.gfw.config.GFW_URL;
   var API = window.gfw.config.GFW_API_HOST_V2;
-  var ENDPOINT_CONFIG = '/query/b0c709f0-d1a6-42a0-a750-df8bdb0895f3?sql=SELECT * FROM data';
-  var gladInsightId = window.gfw.config.GLAD_INSIGHT_ID || '3d170908-043f-49db-b26b-9e9bfaaa40ce';
-  var ENDPOINT_DATA = '/query/'+ gladInsightId + '?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss_ha::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE ((country_iso IN (\'%s\') OR state_iso IN (%s)) AND year IN (\'%s\') AND week::int <= 53) GROUP BY year, country_iso, week ORDER BY week::int ASC';
+  var ENDPOINT_CONFIG = '/query/'+ window.gfw.config.GLAD_INSIGHT_CONFIG_ID +'?sql=SELECT * FROM data';
+  var ENDPOINT_DATA = '/query/'+ window.gfw.config.GLAD_INSIGHT_ID + '?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss_ha::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE %s AND year IN (\'%s\') AND week::int <= 53 GROUP BY year, country_iso, week ORDER BY week::int ASC';
 
   var WEEKS_YEAR = 53;
 
@@ -161,16 +160,16 @@ define([
     _getDataQuery: function() {
       var iso = this.currentCountry;
       var year = this.currentYear;
-      var stateIso = iso;
+      var filter = 'WHERE country_iso =\''+ iso +'\'';
       var locationData = _.findWhere(this.locations, {
         iso: iso
       });
 
       if (locationData && locationData.groupBy) {
-        stateIso = locationData.groupBy.join('\', \'');
+        filter = 'WHERE state_iso IN(\''+locationData.groupBy.join('\', \'') + '\')';
       }
 
-      return API + _.str.sprintf(ENDPOINT_DATA, iso, '\'' + stateIso + '\'', year);
+      return API + _.str.sprintf(ENDPOINT_DATA, filter, year);
     },
 
     _createVisualization: function(data) {
