@@ -83,7 +83,12 @@
 
     &.-disabled {
       pointer-events: none;
-      opacity: 0.4;
+
+      .slider,
+      .xaxis {
+        pointer-events: none;
+        opacity: 0.2;
+      }
     }
   }
 
