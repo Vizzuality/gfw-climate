@@ -108,6 +108,7 @@ define([
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
+  'map/views/timeline/GainTimeline',
   'map/views/timeline/LossTimeline'
 ], function(
   // Layer Views
@@ -216,6 +217,7 @@ define([
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
+  GainTimeline,
   LossTimeline) {
 
   'use strict';
@@ -517,16 +519,20 @@ define([
       view: MangroveBiomassLayer
     },
     total_sg: {
-      view: UptakeTotalSGCarbonGainLayer
+      view: UptakeTotalSGCarbonGainLayer,
+      timelineView: GainTimeline
     },
     crops_1: {
-      view: UptakeCropsCarbonGainLayer
+      view: UptakeCropsCarbonGainLayer,
+      timelineView: GainTimeline
     },
     ysg_msg: {
-      view: UptakeYSGCarbonGainLayer
+      view: UptakeYSGCarbonGainLayer,
+      timelineView: GainTimeline
     },
     pastures: {
-      view: UptakePasturesCarbonGainLayer
+      view: UptakePasturesCarbonGainLayer,
+      timelineView: GainTimeline
     },
 
     nothing: {

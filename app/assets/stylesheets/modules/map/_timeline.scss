@@ -80,6 +80,16 @@
   .timeline-container {
     width: 100%;
     height: 100%;
+
+    &.-disabled {
+      pointer-events: none;
+
+      .slider,
+      .xaxis {
+        pointer-events: none;
+        opacity: 0.2;
+      }
+    }
   }
 
   .tooltip {
