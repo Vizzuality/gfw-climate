@@ -172,6 +172,12 @@ define([
       return API + _.str.sprintf(ENDPOINT_DATA, filter, year);
     },
 
+    _getCurrentLocation: function() {
+      return _.findWhere(this.locations, {
+        iso: this.currentCountry
+      });
+    },
+
     _createVisualization: function(data) {
       var el = this.el.querySelector('#visMain');
       var chartEl = el.querySelector('.chart');
@@ -187,6 +193,7 @@ define([
           currentStep: this.currentStep,
           iso: this.currentCountry,
           year: this.currentYear,
+          currentLocation: this._getCurrentLocation(),
           desforestationFilter: this.defaults.desforestationFilter,
         }
       });
