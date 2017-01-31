@@ -12,7 +12,7 @@ define([
 
     id: 'downloadWidgetModal',
 
-    className: "modal modal-download",
+    className: "modal modal-download is-large",
 
     template: Handlebars.compile(tpl),
 
