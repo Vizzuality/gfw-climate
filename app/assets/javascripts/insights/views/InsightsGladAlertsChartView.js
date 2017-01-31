@@ -125,6 +125,7 @@ define([
       this.year = this.defaults.year;
       this.imageURI = this.defaults.imageURI;
       this.locations = this.defaults.locations;
+      this.currentLocation = this.defaults.currentLocation;
 
       this._initChart();
 
@@ -289,10 +290,10 @@ define([
           .text(')');
       }
 
-      if (this.iso === 'IDN13') {
+      if (this.currentLocation && this.currentLocation.legend) {
         yAxisLabel.append('tspan')
           .attr('class', 'light')
-          .text(' *data reflect loss occurring within primary forests only, rather than all tree cover loss');
+          .text(' *' + this.currentLocation.legend);
       }
 
       this.svg = svg.append('g')
@@ -602,8 +603,16 @@ define([
 
       if (data) {
         var tooltip = this.el.querySelector('.tooltip');
-        var emissions = Math.round(data.cumulative_emissions * 1);
-        var deforestation = Math.round(data.cumulative_deforestation * 1);
+        var emissions = parseFloat(data.cumulative_emissions * 1).toFixed(2);
+        var deforestation = parseFloat(data.cumulative_deforestation * 1).toFixed(2);
+
+        if (emissions > 1) {
+          emissions = Math.round(emissions);
+        }
+
+        if (deforestation > 1) {
+          deforestation = Math.round(deforestation);
+        }
 
         tooltip.innerHTML = this.templateTooltip({
           isDesforestation: this.filter === this.defaults.desforestationFilter,
