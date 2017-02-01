@@ -110,6 +110,12 @@ define([
       "logging",
       // Carbon density
 
+      // Carbon gain
+      "total_sg",
+      "ysg_msg",
+      "pastures",
+      "crops_1",
+
       // Carbon loss
       "carbon_stocks",
       "peatland_drainage",

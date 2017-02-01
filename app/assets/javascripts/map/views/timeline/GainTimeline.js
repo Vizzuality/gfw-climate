@@ -21,7 +21,7 @@ define([
       this.presenter = new Presenter(this);
 
       this.options = {
-        // dateRange: [moment(layer.mindate), moment(layer.maxdate)],
+        dateRange: [moment([2008]), moment([2048])],
         player: false,
         disabled: true
       };
