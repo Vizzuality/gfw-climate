@@ -162,7 +162,7 @@ define([
      * Render d3 timeline slider.
      */
     render: function() {
-      var self = this, margin, width, height, ticks, center, handleY, yearWidth;
+      var self = this, margin, width, height, ticks, center, handleY, yearWidth, yearsRange;
 
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
@@ -178,10 +178,11 @@ define([
       margin = {top: 0, right: 20, bottom: 0, left: 20};
       width = this.options.width - margin.left - margin.right;
       height = this.options.height - margin.bottom - margin.top;
-      yearWidth = width/(moment(this.options.dateRange[1]).year() - moment(this.options.dateRange[0]).year());
+      yearsRange = moment(this.options.dateRange[1]).year() - moment(this.options.dateRange[0]).year();
+      yearWidth = width/(yearsRange < 20 ? yearsRange : 20);
       center = height/2 - 2;
       handleY = 14;
-      ticks = moment(this.options.dateRange[1]).year() - moment(this.options.dateRange[0]).year();
+      ticks = yearsRange < 20 ? yearsRange : 20;
 
       if (! !!this.options.player) {
         this.$play.addClass('hidden');
