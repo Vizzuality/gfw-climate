@@ -1,6 +1,6 @@
 // $forest-change-color: rgb(255, 102, 153);
 $carbon-loss-color: rgb(195, 32, 38);
-$carbon-gain-color: #D87817;
+$carbon-gain-color: #36893D;
 $carbon-density-color: rgb(159, 212, 177);
 $land-use-color: #C98E6C;
 $land-cover-color: #B2D26E;
@@ -331,8 +331,8 @@ $colors: $carbon-loss-color,$carbon-gain-color,$carbon-density-color,$land-use-c
         position: relative;
         display: inline-block;
         margin: auto;
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
         margin-top: 10px;
         border-radius: 50%;
         svg{
