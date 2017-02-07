@@ -43,7 +43,7 @@ define([
       selectedClassEl: '-selected',
       filter: 'carbon_emissions',
       country: '',
-      year: 2016,
+      year: 2017,
       weekStep: 1,
       desforestationFilter: 'deforestation',
       loadingClassEl: 'is-loading',
