@@ -110,6 +110,12 @@ define([
       "logging",
       // Carbon density
 
+      // Carbon gain
+      "total_sg",
+      "ysg_msg",
+      "pastures",
+      "crops_1",
+
       // Carbon loss
       "carbon_stocks",
       "peatland_drainage",
@@ -168,7 +174,7 @@ define([
      * @return {object} baselayers
      */
     getBaselayers: function() {
-      return this.positionizer(this.get('carbon_loss') || {});
+      return this.positionizer(this.get('carbon_loss') || this.get('carbon_gain') || {});
     },
 
     /**

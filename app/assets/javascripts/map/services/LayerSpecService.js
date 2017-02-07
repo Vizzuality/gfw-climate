@@ -22,6 +22,7 @@ define([
             ['carbon_stocks', 'biomass_loss']
           ]
         },
+        carbon_gain: {},
         geographic_coverage: {}
       }
     },
@@ -69,8 +70,16 @@ define([
         this._removeLayer(current);
         return false;
       } else {
+        // TODO: set forbidden between tabs dinamically
         if (!this._combinationIsValid(layer)) {
+          var carbonLossLayer = this.model.get('carbon_loss');
+          if (layer.category_slug === 'carbon_gain' && carbonLossLayer && carbonLossLayer['biomass_loss']) {
+            this._removeLayer(carbonLossLayer['biomass_loss']);
+          }
           _.each(this.model.get(layer.category_slug), this._removeLayer);
+        }
+        if (layer.category_slug === 'carbon_loss' && this.model.get('carbon_gain')) {
+          _.each(this.model.get('carbon_gain'), this._removeLayer);
         }
 
         this._addLayer(layer);

@@ -3,12 +3,12 @@
 
     {{!-- CARBON LOSS --}}
     <li class="carbon-loss">
-      <span class="category-name">CARBON EMISSIONS <i id="carbon_loss-category-num" class="category-num"></i></span>
+      <span class="category-name">CARBON LOSS <i id="carbon_loss-category-num" class="category-num"></i></span>
 
       <div class="layers-nav">
         <div class="layers-nav-header">
           <div class="category-icon"><svg><use xlink:href="#icon-layer-carbon-emissions"></use></svg></div>
-          <span class="category-name">CARBON EMISSIONS</span>
+          <span class="category-name">CARBON LOSS</span>
         </div>
         <ul class="layers-list">
           <li class="layer" data-layer="biomass_loss">
@@ -24,36 +24,36 @@
     </li>
 
     {{!-- CARBON GAINS --}}
-    <li class="carbon-loss">
+    <li class="carbon-gains">
       <span class="category-name">CARBON GAINS <i id="carbon_gains-category-num" class="category-num"></i></span>
 
       <div class="layers-nav">
         <div class="layers-nav-header">
-          <div class="category-icon"><svg><use xlink:href="#icon-layer-carbon-gains"></use></svg></div>
+          <div class="category-icon"><svg><use xlink:href="#icon-layer-carbon-emissions"></use></svg></div>
           <span class="category-name">CARBON GAINS</span>
         </div>
         <ul class="layers-list">
-          <li class="layer" data-layer="total_sg">
+          <li class="wrapped-layer" data-color="#36893D">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Total secondary growth carbon uptake<a href='#' data-source='layer_surce_id' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
-        </ul>
-        <ul class="layers-list">
-          <li class="layer" data-layer="crops_1">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Crops carbon uptake<a href='#' data-source='layer_surce_id' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
-        </ul>
-        <ul class="layers-list">
-          <li class="layer" data-layer="ysg_msg">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Young secondary growth, mature secondary growth carbon uptake<a href='#' data-source='layer_surce_id' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
-        </ul>
-        <ul class="layers-list">
-          <li class="layer" data-layer="pastures">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Pastures carbon uptake<a href='#' data-source='layer_surce_id' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Potential carbon gains from forest regeneration<a href="#" data-source="potential_tree_biomass_gain" class="source"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">
+              <label data-layer="total_sg" class="layer wrapped">
+                <span></span>
+                <input type="radio">Total
+              </label>
+              <label data-layer="ysg_msg" class="layer wrapped">
+                <span></span>
+                <input type="radio">Young and mid secondary forests only
+              </label>
+              <label data-layer="pastures" class="layer wrapped">
+                <span></span>
+                <input type="radio">Pasture areas only
+              </label>
+              <label data-layer="crops_1" class="layer wrapped">
+                <span></span>
+                <input type="radio">Crop areas only
+              </label>
+            </span>
           </li>
         </ul>
       </div>
