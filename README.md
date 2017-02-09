@@ -34,6 +34,9 @@ ASSETS_VERSION=latest
 ASSETS_AB=false
 GLAD_INSIGHT_CONFIG_ID=
 GLAD_INSIGHT_ID=
+SPREADSHEETS_ID=
+DRIVE_PRIVATE_KEY_ID=
+DRIVE_PRIVATE_KEY
 ```
 
 ### REDIS ###
@@ -88,7 +91,7 @@ redis-cli flushall
     bin/rspec
   ```
   Run teaspoon:
-  ```ruby  
+  ```ruby
     rake teaspoon
   ```
   Run all:
