@@ -1,7 +1,7 @@
 require "google_drive"
 
 module Api::V1
-  class SignUpUpdatesController < BaseControllerV1
+  class ReportSignUpController < BaseControllerV1
     skip_before_action :verify_authenticity_token, only: [:create]
 
     def create
@@ -16,7 +16,7 @@ module Api::V1
       if already_added(sheet)
         response = { success: false, msg: 'Already added' }
       elsif add_new_email(sheet)
-        response = { success: true, msg: 'Email added' }
+        response = { success: true, msg: 'Subscription correct' }
       else
         response = { success: false, msg: 'Unable to save the email' }
       end
