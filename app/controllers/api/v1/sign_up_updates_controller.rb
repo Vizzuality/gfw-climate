@@ -7,10 +7,10 @@ module Api::V1
     def create
       # https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md
       config = File.read(File.join(Rails.root, 'config', 'gdrive.json.erb'))
-      config = JSON.parse(ERB.new(config).result(binding))
-      session = GoogleDrive::Session.from_service_account_key(config)
+      config = ERB.new(config).result(binding)
+      session = GoogleDrive::Session.from_service_account_key(StringIO.new(config))
 
-      sheet = session.spreadsheet_by_key(ENV["DRIVE_PRIVATE_KEY_ID"]).worksheets[0]
+      sheet = session.spreadsheet_by_key(ENV["SPREADSHEETS_ID"]).worksheets[0]
 
       response = {}
       if already_added(sheet)
