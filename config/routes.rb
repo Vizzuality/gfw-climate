@@ -75,6 +75,8 @@ Rails.application.routes.draw do
       # Compare countries API routes
       # GET 'compare-countries/bra+1+0/aus+1+0/aut+0+3/etc...'
       get 'compare-countries(/*path)', to: 'compare_countries#index', as: :compare_countries
+
+      post 'report-sign-up', to: 'report_sign_up_#create'
     end
 
   end

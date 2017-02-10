@@ -58,6 +58,7 @@ define([
     events: {
       'change .js-report-param' : '_handleReportParamsChange',
       'click #update-report-btn' : '_updateReport',
+      'click #report-updates-submit' : '_subscribeUpdates',
     },
 
     initialize: function(params) {
@@ -382,6 +383,26 @@ define([
       this.$el.addClass('is-loading');
       this._updateParams();
       this._getData();
+    },
+
+    _subscribeUpdates:function(ev) {
+      ev.preventDefault();
+      var container = this.$el.find('#report-updates-form');
+      container.addClass('is-loading');
+
+      $.ajax({
+        type: 'POST',
+        url: window.gfw.config.CLIMATE_API_HOST + '/report-sign-up',
+        crossDomain: true,
+        data: {
+          email: this.$el.find('#sign-up-email').val()
+        },
+        dataType: 'json',
+        complete: function(responseData) {
+          container.removeClass('is-loading');
+          if (responseData.responseJSON.msg) alert(responseData.responseJSON.msg);
+        }
+      });
     },
 
     _remove() {

@@ -87,3 +87,24 @@ textarea {
     }
   }
 }
+
+.inline-form {
+  .field {
+    margin: 0 auto;
+    width: 75%;
+    text-align: center;
+    @media (min-width: $br-mobile) {
+      width: 100%;
+    }
+  }
+  label {
+    float: none
+  }
+  input {
+    margin: 10px 0 15px;
+    text-align: center;
+  }
+  .field + .field {
+    margin-top: 5px;
+  }
+}
