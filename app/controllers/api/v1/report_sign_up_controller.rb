@@ -12,16 +12,15 @@ module Api::V1
 
       sheet = session.spreadsheet_by_key(ENV["SPREADSHEETS_ID"]).worksheets[0]
 
-      response = {}
-      if already_added(sheet)
-        response = { success: false, msg: 'Already added' }
-      elsif add_new_email(sheet)
+      if add_new_email(sheet)
         response = { success: true, msg: 'Subscription correct' }
+        status = 200
       else
-        response = { success: false, msg: 'Unable to save the email' }
+        response = { success: false, :msg => 'There was an error during sign up, please try again later' }
+        status = 500
       end
 
-      render :json => response
+      render :json => response, :status => status
     end
 
     private
@@ -30,24 +29,28 @@ module Api::V1
       end
 
       def already_added(sheet)
-        sheet.rows.each do |row|
-          if row[0] == params[:email]
-            return true
+          sheet.rows.each do |row|
+            if row[0] == params[:email]
+              return true
+            end
           end
-        end
-        return false
+          return false
       end
 
       def add_new_email(sheet)
-        # Get last available row
-        row = 1 + sheet.num_rows
+        unless already_added(sheet)
+          # Get last available row
+          row = 1 + sheet.num_rows
 
-        # Write the email and save it
-        sheet[row, 1] = params[:email]
-        sheet.save
+          # Write the email and save it
+          sheet[row, 1] = params[:email]
+          sheet.save
 
-        # Reloads the worksheet to get changes by other clients.
-        sheet.reload
+          # Reloads the worksheet to get changes by other clients.
+          sheet.reload
+          return true
+        end
+        return true
       end
   end
 end
