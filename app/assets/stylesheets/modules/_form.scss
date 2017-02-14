@@ -96,15 +96,70 @@ textarea {
     @media (min-width: $br-mobile) {
       width: 100%;
     }
+    & + .field {
+      margin-top: 5px;
+    }
   }
   label {
-    float: none
+    display: inline-block;
+    text-align: left;
+    width: 80%;
+    float: none;
   }
   input {
     margin: 10px 0 15px;
-    text-align: center;
+    min-height: 40px;
+
+    &.error {
+      border: 1px solid $red;
+    }
   }
-  .field + .field {
-    margin-top: 5px;
+  .btn-container {
+    height: 40px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(20% - 5px);
+    button {
+      width: 120px;
+      height: 36px;
+      position: relative;
+      text-align: center;
+      .icon {
+        opacity: 0;
+        position: absolute;
+        top: 8px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 18px;
+        fill: $white;
+      }
+
+      &.-success,
+      &.is-loading {
+        white-space: nowrap;
+        overflow: hidden;
+        text-indent: -9999px;
+      }
+
+      &.is-loading {
+        &:after {
+          top: 24px;
+          left: 60px;
+          width: 25px;
+          height: 25px;
+          border-width: 3px;
+        }
+      }
+      &.-success {
+        .icon {
+          opacity: 1;
+        }
+      }
+    }
+
   }
 }

@@ -385,24 +385,42 @@ define([
       this._getData();
     },
 
+    _validateEmail:function(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
     _subscribeUpdates:function(ev) {
       ev.preventDefault();
-      var container = this.$el.find('#report-updates-form');
-      container.addClass('is-loading');
-
-      $.ajax({
-        type: 'POST',
-        url: window.gfw.config.CLIMATE_API_HOST + '/report-sign-up',
-        crossDomain: true,
-        data: {
-          email: this.$el.find('#sign-up-email').val()
-        },
-        dataType: 'json',
-        complete: function(responseData) {
-          container.removeClass('is-loading');
-          if (responseData.responseJSON.msg) alert(responseData.responseJSON.msg);
-        }
-      });
+      var btnContainer = this.$el.find('#report-updates-submit');
+      btnContainer.addClass('is-loading');
+      var emailInput = this.$el.find('#sign-up-email');
+      var email = emailInput.val();
+      if (this._validateEmail(email)) {
+        emailInput.removeClass('error');
+        btnContainer.prop('disabled', true);
+        $.ajax({
+          type: 'POST',
+          url: window.gfw.config.CLIMATE_API_HOST + '/report-sign-up',
+          crossDomain: true,
+          data: {
+            email: email
+          },
+          dataType: 'json',
+          success: function(responseData) {
+            btnContainer.addClass('-success');
+          },
+          error: function(responseData) {
+            if (responseData.responseJSON && responseData.responseJSON.msg) alert(responseData.responseJSON.msg);
+          },
+          complete: function(responseData) {
+            btnContainer.removeClass('is-loading');
+          },
+        });
+      } else {
+        emailInput.addClass('error');
+        btnContainer.removeClass('is-loading');
+      }
     },
 
     _remove() {
