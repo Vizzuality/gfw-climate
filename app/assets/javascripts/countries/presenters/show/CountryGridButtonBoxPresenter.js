@@ -10,17 +10,22 @@ define([
 
     init: function(view) {
       this._super();
+      this.open = false;
       this.view = view;
     },
 
-    /**
-     * Application subscriptions.
-     */
-    _subscriptions: [],
+    _subscriptions: [{
+      'CountryWidgetsModal/hide': function() {
+        this.open = false;
+      }
+    }],
 
     showIndicatorModal: function() {
-      // mps publish an event that makes the indicator modal show
-      mps.publish('CountryWidgetsModal/show');
+      if  (!this.open) {
+        // mps publish an event that makes the indicator modal show
+        mps.publish('CountryWidgetsModal/show');
+        this.open = true;
+      }
     }
 
   });
