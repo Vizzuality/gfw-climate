@@ -74,7 +74,8 @@ define([
       var uri = new URI();
       var params = _.omit(this.getParams(), 'vars', 'defaults','params');
       uri.query(this._serializeParams(params));
-      this.navigate(uri.path().slice(1) + uri.search(), { trigger: true });
+      // {replace: true} update the URL without creating an entry in the browser's history and allow us to go back
+      this.navigate(uri.path().slice(1) + uri.search(), { trigger: true, replace: true });
     },
 
     /**

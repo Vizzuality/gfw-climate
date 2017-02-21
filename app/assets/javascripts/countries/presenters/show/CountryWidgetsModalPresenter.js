@@ -200,6 +200,10 @@ define([
         jurisdictions: this.status.get('jurisdictions'),
         areas: this.status.get('areas')
       }]);
+    },
+
+    hide: function() {
+      mps.publish('CountryWidgetsModal/hide');
     }
 
   });
