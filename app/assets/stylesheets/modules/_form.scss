@@ -127,7 +127,6 @@ textarea {
       position: relative;
       text-align: center;
       .icon {
-        opacity: 0;
         position: absolute;
         top: 8px;
         right: 0;
@@ -136,6 +135,8 @@ textarea {
         width: 100%;
         height: 18px;
         fill: $white;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
       }
 
       &.-success,
