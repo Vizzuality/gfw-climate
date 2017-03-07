@@ -23,6 +23,7 @@ gem 'httparty'
 gem 'rabl'
 gem 'oj'
 gem 'responders', '~> 2.0'
+gem 'google_drive'
 
 gem 'raddocs'
 

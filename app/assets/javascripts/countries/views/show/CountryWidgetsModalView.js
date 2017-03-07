@@ -109,6 +109,7 @@ define([
       this.model.set('hidden', true);
       this.$htmlbody.removeClass('active');
       this.presenter.setActiveWidgets();
+      this.presenter.hide();
       this._resetPagesPosition();
     },
 

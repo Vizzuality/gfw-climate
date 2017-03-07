@@ -7,7 +7,7 @@ define([
 
   var CountryGridButtonBoxView = Backbone.View.extend({
 
-    el: '#countryGridButtonBox',
+    el: '.addIndicatorsContainer',
 
     template: Handlebars.compile(tpl),
 
@@ -17,11 +17,15 @@ define([
 
     initialize:function() {
       this.presenter = new CountryGridButtonBoxPresenter(this);
-      this.render();
+      this.$el.each(function(index, item) {
+        if (item.innerHTML === "") {
+          this.render(item);
+        }
+      }.bind(this))
     },
 
-    render: function() {
-      this.$el.html(this.template());
+    render: function(item) {
+      $(item).html(this.template());
     },
 
     // Events
