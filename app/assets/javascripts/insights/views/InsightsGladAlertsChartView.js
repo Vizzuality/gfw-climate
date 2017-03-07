@@ -557,8 +557,12 @@ define([
     },
 
     _addLineLabel: function(el, value) {
+      var parsedValue = parseFloat((value * 1).toFixed(2));
+      if (parsedValue > 1) {
+        parsedValue = Math.round(parsedValue);
+      }
       el.append('tspan')
-        .text(NumbersHelper.addNumberDecimals(Math.round(value)) + ' ');
+        .text(NumbersHelper.addNumberDecimals(parsedValue) + ' ');
 
       if (this.unit.search(this.defaults.underscript) !== -1) {
         var unit = this.unit.split(this.defaults.underscript);
@@ -602,8 +606,16 @@ define([
 
       if (data) {
         var tooltip = this.el.querySelector('.tooltip');
-        var emissions = Math.round(data.cumulative_emissions * 1);
-        var deforestation = Math.round(data.cumulative_deforestation * 1);
+        var emissions = parseFloat((data.cumulative_emissions * 1).toFixed(2));
+        var deforestation = parseFloat((data.cumulative_deforestation * 1).toFixed(2));
+
+        if (emissions > 1) {
+          emissions = Math.round(emissions);
+        }
+
+        if (deforestation > 1) {
+          deforestation = Math.round(deforestation);
+        }
 
         tooltip.innerHTML = this.templateTooltip({
           isDesforestation: this.filter === this.defaults.desforestationFilter,

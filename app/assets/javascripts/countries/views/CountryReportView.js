@@ -44,7 +44,7 @@ define([
         'reference_start_year': '2001',
         'reference_end_year': '2010',
         'monitor_start_year': '2011',
-        'monitor_end_year': '2014',
+        'monitor_end_year': '2015',
         'thresh': '30',
         'below': 'false',
         'primary_forest': 'false',
@@ -52,12 +52,13 @@ define([
         'co2': 'true'
       },
       minYear: 2001,
-      maxYear: 2014
+      maxYear: 2015
     },
 
     events: {
       'change .js-report-param' : '_handleReportParamsChange',
       'click #update-report-btn' : '_updateReport',
+      'click #report-updates-submit' : '_subscribeUpdates',
     },
 
     initialize: function(params) {
@@ -382,6 +383,44 @@ define([
       this.$el.addClass('is-loading');
       this._updateParams();
       this._getData();
+    },
+
+    _validateEmail:function(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
+    _subscribeUpdates:function(ev) {
+      ev.preventDefault();
+      var btnContainer = this.$el.find('#report-updates-submit');
+      btnContainer.addClass('is-loading');
+      var emailInput = this.$el.find('#sign-up-email');
+      var email = emailInput.val();
+      if (this._validateEmail(email)) {
+        emailInput.removeClass('error');
+        btnContainer.prop('disabled', true);
+        $.ajax({
+          type: 'POST',
+          url: window.gfw.config.CLIMATE_API_HOST + '/report-sign-up',
+          crossDomain: true,
+          data: {
+            email: email
+          },
+          dataType: 'json',
+          success: function(responseData) {
+            btnContainer.addClass('-success');
+          },
+          error: function(responseData) {
+            if (responseData.responseJSON && responseData.responseJSON.msg) alert(responseData.responseJSON.msg);
+          },
+          complete: function(responseData) {
+            btnContainer.removeClass('is-loading');
+          },
+        });
+      } else {
+        emailInput.addClass('error');
+        btnContainer.removeClass('is-loading');
+      }
     },
 
     _remove() {
