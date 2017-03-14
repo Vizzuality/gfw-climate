@@ -5,6 +5,7 @@ define([
   'moment',
   'underscore',
   '_string',
+  'helpers/NumbersHelper',
   'countries/services/ReportService',
   'countries/views/report/SummaryChartView',
   'countries/views/report/HistoricalTrendChartView',
@@ -19,6 +20,7 @@ define([
   moment,
   _,
   _string,
+  NumbersHelper,
   ReportService,
   SummaryChartView,
   HistoricalTrendChartView,
@@ -83,11 +85,12 @@ define([
 
     render: function() {
       var currentDate = moment();
-      var totalReference = Math.round(this.data.emissions.reference.average);
-      var totalMonitoring = Math.round(this.data.emissions.monitor.average);
+      var totalReference = NumbersHelper.round(this.data.emissions.reference.average, 6);
+      var totalMonitoring = NumbersHelper.round(this.data.emissions.monitor.average, 6);
       var increase = Math.round(((totalMonitoring - totalReference) / totalReference) * 100);
       var increaseDisplay = Math.abs(increase);
       var hasIncreased = increase > -1;
+      var hasProvinces = this.data.provinces.emissions.top_five.length > 0;
       var factorAbovegroundBiomass = Math.round(this.data.emission_factors.aboveground);
       var factorBelowgroundBiomass = Math.round(this.data.emission_factors.belowground);
       var factorTotalEmission = Math.round(this.data.emission_factors.total);
@@ -101,6 +104,8 @@ define([
         monitorEnd: this.status.get('monitor_end_year'),
         referenceStart: this.status.get('reference_start_year'),
         referenceEnd: this.status.get('reference_end_year'),
+        primaryForest: this.status.get('primary_forest') === 'true',
+        excludePlantations: this.status.get('exclude_plantations') === 'true',
         below: this.status.get('below') === 'true',
         co2: this.status.get('co2') === 'true' ,
         totalReference: totalReference,
@@ -108,6 +113,7 @@ define([
         increase: increase,
         increaseDisplay: increaseDisplay,
         hasIncreased: hasIncreased,
+        hasProvinces: hasProvinces,
         factorAbovegroundBiomass: factorAbovegroundBiomass,
         factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass : '',
         factorTotalEmission: factorTotalEmission,

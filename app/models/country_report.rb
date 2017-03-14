@@ -194,7 +194,7 @@ class CountryReport
       monit_vals = vals.select{|t| t["year"] >= @monitor_start_year && t["year"] <= @monitor_end_year }
       r[:monitor_avg] = monit_vals.empty? ? nil : monit_vals.inject(0){|sum,t| sum += t["value"]} / monit_vals.size
 
-      next unless r[:reference_avg] && r[:monitor_avg]
+      next unless r[:reference_avg] && r[:monitor_avg] && r[:reference_avg] > 0
 
       r[:delta_perc] = (((r[:monitor_avg]-r[:reference_avg])/r[:reference_avg])*100)
 

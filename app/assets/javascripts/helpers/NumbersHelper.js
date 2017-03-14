@@ -13,7 +13,11 @@ define([
       var formattedNumber = '-';
 
       if (number) {
-        formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        if (number > 1) {
+          formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        } else {
+          formattedNumber = number;
+        }
       }
       return formattedNumber;
     },
@@ -30,6 +34,18 @@ define([
 
     padNumberToTwo: function(number) {
       return ("0" + number.toString()).slice(-2);
+    },
+
+    round: function(number, decimals) {
+      var result = number;
+      if (number) {
+        var toDecimals = decimals || 2;
+        result = parseFloat((number * 1).toFixed(toDecimals));
+        if (result > 1) {
+          result = Math.round(result);
+        }
+      }
+      return result;
     }
   };
 

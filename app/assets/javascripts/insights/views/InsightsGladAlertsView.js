@@ -17,7 +17,7 @@ define([
   'use strict';
 
   var GFW_URL = window.gfw.config.GFW_URL;
-  var API = window.gfw.config.GFW_API_HOST_V2;
+  var API = window.gfw.config.GFW_API_HOST_PRO;
   var ENDPOINT_CONFIG = '/query/'+ window.gfw.config.GLAD_INSIGHT_CONFIG_ID +'?sql=SELECT * FROM data';
   var ENDPOINT_DATA = '/query/'+ window.gfw.config.GLAD_INSIGHT_ID + '?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss_ha::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE %s AND year IN (\'%s\') AND week::int <= 53 GROUP BY year, country_iso, week ORDER BY week::int ASC';
 

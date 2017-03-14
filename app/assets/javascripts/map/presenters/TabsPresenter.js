@@ -37,6 +37,14 @@ define([
 
     onTabMobileClose : function () {
       mps.publish('Tab/closed');
+    },
+
+    deleteAnalysis: function() {
+      mps.publish('Spinner/stop', []);
+      mps.publish('AnalysisService/cancel', []);
+      mps.publish('AnalysisResults/delete-analysis', []);
+      mps.publish('AnalysisResults/Delete', []);
+      mps.publish('Place/update', [{go: false}]);
     }
 
   });

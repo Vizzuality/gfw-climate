@@ -84,7 +84,8 @@
     margin-top: 30px;
 
     .content {
-      width: 370px;
+      min-width: 370px;
+      max-width: 408px;
       margin: 0 auto;
 
       .list {
