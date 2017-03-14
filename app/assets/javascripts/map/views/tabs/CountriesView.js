@@ -7,6 +7,7 @@
 define([
   'underscore',
   'handlebars',
+  'enquire',
   'amplify',
   'chosen',
   'map/presenters/tabs/CountriesPresenter',
@@ -17,7 +18,7 @@ define([
   'text!map/templates/tabs/countriesIso.handlebars',
   'text!map/templates/tabs/countriesButtons.handlebars',
   'text!map/templates/tabs/countries-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, CountriesService, GeoStylingView,
+], function(_, Handlebars, enquire, amplify, chosen, Presenter, CountriesService, GeoStylingView,
     barChart, tpl, tplIso, tplButtons, tplMobile) {
 
   'use strict';

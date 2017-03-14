@@ -1,12 +1,13 @@
 define([
   'jquery',
+  'enquire',
   'backbone',
   'handlebars',
   'chosen',
   'views/ModalView',
   'widgets/presenters/DownloadWidgetPresenter',
   'text!widgets/templates/widget-download.handlebars',
-], function($, Backbone, Handlebars, chosen, ModalView, DownloadWidgetPresenter, tpl) {
+], function($, enquire, Backbone, Handlebars, chosen, ModalView, DownloadWidgetPresenter, tpl) {
 
   var DownloadModalView = ModalView.extend({
 

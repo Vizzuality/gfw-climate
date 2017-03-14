@@ -5,13 +5,14 @@
  */
 define([
   'underscore',
+  'enquire',
   'handlebars',
   'map/presenters/analysis/AnalysisResultsPresenter',
   'widgets/indicators/bars/BarChart',
   'text!map/templates/analysis/analysisResults.handlebars',
   'text!map/templates/analysis/analysisResultsChart.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
-], function(_, Handlebars, Presenter, BarChart, tpl, chartTpl, failureTpl) {
+], function(_, enquire, Handlebars, Presenter, BarChart, tpl, chartTpl, failureTpl) {
 
   'use strict';
 
