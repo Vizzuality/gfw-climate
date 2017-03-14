@@ -31,7 +31,8 @@ define([
       'click .share-mobile' : 'toggleShareMobile',
       'click .tab-mobile' : 'toggleTabsMobile',
       'click .close-tab-mobile' : 'hideTabsMobile',
-      'click ul' : 'checkAnalyzeAvailability'
+      'click ul' : 'checkAnalyzeAvailability',
+      'click #analysis-cancel': '_deleteAnalysis'
     },
 
     template: Handlebars.compile(tpl),
@@ -170,6 +171,10 @@ define([
       if (e.target.tagName === 'UL' && $('#analysis-tab-button').hasClass('disabled')) {
         mps.publish('Notification/open', ['open-analyze-not-available']);
       }
+    },
+
+    _deleteAnalysis: function() {
+      this.presenter.deleteAnalysis();
     }
   });
 
