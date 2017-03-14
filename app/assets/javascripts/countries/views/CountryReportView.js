@@ -104,6 +104,8 @@ define([
         monitorEnd: this.status.get('monitor_end_year'),
         referenceStart: this.status.get('reference_start_year'),
         referenceEnd: this.status.get('reference_end_year'),
+        primaryForest: this.status.get('primary_forest') === 'true',
+        excludePlantations: this.status.get('exclude_plantations') === 'true',
         below: this.status.get('below') === 'true',
         co2: this.status.get('co2') === 'true' ,
         totalReference: totalReference,
