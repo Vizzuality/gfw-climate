@@ -627,7 +627,7 @@ define([
       contentGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          return NumbersHelper.addNumberDecimals(Math.round(d.value));
+          return NumbersHelper.addNumberDecimals(NumbersHelper.round(d.value, 6));
         })
         .attr('dx', function() {
           return averageLabelWidth - this.defaults.paddingXAxisLabels
