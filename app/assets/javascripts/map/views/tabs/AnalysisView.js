@@ -6,6 +6,7 @@
 define([
   'underscore',
   'handlebars',
+  'enquire',
   'amplify',
   'chosen',
   'map/presenters/tabs/AnalysisPresenter',
@@ -14,7 +15,7 @@ define([
   'map/views/GeoStylingView',
   'text!map/templates/tabs/analysis.handlebars',
   'text!map/templates/tabs/analysis-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, AnalysisShapeUpload,
+], function(_, Handlebars, enquire, amplify, chosen, Presenter, AnalysisShapeUpload,
   CountriesService, GeoStylingView, tpl, tplMobile) {
 
   'use strict';

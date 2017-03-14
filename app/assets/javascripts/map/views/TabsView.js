@@ -5,6 +5,7 @@
  */
 define([
   'underscore',
+  'enquire',
   'handlebars',
   'd3',
   'map/presenters/TabsPresenter',
@@ -18,7 +19,7 @@ define([
   'text!map/templates/tabs.handlebars',
   'text!map/templates/tabs-mobile.handlebars'
 
-], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, SubscriptionView, BasemapsView, SpinnerView, SubscribeView, ShareView, tpl, tplMobile) {
+], function(_, enquire, Handlebars, d3, Presenter, AnalysisView, CountriesView, SubscriptionView, BasemapsView, SpinnerView, SubscribeView, ShareView, tpl, tplMobile) {
 
   'use strict';
 

@@ -5,12 +5,13 @@
  */
 define([
   'underscore',
+  'enquire',
   'backbone',
   'handlebars',
   'keymaster',
   'map/presenters/controls/SearchboxPresenter',
   'text!map/templates/controls/searchbox.handlebars'
-], function(_, Backbone, Handlebars, keymaster, Presenter, tpl) {
+], function(_, enquire, Backbone, Handlebars, keymaster, Presenter, tpl) {
 
   'use strict';
 
