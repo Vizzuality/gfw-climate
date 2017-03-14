@@ -124,6 +124,20 @@
       background: darken($border,5%);
     }
   }
+
+  &.red {
+    color: $white;
+    background: $red;
+    &:hover {
+      background: darken($red,10%);
+    }
+    &.disabled{
+      &:hover {
+        background: $red;
+      }
+    }
+  }
+
   &.soon {
     color: #ccc;
     background: none;
