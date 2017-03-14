@@ -7,6 +7,7 @@
  */
 define([
   'underscore',
+  'enquire',
   'backbone',
   'moment',
   'd3',
@@ -15,7 +16,7 @@ define([
   'text!templates/timelineYear.handlebars',
   'text!templates/timelineMonth-mobile.handlebars'
 
-], function(_, Backbone, moment, d3, mps, Handlebars, tpl, tplMobile) {
+], function(_, enquire, Backbone, moment, d3, mps, Handlebars, tpl, tplMobile) {
 
   'use strict';
 
