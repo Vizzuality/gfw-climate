@@ -1,7 +1,7 @@
 define([
- 'jquery', 'd3', 'underscore',
+ 'jquery', 'd3', 'underscore', 'enquire'
 ], function(
-  $, d3, _
+  $, d3, _, enquire
 ) {
 
 var svg, pie, color, arc;
@@ -120,7 +120,7 @@ PieChart.prototype._createLegend = function(mobile, mobileHeight) {
   var legendDotSize = 12;
   var legendSpacing = 4;
   var widgetHeightMobile = mobileHeight;
-  
+
   var legend = svg.selectAll('.legend')
     .data(color.domain())
     .enter()
@@ -129,7 +129,7 @@ PieChart.prototype._createLegend = function(mobile, mobileHeight) {
     .attr('transform', function(d, i) {
       var height = legendDotSize + legendSpacing*2;
       var offset =  height * color.domain().length / 2;
-      
+
       if (mobile) {
         var horz = 40 + i*100;
         var vert = widgetHeightMobile - height/2 - 5;

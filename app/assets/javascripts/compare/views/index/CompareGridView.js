@@ -1,10 +1,11 @@
 define([
   'backbone',
+  'enquire',
   'mps',
   'compare/presenters/CompareGridPresenter',
   'widgets/views/WidgetView',
   'text!compare/templates/compareGrid.handlebars',
-], function(Backbone, mps, CompareMainPresenter, WidgetView, tpl) {
+], function(Backbone, enquire, mps, CompareMainPresenter, WidgetView, tpl) {
 
   var CompareMainView = Backbone.View.extend({
 
