@@ -3,12 +3,14 @@ define([
   'underscore',
   'd3',
   'moment',
+  'helpers/NumbersHelper',
   'text!countries/templates/report/summary-chart.handlebars'
 ], function(
   Backbone,
   _,
   d3,
   moment,
+  NumbersHelper,
   tpl
 ) {
 
@@ -61,8 +63,8 @@ define([
     },
 
     _start: function() {
-      var referenceAvg = Math.round(this.referenceData.average);
-      var monitoringAvg = Math.round(this.monitoringData.average);
+      var referenceAvg = NumbersHelper.round(this.referenceData.average, 6);
+      var monitoringAvg = NumbersHelper.round(this.monitoringData.average, 6);
       var increase = Math.round(((monitoringAvg - referenceAvg) / referenceAvg) * 100);
       var hasIncreased = increase > -1;
 

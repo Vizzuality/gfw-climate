@@ -149,10 +149,10 @@ define([
       for (var indicator in this.data) {
         var current = this.data[indicator];
         if (current && current.values) {
-          current.total = Math.round(current.total);
+          current.total = NumbersHelper.round(current.total, 6);
           current.values.forEach(function(data) {
             if (data) {
-              data.value = Math.round(data.value);
+              data.value = NumbersHelper.round(data.value, 6);
               data.type = indicator;
               this.chartData.push(data);
             }
@@ -401,7 +401,7 @@ define([
       lossGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          return NumbersHelper.addNumberDecimals(Math.round(d.value));
+          return NumbersHelper.addNumberDecimals(NumbersHelper.round(d.value, 6));
         })
         .attr('dx', function() {
           return lossLabelWidth - this.defaults.paddingXAxisLabels
@@ -627,7 +627,7 @@ define([
       contentGroup.append('text')
         .attr('class', 'value')
         .text(function(d) {
-          return NumbersHelper.addNumberDecimals(Math.round(d.value));
+          return NumbersHelper.addNumberDecimals(NumbersHelper.round(d.value, 6));
         })
         .attr('dx', function() {
           return averageLabelWidth - this.defaults.paddingXAxisLabels
