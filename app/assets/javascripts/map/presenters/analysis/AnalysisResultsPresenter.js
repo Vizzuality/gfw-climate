@@ -81,6 +81,11 @@ define([
       }
     }, {
       'AnalysisResults/Delete': function() {
+        this.status.set({
+          'analysis': false,
+          'iso': null,
+          'resource': null
+        }, { silent: true });
         this.view._deleteAnalysisView();
       }
     },{
