@@ -1,5 +1,6 @@
 define([
   'backbone',
+  'enquire',
   'compare/views/index/CompareSelectorsView',
   'compare/views/index/CompareGridView',
   'compare/views/index/CompareModalView',
@@ -12,7 +13,7 @@ define([
   'views/ToolbarView',
   'widgets/views/ShareWidgetView',
 
-], function(Backbone, CompareSelectorsView, CompareGridView, CompareModalView, CompareFixedHeaderView, CompareGridButtonBoxView, CompareWidgetsModalView, CompareSwitcherView, SourceModalView, ToolbarView, ShareWidgetView) {
+], function(Backbone, enquire, CompareSelectorsView, CompareGridView, CompareModalView, CompareFixedHeaderView, CompareGridButtonBoxView, CompareWidgetsModalView, CompareSwitcherView, SourceModalView, ToolbarView, ShareWidgetView) {
 
   var CompareIndexView = Backbone.View.extend({
 

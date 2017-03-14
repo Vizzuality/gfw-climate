@@ -7,12 +7,13 @@
  */
 define([
   'underscore',
+  'enquire',
   'backbone',
   'moment',
   'd3',
   'text!templates/timelineBtn-mobile.handlebars'
 
-], function(_, Backbone, moment, d3, tplMobile) {
+], function(_, enquire, Backbone, moment, d3, tplMobile) {
 
   'use strict';
 

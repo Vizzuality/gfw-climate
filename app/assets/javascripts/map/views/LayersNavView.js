@@ -6,6 +6,7 @@
 define([
   'backbone',
   'underscore',
+  'enquire',
   'amplify',
   'chosen',
   'map/presenters/LayersNavPresenter',
@@ -13,7 +14,7 @@ define([
   'text!map/templates/layersNav.handlebars',
   'text!map/templates/layersNavByCountry.handlebars',
   'text!map/templates/layersNavByCountryWrapper.handlebars'
-], function(Backbone, _, amplify, chosen, Presenter, Handlebars, tpl, tplCountry, tplCountryWrapper) {
+], function(Backbone, _, enquire, amplify, chosen, Presenter, Handlebars, tpl, tplCountry, tplCountryWrapper) {
 
   'use strict';
 

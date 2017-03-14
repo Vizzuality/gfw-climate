@@ -7,6 +7,7 @@
 define([
   'backbone',
   'underscore',
+  'enquire',
   'mps',
   'map/presenters/MapPresenter',
   'map/views/maptypes/grayscaleMaptype',
@@ -18,7 +19,7 @@ define([
   'map/views/GeoStylingView',
   'map/helpers/layersHelper',
   'text!map/geojson_overlays/tropics.json'
-], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype,
+], function(Backbone, _, enquire, mps, Presenter, grayscaleMaptype, treeheightMaptype,
   darkMaptype, positronMaptype, landsatMaptype, BasemapStyles, GeoStylingView,
   layersHelper, tropicsOverlay) {
 
