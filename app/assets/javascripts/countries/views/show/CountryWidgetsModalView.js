@@ -63,6 +63,15 @@ define([
           break;
       }
 
+      if (widgets[forestAndCarbon]) {
+        var country = this.status.get('country');
+        for (var i = 0, wLength = widgets[forestAndCarbon].length; i < wLength; i++) {
+          if (widgets[forestAndCarbon][i].slug === peatDrainageSlug) {
+            widgets[forestAndCarbon][i].hide = peatDrainageCountries.indexOf(country) < 0;
+          }
+        }
+      }
+
       return {
         view: {
           isNational: (this.status.get('view') == 'national') ? true : false,
