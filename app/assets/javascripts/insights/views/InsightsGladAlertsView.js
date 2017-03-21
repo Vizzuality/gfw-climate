@@ -19,7 +19,7 @@ define([
   var GFW_URL = window.gfw.config.GFW_URL;
   var API = window.gfw.config.GFW_API_HOST_PRO;
   var ENDPOINT_CONFIG = '/query/'+ window.gfw.config.GLAD_INSIGHT_CONFIG_ID +'?sql=SELECT * FROM data';
-  var ENDPOINT_DATA = '/query/'+ window.gfw.config.GLAD_INSIGHT_ID + '?sql=SELECT sum(alerts::int) AS alerts, sum(cumulative_emissions::float) AS cumulative_emissions, sum(above_ground_carbon_loss::float) AS above_ground_carbon_loss, sum(percent_to_emissions_target::float) AS percent_to_emissions_target, sum(percent_to_deforestation_target::float) AS percent_to_deforestation_target, sum(loss_ha::float) AS loss, sum(cumulative_deforestation::float) AS cumulative_deforestation, year::text as year, country_iso, week FROM data WHERE %s AND year IN (\'%s\') AND week::int <= 53 GROUP BY year, country_iso, week ORDER BY week::int ASC';
+  var ENDPOINT_DATA = '/query/'+ window.gfw.config.GLAD_INSIGHT_ID + '?sql=SELECT sum(alerts) AS alerts, sum(cumulative_emissions) AS cumulative_emissions, sum(above_ground_carbon_loss) AS above_ground_carbon_loss, sum(percent_to_emissions_target) AS percent_to_emissions_target, sum(percent_to_deforestation_target) AS percent_to_deforestation_target, sum(loss_ha) AS loss, sum(cumulative_deforestation) AS cumulative_deforestation, year as year, country_iso, week FROM data WHERE %s AND year IN (\'%s\') AND week <= 53 GROUP BY year, country_iso, week ORDER BY week ASC';
 
   var WEEKS_YEAR = 53;
 
@@ -94,8 +94,8 @@ define([
       config.data[0] ? config.data[0] : {};
 
       if (data) {
-        this.chartConfig = JSON.parse(data.vizsetup);
-        this.locations = JSON.parse(data.locations);
+        this.chartConfig = typeof (data.vizsetup) === 'string' ? JSON.parse(data.vizsetup) : data.vizsetup;
+        this.locations = typeof (data.locations) === 'string' ? JSON.parse(data.locations) : data.locations;
       }
 
       if (!this.currentCountry) {
