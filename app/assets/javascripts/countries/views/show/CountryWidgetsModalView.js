@@ -76,7 +76,7 @@ define([
           }
         }
       }
-      console.log(widgets[forestAndCarbon]);
+
       return {
         view: {
           isNational: (this.status.get('view') == 'national') ? true : false,
