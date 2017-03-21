@@ -9,11 +9,13 @@ define([
 
   'use strict';
 
+  var COUNTRIES_DATASET_STATS_ID= '3f633a05-a3c9-44a5-939c-aecae35fe63e';
+
   var CountryStatsService = Class.extend({
 
     requestId: 'CountryStatsService',
 
-    _uriTemplate: 'http://api.resourcewatch.org/query/3f633a05-a3c9-44a5-939c-aecae35fe63e?sql=select * from data where ISO=\'{iso}\'',
+    _uriTemplate: '/query/?sql=SELECT * FROM ' + COUNTRIES_DATASET_STATS_ID + ' WHERE iso=\'{iso}\'',
 
     /**
      * Constructs a new instance of CountryStatsService.
@@ -35,7 +37,7 @@ define([
     _defineRequests: function() {
       // var cache = this._cacheConfig;
       var cache = false;
-      var config = {cache: cache, url: this._uriTemplate};
+      var config = {cache: cache, url:  window.gfw.config.GFW_API_HOST_V2 + this._uriTemplate};
 
       ds.define(this.requestId, config);
     },
