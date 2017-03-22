@@ -45,22 +45,36 @@ define([
     },
 
     parseData: function() {
+      var forestAndCarbon = 'Forest and Carbon Data';
+      // TODO: make this dynamic
+      var peatDrainageSlug = 'emissions-from-peat-drainage-on-plantations';
+      var peatDrainageCountries = ["IDN", "MYS"];
+
       var widgets = _.groupBy(this.status.get('widgets'), 'type'),
         jurisdictions, areas;
 
       switch(this.status.get('view')) {
 
         case 'subnational':
-          widgets = widgets['Forest and Carbon Data'];
+          widgets = widgets[forestAndCarbon];
           jurisdictions = this.presenter.countryModel.get('jurisdictions');
           jurisdictions = jurisdictions.length > 0 ? jurisdictions : null;
           break;
 
         case 'areas-interest':
-          widgets = widgets['Forest and Carbon Data'];
+          widgets = widgets[forestAndCarbon];
           areas = this.presenter.countryModel.get('areas_of_interest');
           areas = areas.length > 0 ? areas : null;
           break;
+      }
+
+      if (widgets[forestAndCarbon]) {
+        var country = this.status.get('country');
+        for (var i = 0, wLength = widgets[forestAndCarbon].length; i < wLength; i++) {
+          if (widgets[forestAndCarbon][i].slug === peatDrainageSlug) {
+            widgets[forestAndCarbon][i].hide = peatDrainageCountries.indexOf(country) < 0;
+          }
+        }
       }
 
       return {
