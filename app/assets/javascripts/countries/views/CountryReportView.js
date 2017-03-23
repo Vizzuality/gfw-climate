@@ -77,6 +77,38 @@ define([
       }
     },
 
+    _getOptions: function(params) {
+      var options = _.extend(this.defaults, params);
+      if (!params.params.primary_forest && this._hasPrimaryForest(params.iso) && this._isDefaultPrimaryForest(params.iso)) {
+        options.settings.primary_forest = 'true';
+      }
+      if (!params.params.exclude_plantations && this._hasPlantations(params.iso) && this._isDefaultExcludePlantations(params.iso)) {
+        options.settings.exclude_plantations = 'true';
+      }
+      return options;
+    },
+
+    // TODO: make this dynamic !!!
+    _hasPrimaryForest: function(iso) {
+      var hasPrimaryForest = ['COD', 'IDN'];
+      return hasPrimaryForest.indexOf(iso) >= 0;
+    },
+
+    _hasPlantations: function(iso) {
+      var hasPlantations = ['BRA', 'IDN', 'MYS', 'COL', 'KHM', 'LBR', 'PER'];
+      return hasPlantations.indexOf(iso) >= 0;
+    },
+
+    _isDefaultPrimaryForest: function(iso) {
+      var primaryForestDefault = ['COD', 'IDN'];
+      return primaryForestDefault.indexOf(iso) >= 0;
+    },
+
+    _isDefaultExcludePlantations: function(iso) {
+      var excludePlantationsDefault = ['IDN', 'MYS'];
+      return excludePlantationsDefault.indexOf(iso) >= 0;
+    },
+
     _cache: function() {
       this.yearSelector = this.el.querySelector('.js-year-selector');
       this.yearSelectorReference = this.el.querySelector('.js-reference-slider');
