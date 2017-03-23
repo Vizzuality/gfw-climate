@@ -90,7 +90,7 @@ define([
 
     // TODO: make this dynamic !!!
     _hasPrimaryForest: function(iso) {
-      var hasPrimaryForest = ['COD', 'IDN'];
+      var hasPrimaryForest = ['IDN', 'DRC'];
       return hasPrimaryForest.indexOf(iso) >= 0;
     },
 
@@ -100,7 +100,7 @@ define([
     },
 
     _isDefaultPrimaryForest: function(iso) {
-      var primaryForestDefault = ['COD', 'IDN'];
+      var primaryForestDefault = ['IDN', 'DRC'];
       return primaryForestDefault.indexOf(iso) >= 0;
     },
 
