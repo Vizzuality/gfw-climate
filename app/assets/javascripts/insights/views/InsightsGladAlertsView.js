@@ -19,7 +19,7 @@ define([
   var GFW_URL = window.gfw.config.GFW_URL;
   var API = window.gfw.config.GFW_API_HOST_V2;
   var ENDPOINT_CONFIG = '/query?sql=SELECT * FROM '+ window.gfw.config.GLAD_INSIGHT_CONFIG_ID;
-  var ENDPOINT_DATA = '/query/'+ window.gfw.config.GLAD_INSIGHT_ID + '?sql=SELECT sum(alerts) AS alerts, sum(cumulative_emissions) AS cumulative_emissions, sum(above_ground_carbon_loss) AS above_ground_carbon_loss, sum(percent_to_emissions_target) AS percent_to_emissions_target, sum(percent_to_deforestation_target) AS percent_to_deforestation_target, sum(loss_ha) AS loss, sum(cumulative_deforestation) AS cumulative_deforestation, year as year, country_iso, week FROM data WHERE %s AND year IN (\'%s\') AND week <= 53 GROUP BY year, country_iso, week ORDER BY week ASC';
+  var ENDPOINT_DATA = '/query/'+ window.gfw.config.GLAD_INSIGHT_ID + '?sql=SELECT sum(alerts) AS alerts, sum(cumulative_emissions) AS cumulative_emissions, sum(above_ground_carbon_loss) AS above_ground_carbon_loss, sum(percent_to_emissions_target) AS percent_to_emissions_target, sum(percent_to_deforestation_target) AS percent_to_deforestation_target, sum(loss_ha) AS loss, sum(cumulative_deforestation) AS cumulative_deforestation, year as year, country_iso, week FROM data WHERE %s AND year IN (\'%s\') AND week <= 53 GROUP BY week, country_iso ORDER BY week ASC';
 
   var WEEKS_YEAR = 53;
 
@@ -160,13 +160,13 @@ define([
     _getDataQuery: function() {
       var iso = this.currentCountry;
       var year = this.currentYear;
-      var filter = 'WHERE country_iso =\''+ iso +'\'';
+      var filter = ' country_iso =\''+ iso +'\'';
       var locationData = _.findWhere(this.locations, {
         iso: iso
       });
 
       if (locationData && locationData.groupBy) {
-        filter = 'WHERE state_iso IN(\''+locationData.groupBy.join('\', \'') + '\')';
+        filter = ' state_iso IN(\''+locationData.groupBy.join('\', \'') + '\')';
       }
 
       return API + _.str.sprintf(ENDPOINT_DATA, filter, year);
