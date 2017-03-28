@@ -90,11 +90,7 @@ define([
 
     // TODO: make this dynamic !!!
     _hasPrimaryForest: function(iso) {
-<<<<<<< HEAD
       var hasPrimaryForest = ['IDN', 'DRC'];
-=======
-      var hasPrimaryForest = ['COG', 'IDN'];
->>>>>>> 731f57c8... Set report input status on countries data
       return hasPrimaryForest.indexOf(iso) >= 0;
     },
 
@@ -104,11 +100,7 @@ define([
     },
 
     _isDefaultPrimaryForest: function(iso) {
-<<<<<<< HEAD
       var primaryForestDefault = ['IDN', 'DRC'];
-=======
-      var primaryForestDefault = ['IDN'];
->>>>>>> 731f57c8... Set report input status on countries data
       return primaryForestDefault.indexOf(iso) >= 0;
     },
 

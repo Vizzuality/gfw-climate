@@ -19,7 +19,9 @@
                   <h4>{{@key}}</h4>
                   <ul class="m-field-list compare-area">
                     {{#each this}}
-                      <li class="m-field-list-item is-data js-field-list-checkbox-widget" data-id="{{this.id}}"><svg class="icon-chart-{{this.type_chart}}"><use xlink:href="#icon-chart-{{this.type_chart}}"></use></svg>{{this.name}}</li>
+                      {{#unless this.hide}}
+                        <li class="m-field-list-item is-data js-field-list-checkbox-widget" data-id="{{this.id}}"><svg class="icon-chart-{{this.type_chart}}"><use xlink:href="#icon-chart-{{this.type_chart}}"></use></svg>{{this.name}}</li>
+                      {{/unless}}
                     {{/each}}
                   </ul>
                   </div>
