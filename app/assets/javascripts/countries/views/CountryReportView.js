@@ -64,7 +64,7 @@ define([
     },
 
     initialize: function(params) {
-      this.options = _.extend(this.defaults, params);
+      this.options = this._getOptions(params);
       this.indicatorsList = this.options.indicators;
       this.defaultSettings= this.options.settings;
       this.iso = this.options.iso;
@@ -77,6 +77,38 @@ define([
       }
     },
 
+    _getOptions: function(params) {
+      var options = _.extend(this.defaults, params);
+      if (!params.params.primary_forest && this._hasPrimaryForest(params.iso) && this._isDefaultPrimaryForest(params.iso)) {
+        options.settings.primary_forest = 'true';
+      }
+      if (!params.params.exclude_plantations && this._hasPlantations(params.iso) && this._isDefaultExcludePlantations(params.iso)) {
+        options.settings.exclude_plantations = 'true';
+      }
+      return options;
+    },
+
+    // TODO: make this dynamic !!!
+    _hasPrimaryForest: function(iso) {
+      var hasPrimaryForest = ['IDN', 'DRC'];
+      return hasPrimaryForest.indexOf(iso) >= 0;
+    },
+
+    _hasPlantations: function(iso) {
+      var hasPlantations = ['BRA', 'IDN', 'MYS', 'COL', 'KHM', 'LBR', 'PER'];
+      return hasPlantations.indexOf(iso) >= 0;
+    },
+
+    _isDefaultPrimaryForest: function(iso) {
+      var primaryForestDefault = ['IDN', 'DRC'];
+      return primaryForestDefault.indexOf(iso) >= 0;
+    },
+
+    _isDefaultExcludePlantations: function(iso) {
+      var excludePlantationsDefault = ['IDN', 'MYS'];
+      return excludePlantationsDefault.indexOf(iso) >= 0;
+    },
+
     _cache: function() {
       this.yearSelector = this.el.querySelector('.js-year-selector');
       this.yearSelectorReference = this.el.querySelector('.js-reference-slider');
@@ -84,19 +116,21 @@ define([
     },
 
     render: function() {
+      this.$el.removeClass('is-loading');
+      this.$el.html(this.template(this.parseTemplate()));
+
+      this.updateBox = this.$('.updates-box');
+      this._cache();
+      this._initModules();
+    },
+
+    parseTemplate: function() {
       var currentDate = moment();
       var totalReference = NumbersHelper.round(this.data.emissions.reference.average, 6);
       var totalMonitoring = NumbersHelper.round(this.data.emissions.monitor.average, 6);
       var increase = Math.round(((totalMonitoring - totalReference) / totalReference) * 100);
-      var increaseDisplay = Math.abs(increase);
-      var hasIncreased = increase > -1;
-      var hasProvinces = this.data.provinces.emissions.top_five.length > 0;
-      var factorAbovegroundBiomass = Math.round(this.data.emission_factors.aboveground);
       var factorBelowgroundBiomass = Math.round(this.data.emission_factors.belowground);
-      var factorTotalEmission = Math.round(this.data.emission_factors.total);
-
-      this.$el.removeClass('is-loading');
-      this.$el.html(this.template({
+      return {
         country: this.data.country,
         date: currentDate.format('MM/DD/YYYY'),
         year: currentDate.year(),
@@ -104,24 +138,28 @@ define([
         monitorEnd: this.status.get('monitor_end_year'),
         referenceStart: this.status.get('reference_start_year'),
         referenceEnd: this.status.get('reference_end_year'),
+        primaryForest: {
+          disabled: !this._hasPrimaryForest(this.options.iso),
+          checked: this.status.get('primary_forest') === 'true'
+        },
+        excludePlantations: {
+          disabled: !this._hasPlantations(this.options.iso),
+          checked: this.status.get('exclude_plantations') === 'true'
+        },
         below: this.status.get('below') === 'true',
         co2: this.status.get('co2') === 'true' ,
         totalReference: totalReference,
         totalMonitoring: totalMonitoring,
         increase: increase,
-        increaseDisplay: increaseDisplay,
-        hasIncreased: hasIncreased,
-        hasProvinces: hasProvinces,
-        factorAbovegroundBiomass: factorAbovegroundBiomass,
+        increaseDisplay: Math.abs(increase),
+        hasIncreased: increase > -1,
+        hasProvinces: this.data.provinces.emissions.top_five.length > 0,
+        factorAbovegroundBiomass: Math.round(this.data.emission_factors.aboveground),
         factorBelowgroundBiomass: factorBelowgroundBiomass ? factorBelowgroundBiomass : '',
-        factorTotalEmission: factorTotalEmission,
+        factorTotalEmission: Math.round(this.data.emission_factors.total),
         co2EmissionsByProvinces: this.data.provinces.emissions.top_five,
         accuracyData: this.accuracyData
-      }));
-
-      this.updateBox = this.$('.updates-box');
-      this._cache();
-      this._initModules();
+      }
     },
 
     _setDefaultParams: function() {

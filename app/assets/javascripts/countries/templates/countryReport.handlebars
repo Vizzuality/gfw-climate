@@ -191,12 +191,14 @@
           <div class="col">
             <div class="m-plantations">
               <label class="report-checkbox -disabled" for="tree-plantation-excluded">
-                <input class="js-report-param" id="tree-plantation-excluded" type="checkbox" disabled="disabled" name="tree_plantations">
-                Tree Plantations Excluded
+                <input class="js-report-param" id="tree-plantation-excluded" type="checkbox" name="exclude_plantations"
+                  {{#if excludePlantations.disabled}}disabled="disabled"{{/if}} {{#if excludePlantations.checked}}checked="checked"{{/if}}>
+                Tree Plantations Excluded (select countries)
               </label>
               <label class="report-checkbox -disabled" for="primary-forest-only">
-                <input class="js-report-param" id="primary-forest-only" type="checkbox" disabled="disabled" name="primaryforest">
-                Primary Forest Only
+                <input class="js-report-param" id="primary-forest-only" type="checkbox" name="primary_forest"
+                  {{#if primaryForest.disabled}}disabled="disabled"{{/if}} {{#if primaryForest.checked}}checked="checked"{{/if}} >
+                Primary Forest Only (select countries)
               </label>
             </div>
 

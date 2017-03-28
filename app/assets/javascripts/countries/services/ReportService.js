@@ -12,7 +12,7 @@ define([
   var APIURL = window.gfw.config.GFW_API_HOST_V2;
 
   var APIURLS = {
-    'indicators': '/api/reports/{?iso,reference_start_year,reference_end_year,monitor_start_year,monitor_end_year,thresh,above,below,primary_forest,tree_plantations}'
+    'indicators': '/api/reports/{?iso,reference_start_year,reference_end_year,monitor_start_year,monitor_end_year,thresh,above,below,primary_forest,exclude_plantations}'
   };
 
   var ReportService = Class.extend({
