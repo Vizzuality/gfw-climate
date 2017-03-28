@@ -603,7 +603,7 @@ define([
      */
     _updateTooltip: function(step) {
       var currentStep = step || this.currentStep;
-      var data = _.findWhere(this.chartData, { week: currentStep.toString() });
+      var data = _.findWhere(this.chartData, { week: currentStep });
 
       if (data) {
         var tooltip = this.el.querySelector('.tooltip');
