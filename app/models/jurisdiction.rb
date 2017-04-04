@@ -4,7 +4,7 @@ class Jurisdiction
   include HTTParty
   default_timeout 10
 
-  CDB_JURISDICTIONS_TABLE = "gadm27_adm1"
+  CDB_JURISDICTIONS_TABLE = "gadm28_adm1"
   class << self
 
     def base_path
