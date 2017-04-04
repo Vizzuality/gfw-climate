@@ -73,7 +73,7 @@ define([
 
       var sql = ['SELECT climate_iso AS iso,',
                  'ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom',
-                 'FROM gadm27_adm0',
+                 'FROM gadm28_countries',
                  'WHERE climate_iso IS NOT NULL',
                  '&format=topojson'].join(' ');
 

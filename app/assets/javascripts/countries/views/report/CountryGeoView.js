@@ -11,7 +11,7 @@ define([
     template: Handlebars.compile(tpl),
 
     defaults: {
-      query: '?q=SELECT climate_iso AS iso, ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom FROM gadm27_adm0 WHERE climate_iso IS NOT NULL AND climate_iso =',
+      query: '?q=SELECT climate_iso AS iso, ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom FROM gadm28_adm0 WHERE iso IS NOT NULL AND iso =',
       iso: ''
     },
 
