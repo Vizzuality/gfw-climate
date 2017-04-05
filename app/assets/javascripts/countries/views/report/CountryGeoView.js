@@ -11,7 +11,7 @@ define([
     template: Handlebars.compile(tpl),
 
     defaults: {
-      query: '?q=SELECT climate_iso AS iso, ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom FROM gadm28_adm0 WHERE iso IS NOT NULL AND iso =',
+      query: '?q=SELECT iso, topojson FROM gadm28_countries WHERE iso =',
       iso: ''
     },
 
@@ -28,13 +28,17 @@ define([
     init: function() {
       this._getData()
         .then(function(data){
-          this.topoJSON = data;
+          var topojson = null;
+          if (data.rows.length > 0) {
+            topojson = JSON.parse(data.rows[0].topojson);
+          }
+          this.topoJSON = topojson;
           this.render();
         }.bind(this))
     },
 
     _getData: function() {
-      return $.getJSON(window.gfw.config.CDB_API_HOST + this.defaults.query + '\'' +this.iso + '\'' + '&format=topojson');
+      return $.getJSON(window.gfw.config.CDB_API_HOST + this.defaults.query + '\'' +this.iso + '\'');
     },
 
     render: function() {
