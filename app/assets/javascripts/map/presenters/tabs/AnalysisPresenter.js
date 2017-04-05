@@ -11,10 +11,11 @@ define([
   'topojson',
   'bluebird',
   'helpers/geojsonUtilsHelper',
-  'services/CountryService',
+  'map/services/CountryService',
+  'map/services/RegionService',
   'map/services/GeostoreService'
 ], function(PresenterClass, _, Backbone, mps, topojson, bluebird,
-  geojsonUtilsHelper, CountryService, GeostoreService) {
+  geojsonUtilsHelper, countryService, regionService, GeostoreService) {
 
   'use strict';
 
@@ -294,45 +295,42 @@ define([
       //Pan map to selected country.
       if (!iso.region) {
         // Get geojson/fit bounds/draw geojson/publish analysis.
-        //use new country service
-        CountryService.showCountry(resource.iso)
-          .then(function(results) {
-            debugger;
-            var objects = _.findWhere(results.topojson.objects, {
-              type: 'MultiPolygon'
-            });
+        countryService.execute(resource.iso, _.bind(function(results) {
+          var objects = _.findWhere(results.topojson.objects, {
+            type: 'MultiPolygon'
+          });
 
-            var geojson = topojson.feature(results.topojson,
-              objects);
-            this._geojsonFitBounds(geojson);
-            mps.publish('Subscribe/geom',[geojson]);
+          var geojson = topojson.feature(results.topojson,
+            objects);
+          this._geojsonFitBounds(geojson);
+          mps.publish('Subscribe/geom',[geojson]);
 
-            // Always draw the country shape regardless of the tab
-            this.view.drawCountrypolygon(geojson,'#5B80A0');
+          // Always draw the country shape regardless of the tab
+          this.view.drawCountrypolygon(geojson,'#5B80A0');
 
-            if (!this.status.get('dont_analyze')) {
-              this.view._removeCartodblayer();
-              this._publishAnalysis(resource);
-            } else{
-              mps.publish('Spinner/stop');
-            }
-        }.bind(this));
+          if (!this.status.get('dont_analyze')) {
+            this.view._removeCartodblayer();
+            this._publishAnalysis(resource);
+          }else{
+            mps.publish('Spinner/stop');
+          }
+
+        },this));
       } else {
-        CountryService.showRegion(resource)
-          .then(function(results) {
-            debugger;
-            var geojson = results.features[0];
-            this._geojsonFitBounds(geojson);
-            mps.publish('Subscribe/geom',[geojson]);
+        regionService.execute(resource, _.bind(function(results) {
+          var geojson = results.features[0];
+          this._geojsonFitBounds(geojson);
+          mps.publish('Subscribe/geom',[geojson]);
 
-            if (!this.status.get('dont_analyze')) {
-              this.view.drawCountrypolygon(geojson,'#5B80A0');
-              this.view._removeCartodblayer();
-              this._publishAnalysis(resource);
-            }else{
-              mps.publish('Spinner/stop');
-            }
-          }.bind(this));
+          if (!this.status.get('dont_analyze')) {
+            this.view.drawCountrypolygon(geojson,'#5B80A0');
+            this.view._removeCartodblayer();
+            this._publishAnalysis(resource);
+          }else{
+            mps.publish('Spinner/stop');
+          }
+
+        },this));
       }
     },
 

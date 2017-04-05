@@ -312,7 +312,7 @@ define([
         // record in Google Analytics
         var countryName = this.$countrySelect.find("option[value='"+this.iso+"']").text();
         var regionName = this.area ? " - " + this.$regionSelect.find("option[value='"+this.area+"']").text() : "" ;
-        ga('send', 'event', 'Map', 'Analyse', countryName + regioName);
+        ga('send', 'event', 'Map', 'Analyse', countryName + regionName);
       }
     },
 
