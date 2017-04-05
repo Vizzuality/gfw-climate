@@ -105,7 +105,7 @@ define([
     },
 
     _isDefaultExcludePlantations: function(iso) {
-      var excludePlantationsDefault = ['IDN', 'MYS'];
+      var excludePlantationsDefault = ['IDN', 'MYS', 'BRA'];
       return excludePlantationsDefault.indexOf(iso) >= 0;
     },
 
@@ -196,7 +196,8 @@ define([
       this._initSlides();
 
       this.summaryChart = new SummaryChartView({
-        data: this.data.emissions
+        data: this.data.emissions,
+        country: this.data.country
       });
 
       this.historicalTrendChart = new HistoricalTrendChartView({

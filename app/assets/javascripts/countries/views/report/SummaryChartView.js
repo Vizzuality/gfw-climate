@@ -42,6 +42,7 @@ define([
     initialize: function(settings) {
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
+      this.country = this.defaults.country;
 
       this._initChart();
 
@@ -73,7 +74,8 @@ define([
         referenceAvg: referenceAvg,
         monitoringAvg: monitoringAvg,
         increase: increase,
-        hasIncreased: hasIncreased
+        hasIncreased: hasIncreased,
+        country: this.country
       }));
 
       this.render();
