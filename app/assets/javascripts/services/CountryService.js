@@ -108,7 +108,6 @@ define([
             var requestConfig = {
               resourceId: GET_REQUEST_COUNTRY_STATS_ID,
               success: function(res, status) {
-                debugger;
                 var data = res.data.length >= 0 ? res.data : [];
                 resolve(data, status);
               },
@@ -127,13 +126,11 @@ define([
 
     getCountry: function(params, stats) {
       stats = stats || false;
-      debugger;
       var datasetId = GET_REQUEST_COUNTRY_ID + '_' + params.iso + '_' + stats ? 'withStats' : '';
       if (stats) {
         return new Promise(function(resolve, reject) {
           this.getCountryStats(params)
             .then(function(countryStats) {
-              debugger;
               var status = _.extend({}, CONFIG, params);
               var url = new UriTemplate(APIURLS.getCountry).fillFromObject(status);
 
