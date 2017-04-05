@@ -105,7 +105,7 @@ define([
     },
 
     _isDefaultExcludePlantations: function(iso) {
-      var excludePlantationsDefault = ['IDN', 'MYS'];
+      var excludePlantationsDefault = ['IDN', 'MYS', 'BRA'];
       return excludePlantationsDefault.indexOf(iso) >= 0;
     },
 
