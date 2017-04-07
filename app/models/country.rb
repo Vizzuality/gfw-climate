@@ -33,7 +33,7 @@ class Country
 
     def index_query
       <<-SQL
-       SELECT DISTINCT iso, name_engli AS name, centroid AS latlng
+       SELECT DISTINCT ga28.iso, name_engli AS name, centroid AS latlng
        FROM #{CDB_COUNTRIES_TABLE} ga28
        INNER JOIN gfw_climate_config cc ON cc.iso = ga28.iso
        ORDER BY name
