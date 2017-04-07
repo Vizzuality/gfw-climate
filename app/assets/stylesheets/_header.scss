@@ -237,7 +237,7 @@
         position: absolute;
         top: 0;
         z-index: 2;
-        @include gradient(left,rgba(247,247,247,0),rgba(247,247,247,1));
+        @include gradient(to right,rgba(247,247,247,0),rgba(247,247,247,1));
       }
       @media (min-width: $br-mobile){
         display: none;
