@@ -42,8 +42,8 @@ define([
       }
 
       sql = ['SELECT ST_GeomFromText(topojson) AS the_geom',
-             'FROM gadm27_adm0',
-             "WHERE UPPER(climate_iso) = UPPER('" + iso + "')",
+             'FROM gadm28_countries',
+             "WHERE UPPER(iso) = UPPER('" + iso + "')",
              '&format=topojson'].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, _.bind(function(error, topology) {

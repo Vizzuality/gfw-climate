@@ -77,13 +77,13 @@ define([
       if (!!compare.iso && !!compare.jurisdiction) {
         var sql = ["SELECT",
                    "ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom",
-                   "FROM gadm27_adm1",
+                   "FROM gadm28_adm1",
                    "WHERE iso = '"+compare.iso+"'",
                    "AND id_1 = '"+compare.jurisdiction+"'&format=topojson"].join(' ');
       } else {
         var sql = ["SELECT",
                    "ST_Simplify(ST_RemoveRepeatedPoints(the_geom, 0.00005), 0.01) AS the_geom",
-                   "FROM gadm27_adm0",
+                   "FROM gadm28_adm0",
                    "WHERE iso = '"+compare.iso+"'&format=topojson"].join(' ');
       }
 

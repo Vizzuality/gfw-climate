@@ -10,15 +10,15 @@ define([
   'enquire',
   'amplify',
   'chosen',
+  'services/CountryService',
   'map/presenters/tabs/CountriesPresenter',
-  'map/services/CountriesService',
   'map/views/GeoStylingView',
   'widgets/indicators/bars/BarChart',
   'text!map/templates/tabs/countries.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
   'text!map/templates/tabs/countriesButtons.handlebars',
   'text!map/templates/tabs/countries-mobile.handlebars'
-], function(_, Handlebars, enquire, amplify, chosen, Presenter, CountriesService, GeoStylingView,
+], function(_, Handlebars, enquire, amplify, chosen, CountryService, Presenter, GeoStylingView,
     barChart, tpl, tplIso, tplButtons, tplMobile) {
 
   'use strict';
@@ -196,16 +196,17 @@ define([
      * COUNTRY
      */
     getCountries: function(){
-      CountriesService.execute('',_.bind(function(data){
-        this.printCountries(data.countries);
-      },this));
+      CountryService.getCountries()
+        .then(function(countries){
+          this.printCountries(countries);
+        }.bind(this));
     },
 
     /**
      * Print countries.
      */
     printCountries: function(countries) {
-      if(this.mobile){
+      if (this.mobile) {
         var options = "";
         var letters = [];
         _.each(_.sortBy(countries, function(country){ return country.name }), _.bind(function(country, i){
@@ -217,7 +218,7 @@ define([
         this.$countryUl.html(options);
         this.setLettersVisibility(letters);
 
-      }else{
+      } else {
         //Loop for print options
         var options = "<option></option>";
         _.each(_.sortBy(countries, function(country){ return country.name }), _.bind(function(country, i){
