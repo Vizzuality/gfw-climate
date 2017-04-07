@@ -3,9 +3,8 @@ define([
   'jquery',
   'underscore',
   'countries/presenters/PresenterClass',
-  'countries/services/CountryService',
   'widgets/collections/WidgetCollection'
-], function(mps, $, _, PresenterClass, CountryService, WidgetCollection) {
+], function(mps, $, _, PresenterClass, WidgetCollection) {
 
   'use strict';
 
@@ -24,7 +23,6 @@ define([
       this._super();
 
       this.widgetCollection = new WidgetCollection();
-      this.service = CountryService;
       mps.publish('Place/register', [this]);
 
       this._setListeners();
@@ -280,16 +278,6 @@ define([
     },
 
     _removeWidget: function() {
-      var iso = this.status.get('country');
-
-      this.service.execute(
-        iso,
-        _.bind(this.onSuccess, this),
-        _.bind(this.onError, this)
-      );
-    },
-
-    onSuccess: function(data) {
       var activeWidgets = this.status.get('activeWidgets');
 
       if (activeWidgets.length == 0) {
@@ -356,7 +344,7 @@ define([
 
       x.forEach(function(v, i) {
         //Before, it was x[i] = Number.parseInt(v);
-        //Safari mobile doesn't understand it. So I changed it. 
+        //Safari mobile doesn't understand it. So I changed it.
         x[i] = ~~v;
       });
 

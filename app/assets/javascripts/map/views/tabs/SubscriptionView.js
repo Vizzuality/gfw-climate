@@ -8,10 +8,11 @@ define([
   'handlebars',
   'amplify',
   'chosen',
+  'services/CountryService',
   'map/presenters/tabs/SubscriptionPresenter',
   'map/views/GeoStylingView',
   'text!map/templates/tabs/subscription.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, 
+], function(_, Handlebars, amplify, chosen, CountryService, Presenter,
   GeoStylingView, tpl) {
 
   'use strict';
@@ -199,18 +200,23 @@ define([
     },
 
     getSubCountries: function(){
-      this.$regionSelect.attr('disabled', true).trigger("liszt:updated");
-      var sql = ["SELECT gadm27_adm0.cartodb_id, gadm27_adm0.iso, gadm27_adm1.id_1, gadm27_adm1.name_1 as name_1 FROM gadm27_adm0, gadm27_adm1 where gadm27_adm0.iso = '"+this.iso+"' AND gadm27_adm1.iso = '"+this.iso+"' order by id_1 asc"];
-      $.ajax({
-        url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
-        dataType: 'json',
-        success: _.bind(function(data){
+      CountryService.getRegions(this.iso)
+        .then(function(data) {
+          console.log(data, 'regions');
           this.printSubareas(data.rows);
-        }, this ),
-        error: function(error){
-          console.log(error);
-        }
-      });
+        });
+      // var sql = ["SELECT g28c.cartodb_id, g28c.iso, g28a1.id_1, g28a1.name_1 as name_1 FROM gadm28_countries as g28c, gadm28_adm1 as g28a1 where g28c.iso = '"+this.iso+"' AND g28a1.iso = '"+this.iso+"' order by id_1 asc"];
+      // $.ajax({
+      //   url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
+      //   dataType: 'json',
+      //   success: _.bind(function(data){
+      //     console.log(data, 'preves');
+      //     this.printSubareas(data.rows);
+      //   }, this ),
+      //   error: function(error){
+      //     console.log(error);
+      //   }
+      // });
     },
 
     /**
@@ -249,9 +255,9 @@ define([
       this.iso = $(e.currentTarget).val();
       this.$countryButton.removeClass('disabled');
       this.area = null;
-      if(this.iso) {
+      if (this.iso) {
         this.getSubCountries()
-      }else{
+      } else {
         this.presenter.deleteSubscription();
         this.presenter.resetIsos();
         this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
@@ -335,7 +341,7 @@ define([
      * Star drawing manager and add an overlaycomplete
      * listener.
      */
-    _startDrawingManager: function() {
+    _startDrawingManager: function() {
       this.presenter.deleteMultiPoligon();
       this.setSelects({country: null, region: null});
       this.model.set('is_drawing', true);

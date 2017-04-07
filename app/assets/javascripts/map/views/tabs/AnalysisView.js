@@ -312,7 +312,7 @@ define([
         // record in Google Analytics
         var countryName = this.$countrySelect.find("option[value='"+this.iso+"']").text();
         var regionName = this.area ? " - " + this.$regionSelect.find("option[value='"+this.area+"']").text() : "" ;
-        ga('send', 'event', 'Map', 'Analyse', countryName + regioName);
+        ga('send', 'event', 'Map', 'Analyse', countryName + regionName);
       }
     },
 
@@ -542,9 +542,9 @@ define([
               line-opacity: 1;\
             }"
         }, {
-          sql: "SELECT * FROM gadm27_adm0 WHERE iso LIKE '" + iso +"' ",
+          sql: "SELECT * FROM gadm28_countries WHERE iso LIKE '" + iso +"' ",
           cartocss: "\
-            #gadm27_adm0 {\
+            #gadm28_countries {\
               polygon-fill: #373737;\
               polygon-opacity: 0.15;\
               line-color: #333;\
