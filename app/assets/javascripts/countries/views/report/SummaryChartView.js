@@ -72,13 +72,13 @@ define([
     _initYearSlider: function() {
       nouislider.create(this.yearsSlider, {
         start: [this.defaults.startYear, this.defaults.commonYear, this.defaults.endYear],
-      	animate: true,
+      animate: true,
         connect: [false, true, true, false],
         step: 1,
-      	range: {
+      range: {
           min: this.defaults.minYear,
           max: this.defaults.maxYear
-      	}
+      }
       });
 
       this.yearsSlider.noUiSlider.on('slide', function(value) {
@@ -92,22 +92,6 @@ define([
           commonYear: commonYear
         };
         this.trigger('summary:slider:change', params);
-      }.bind(this));
-
-      this.yearsSlider.noUiSlider.on('change', function(value) {
-        if (value[1] === value[2]) {
-          this.yearsSlider.noUiSlider.set([
-            value[0],
-            parseInt(value[2]) - 1,
-            value[2]
-          ])
-        } else if (value[0] === value[1]) {
-          this.yearsSlider.noUiSlider.set([
-            value[0],
-            parseInt(value[0]) + 1,
-            value[2]
-          ])
-        }
       }.bind(this));
     },
 
