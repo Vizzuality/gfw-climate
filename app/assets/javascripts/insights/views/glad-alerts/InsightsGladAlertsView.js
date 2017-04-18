@@ -5,12 +5,12 @@ define([
   'd3',
   'underscore',
   '_string',
-  'insights/views/InsightsGladAlertsChartView',
+  'insights/views/glad-alerts/InsightsGladAlertsChartView',
   'views/ShareView',
   'views/SourceModalView',
   'helpers/NumbersHelper',
-  'text!insights/templates/insights-glad-alerts.handlebars',
-  'text!insights/templates/insights-glad-alerts-legend.handlebars',
+  'text!insights/templates/glad-alerts/insights-glad-alerts.handlebars',
+  'text!insights/templates/glad-alerts/insights-glad-alerts-legend.handlebars',
 ], function(Backbone, mps, Handlebars, d3, _, _string, InsightsGladAlertsChart,
   ShareView, SourceModalView, NumbersHelper, tpl, tplLegend) {
 

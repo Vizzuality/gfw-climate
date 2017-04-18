@@ -1,0 +1,49 @@
+@import "reset";
+
+// General
+@import "settings";
+@import "fonts";
+@import "mixins";
+@import "animations";
+@import "base";
+
+// Layout
+@import "header";
+@import "footer";
+@import "grid";
+@import "modules/notifications";
+
+// Modules
+@import "modules/modal";
+@import "modules/modal_new";
+@import "modules/shared";
+@import "modules/buttons";
+@import "modules/icons";
+@import "modules/select";
+@import "modules/gridgraphs";
+
+// Widgets and charts
+@import "modules/widgets/*";
+@import "modules/widgets/charts/*";
+
+// Pantropical: we should remove this to another tab
+@import "modules/pantropical/m-pantropical";
+
+// Insights
+@import "modules/insights/m-insights";
+@import "modules/insights/m-glad-vis";
+@import "modules/insights/m-chart-glad";
+
+// Common
+@import "states";
+@import "modules/common/m-fixed-header";
+@import "modules/common/m-toolbar";
+@import "modules/common/m-grid-button-box";
+@import "modules/common/m-modal-fields";
+
+// Layouts
+@import "layouts/countries";
+@import 'layouts/compare';
+
+// Report page print
+@import "modules/countries/report/print";

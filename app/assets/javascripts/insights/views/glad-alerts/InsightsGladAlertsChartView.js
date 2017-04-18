@@ -4,7 +4,7 @@ define([
   'd3',
   'moment',
   'helpers/NumbersHelper',
-  'text!insights/templates/insights-glad-alerts-tooltip.handlebars',
+  'text!insights/templates/glad-alerts/insights-glad-alerts-tooltip.handlebars',
 ], function(Backbone, _, d3, moment, NumbersHelper, tplTooltip) {
 
   'use strict';
