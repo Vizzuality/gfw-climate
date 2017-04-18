@@ -2,7 +2,6 @@
   h2 {
     font-size: 47px;
     color: $white;
-    text-align: center;
 
     @media only screen and (max-width: $br-mobile-portrait) {
       font-size: 26px;
@@ -31,7 +30,6 @@
     font-size: 18px;
     font-weight: 300;
     color: rgba($white, 0.7);
-    text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
     padding-bottom: 23px;
@@ -72,42 +70,37 @@
 
 .insights {
   .visualization-list {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 850px;
+    display: flex;
+
+    @media only screen and (max-width: $br-mobile) {
+      flex-direction: column;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
 
     .item {
-      padding: 65px 0;
-      border-bottom: 1px solid #E0E0E0;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
+      flex-basis: 33%;
+      padding: 40px 25px;
+      padding-left: 0;
 
       &:last-child {
         border: 0;
       }
 
       .link {
-        display: flex;
+        margin-top: 15px;
       }
 
       .thumb {
-        width: 445px;
+        width: 100%;
         flex-shrink: 0;
-        margin-right: 40px;
+        margin-bottom: 15px;
 
         .image {
-          width: 436px;
+          width: 100%;
           height: auto;
-        }
-
-        @media only screen and (max-width: $br-mobile) {
-          width: 34%;
-          margin-right: 20px;
-          margin-left: 15px;
-
-          .image {
-            width: 100%;
-          }
         }
       }
 
@@ -116,7 +109,6 @@
         font-weight: 300;
         color: #555555;
         margin-bottom: 15px;
-        margin-top: 25px;
       }
 
       .text {
