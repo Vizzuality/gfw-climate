@@ -56,7 +56,7 @@ define([
     ranges: {
       tco: {
         min: 0,
-        max: 917
+        max: 440
       }
     },
     units: [
