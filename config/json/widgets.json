@@ -1188,7 +1188,7 @@
   },
   {
     "id": 17,
-    "name": "Potential carbon sequestration from natural forest regeneration",
+    "name": "Potential tree biomass gain",
     "slug": "potential_tree_biomass_gain",
     "type_slug": "carbon_gain",
     "type": "Forest and Carbon Data",
