@@ -1,5 +1,26 @@
+$reference-color: #5B80A0;
+$monitoring-color: #EDB04A;
+
 .m-summary-chart {
   width: 100%;
+
+  .years-selector {
+    padding: 0 35px 0 75px;
+    .noUi-target {
+      margin: 0;
+    }
+
+    .noUi-base {
+      .noUi-connect:nth-of-type(2) {
+        background: $reference-color;
+      }
+
+      .noUi-connect:nth-of-type(4) {
+        background: $monitoring-color;
+      }
+    }
+
+  }
 
   .chart {
     width: 100%;
@@ -45,13 +66,13 @@
 
     .line-group {
       .line-reference {
-        stroke: #5B80A0;
+        stroke: $reference-color;
         fill: transparent;
         stroke-width: 3;
       }
 
       .line-monitoring {
-        stroke: #EDB04A;
+        stroke: $monitoring-color;
         fill: transparent;
         stroke-width: 3;
       }
@@ -63,11 +84,11 @@
         stroke-width: 1.5;
 
         &.reference {
-          fill: #5B80A0;
+          fill: $reference-color;
         }
 
         &.monitoring {
-          fill: #EDB04A;
+          fill: $monitoring-color;
         }
       }
     }
@@ -112,13 +133,13 @@
 
           &.-reference {
             > .icon {
-              background: #5B80A0;
+              background: $reference-color;
             }
           }
 
           &.-monitoring {
             > .icon {
-              background: #EDB04A;
+              background: $monitoring-color;
             }
           }
         }

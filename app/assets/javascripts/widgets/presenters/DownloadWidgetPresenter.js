@@ -4,10 +4,11 @@
  * @return DownloadWigdetPresenter class.
  */
 define([
+  'backbone',
   'underscore',
   'mps',
   'map/presenters/PresenterClass'
-], function(_, mps, PresenterClass) {
+], function(Backbone, _, mps, PresenterClass) {
 
   'use strict';
 
