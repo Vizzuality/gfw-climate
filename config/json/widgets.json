@@ -1185,5 +1185,32 @@
         "_comment": "indicator 'created' to show data for plantations inside sub national areas, while the application doesn't support that. based on indicator 75"
       }
     ]
+  },
+  {
+    "id": 17,
+    "name": "Potential carbon sequestration from natural forest regeneration",
+    "slug": "potential_tree_biomass_gain",
+    "type_slug": "carbon_gain",
+    "type": "Forest and Carbon Data",
+    "type_chart": "table",
+    "default_thresh": "0",
+    "default": false,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Potential carbon sequestration (Chazdon et al. 2016)",
+        "type": "table",
+        "template" : "tree_biomass_gain",
+        "default": true,
+        "switch" : [
+          {
+            "unit": "co2-ha",
+            "unitname": "CO2/ha",
+            "unitfullname": "Carbon dioxide per hectares"
+          }
+        ]
+      }
+    ],
+    "indicators": []
   }
 ]
