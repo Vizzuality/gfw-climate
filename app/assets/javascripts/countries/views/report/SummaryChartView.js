@@ -95,7 +95,6 @@ define([
       }.bind(this));
 
       this.yearsSlider.noUiSlider.on('change', function(value) {
-        console.log(value);
         if (value[1] === value[2]) {
           this.yearsSlider.noUiSlider.set([
             value[0],
