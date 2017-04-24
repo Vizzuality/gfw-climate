@@ -35,7 +35,6 @@ define([
 
     initialize: function() {
       this.placeService = new PlaceService(this);
-      debugger;
       this.setSubscriptions();
       this.setEvents();
     },
