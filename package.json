@@ -23,9 +23,13 @@
     "eslint-config-airbnb-es5": "^1.1.0",
     "eslint-config-recommended": "^1.5.0",
     "husky": "^0.13.3",
-    "lint-staged": "^3.4.0"
+    "lint-staged": "^3.4.0",
+    "prettier": "^1.2.2"
   },
   "lint-staged": {
-    "app/**/*.js": "eslint --quiet"
+    "app/**/*.js": [
+      "prettier --single-quote --write",
+      "eslint --quiet"
+    ]
   }
 }
