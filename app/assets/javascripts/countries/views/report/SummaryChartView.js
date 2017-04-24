@@ -93,6 +93,23 @@ define([
         };
         this.trigger('summary:slider:change', params);
       }.bind(this));
+
+      this.yearsSlider.noUiSlider.on('change', function(value) {
+        console.log(value);
+        if (value[1] === value[2]) {
+          this.yearsSlider.noUiSlider.set([
+            value[0],
+            parseInt(value[2]) - 1,
+            value[2]
+          ])
+        } else if (value[0] === value[1]) {
+          this.yearsSlider.noUiSlider.set([
+            value[0],
+            parseInt(value[0]) + 1,
+            value[2]
+          ])
+        }
+      }.bind(this));
     },
 
     _start: function() {
