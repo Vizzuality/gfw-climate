@@ -55,7 +55,7 @@
 
 .insights-content {
   width:100%;
-  height: 600px;
+  min-height: 600px;
   position: relative;
 
   &.loaded {

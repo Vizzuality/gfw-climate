@@ -67,15 +67,17 @@ define([
       }.bind(this));
     },
 
-    getCountries: function(geo) {
-      geo = geo || false;
+    getCountries: function(filters) {
+      filters = filters || {
+        geo: false
+      }
       return new Promise(function(resolve, reject) {
         this.getClimateConfig()
           .then(function(countryConfig) {
             var params = { climateCountries: '\'' + countryConfig.join('\',\'') + '\'' };
             var status = _.extend({}, CONFIG, params);
-            var urlTemplate = geo ? APIURLS.getCountriesListGeo : APIURLS.getCountriesList;
-            var templateId = geo ? GET_REQUEST_COUNTRIES_LIST_ID + '_GEO' : GET_REQUEST_COUNTRIES_LIST_ID;
+            var urlTemplate = filters.geo ? APIURLS.getCountriesListGeo : APIURLS.getCountriesList;
+            var templateId = filters.geo ? GET_REQUEST_COUNTRIES_LIST_ID + '_GEO' : GET_REQUEST_COUNTRIES_LIST_ID;
             var url = new UriTemplate(urlTemplate).fillFromObject(status);
 
             this.defineRequest(templateId,
@@ -85,7 +87,7 @@ define([
               resourceId: templateId,
               success: function(res, status) {
                 var data = res.data.length >= 0 ? res.data : [];
-                if (geo) {
+                if (filters.geo) {
                   var dataParsed =  data.map(function(country) {
                     return {
                       name: country.name,
