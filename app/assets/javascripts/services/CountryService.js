@@ -26,8 +26,8 @@ define([
 
   var APIURLS = {
     'getClimateConfig'   : '/query?sql=SELECT iso FROM {countriesConfigDataset}',
-    'getCountriesList'   : '/query?sql=SELECT name_engli as name, iso FROM {countriesDataset} WHERE iso IN({climateCountries})',
-    'getCountriesListGeo': '/query?sql=SELECT name_engli as name, iso, topojson FROM {countriesDataset} WHERE iso IN({climateCountries}) ORDER BY iso ASC',
+    'getCountriesList'   : '/query?sql=SELECT name_engli as name, iso FROM {countriesDataset} WHERE iso IN({climateCountries}) ORDER BY name ASC',
+    'getCountriesListGeo': '/query?sql=SELECT name_engli as name, iso, topojson FROM {countriesDataset} WHERE iso IN({climateCountries}) ORDER BY name ASC',
     'getCountriesStats'  : '/query/?sql=SELECT * FROM {countryStatsDataset} WHERE iso=\'{iso}\'',
     'getCountry'         : '/query?sql=SELECT name_engli as name, iso, topojson FROM {countriesDataset} WHERE iso=\'{iso}\'',
     'getRegionsList'     : '/query?sql=SELECT cartodb_id, iso, bbox as bounds, id_1, name_1 FROM {regionsDataset} WHERE iso=\'{iso}\' ORDER BY name_1',
