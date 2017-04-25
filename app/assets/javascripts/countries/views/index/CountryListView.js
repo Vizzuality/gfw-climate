@@ -8,8 +8,9 @@ define([
   'amplify',
   'd3',
   'mps',
-  'helpers/CountryHelper'
-], function($, Backbone, _,amplify, d3, mps, CountryHelper) {
+  'services/CountryService',
+  'views/shared/GeoListView'
+], function($, Backbone, _,amplify, d3, mps, CountryService, GeoListView) {
 
   'use strict';
 
@@ -27,7 +28,6 @@ define([
         return
       }
 
-      this.helper = CountryHelper;
       this.$searchBox = $('#searchCountry');
       this._getCountries();
       this._drawCountries();
@@ -42,6 +42,7 @@ define([
     },
 
     _searchCountries : function(e){
+      // TODO: FIX THIS WITH THE NEW SERVICE!
       var searchText = this.$searchBox.val(),
           val = $.trim(searchText).replace(/ +/g, ' ').toLowerCase(),
           count = [];
@@ -70,36 +71,14 @@ define([
 
     _drawCountries: function() {
       var that = this;
-
-      var sql = ['SELECT ga28.iso,',
-                 'ST_Simplify(ST_RemoveRepeatedPoints(ga28.the_geom, 0.00005), 0.01) AS the_geom',
-                 'FROM gadm28_countries ga28',
-                 'INNER JOIN gfw_climate_config cc ON cc.iso = ga28.iso',
-                 '&format=topojson'].join(' ');
-
-      var sql_ = ['SELECT c.iso, m.the_geom',
-                  'FROM ne_50m_admin_0_countries m, gfw2_countries c',
-                  'WHERE c.iso = m.adm0_a3',
-                  "AND c.iso = 'TWN'&format=topojson"].join(' ');
-
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
-        for (var i = 0; i < Object.keys(topology.objects).length; i++) {
-          var iso = topology.objects[i].properties.iso;
-
-          var bounds = this.helper.draw(topology, i, iso, { alerts: false });
-
-          if (iso === 'CHN') {
-            that.bounds = bounds;
-
-            d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql_, _.bind(function(error, topology) {
-              this.helper.draw(topology, 0, 'CHN', { alerts: false, bounds: that.bounds});
-            }, this ));
-          }
-        }
-      }, this ));
+      CountryService.getCountries({ geo: true })
+        .then(function(countryData) {
+           this.countryList = new GeoListView({
+              el: '.countries_list_index',
+              data: countryData
+            });
+        }.bind(this));
     }
-
-
   });
 
   return CountryListView;

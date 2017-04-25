@@ -20,7 +20,6 @@ define([
       this.iso = this.defaults.iso;
       this.country = this.defaults.country;
       this.ha = this.defaults.ha;
-      this.countryHelper = CountryHelper;
 
       this.init();
     },
@@ -54,7 +53,7 @@ define([
     },
 
     _renderGeo: function() {
-      this.countryHelper.draw(this.topoJSON, 0, 'country-geo', {
+      CountryHelper.draw(this.topoJSON, '#country-geo', {
         alerts: true,
         width: 170,
         height: 170

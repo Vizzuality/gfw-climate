@@ -8,16 +8,16 @@ define(['d3', 'topojson'], function(d3, topojson) {
         console.warn('el param is necessary');
         return null;
       }
+      var defaults = {
+        index: 0,
+        width: 300,
+        height: 300,
+        alerts: false,
+        bounds: false
+      }
+      var options = _.extend({}, defaults, params);
 
-      var options = {
-        c: params.c || 0,
-        width: params.width || 300,
-        height: params.height || 300,
-        alerts: params.alerts || false,
-        bounds: params.bounds || false
-      };
-
-      var country = topojson.feature(topology, topology.objects[options.c]);
+      var country = topojson.feature(topology, topology.objects[options.index]);
 
       // if ($('body').hasClass('is-compare-page')) {
       //   var width = 150, height = 150;
@@ -88,7 +88,7 @@ define(['d3', 'topojson'], function(d3, topojson) {
           .style('fill', '#AAC600');
       }
 
-      return true;
+      return country;
     }
   };
 
