@@ -8,16 +8,29 @@ define(
   function(Backbone, Handlebars, CountryHelper, tpl) {
     'use strict';
     var GeoListView = Backbone.View.extend({
+
+      events : {
+        'keyup #searchCountry' : 'searchCountries',
+        'focus #searchCountry' : 'scrollTo'
+      },
+
       template: Handlebars.compile(tpl),
 
       initialize: function(settings) {
         this.params = _.extend({}, this.defaults, settings);
         this.render(this.params);
         this.renderGeo(this.params.data);
+        this.cache();
+      },
+
+      cache: function(data) {
+        this.$searchBox = $('#searchCountry');
+        this.$countries = $('.country');
       },
 
       render: function(data) {
         this.$el.html(this.template(data));
+        return this;
       },
 
       renderGeo: function(data) {
@@ -32,7 +45,44 @@ define(
             }
           }
         }
-      }
+      },
+
+      scrollTo: function() {
+        $('html,body').animate({
+          scrollTop: this.$searchBox.offset().top - 20
+        });
+      },
+
+      searchCountries: function(e) {
+        // TODO: move this to the presenter
+        var searchText = this.$searchBox.val(),
+          val = $.trim(searchText).replace(/ +/g, ' ').toLowerCase(),
+          count = [];
+
+        this.$countries
+          .show()
+          .filter(function() {
+            var text = $(this)
+              .find('.country-name')
+              .text()
+              .replace(/\s+/g, ' ')
+              .toLowerCase();
+            text.indexOf(val) != -1 ? count.push($(this)) : null;
+            return !~text.indexOf(val);
+          })
+          .hide();
+
+        count.length == 1
+          ? this.$searchBox.addClass('is-active')
+          : this.$searchBox.removeClass('is-active');
+
+        if (e) {
+          if (e.keyCode == 13 && count.length == 1) {
+            var href = $(count[0]).find('.country-href').attr('href');
+            window.location = href;
+          }
+        }
+      },
     });
     return GeoListView;
   }
