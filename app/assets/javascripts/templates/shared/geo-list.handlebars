@@ -1,9 +1,11 @@
 <ul class="inner countries_list_index">
   {{#each data}}
     <li class="country">
-      <a href="/countries/{{this.iso}}">
+      <a class="country-href" href="/countries/{{this.iso}}/report">
+        <span class="country-content">
+          <h3 class="country-name">{{this.name}}</h3>
+        </span>
         <div id="{{this.iso}}-geometry"></div>
-        <h3 class="country-name">{{this.name}}</h3>
       </a>
     </li>
   {{/each}}
