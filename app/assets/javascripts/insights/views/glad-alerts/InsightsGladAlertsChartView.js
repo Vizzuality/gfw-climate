@@ -1,11 +1,12 @@
 define([
   'backbone',
+  'handlebars',
   'underscore',
   'd3',
   'moment',
   'helpers/NumbersHelper',
   'text!insights/templates/glad-alerts/insights-glad-alerts-tooltip.handlebars',
-], function(Backbone, _, d3, moment, NumbersHelper, tplTooltip) {
+], function(Backbone, Handlebars, _, d3, moment, NumbersHelper, tplTooltip) {
 
   'use strict';
 
