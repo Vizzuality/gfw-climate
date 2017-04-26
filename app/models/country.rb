@@ -33,18 +33,18 @@ class Country
 
     def index_query
       <<-SQL
-       SELECT DISTINCT climate_iso AS iso, name_0 AS name, centroid AS latlng
-       FROM #{CDB_COUNTRIES_TABLE}
-       WHERE climate_iso IS NOT NULL
+       SELECT DISTINCT ga28.iso, name_engli AS name, centroid AS latlng
+       FROM #{CDB_COUNTRIES_TABLE} ga28
+       INNER JOIN gfw_climate_config cc ON cc.iso = ga28.iso
        ORDER BY name
       SQL
     end
 
     def country_data iso
      sql = <<-SQL
-      SELECT climate_iso AS iso, name_0 AS name, centroid AS latlng
+      SELECT iso, name_engli AS name, centroid AS latlng
       FROM #{CDB_COUNTRIES_TABLE}
-      WHERE UPPER(climate_iso) = UPPER('#{iso}')
+      WHERE UPPER(iso) = UPPER('#{iso}')
      SQL
 
      get(base_countries_path+sql)['rows'].first

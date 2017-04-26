@@ -2,5 +2,5 @@ ADMIN_BOUNDARY_ID = 1
 CDB_INDICATORS_VALUES_TABLE = "indicators_values"
 CDB_INDICATORS_TABLE = "indicators"
 CDB_BOUNDARIES_TABLE="boundaries_table"
-CDB_COUNTRIES_TABLE = "gadm27_adm0"
-CDB_SUBNAT_TABLE = "gadm27_adm1"
+CDB_COUNTRIES_TABLE = "gadm28_countries"
+CDB_SUBNAT_TABLE = "gadm28_adm1"

@@ -14,7 +14,7 @@ define([
     requestId: 'RegionService',
 
     _uriTemplate: ['http://wri-01.cartodb.com/api/v1/sql?q=',
-                   'SELECT * FROM gadm27_adm1',
+                   'SELECT * FROM gadm28_adm1',
                    "where iso='{iso}' AND id_1={id1}",
                    '&format=geojson'].join(' '),
 
