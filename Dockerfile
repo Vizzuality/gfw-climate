@@ -7,7 +7,7 @@ RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - \
     && rm -rf /var/cache/apt \
     && npm install -g yarn
 
-MAINTAINER Sebastian Schkudlara "sebastian.schkudlara@vizzuality.com"
+MAINTAINER Benjamin Laken "benjamin.laken@vizzuality.com"
 
 ENV BUILD_PACKAGES bash curl build-essential libxml2 imagemagick libmagickcore-dev libmagickwand-dev
 
