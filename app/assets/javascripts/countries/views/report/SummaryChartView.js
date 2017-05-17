@@ -72,13 +72,13 @@ define([
     _initYearSlider: function() {
       nouislider.create(this.yearsSlider, {
         start: [this.defaults.startYear, this.defaults.commonYear, this.defaults.endYear],
-      	animate: true,
+      animate: true,
         connect: [false, true, true, false],
         step: 1,
-      	range: {
+      range: {
           min: this.defaults.minYear,
           max: this.defaults.maxYear
-      	}
+      }
       });
 
       this.yearsSlider.noUiSlider.on('slide', function(value) {
