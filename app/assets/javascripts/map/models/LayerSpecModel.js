@@ -21,6 +21,7 @@ define([
       "gtm_forest_density",
       "gtm_forest_change2",
       "WMSLayer",
+      "total_carbon",
       "hwsd",
       //LAND COVER
       "cod_primary_forest_wgs",
