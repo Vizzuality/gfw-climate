@@ -462,7 +462,9 @@ define([
       for (var i = 1999; i < 2013; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
-      this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
+      // The below line greys out areas outside of the tropics, using a
+      // geojson in map/geojson_overlays/tropics.json. Deactivated 29th May 2017
+      //this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
     },
 
     /**
