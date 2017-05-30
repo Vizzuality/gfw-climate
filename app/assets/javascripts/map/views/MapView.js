@@ -18,10 +18,9 @@ define([
   'map/views/maptypes/basemapStyles',
   'map/views/GeoStylingView',
   'map/helpers/layersHelper',
-  'text!map/geojson_overlays/tropics.json'
 ], function(Backbone, _, enquire, mps, Presenter, grayscaleMaptype, treeheightMaptype,
   darkMaptype, positronMaptype, landsatMaptype, BasemapStyles, GeoStylingView,
-  layersHelper, tropicsOverlay) {
+  layersHelper) {
 
   'use strict';
 
@@ -462,7 +461,6 @@ define([
       for (var i = 1999; i < 2013; i++) {
         this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
-      this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
     },
 
     /**
