@@ -13,6 +13,7 @@ define([
   'map/views/layers/BiomassLossLayer',
   'map/views/layers/DrcPrimaryForestLayer',
   'map/views/layers/IdnPeatLandsLayer',
+  'map/views/layers/TotalCarbonLayer',
   'map/views/layers/SoilOrganicCarbonDLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
@@ -122,6 +123,7 @@ define([
   BiomassLoss,
   DrcPrimaryForestLayer,
   IdnPeatLandsLayer,
+  TotalCarbonLayer,
   SoilOrganicCarbonDLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
@@ -394,6 +396,9 @@ define([
     },
     idn_peatland_drainage: {
       view: PeatLandsDrainageLayer
+    },
+    total_carbon: {
+      view: TotalCarbonLayer
     },
     hwsd: {
       view: SoilOrganicCarbonDLayer
