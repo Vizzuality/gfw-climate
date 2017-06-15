@@ -28,13 +28,13 @@ class Indicator
 
       # Allowed values for thresh: 10, 15, 20, 25, 30, 50, 75
       url =  base_path
-      url += show_query(indicator_id, iso, id_1, area, thresh_value)
+      url += show_query(indicator_id, iso, id_1, area, thresh_value) + ' ORDER BY year'
 
       ids = "#{iso}_#{id_1}_#{area}"
 
       timeouts do
         item_caching(indicator_id, ids, nil, thresh_value) do
-          get(url)['rows'].blank? ? {} : get(url)['rows'].sort_by { |i| i['year'] }
+          get(url)['rows'].blank? ? {} : get(url)['rows']
         end
       end
     end

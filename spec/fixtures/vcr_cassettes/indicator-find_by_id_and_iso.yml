@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20indicator_id,%20values.cartodb_id%20AS%20cartodb_id,%20values.iso,%20values.sub_nat_id,%20values.boundary,%20values.boundary_id,%20values.thresh,%20values.the_geom,%20values.the_geom_webmercator,%20values.admin0_name,%20values.year,%20values.value,%20values.text_value,%20subnat.name_1%20AS%20sub_nat_name,%20boundaries.boundary_name%20FROM%20indicators_values%20AS%20values%20LEFT%20JOIN%20gadm28_adm1%20AS%20subnat%20ON%20values.sub_nat_id%20=%20subnat.id_1%20AND%20values.iso%20=%20subnat.iso%20LEFT%20JOIN%20boundaries_table%20AS%20boundaries%20ON%20values.boundary_id%20=%20boundaries.cartodb_id%20WHERE%20indicator_id%20=%201%20AND%20(value%20IS%20NOT%20NULL%20OR%20text_value%20IS%20NOT%20NULL)%20AND%20thresh%20=%2025%20AND%20values.iso%20=%20UPPER(%27bra%27)%20AND%20values.sub_nat_id%20IS%20NULL%20AND%20values.boundary_id%20=%201
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20indicator_id,%20values.cartodb_id%20AS%20cartodb_id,%20values.iso,%20values.sub_nat_id,%20values.boundary,%20values.boundary_id,%20values.thresh,%20values.the_geom,%20values.the_geom_webmercator,%20values.admin0_name,%20values.year,%20values.value,%20values.text_value,%20subnat.name_1%20AS%20sub_nat_name,%20boundaries.boundary_name%20FROM%20indicators_values%20AS%20values%20LEFT%20JOIN%20gadm28_adm1%20AS%20subnat%20ON%20values.sub_nat_id%20=%20subnat.id_1%20AND%20values.iso%20=%20subnat.iso%20LEFT%20JOIN%20boundaries_table%20AS%20boundaries%20ON%20values.boundary_id%20=%20boundaries.cartodb_id%20WHERE%20indicator_id%20=%201%20AND%20(value%20IS%20NOT%20NULL%20OR%20text_value%20IS%20NOT%20NULL)%20AND%20thresh%20=%2025%20AND%20values.iso%20=%20UPPER(%27bra%27)%20AND%20values.sub_nat_id%20IS%20NULL%20AND%20values.boundary_id%20=%201%20ORDER%20BY%20year
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Thu, 15 Jun 2017 08:46:41 GMT
+      - Thu, 15 Jun 2017 08:54:59 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -35,7 +35,7 @@ http_interactions:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Thu, 15 Jun 2017 08:46:41
+      - inline; filename=cartodb-query.json; modification-date="Thu, 15 Jun 2017 08:54:59
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
@@ -44,9 +44,9 @@ http_interactions:
       Last-Modified:
       - Wed, 07 Jun 2017 18:37:22 GMT
       X-Sqlapi-Profiler:
-      - '{"setDBAuth":1,"queryExplain":9,"eventedQuery":1,"beforeSink":426,"total":437}'
+      - '{"setDBAuth":1,"queryExplain":8,"eventedQuery":1,"beforeSink":426,"total":436}'
       X-Varnish:
-      - '1524073292'
+      - '1524118212'
       Age:
       - '0'
       X-Cache:
@@ -68,12 +68,12 @@ http_interactions:
         boundary"},{"indicator_id":1,"cartodb_id":16634748,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2013,"value":1977760.84,"text_value":"null","sub_nat_name":null,"boundary_name":"administrative
         boundary"},{"indicator_id":1,"cartodb_id":16634899,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2014,"value":2740442.79,"text_value":"null","sub_nat_name":null,"boundary_name":"administrative
         boundary"},{"indicator_id":1,"cartodb_id":16635046,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2015,"value":2261281.62,"text_value":"null","sub_nat_name":null,"boundary_name":"administrative
-        boundary"}],"time":0.429,"fields":{"indicator_id":{"type":"number"},"cartodb_id":{"type":"number"},"iso":{"type":"string"},"sub_nat_id":{"type":"number"},"boundary":{"type":"string"},"boundary_id":{"type":"number"},"thresh":{"type":"number"},"the_geom":{"type":"geometry"},"the_geom_webmercator":{"type":"geometry"},"admin0_name":{"type":"string"},"year":{"type":"number"},"value":{"type":"number"},"text_value":{"type":"string"},"sub_nat_name":{"type":"string"},"boundary_name":{"type":"string"}},"total_rows":15}'
+        boundary"}],"time":0.428,"fields":{"indicator_id":{"type":"number"},"cartodb_id":{"type":"number"},"iso":{"type":"string"},"sub_nat_id":{"type":"number"},"boundary":{"type":"string"},"boundary_id":{"type":"number"},"thresh":{"type":"number"},"the_geom":{"type":"geometry"},"the_geom_webmercator":{"type":"geometry"},"admin0_name":{"type":"string"},"year":{"type":"number"},"value":{"type":"number"},"text_value":{"type":"string"},"sub_nat_name":{"type":"string"},"boundary_name":{"type":"string"}},"total_rows":15}'
     http_version: 
-  recorded_at: Thu, 15 Jun 2017 08:46:41 GMT
+  recorded_at: Thu, 15 Jun 2017 08:54:59 GMT
 - request:
     method: get
-    uri: https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20indicator_id,%20values.cartodb_id%20AS%20cartodb_id,%20values.iso,%20values.sub_nat_id,%20values.boundary,%20values.boundary_id,%20values.thresh,%20values.the_geom,%20values.the_geom_webmercator,%20values.admin0_name,%20values.year,%20values.value,%20values.text_value,%20subnat.name_1%20AS%20sub_nat_name,%20boundaries.boundary_name%20FROM%20indicators_values%20AS%20values%20LEFT%20JOIN%20gadm28_adm1%20AS%20subnat%20ON%20values.sub_nat_id%20=%20subnat.id_1%20AND%20values.iso%20=%20subnat.iso%20LEFT%20JOIN%20boundaries_table%20AS%20boundaries%20ON%20values.boundary_id%20=%20boundaries.cartodb_id%20WHERE%20indicator_id%20=%201%20AND%20(value%20IS%20NOT%20NULL%20OR%20text_value%20IS%20NOT%20NULL)%20AND%20thresh%20=%2025%20AND%20values.iso%20=%20UPPER(%27bra%27)%20AND%20values.sub_nat_id%20IS%20NULL%20AND%20values.boundary_id%20=%201
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20indicator_id,%20values.cartodb_id%20AS%20cartodb_id,%20values.iso,%20values.sub_nat_id,%20values.boundary,%20values.boundary_id,%20values.thresh,%20values.the_geom,%20values.the_geom_webmercator,%20values.admin0_name,%20values.year,%20values.value,%20values.text_value,%20subnat.name_1%20AS%20sub_nat_name,%20boundaries.boundary_name%20FROM%20indicators_values%20AS%20values%20LEFT%20JOIN%20gadm28_adm1%20AS%20subnat%20ON%20values.sub_nat_id%20=%20subnat.id_1%20AND%20values.iso%20=%20subnat.iso%20LEFT%20JOIN%20boundaries_table%20AS%20boundaries%20ON%20values.boundary_id%20=%20boundaries.cartodb_id%20WHERE%20indicator_id%20=%201%20AND%20(value%20IS%20NOT%20NULL%20OR%20text_value%20IS%20NOT%20NULL)%20AND%20thresh%20=%2025%20AND%20values.iso%20=%20UPPER(%27bra%27)%20AND%20values.sub_nat_id%20IS%20NULL%20AND%20values.boundary_id%20=%201%20ORDER%20BY%20year
     body:
       encoding: US-ASCII
       string: ''
@@ -92,7 +92,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Thu, 15 Jun 2017 08:46:42 GMT
+      - Thu, 15 Jun 2017 08:55:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -106,7 +106,7 @@ http_interactions:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Thu, 15 Jun 2017 08:46:41
+      - inline; filename=cartodb-query.json; modification-date="Thu, 15 Jun 2017 08:54:59
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
@@ -115,9 +115,9 @@ http_interactions:
       Last-Modified:
       - Wed, 07 Jun 2017 18:37:22 GMT
       X-Sqlapi-Profiler:
-      - '{"setDBAuth":1,"queryExplain":9,"eventedQuery":1,"beforeSink":426,"total":437}'
+      - '{"setDBAuth":1,"queryExplain":8,"eventedQuery":1,"beforeSink":426,"total":436}'
       X-Varnish:
-      - 1524073418 1524073292
+      - 1524118365 1524118212
       Age:
       - '1'
       X-Cache:
@@ -139,7 +139,7 @@ http_interactions:
         boundary"},{"indicator_id":1,"cartodb_id":16634748,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2013,"value":1977760.84,"text_value":"null","sub_nat_name":null,"boundary_name":"administrative
         boundary"},{"indicator_id":1,"cartodb_id":16634899,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2014,"value":2740442.79,"text_value":"null","sub_nat_name":null,"boundary_name":"administrative
         boundary"},{"indicator_id":1,"cartodb_id":16635046,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2015,"value":2261281.62,"text_value":"null","sub_nat_name":null,"boundary_name":"administrative
-        boundary"}],"time":0.429,"fields":{"indicator_id":{"type":"number"},"cartodb_id":{"type":"number"},"iso":{"type":"string"},"sub_nat_id":{"type":"number"},"boundary":{"type":"string"},"boundary_id":{"type":"number"},"thresh":{"type":"number"},"the_geom":{"type":"geometry"},"the_geom_webmercator":{"type":"geometry"},"admin0_name":{"type":"string"},"year":{"type":"number"},"value":{"type":"number"},"text_value":{"type":"string"},"sub_nat_name":{"type":"string"},"boundary_name":{"type":"string"}},"total_rows":15}'
+        boundary"}],"time":0.428,"fields":{"indicator_id":{"type":"number"},"cartodb_id":{"type":"number"},"iso":{"type":"string"},"sub_nat_id":{"type":"number"},"boundary":{"type":"string"},"boundary_id":{"type":"number"},"thresh":{"type":"number"},"the_geom":{"type":"geometry"},"the_geom_webmercator":{"type":"geometry"},"admin0_name":{"type":"string"},"year":{"type":"number"},"value":{"type":"number"},"text_value":{"type":"string"},"sub_nat_name":{"type":"string"},"boundary_name":{"type":"string"}},"total_rows":15}'
     http_version: 
-  recorded_at: Thu, 15 Jun 2017 08:46:42 GMT
+  recorded_at: Thu, 15 Jun 2017 08:55:00 GMT
 recorded_with: VCR 3.0.3
