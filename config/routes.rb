@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       resources :widgets, only: [:index, :show]
 
       resources :downloads, only: :index
+      resources :data_portal_downloads, only: :index
 
       resources :reports, only: [:index]
 

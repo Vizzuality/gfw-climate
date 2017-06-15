@@ -1,0 +1,3 @@
+class DataPortalDownload < Download
+
+end
