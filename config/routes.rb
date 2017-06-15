@@ -58,11 +58,12 @@ Rails.application.routes.draw do
     # Set APIVersion.new(version: X, default: true) for dafault API version
     scope module: :v1, constraints: APIVersion.new(version: 1, current: true) do
 
-      with_options only: [:index, :show] do |list_show_only|
-        list_show_only.resources :indicators
-        list_show_only.resources :countries
-        list_show_only.resources :widgets
-      end
+      resources :indicators, only: [:index, :show]
+      resources :countries, only: [:index, :show]
+      resources :widgets, only: [:index, :show]
+
+      resources :downloads, only: :index
+      resources :data_portal_downloads, only: :index
 
       resources :reports, only: [:index]
 
