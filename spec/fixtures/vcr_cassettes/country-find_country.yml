@@ -1,0 +1,369 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20SELECT%20iso,%20name_engli%20AS%20name,%20centroid%20AS%20latlng%20%20%20%20%20%20FROM%20gadm28_countries%20%20%20%20%20%20WHERE%20UPPER(iso)%20=%20UPPER(%27bra%27)
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty
+      Date:
+      - Wed, 14 Jun 2017 13:46:57 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '239'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Prototype-Version, X-CSRF-Token
+      Content-Disposition:
+      - inline; filename=cartodb-query.json; modification-date="Wed, 14 Jun 2017 13:46:57
+        GMT";
+      Cache-Control:
+      - no-cache,max-age=31536000,must-revalidate,public
+      Surrogate-Key:
+      - t:QiX7Tw
+      Last-Modified:
+      - Fri, 17 Mar 2017 14:27:06 GMT
+      X-Sqlapi-Profiler:
+      - '{"setDBAuth":1,"queryExplain":6,"eventedQuery":1,"beforeSink":3,"total":11}'
+      X-Varnish:
+      - '71917002'
+      Age:
+      - '0'
+      X-Cache:
+      - MISS
+    body:
+      encoding: UTF-8
+      string: '{"rows":[{"iso":"BRA","name":"Brazil","latlng":"{\"type\":\"Point\",\"coordinates\":[-53.0924814310442,-10.78085967622]}"}],"time":0.003,"fields":{"iso":{"type":"string"},"name":{"type":"string"},"latlng":{"type":"string"}},"total_rows":1}'
+    http_version: 
+  recorded_at: Wed, 14 Jun 2017 13:46:57 GMT
+- request:
+    method: get
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20%20%20SELECT%20name_1%20AS%20jurisdiction_name,%20iso,%20id_1,%20%20%20%20%20%20%20%20%20%20cartodb_id,%20ST_AsGeoJSON(ST_Envelope(the_geom))::json%20AS%20bounds%20%20%20%20%20%20%20%20FROM%20gadm28_adm1%20%20%20%20%20%20%20%20WHERE%20UPPER(iso)%20=%20UPPER(%27bra%27)%20%20%20%20%20%20%20%20ORDER%20by%20jurisdiction_name
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty
+      Date:
+      - Wed, 14 Jun 2017 13:46:57 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Prototype-Version, X-CSRF-Token
+      Content-Disposition:
+      - inline; filename=cartodb-query.json; modification-date="Wed, 14 Jun 2017 13:46:57
+        GMT";
+      Cache-Control:
+      - no-cache,max-age=31536000,must-revalidate,public
+      Surrogate-Key:
+      - t:d7vJOZ
+      Last-Modified:
+      - Fri, 24 Mar 2017 08:38:35 GMT
+      X-Sqlapi-Profiler:
+      - '{"setDBAuth":1,"queryExplain":7,"eventedQuery":1,"beforeSink":18,"total":27}'
+      X-Varnish:
+      - '71917067'
+      Age:
+      - '0'
+      X-Cache:
+      - MISS
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyb3dzIjpbeyJqdXJpc2RpY3Rpb25fbmFtZSI6IkFjcmUiLCJpc28iOiJC
+        UkEiLCJpZF8xIjoxLCJjYXJ0b2RiX2lkIjozNjEsImJvdW5kcyI6eyJ0eXBl
+        IjoiUG9seWdvbiIsImNvb3JkaW5hdGVzIjpbW1stNzMuOTg5NzA3OTQ2Nzc3
+        MywtMTEuMTQ1MTYwNjc1MDQ4OF0sWy03My45ODk3MDc5NDY3NzczLC03LjEy
+        MTMxOTc3MDgxMjkzXSxbLTY2LjU4ODc1Mjc0NjU4MiwtNy4xMjEzMTk3NzA4
+        MTI5M10sWy02Ni41ODg3NTI3NDY1ODIsLTExLjE0NTE2MDY3NTA0ODhdLFst
+        NzMuOTg5NzA3OTQ2Nzc3MywtMTEuMTQ1MTYwNjc1MDQ4OF1dXX19LHsianVy
+        aXNkaWN0aW9uX25hbWUiOiJBbGFnb2FzIiwiaXNvIjoiQlJBIiwiaWRfMSI6
+        MiwiY2FydG9kYl9pZCI6MzYyLCJib3VuZHMiOnsidHlwZSI6IlBvbHlnb24i
+        LCJjb29yZGluYXRlcyI6W1tbLTM4LjIzNjMzOTU2OTA5MTcsLTEwLjUwMTQz
+        NTI3OTg0NjFdLFstMzguMjM2MzM5NTY5MDkxNywtOC44MTQ5ODcxODI2MTcx
+        OV0sWy0zNS4xNTE4MjQ5NTExNzE5LC04LjgxNDk4NzE4MjYxNzE5XSxbLTM1
+        LjE1MTgyNDk1MTE3MTksLTEwLjUwMTQzNTI3OTg0NjFdLFstMzguMjM2MzM5
+        NTY5MDkxNywtMTAuNTAxNDM1Mjc5ODQ2MV1dXX19LHsianVyaXNkaWN0aW9u
+        X25hbWUiOiJBbWFww6EiLCJpc28iOiJCUkEiLCJpZF8xIjozLCJjYXJ0b2Ri
+        X2lkIjozNjMsImJvdW5kcyI6eyJ0eXBlIjoiUG9seWdvbiIsImNvb3JkaW5h
+        dGVzIjpbW1stNTQuODc2MTg2MzcwODQ5NiwtMS4yMzYwMDgwNDgwNTc1Nl0s
+        Wy01NC44NzYxODYzNzA4NDk2LDQuNDQyMzU5OTI0MzE2NDFdLFstNDkuODY2
+        ODA2MDMwMjczNCw0LjQ0MjM1OTkyNDMxNjQxXSxbLTQ5Ljg2NjgwNjAzMDI3
+        MzQsLTEuMjM2MDA4MDQ4MDU3NTZdLFstNTQuODc2MTg2MzcwODQ5NiwtMS4y
+        MzYwMDgwNDgwNTc1Nl1dXX19LHsianVyaXNkaWN0aW9uX25hbWUiOiJBbWF6
+        b25hcyIsImlzbyI6IkJSQSIsImlkXzEiOjQsImNhcnRvZGJfaWQiOjM2NCwi
+        Ym91bmRzIjp7InR5cGUiOiJQb2x5Z29uIiwiY29vcmRpbmF0ZXMiOltbWy03
+        My43OTU2NzcxODUwNTg2LC05LjgxNDUxOTg4MjIwMjA5XSxbLTczLjc5NTY3
+        NzE4NTA1ODYsMi4yNDYyMDEwMzgzNjA2NV0sWy01Ni4wOTc0OTYwMzI3MTQ4
+        LDIuMjQ2MjAxMDM4MzYwNjVdLFstNTYuMDk3NDk2MDMyNzE0OCwtOS44MTQ1
+        MTk4ODIyMDIwOV0sWy03My43OTU2NzcxODUwNTg2LC05LjgxNDUxOTg4MjIw
+        MjA5XV1dfX0seyJqdXJpc2RpY3Rpb25fbmFtZSI6IkJhaGlhIiwiaXNvIjoi
+        QlJBIiwiaWRfMSI6NSwiY2FydG9kYl9pZCI6MzY1LCJib3VuZHMiOnsidHlw
+        ZSI6IlBvbHlnb24iLCJjb29yZGluYXRlcyI6W1tbLTQ2LjYxNzA0NjM1NjIw
+        MTEsLTE4LjM0OTg1OTIzNzY3MDldLFstNDYuNjE3MDQ2MzU2MjAxMSwtOC41
+        MzM2MzYwOTMxMzk1OV0sWy0zNy4zNDkwMjk1NDEwMTU2LC04LjUzMzYzNjA5
+        MzEzOTU5XSxbLTM3LjM0OTAyOTU0MTAxNTYsLTE4LjM0OTg1OTIzNzY3MDld
+        LFstNDYuNjE3MDQ2MzU2MjAxMSwtMTguMzQ5ODU5MjM3NjcwOV1dXX19LHsi
+        anVyaXNkaWN0aW9uX25hbWUiOiJDZWFyw6EiLCJpc28iOiJCUkEiLCJpZF8x
+        Ijo2LCJjYXJ0b2RiX2lkIjozNjYsImJvdW5kcyI6eyJ0eXBlIjoiUG9seWdv
+        biIsImNvb3JkaW5hdGVzIjpbW1stNDEuNDIzNDY5NTQzNDU3LC03Ljg1ODE5
+        NTc4MTcwNzcxXSxbLTQxLjQyMzQ2OTU0MzQ1NywtMi43ODQ4NjEwODc3OTkw
+        N10sWy0zNy4yNTIwODI4MjQ3MDcsLTIuNzg0ODYxMDg3Nzk5MDddLFstMzcu
+        MjUyMDgyODI0NzA3LC03Ljg1ODE5NTc4MTcwNzcxXSxbLTQxLjQyMzQ2OTU0
+        MzQ1NywtNy44NTgxOTU3ODE3MDc3MV1dXX19LHsianVyaXNkaWN0aW9uX25h
+        bWUiOiJEaXN0cml0byBGZWRlcmFsIiwiaXNvIjoiQlJBIiwiaWRfMSI6Nywi
+        Y2FydG9kYl9pZCI6MzY3LCJib3VuZHMiOnsidHlwZSI6IlBvbHlnb24iLCJj
+        b29yZGluYXRlcyI6W1tbLTQ4LjI4NzA0ODMzOTg0MzgsLTE2LjA1MTc2MTYy
+        NzE5NzJdLFstNDguMjg3MDQ4MzM5ODQzOCwtMTUuNTAwMTY5NzU0MDI4M10s
+        Wy00Ny4zMDg1NDAzNDQyMzgyLC0xNS41MDAxNjk3NTQwMjgzXSxbLTQ3LjMw
+        ODU0MDM0NDIzODIsLTE2LjA1MTc2MTYyNzE5NzJdLFstNDguMjg3MDQ4MzM5
+        ODQzOCwtMTYuMDUxNzYxNjI3MTk3Ml1dXX19LHsianVyaXNkaWN0aW9uX25h
+        bWUiOiJFc3DDrXJpdG8gU2FudG8iLCJpc28iOiJCUkEiLCJpZF8xIjo4LCJj
+        YXJ0b2RiX2lkIjozNjgsImJvdW5kcyI6eyJ0eXBlIjoiUG9seWdvbiIsImNv
+        b3JkaW5hdGVzIjpbW1stNDEuODc4OTEzODc5Mzk0NCwtMjEuMjk3MTg5NzEy
+        NTI0NF0sWy00MS44Nzg5MTM4NzkzOTQ0LC0xNy44OTE5NDEwNzA1NTY2XSxb
+        LTI4Ljg0NzIxOTQ2NzE2MzEsLTE3Ljg5MTk0MTA3MDU1NjZdLFstMjguODQ3
+        MjE5NDY3MTYzMSwtMjEuMjk3MTg5NzEyNTI0NF0sWy00MS44Nzg5MTM4Nzkz
+        OTQ0LC0yMS4yOTcxODk3MTI1MjQ0XV1dfX0seyJqdXJpc2RpY3Rpb25fbmFt
+        ZSI6IkdvacOhcyIsImlzbyI6IkJSQSIsImlkXzEiOjksImNhcnRvZGJfaWQi
+        OjM2OSwiYm91bmRzIjp7InR5cGUiOiJQb2x5Z29uIiwiY29vcmRpbmF0ZXMi
+        OltbWy01My4yNTExNDgyMjM4NzcsLTE5LjQ5OTE0NzQxNTE2MTFdLFstNTMu
+        MjUxMTQ4MjIzODc3LC0xMi4zOTU5MzUwNTg1OTM4XSxbLTQ1LjkwNjkxNzU3
+        MjAyMTQsLTEyLjM5NTkzNTA1ODU5MzhdLFstNDUuOTA2OTE3NTcyMDIxNCwt
+        MTkuNDk5MTQ3NDE1MTYxMV0sWy01My4yNTExNDgyMjM4NzcsLTE5LjQ5OTE0
+        NzQxNTE2MTFdXV19fSx7Imp1cmlzZGljdGlvbl9uYW1lIjoiTWFyYW5ow6Nv
+        IiwiaXNvIjoiQlJBIiwiaWRfMSI6MTAsImNhcnRvZGJfaWQiOjM3MCwiYm91
+        bmRzIjp7InR5cGUiOiJQb2x5Z29uIiwiY29vcmRpbmF0ZXMiOltbWy00OC43
+        NTUxMDAyNTAyNDQsLTEwLjI2MDkzODY0NDQwOTFdLFstNDguNzU1MTAwMjUw
+        MjQ0LC0xLjA0ODE5NDA1MDc4ODgyXSxbLTQxLjc5NjY1NzU2MjI1NTksLTEu
+        MDQ4MTk0MDUwNzg4ODJdLFstNDEuNzk2NjU3NTYyMjU1OSwtMTAuMjYwOTM4
+        NjQ0NDA5MV0sWy00OC43NTUxMDAyNTAyNDQsLTEwLjI2MDkzODY0NDQwOTFd
+        XV19fSx7Imp1cmlzZGljdGlvbl9uYW1lIjoiTWF0byBHcm9zc28iLCJpc28i
+        OiJCUkEiLCJpZF8xIjoxMiwiY2FydG9kYl9pZCI6MzcyLCJib3VuZHMiOnsi
+        dHlwZSI6IlBvbHlnb24iLCJjb29yZGluYXRlcyI6W1tbLTYxLjYzMjc3MDUz
+        ODMzMDEsLTE4LjA0MjA0OTQwNzk1OV0sWy02MS42MzI3NzA1MzgzMzAxLC03
+        LjM0OTA0OTA5MTMzOTA1XSxbLTUwLjIyNDc1MDUxODc5ODgsLTcuMzQ5MDQ5
+        MDkxMzM5MDVdLFstNTAuMjI0NzUwNTE4Nzk4OCwtMTguMDQyMDQ5NDA3OTU5
+        XSxbLTYxLjYzMjc3MDUzODMzMDEsLTE4LjA0MjA0OTQwNzk1OV1dXX19LHsi
+        anVyaXNkaWN0aW9uX25hbWUiOiJNYXRvIEdyb3NzbyBkbyBTdWwiLCJpc28i
+        OiJCUkEiLCJpZF8xIjoxMSwiY2FydG9kYl9pZCI6MzcxLCJib3VuZHMiOnsi
+        dHlwZSI6IlBvbHlnb24iLCJjb29yZGluYXRlcyI6W1tbLTU4LjE2MjgzMDM1
+        Mjc4MzIsLTI0LjA2NzQ3NDM2NTIzNDRdLFstNTguMTYyODMwMzUyNzgzMiwt
+        MTcuMTY3MTk4MTgxMTUyM10sWy01MC45MjMwNjkwMDAyNDQxLC0xNy4xNjcx
+        OTgxODExNTIzXSxbLTUwLjkyMzA2OTAwMDI0NDEsLTI0LjA2NzQ3NDM2NTIz
+        NDRdLFstNTguMTYyODMwMzUyNzgzMiwtMjQuMDY3NDc0MzY1MjM0NF1dXX19
+        LHsianVyaXNkaWN0aW9uX25hbWUiOiJNaW5hcyBHZXJhaXMiLCJpc28iOiJC
+        UkEiLCJpZF8xIjoxMywiY2FydG9kYl9pZCI6MzczLCJib3VuZHMiOnsidHlw
+        ZSI6IlBvbHlnb24iLCJjb29yZGluYXRlcyI6W1tbLTUxLjA0NTg4MzE3ODcx
+        MDksLTIyLjkyMjc0NjY1ODMyNTFdLFstNTEuMDQ1ODgzMTc4NzEwOSwtMTQu
+        MjMzNDI3MDQ3NzI5NV0sWy0zOS44NTY3NjE5MzIzNzMsLTE0LjIzMzQyNzA0
+        NzcyOTVdLFstMzkuODU2NzYxOTMyMzczLC0yMi45MjI3NDY2NTgzMjUxXSxb
+        LTUxLjA0NTg4MzE3ODcxMDksLTIyLjkyMjc0NjY1ODMyNTFdXV19fSx7Imp1
+        cmlzZGljdGlvbl9uYW1lIjoiUGFyw6EiLCJpc28iOiJCUkEiLCJpZF8xIjox
+        NCwiY2FydG9kYl9pZCI6Mzc0LCJib3VuZHMiOnsidHlwZSI6IlBvbHlnb24i
+        LCJjb29yZGluYXRlcyI6W1tbLTU4Ljg5ODI2NTgzODYyMywtOS44NDU2Mjk2
+        OTIwNzc1OF0sWy01OC44OTgyNjU4Mzg2MjMsMi42MzI0Nzk5MDYwODIyMV0s
+        Wy00Ni4wNTE0NTI2MzY3MTg4LDIuNjMyNDc5OTA2MDgyMjFdLFstNDYuMDUx
+        NDUyNjM2NzE4OCwtOS44NDU2Mjk2OTIwNzc1OF0sWy01OC44OTgyNjU4Mzg2
+        MjMsLTkuODQ1NjI5NjkyMDc3NThdXV19fSx7Imp1cmlzZGljdGlvbl9uYW1l
+        IjoiUGFyYcOtYmEiLCJpc28iOiJCUkEiLCJpZF8xIjoxNSwiY2FydG9kYl9p
+        ZCI6Mzc1LCJib3VuZHMiOnsidHlwZSI6IlBvbHlnb24iLCJjb29yZGluYXRl
+        cyI6W1tbLTQzLjAxNDUzMDE4MTg4NDcsLTkuNDM0MDA4NTk4MzI3NThdLFst
+        NDMuMDE0NTMwMTgxODg0NywtNi4wMjY5OTA4OTA1MDI4N10sWy0zNC43OTI5
+        MTUzNDQyMzgyLC02LjAyNjk5MDg5MDUwMjg3XSxbLTM0Ljc5MjkxNTM0NDIz
+        ODIsLTkuNDM0MDA4NTk4MzI3NThdLFstNDMuMDE0NTMwMTgxODg0NywtOS40
+        MzQwMDg1OTgzMjc1OF1dXX19LHsianVyaXNkaWN0aW9uX25hbWUiOiJQYXJh
+        bsOhIiwiaXNvIjoiQlJBIiwiaWRfMSI6MTYsImNhcnRvZGJfaWQiOjM3Niwi
+        Ym91bmRzIjp7InR5cGUiOiJQb2x5Z29uIiwiY29vcmRpbmF0ZXMiOltbWy01
+        NC42MTYwMjQwMTczMzQsLTI2LjcxNzI4MzI0ODkwMTRdLFstNTQuNjE2MDI0
+        MDE3MzM0LC0yMi41MTY2ODU0ODU4Mzk4XSxbLTQ4LjAyMzUwMjM0OTg1MzUs
+        LTIyLjUxNjY4NTQ4NTgzOThdLFstNDguMDIzNTAyMzQ5ODUzNSwtMjYuNzE3
+        MjgzMjQ4OTAxNF0sWy01NC42MTYwMjQwMTczMzQsLTI2LjcxNzI4MzI0ODkw
+        MTRdXV19fSx7Imp1cmlzZGljdGlvbl9uYW1lIjoiUGVybmFtYnVjbyIsImlz
+        byI6IkJSQSIsImlkXzEiOjE3LCJjYXJ0b2RiX2lkIjozNzcsImJvdW5kcyI6
+        eyJ0eXBlIjoiUG9seWdvbiIsImNvb3JkaW5hdGVzIjpbW1stNDEuMzU4MjY4
+        NzM3NzkyOSwtOS40ODI5MTY4MzE5NzAyMV0sWy00MS4zNTgyNjg3Mzc3OTI5
+        LC03LjI3NDE3NTE2NzA4Mzc0XSxbLTM0LjgwNzM2MTYwMjc4MzIsLTcuMjc0
+        MTc1MTY3MDgzNzRdLFstMzQuODA3MzYxNjAyNzgzMiwtOS40ODI5MTY4MzE5
+        NzAyMV0sWy00MS4zNTgyNjg3Mzc3OTI5LC05LjQ4MjkxNjgzMTk3MDIxXV1d
+        fX0seyJqdXJpc2RpY3Rpb25fbmFtZSI6IlBpYXXDrSIsImlzbyI6IkJSQSIs
+        ImlkXzEiOjE4LCJjYXJ0b2RiX2lkIjozNzgsImJvdW5kcyI6eyJ0eXBlIjoi
+        UG9seWdvbiIsImNvb3JkaW5hdGVzIjpbW1stNDUuOTk0MjQzNjIxODI2Miwt
+        MTAuOTI4NzY2MjUwNjEwM10sWy00NS45OTQyNDM2MjE4MjYyLC0yLjc0Mzc1
+        MDA5NTM2NzQzXSxbLTQwLjM3MDUyNTM2MDEwNzQsLTIuNzQzNzUwMDk1MzY3
+        NDNdLFstNDAuMzcwNTI1MzYwMTA3NCwtMTAuOTI4NzY2MjUwNjEwM10sWy00
+        NS45OTQyNDM2MjE4MjYyLC0xMC45Mjg3NjYyNTA2MTAzXV1dfX0seyJqdXJp
+        c2RpY3Rpb25fbmFtZSI6IlJpbyBkZSBKYW5laXJvIiwiaXNvIjoiQlJBIiwi
+        aWRfMSI6MTksImNhcnRvZGJfaWQiOjM3OSwiYm91bmRzIjp7InR5cGUiOiJQ
+        b2x5Z29uIiwiY29vcmRpbmF0ZXMiOltbWy00NC44ODg4ODE2ODMzNDk2LC0y
+        My4zNjk2NDYwNzIzODc2XSxbLTQ0Ljg4ODg4MTY4MzM0OTYsLTIwLjc2NDE0
+        NDg5NzQ2MDldLFstNDAuOTU3MzU5MzEzOTY0OCwtMjAuNzY0MTQ0ODk3NDYw
+        OV0sWy00MC45NTczNTkzMTM5NjQ4LC0yMy4zNjk2NDYwNzIzODc2XSxbLTQ0
+        Ljg4ODg4MTY4MzM0OTYsLTIzLjM2OTY0NjA3MjM4NzZdXV19fSx7Imp1cmlz
+        ZGljdGlvbl9uYW1lIjoiUmlvIEdyYW5kZSBkbyBOb3J0ZSIsImlzbyI6IkJS
+        QSIsImlkXzEiOjIwLCJjYXJ0b2RiX2lkIjozODAsImJvdW5kcyI6eyJ0eXBl
+        IjoiUG9seWdvbiIsImNvb3JkaW5hdGVzIjpbW1stMzguNjAxOTc0NDg3MzA0
+        NiwtNi45ODI3MzcwNjQzNjE1N10sWy0zOC42MDE5NzQ0ODczMDQ2LC0zLjgx
+        NzA4NDA3NDAyMDM5XSxbLTMyLjM4OTU4MzU4NzY0NjUsLTMuODE3MDg0MDc0
+        MDIwMzldLFstMzIuMzg5NTgzNTg3NjQ2NSwtNi45ODI3MzcwNjQzNjE1N10s
+        Wy0zOC42MDE5NzQ0ODczMDQ2LC02Ljk4MjczNzA2NDM2MTU3XV1dfX0seyJq
+        dXJpc2RpY3Rpb25fbmFtZSI6IlJpbyBHcmFuZGUgZG8gU3VsIiwiaXNvIjoi
+        QlJBIiwiaWRfMSI6MjEsImNhcnRvZGJfaWQiOjM4MSwiYm91bmRzIjp7InR5
+        cGUiOiJQb2x5Z29uIiwiY29vcmRpbmF0ZXMiOltbWy01Ny42MTUyMTE0ODY4
+        MTY0LC0zMy43NDcwODE3NTY1OTE4XSxbLTU3LjYxNTIxMTQ4NjgxNjQsLTI3
+        LjA4MDU4MzU3MjM4NzZdLFstNDkuNjkxNTc3OTExMzc2OSwtMjcuMDgwNTgz
+        NTcyMzg3Nl0sWy00OS42OTE1Nzc5MTEzNzY5LC0zMy43NDcwODE3NTY1OTE4
+        XSxbLTU3LjYxNTIxMTQ4NjgxNjQsLTMzLjc0NzA4MTc1NjU5MThdXV19fSx7
+        Imp1cmlzZGljdGlvbl9uYW1lIjoiUm9uZMO0bmlhIiwiaXNvIjoiQlJBIiwi
+        aWRfMSI6MjIsImNhcnRvZGJfaWQiOjM4MiwiYm91bmRzIjp7InR5cGUiOiJQ
+        b2x5Z29uIiwiY29vcmRpbmF0ZXMiOltbWy02Ni44MDY0NzI3NzgzMjAzLC0x
+        My41NTc1ODA5NDc4NzU5XSxbLTY2LjgwNjQ3Mjc3ODMyMDMsLTcuOTY5MzA4
+        ODUzMTQ5NDFdLFstNTkuNzc0Mjg4MTc3NDkwMiwtNy45NjkzMDg4NTMxNDk0
+        MV0sWy01OS43NzQyODgxNzc0OTAyLC0xMy41NTc1ODA5NDc4NzU5XSxbLTY2
+        LjgwNjQ3Mjc3ODMyMDMsLTEzLjU1NzU4MDk0Nzg3NTldXV19fSx7Imp1cmlz
+        ZGljdGlvbl9uYW1lIjoiUm9yYWltYSIsImlzbyI6IkJSQSIsImlkXzEiOjIz
+        LCJjYXJ0b2RiX2lkIjozODMsImJvdW5kcyI6eyJ0eXBlIjoiUG9seWdvbiIs
+        ImNvb3JkaW5hdGVzIjpbW1stNjQuODI0OTc0MDYwMDU4NSwtMS41ODA2NTcw
+        MDUzMTAwNl0sWy02NC44MjQ5NzQwNjAwNTg1LDUuMjY0ODc3Nzk2MTczMV0s
+        Wy01OC44OTE3OTk5MjY3NTc4LDUuMjY0ODc3Nzk2MTczMV0sWy01OC44OTE3
+        OTk5MjY3NTc4LC0xLjU4MDY1NzAwNTMxMDA2XSxbLTY0LjgyNDk3NDA2MDA1
+        ODUsLTEuNTgwNjU3MDA1MzEwMDZdXV19fSx7Imp1cmlzZGljdGlvbl9uYW1l
+        IjoiU2FudGEgQ2F0YXJpbmEiLCJpc28iOiJCUkEiLCJpZF8xIjoyNSwiY2Fy
+        dG9kYl9pZCI6Mzg1LCJib3VuZHMiOnsidHlwZSI6IlBvbHlnb24iLCJjb29y
+        ZGluYXRlcyI6W1tbLTU5LjI3NjczMzM5ODQzNzUsLTI5LjM1MTI2MTEzODkx
+        NTldLFstNTkuMjc2NzMzMzk4NDM3NSwtMi4yMzA2OTgxMDg2NzMxXSxbLTQ4
+        LjMyNzY0MDUzMzQ0NzIsLTIuMjMwNjk4MTA4NjczMV0sWy00OC4zMjc2NDA1
+        MzM0NDcyLC0yOS4zNTEyNjExMzg5MTU5XSxbLTU5LjI3NjczMzM5ODQzNzUs
+        LTI5LjM1MTI2MTEzODkxNTldXV19fSx7Imp1cmlzZGljdGlvbl9uYW1lIjoi
+        U8OjbyBQYXVsbyIsImlzbyI6IkJSQSIsImlkXzEiOjI0LCJjYXJ0b2RiX2lk
+        IjozODQsImJvdW5kcyI6eyJ0eXBlIjoiUG9seWdvbiIsImNvb3JkaW5hdGVz
+        IjpbW1stNTMuMTA5NjAzODgxODM1OSwtMjUuMzAyOTE3NDgwNDY4Nl0sWy01
+        My4xMDk2MDM4ODE4MzU5LC0xOS43Nzk2NTE2NDE4NDU3XSxbLTQzLjg1OTEw
+        Nzk3MTE5MTMsLTE5Ljc3OTY1MTY0MTg0NTddLFstNDMuODU5MTA3OTcxMTkx
+        MywtMjUuMzAyOTE3NDgwNDY4Nl0sWy01My4xMDk2MDM4ODE4MzU5LC0yNS4z
+        MDI5MTc0ODA0Njg2XV1dfX0seyJqdXJpc2RpY3Rpb25fbmFtZSI6IlNlcmdp
+        cGUiLCJpc28iOiJCUkEiLCJpZF8xIjoyNiwiY2FydG9kYl9pZCI6Mzg2LCJi
+        b3VuZHMiOnsidHlwZSI6IlBvbHlnb24iLCJjb29yZGluYXRlcyI6W1tbLTM4
+        LjI0NTU3MTEzNjQ3NDYsLTExLjcwNTA2NjY4MDkwODJdLFstMzguMjQ1NTcx
+        MTM2NDc0NiwtOS41MTUwMDUxMTE2OTQzNF0sWy0zNi4zOTEyNTA2MTAzNTE1
+        LC05LjUxNTAwNTExMTY5NDM0XSxbLTM2LjM5MTI1MDYxMDM1MTUsLTExLjcw
+        NTA2NjY4MDkwODJdLFstMzguMjQ1NTcxMTM2NDc0NiwtMTEuNzA1MDY2Njgw
+        OTA4Ml1dXX19LHsianVyaXNkaWN0aW9uX25hbWUiOiJUb2NhbnRpbnMiLCJp
+        c28iOiJCUkEiLCJpZF8xIjoyNywiY2FydG9kYl9pZCI6Mzg3LCJib3VuZHMi
+        OnsidHlwZSI6IlBvbHlnb24iLCJjb29yZGluYXRlcyI6W1tbLTUwLjc0MjAw
+        NDM5NDUzMTIsLTEzLjQ2NzcxNzE3MDcxNTNdLFstNTAuNzQyMDA0Mzk0NTMx
+        MiwtNS4xNjgzOTY5NDk3Njc5NV0sWy00NS42OTYwMzM0Nzc3ODMyLC01LjE2
+        ODM5Njk0OTc2Nzk1XSxbLTQ1LjY5NjAzMzQ3Nzc4MzIsLTEzLjQ2NzcxNzE3
+        MDcxNTNdLFstNTAuNzQyMDA0Mzk0NTMxMiwtMTMuNDY3NzE3MTcwNzE1M11d
+        XX19XSwidGltZSI6MC4wMjEsImZpZWxkcyI6eyJqdXJpc2RpY3Rpb25fbmFt
+        ZSI6eyJ0eXBlIjoic3RyaW5nIn0sImlzbyI6eyJ0eXBlIjoic3RyaW5nIn0s
+        ImlkXzEiOnsidHlwZSI6Im51bWJlciJ9LCJjYXJ0b2RiX2lkIjp7InR5cGUi
+        OiJudW1iZXIifSwiYm91bmRzIjp7InR5cGUiOiJKU09OIn19LCJ0b3RhbF9y
+        b3dzIjoyN30=
+    http_version: 
+  recorded_at: Wed, 14 Jun 2017 13:46:57 GMT
+- request:
+    method: get
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20%20%20SELECT%20DISTINCT%20boundary_id%20AS%20id,%20boundary_name%20AS%20name,%20boundary_code%20AS%20code%20%20%20%20%20%20%20%20FROM%20indicators_values%20i%20%20%20%20%20%20%20%20INNER%20JOIN%20boundaries_table%20b%20ON%20%20%20%20%20%20%20%20i.boundary_id%20=%20b.cartodb_id%20%20%20%20%20%20%20%20WHERE%20UPPER(iso)%20=%20UPPER(%27bra%27)%20AND%20%20%20%20%20%20%20%20boundary%20%3C%3E%20%27admin%27%20%20%20%20%20%20%20%20ORDER%20BY%20boundary_id
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty
+      Date:
+      - Wed, 14 Jun 2017 13:46:58 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '519'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Prototype-Version, X-CSRF-Token
+      Content-Disposition:
+      - inline; filename=cartodb-query.json; modification-date="Wed, 14 Jun 2017 13:46:58
+        GMT";
+      Cache-Control:
+      - no-cache,max-age=31536000,must-revalidate,public
+      Surrogate-Key:
+      - t:0Qor5H t:uiJFJp
+      Last-Modified:
+      - Wed, 07 Jun 2017 18:37:22 GMT
+      X-Sqlapi-Profiler:
+      - '{"setDBAuth":1,"queryExplain":8,"beforeSink":470,"total":479}'
+      X-Varnish:
+      - '71917156'
+      Age:
+      - '0'
+      X-Cache:
+      - MISS
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJyb3dzIjpbeyJpZCI6MywibmFtZSI6IkNhYXRpbmdhIiwiY29kZSI6ImJp
+        b18xIn0seyJpZCI6NCwibmFtZSI6IkNlcnJhZG8iLCJjb2RlIjoiYmlvXzIi
+        fSx7ImlkIjo1LCJuYW1lIjoiUGFudGFuYWwiLCJjb2RlIjoiYmlvXzMifSx7
+        ImlkIjo2LCJuYW1lIjoiUGFtcGEiLCJjb2RlIjoiYmlvXzQifSx7ImlkIjo3
+        LCJuYW1lIjoiQW1hesO0bmlhIiwiY29kZSI6ImJpb181In0seyJpZCI6OCwi
+        bmFtZSI6Ik1hdGEgQXRsw6JudGljYSIsImNvZGUiOiJiaW9fNiJ9LHsiaWQi
+        OjE0LCJuYW1lIjoiSW5kaWdlbm91cyBMYW5kcyIsImNvZGUiOiJpbmQifSx7
+        ImlkIjoyMiwibmFtZSI6IlBsYW50YXRpb25zIiwiY29kZSI6InBsdCJ9LHsi
+        aWQiOjI0LCJuYW1lIjoiUHJvdGVjdGVkIEFyZWFzIiwiY29kZSI6InByYSJ9
+        XSwidGltZSI6MC40NzEsImZpZWxkcyI6eyJpZCI6eyJ0eXBlIjoibnVtYmVy
+        In0sIm5hbWUiOnsidHlwZSI6InN0cmluZyJ9LCJjb2RlIjp7InR5cGUiOiJz
+        dHJpbmcifX0sInRvdGFsX3Jvd3MiOjl9
+    http_version: 
+  recorded_at: Wed, 14 Jun 2017 13:46:58 GMT
+recorded_with: VCR 3.0.3
