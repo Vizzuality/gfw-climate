@@ -25,10 +25,10 @@ class Download
   def as_zip
     validate_download
     results = Download.get(query_url)["rows"]
-    csv_files = results_to_csv(results)
+    files = results_to_files(results)
     temp_file = Tempfile.new("my_zip.zip")
     Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
-      csv_files.each do |filename, path|
+      files.each do |filename, path|
         # Two arguments:
         # # - The name of the file as it will appear in the archive
         # # - The original file, including the path to find it
@@ -53,6 +53,8 @@ class Download
     end
     file_names
   end
+
+  alias_method :results_to_files, :results_to_csv
 
   def query_url
     url = base_path
