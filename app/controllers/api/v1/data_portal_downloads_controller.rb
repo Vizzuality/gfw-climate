@@ -10,9 +10,18 @@ module Api::V1
     private
 
     def download_params
-      params.permit(:iso, :id_1, :area, :start_year, :end_year,
-                    {units: []}, {indicator_ids: []}, {thresholds: []},
-                    :json, :pivot)
+      params.permit(
+        {country_codes: []},
+        {jurisdiction_ids: []},
+        {area_ids: []},
+        :start_year,
+        :end_year,
+        {units: []},
+        {indicator_ids: []},
+        {thresholds: []},
+        :json,
+        :pivot
+      )
     end
   end
 end
