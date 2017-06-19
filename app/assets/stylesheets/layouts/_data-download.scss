@@ -1,0 +1,47 @@
+.l-header {
+  padding-top: 70px;
+  background-color: $dark-grey;
+
+  @media screen and (min-width: $br-mobile) {
+    padding: 70px 0 25px;
+  }
+}
+
+.header-static {
+  color: $white;
+  header {
+    font-weight: 300;
+  }
+  h2,h3,p{
+    max-width: 1024px;
+  }
+  h2 {
+    font-size: 35px;
+    padding: 0 0 15px;
+    @media (min-width: $br-mobile) {
+      font-size: 47px;
+    }
+
+  }
+  h3 {
+    font-size: 17px;
+    line-height: 1.25;
+    padding: 0 0 10px;
+    @media (min-width: $br-mobile) {
+      font-size: 19px;
+    }
+  }
+  h4{
+    text-align: center;
+    @media (min-width: $br-mobile) {
+      top: 30px;
+    }
+  }
+  p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  strong{
+    font-weight: 500;
+  }
+}

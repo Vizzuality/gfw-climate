@@ -18,6 +18,9 @@
         <a <% if controller?("compare") && action?("index") %>class="current"<% end %> href="/compare-countries">Country Comparisons</a>
       </li>
       <li>
+        <a <% if controller?("data_download") && action?("index") %>class="current"<% end %> href="/data-download">Data download</a>
+      </li>
+      <li>
         <a <% if (controller?("insights")) || (controller?("countries") && action?("pantropical"))  %>class="current"<% end %> href="/insights">Insights</a>
       </li>
       <li>
