@@ -97,8 +97,8 @@ class DataPortalDownload < Download
 
     # TODO: data sources?
 
-    where += "AND values.boundary_id #{@area_ids.empty? ? "=#{ADMIN_BOUNDARY_ID}" : "IN #{@area_ids.join(",")}"}"
-    where += "AND values.sub_nat_id #{@jurisdiction_ids.empty? ? 'IS NULL' : "IN #{@jurisdiction_ids.join(",")}"}"
+    where += " AND values.boundary_id #{@area_ids.empty? ? "=#{ADMIN_BOUNDARY_ID}" : "IN (#{@area_ids.join(",")})"}"
+    where += " AND values.sub_nat_id #{@jurisdiction_ids.empty? ? 'IS NULL' : "IN (#{@jurisdiction_ids.join(",")})"}"
 
     if @start_year && @end_year
       where += <<-SQL
