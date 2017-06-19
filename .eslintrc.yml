@@ -1,0 +1,10 @@
+---
+  extends:
+    - eslint-config-airbnb-es5
+  globals:
+    define: true
+    $: true
+  rules:
+    func-names: 0
+    space-before-function-paren: 0
+
