@@ -24,7 +24,7 @@ class Download
 
   def as_zip
     validate_download
-    results = Download.get(query_url)["rows"]
+    results = self.class.get(query_url)["rows"]
     files = results_to_files(results)
     temp_file = Tempfile.new("my_zip.zip")
     Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|

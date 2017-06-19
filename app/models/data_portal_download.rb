@@ -1,8 +1,15 @@
 class DataPortalDownload < Download
   def initialize options
+    @country_codes = options[:country_codes] || []
+    @jurisdiction_ids = options[:jurisdiction_ids] || []
+    @area_ids = options[:area_ids] || []
+    @start_year = options[:start_year]
+    @end_year = options[:end_year]
+    # TODO: data sources
+    @indicator_ids = options[:indicator_ids] || []
+    @thresholds = options[:thresholds] || []
     @json = options[:json]
     @pivot = options[:pivot]
-    super
   end
 
   def results_to_files(results)
@@ -52,7 +59,11 @@ class DataPortalDownload < Download
       core_headers = data.first.keys.reject{ |k| ['year', 'value'].include? k }
       years = Set.new
       data.each do |row_hash|
-        row_idx = rows.find_index { |r| r['indicator_id'] == row_hash['indicator_id'] && r['threshold'] == row_hash['threshold'] }
+        row_idx = rows.find_index do |r|
+          r['iso'] == row_hash['iso'] &&
+          r['indicator_id'] == row_hash['indicator_id'] &&
+          r['threshold'] == row_hash['threshold']
+        end
         unless row_idx.present?
           row = Hash[core_headers.map { |h| [h, row_hash[h]] }]
           rows << row
@@ -69,5 +80,38 @@ class DataPortalDownload < Download
       end
     end
     [headers, rows]
+  end
+
+  def where_clause
+    where = <<-SQL
+      WHERE indicators.indicator_id IN (#{@indicator_ids.join(",")})
+    SQL
+
+    if @country_codes.any?
+      where += "AND values.iso IN (#{@country_codes.map { |c| "'" + c + "'"}.join(",")})"
+    end
+
+    if @thresholds.any?
+      where += "AND thresh IN (#{@thresholds.join(",")})"
+    end
+
+    # TODO: data sources?
+
+    where += "AND values.boundary_id #{@area_ids.empty? ? "=#{ADMIN_BOUNDARY_ID}" : "IN #{@area_ids.join(",")}"}"
+    where += "AND values.sub_nat_id #{@jurisdiction_ids.empty? ? 'IS NULL' : "IN #{@jurisdiction_ids.join(",")}"}"
+
+    if @start_year && @end_year
+      where += <<-SQL
+        AND values.year >= #{@start_year}
+        AND values.year <= #{@end_year}
+      SQL
+    end
+    where
+  end
+
+  def validate_download
+    if @indicator_ids.empty?
+      raise "Please specify at least one indicator, param: indicator_ids[]"
+    end
   end
 end
