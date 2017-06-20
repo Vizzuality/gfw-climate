@@ -1,15 +1,97 @@
 .l-header
-  header.header-static
+  header.header
     .row
       .column
         h2 Data download
     .row
       .column
-        h3 Top downloads
+        h3 TOP DOWNLOADS
     .row
       .column.small-12.medium-4
-        span  widget1
+        .download-top-card
+          .content
+            p.title CO2 emissions
+            span.detail
+              | (all countries and years)
+          .actions
+            button.action.-info
+              svg
+                use xlink:href="#icon-info"
+            a.action target="_blank" href="/api/data_portal_downloads?indicator_ids[]=14&indicator_ids[]=1003&pivot=1"
+              svg
+                use xlink:href="#icon-download"
       .column.small-12.medium-4
-        span  widget2
+        .download-top-card
+          .content
+            p.title Area of forest loss
+            span.detail
+              | (all countries and years)
+          .actions
+            button.action.-info
+              svg
+                use xlink:href="#icon-info"
+            a.action target="_blank" href="/api/data_portal_downloads?indicator_ids[]=1&indicator_ids[]=1000&pivot=1"
+              svg
+                use xlink:href="#icon-download"
       .column.small-12.medium-4
-        span  widget3
+        .download-top-card
+          .content
+            p.title Average carbon density
+            span.detail
+              | (all countries)
+          .actions
+            button.action.-info
+              svg
+                use xlink:href="#icon-info"
+            a.action target="_blank" href="/api/data_portal_downloads?indicator_ids[]=10&pivot=1"
+              svg
+                use xlink:href="#icon-download"
+
+.l-content
+  section.content
+    .row
+      .column
+        h3 CREATE A CUSTOM DATASET
+    .row
+      .column.small-12.medium-4
+        .dowload-select-card
+          .header
+            .search-filter-box
+              input#searchCountry autofocus="true" placeholder=("Countries") type="text"
+            .selector
+              input type="checkbox" name="select-all" id="select-all" value="true" checked="true"
+              label for="select-all"
+          .content
+            ul.filter-list
+              li.list-item
+                span Afhganishtan
+                .selector
+                  input type="checkbox" name="select-afg" id="select-afg" value="true"
+                  label for="select-afg"
+              li.list-item
+                span Albania
+                .selector
+                  input type="checkbox" name="select-alb" id="select-alb" value="true"
+                  label for="select-alb"
+              li.list-item
+                span Algeria
+                .selector
+                  input type="checkbox" name="select-arg" id="select-arg" value="true"
+                  label for="select-arg"
+.l-footer
+  footer
+    .row
+      .column.small-6.medium-2
+        h4 Output Type
+        .c-switch
+          ul.switcher-track
+            li.switcher-item.is-active Table
+            li.switcher-item Pivot
+      .column.small-6.medium-2
+        h4 File
+        .c-switch
+          ul.switcher-track
+            li.switcher-item.is-active .csv
+            li.switcher-item .json
+      .column.small-12.medium-2.medium-offset-6
+        button.btn.blue.medium  Download

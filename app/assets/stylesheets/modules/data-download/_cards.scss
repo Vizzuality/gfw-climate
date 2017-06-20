@@ -1,0 +1,115 @@
+.download-top-card {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: solid 1px rgba($white, 0.3);
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .content {
+    .title {
+      font-size: 16px;
+      font-weight: 500;
+      color: $blue3;
+    }
+    .detail {
+      font-size: 14px;
+      font-weight: 300;
+      color: white;
+      opacity: 0.5;
+    }
+  }
+  .actions {
+    > .action {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      background: none;
+      border: 0;
+      padding: 0;
+      outline: none;
+      cursor: pointer;
+
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+
+      > svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.dowload-select-card {
+  border-radius: 5px;
+  border: solid 1px $grey;
+  margin: 15px 0;
+
+  > .header {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px $grey;
+    padding: 0 15px;
+  }
+
+  .filter-list {
+    height: 220px;
+    overflow: scroll;
+    padding: 5px 0;
+
+    .list-item {
+      padding: 5px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      > span {
+        font-size: 14px;
+        line-height: 2.14;
+        text-align: left;
+        color: rgba($black, 0.5);
+      }
+    }
+  }
+
+  .selector {
+    position: relative;
+    margin-left: 15px;
+
+    > input[type=checkbox] {
+      visibility: hidden;
+
+      &:checked + label:after {
+        background-color: $blue3;
+      }
+    }
+
+    > label {
+      display: block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid $grey2;
+      overflow: hidden;
+      border-radius: 8px;
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      background: transparent;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: transparent;
+        transition: all .3s ease;
+      }
+    }
+  }
+}
