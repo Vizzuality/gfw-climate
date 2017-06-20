@@ -106,7 +106,7 @@ define([
 
     render: function() {
       this.$el.html(this.template({
-        locations: this.locations
+        locations: _.sortBy(this.locations, 'name')
       }));
       this.$el.removeClass(this.defaults.loadingClassEl);
       this.$el.addClass(this.defaults.loadedClassEl);
