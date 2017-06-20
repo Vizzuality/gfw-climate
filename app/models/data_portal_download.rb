@@ -3,9 +3,7 @@ class DataPortalDownload < Download
     @country_codes = options[:country_codes] || []
     @jurisdiction_ids = options[:jurisdiction_ids] || []
     @area_ids = options[:area_ids] || []
-    @start_year = options[:start_year]
-    @end_year = options[:end_year]
-    # TODO: data sources
+    @years = options[:years] || []
     @indicator_ids = options[:indicator_ids] || []
     @thresholds = options[:thresholds] || []
     @json = options[:json]
@@ -95,16 +93,11 @@ class DataPortalDownload < Download
       where += "AND thresh IN (#{@thresholds.join(",")})"
     end
 
-    # TODO: data sources?
-
     where += " AND values.boundary_id #{@area_ids.empty? ? "=#{ADMIN_BOUNDARY_ID}" : "IN (#{@area_ids.join(",")})"}"
     where += " AND values.sub_nat_id #{@jurisdiction_ids.empty? ? 'IS NULL' : "IN (#{@jurisdiction_ids.join(",")})"}"
 
-    if @start_year && @end_year
-      where += <<-SQL
-        AND values.year >= #{@start_year}
-        AND values.year <= #{@end_year}
-      SQL
+    if @years.any?
+      where += " AND values.year IN (#{@years.join(",")})"
     end
     where
   end
