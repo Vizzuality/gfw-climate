@@ -61,3 +61,17 @@ h4 {
     color: rgba($black, 0.5);
   }
 }
+
+.btn-download {
+  margin: 15px 0;
+  @media (min-width: $br-mobile) {
+    margin: 0;
+  }
+  .btn {
+    margin: 0 auto;
+    display: block;
+    @media (min-width: $br-mobile) {
+      margin: 0;
+    }
+  }
+}
