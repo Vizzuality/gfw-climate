@@ -3,12 +3,8 @@ require "rails_helper"
 RSpec.describe DataPortalDownload, type: :model do
   describe :as_zip do
     context :validation do
-      it 'fails when country not given' do
-        dpd = DataPortalDownload.new({})
-        expect { dpd.as_zip }.to raise_error(RuntimeError)
-      end
       it 'fails when indicators not given' do
-        dpd = DataPortalDownload.new({country_codes: ['BRA']})
+        dpd = DataPortalDownload.new({country_codes: ['BRA'], indicator_ids: []})
         expect { dpd.as_zip }.to raise_error(RuntimeError)
       end
     end
@@ -16,7 +12,16 @@ RSpec.describe DataPortalDownload, type: :model do
 
   describe :as_zip do
     context 'CSV' do
-      let(:dpd){ DataPortalDownload.new({country_codes: ['BRA'], indicator_ids: [1]}) }
+      let(:dpd){
+        DataPortalDownload.new(
+          {
+            country_codes: ['BRA'],
+            indicator_ids: [1],
+            years: [2009, 2011],
+            thresholds: [25, 30],
+          }
+        )
+      }
       let(:zipfile){
         VCR.use_cassette("data_portal_download") do
           dpd.as_zip
@@ -33,11 +38,19 @@ RSpec.describe DataPortalDownload, type: :model do
       it 'non-pivot has many for single indicator' do
         expect(
           tree_cover_loss_entry.get_input_stream { |io| io.readlines.length }
-        ).to eq(121)
+        ).to eq(5)
       end
       context 'pivot' do
         let(:dpd){
-          DataPortalDownload.new({country_codes: ['BRA'], indicator_ids: [1], pivot: true})
+          DataPortalDownload.new(
+            {
+            country_codes: ['BRA'],
+            indicator_ids: [1],
+            years: [2009, 2011],
+            thresholds: [25, 30],
+              pivot: true
+            }
+          )
         }
         it 'has one data row for single indicator' do
           expect(
@@ -62,16 +75,28 @@ RSpec.describe DataPortalDownload, type: :model do
         end
       end
     end
-    it 'creates JSON files' do
-      dpd = DataPortalDownload.new(
-        {country_codes: ['BRA'], indicator_ids: [1], json: true}
-      )
-      zipfile = VCR.use_cassette("data_portal_download") do
-        dpd.as_zip
+    context 'JSON' do
+      let(:dpd){
+        DataPortalDownload.new(
+          {
+            country_codes: ['BRA'],
+            indicator_ids: [1],
+            years: [2009, 2011],
+            thresholds: [25, 30],
+            json: true
+          }
+        )
+      }
+      let(:zipfile){
+        VCR.use_cassette("data_portal_download") do
+          dpd.as_zip
+        end
+      }
+      it 'creates JSON files' do
+        expect(
+          Zip::File.open(zipfile.path).entries.map(&:name)
+        ).to match_array(['indicators/Tree cover loss.json'])
       end
-      expect(
-        Zip::File.open(zipfile.path).entries.map(&:name)
-      ).to match_array(['indicators/Tree cover loss.json'])
     end
   end
 end

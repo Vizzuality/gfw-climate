@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20SELECT%20values.indicator_id,%20values.cartodb_id%20AS%20cartodb_id,%20%20%20%20%20%20values.iso,%20values.sub_nat_id,%20values.boundary,%20values.boundary_id,%20%20%20%20%20%20values.thresh,%20values.admin0_name%20AS%20country,%20values.year,%20%20%20%20%20%20values.value,%20subnat.name_1%20AS%20province,%20%20%20%20%20%20boundaries.boundary_name,%20indicators.indicator_short%20AS%20indicator_name,%20%20%20%20%20%20indicators.value_units%20AS%20units%20%20%20%20%20%20FROM%20indicators_values%20AS%20values%20%20%20%20%20%20INNER%20JOIN%20indicators%20ON%20values.indicator_id%20=%20indicators.indicator_id%20%20%20%20%20%20LEFT%20JOIN%20gadm28_adm1%20AS%20subnat%20%20%20%20%20%20ON%20values.sub_nat_id%20%20=%20subnat.id_1%20AND%20values.iso%20=%20subnat.iso%20%20%20%20%20%20LEFT%20JOIN%20boundaries_table%20AS%20boundaries%20%20%20%20%20%20ON%20values.boundary_id%20=%20boundaries.cartodb_id%20%20%20%20%20%20WHERE%20indicators.indicator_id%20IN%20(1)AND%20values.boundary_id%20=1AND%20values.sub_nat_id%20IS%20NULL
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20SELECT%20values.indicator_id,%20values.cartodb_id%20AS%20cartodb_id,%20%20%20%20%20%20values.iso,%20values.sub_nat_id,%20values.boundary,%20values.boundary_id,%20%20%20%20%20%20values.thresh,%20values.admin0_name%20AS%20country,%20values.year,%20%20%20%20%20%20values.value,%20subnat.name_1%20AS%20province,%20%20%20%20%20%20boundaries.boundary_name,%20indicators.indicator_short%20AS%20indicator_name,%20%20%20%20%20%20indicators.value_units%20AS%20units%20%20%20%20%20%20FROM%20indicators_values%20AS%20values%20%20%20%20%20%20INNER%20JOIN%20indicators%20ON%20values.indicator_id%20=%20indicators.indicator_id%20%20%20%20%20%20LEFT%20JOIN%20gadm28_adm1%20AS%20subnat%20%20%20%20%20%20ON%20values.sub_nat_id%20%20=%20subnat.id_1%20AND%20values.iso%20=%20subnat.iso%20%20%20%20%20%20LEFT%20JOIN%20boundaries_table%20AS%20boundaries%20%20%20%20%20%20ON%20values.boundary_id%20=%20boundaries.cartodb_id%20%20%20%20%20%20WHERE%20indicators.indicator_id%20IN%20(1)%20AND%20values.boundary_id%20=1%20AND%20values.sub_nat_id%20IS%20NULL
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Mon, 19 Jun 2017 10:45:57 GMT
+      - Mon, 19 Jun 2017 12:54:41 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -35,7 +35,7 @@ http_interactions:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Mon, 19 Jun 2017 10:33:03
+      - inline; filename=cartodb-query.json; modification-date="Mon, 19 Jun 2017 12:54:39
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
@@ -44,13 +44,13 @@ http_interactions:
       Last-Modified:
       - Wed, 07 Jun 2017 18:37:22 GMT
       X-Sqlapi-Profiler:
-      - '{"setDBAuth":2,"queryExplain":8,"beforeSink":398,"total":408}'
+      - '{"queryExplain":7,"beforeSink":311,"total":318}'
       X-Varnish:
-      - 1183438603 1183365309
+      - '1184236007'
       Age:
-      - '773'
+      - '1'
       X-Cache:
-      - HIT
+      - MISS
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -114026,7 +114026,7 @@ http_interactions:
         ciI6MjAxMCwidmFsdWUiOjI4MDE1LjY1LCJwcm92aW5jZSI6bnVsbCwiYm91
         bmRhcnlfbmFtZSI6ImFkbWluaXN0cmF0aXZlIGJvdW5kYXJ5IiwiaW5kaWNh
         dG9yX25hbWUiOiJUcmVlIGNvdmVyIGxvc3MiLCJ1bml0cyI6ImhlY3RhcmVz
-        In1dLCJ0aW1lIjoxLjUxMSwiZmllbGRzIjp7ImluZGljYXRvcl9pZCI6eyJ0
+        In1dLCJ0aW1lIjoxLjM2MSwiZmllbGRzIjp7ImluZGljYXRvcl9pZCI6eyJ0
         eXBlIjoibnVtYmVyIn0sImNhcnRvZGJfaWQiOnsidHlwZSI6Im51bWJlciJ9
         LCJpc28iOnsidHlwZSI6InN0cmluZyJ9LCJzdWJfbmF0X2lkIjp7InR5cGUi
         OiJudW1iZXIifSwiYm91bmRhcnkiOnsidHlwZSI6InN0cmluZyJ9LCJib3Vu
@@ -114038,5 +114038,5 @@ http_interactions:
         aW5nIn0sInVuaXRzIjp7InR5cGUiOiJzdHJpbmcifX0sInRvdGFsX3Jvd3Mi
         OjE4MzMyfQ==
     http_version: 
-  recorded_at: Mon, 19 Jun 2017 10:45:57 GMT
+  recorded_at: Mon, 19 Jun 2017 12:54:41 GMT
 recorded_with: VCR 3.0.3
