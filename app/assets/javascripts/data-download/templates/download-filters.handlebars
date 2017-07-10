@@ -1,0 +1,58 @@
+<div class="l-content">
+  <section class="content">
+    <div class="row">
+      <div class="column">
+        <h3>CREATE A CUSTOM DATASET</h3>
+      </div>
+    </div>
+    <div class="row">
+      {{#each filters}}
+        <div class="column small-12 medium-4">
+          <div id="{{this.id}}-filter-card"></div>
+        </div>
+      {{/each}}
+    </div>
+  </section>
+</div>
+
+<div class="l-footer">
+  <footer>
+    <div class="row">
+      <div class="column small-6 medium-2">
+        <h4>
+          Output Type
+        </h4>
+        <div class="c-switch">
+          <ul class="switcher-track">
+            <li class="switcher-item is-active">
+              Table
+            </li>
+            <li class="switcher-item">
+              Pivot
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="column small-6 medium-2">
+        <h4>
+          File
+        </h4>
+        <div class="c-switch">
+          <ul class="switcher-track">
+            <li class="switcher-item is-active">
+              .csv
+            </li>
+            <li class="switcher-item">
+              .json
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="column small-12 medium-2 medium-offset-6">
+        <div class="btn-download">
+          <button id="download-btn" class="btn blue medium">Download</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
