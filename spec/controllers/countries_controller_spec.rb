@@ -7,14 +7,18 @@ RSpec.describe CountriesController, type: :controller do
     render_views
 
     it "GET index returns http success after accepting cookie" do
-      get :index
+      VCR.use_cassette("country-find_all") do
+        get :index
+      end
       expect(response).to be_success
       expect(response).to have_http_status(200)
       expect(response.body).to match 'Angola'
     end
 
     it "GET cached countries page", type: :feature do
-      get :index
+      VCR.use_cassette("country-find_all") do
+        get :index
+      end
       expect(response).to be_success
       expect($redis.exists('countries_all_')).to eq(true)
     end
@@ -33,14 +37,18 @@ RSpec.describe CountriesController, type: :controller do
     render_views
 
     it "GET show returns http success after accepting cookie" do
-      get :show, id: 'bra'
+      VCR.use_cassette("country-find_country") do
+        get :show, id: 'bra'
+      end
       expect(response).to be_success
       expect(response).to have_http_status(200)
       expect(response.body).to match 'Brazil'
     end
 
     it "GET cached certain country page", type: :feature do
-      get :show, id: 'bra'
+      VCR.use_cassette("country-find_country") do
+        get :show, id: 'bra'
+      end
       expect(response).to be_success
       expect($redis.exists('country/item_bra')).to eq(true)
     end
