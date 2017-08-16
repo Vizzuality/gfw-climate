@@ -49,6 +49,7 @@ class CountryReport
     url = base_path
     url += select_query
     url += where_clause
+    url += ' ORDER BY year'
 
     puts url
 
