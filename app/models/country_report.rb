@@ -177,9 +177,7 @@ class CountryReport
         excluded_vals = data.select do |t|
           t["boundary"] == INSIDE_PLANTATIONS_BOUNDARY &&
             t["indicator_id"] == indicator &&
-            t["sub_nat_id"] == sub_nat_id &&
-            t["year"] >= start_year &&
-            t["year"] <= end_year
+            t["sub_nat_id"] == sub_nat_id
         end
         vals.each do |t|
           exclude = excluded_vals.select{|p| p["year"] == t["year"]}.first
