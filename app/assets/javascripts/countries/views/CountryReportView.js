@@ -100,7 +100,7 @@ define([
     },
 
     _isDefaultPrimaryForest: function(iso) {
-      var primaryForestDefault = ['COD', 'IDN'];
+      var primaryForestDefault = ['COD'];
       return primaryForestDefault.indexOf(iso) >= 0;
     },
 
