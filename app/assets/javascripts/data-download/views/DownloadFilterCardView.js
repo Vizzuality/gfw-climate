@@ -72,7 +72,9 @@ define(
       },
 
       setAllInputsValue: function(value) {
-        this.$('.js-select').each(function(index, item) { item.checked = value; });
+        this.$('.js-select').each(function(index, item) {
+          item.checked = value;
+        });
       },
 
       onSelectChange: function(e) {

@@ -3,6 +3,7 @@ define(
     'backbone',
     'handlebars',
     'bluebird',
+    'underscore',
     'jquery',
     'data-download/views/DownloadFilterCardView',
     'helpers/utilsHelper',
@@ -12,6 +13,7 @@ define(
     Backbone,
     Handlebars,
     Promise,
+    _,
     $,
     DownloadFilterCardView,
     UtilsHelper,
@@ -45,6 +47,7 @@ define(
           name: 'Years'
         }
       ],
+      mandatorys: ['country_codes', 'indicator_ids'],
       tresh: [10, 15, 20, 25, 30],
       years: [
         2001,
@@ -201,18 +204,46 @@ define(
             el: '#' + filter.id + '-filter-card',
             filter: filter
           });
-          if (filter.id === 'country_codes') {
-            this.listenTo(
-              view,
-              'option:changed',
-              this.onCountryChange.bind(this)
-            );
-          }
+          this.listenTo(
+            view,
+            'option:changed',
+            this.onOptionChange.bind(this, filter.id)
+          );
           if (filter.id === 'jurisdiction_ids') {
             this.jurisdictionIndex = index;
           }
           this.filterViews.push(view);
         }, this);
+      },
+
+      checkDownloadAvailable: function() {
+        var mandatorysSelected = 0;
+        var hasSelected = function(view) {
+          if (!view) return false;
+          if (view.selection && view.selection.length > 0) return true;
+          return false;
+        };
+        this.filterViews.forEach(function(view) {
+          if (_.include(this.mandatorys, view.filter.id) && hasSelected(view)) {
+            mandatorysSelected += 1;
+          }
+        }, this);
+        this.$('#download-btn').prop(
+          'disabled',
+          mandatorysSelected !== this.mandatorys.length
+        );
+      },
+
+      onOptionChange: function(type, selection) {
+        switch (type) {
+          case 'country_codes':
+            this.onCountryChange(selection);
+            break;
+
+          default:
+            break;
+        }
+        this.checkDownloadAvailable();
       },
 
       onCountryChange: function(selection) {
@@ -258,9 +289,11 @@ define(
         e.preventDefault();
         var downloadUrl = '/api/data_portal_downloads'; // TODO: move this to .env
         var query = '';
+        var firstParam = true;
         this.filterViews.forEach(function(view, index) {
           if (view.selection.length > 0) {
-            if (index === 0 || query === '') {
+            if ((index === 0 && firstParam) || query === '') {
+              firstParam = false;
               query += '?';
             } else {
               query += '&';
