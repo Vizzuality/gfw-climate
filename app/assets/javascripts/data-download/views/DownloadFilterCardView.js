@@ -61,11 +61,18 @@ define(
       },
 
       onSelectAllChange: function(e) {
+        var selected = false;
         if (e.currentTarget.checked) {
+          selected = true;
           this.selection = this.getAllOptionsValues(this.filter.options);
         } else {
           this.selection = [];
         }
+        this.setAllInputsValue(selected);
+      },
+
+      setAllInputsValue: function(value) {
+        this.$('.js-select').each(function(index, item) { item.checked = value; });
       },
 
       onSelectChange: function(e) {
