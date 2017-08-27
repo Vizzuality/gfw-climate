@@ -30,7 +30,8 @@
   "lint-staged": {
     "app/**/*.js": [
       "prettier --single-quote --write",
-      "eslint --quiet"
+      "eslint --quiet",
+      "git add"
     ]
   }
 }
