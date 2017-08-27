@@ -69,6 +69,7 @@ define(
           this.selection = [];
         }
         this.setAllInputsValue(selected);
+        this.trigger('option:changed', this.selection);
       },
 
       setAllInputsValue: function(value) {
