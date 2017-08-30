@@ -36,8 +36,8 @@
 .column, .columns {
   -ms-flex: 1 1 0px;
       flex: 1 1 0px;
-  padding-right: 1.25rem;
-  padding-left: 1.25rem;
+  padding-right: 1.25rem!important;
+  padding-left: 1.25rem!important;
   min-width: initial; }
 
 .column.row.row, .row.row.columns {
