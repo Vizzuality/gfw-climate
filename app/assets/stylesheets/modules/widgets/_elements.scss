@@ -32,6 +32,8 @@
   appearance:none;
   padding: 2px 8px 3px;
   border-radius: 11px;
+  width: auto;
+
   &.blue {
     border: 1px solid $blue;
   }
