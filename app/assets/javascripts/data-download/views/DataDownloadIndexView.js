@@ -6,6 +6,7 @@ define(
     'underscore',
     'jquery',
     'data-download/views/DownloadFilterCardView',
+    'data-download/views/SwitchView',
     'helpers/utilsHelper',
     'text!data-download/templates/download-filters.handlebars'
   ],
@@ -16,6 +17,7 @@ define(
     _,
     $,
     DownloadFilterCardView,
+    SwitchView,
     UtilsHelper,
     tpl
   ) {
@@ -66,7 +68,20 @@ define(
         2014,
         2015
       ],
-
+      switchs: [
+        {
+          el: 'outputTypeSwitch',
+          param: 'pivot',
+          label: 'Output Type',
+          options: [{ label: 'Table', value: 0 }, { label: 'Pivot', value: 1 }]
+        },
+        {
+          el: 'filerSwitch',
+          param: 'json',
+          label: 'File',
+          options: [{ label: '.csv', value: 0 }, { label: '.json', value: 1 }]
+        }
+      ],
       el: '#download-page',
       template: Handlebars.compile(tpl),
 
@@ -76,6 +91,7 @@ define(
 
       initialize: function() {
         this.filterViews = [];
+        this.switchViews = [];
         this.jurisdictionsData = {};
         this.domCache();
         this.getData().then(
@@ -214,6 +230,18 @@ define(
           }
           this.filterViews.push(view);
         }, this);
+
+        this.switchs.forEach(function(option, index) {
+          var view = new SwitchView({
+            el: '#' + option.el,
+            param: option.param,
+            data: {
+              label: option.label,
+              options: option.options
+            }
+          });
+          this.switchViews.push(view);
+        }, this);
       },
 
       checkDownloadAvailable: function() {
@@ -299,6 +327,18 @@ define(
               query += '&';
             }
             query += view.filter.id + '[]=' + view.selection.join(',');
+          }
+        });
+
+        this.switchViews.forEach(function(view, index) {
+          if (view.value === "1") {
+            if ((index === 0 && firstParam) || query === '') {
+              firstParam = false;
+              query += '?';
+            } else {
+              query += '&';
+            }
+            query += view.param + '=' + view.value;
           }
         });
         window.open(downloadUrl + query, '_blank');
