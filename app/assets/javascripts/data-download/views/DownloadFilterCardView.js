@@ -23,20 +23,23 @@ define(
         this.selection = [];
         this.render(this.filter);
         this.optionsContainer = this.$('#' + settings.filter.id + '-options');
-        this.renderOptions(this.filter.options);
+        this.renderOptions(this.filter.options, this.filter.placeholder);
       },
 
-      renderOptions: function(options) {
+      renderOptions: function(options, placeholder) {
+        this.selectAllEl.prop('disabled', !options.length);
         this.optionsContainer.html(
           this.optionsTemplate({
             id: this.filter.id,
-            options: options
+            options: options,
+            placeholder: placeholder || ''
           })
         );
       },
 
       render: function(filter) {
         this.$el.html(this.template(filter));
+        this.selectAllEl = this.$('.js-select-all');
       },
 
       getAllOptionsValues: function(options) {
@@ -57,7 +60,7 @@ define(
         } else {
           options = this.filter.options;
         }
-        this.renderOptions(options);
+        this.renderOptions(options, this.filter.placeholder);
       },
 
       onSelectAllChange: function(e) {

@@ -64,6 +64,12 @@
     overflow-y: scroll;
     padding: 5px 0;
 
+    &.-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     .list-item {
       padding: 5px 15px;
       display: flex;
@@ -76,6 +82,12 @@
         text-align: left;
         color: rgba($black, 0.5);
       }
+    }
+    .placeholder {
+      font-size: 14px;
+      line-height: 2.14;
+      text-align: left;
+      color: rgba($black, 0.5);
     }
   }
 
