@@ -26,48 +26,36 @@ define(
       filters: [
         {
           id: 'country_codes',
-          name: 'Countries'
+          name: 'Countries',
+          hideAll: true
         },
         {
           id: 'jurisdiction_ids',
-          name: 'Jurisdictions'
+          name: 'Jurisdictions',
+          placeholder: 'Select a country'
         },
         {
           id: 'indicator_ids',
           name: 'Indicators'
         },
         {
-          id: 'dataSource', // TODO: define this
-          name: 'Data source'
+          id: 'dataSource',
+          name: 'Data source',
+          placeholder: 'Select a indicator'
         },
         {
           id: 'thresholds',
-          name: '% Tree cover density'
+          name: '% Tree cover density',
+          placeholder: 'Select a indicator'
         },
         {
           id: 'years',
-          name: 'Years'
+          name: 'Years',
+          placeholder: 'Select a indicator'
         }
       ],
       mandatorys: ['country_codes', 'indicator_ids'],
       tresh: [10, 15, 20, 25, 30],
-      years: [
-        2001,
-        2002,
-        2003,
-        2004,
-        2005,
-        2006,
-        2007,
-        2008,
-        2009,
-        2010,
-        2011,
-        2012,
-        2013,
-        2014,
-        2015
-      ],
       switchs: [
         {
           el: 'outputTypeSwitch',
@@ -82,6 +70,7 @@ define(
           options: [{ label: '.csv', value: 0 }, { label: '.json', value: 1 }]
         }
       ],
+
       el: '#download-page',
       template: Handlebars.compile(tpl),
 
@@ -92,6 +81,8 @@ define(
       initialize: function() {
         this.filterViews = [];
         this.switchViews = [];
+        this.filterIndex = {};
+        this.availableIndicators = [];
         this.jurisdictionsData = {};
         this.domCache();
         this.getData().then(
@@ -131,13 +122,13 @@ define(
               filter.options = this.getIndicatorsOptions();
               break;
             case 'dataSource':
-              filter.options = this.getDatasSourceOptions();
+              filter.options = [];
               break;
             case 'thresholds':
-              filter.options = this.getTreeCoverOptions();
+              filter.options = [];
               break;
             case 'years':
-              filter.options = this.getYearsOptions();
+              filter.options = [];
               break;
             default:
               filter.options = [];
@@ -180,19 +171,70 @@ define(
         });
       },
 
-      getDatasSourceOptions: function() {
-        var options = [];
+      onIndicatorsChange: function(selection) {
+        var dataSourceOptions = [];
+        this.availableIndicators = [];
         this.widgets.forEach(function(widget) {
-          if (widget.tabs) {
+          if (
+            _.include(selection, widget.slug) &&
+            widget.tabs &&
+            widget.tabs.length > 0
+          ) {
             widget.tabs.forEach(function(tab) {
-              options.push({
-                value: UtilsHelper.slugify(tab.name), // TODO: same than jurisdictions
+              this.availableIndicators.push(tab);
+              dataSourceOptions.push({
+                value: UtilsHelper.slugify(tab.name),
                 name: tab.name
               });
             }, this);
           }
         }, this);
-        return options;
+
+        this.filterViews[this.filterIndex.dataSource].renderOptions(
+          dataSourceOptions
+        );
+        this.filterViews[this.filterIndex.thresholds].renderOptions(
+          [],
+          'Select a data source'
+        );
+        this.filterViews[this.filterIndex.years].renderOptions(
+          [],
+          'Select a data source'
+        );
+      },
+
+      onDataSourceChange: function(selection) {
+        var years = [];
+        var trhesAllowed = true;
+
+        this.availableIndicators.forEach(function(indicator) {
+          var slug = UtilsHelper.slugify(indicator.name);
+          if (_.include(selection, slug)) {
+            years = _.union(years, indicator.range);
+            if (!indicator.thresh) {
+              trhesAllowed = false;
+            }
+          }
+        }, this);
+
+        var yearsOptions = years.map(function(year) {
+          return { name: year, value: year };
+        });
+        this.filterViews[this.filterIndex.years].renderOptions(yearsOptions);
+
+        if (trhesAllowed) {
+          var trheshOptions = this.tresh.map(function(thresh) {
+            return { name: thresh, value: thresh };
+          });
+          this.filterViews[this.filterIndex.thresholds].renderOptions(
+            trheshOptions
+          );
+        } else {
+          this.filterViews[this.filterIndex.thresholds].renderOptions(
+            [],
+            'Threshold selection is not allowed'
+          );
+        }
       },
 
       getTreeCoverOptions: function() {
@@ -225,13 +267,13 @@ define(
             'option:changed',
             this.onOptionChange.bind(this, filter.id)
           );
-          if (filter.id === 'jurisdiction_ids') {
-            this.jurisdictionIndex = index;
-          }
+          var filterindex = {};
+          filterindex[filter.id] = index;
+          this.filterIndex = _.extend(this.filterIndex, filterindex);
           this.filterViews.push(view);
         }, this);
 
-        this.switchs.forEach(function(option, index) {
+        this.switchs.forEach(function(option) {
           var view = new SwitchView({
             el: '#' + option.el,
             param: option.param,
@@ -267,6 +309,12 @@ define(
           case 'country_codes':
             this.onCountryChange(selection);
             break;
+          case 'indicator_ids':
+            this.onIndicatorsChange(selection);
+            break;
+          case 'dataSource':
+            this.onDataSourceChange(selection);
+            break;
 
           default:
             break;
@@ -275,7 +323,8 @@ define(
       },
 
       onCountryChange: function(selection) {
-        var jurisView = this.filterViews[this.jurisdictionIndex];
+        var jurisIndex = this.filterIndex.jurisdiction_ids;
+        var jurisView = this.filterViews[jurisIndex];
         if (jurisView) {
           if (selection && selection.length > 0) {
             var options = [];
@@ -304,11 +353,11 @@ define(
                 if (options.length) {
                   options = options.sort(sortByName);
                 }
-                this.filterViews[this.jurisdictionIndex].renderOptions(options);
+                this.filterViews[jurisIndex].renderOptions(options);
               }.bind(this)
             );
           } else {
-            this.filterViews[this.jurisdictionIndex].renderOptions([]);
+            this.filterViews[jurisIndex].renderOptions([]);
           }
         }
       },
@@ -331,7 +380,7 @@ define(
         });
 
         this.switchViews.forEach(function(view, index) {
-          if (view.value === "1") {
+          if (view.value === '1') {
             if ((index === 0 && firstParam) || query === '') {
               firstParam = false;
               query += '?';
@@ -341,7 +390,8 @@ define(
             query += view.param + '=' + view.value;
           }
         });
-        window.open(downloadUrl + query, '_blank');
+        console.info(downloadUrl + query);
+        // window.open(downloadUrl + query, '_blank');
       }
     });
 
