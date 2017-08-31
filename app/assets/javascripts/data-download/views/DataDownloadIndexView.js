@@ -55,6 +55,7 @@ define(
         }
       ],
       mandatorys: ['country_codes', 'indicator_ids'],
+      validationMsg: 'Please select, at least, a country and a indicator',
       tresh: [10, 15, 20, 25, 30],
       switchs: [
         {
@@ -152,7 +153,7 @@ define(
               this.jurisdictionsData[iso] = data.country.jurisdictions;
               return data.country.jurisdictions.map(function(juris) {
                 return {
-                  value: UtilsHelper.slugify(juris.name), // TODO: find a way to identify the jurisdictions
+                  value: juris.name,
                   name: juris.name
                 };
               });
@@ -183,7 +184,7 @@ define(
             widget.tabs.forEach(function(tab) {
               this.availableIndicators.push(tab);
               dataSourceOptions.push({
-                value: UtilsHelper.slugify(tab.name),
+                value: tab.name,
                 name: tab.name
               });
             }, this);
@@ -208,8 +209,7 @@ define(
         var trhesAllowed = true;
 
         this.availableIndicators.forEach(function(indicator) {
-          var slug = UtilsHelper.slugify(indicator.name);
-          if (_.include(selection, slug)) {
+          if (_.include(selection, indicator.name)) {
             years = _.union(years, indicator.range);
             if (!indicator.thresh) {
               trhesAllowed = false;
@@ -298,10 +298,16 @@ define(
             mandatorysSelected += 1;
           }
         }, this);
-        this.$('#download-btn').prop(
-          'disabled',
-          mandatorysSelected !== this.mandatorys.length
-        );
+        var isValid = mandatorysSelected === this.mandatorys.length;
+        this.$('#download-btn').prop('disabled', !isValid);
+        if (!this.validationMsgEl) {
+          this.validationMsgEl = this.$('.validation-msg');
+        }
+        if (isValid) {
+          this.validationMsgEl.addClass('-hide');
+        } else {
+          this.validationMsgEl.removeClass('-hide');
+        }
       },
 
       onOptionChange: function(type, selection) {
@@ -390,8 +396,8 @@ define(
             query += view.param + '=' + view.value;
           }
         });
-        console.info(downloadUrl + query);
-        // window.open(downloadUrl + query, '_blank');
+
+        window.open(downloadUrl + query, '_blank');
       }
     });
 

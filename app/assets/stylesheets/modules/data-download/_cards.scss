@@ -128,5 +128,7 @@
         transition: all .3s ease;
       }
     }
+
+    > input:disabled + label { cursor: not-allowed; }
   }
 }

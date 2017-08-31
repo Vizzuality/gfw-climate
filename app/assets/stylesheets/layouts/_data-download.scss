@@ -76,6 +76,7 @@ h4 {
   }
 
   button:disabled {
+    cursor: not-allowed;
     background-color: $grey2!important;
   }
 }
@@ -83,4 +84,15 @@ h4 {
 .filters-placeholder {
   min-height: 600px;
   position: relative;
+}
+
+.validation-msg {
+  font-size: 14px;
+  line-height: 1.21;
+  color: rgba($black, 0.5);
+  opacity: 1;
+
+  &.-hide {
+    opacity: 0;
+  }
 }
