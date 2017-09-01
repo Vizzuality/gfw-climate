@@ -24,7 +24,12 @@ class Download
 
   def as_zip
     validate_download
-    results = self.class.get(query_url)["rows"]
+    response = self.class.get(query_url)
+    if response['error'].present?
+      raise CartoDbError, response['error']
+      return
+    end
+    results = response["rows"]
     files = results_to_files(results)
     temp_file = Tempfile.new("my_zip.zip")
     Zip::File.open(temp_file.path, Zip::File::CREATE) do |zipfile|
