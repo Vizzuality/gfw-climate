@@ -1,7 +1,12 @@
 module Api::V1
   class DataPortalDownloadsController < BaseControllerV1
     def index
-      zip_file = DataPortalDownload.new(download_params).as_zip
+      begin
+        zip_file = DataPortalDownload.new(download_params).as_zip
+      rescue CartoDbError => e
+        Rails.logger.error e.message
+        render json: e.message, status: :unprocessable_entity and return
+      end
       send_file(
         zip_file.path, type: 'application/zip', filename: 'download.zip'
       )
