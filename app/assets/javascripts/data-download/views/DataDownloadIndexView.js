@@ -153,7 +153,7 @@ define(
               this.jurisdictionsData[iso] = data.country.jurisdictions;
               return data.country.jurisdictions.map(function(juris) {
                 return {
-                  value: juris.name,
+                  value: juris.id,
                   name: juris.name
                 };
               });
@@ -166,7 +166,7 @@ define(
       getIndicatorsOptions: function() {
         return this.widgets.map(function(widget) {
           return {
-            value: widget.slug,
+            value: widget.id,
             name: widget.name
           };
         });
@@ -177,7 +177,7 @@ define(
         this.availableIndicators = [];
         this.widgets.forEach(function(widget) {
           if (
-            _.include(selection, widget.slug) &&
+            _.include(selection, widget.id + '') &&
             widget.tabs &&
             widget.tabs.length > 0
           ) {
