@@ -52,8 +52,6 @@ define([
     },
 
     render: function() {
-      console.log(this.$el);
-      console.log('hello!');
       this.$el.append(this.template());
       //Experiment
       this.presenter.initExperiment('source');
