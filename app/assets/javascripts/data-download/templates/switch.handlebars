@@ -1,0 +1,14 @@
+<div class="switch-wrapper">
+  <h4>
+    {{label}}
+  </h4>
+  <div class="c-switch">
+    <ul class="switcher-track">
+      {{#each options}}
+        <li class="switcher-item js-option {{#if @first}}is-active{{/if}}" data-value="{{this.value}}">
+          {{this.label}}
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

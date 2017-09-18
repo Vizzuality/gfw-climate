@@ -1,0 +1,37 @@
+<div class="l-content">
+  <section class="content">
+    <div class="row">
+      <div class="column">
+        <h3>CREATE A CUSTOM DATASET</h3>
+      </div>
+    </div>
+    <div class="row">
+      {{#each filters}}
+        <div class="column small-12 medium-4">
+          <div id="{{this.id}}-filter-card"></div>
+        </div>
+      {{/each}}
+    </div>
+  </section>
+</div>
+
+<div class="l-footer">
+  <footer>
+    <div class="row">
+      <div class="column small-6 medium-2">
+        <div id="outputTypeSwitch"></div>
+      </div>
+      <div class="column small-6 medium-2">
+        <div id="filerSwitch"></div>
+      </div>
+      <div class="column small-12 medium-3 medium-offset-3">
+        <span class="validation-msg">Please select a country and a indicator</span>
+      </div>
+      <div class="column small-12 medium-2">
+        <div class="btn-download">
+          <button id="download-btn" disabled class="btn blue medium">Download</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

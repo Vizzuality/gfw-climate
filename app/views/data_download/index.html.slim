@@ -1,0 +1,52 @@
+#download-page
+  .l-header
+    header.header
+      .row
+        .column
+          h2 Data download
+      .row
+        .column
+          h3 TOP DOWNLOADS
+      .row
+        .column.small-12.medium-4
+          .download-top-card
+            .content
+              p.title CO2 emissions
+              span.detail
+                | (all countries and years)
+            .actions
+              button.action.-info
+                svg
+                  use xlink:href="#icon-info"
+              a.action target="_blank" href="/api/data_portal_downloads?indicator_ids[]=14&indicator_ids[]=1003&pivot=1"
+                svg
+                  use xlink:href="#icon-download"
+        .column.small-12.medium-4
+          .download-top-card
+            .content
+              p.title Area of forest loss
+              span.detail
+                | (all countries and years)
+            .actions
+              button.action.-info
+                svg
+                  use xlink:href="#icon-info"
+              a.action target="_blank" href="/api/data_portal_downloads?indicator_ids[]=1&indicator_ids[]=1000&pivot=1"
+                svg
+                  use xlink:href="#icon-download"
+        .column.small-12.medium-4
+          .download-top-card
+            .content
+              p.title Average carbon density
+              span.detail
+                | (all countries)
+            .actions
+              button.action.-info
+                svg
+                  use xlink:href="#icon-info"
+              a.action target="_blank" href="/api/data_portal_downloads?indicator_ids[]=10&pivot=1"
+                svg
+                  use xlink:href="#icon-download"
+
+  #filters-container.filters-placeholder
+    .is-loading

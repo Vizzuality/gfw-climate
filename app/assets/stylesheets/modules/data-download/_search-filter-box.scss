@@ -1,0 +1,53 @@
+.search-filter-box {
+  position: relative;
+  flex: 1;
+
+  input {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    text-transform: uppercase;
+    color: $font-color-3;
+    min-height: 20px;
+    outline: none;
+    border: none;
+
+    &.is-active{
+      background: rgba($blue1,0.3);
+    }
+    &::-webkit-input-placeholder {
+       color: $font-color-3;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+       color: $font-color-3;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+       color: $font-color-3;
+    }
+
+    &:-ms-input-placeholder {
+       color: $font-color-3;
+    }
+  }
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: image-url('countries/search.svg') no-repeat center;
+    background-size: contain;
+    transform: translate(0, -50%);
+    visibility: visible;
+  }
+}

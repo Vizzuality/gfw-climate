@@ -4,6 +4,7 @@ modules:
   - name: 'countries'
   - name: 'compare'
   - name: 'embed'
+  - name: 'data-download'
 
 waitSeconds: 200
 
