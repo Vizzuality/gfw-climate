@@ -59,8 +59,8 @@ class DataPortalDownload < Download
       data.each do |row_hash|
         row_idx = rows.find_index do |r|
           r['iso'] == row_hash['iso'] &&
-          r['indicator_id'] == row_hash['indicator_id'] &&
-          r['threshold'] == row_hash['threshold']
+            r['indicator_id'] == row_hash['indicator_id'] &&
+            r['thresh'] == row_hash['thresh']
         end
         unless row_idx.present?
           row = Hash[core_headers.map { |h| [h, row_hash[h]] }]
