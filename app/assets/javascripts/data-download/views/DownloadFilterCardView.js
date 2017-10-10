@@ -27,6 +27,7 @@ define(
       },
 
       renderOptions: function(options, placeholder) {
+        this.filter.options = options;
         this.selectAllEl.prop('disabled', !options.length);
         this.optionsContainer.html(
           this.optionsTemplate({
@@ -53,10 +54,21 @@ define(
       onSearchChange: function(e) {
         var options = [];
         var search = e.currentTarget.value.toUpperCase();
+
+        function filterOptions(option) {
+          return option.name.toUpperCase().indexOf(search) > -1;
+        }
+
         if (search) {
-          options = this.filter.options.filter(function(option) {
-            return option.name.toUpperCase().indexOf(search) > -1;
-          });
+          if (!this.initialOptions) {
+            this.initialOptions = this.filter.options;
+            options = this.filter.options.filter(filterOptions);
+          } else {
+            options = this.initialOptions.filter(filterOptions);
+          }
+        } else if (this.initialOptions) {
+          options = this.initialOptions;
+          this.initialOptions = false;
         } else {
           options = this.filter.options;
         }
