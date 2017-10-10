@@ -27,7 +27,6 @@ define(
       },
 
       renderOptions: function(options, placeholder) {
-        this.filter.options = options;
         this.selectAllEl.prop('disabled', !options.length);
         this.optionsContainer.html(
           this.optionsTemplate({
