@@ -41,21 +41,22 @@ define(
         {
           id: 'dataSource',
           name: 'Data source',
-          placeholder: 'Select a indicator'
+          placeholder: 'Select an indicator',
+          hide: true
         },
         {
           id: 'thresholds',
           name: '% Tree cover density',
-          placeholder: 'Select a indicator'
+          placeholder: 'Select an indicator'
         },
         {
           id: 'years',
           name: 'Years',
-          placeholder: 'Select a indicator'
+          placeholder: 'Select an indicator'
         }
       ],
       mandatorys: ['country_codes', 'indicator_ids'],
-      validationMsg: 'Please select, at least, a country and a indicator',
+      validationMsg: 'Please select, at least, a country, an indicator and a year',
       tresh: [10, 15, 20, 25, 30],
       switchs: [
         {
@@ -76,7 +77,8 @@ define(
       template: Handlebars.compile(tpl),
 
       events: {
-        'click #download-btn': 'onDownloadClick'
+        'click #download-btn': 'onDownloadClick',
+        'click #clear-btn': 'onClearClick'
       },
 
       initialize: function() {
@@ -172,6 +174,17 @@ define(
         });
       },
 
+      setClearVisibility: function(value) {
+        if (!this.clearBtn) {
+          this.clearBtn = this.$('#clear-btn');
+        }
+        if (value) {
+          this.clearBtn.removeClass('-hide');
+        } else {
+          this.clearBtn.addClass('-hide');
+        }
+      },
+
       onIndicatorsChange: function(selection) {
         var dataSourceOptions = [];
         this.availableIndicators = [];
@@ -192,48 +205,79 @@ define(
         }, this);
 
         this.filterViews[this.filterIndex.dataSource].renderOptions(
-          dataSourceOptions
+          dataSourceOptions,
+          '',
+          true
         );
-        this.filterViews[this.filterIndex.thresholds].renderOptions(
-          [],
-          'Select a data source'
-        );
-        this.filterViews[this.filterIndex.years].renderOptions(
-          [],
-          'Select a data source'
-        );
+        if (dataSourceOptions) {
+          this.filterViews[this.filterIndex.dataSource].setAllMarked(true);
+          this.onDataSourceChange(
+            dataSourceOptions.map(function(option) {
+              return option.value;
+            })
+          );
+        } else {
+          this.filterViews[this.filterIndex.dataSource].setAllMarked(false);
+        }
+        this.setClearVisibility(true);
       },
 
       onDataSourceChange: function(selection) {
         var years = [];
-        var trhesAllowed = true;
+        var trhesAllowed = false;
 
-        this.availableIndicators.forEach(function(indicator) {
-          if (_.include(selection, indicator.name)) {
-            years = _.union(years, indicator.range);
-            if (!indicator.thresh) {
-              trhesAllowed = false;
+        if (selection && selection.length) {
+          this.availableIndicators.forEach(function(indicator) {
+            if (_.include(selection, indicator.name)) {
+              if (indicator.range) {
+                years = _.union(years, indicator.range);
+              }
+              if (indicator.thresh) {
+                trhesAllowed = true;
+              }
             }
+          }, this);
+
+          var yearsOptions = [];
+          var yearsMsg = '';
+          var selectAllYears = false;
+          if (years.length) {
+            yearsOptions = years.map(function(year) {
+              return { name: year, value: year };
+            });
+            selectAllYears = true;
+          } else {
+            yearsMsg = 'No years availables';
           }
-        }, this);
-
-        var yearsOptions = years.map(function(year) {
-          return { name: year, value: year };
-        });
-        this.filterViews[this.filterIndex.years].renderOptions(yearsOptions);
-
-        if (trhesAllowed) {
-          var trheshOptions = this.tresh.map(function(thresh) {
-            return { name: thresh, value: thresh };
-          });
-          this.filterViews[this.filterIndex.thresholds].renderOptions(
-            trheshOptions
+          this.filterViews[this.filterIndex.years].renderOptions(
+            yearsOptions,
+            yearsMsg
           );
+          this.filterViews[this.filterIndex.years].setAllMarked(selectAllYears);
+
+          if (trhesAllowed) {
+            var trheshOptions = this.tresh.map(function(thresh) {
+              return { name: thresh, value: thresh, selected: thresh === 30 };
+            });
+            this.filterViews[this.filterIndex.thresholds].renderOptions(
+              trheshOptions
+            );
+          } else {
+            this.filterViews[this.filterIndex.thresholds].renderOptions(
+              [],
+              'Threshold selection is not allowed'
+            );
+          }
         } else {
           this.filterViews[this.filterIndex.thresholds].renderOptions(
             [],
-            'Threshold selection is not allowed'
+            'Select a data source'
           );
+          this.filterViews[this.filterIndex.years].renderOptions(
+            [],
+            'Select a data source'
+          );
+          this.filterViews[this.filterIndex.years].setAllMarked(false);
         }
       },
 
@@ -332,7 +376,7 @@ define(
         var jurisIndex = this.filterIndex.jurisdiction_ids;
         var jurisView = this.filterViews[jurisIndex];
         if (jurisView) {
-          if (selection && selection.length > 0) {
+          if (selection && selection.length === 1) {
             var options = [];
             Promise.all(
               selection.map(
@@ -359,13 +403,35 @@ define(
                 if (options.length) {
                   options = options.sort(sortByName);
                 }
-                this.filterViews[jurisIndex].renderOptions(options);
+                var hasJurisdictions = options.length > 0;
+                var msg = hasJurisdictions > 0
+                  ? ''
+                  : 'There is no jurisdictions';
+                this.filterViews[jurisIndex].renderOptions(options, msg);
+                if (hasJurisdictions) {
+                  this.filterViews[jurisIndex].setAllMarked(true);
+                }
               }.bind(this)
             );
+          } else if (selection && selection.length > 1) {
+            this.filterViews[jurisIndex].renderOptions(
+              [],
+              'Please select only one country'
+            );
+            this.filterViews[jurisIndex].setAllMarked(false);
           } else {
             this.filterViews[jurisIndex].renderOptions([]);
+            this.filterViews[jurisIndex].setAllMarked(false);
           }
+          this.setClearVisibility(true);
         }
+      },
+
+      onClearClick: function() {
+        this.filterViews.forEach(function(view) {
+          view.setAllMarked(false);
+        });
+        this.setClearVisibility(false);
       },
 
       onDownloadClick: function(e) {

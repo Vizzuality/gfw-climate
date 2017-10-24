@@ -87,7 +87,19 @@ define(
         this.trigger('option:changed', this.selection);
       },
 
+      setAllMarked: function(value) {
+        this.setAllInputsMarked(value);
+        this.setAllInputsValue(value);
+      },
+
+      setAllInputsMarked: function(value) {
+        this.$('.js-select-all').prop('checked', value);
+      },
+
       setAllInputsValue: function(value) {
+        this.selection = value
+          ? this.getAllOptionsValues(this.filter.options)
+          : [];
         this.$('.js-select').each(function(index, item) {
           item.checked = value;
         });
@@ -106,6 +118,11 @@ define(
           }
         }
         this.trigger('option:changed', this.selection);
+        if (!this.selection.length) {
+          this.setAllInputsMarked(false);
+        } else if (this.selection.length === this.filter.options.length) {
+          this.setAllInputsMarked(true);
+        }
       }
     });
 

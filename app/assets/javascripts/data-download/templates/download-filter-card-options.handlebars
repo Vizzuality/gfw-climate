@@ -1,10 +1,17 @@
 <ul class="filter-list {{#unless options.length}}-empty{{/unless}}">
   {{#each options}}
     <li class="list-item">
-      <span>{{this.name}}</span>
       <div class="selector">
-        <input id="{{../id}}-option-{{@index}}" name="{{../id}}-option-{{@index}}" type="checkbox" value="{{this.value}}" class="js-select">
-        <label for="{{../id}}-option-{{@index}}"></label>
+        <input
+          id="{{../id}}-option-{{@index}}"
+          name="{{../id}}-option-{{@index}}"
+          type="checkbox" value="{{this.value}}"
+          {{#if this.selected}}checked{{/if}}
+          class="js-select"
+        >
+        <label for="{{../id}}-option-{{@index}}">
+          <span>{{this.name}}</span>
+        </label>
       </div>
   {{else}}
     <span class="placeholder">{{placeholder}}</span>
