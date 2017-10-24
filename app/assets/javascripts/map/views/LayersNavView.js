@@ -52,7 +52,7 @@ define([
     },
 
     render: function() {
-      this.$el.html('').append(this.template());
+      this.$el.append(this.template());
       //Experiment
       this.presenter.initExperiment('source');
 
