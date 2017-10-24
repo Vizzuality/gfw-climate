@@ -26,12 +26,16 @@ define(
       filters: [
         {
           id: 'country_codes',
-          name: 'Countries',
-          hideAll: true
+          name: 'Countries'
         },
         {
           id: 'jurisdiction_ids',
           name: 'Jurisdictions',
+          placeholder: 'Select a country'
+        },
+        {
+          id: 'areas_of_interest',
+          name: 'Areas of interest',
           placeholder: 'Select a country'
         },
         {
@@ -148,17 +152,24 @@ define(
         });
       },
 
-      getJurisdictionsOptions: function(iso) {
+      getCountryData: function(iso) {
         return $.getJSON('api/countries/' + iso).then(
           function(data) {
-            if (data && data.country && data.country.jurisdictions) {
-              this.jurisdictionsData[iso] = data.country.jurisdictions;
-              return data.country.jurisdictions.map(function(juris) {
-                return {
-                  value: juris.id,
-                  name: juris.name
-                };
-              });
+            if (data && data.country && data.country) {
+              var parseData = function(items) {
+                return items.map(function(item) {
+                  return {
+                    value: item.id,
+                    name: item.name
+                  };
+                });
+              };
+              var jurisdictionsData = {
+                areasOfInterest: parseData(data.country.areas_of_interest),
+                jurisdictions: parseData(data.country.jurisdictions)
+              };
+              this.jurisdictionsData[iso] = jurisdictionsData;
+              return jurisdictionsData;
             }
             return [];
           }.bind(this)
@@ -168,7 +179,10 @@ define(
       getIndicatorsOptions: function() {
         return this.widgets.map(function(widget) {
           return {
-            value: widget.id,
+            value: widget.id + '',
+            indicators: widget.indicators.map(function(indicator) {
+              return indicator.id;
+            }),
             name: widget.name
           };
         });
@@ -206,8 +220,7 @@ define(
 
         this.filterViews[this.filterIndex.dataSource].renderOptions(
           dataSourceOptions,
-          '',
-          true
+          ''
         );
         if (dataSourceOptions) {
           this.filterViews[this.filterIndex.dataSource].setAllMarked(true);
@@ -374,54 +387,65 @@ define(
 
       onCountryChange: function(selection) {
         var jurisIndex = this.filterIndex.jurisdiction_ids;
+        var aoiIndex = this.filterIndex.areas_of_interest;
         var jurisView = this.filterViews[jurisIndex];
-        if (jurisView) {
+        var aoiView = this.filterViews[aoiIndex];
+        if (jurisView && aoiView) {
           if (selection && selection.length === 1) {
-            var options = [];
+            var jurisdictions = [];
+            var areasOfInterest = [];
             Promise.all(
               selection.map(
                 function(country) {
                   if (!this.jurisdictionsData[country]) {
-                    return this.getJurisdictionsOptions(country);
+                    return this.getCountryData(country);
                   }
                   return this.jurisdictionsData[country];
                 }.bind(this)
               )
-            ).then(
-              function(data) {
-                if (data && data.length) {
-                  data.forEach(function(jurisdiction) {
-                    options = options.concat(jurisdiction);
-                  });
-                }
-                function sortByName(a, b) {
-                  if (a.name < b.name) return -1;
-                  if (a.name > b.name) return 1;
-                  return 0;
-                }
+            ).then(function(data) {
+              if (data && data.length) {
+                data.forEach(function(d) {
+                  jurisdictions = d.jurisdictions.concat(jurisdictions);
+                  areasOfInterest = d.areasOfInterest.concat(areasOfInterest);
+                });
+              }
+              function sortByName(a, b) {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+                return 0;
+              }
 
-                if (options.length) {
-                  options = options.sort(sortByName);
+              var populateOptions = function(options, view, emptyMsg) {
+                var sortedOptions = options;
+                var hasOptions = options.length > 0;
+                if (hasOptions) {
+                  sortedOptions = options.sort(sortByName);
                 }
-                var hasJurisdictions = options.length > 0;
-                var msg = hasJurisdictions > 0
-                  ? ''
-                  : 'There is no jurisdictions';
-                this.filterViews[jurisIndex].renderOptions(options, msg);
-                if (hasJurisdictions) {
-                  this.filterViews[jurisIndex].setAllMarked(true);
-                }
-              }.bind(this)
-            );
+                var msg = hasOptions > 0 ? '' : emptyMsg;
+                view.renderOptions(sortedOptions, msg);
+              };
+              populateOptions(
+                jurisdictions,
+                jurisView,
+                'There is no jurisdictions'
+              );
+              populateOptions(
+                areasOfInterest,
+                aoiView,
+                'There is no area of interest'
+              );
+            });
           } else if (selection && selection.length > 1) {
-            this.filterViews[jurisIndex].renderOptions(
-              [],
-              'Please select only one country'
-            );
-            this.filterViews[jurisIndex].setAllMarked(false);
+            jurisView.renderOptions([], 'Please select only one country');
+            jurisView.setAllMarked(false);
+            aoiView.renderOptions([], 'Please select only one country');
+            aoiView.setAllMarked(false);
           } else {
-            this.filterViews[jurisIndex].renderOptions([]);
-            this.filterViews[jurisIndex].setAllMarked(false);
+            jurisView.renderOptions([]);
+            jurisView.setAllMarked(false);
+            aoiView.renderOptions([]);
+            aoiView.setAllMarked(false);
           }
           this.setClearVisibility(true);
         }
@@ -447,7 +471,17 @@ define(
             } else {
               query += '&';
             }
-            query += view.filter.id + '[]=' + view.selection.join(',');
+            var value = view.selection.join(',');
+            if (view.filter.id === 'indicator_ids') {
+              var options = view.filter.options.filter(function(o) {
+                return view.selection.includes(o.value);
+              });
+              var indicators = options.map(function(i) {
+                return i.indicators;
+              });
+              value = _.flatten(indicators);
+            }
+            query += view.filter.id + '[]=' + value;
           }
         });
 
