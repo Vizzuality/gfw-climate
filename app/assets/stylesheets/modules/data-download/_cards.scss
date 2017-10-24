@@ -69,20 +69,10 @@
       align-items: center;
       justify-content: center;
     }
-
     .list-item {
       padding: 5px 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      > span {
-        font-size: 14px;
-        line-height: 2.14;
-        text-align: left;
-        color: rgba($black, 0.5);
-      }
     }
+
     .placeholder {
       font-size: 14px;
       line-height: 2.14;
@@ -92,11 +82,14 @@
   }
 
   .selector {
+    display: block;
     position: relative;
-    margin-left: 15px;
 
     > input[type=checkbox] {
       visibility: hidden;
+      position: absolute;
+      top: 0;
+      right: 0;
 
       &:checked + label:after {
         background-color: $blue3;
@@ -105,28 +98,43 @@
 
     > label {
       display: block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid $grey2;
-      overflow: hidden;
-      border-radius: 8px;
+      position: relative;
       cursor: pointer;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      background: transparent;
+      font-size: 14px;
+      line-height: 2.14;
+      text-align: left;
+      color: rgba($black, 0.5);
+      min-width: 20px;
+      padding-right: 16px;
 
-      &:after {
+      &:before {
         content: "";
+        width: 16px;
+        height: 16px;
+        border: 2px solid $grey2;
+        border-radius: 8px;
         position: absolute;
-        top: 0;
+        top: 6px;
         right: 0;
         bottom: 0;
-        left: 0;
+        left: auto;
         background-color: transparent;
         transition: all .3s ease;
       }
+
+      &:after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 6px;
+        position: absolute;
+        top: 10px;
+        right: 4px;
+        left: auto;
+        background-color: transparent;
+        transition: all .3s ease;
+      }
+
     }
 
     > input:disabled + label { cursor: not-allowed; }
