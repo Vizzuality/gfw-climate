@@ -47,7 +47,7 @@ define(
         if (!options) return [];
 
         return options.map(function(option) {
-          return option.value;
+          return option.value + '';
         });
       },
 
