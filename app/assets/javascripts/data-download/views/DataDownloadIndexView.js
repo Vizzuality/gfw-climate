@@ -179,7 +179,10 @@ define(
       getIndicatorsOptions: function() {
         return this.widgets.map(function(widget) {
           return {
-            value: widget.id,
+            value: widget.id + '',
+            indicators: widget.indicators.map(function(indicator) {
+              return indicator.id;
+            }),
             name: widget.name
           };
         });
@@ -468,7 +471,17 @@ define(
             } else {
               query += '&';
             }
-            query += view.filter.id + '[]=' + view.selection.join(',');
+            var value = view.selection.join(',');
+            if (view.filter.id === 'indicator_ids') {
+              var options = view.filter.options.filter(function(o) {
+                return view.selection.includes(o.value);
+              });
+              var indicators = options.map(function(i) {
+                return i.indicators;
+              });
+              value = _.flatten(indicators);
+            }
+            query += view.filter.id + '[]=' + value;
           }
         });
 
