@@ -39,7 +39,7 @@ define(
           placeholder: 'Select a country'
         },
         {
-          id: 'indicator_ids',
+          id: 'widget_ids',
           name: 'Indicators'
         },
         {
@@ -59,7 +59,7 @@ define(
           placeholder: 'Select an indicator'
         }
       ],
-      mandatorys: ['country_codes', 'indicator_ids'],
+      mandatorys: ['country_codes', 'widget_ids'],
       validationMsg: 'Please select, at least, a country, an indicator and a year',
       tresh: [10, 15, 20, 25, 30],
       switchs: [
@@ -125,7 +125,7 @@ define(
             case 'jurisdiction_ids':
               filter.options = [];
               break;
-            case 'indicator_ids':
+            case 'widget_ids':
               filter.options = this.getIndicatorsOptions();
               break;
             case 'dataSource':
@@ -372,7 +372,7 @@ define(
           case 'country_codes':
             this.onCountryChange(selection);
             break;
-          case 'indicator_ids':
+          case 'widget_ids':
             this.onIndicatorsChange(selection);
             break;
           case 'dataSource':
@@ -472,15 +472,6 @@ define(
               query += '&';
             }
             var value = view.selection.join(',');
-            if (view.filter.id === 'indicator_ids') {
-              var options = view.filter.options.filter(function(o) {
-                return view.selection.includes(o.value);
-              });
-              var indicators = options.map(function(i) {
-                return i.indicators;
-              });
-              value = _.flatten(indicators);
-            }
             query += view.filter.id + '[]=' + value;
           }
         });
