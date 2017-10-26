@@ -28,6 +28,12 @@ define(
 
       renderOptions: function(options, placeholder) {
         this.filter.options = options;
+        var selected = _.filter(options, function(option) {
+          return option.selected;
+        });
+        this.selection = _.map(selected, function(select) {
+          return select.value + '';
+        });
         this.selectAllEl.prop('disabled', !options.length);
         this.optionsContainer.html(
           this.optionsTemplate({
