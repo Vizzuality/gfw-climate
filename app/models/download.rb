@@ -18,7 +18,9 @@ class Download
     @start_year = options[:start_year]
     @end_year = options[:end_year]
     @units = options[:units]
-    @indicator_ids = options[:indicator_ids]
+    @indicator_ids = options[:widget_ids].map do |widget_id|
+      Widget.find(widget_id).indicators.map{ |i| i["id"] }
+    end.flatten
     @thresholds = options[:thresholds]
   end
 
