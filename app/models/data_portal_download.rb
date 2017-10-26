@@ -4,7 +4,13 @@ class DataPortalDownload < Download
     @jurisdiction_ids = options[:jurisdiction_ids] || []
     @area_ids = options[:area_ids] || []
     @years = options[:years] || []
-    @indicator_ids = options[:indicator_ids] || []
+    @indicator_ids = if options[:widget_ids]
+                       options[:widget_ids].map do |widget_id|
+                         Widget.find(widget_id).indicators.map{ |i| i["id"] }
+                       end.flatten
+                     else
+                       []
+                     end
     @thresholds = options[:thresholds] || []
     @json = options[:json]
     @pivot = options[:pivot]
