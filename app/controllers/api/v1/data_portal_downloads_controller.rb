@@ -21,7 +21,7 @@ module Api::V1
         {area_ids: []},
         {years: []},
         {units: []},
-        {indicator_ids: []},
+        {widget_ids: []},
         {thresholds: []},
         :json,
         :pivot
