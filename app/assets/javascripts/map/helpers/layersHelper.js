@@ -14,6 +14,7 @@ define([
   'map/views/layers/DrcPrimaryForestLayer',
   'map/views/layers/IdnPeatLandsLayer',
   'map/views/layers/TotalCarbonLayer',
+  'map/views/layers/BiomassCarbonLayer',
   'map/views/layers/SoilOrganicCarbonDLayer',
   'map/views/layers/PlantationsLayerByType',
   'map/views/layers/PlantationsLayerBySpecies',
@@ -124,6 +125,7 @@ define([
   DrcPrimaryForestLayer,
   IdnPeatLandsLayer,
   TotalCarbonLayer,
+  BiomassCarbonLayer,
   SoilOrganicCarbonDLayer,
   PlantationsLayerByType,
   PlantationsLayerBySpecies,
@@ -399,6 +401,9 @@ define([
     },
     total_carbon: {
       view: TotalCarbonLayer
+    },
+    biomass_carbon: {
+      view: BiomassCarbonLayer
     },
     hwsd: {
       view: SoilOrganicCarbonDLayer

@@ -21,8 +21,7 @@ define([
       "gtm_forest_density",
       "gtm_forest_change2",
       "WMSLayer",
-      "total_carbon",
-      "hwsd",
+      
       //LAND COVER
       "cod_primary_forest_wgs",
       "idn_primary",
@@ -110,7 +109,9 @@ define([
       "mining",
       "logging",
       // Carbon density
-
+      "total_carbon",
+      "biomass_carbon",
+      "hwsd",
       // Carbon gain
       "total_sg",
       "ysg_msg",
