@@ -30,7 +30,7 @@ class DataPortalDownload < Download
     grouped.each do |id, data|
       headers, rows = data_to_headers_and_rows(data)
       csv_file = Tempfile.new([id, ".csv"])
-      file_names << ["#{id}.csv", csv_file.path]
+      file_names << ["#{id}-#{Time.now.to_i}.csv", csv_file.path]
       CSV.open(csv_file, "wb") do |csv|
         csv << headers # adds the attributes name on the first line
         rows.each do |hash|
