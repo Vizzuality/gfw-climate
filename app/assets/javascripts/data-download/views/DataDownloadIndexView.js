@@ -34,7 +34,7 @@ define(
           placeholder: 'Select a country'
         },
         {
-          id: 'areas_of_interest',
+          id: 'area_ids',
           name: 'Areas of interest',
           placeholder: 'Select a country'
         },
@@ -387,7 +387,7 @@ define(
 
       onCountryChange: function(selection) {
         var jurisIndex = this.filterIndex.jurisdiction_ids;
-        var aoiIndex = this.filterIndex.areas_of_interest;
+        var aoiIndex = this.filterIndex.area_ids;
         var jurisView = this.filterViews[jurisIndex];
         var aoiView = this.filterViews[aoiIndex];
         if (jurisView && aoiView) {
