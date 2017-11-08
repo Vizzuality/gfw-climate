@@ -1,6 +1,6 @@
 
 /**
- * hsdw
+ * slug = biomass_carbon
  *
  * @return ProtectedAreasCDBLayer class (extends CartoDBLayerClass)
  */
@@ -10,14 +10,14 @@ define([
 
   'use strict';
 
-  var SoilOrganicCarbonDLayer = ImageMaptypeLayerClass.extend({
+  var BiomassCarbonLayer = ImageMaptypeLayerClass.extend({
 
     options: {
-      urlTemplate:'https://storage.googleapis.com/gfw-climate-tiles/soil%20organic%20carbon/{z}/{x}/{y}.png'
+      urlTemplate:'https://storage.googleapis.com/gfw-climate-tiles/biomass/{z}/{x}/{y}.png'
     }
 
   });
 
-  return SoilOrganicCarbonDLayer;
+  return BiomassCarbonLayer;
 
 });
