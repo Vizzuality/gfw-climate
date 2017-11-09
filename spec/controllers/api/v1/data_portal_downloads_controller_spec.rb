@@ -6,7 +6,7 @@ RSpec.describe Api::V1::DataPortalDownloadsController, type: :controller do
       VCR.use_cassette('data_portal_download') do
         get :index,
           country_codes: ['BRA'],
-          indicator_ids: [1],
+          widget_ids: [1],
           years: [2009, 2011],
           thresholds: [25, 30]
       end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20SELECT%20values.indicator_id,%20values.cartodb_id%20AS%20cartodb_id,%20%20%20%20%20%20values.iso,%20values.sub_nat_id,%20values.boundary,%20values.boundary_id,%20%20%20%20%20%20values.thresh,%20values.admin0_name%20AS%20country,%20values.year,%20%20%20%20%20%20values.value,%20subnat.name_1%20AS%20province,%20%20%20%20%20%20boundaries.boundary_name,%20indicators.indicator_short%20AS%20indicator_name,%20%20%20%20%20%20indicators.value_units%20AS%20units%20%20%20%20%20%20FROM%20indicators_values%20AS%20values%20%20%20%20%20%20INNER%20JOIN%20indicators%20ON%20values.indicator_id%20=%20indicators.indicator_id%20%20%20%20%20%20LEFT%20JOIN%20gadm28_adm1%20AS%20subnat%20%20%20%20%20%20ON%20values.sub_nat_id%20%20=%20subnat.id_1%20AND%20values.iso%20=%20subnat.iso%20%20%20%20%20%20LEFT%20JOIN%20boundaries_table%20AS%20boundaries%20%20%20%20%20%20ON%20values.boundary_id%20=%20boundaries.cartodb_id%20%20%20%20%20%20WHERE%20values.iso%20=%20%27BRA%27%20%20%20%20%20%20%20%20AND%20indicators.indicator_id%20IN%20(1)AND%20thresh%20IN%20(25,30)AND%20values.boundary_id%20=%201AND%20values.sub_nat_id%20IS%20NULL%20%20%20%20%20%20%20%20AND%20values.year%20%3E=%202009%20%20%20%20%20%20%20%20AND%20values.year%20%3C=%202011
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20SELECT%20values.indicator_id,%20values.cartodb_id%20AS%20cartodb_id,%20%20%20%20%20%20values.iso,%20values.sub_nat_id,%20values.boundary,%20values.boundary_id,%20%20%20%20%20%20values.thresh,%20values.admin0_name%20AS%20country,%20values.year,%20%20%20%20%20%20values.value,%20subnat.name_1%20AS%20province,%20%20%20%20%20%20boundaries.boundary_name,%20indicators.indicator_short%20AS%20indicator_name,%20%20%20%20%20%20indicators.value_units%20AS%20units%20%20%20%20%20%20FROM%20sam_test%20AS%20values%20%20%20%20%20%20INNER%20JOIN%20indicators%20ON%20values.indicator_id%20=%20indicators.indicator_id%20%20%20%20%20%20LEFT%20JOIN%20gadm28_adm1%20AS%20subnat%20%20%20%20%20%20ON%20values.sub_nat_id%20%20=%20subnat.id_1%20AND%20values.iso%20=%20subnat.iso%20%20%20%20%20%20LEFT%20JOIN%20boundaries_table%20AS%20boundaries%20%20%20%20%20%20ON%20values.boundary_id%20=%20boundaries.cartodb_id%20%20%20%20%20%20WHERE%20values.iso%20=%20%27BRA%27%20%20%20%20%20%20%20%20AND%20indicators.indicator_id%20IN%20(1)AND%20thresh%20IN%20(25,30)AND%20values.boundary_id%20=%201AND%20values.sub_nat_id%20IS%20NULL%20%20%20%20%20%20%20%20AND%20values.year%20%3E=%202009%20%20%20%20%20%20%20%20AND%20values.year%20%3C=%202011
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Tue, 20 Jun 2017 08:26:27 GMT
+      - Wed, 08 Nov 2017 18:56:40 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -35,31 +35,31 @@ http_interactions:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Tue, 20 Jun 2017 08:26:27
+      - inline; filename=cartodb-query.json; modification-date="Wed, 08 Nov 2017 18:55:23
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
       Surrogate-Key:
-      - t:0Qor5H t:JD7bcq t:d7vJOZ t:uiJFJp
+      - t:JD7bcq t:d7vJOZ t:fWy6gG t:uiJFJp
       Last-Modified:
-      - Wed, 07 Jun 2017 18:37:22 GMT
+      - Tue, 07 Nov 2017 00:15:41 GMT
       X-Sqlapi-Profiler:
-      - '{"setDBAuth":1,"queryExplain":8,"eventedQuery":1,"beforeSink":380,"total":390}'
+      - '{"setDBAuth":1,"queryExplain":6,"eventedQuery":1,"beforeSink":1210,"total":1218}'
       X-Varnish:
-      - '490922507'
+      - 1080578599 1080560780
       Age:
-      - '0'
+      - '76'
       X-Cache:
-      - MISS
+      - HIT
     body:
       encoding: ASCII-8BIT
-      string: '{"rows":[{"indicator_id":1,"cartodb_id":16634134,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"country":"Brazil","year":2009,"value":1829956.19,"province":null,"boundary_name":"administrative
-        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":16634288,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"country":"Brazil","year":2010,"value":2705582.1,"province":null,"boundary_name":"administrative
-        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":16634440,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"country":"Brazil","year":2011,"value":1937607.8,"province":null,"boundary_name":"administrative
-        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":16636399,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":30,"country":"Brazil","year":2009,"value":1817901.23,"province":null,"boundary_name":"administrative
-        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":16636550,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":30,"country":"Brazil","year":2010,"value":2688896.17,"province":null,"boundary_name":"administrative
-        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":16636701,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":30,"country":"Brazil","year":2011,"value":1923363.69,"province":null,"boundary_name":"administrative
-        boundary","indicator_name":"Tree cover loss","units":"hectares"}],"time":0.382,"fields":{"indicator_id":{"type":"number"},"cartodb_id":{"type":"number"},"iso":{"type":"string"},"sub_nat_id":{"type":"number"},"boundary":{"type":"string"},"boundary_id":{"type":"number"},"thresh":{"type":"number"},"country":{"type":"string"},"year":{"type":"number"},"value":{"type":"number"},"province":{"type":"string"},"boundary_name":{"type":"string"},"indicator_name":{"type":"string"},"units":{"type":"string"}},"total_rows":6}'
+      string: '{"rows":[{"indicator_id":1,"cartodb_id":339997,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"country":"Brazil","year":2009,"value":1829956.19633,"province":null,"boundary_name":"administrative
+        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":340003,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"country":"Brazil","year":2010,"value":2705582.10874,"province":null,"boundary_name":"administrative
+        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":340009,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"country":"Brazil","year":2011,"value":1937607.80645,"province":null,"boundary_name":"administrative
+        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":340093,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":30,"country":"Brazil","year":2009,"value":1817901.23276,"province":null,"boundary_name":"administrative
+        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":340099,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":30,"country":"Brazil","year":2010,"value":2688896.17627,"province":null,"boundary_name":"administrative
+        boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":340105,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":30,"country":"Brazil","year":2011,"value":1923363.69455,"province":null,"boundary_name":"administrative
+        boundary","indicator_name":"Tree cover loss","units":"hectares"}],"time":1.21,"fields":{"indicator_id":{"type":"number"},"cartodb_id":{"type":"number"},"iso":{"type":"string"},"sub_nat_id":{"type":"number"},"boundary":{"type":"string"},"boundary_id":{"type":"number"},"thresh":{"type":"number"},"country":{"type":"string"},"year":{"type":"number"},"value":{"type":"number"},"province":{"type":"string"},"boundary_name":{"type":"string"},"indicator_name":{"type":"string"},"units":{"type":"string"}},"total_rows":6}'
     http_version: 
-  recorded_at: Tue, 20 Jun 2017 08:26:22 GMT
+  recorded_at: Wed, 08 Nov 2017 18:56:41 GMT
 recorded_with: VCR 3.0.3
