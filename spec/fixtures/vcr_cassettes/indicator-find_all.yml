@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Thu, 15 Jun 2017 08:54:48 GMT
+      - Thu, 09 Nov 2017 15:13:15 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -35,7 +35,7 @@ http_interactions:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Thu, 15 Jun 2017 08:54:48
+      - inline; filename=cartodb-query.json; modification-date="Thu, 09 Nov 2017 15:13:15
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
@@ -44,9 +44,9 @@ http_interactions:
       Last-Modified:
       - Thu, 15 Dec 2016 17:23:30 GMT
       X-Sqlapi-Profiler:
-      - '{"init":1,"setDBAuth":1,"queryExplain":7,"eventedQuery":2,"beforeSink":2,"total":13}'
+      - '{"setDBAuth":1,"queryExplain":7,"beforeSink":2,"total":10}'
       X-Varnish:
-      - '1524117372'
+      - '202246922'
       Age:
       - '0'
       X-Cache:
@@ -179,7 +179,7 @@ http_interactions:
         Density","chart_type":null,"description":"","indicator_id":66,"value_units":""},{"indicator_group":"Stocks
         in 2000","chart_type":"pie","description":"Belowground biomass stocks according
         to Woods Hole data at ({{threshold}}) in the year 2000","indicator_id":6,"value_units":"Tg"},{"indicator_group":"Stocks
-        in 2000","chart_type":null,"description":"","indicator_id":60,"value_units":""}],"time":0.009,"fields":{"indicator_group":{"type":"string"},"chart_type":{"type":"string"},"description":{"type":"string"},"indicator_id":{"type":"number"},"value_units":{"type":"string"}},"total_rows":79}'
+        in 2000","chart_type":null,"description":"","indicator_id":60,"value_units":""}],"time":0.006,"fields":{"indicator_group":{"type":"string"},"chart_type":{"type":"string"},"description":{"type":"string"},"indicator_id":{"type":"number"},"value_units":{"type":"string"}},"total_rows":79}'
     http_version: 
-  recorded_at: Thu, 15 Jun 2017 08:54:48 GMT
+  recorded_at: Thu, 09 Nov 2017 15:13:15 GMT
 recorded_with: VCR 3.0.3

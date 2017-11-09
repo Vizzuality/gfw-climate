@@ -15,14 +15,14 @@ RSpec.describe Indicator, type: :model do
       indicators = VCR.use_cassette("indicator-find_by_id") do
         Indicator.find_indicator(id: 1)
       end
-      expect(indicators.length).to eq 33773
+      expect(indicators.length).to eq 124352
     end
 
     it "Find indicator by iso and id" do
       indicators = VCR.use_cassette("indicator-find_by_id_and_iso") do
         Indicator.find_indicator(id: 1, iso: 'bra')
       end
-      expect(indicators.length).to eq 15
+      expect(indicators.length).to eq 16
     end
   end
 end
