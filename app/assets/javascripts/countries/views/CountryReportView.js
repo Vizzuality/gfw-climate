@@ -185,7 +185,7 @@ define([
     },
 
     _getAccuracyData: function() {
-      var url = window.gfw.config.GFW_API_HOST_V2 +  _.str.sprintf(ENDPOINT_ACCURACY, this.iso);
+      var url = window.gfw.config.GFW_API_HOST_PRO +  _.str.sprintf(ENDPOINT_ACCURACY, this.iso);
       $.when($.getJSON(url))
         .then(function(res) {
           this.accuracyData = res.data[0];
