@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Wed, 14 Jun 2017 13:46:57 GMT
+      - Wed, 08 Nov 2017 18:56:49 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -33,27 +33,27 @@ http_interactions:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Wed, 14 Jun 2017 13:46:57
+      - inline; filename=cartodb-query.json; modification-date="Wed, 08 Nov 2017 18:47:43
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
       Surrogate-Key:
       - t:QiX7Tw
       Last-Modified:
-      - Fri, 17 Mar 2017 14:27:06 GMT
+      - Tue, 10 Oct 2017 13:42:10 GMT
       X-Sqlapi-Profiler:
-      - '{"setDBAuth":1,"queryExplain":6,"eventedQuery":1,"beforeSink":3,"total":11}'
+      - '{"setDBAuth":2,"queryExplain":7,"eventedQuery":1,"beforeSink":1,"total":11}'
       X-Varnish:
-      - '71917002'
+      - 1080580617 1080446469
       Age:
-      - '0'
+      - '546'
       X-Cache:
-      - MISS
+      - HIT
     body:
       encoding: UTF-8
-      string: '{"rows":[{"iso":"BRA","name":"Brazil","latlng":"{\"type\":\"Point\",\"coordinates\":[-53.0924814310442,-10.78085967622]}"}],"time":0.003,"fields":{"iso":{"type":"string"},"name":{"type":"string"},"latlng":{"type":"string"}},"total_rows":1}'
+      string: '{"rows":[{"iso":"BRA","name":"Brazil","latlng":"{\"type\":\"Point\",\"coordinates\":[-53.0924814310442,-10.78085967622]}"}],"time":0.002,"fields":{"iso":{"type":"string"},"name":{"type":"string"},"latlng":{"type":"string"}},"total_rows":1}'
     http_version: 
-  recorded_at: Wed, 14 Jun 2017 13:46:57 GMT
+  recorded_at: Wed, 08 Nov 2017 18:56:49 GMT
 - request:
     method: get
     uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20%20%20SELECT%20name_1%20AS%20jurisdiction_name,%20iso,%20id_1,%20%20%20%20%20%20%20%20%20%20cartodb_id,%20ST_AsGeoJSON(ST_Envelope(the_geom))::json%20AS%20bounds%20%20%20%20%20%20%20%20FROM%20gadm28_adm1%20%20%20%20%20%20%20%20WHERE%20UPPER(iso)%20=%20UPPER(%27bra%27)%20%20%20%20%20%20%20%20ORDER%20by%20jurisdiction_name
@@ -75,7 +75,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Wed, 14 Jun 2017 13:46:57 GMT
+      - Wed, 08 Nov 2017 18:56:50 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -89,7 +89,7 @@ http_interactions:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Wed, 14 Jun 2017 13:46:57
+      - inline; filename=cartodb-query.json; modification-date="Wed, 08 Nov 2017 18:47:44
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
@@ -98,13 +98,13 @@ http_interactions:
       Last-Modified:
       - Fri, 24 Mar 2017 08:38:35 GMT
       X-Sqlapi-Profiler:
-      - '{"setDBAuth":1,"queryExplain":7,"eventedQuery":1,"beforeSink":18,"total":27}'
+      - '{"setDBAuth":2,"queryExplain":6,"eventedQuery":1,"beforeSink":37,"total":46}'
       X-Varnish:
-      - '71917067'
+      - 1080580925 1080446709
       Age:
-      - '0'
+      - '546'
       X-Cache:
-      - MISS
+      - HIT
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -293,16 +293,16 @@ http_interactions:
         MiwtNS4xNjgzOTY5NDk3Njc5NV0sWy00NS42OTYwMzM0Nzc3ODMyLC01LjE2
         ODM5Njk0OTc2Nzk1XSxbLTQ1LjY5NjAzMzQ3Nzc4MzIsLTEzLjQ2NzcxNzE3
         MDcxNTNdLFstNTAuNzQyMDA0Mzk0NTMxMiwtMTMuNDY3NzE3MTcwNzE1M11d
-        XX19XSwidGltZSI6MC4wMjEsImZpZWxkcyI6eyJqdXJpc2RpY3Rpb25fbmFt
-        ZSI6eyJ0eXBlIjoic3RyaW5nIn0sImlzbyI6eyJ0eXBlIjoic3RyaW5nIn0s
-        ImlkXzEiOnsidHlwZSI6Im51bWJlciJ9LCJjYXJ0b2RiX2lkIjp7InR5cGUi
-        OiJudW1iZXIifSwiYm91bmRzIjp7InR5cGUiOiJKU09OIn19LCJ0b3RhbF9y
-        b3dzIjoyN30=
+        XX19XSwidGltZSI6MC4wNCwiZmllbGRzIjp7Imp1cmlzZGljdGlvbl9uYW1l
+        Ijp7InR5cGUiOiJzdHJpbmcifSwiaXNvIjp7InR5cGUiOiJzdHJpbmcifSwi
+        aWRfMSI6eyJ0eXBlIjoibnVtYmVyIn0sImNhcnRvZGJfaWQiOnsidHlwZSI6
+        Im51bWJlciJ9LCJib3VuZHMiOnsidHlwZSI6IkpTT04ifX0sInRvdGFsX3Jv
+        d3MiOjI3fQ==
     http_version: 
-  recorded_at: Wed, 14 Jun 2017 13:46:57 GMT
+  recorded_at: Wed, 08 Nov 2017 18:56:50 GMT
 - request:
     method: get
-    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20%20%20SELECT%20DISTINCT%20boundary_id%20AS%20id,%20boundary_name%20AS%20name,%20boundary_code%20AS%20code%20%20%20%20%20%20%20%20FROM%20indicators_values%20i%20%20%20%20%20%20%20%20INNER%20JOIN%20boundaries_table%20b%20ON%20%20%20%20%20%20%20%20i.boundary_id%20=%20b.cartodb_id%20%20%20%20%20%20%20%20WHERE%20UPPER(iso)%20=%20UPPER(%27bra%27)%20AND%20%20%20%20%20%20%20%20boundary%20%3C%3E%20%27admin%27%20%20%20%20%20%20%20%20ORDER%20BY%20boundary_id
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20%20%20SELECT%20DISTINCT%20boundary_id%20AS%20id,%20boundary_name%20AS%20name,%20boundary_code%20AS%20code%20%20%20%20%20%20%20%20FROM%20sam_test%20i%20%20%20%20%20%20%20%20INNER%20JOIN%20boundaries_table%20b%20ON%20%20%20%20%20%20%20%20i.boundary_id%20=%20b.cartodb_id%20%20%20%20%20%20%20%20WHERE%20UPPER(iso)%20=%20UPPER(%27bra%27)%20AND%20%20%20%20%20%20%20%20boundary%20%3C%3E%20%27admin%27%20%20%20%20%20%20%20%20ORDER%20BY%20boundary_id
     body:
       encoding: US-ASCII
       string: ''
@@ -321,11 +321,11 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Wed, 14 Jun 2017 13:46:58 GMT
+      - Wed, 08 Nov 2017 18:56:51 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '519'
+      - '725'
       Connection:
       - keep-alive
       Access-Control-Allow-Origin:
@@ -333,22 +333,22 @@ http_interactions:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Wed, 14 Jun 2017 13:46:58
+      - inline; filename=cartodb-query.json; modification-date="Wed, 08 Nov 2017 18:47:46
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
       Surrogate-Key:
-      - t:0Qor5H t:uiJFJp
+      - t:fWy6gG t:uiJFJp
       Last-Modified:
-      - Wed, 07 Jun 2017 18:37:22 GMT
+      - Tue, 07 Nov 2017 00:15:41 GMT
       X-Sqlapi-Profiler:
-      - '{"setDBAuth":1,"queryExplain":8,"beforeSink":470,"total":479}'
+      - '{"setDBAuth":1,"queryExplain":7,"eventedQuery":1,"beforeSink":2425,"total":2434}'
       X-Varnish:
-      - '71917156'
+      - 1080581139 1080447152
       Age:
-      - '0'
+      - '543'
       X-Cache:
-      - MISS
+      - HIT
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -358,12 +358,17 @@ http_interactions:
         ImlkIjo2LCJuYW1lIjoiUGFtcGEiLCJjb2RlIjoiYmlvXzQifSx7ImlkIjo3
         LCJuYW1lIjoiQW1hesO0bmlhIiwiY29kZSI6ImJpb181In0seyJpZCI6OCwi
         bmFtZSI6Ik1hdGEgQXRsw6JudGljYSIsImNvZGUiOiJiaW9fNiJ9LHsiaWQi
-        OjE0LCJuYW1lIjoiSW5kaWdlbm91cyBMYW5kcyIsImNvZGUiOiJpbmQifSx7
-        ImlkIjoyMiwibmFtZSI6IlBsYW50YXRpb25zIiwiY29kZSI6InBsdCJ9LHsi
-        aWQiOjI0LCJuYW1lIjoiUHJvdGVjdGVkIEFyZWFzIiwiY29kZSI6InByYSJ9
-        XSwidGltZSI6MC40NzEsImZpZWxkcyI6eyJpZCI6eyJ0eXBlIjoibnVtYmVy
-        In0sIm5hbWUiOnsidHlwZSI6InN0cmluZyJ9LCJjb2RlIjp7InR5cGUiOiJz
-        dHJpbmcifX0sInRvdGFsX3Jvd3MiOjl9
+        OjEwLCJuYW1lIjoiRm9yZXN0IENvbmNlc3Npb25zIiwiY29kZSI6ImNvbiJ9
+        LHsiaWQiOjE0LCJuYW1lIjoiSW5kaWdlbm91cyBMYW5kcyIsImNvZGUiOiJp
+        bmQifSx7ImlkIjoxNiwibmFtZSI6Ik1pbmluZyBDb25jZXNzaW9ucyIsImNv
+        ZGUiOiJtbmMifSx7ImlkIjoyMiwibmFtZSI6IlBsYW50YXRpb25zIiwiY29k
+        ZSI6InBsdCJ9LHsiaWQiOjIzLCJuYW1lIjoiUHJpbWFyeSBGb3Jlc3QiLCJj
+        b2RlIjoicHJmIn0seyJpZCI6MjQsIm5hbWUiOiJQcm90ZWN0ZWQgQXJlYXMi
+        LCJjb2RlIjoicHJhIn0seyJpZCI6MjgsIm5hbWUiOiJJbnRhY3QgRm9yZXN0
+        IExhbmRzY2FwZSIsImNvZGUiOiJpZmwifV0sInRpbWUiOjIuNDI2LCJmaWVs
+        ZHMiOnsiaWQiOnsidHlwZSI6Im51bWJlciJ9LCJuYW1lIjp7InR5cGUiOiJz
+        dHJpbmcifSwiY29kZSI6eyJ0eXBlIjoic3RyaW5nIn19LCJ0b3RhbF9yb3dz
+        IjoxM30=
     http_version: 
-  recorded_at: Wed, 14 Jun 2017 13:46:58 GMT
+  recorded_at: Wed, 08 Nov 2017 18:56:51 GMT
 recorded_with: VCR 3.0.3
