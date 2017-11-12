@@ -48,6 +48,8 @@ group :test do
   gem 'capybara'
   gem "codeclimate-test-reporter", require: nil
   gem 'coveralls', require: false
+  gem 'vcr'
+  gem 'webmock'
 end
 
 gem 'dotenv-rails'
