@@ -1,8 +1,20 @@
+require 'codeclimate-test-reporter' if ENV['CI']
 require 'simplecov'
-SimpleCov.start
-
 require 'coveralls'
-Coveralls.wear!
+
+Coveralls::Output.no_color = true
+
+formatters = [Coveralls::SimpleCov::Formatter, SimpleCov::Formatter::HTMLFormatter]
+formatters.push CodeClimate::TestReporter::Formatter if ENV['CI']
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(formatters)
+SimpleCov.start 'rails'
+
+require 'vcr'
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+  config.hook_into :webmock
+end
 
 RSpec.configure do |config|
   

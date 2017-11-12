@@ -1,28 +1,28 @@
 require "rails_helper"
 
 RSpec.describe Indicator, type: :model do
-
   context "Get list of indicators" do
-
     it "Find all indicators" do
-      indicators = Indicator.find_all
+      indicators = VCR.use_cassette("indicator-find_all") do
+        Indicator.find_all
+      end
       expect(indicators[0]['indicator_id']).to eq 1
     end
-
   end
 
   context "Get certain indicator" do
-
     it "Find indicator by id" do
-      indicator = Indicator.find_indicator(id: 1)
-      expect(indicator[0]['year']).to eq 2001
+      indicators = VCR.use_cassette("indicator-find_by_id") do
+        Indicator.find_indicator(id: 1)
+      end
+      expect(indicators.length).to eq 124352
     end
 
     it "Find indicator by iso and id" do
-      indicator = Indicator.find_indicator(id: 1, iso: 'bra')
-      expect(indicator[0]['iso']).to eq 'BRA'
+      indicators = VCR.use_cassette("indicator-find_by_id_and_iso") do
+        Indicator.find_indicator(id: 1, iso: 'bra')
+      end
+      expect(indicators.length).to eq 16
     end
-
   end
-
 end

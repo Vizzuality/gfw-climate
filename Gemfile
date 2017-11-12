@@ -17,7 +17,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'requirejs-rails'
 
-gem 'slim-rails'
+gem 'slim-rails', '3.1.1'
 
 gem 'httparty'
 gem 'rabl'
@@ -25,6 +25,7 @@ gem 'oj'
 gem 'responders', '~> 2.0'
 gem 'google_drive'
 
+gem 'rubyzip'
 gem 'raddocs'
 
 group :development do
@@ -47,6 +48,8 @@ group :test do
   gem 'capybara'
   gem "codeclimate-test-reporter", require: nil
   gem 'coveralls', require: false
+  gem 'vcr'
+  gem 'webmock'
 end
 
 gem 'dotenv-rails'

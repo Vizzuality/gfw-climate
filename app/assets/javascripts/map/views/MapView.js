@@ -99,6 +99,7 @@ define([
       this._setMaptypes();
       this._addListeners();
       this._setGeoStyles();
+      this._appearMenu();
       // Node
       this.createMaptypeNode();
     },
@@ -314,10 +315,6 @@ define([
       this.map.setCenter(newCenter);
 
     },
-
-
-
-
 
     /**
      * Used by Embed to fit bounds.
@@ -538,6 +535,45 @@ define([
         this.setCustomLabelLayer('custom_dark_base_labels', false)
         this.setCustomLabelLayer('custom_dark_only_labels', false);
       }
+    },
+
+    _appearMenu() {
+      $('body').mousemove(function( event ) {
+        if(event.pageY < 100) {
+          $('#headerGfw').addClass('-show');
+          $('.logo-menu').addClass('-show');
+          $('.nav-sections').addClass('-show');
+          $('.layout-header-bottom').addClass('-show');
+        }
+
+        if(event.pageY > 120) {
+          var hoverMenuLogin;
+          if ($('.m-header-sub-menu-login').length === 1) {
+            hoverMenuLogin = $('.m-header-sub-menu-login').is(':hover');
+          }
+          if ($('.m-header-submenu-logged').length === 1) {
+            hoverMenuLogin = $('.m-header-submenu-logged').is(':hover');
+          }
+
+          var hoverMenuDashboard = $('.m-header-sub-menu-dashboard').is(':hover');
+          var dashboardMenuOpen = $('.m-header-sub-menu-dashboard').hasClass('-active');
+          var loginMenuOpen = $('.m-header-sub-menu-login').hasClass('-active');
+          var hoverCarbonLoss = $('.carbon-loss').is(':hover');
+          var hoverCarbonGains = $('.carbon-gains').is(':hover');
+          var hoverCarbonDensity = $('.carbon-density').is(':hover');
+          var hoverLandUse = $('.land-use').is(':hover');
+          var hoverLandCover = $('.land-cover').is(':hover');
+          var hoverLayersNav = $('.country-layers-nav').is(':hover');
+
+          if(!hoverCarbonLoss && !hoverMenuLogin && !hoverCarbonGains && !hoverCarbonDensity && !hoverLandCover
+            && !hoverLandUse && !hoverLayersNav && !hoverMenuDashboard && !dashboardMenuOpen && !loginMenuOpen) {
+            $('#headerGfw').removeClass('-show');
+            $('.logo-menu').removeClass('-show');
+            $('.nav-sections').removeClass('-show');
+            $('.layout-header-bottom').removeClass('-show');
+          }
+        }
+      });
     },
 
     setCustomLabelLayer: function(slug, add) {

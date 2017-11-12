@@ -48,6 +48,9 @@ Rails.application.routes.draw do
   get 'insights', to: 'insights#index', as: :insights
   get 'insights(/*path)', to: 'insights#show', as: :insights_show
 
+  # Data download
+  get 'data-download', to: 'data_download#index', as: :data_download
+
   # Compare countries routes
   # GET 'compare-countries/bra+1+0/aus+1+0/aut+0+3'
   get 'compare-countries(/*path)', to: 'compare#index', as: :compare_countries
@@ -58,11 +61,12 @@ Rails.application.routes.draw do
     # Set APIVersion.new(version: X, default: true) for dafault API version
     scope module: :v1, constraints: APIVersion.new(version: 1, current: true) do
 
-      with_options only: [:index, :show] do |list_show_only|
-        list_show_only.resources :indicators
-        list_show_only.resources :countries
-        list_show_only.resources :widgets
-      end
+      resources :indicators, only: [:index, :show]
+      resources :countries, only: [:index, :show]
+      resources :widgets, only: [:index, :show]
+
+      resources :downloads, only: :index
+      resources :data_portal_downloads, only: :index
 
       resources :reports, only: [:index]
 

@@ -15,5 +15,27 @@
   "bugs": {
     "url": "https://github.com/Vizzuality/gfw-climate/issues"
   },
-  "homepage": "https://github.com/Vizzuality/gfw-climate#readme"
+  "homepage": "https://github.com/Vizzuality/gfw-climate#readme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint-staged": "lint-staged",
+    "precommit": "npm run lint-staged"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-es5": "^1.1.0",
+    "eslint-config-recommended": "^1.5.0",
+    "husky": "^0.13.3",
+    "lint-staged": "^3.4.0",
+    "prettier": "^1.2.2"
+  },
+  "lint-staged": {
+    "app/**/*.js": [
+      "prettier --single-quote --write",
+      "eslint --quiet",
+      "git add"
+    ]
+  }
 }
