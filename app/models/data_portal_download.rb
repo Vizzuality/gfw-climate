@@ -5,7 +5,7 @@ class DataPortalDownload < Download
     @area_ids = options[:area_ids] || []
     @years = options[:years] || []
     @indicator_ids = if options[:widget_ids]
-                       options[:widget_ids].map do |widget_id|
+                       options[:widget_ids].map{|t| t.split(",")}.flatten do |widget_id|
                          Widget.find(widget_id).indicators.map{ |i| i["id"] }
                        end.flatten
                      else
