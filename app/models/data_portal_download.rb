@@ -4,8 +4,10 @@ class DataPortalDownload < Download
     @jurisdiction_ids = options[:jurisdiction_ids] || []
     @area_ids = options[:area_ids] || []
     @years = options[:years] || []
-    @indicator_ids = if options[:widget_ids]
-                       options[:widget_ids].map do |widget_id|
+    @indicator_ids = if options[:indicator_ids]
+                       options[:indicator_ids]
+                     elsif options[:widget_ids]
+                       options[:widget_ids].map{|t| t.split(",")}.flatten do |widget_id|
                          Widget.find(widget_id).indicators.map{ |i| i["id"] }
                        end.flatten
                      else
