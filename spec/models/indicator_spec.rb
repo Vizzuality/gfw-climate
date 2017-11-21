@@ -11,13 +11,6 @@ RSpec.describe Indicator, type: :model do
   end
 
   context "Get certain indicator" do
-    it "Find indicator by id" do
-      indicators = VCR.use_cassette("indicator-find_by_id") do
-        Indicator.find_indicator(id: 1)
-      end
-      expect(indicators.length).to eq 124352
-    end
-
     it "Find indicator by iso and id" do
       indicators = VCR.use_cassette("indicator-find_by_id_and_iso") do
         Indicator.find_indicator(id: 1, iso: 'bra')
