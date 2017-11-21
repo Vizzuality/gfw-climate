@@ -16,7 +16,7 @@ RSpec.describe DataPortalDownload, type: :model do
         DataPortalDownload.new(
           {
             country_codes: ['BRA'],
-            widget_ids: [1],
+            widget_ids: ['1'],
             years: [2009, 2011],
             thresholds: [25, 30],
           }
@@ -45,7 +45,7 @@ RSpec.describe DataPortalDownload, type: :model do
           DataPortalDownload.new(
             {
             country_codes: ['BRA'],
-            widget_ids: [1],
+            widget_ids: ['1'],
             years: [2009, 2011],
             thresholds: [25, 30],
               pivot: true
@@ -59,7 +59,7 @@ RSpec.describe DataPortalDownload, type: :model do
         end
       end
       context 'all countries pivot' do
-        let(:widget_ids){ [1] }
+        let(:widget_ids){ ['1'] }
         let(:dpd){
           DataPortalDownload.new({widget_ids: widget_ids, pivot: true})
         }
@@ -80,7 +80,7 @@ RSpec.describe DataPortalDownload, type: :model do
         DataPortalDownload.new(
           {
             country_codes: ['BRA'],
-            widget_ids: [1],
+            widget_ids: ['1'],
             years: [2009, 2011],
             thresholds: [25, 30],
             json: true
