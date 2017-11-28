@@ -21,7 +21,7 @@ http_interactions:
       Server:
       - openresty
       Date:
-      - Wed, 08 Nov 2017 18:56:45 GMT
+      - Tue, 28 Nov 2017 16:12:50 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -35,7 +35,7 @@ http_interactions:
       Access-Control-Allow-Headers:
       - X-Requested-With, X-Prototype-Version, X-CSRF-Token
       Content-Disposition:
-      - inline; filename=cartodb-query.json; modification-date="Wed, 08 Nov 2017 18:47:14
+      - inline; filename=cartodb-query.json; modification-date="Tue, 28 Nov 2017 15:56:53
         GMT";
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
@@ -44,11 +44,11 @@ http_interactions:
       Last-Modified:
       - Tue, 10 Oct 2017 13:42:10 GMT
       X-Sqlapi-Profiler:
-      - '{"setDBAuth":1,"queryExplain":9,"eventedQuery":1,"beforeSink":3,"total":14}'
+      - '{"setDBAuth":9,"queryExplain":7,"beforeSink":4,"total":20}'
       X-Varnish:
-      - 1080579760 1080439547
+      - 493114486 492975974
       Age:
-      - '571'
+      - '957'
       X-Cache:
       - HIT
     body:
@@ -327,9 +327,9 @@ http_interactions:
         ODIxNTQyLC0xMy40NjAxMTI3MjI3MzYyXX0ifSx7ImlzbyI6IlpXRSIsIm5h
         bWUiOiJaaW1iYWJ3ZSIsImxhdGxuZyI6IntcInR5cGVcIjpcIlBvaW50XCIs
         XCJjb29yZGluYXRlc1wiOlsyOS44NTE4ODMzOTIyNzY5LC0xOS4wMDI1MzU2
-        NjE5Njk2XX0ifV0sInRpbWUiOjAuMDExLCJmaWVsZHMiOnsiaXNvIjp7InR5
+        NjE5Njk2XX0ifV0sInRpbWUiOjAuMDA5LCJmaWVsZHMiOnsiaXNvIjp7InR5
         cGUiOiJzdHJpbmcifSwibmFtZSI6eyJ0eXBlIjoic3RyaW5nIn0sImxhdGxu
         ZyI6eyJ0eXBlIjoic3RyaW5nIn19LCJ0b3RhbF9yb3dzIjoxMDN9
     http_version: 
-  recorded_at: Wed, 08 Nov 2017 18:56:45 GMT
+  recorded_at: Tue, 28 Nov 2017 16:12:50 GMT
 recorded_with: VCR 3.0.3
