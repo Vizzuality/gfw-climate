@@ -98,11 +98,17 @@ define([
   'map/views/layers/PerMinamCoverLayer',
   'map/views/layers/WMSLayer',
   'map/views/layers/MangroveBiomassLayer',
+  'map/views/layers/UptakeTotalSGCarbonGainLayer',
+  'map/views/layers/UptakeCropsCarbonGainLayer',
+  'map/views/layers/UptakeYSGCarbonGainLayer',
+  'map/views/layers/UptakePasturesCarbonGainLayer',
+  // Basemaps
   'map/views/layers/CustomDarkBaseLabelsLayer',
   'map/views/layers/CustomDarkOnlyLabelsLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
+  'map/views/timeline/GainTimeline',
   'map/views/timeline/LossTimeline'
 ], function(
   // Layer Views
@@ -201,11 +207,17 @@ define([
   PerMinamCoverLayer,
   WMSLayer,
   MangroveBiomassLayer,
+  UptakeTotalSGCarbonGainLayer,
+  UptakeCropsCarbonGainLayer,
+  UptakeYSGCarbonGainLayer,
+  UptakePasturesCarbonGainLayer,
+  // Basemaps
   CustomDarkBaseLabelsLayer,
   CustomDarkOnlyLabelsLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
+  GainTimeline,
   LossTimeline) {
 
   'use strict';
@@ -505,6 +517,22 @@ define([
     },
     global_mangroves_biomass: {
       view: MangroveBiomassLayer
+    },
+    total_sg: {
+      view: UptakeTotalSGCarbonGainLayer,
+      timelineView: GainTimeline
+    },
+    crops_1: {
+      view: UptakeCropsCarbonGainLayer,
+      timelineView: GainTimeline
+    },
+    ysg_msg: {
+      view: UptakeYSGCarbonGainLayer,
+      timelineView: GainTimeline
+    },
+    pastures: {
+      view: UptakePasturesCarbonGainLayer,
+      timelineView: GainTimeline
     },
 
     nothing: {

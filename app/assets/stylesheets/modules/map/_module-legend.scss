@@ -517,6 +517,7 @@
   /****************************/
   .layer-details-pantropical,
   .layer-details-biomass_loss,
+  .layer-details-carbon_gain,
   .layer-details-carbon_stocks {
     .details-title .units {
       font-weight: normal;
@@ -589,6 +590,13 @@
       background: -webkit-linear-gradient(left,  #ff1f26 0%,#d21f26 27%,#d21f26 52%,#f19813 77%,#ffd00b 100%);
       background: linear-gradient(to right,  #ff1f26 0%,#d21f26 27%,#d21f26 52%,#f19813 77%,#ffd00b 100%);
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1f26', endColorstr='#ffd00b',GradientType=1 );
+    }
+
+    &.layer-details-carbon_gain {
+      .quartile-bar {
+        background: #8FDFD2;
+        background: linear-gradient(to right, #8FDFD2 0%, #263317 100%);
+      }
     }
 
   }

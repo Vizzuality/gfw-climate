@@ -38,6 +38,7 @@ define([
   'text!map/templates/legend/per_mining.handlebars',
   'text!map/templates/legend/raisg_mining.handlebars',
   'text!map/templates/legend/mangrove_biomass.handlebars',
+  'text!map/templates/legend/carbon_gain.handlebars',
 
 ], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl,
   idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, concesionesTpl,
@@ -47,9 +48,25 @@ define([
   colombiaForestChangeTpl, us_land_coverTpl, bra_biomesTpl,
   gtm_forest_changeTpl, gtm_forest_coverTpl, gtm_forest_densityTpl,
   khm_eco_land_concTpl, usa_forest_ownershipTpl, mysPATpl,
-  per_miningTpl, raisg_miningTpl, mangrove_biomassTpl) {
+  per_miningTpl, raisg_miningTpl, mangrove_biomassTpl, carbon_gainTpl) {
 
   'use strict';
+
+  var carbonGainConfig = {
+    ranges: {
+      tco: {
+        min: 0,
+        max: 917
+      }
+    },
+    units: [
+      {
+        name: 't CO2 ha<sup>-1</sup>',
+        value: 'tco'
+      }
+    ],
+    selectedUnit: 'tco'
+  };
 
   var LegendModel = Backbone.Model.extend({
     defaults:{
@@ -81,6 +98,12 @@ define([
           ],
           selectedUnit: 'tco'
         },
+        // Carbon Gain
+        total_sg: carbonGainConfig,
+        ysg_msg: carbonGainConfig,
+        pastures: carbonGainConfig,
+        crops_1: carbonGainConfig,
+
         carbon_stocks: {
           ranges: {
             biomass: {
@@ -171,6 +194,10 @@ define([
       bra_mining:Handlebars.compile(raisg_miningTpl),
       per_mining:Handlebars.compile(per_miningTpl),
       global_mangroves_biomass:Handlebars.compile(mangrove_biomassTpl),
+      total_sg:Handlebars.compile(carbon_gainTpl),
+      ysg_msg:Handlebars.compile(carbon_gainTpl),
+      pastures:Handlebars.compile(carbon_gainTpl),
+      crops_1:Handlebars.compile(carbon_gainTpl),
     },
 
     initialize: function() {

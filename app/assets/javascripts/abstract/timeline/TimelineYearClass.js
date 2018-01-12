@@ -28,7 +28,8 @@ define([
       dateRange: [moment([2001]), moment()],
       playSpeed: 400,
       width: 750,
-      height: 50
+      height: 50,
+      disabled: false
     },
 
     events: {
@@ -161,7 +162,7 @@ define([
      * Render d3 timeline slider.
      */
     render: function() {
-      var self = this, margin, width, height, ticks, center, handleY, yearWidth;
+      var self = this, margin, width, height, ticks, center, handleY, yearWidth, yearsRange;
 
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
@@ -177,10 +178,11 @@ define([
       margin = {top: 0, right: 20, bottom: 0, left: 20};
       width = this.options.width - margin.left - margin.right;
       height = this.options.height - margin.bottom - margin.top;
-      yearWidth = width/(moment(this.options.dateRange[1]).year() - moment(this.options.dateRange[0]).year());
+      yearsRange = moment(this.options.dateRange[1]).year() - moment(this.options.dateRange[0]).year();
+      yearWidth = width/(yearsRange < 20 ? yearsRange : 20);
       center = height/2 - 2;
       handleY = 14;
-      ticks = moment(this.options.dateRange[1]).year() - moment(this.options.dateRange[0]).year();
+      ticks = yearsRange < 20 ? yearsRange : 20;
 
       if (! !!this.options.player) {
         this.$play.addClass('hidden');
@@ -208,13 +210,7 @@ define([
       // Set brush and listeners
       this.brush = d3.svg.brush()
           .x(this.xscale)
-          .extent([0, 0])
-          .on('brush', function() {
-            self.onBrush(this);
-          })
-          .on('brushend', function() {
-            self.onBrushEnd(this);
-          });
+          .extent([0, 0]);
 
       // Set SVG
       var timelineWidth = width + margin.left + margin.right;
@@ -272,8 +268,8 @@ define([
           .attr('y', handleY);
 
       this.handlers.right = this.handlers.left
-         .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-         .attr('x', this.xscale(this.currentDate[1].year()));
+        .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+        .attr('x', this.xscale(this.currentDate[1].year()));
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
@@ -301,12 +297,6 @@ define([
       this.hiddenBrush = d3.svg.brush()
           .x(this.xscale)
           .extent([0, 0])
-          .on('brush', function() {
-            self.onAnimationBrush(this);
-          })
-          .on('brushend', function() {
-            self.onAnimationBrushEnd(this);
-          });
 
       this.svg.selectAll('.extent,.resize')
           .remove();
@@ -317,11 +307,29 @@ define([
         .attr('x1', this.handlers.left.attr('x'))
         .attr('x2', this.handlers.right.attr('x'));
 
-      d3.select('.xaxis-years')
-          .selectAll('.tick')
-          .on('click',_.bind(function(value){
-            this.selectYear(value);
-          }, this ))
+      if (this.options.disabled) {
+        this.$timeline.addClass('-disabled');
+      } else {
+        this.brush
+          .on('brush', function() {
+            self.onBrush(this);
+          })
+          .on('brushend', function() {
+            self.onBrushEnd(this);
+          });
+        this.hiddenBrush
+          .on('brush', function() {
+            self.onAnimationBrush(this);
+          })
+          .on('brushend', function() {
+            self.onAnimationBrushEnd(this);
+          });
+        d3.select('.xaxis-years')
+            .selectAll('.tick')
+            .on('click',_.bind(function(value){
+              this.selectYear(value);
+            }, this ))
+      }
       this.formatXaxis();
     },
 
