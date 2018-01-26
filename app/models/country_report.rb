@@ -112,7 +112,8 @@ class CountryReport
         t["indicator_id"] == indicator &&
         t["sub_nat_id"] == nil &&
         t["year"] >= start_year &&
-        t["year"] <= end_year
+        t["year"] <= end_year &&
+        t["thresh"] == @thresh
     end
     if @below && indicator == EMISSIONS
       values.each do |t|
@@ -159,7 +160,8 @@ class CountryReport
     values = data.select do |t|
       t["boundary"] == @use_boundary &&
         t["indicator_id"] == indicator &&
-        !t["sub_nat_id"].nil?
+        !t["sub_nat_id"].nil? &&
+        t["thresh"] == @thresh
     end.group_by{|t| t["sub_nat_id"]}
 
     provinces = []
