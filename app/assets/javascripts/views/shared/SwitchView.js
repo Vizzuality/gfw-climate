@@ -3,7 +3,7 @@ define(
     'backbone',
     'underscore',
     'handlebars',
-    'text!data-download/templates/switch.handlebars'
+    'text!templates/shared/switch.handlebars'
   ],
   function(Backbone, _, Handlebars, tpl) {
     'use strict';
@@ -21,14 +21,17 @@ define(
 
       render: function(data) {
         this.$el.html(this.template(data));
-        this.value = this.$('.js-option')[0].dataset.value;
+        var item = this.$('.js-option')[0];
+        if (item) {
+          this.value = item.dataset.value;
+        }
       },
 
       onOptionChange: function(e) {
         var item = e.currentTarget;
         if (item) {
-          this.$('.js-option').each(function(index, item) {
-            item.classList.remove('is-active');
+          this.$('.js-option').each(function(index, i) {
+            i.classList.remove('is-active');
           });
           item.classList.add('is-active');
           this.value = item.dataset.value;

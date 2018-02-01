@@ -2,6 +2,7 @@
   h2 {
     font-size: 47px;
     color: $white;
+    max-width: 780px;
 
     @media only screen and (max-width: $br-mobile-portrait) {
       font-size: 26px;
@@ -199,5 +200,16 @@
         }
       }
     }
+  }
+}
+
+.m-sub-header {
+  padding: 60px;
+  display: flex;
+  justify-content: space-between;
+
+  h3 {
+    color: $dark;
+    font-size: 25px;
   }
 }

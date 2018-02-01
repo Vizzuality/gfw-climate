@@ -6,7 +6,7 @@ define(
     'underscore',
     'jquery',
     'data-download/views/DownloadFilterCardView',
-    'data-download/views/SwitchView',
+    'views/shared/SwitchView',
     'helpers/utilsHelper',
     'text!data-download/templates/download-filters.handlebars'
   ],
