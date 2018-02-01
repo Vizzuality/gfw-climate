@@ -29,5 +29,5 @@ class Widget < ActiveJSON::Base
 
     url.to_s
   end
-  
+
 end

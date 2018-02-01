@@ -1,0 +1,185 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20%20SELECT%20indicator_group,%20chart_type,%20description,%20indicator_id,%20value_units%20%20%20%20%20%20%20FROM%20indicators%20%20%20%20%20%20%20GROUP%20BY%20indicator_id,%20indicator_group,%20description,%20value_units,%20chart_type
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty
+      Date:
+      - Thu, 09 Nov 2017 15:13:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Prototype-Version, X-CSRF-Token
+      Content-Disposition:
+      - inline; filename=cartodb-query.json; modification-date="Thu, 09 Nov 2017 15:13:15
+        GMT";
+      Cache-Control:
+      - no-cache,max-age=31536000,must-revalidate,public
+      Surrogate-Key:
+      - t:JD7bcq
+      Last-Modified:
+      - Thu, 15 Dec 2016 17:23:30 GMT
+      X-Sqlapi-Profiler:
+      - '{"setDBAuth":1,"queryExplain":7,"beforeSink":2,"total":10}'
+      X-Varnish:
+      - '202246922'
+      Age:
+      - '0'
+      X-Cache:
+      - MISS
+    body:
+      encoding: ASCII-8BIT
+      string: '{"rows":[{"indicator_group":"Stocks in 2000","chart_type":"pie","description":"Aboveground
+        biomass stocks according to Woods Hole data at ({{threshold}}) in the year
+        2000","indicator_id":4,"value_units":"Tg"},{"indicator_group":"Carbon Emissions","chart_type":"","description":"Aboveground
+        biomass loss according to Woods Hole data at ({{threshold}}) in the year ({{year}})
+        in units of Tg biomass","indicator_id":12,"value_units":"Tg biomass"},{"indicator_group":"Carbon
+        Emissions","chart_type":"line","description":"Carbon loss from living biomass
+        (above- and belowground) FAOSTAT in Tg C","indicator_id":29,"value_units":"TgC"},{"indicator_group":"Carbon
+        Emissions","chart_type":null,"description":"came from CAIT historical emissions
+        2001-2012 spreadsheet","indicator_id":48,"value_units":"%"},{"indicator_group":"Carbon
+        Emissions","chart_type":null,"description":"came from CAIT historical emissions
+        2001-2012 spreadsheet","indicator_id":49,"value_units":"Mt CO2 yr-1"},{"indicator_group":"Carbon
+        Emissions","chart_type":null,"description":"","indicator_id":53,"value_units":"Tg"},{"indicator_group":"Carbon
+        Emissions","chart_type":null,"description":"","indicator_id":76,"value_units":"tgC"},{"indicator_group":"drivers","chart_type":"text","description":"name
+        of driver","indicator_id":40,"value_units":null},{"indicator_group":"Stocks
+        in 2000","chart_type":null,"description":"","indicator_id":62,"value_units":""},{"indicator_group":"Carbon
+        Emissions","chart_type":"line","description":"Carbon emissions from aboveground
+        biomass loss according to other national data in units of Mt CO2","indicator_id":35,"value_units":"Mt
+        CO2"},{"indicator_group":"Biomass Density","chart_type":"pie","description":"Aboveground
+        carbon density in live biomass according to Woods Hole data at ({{threshold}})
+        in the year 2000","indicator_id":11,"value_units":"Mg Carbon/ha"},{"indicator_group":"Deforestation","chart_type":"line","description":"Deforestation
+        rate per year as a % of 2000 forest area in other national dataset","indicator_id":32,"value_units":"%"},{"indicator_group":"drivers","chart_type":"text","description":"net
+        area of expansion (+) or contraction (-) of cropland between 2000 and 2013","indicator_id":41,"value_units":"ha"},{"indicator_group":"Biomass
+        Density","chart_type":null,"description":null,"indicator_id":70,"value_units":null},{"indicator_group":"Deforestation","chart_type":"line","description":"Net
+        forest area change per year as a % of 2000 forest area","indicator_id":16,"value_units":"%"},{"indicator_group":"Deforestation","chart_type":"line","description":"Tree
+        cover loss per year ({{years}}) at {{threshold}} threshold in units of hectares","indicator_id":1,"value_units":"hectares"},{"indicator_group":"Biomass
+        Density","chart_type":"","description":"Belowground biomass density in the
+        year 2000 according to FAO FRA2015","indicator_id":26,"value_units":"Mg Biomass/ha"},{"indicator_group":"Biomass
+        Density","chart_type":"","description":"Belowground carbon density in live
+        biomass in the year 2000 according to FAO FRA2015","indicator_id":27,"value_units":"Mg
+        Carbon/ha"},{"indicator_group":"drivers","chart_type":"line","description":null,"indicator_id":44,"value_units":"%"},{"indicator_group":"Stocks
+        in 2000","chart_type":"pie","description":"Total living biomass stocks in
+        the year 2000 according to FAO FRA2015","indicator_id":22,"value_units":"Tg"},{"indicator_group":"Treecover
+        Extent","chart_type":"number","description":"Forest extent in the year 2000
+        according to FAO FRA2015","indicator_id":17,"value_units":"hectares"},{"indicator_group":"Carbon
+        Emissions from Peat Drainage","chart_type":null,"description":null,"indicator_id":74,"value_units":"tC02"},{"indicator_group":"Soil
+        carbon density","chart_type":"no-chart","description":"Soil organic carbon
+        density according to World Harmonized Soil Database","indicator_id":37,"value_units":"Mg
+        carbon/ha"},{"indicator_group":"Biomass Density","chart_type":null,"description":null,"indicator_id":71,"value_units":null},{"indicator_group":"Deforestation","chart_type":"line","description":"Tree
+        cover loss per year ({{years}}) at {{threshold}} threshold in units of % of
+        initial tree cover extent (TreeCov_UMD_2000) at the same threshold","indicator_id":2,"value_units":"%"},{"indicator_group":"Biomass
+        Density","chart_type":null,"description":null,"indicator_id":69,"value_units":null},{"indicator_group":"Carbon
+        Emissions","chart_type":"line","description":"Aboveground biomass loss according
+        to Woods Hole data at ({{threshold}}) in the year ({{year}}) in units of Tg
+        carbon","indicator_id":13,"value_units":"Tg C"},{"indicator_group":"Biomass
+        Density","chart_type":null,"description":"","indicator_id":63,"value_units":""},{"indicator_group":"Deforestation","chart_type":"line","description":"Net
+        forest area change per year","indicator_id":15,"value_units":"hectares"},{"indicator_group":"Carbon
+        Emissions","chart_type":"line","description":"Aboveground biomass loss according
+        to other national data in units of Tg carbon","indicator_id":34,"value_units":"Tg
+        C"},{"indicator_group":"Carbon Emissions","chart_type":null,"description":"average
+        emissions density per year","indicator_id":78,"value_units":"Mg Carbon/ha"},{"indicator_group":"Biomass
+        Density","chart_type":"pie","description":"Aboveground biomass density in
+        the year 2000 according to FAO FRA2015","indicator_id":24,"value_units":"Mg
+        Biomass/ha"},{"indicator_group":"Carbon Emissions","chart_type":null,"description":"came
+        from CAIT historical emissions 2001-2012 spreadsheet","indicator_id":50,"value_units":"Mt
+        CO2 yr-1"},{"indicator_group":"Biomass Density","chart_type":"pie","description":"Aboveground
+        live biomass density according to Woods Hole data at ({{threshold}}) in the
+        year 2000","indicator_id":10,"value_units":"Mg Biomass/ha"},{"indicator_group":"Biomass
+        Density","chart_type":"no-chart","description":"Belowground biomass density
+        in the year 2000 according to Woods Hole data","indicator_id":38,"value_units":"Mg
+        Biomass/ha"},{"indicator_group":"Carbon Emissions","chart_type":null,"description":"came
+        from CAIT historical emissions 2001-2012 spreadsheet","indicator_id":47,"value_units":"mt
+        c02e"},{"indicator_group":"Treecover Extent","chart_type":null,"description":"","indicator_id":56,"value_units":""},{"indicator_group":"Treecover
+        Extent","chart_type":null,"description":"Total land area","indicator_id":77,"value_units":"Ha"},{"indicator_group":"driver","chart_type":null,"description":"The
+        largest net export in 1000 USD per capita","indicator_id":52,"value_units":"1000USD
+        and text"},{"indicator_group":"Carbon Emissions","chart_type":null,"description":"","indicator_id":54,"value_units":"TgC"},{"indicator_group":"Carbon
+        Emissions","chart_type":"line","description":"Carbon emissions from aboveground
+        biomass loss according to Woods Hole data at ({{threshold}}) in the year ({{year}})
+        in units of Mt CO2","indicator_id":14,"value_units":"MtC02"},{"indicator_group":"Stocks
+        in 2000","chart_type":"pie","description":"Total (above + belowground) carbon
+        stocks according to Woods Hole data at ({{threshold}}) in the year 2000","indicator_id":9,"value_units":"Tg"},{"indicator_group":"Stocks
+        in 2000","chart_type":null,"description":"","indicator_id":61,"value_units":""},{"indicator_group":"Carbon
+        Emissions from Peat Drainage","chart_type":null,"description":null,"indicator_id":75,"value_units":"mtCO2"},{"indicator_group":"Carbon
+        Emissions","chart_type":"line","description":"Carbon loss from living biomass
+        (above- and belowground) FAOSTAT in Mt CO2","indicator_id":30,"value_units":"Mt
+        CO2"},{"indicator_group":"Biomass Density","chart_type":null,"description":"\n","indicator_id":67,"value_units":"\n"},{"indicator_group":"Stocks
+        in 2000","chart_type":"pie","description":"Belowground carbon stocks in the
+        year 2000 according to FAO FRA2015","indicator_id":21,"value_units":"Tg C"},{"indicator_group":"Carbon
+        Emissions","chart_type":null,"description":"area of peatlands on large scale
+        planatations (ha) times 15 (t c02) /10000 (mt c02)","indicator_id":45,"value_units":"mt
+        c02"},{"indicator_group":"Carbon Emissions","chart_type":"","description":"Aboveground
+        biomass loss according to other national data in units of Tg biomass","indicator_id":33,"value_units":"Tg
+        biomass"},{"indicator_group":"Stocks in 2000","chart_type":null,"description":"","indicator_id":57,"value_units":""},{"indicator_group":"drivers","chart_type":"line","description":null,"indicator_id":43,"value_units":"%"},{"indicator_group":"Biomass
+        Density","chart_type":"no-chart","description":"Belowground carbon density
+        in live biomass in the year 2000 according to Woods Hole data","indicator_id":39,"value_units":"Mg
+        carbon/ha"},{"indicator_group":"Stocks in 2000","chart_type":"pie","description":"Belowground
+        carbon stocks according to Woods Hole data at ({{threshold}}) in the year
+        2000","indicator_id":7,"value_units":"Tg"},{"indicator_group":"Soil carbon
+        stocks","chart_type":"no-chart","description":"Soil organic carbon stocks
+        according to World Harmonized Soil Database","indicator_id":36,"value_units":"Tg
+        C"},{"indicator_group":"Stocks in 2000","chart_type":"pie","description":"Total
+        (above + belowground) biomass stocks according to Woods Hole data at ({{threshold}})
+        in the year 2000","indicator_id":8,"value_units":"Tg"},{"indicator_group":"Biomass
+        Density","chart_type":null,"description":null,"indicator_id":68,"value_units":null},{"indicator_group":"Biomass
+        Density","chart_type":"pie","description":"Aboveground carbon density in live
+        biomass in the year 2000 according to FAO FRA2015","indicator_id":25,"value_units":"Mg
+        Carbon/ha"},{"indicator_group":"Treecover Extent","chart_type":"number","description":"Tree
+        cover extent according to UMD data at {{threshold}} threshold for the year
+        2000 in units of hectares","indicator_id":3,"value_units":"hectares"},{"indicator_group":"Stocks
+        in 2000","chart_type":"pie","description":"Aboveground biomass stocks in the
+        year 2000 according to FAO FRA2015","indicator_id":18,"value_units":"Tg"},{"indicator_group":"Biomass
+        Density","chart_type":null,"description":"","indicator_id":65,"value_units":""},{"indicator_group":"driver","chart_type":null,"description":"came
+        from CAIT historical emissions 2001-2012 spreadsheet","indicator_id":51,"value_units":"%"},{"indicator_group":"Biomass
+        Density","chart_type":null,"description":null,"indicator_id":72,"value_units":null},{"indicator_group":"Stocks
+        in 2000","chart_type":"pie","description":"Aboveground carbon stocks according
+        to Woods Hole data at ({{threshold}}) in the year 2000","indicator_id":5,"value_units":"Tg"},{"indicator_group":"Carbon
+        Emissions","chart_type":"","description":"Biomass loss from living biomass
+        (above- and belowground) FAOSTAT in Tg","indicator_id":28,"value_units":"Tg
+        biomass"},{"indicator_group":"Stocks in 2000","chart_type":"pie","description":"Aboveground
+        carbon stocks in the year 2000 according to FAO FRA2015","indicator_id":19,"value_units":"Tg
+        C"},{"indicator_group":"Carbon Emissions","chart_type":null,"description":null,"indicator_id":73,"value_units":"MtCO2e"},{"indicator_group":"Deforestation","chart_type":"line","description":"Deforestation
+        rate per year in other national dataset","indicator_id":31,"value_units":"ha"},{"indicator_group":"Stocks
+        in 2000","chart_type":null,"description":"","indicator_id":59,"value_units":""},{"indicator_group":"Biomass
+        Density","chart_type":null,"description":"","indicator_id":64,"value_units":""},{"indicator_group":"Stocks
+        in 2000","chart_type":null,"description":"","indicator_id":58,"value_units":""},{"indicator_group":"Carbon
+        Emissions","chart_type":null,"description":"","indicator_id":55,"value_units":"MtC02"},{"indicator_group":"Stocks
+        in 2000","chart_type":"pie","description":"Belowground biomass stocks in the
+        year 2000 according to FAO FRA2015","indicator_id":20,"value_units":"Tg"},{"indicator_group":"Stocks
+        in 2000","chart_type":"pie","description":"Total living carbon stocks in the
+        year 2000 according to FAO FRA2015","indicator_id":23,"value_units":"Tg C"},{"indicator_group":"Carbon
+        Emissions from Peat Drainage on Plantations","chart_type":null,"description":null,"indicator_id":9999,"value_units":"mtCO2"},{"indicator_group":"Carbon
+        Emissions","chart_type":null,"description":"came from CAIT historical emissions
+        2001-2012 spreadsheet","indicator_id":46,"value_units":"mt c02e"},{"indicator_group":"drivers","chart_type":"text","description":"name
+        of crop","indicator_id":42,"value_units":null},{"indicator_group":"Biomass
+        Density","chart_type":null,"description":"","indicator_id":66,"value_units":""},{"indicator_group":"Stocks
+        in 2000","chart_type":"pie","description":"Belowground biomass stocks according
+        to Woods Hole data at ({{threshold}}) in the year 2000","indicator_id":6,"value_units":"Tg"},{"indicator_group":"Stocks
+        in 2000","chart_type":null,"description":"","indicator_id":60,"value_units":""}],"time":0.006,"fields":{"indicator_group":{"type":"string"},"chart_type":{"type":"string"},"description":{"type":"string"},"indicator_id":{"type":"number"},"value_units":{"type":"string"}},"total_rows":79}'
+    http_version: 
+  recorded_at: Thu, 09 Nov 2017 15:13:15 GMT
+recorded_with: VCR 3.0.3

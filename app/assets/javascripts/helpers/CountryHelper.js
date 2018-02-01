@@ -1,4 +1,4 @@
-define(['d3', 'topojson'], function(d3, topojson) {
+define(['d3', 'topojson', 'underscore'], function(d3, topojson, _) {
   var CountryHelper = {
     draw: function(topology, el, params) {
       if (!topology) {
@@ -14,7 +14,7 @@ define(['d3', 'topojson'], function(d3, topojson) {
         height: 300,
         alerts: false,
         bounds: false
-      }
+      };
       var options = _.extend({}, defaults, params);
 
       var country = topojson.feature(topology, topology.objects[options.index]);
@@ -35,7 +35,10 @@ define(['d3', 'topojson'], function(d3, topojson) {
         .attr('width', options.width)
         .attr('height', options.height);
 
-      var projection = d3.geo.mercator().scale(1).translate([0, 0]);
+      var projection = d3.geo
+        .mercator()
+        .scale(1)
+        .translate([0, 0]);
       var path = d3.geo.path().projection(projection);
 
       var b = path.bounds(options.bounds || country);
@@ -87,7 +90,6 @@ define(['d3', 'topojson'], function(d3, topojson) {
           .attr('r', 2)
           .style('fill', '#AAC600');
       }
-
       return country;
     }
   };

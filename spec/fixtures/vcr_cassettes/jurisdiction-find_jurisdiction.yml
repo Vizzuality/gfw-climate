@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://wri-01.cartodb.com/api/v2/sql?q=%20%20%20%20%20%20%20%20SELECT%20name_1%20AS%20jurisdiction_name,%20iso,%20id_1,%20%20%20%20%20%20%20%20%20%20cartodb_id,%20iso,%20name_0%20AS%20country_name,%20%20%20%20%20%20%20%20%20%20ST_AsGeoJSON(ST_Envelope(the_geom))::json%20AS%20bounds%20%20%20%20%20%20%20%20FROM%20gadm28_adm1%20%20%20%20%20%20%20%20WHERE%20UPPER(iso)%20=%20UPPER(%27bra%27)%20AND%20id_1%20=%201%20%20%20%20%20%20%20%20ORDER%20BY%20jurisdiction_name
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty
+      Date:
+      - Thu, 09 Nov 2017 15:53:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '550'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - X-Requested-With, X-Prototype-Version, X-CSRF-Token
+      Content-Disposition:
+      - inline; filename=cartodb-query.json; modification-date="Thu, 09 Nov 2017 15:53:55
+        GMT";
+      Cache-Control:
+      - no-cache,max-age=31536000,must-revalidate,public
+      Surrogate-Key:
+      - t:d7vJOZ
+      Last-Modified:
+      - Fri, 24 Mar 2017 08:38:35 GMT
+      X-Sqlapi-Profiler:
+      - '{"setDBAuth":1,"queryExplain":7,"beforeSink":5,"total":13}'
+      X-Varnish:
+      - '202971536'
+      Age:
+      - '0'
+      X-Cache:
+      - MISS
+    body:
+      encoding: UTF-8
+      string: '{"rows":[{"jurisdiction_name":"Acre","iso":"BRA","id_1":1,"cartodb_id":361,"country_name":"Brazil","bounds":{"type":"Polygon","coordinates":[[[-73.9897079467773,-11.1451606750488],[-73.9897079467773,-7.12131977081293],[-66.588752746582,-7.12131977081293],[-66.588752746582,-11.1451606750488],[-73.9897079467773,-11.1451606750488]]]}}],"time":0.005,"fields":{"jurisdiction_name":{"type":"string"},"iso":{"type":"string"},"id_1":{"type":"number"},"cartodb_id":{"type":"number"},"country_name":{"type":"string"},"bounds":{"type":"JSON"}},"total_rows":1}'
+    http_version: 
+  recorded_at: Thu, 09 Nov 2017 15:53:55 GMT
+recorded_with: VCR 3.0.3
