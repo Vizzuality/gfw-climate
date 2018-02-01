@@ -204,12 +204,23 @@
 }
 
 .m-sub-header {
-  padding: 60px;
+  padding: 60px 0;
   display: flex;
   justify-content: space-between;
 
   h3 {
     color: $dark;
     font-size: 25px;
+  }
+}
+
+
+.geo-tabs {
+  .geo-tab {
+    display: none;
+
+    &.-active {
+      display: block;
+    }
   }
 }

@@ -1,31 +1,33 @@
-define([
-  'backbone',
-  'handlebars',
-  'text!insights/templates/emissions-calculator/insights-emission-calculator-show.handlebars',
-], function(Backbone, Handlebars, tpl) {
+define(
+  [
+    'backbone',
+    'underscore',
+    'handlebars',
+    'text!insights/templates/emissions-calculator/insights-emission-calculator-show.handlebars'
+  ],
+  function(Backbone, _, Handlebars, tpl) {
+    'use strict';
 
-  'use strict';
+    var EmisionCalculatorShow = Backbone.View.extend({
+      el: '#insights',
 
-  var EmisionCalculatorShow = Backbone.View.extend({
+      template: Handlebars.compile(tpl),
 
-    el: '#insights',
+      initialize: function(settings) {
+        this.defaults = _.extend({}, this.defaults, settings);
+        this.$el.removeClass('is-loading');
+        this.render();
+      },
 
-    template: Handlebars.compile(tpl),
+      render: function() {
+        this.$el.html(
+          this.template({
+            id: this.defaults.id
+          })
+        );
+      }
+    });
 
-    initialize: function(settings) {
-      this.defaults = _.extend({}, this.defaults, settings);
-      this.$el.removeClass('is-loading');
-      this.render();
-    },
-
-    render: function() {
-      this.$el.html(this.template({
-        id: this.defaults.id
-      }));
-     }
-
-  });
-
-  return EmisionCalculatorShow;
-
-});
+    return EmisionCalculatorShow;
+  }
+);

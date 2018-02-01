@@ -22,6 +22,7 @@ define(
 
       initialize: function(settings) {
         this.params = _.extend({}, this.defaults, settings);
+        this.params.id = this.el.id;
         this.render(this.params);
         this.renderGeo(this.params.data);
         this.cache();
@@ -41,7 +42,7 @@ define(
         if (data && data.length) {
           for (var i = 0, dLength = data.length; i < dLength; i++) {
             if (data[i].topojson) {
-              var el = '#' + data[i].iso + '-geometry';
+              var el = '#' + this.el.id + '-' + data[i].iso + '-geometry';
               CountryHelper.draw(data[i].topojson, el, {
                 width: 150,
                 height: 150

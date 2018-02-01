@@ -68,13 +68,19 @@ define(
           el: 'outputTypeSwitch',
           param: 'pivot',
           label: 'Output Type',
-          options: [{ label: 'Table', value: 0 }, { label: 'Pivot', value: 1 }]
+          options: [
+            { label: 'Table', value: 0, selected: true },
+            { label: 'Pivot', value: 1 }
+          ]
         },
         {
           el: 'filerSwitch',
           param: 'json',
           label: 'File',
-          options: [{ label: '.csv', value: 0 }, { label: '.json', value: 1 }]
+          options: [
+            { label: '.csv', value: 0, selected: true },
+            { label: '.json', value: 1 }
+          ]
         }
       ],
 

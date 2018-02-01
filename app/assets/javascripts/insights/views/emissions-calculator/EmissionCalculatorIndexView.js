@@ -25,8 +25,10 @@ define(
       switch: {
         el: 'countryInsighSwitch',
         param: 'pivot',
-        label: 'Output Type',
-        options: [{ label: 'Table', value: 0 }, { label: 'Pivot', value: 1 }]
+        options: [
+          { label: 'Continents', value: 'continents' },
+          { label: 'Countries', value: 'countries', selected: true }
+        ]
       },
 
       template: Handlebars.compile(tpl),
@@ -45,10 +47,6 @@ define(
       },
 
       start: function(countryData) {
-        var data = _.map(countryData, function(c) {
-          c.href = '/countries/' + c.iso + '/report';
-          return c;
-        });
         this.switch = new SwitchView({
           el: '#' + this.switch.el,
           param: this.switch.param,
@@ -57,11 +55,44 @@ define(
             options: this.switch.options
           }
         });
+
+        this.listenTo(
+          this.switch,
+          'onSelectionchange',
+          this.onSelectionChange.bind(this)
+        );
+
+        this.continentsEl = this.$('#geo-continents-list');
+        this.countriesEl = this.$('#geo-countries-list');
+        var continents = _.map(countryData, function(c) {
+          c.href = '/countries/' + c.iso + '/report';
+          return c;
+        }).slice(1, 5);
         this.countryList = new GeoListView({
-          el: '#geo-list',
-          data: data
+          el: this.continentsEl,
+          data: continents,
+          placeholder: 'Select continent name'
+        });
+
+        var countries = _.map(countryData, function(c) {
+          c.href = '/countries/' + c.iso + '/report';
+          return c;
+        });
+        this.countryList = new GeoListView({
+          el: this.countriesEl,
+          data: countries
         });
         this.$el.removeClass('is-loading');
+      },
+
+      onSelectionChange: function(i) {
+        if (i === 'continents') {
+          this.continentsEl.addClass('-active');
+          this.countriesEl.removeClass('-active');
+        } else {
+          this.continentsEl.removeClass('-active');
+          this.countriesEl.addClass('-active');
+        }
       },
 
       render: function() {
