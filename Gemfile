@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.2'
 
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.10'
 
 gem 'active_hash'
 
@@ -17,7 +17,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'requirejs-rails'
 
-gem 'slim-rails'
+gem 'slim-rails', '3.1.1'
 
 gem 'httparty'
 gem 'rabl'
@@ -49,6 +49,8 @@ group :test do
   gem 'capybara'
   gem "codeclimate-test-reporter", require: nil
   gem 'coveralls', require: false
+  gem 'vcr'
+  gem 'webmock'
 end
 
 gem 'dotenv-rails'

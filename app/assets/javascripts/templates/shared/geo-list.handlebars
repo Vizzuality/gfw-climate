@@ -1,0 +1,15 @@
+<div class="search-countries-box">
+  <input type="text" id="searchCountry" autofocus="true" type="text" placeholder="{{this.placeholder}}">
+</div>
+<ul class="countries_list_index">
+  {{#each data}}
+    <li class="country">
+      <a class="country-href" href="{{this.href}}">
+        <span class="country-content">
+          <h3 class="country-name">{{this.name}}</h3>
+        </span>
+        <div id="{{this.iso}}-geometry"></div>
+      </a>
+    </li>
+  {{/each}}
+</ul>

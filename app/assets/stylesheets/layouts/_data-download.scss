@@ -1,0 +1,132 @@
+.l-header {
+  padding-top: 70px;
+  background-color: $dark-grey;
+
+  @media screen and (min-width: $br-mobile) {
+    padding: 120px 0 35px;
+  }
+}
+
+.l-content {
+  padding: 20px 0 20px;
+
+  @media screen and (min-width: $br-mobile) {
+    padding: 30px 0 40px;
+  }
+}
+
+.l-footer {
+  padding: 10px 0 20px;
+
+  @media screen and (min-width: $br-mobile) {
+    padding: 20px 0 40px;
+  }
+}
+
+h2 {
+  font-size: 35px;
+  color: $white;
+  @media (min-width: $br-mobile) {
+    font-size: 59px;
+  }
+}
+
+h3 {
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 500;
+  color: rgba($white, 0.5);
+  @media (min-width: $br-mobile) {
+    font-size: 14px;
+  }
+}
+
+h4 {
+  font-size: 14px;
+  line-height: 1.21;
+  color: rgba($black, 0.5);
+}
+
+.header {
+  h2 {
+    padding: 0 0 25px;
+  }
+  h3 {
+    padding: 0 0 10px;
+  }
+}
+
+.content {
+  h3 {
+    color: rgba($black, 0.5);
+  }
+}
+
+.btn-download {
+  margin: 15px 0;
+  @media (min-width: $br-mobile) {
+    margin: 0;
+  }
+  .btn {
+    margin: 0 auto;
+    display: block;
+    @media (min-width: $br-mobile) {
+      margin: 0;
+    }
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    background-color: $grey2!important;
+  }
+}
+
+.filters-placeholder {
+  min-height: 600px;
+  position: relative;
+}
+
+.right-center {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.validation-msg {
+  font-size: 14px;
+  line-height: 1.21;
+  color: rgba($black, 0.5);
+  opacity: 1;
+
+  &.-hide {
+    opacity: 0;
+  }
+}
+
+.-hide {
+  display: none;
+}
+
+.icon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background: none;
+  border: 0;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s linear;
+
+  &.-hide {
+    opacity: 0;
+    cursor: default;
+  }
+
+  > svg {
+    width: 100%;
+    height: 100%;
+    fill: #979797;
+  }
+}

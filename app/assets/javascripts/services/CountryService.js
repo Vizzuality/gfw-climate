@@ -26,8 +26,8 @@ define([
 
   var APIURLS = {
     'getClimateConfig'   : '/query?sql=SELECT iso FROM {countriesConfigDataset}',
-    'getCountriesList'   : '/query?sql=SELECT name_engli as name, iso FROM {countriesDataset} WHERE iso IN({climateCountries})',
-    'getCountriesListGeo': '/query?sql=SELECT name_engli as name, iso, topojson FROM {countriesDataset} WHERE iso IN({climateCountries}) ORDER BY iso ASC',
+    'getCountriesList'   : '/query?sql=SELECT name_engli as name, iso FROM {countriesDataset} WHERE iso IN({climateCountries}) ORDER BY name ASC',
+    'getCountriesListGeo': '/query?sql=SELECT name_engli as name, iso, topojson FROM {countriesDataset} WHERE iso IN({climateCountries}) ORDER BY name ASC',
     'getCountriesStats'  : '/query/?sql=SELECT * FROM {countryStatsDataset} WHERE iso=\'{iso}\'',
     'getCountry'         : '/query?sql=SELECT name_engli as name, iso, topojson FROM {countriesDataset} WHERE iso=\'{iso}\'',
     'getRegionsList'     : '/query?sql=SELECT cartodb_id, iso, bbox as bounds, id_1, name_1 FROM {regionsDataset} WHERE iso=\'{iso}\' ORDER BY name_1',
@@ -67,15 +67,17 @@ define([
       }.bind(this));
     },
 
-    getCountries: function(geo) {
-      geo = geo || false;
+    getCountries: function(filters) {
+      filters = filters || {
+        geo: false
+      }
       return new Promise(function(resolve, reject) {
         this.getClimateConfig()
           .then(function(countryConfig) {
             var params = { climateCountries: '\'' + countryConfig.join('\',\'') + '\'' };
             var status = _.extend({}, CONFIG, params);
-            var urlTemplate = geo ? APIURLS.getCountriesListGeo : APIURLS.getCountriesList;
-            var templateId = geo ? GET_REQUEST_COUNTRIES_LIST_ID + '_GEO' : GET_REQUEST_COUNTRIES_LIST_ID;
+            var urlTemplate = filters.geo ? APIURLS.getCountriesListGeo : APIURLS.getCountriesList;
+            var templateId = filters.geo ? GET_REQUEST_COUNTRIES_LIST_ID + '_GEO' : GET_REQUEST_COUNTRIES_LIST_ID;
             var url = new UriTemplate(urlTemplate).fillFromObject(status);
 
             this.defineRequest(templateId,
@@ -85,7 +87,7 @@ define([
               resourceId: templateId,
               success: function(res, status) {
                 var data = res.data.length >= 0 ? res.data : [];
-                if (geo) {
+                if (filters.geo) {
                   var dataParsed =  data.map(function(country) {
                     return {
                       name: country.name,

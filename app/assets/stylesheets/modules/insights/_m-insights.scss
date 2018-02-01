@@ -2,6 +2,7 @@
   h2 {
     font-size: 47px;
     color: $white;
+    max-width: 780px;
 
     @media only screen and (max-width: $br-mobile-portrait) {
       font-size: 26px;
@@ -55,7 +56,7 @@
 
 .insights-content {
   width:100%;
-  height: 600px;
+  min-height: 600px;
   position: relative;
 
   &.loaded {
@@ -199,5 +200,16 @@
         }
       }
     }
+  }
+}
+
+.m-sub-header {
+  padding: 60px;
+  display: flex;
+  justify-content: space-between;
+
+  h3 {
+    color: $dark;
+    font-size: 25px;
   }
 }

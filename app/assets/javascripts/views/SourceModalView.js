@@ -1,112 +1,126 @@
-define([
-  'jquery',
-  'backbone',
-  'underscore',
-  'handlebars',
-  'uri',
-  'views/ModalView',
-  'presenters/SourceModalPresenter',
-  'text!templates/sourceModal.handlebars',
-  'text!templates/sourceModalStatic.handlebars'
+define(
+  [
+    'jquery',
+    'backbone',
+    'underscore',
+    'handlebars',
+    'uri',
+    'views/ModalView',
+    'presenters/SourceModalPresenter',
+    'text!templates/sourceModal.handlebars',
+    'text!templates/sourceModalStatic.handlebars'
+  ],
+  function(
+    $,
+    Backbone,
+    _,
+    Handlebars,
+    UriTemplate,
+    ModalView,
+    SourceModalPresenter,
+    tpl,
+    tplStatic
+  ) {
+    var SourceModel = Backbone.Model.extend({
+      _uriTemplate: window.gfw.config.GFW_API_HOST_PRO + '/gfw-metadata/{slug}',
 
-], function($,Backbone, _, Handlebars, UriTemplate,
-  ModalView, SourceModalPresenter, tpl, tplStatic) {
+      initialize: function(options) {
+        this.options = _.extend({}, options);
+        this.setUrl();
+      },
 
-  var SourceModel = Backbone.Model.extend({
+      setUrl: function() {
+        this.url = new UriTemplate(this._uriTemplate).fillFromObject(
+          this.options
+        );
+      },
 
-    _uriTemplate: window.gfw.config.GFW_API_HOST + '/metadata/{slug}',
+      parse: function(response) {
+        return response;
+      }
+    });
 
-    initialize: function(options) {
-      this.options = _.extend({}, options);
-      this.setUrl();
-    },
+    var SourceModalView = ModalView.extend({
+      id: '#sourceModal',
 
-    setUrl: function() {
-      this.url = new UriTemplate(this._uriTemplate).fillFromObject(this.options);
-    },
+      className: 'modal',
 
-    parse: function(response) {
-      return response;
-    }
-  });
+      template: Handlebars.compile(tpl),
+      templateStatic: Handlebars.compile(tplStatic),
 
-  var SourceModalView = ModalView.extend({
+      initialize: function() {
+        // Inits
+        this.constructor.__super__.initialize.apply(this);
+        this.presenter = new SourceModalPresenter(this);
+        this.render();
+        this._initVars();
+        this.setListeners();
+        this.$body.append(this.el);
+      },
 
-    id: '#sourceModal',
+      setListeners: function() {
+        this.$body.on('click', '.source', _.bind(this.sourceClick, this));
+      },
 
-    className: "modal",
+      render: function() {
+        this.$el.html(this.template());
+        return this;
+      },
 
-    template: Handlebars.compile(tpl),
-    templateStatic: Handlebars.compile(tplStatic),
+      sourceClick: function(e) {
+        e && e.preventDefault() && e.stopPropagation();
+        this.$current = $(e.currentTarget);
+        this.$current.find('svg').attr('class', 'spinner start');
 
-    initialize: function() {
-      // Inits
-      this.constructor.__super__.initialize.apply(this);
-      this.presenter = new SourceModalPresenter(this);
-      this.render();
-      this._initVars();
-      this.setListeners();
-      this.$body.append(this.el);
-    },
+        this.sourceModel = new SourceModel({
+          slug: $(e.currentTarget).data('source')
+        });
+        this.sourceModel.fetch({
+          update: true,
+          parse: true,
+          success: this.sourceSuccess.bind(this),
+          error: this.sourceError.bind(this)
+        });
+      },
 
-    setListeners: function() {
-      this.$body.on('click', '.source', _.bind(this.sourceClick, this ));
-    },
-
-    render: function() {
-      this.$el.html(this.template());
-      return this;
-    },
-
-    sourceClick: function(e) {
-      e && e.preventDefault() && e.stopPropagation();
-      this.$current = $(e.currentTarget);
-      this.$current.find('svg').attr('class','spinner start');
-
-      this.sourceModel = new SourceModel({
-        slug: $(e.currentTarget).data('source'),
-      });
-      this.sourceModel.fetch({
-        update:true,
-        parse: true,
-        success: this.sourceSuccess.bind(this),
-        error: this.sourceError.bind(this),
-      });
-    },
-
-    sourceSuccess: function() {
-      this.$current.find('svg').attr('class','');
-      this.$el.html(this.template(this.sourceModel.toJSON()));
-      this.show();
-      this.setTargetOfLinks();
-      ga('send', 'event', document.title.replace('| Global Forest Watch - Climate',''), 'Info', this.sourceModel.get('slug'));
-    },
-
-    sourceError: function(error) {
-      this.$current.find('svg').attr('class','');
-      console.info('The id you are searching for does not exist in the API');
-      this.sourceStatic(this.sourceModel.get('slug'));
-    },
-
-    // Fetch content when click fails
-    sourceStatic: function(slug) {
-      var $clone = $('#' + slug).clone();
-      if (!!$clone.length) {
-        this.$el.html(this.templateStatic({ clone: $clone.html() }));
+      sourceSuccess: function() {
+        this.$current.find('svg').attr('class', '');
+        this.$el.html(this.template(this.sourceModel.toJSON()));
         this.show();
         this.setTargetOfLinks();
-      } else {
-        console.info('The id you are searching for does not exist');
-        this.presenter.notificate('no-metadata');
+        ga(
+          'send',
+          'event',
+          document.title.replace('| Global Forest Watch - Climate', ''),
+          'Info',
+          this.sourceModel.get('slug')
+        );
+      },
+
+      sourceError: function(error) {
+        this.$current.find('svg').attr('class', '');
+        console.info('The id you are searching for does not exist in the API');
+        this.sourceStatic(this.sourceModel.get('slug'));
+      },
+
+      // Fetch content when click fails
+      sourceStatic: function(slug) {
+        var $clone = $('#' + slug).clone();
+        if (!!$clone.length) {
+          this.$el.html(this.templateStatic({ clone: $clone.html() }));
+          this.show();
+          this.setTargetOfLinks();
+        } else {
+          console.info('The id you are searching for does not exist');
+          this.presenter.notificate('no-metadata');
+        }
+      },
+
+      setTargetOfLinks: function() {
+        this.$el.find('a').attr('target', '_blank');
       }
-    },
+    });
 
-    setTargetOfLinks: function() {
-      this.$el.find('a').attr('target', '_blank');
-    }
-
-  });
-
-  return SourceModalView;
-
-});
+    return SourceModalView;
+  }
+);
