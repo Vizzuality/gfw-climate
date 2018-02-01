@@ -1,6 +1,7 @@
 define(
   [
     'backbone',
+    'handlebars',
     'mps',
     'nouislider',
     'moment',
@@ -17,6 +18,7 @@ define(
   ],
   function(
     Backbone,
+    Handlebars,
     mps,
     nouislider,
     moment,
@@ -139,20 +141,44 @@ define(
 
       parseTemplate: function() {
         var currentDate = moment();
-        var totalReference = NumbersHelper.round(
-          this.data.emissions.reference.average,
-          6
-        );
-        var totalMonitoring = NumbersHelper.round(
-          this.data.emissions.monitor.average,
-          6
-        );
-        var increase = Math.round(
-          (totalMonitoring - totalReference) / totalReference * 100
-        );
-        var factorBelowgroundBiomass = Math.round(
-          this.data.emission_factors.belowground
-        );
+        var totalReference = '';
+        var totalMonitoring = '';
+        var increase = '';
+        var factorAbovegroundBiomass = '';
+        var factorBelowgroundBiomass = '';
+        var factorTotalEmission = '';
+        var hasProvinces = false;
+        var co2EmissionsByProvinces = '';
+
+        if (this.data) {
+          if (this.data.emissions) {
+            totalReference = NumbersHelper.round(
+              this.data.emissions.reference.average,
+              6
+            );
+            totalMonitoring = NumbersHelper.round(
+              this.data.emissions.monitor.average,
+              6
+            );
+            increase = Math.round(
+              (totalMonitoring - totalReference) / totalReference * 100
+            );
+            factorAbovegroundBiomass = Math.round(
+              this.data.emission_factors.aboveground
+            );
+            factorBelowgroundBiomass = Math.round(
+              this.data.emission_factors.belowground
+            );
+          }
+          if (this.data.provinces) {
+            hasProvinces = this.data.provinces.emissions.top_five.length > 0;
+            co2EmissionsByProvinces = this.data.provinces.emissions.top_five;
+          }
+          if (this.data.emission_factors) {
+            factorTotalEmission = Math.round(this.data.emission_factors.total);
+          }
+        }
+
         return {
           country: this.data.country,
           date: currentDate.format('MM/DD/YYYY'),
@@ -176,15 +202,11 @@ define(
           increase: increase,
           increaseDisplay: Math.abs(increase),
           hasIncreased: increase > -1,
-          hasProvinces: this.data.provinces.emissions.top_five.length > 0,
-          factorAbovegroundBiomass: Math.round(
-            this.data.emission_factors.aboveground
-          ),
-          factorBelowgroundBiomass: factorBelowgroundBiomass
-            ? factorBelowgroundBiomass
-            : '',
-          factorTotalEmission: Math.round(this.data.emission_factors.total),
-          co2EmissionsByProvinces: this.data.provinces.emissions.top_five,
+          hasProvinces: hasProvinces,
+          factorAbovegroundBiomass: factorAbovegroundBiomass,
+          factorBelowgroundBiomass: factorBelowgroundBiomass,
+          factorTotalEmission: factorTotalEmission,
+          co2EmissionsByProvinces: co2EmissionsByProvinces,
           accuracyData: this.accuracyData
         };
       },
@@ -245,18 +267,22 @@ define(
 
         this.forestLossByProvinceChart = new ProvincesTopChartView({
           el: '#forest-loss-province-chart',
-          data: this.data.provinces.forest_loss.top_five
+          data:
+            (this.data.provinces && this.data.provinces.forest_loss.top_five) ||
+            {}
         });
 
         this.co2EmissionsByProvinceChart = new ProvincesTopChartView({
           el: '#co2-emissions-province-chart',
-          data: this.data.provinces.emissions.top_five,
+          data:
+            (this.data.provinces && this.data.provinces.emissions.top_five) ||
+            {},
           customLabel: 'Mt CO2/yr'
         });
 
         this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
           el: '#forest-related-emissions-chart',
-          data: this.data.emissions,
+          data: this.data.emissions || {},
           customLabel: 'Emissions (Mt CO2/yr)'
         });
 
@@ -344,7 +370,7 @@ define(
           function(value) {
             this.status.set(
               {
-                thresh: parseInt(value[0])
+                thresh: parseInt(value[0], 10)
               },
               { silent: true }
             );
@@ -368,7 +394,7 @@ define(
       },
 
       _checkInputsDiff: function() {
-        //TODO: remove the update button if there aren't inputs changes
+        // TODO: remove the update button if there aren't inputs changes
         return true;
       },
 
@@ -412,14 +438,15 @@ define(
               email: email
             },
             dataType: 'json',
-            success: function(responseData) {
+            success: function() {
               btnContainer.addClass('-success');
             },
             error: function(responseData) {
-              if (responseData.responseJSON && responseData.responseJSON.msg)
+              if (responseData.responseJSON && responseData.responseJSON.msg) {
                 alert(responseData.responseJSON.msg);
+              }
             },
-            complete: function(responseData) {
+            complete: function() {
               btnContainer.removeClass('is-loading');
             }
           });

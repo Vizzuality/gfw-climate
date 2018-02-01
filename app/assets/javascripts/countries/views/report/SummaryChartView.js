@@ -1,6 +1,7 @@
 define(
   [
     'backbone',
+    'handlebars',
     'underscore',
     'nouislider',
     'd3',
@@ -8,7 +9,16 @@ define(
     'helpers/NumbersHelper',
     'text!countries/templates/report/summary-chart.handlebars'
   ],
-  function(Backbone, _, nouislider, d3, moment, NumbersHelper, tpl) {
+  function(
+    Backbone,
+    Handlebars,
+    _,
+    nouislider,
+    d3,
+    moment,
+    NumbersHelper,
+    tpl
+  ) {
     'use strict';
 
     var SummaryChart = Backbone.View.extend({
@@ -100,13 +110,13 @@ define(
             if (value[1] === value[2]) {
               this.yearsSlider.noUiSlider.set([
                 value[0],
-                parseInt(value[2]) - 1,
+                parseInt(value[2], 10) - 1,
                 value[2]
               ]);
             } else if (value[0] === value[1]) {
               this.yearsSlider.noUiSlider.set([
                 value[0],
-                parseInt(value[0]) + 1,
+                parseInt(value[0], 10) + 1,
                 value[2]
               ]);
             }
@@ -175,6 +185,7 @@ define(
         this.chartData = [];
 
         for (var indictator in this.data) {
+          // eslint-disable-line
           var current = this.data[indictator];
           if (current && current.values) {
             current.values.forEach(
@@ -188,22 +199,26 @@ define(
           }
         }
 
-        this.referenceData = this.data['reference'];
-        this.monitoringData = [];
-        this.monitoringData.values = _.clone(this.data['monitor'].values);
-        this.monitoringData.average = _.clone(this.data['monitor'].average);
-        var dates = _.range(this.defaults.minYear, this.defaults.maxYear + 1);
-        this.dates = dates.map(function(date) {
-          return moment(date.toString())
-            .add(tzOffset, 'minutes')
-            .toDate();
-        });
+        this.monitoringData = { values: [], average: [] };
+        if (this.data) {
+          this.referenceData = this.data.reference;
+          this.monitoringData.values = _.clone(this.data.monitor.values);
+          this.monitoringData.average = _.clone(this.data.monitor.average);
+          var dates = _.range(this.defaults.minYear, this.defaults.maxYear + 1);
+          this.dates = dates.map(function(date) {
+            return moment(date.toString())
+              .add(tzOffset, 'minutes')
+              .toDate();
+          });
+        }
 
         // Copy the last value from the reference period as the
         // first on in the monitor
-        this.monitoringData.values.unshift(
-          this.referenceData.values[this.referenceData.values.length - 1]
-        );
+        if (this.monitoringData.values.length) {
+          this.monitoringData.values.unshift(
+            this.referenceData.values[this.referenceData.values.length - 1]
+          );
+        }
       },
 
       /**
