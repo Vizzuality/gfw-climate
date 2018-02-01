@@ -29,6 +29,10 @@ Rails.application.config.assets.precompile += %w( embed.js )
 Rails.application.config.assets.precompile += %w( static.js )
 Rails.application.config.assets.precompile += %w( static.css )
 
+# Data download pages
+Rails.application.config.assets.precompile += %w( data-download.js )
+Rails.application.config.assets.precompile += %w( data-download.css )
+
 unless Rails.env.production?
   Rails.application.config.assets.precompile += %w( teaspoon.css )
   Rails.application.config.assets.precompile += %w( teaspoon-teaspoon.js )

@@ -13,7 +13,7 @@ define([
   var SoilOrganicCarbonDLayer = ImageMaptypeLayerClass.extend({
 
     options: {
-      urlTemplate:'https://s3.amazonaws.com/wri-tiles/hwsd{/z}{/x}{/y}.png'
+      urlTemplate:'https://storage.googleapis.com/gfw-climate-tiles/soil%20organic%20carbon/{z}/{x}/{y}.png'
     }
 
   });

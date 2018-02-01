@@ -136,6 +136,8 @@ rake docs:generate
 
 **Automatic deploys from  staging are enabled**
 
-Every push to staging will deploy a new version of this app. Deploys happen automatically: be sure that this branch in GitHub is always in a deployable state and any tests have passed before you push.
+Every push to staging will deploy a new version of this app.
+Deploys happen automatically: be sure that this branch in GitHub is always in
+a deployable state and any tests have passed before you push.
 
 Heroku wait for CI to pass before deploy.

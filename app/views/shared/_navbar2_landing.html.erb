@@ -1,1 +1,7 @@
-
+ <% if content_for?(:header) %>
+   <div class="l-layers-header">
+     <div class="inner">
+       <%= yield :header %>
+     </div>
+   </div>
+ <% end %>

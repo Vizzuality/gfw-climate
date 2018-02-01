@@ -46,7 +46,7 @@ define([
         'reference_start_year': '2001',
         'reference_end_year': '2010',
         'monitor_start_year': '2011',
-        'monitor_end_year': '2015',
+        'monitor_end_year': '2016',
         'thresh': '30',
         'below': 'false',
         'primary_forest': 'false',
@@ -54,7 +54,7 @@ define([
         'co2': 'true'
       },
       minYear: 2001,
-      maxYear: 2015
+      maxYear: 2016
     },
 
     events: {
@@ -185,7 +185,7 @@ define([
     },
 
     _getAccuracyData: function() {
-      var url = window.gfw.config.GFW_API_HOST_V2 +  _.str.sprintf(ENDPOINT_ACCURACY, this.iso);
+      var url = window.gfw.config.GFW_API_HOST_PRO +  _.str.sprintf(ENDPOINT_ACCURACY, this.iso);
       $.when($.getJSON(url))
         .then(function(res) {
           this.accuracyData = res.data[0];
