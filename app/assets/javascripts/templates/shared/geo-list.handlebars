@@ -1,12 +1,10 @@
-<div class="inner">
-  <div class="search-countries-box">
-    <input type="text" id="searchCountry" autofocus="true" type="text" placeholder="Type country name">
-  </div>
+<div class="search-countries-box">
+  <input type="text" id="searchCountry" autofocus="true" type="text" placeholder="{{this.placeholder}}">
 </div>
-<ul class="inner countries_list_index">
+<ul class="countries_list_index">
   {{#each data}}
     <li class="country">
-      <a class="country-href" href="/countries/{{this.iso}}/report">
+      <a class="country-href" href="{{this.href}}">
         <span class="country-content">
           <h3 class="country-name">{{this.name}}</h3>
         </span>
@@ -14,4 +12,4 @@
       </a>
     </li>
   {{/each}}
-</div>
+</ul>

@@ -1,44 +1,50 @@
-define([
-  'backbone',
-  'handlebars',
-  'services/CountryService',
-  'views/shared/GeoListView',
-  'text!insights/templates/emissions-calculator/insights-emission-calculator-index.handlebars',
-], function(Backbone, Handlebars, CountryService, GeoListView, tpl) {
+define(
+  [
+    'backbone',
+    'handlebars',
+    'underscore',
+    'services/CountryService',
+    'views/shared/GeoListView',
+    'text!insights/templates/emissions-calculator/insights-emission-calculator-index.handlebars'
+  ],
+  function(Backbone, Handlebars, _, CountryService, GeoListView, tpl) {
+    'use strict';
 
-  'use strict';
+    var EmisionCalculatorIndex = Backbone.View.extend({
+      el: '#insights',
 
-  var EmisionCalculatorIndex = Backbone.View.extend({
+      template: Handlebars.compile(tpl),
 
-    el: '#insights',
+      initialize: function(settings) {
+        this.defaults = _.extend({}, this.defaults, settings);
 
-    template: Handlebars.compile(tpl),
+        CountryService.getCountries({ geo: true }).then(
+          this.onCountriesData.bind(this)
+        );
+      },
 
-    initialize: function(settings) {
-      this.defaults = _.extend({}, this.defaults, settings);
+      onCountriesData: function(countryData) {
+        this.render();
+        this.start(countryData);
+      },
 
-      CountryService.getCountries({ geo: true })
-        .then(this.onCountriesData.bind(this));
-    },
+      start: function(countryData) {
+        var data = _.map(countryData, function(c) {
+          c.href = '/countries/' + c.iso + '/report';
+          return c;
+        });
+        this.countryList = new GeoListView({
+          el: '#geo-list',
+          data: data
+        });
+        this.$el.removeClass('is-loading');
+      },
 
-    onCountriesData: function(countryData) {
-      this.render();
-      this.start(countryData);
-    },
+      render: function() {
+        this.$el.html(this.template());
+      }
+    });
 
-    start: function(countryData) {
-      this.countryList = new GeoListView({
-        el: '#geo-list',
-        data: countryData
-      });
-      this.$el.removeClass('is-loading');
-    },
-
-    render: function() {
-      this.$el.html(this.template());
-    }
-  });
-
-  return EmisionCalculatorIndex;
-
-});
+    return EmisionCalculatorIndex;
+  }
+);

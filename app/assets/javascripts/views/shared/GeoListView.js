@@ -2,16 +2,20 @@ define(
   [
     'backbone',
     'handlebars',
+    'underscore',
     'helpers/CountryHelper',
     'text!templates/shared/geo-list.handlebars'
   ],
-  function(Backbone, Handlebars, CountryHelper, tpl) {
+  function(Backbone, Handlebars, _, CountryHelper, tpl) {
     'use strict';
     var GeoListView = Backbone.View.extend({
+      events: {
+        'keyup #searchCountry': 'searchCountries',
+        'focus #searchCountry': 'scrollTo'
+      },
 
-      events : {
-        'keyup #searchCountry' : 'searchCountries',
-        'focus #searchCountry' : 'scrollTo'
+      defaults: {
+        placeholder: 'Type country name'
       },
 
       template: Handlebars.compile(tpl),
@@ -23,7 +27,7 @@ define(
         this.cache();
       },
 
-      cache: function(data) {
+      cache: function() {
         this.$searchBox = $('#searchCountry');
         this.$countries = $('.country');
       },
@@ -55,9 +59,11 @@ define(
 
       searchCountries: function(e) {
         // TODO: move this to the presenter
-        var searchText = this.$searchBox.val(),
-          val = $.trim(searchText).replace(/ +/g, ' ').toLowerCase(),
-          count = [];
+        var searchText = this.$searchBox.val();
+        var val = $.trim(searchText)
+          .replace(/ +/g, ' ')
+          .toLowerCase();
+        var count = [];
 
         this.$countries
           .show()
@@ -67,22 +73,24 @@ define(
               .text()
               .replace(/\s+/g, ' ')
               .toLowerCase();
-            text.indexOf(val) != -1 ? count.push($(this)) : null;
+            text.indexOf(val) !== -1 ? count.push($(this)) : null;
             return !~text.indexOf(val);
           })
           .hide();
 
-        count.length == 1
+        count.length === 1
           ? this.$searchBox.addClass('is-active')
           : this.$searchBox.removeClass('is-active');
 
         if (e) {
-          if (e.keyCode == 13 && count.length == 1) {
-            var href = $(count[0]).find('.country-href').attr('href');
+          if (e.keyCode === 13 && count.length === 1) {
+            var href = $(count[0])
+              .find('.country-href')
+              .attr('href');
             window.location = href;
           }
         }
-      },
+      }
     });
     return GeoListView;
   }
