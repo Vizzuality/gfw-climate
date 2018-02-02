@@ -4,6 +4,7 @@ define(
     'handlebars',
     'underscore',
     'services/CountryService',
+    'services/ContinentService',
     'views/shared/GeoListView',
     'views/shared/SwitchView',
     'text!insights/templates/emissions-calculator/insights-emission-calculator-index.handlebars'
@@ -13,6 +14,7 @@ define(
     Handlebars,
     _,
     CountryService,
+    ContinentService,
     GeoListView,
     SwitchView,
     tpl
@@ -35,19 +37,33 @@ define(
 
       initialize: function(settings) {
         this.defaults = _.extend({}, this.defaults, settings);
+        this.render();
+        this.cache();
+        this.startCountries();
+        this.$el.removeClass('is-loading');
+      },
 
-        CountryService.getCountries({ geo: true }).then(
-          this.onCountriesData.bind(this)
-        );
+      cache: function() {
+        this.continentsEl = this.$('#geo-continents-list');
+        this.countriesEl = this.$('#geo-countries-list');
+      },
+
+      startCountries() {
+        CountryService.getCountries({ geo: true })
+          .then(this.onCountriesData.bind(this))
+          .catch(this.startCountries);
       },
 
       onCountriesData: function(countryData) {
-        this.render();
-        this.start(countryData);
+        this.renderCountries(countryData);
+        this.startContinents();
+        this.startSwitch();
+        // https://github.com/petkaantonov/bluebird/blob/master/docs/docs/warning-explanations.md#warning-a-promise-was-created-in-a-handler-but-was-not-returned-from-it
+        return null;
       },
 
-      start: function(countryData) {
-        this.switch = new SwitchView({
+      startSwitch: function() {
+        this.switchView = new SwitchView({
           el: '#' + this.switch.el,
           param: this.switch.param,
           data: {
@@ -57,32 +73,38 @@ define(
         });
 
         this.listenTo(
-          this.switch,
+          this.switchView,
           'onSelectionchange',
           this.onSelectionChange.bind(this)
         );
+      },
 
-        this.continentsEl = this.$('#geo-continents-list');
-        this.countriesEl = this.$('#geo-countries-list');
-        var continents = _.map(countryData, function(c) {
-          c.href = '/countries/' + c.iso + '/report';
-          return c;
-        }).slice(1, 5);
-        this.countryList = new GeoListView({
-          el: this.continentsEl,
-          data: continents,
-          placeholder: 'Select continent name'
-        });
-
+      renderCountries: function(countryData) {
         var countries = _.map(countryData, function(c) {
           c.href = '/countries/' + c.iso + '/report';
           return c;
         });
-        this.countryList = new GeoListView({
+        this.countriesView = new GeoListView({
           el: this.countriesEl,
           data: countries
         });
-        this.$el.removeClass('is-loading');
+        this.countriesEl.removeClass('is-loading');
+      },
+
+      startContinents() {
+        ContinentService.getContinents({ geo: true })
+          .then(this.onContinentsData.bind(this))
+          .catch(this.startContinents);
+      },
+
+      onContinentsData(continentsData) {
+        this.continentsView = new GeoListView({
+          el: this.continentsEl,
+          data: continentsData,
+          placeholder: 'Type continent name'
+        });
+        this.continentsEl.removeClass('is-loading');
+        return null;
       },
 
       onSelectionChange: function(i) {

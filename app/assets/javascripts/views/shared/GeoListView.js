@@ -10,8 +10,7 @@ define(
     'use strict';
     var GeoListView = Backbone.View.extend({
       events: {
-        'keyup #searchCountry': 'searchCountries',
-        'focus #searchCountry': 'scrollTo'
+        'keyup #searchCountry': 'searchCountries'
       },
 
       defaults: {
