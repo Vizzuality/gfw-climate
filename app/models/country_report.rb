@@ -49,6 +49,7 @@ class CountryReport
     url = base_path
     url += select_query
     url += where_clause
+    url += ' ORDER BY year'
 
     puts url
 
@@ -111,7 +112,8 @@ class CountryReport
         t["indicator_id"] == indicator &&
         t["sub_nat_id"] == nil &&
         t["year"] >= start_year &&
-        t["year"] <= end_year
+        t["year"] <= end_year &&
+        t["thresh"] == @thresh
     end
     if @below && indicator == EMISSIONS
       values.each do |t|
@@ -158,7 +160,8 @@ class CountryReport
     values = data.select do |t|
       t["boundary"] == @use_boundary &&
         t["indicator_id"] == indicator &&
-        !t["sub_nat_id"].nil?
+        !t["sub_nat_id"].nil? &&
+        t["thresh"] == @thresh
     end.group_by{|t| t["sub_nat_id"]}
 
     provinces = []
@@ -177,9 +180,7 @@ class CountryReport
         excluded_vals = data.select do |t|
           t["boundary"] == INSIDE_PLANTATIONS_BOUNDARY &&
             t["indicator_id"] == indicator &&
-            t["sub_nat_id"] == sub_nat_id &&
-            t["year"] >= start_year &&
-            t["year"] <= end_year
+            t["sub_nat_id"] == sub_nat_id
         end
         vals.each do |t|
           exclude = excluded_vals.select{|p| p["year"] == t["year"]}.first

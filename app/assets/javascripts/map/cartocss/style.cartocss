@@ -58,6 +58,7 @@
 
   [layer='gfw_logging'] {
     polygon-fill: #fecc5c;
+    polygon-opacity: 0.1;
     line-color: #B38E3B;
     line-clip: false;
     polygon-clip: false;
@@ -152,6 +153,7 @@
 
   [layer='gfw_mining'] {
     polygon-fill: #fd8d3c;
+    polygon-opacity: 0.1;
     line-color: #fd8d3c;
     line-clip: false;
     polygon-clip: false;
@@ -215,6 +217,7 @@
   }
   [layer='gfw_oil_palm'] {
     polygon-fill: #ee9587;
+    polygon-opacity: 0.1;
     line-color: #ee9587;
     line-clip: false;
     polygon-clip: false;
@@ -290,6 +293,7 @@
 
   [layer='gfw_wood_fiber'] {
     polygon-fill: #e6adb9;
+    polygon-opacity: 0.1;
     line-color: #e6adb9;
     line-clip: false;
     polygon-clip: false;
@@ -503,9 +507,8 @@
   }
   [layer='wdpa_protected_areas'] {
     polygon-fill: #2167AB;
-    polygon-opacity: 0.5;
+    polygon-opacity: 0.1;
     line-color: #2167AB;
-    line-width: 1;
     line-opacity: 1;
   }
 

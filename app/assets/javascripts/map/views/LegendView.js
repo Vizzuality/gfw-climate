@@ -22,6 +22,8 @@ define([
   'text!map/templates/legend/us_land_cover.handlebars',
   'text!map/templates/legend/bra_biomes.handlebars',
   'text!map/templates/legend/idn_peat.handlebars',
+  'text!map/templates/legend/total_carbon.handlebars',
+  'text!map/templates/legend/biomass_carbon.handlebars',
   'text!map/templates/legend/hsdw.handlebars',
   'text!map/templates/legend/plantations_by_type.handlebars',
   'text!map/templates/legend/plantations_by_species.handlebars',
@@ -40,15 +42,43 @@ define([
   'text!map/templates/legend/mangrove_biomass.handlebars',
   'text!map/templates/legend/carbon_gain.handlebars',
 
-], function(_, Handlebars, Presenter, tpl, biomass_lossTpl, biomassTpl,
-  idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, concesionesTpl,
-  concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL,
-  dam_hotspotsTPL, us_land_coverTPL, bra_biomesTPL, idn_peatTPL, hsdwTPL,
-  gfwPlantationByTypeTpl, gfwPlantationBySpeciesTpl, peatland_drainageTpl,
-  colombiaForestChangeTpl, us_land_coverTpl, bra_biomesTpl,
-  gtm_forest_changeTpl, gtm_forest_coverTpl, gtm_forest_densityTpl,
-  khm_eco_land_concTpl, usa_forest_ownershipTpl, mysPATpl,
-  per_miningTpl, raisg_miningTpl, mangrove_biomassTpl, carbon_gainTpl) {
+], function(_,
+  Handlebars,
+  Presenter,
+  tpl,
+  biomass_lossTpl,
+  biomassTpl,
+  idnPrimaryTpl,
+  intact2013Tpl,
+  grumpTpl,
+  storiesTpl,
+  concesionesTpl,
+  concesionesTypeTpl,
+  hondurasForestTPL,
+  colombiaForestChangeTPL,
+  dam_hotspotsTPL,
+  us_land_coverTPL,
+  bra_biomesTPL,
+  idn_peatTPL,
+  total_carbon,
+  biomass_carbonTPL,
+  hsdwTPL,
+  gfwPlantationByTypeTpl,
+  gfwPlantationBySpeciesTpl,
+  peatland_drainageTpl,
+  colombiaForestChangeTpl,
+  us_land_coverTpl,
+  bra_biomesTpl,
+  gtm_forest_changeTpl,
+  gtm_forest_coverTpl,
+  gtm_forest_densityTpl,
+  khm_eco_land_concTpl,
+  usa_forest_ownershipTpl,
+  mysPATpl,
+  per_miningTpl,
+  raisg_miningTpl,
+  mangrove_biomassTpl,
+  carbon_gainTpl) {
 
   'use strict';
 
@@ -56,7 +86,7 @@ define([
     ranges: {
       tco: {
         min: 0,
-        max: 917
+        max: 440
       }
     },
     units: [
@@ -161,6 +191,8 @@ define([
       WMSLayer: Handlebars.compile(hondurasForestTPL),
       dam_hotspots: Handlebars.compile(dam_hotspotsTPL),
       idn_peat_lands : Handlebars.compile(idn_peatTPL),
+      total_carbon: Handlebars.compile(total_carbon),
+      biomass_carbon: Handlebars.compile(biomass_carbonTPL),
       hwsd : Handlebars.compile(hsdwTPL),
       plantations_by_type: Handlebars.compile(gfwPlantationByTypeTpl),
       plantations_by_species: Handlebars.compile(gfwPlantationBySpeciesTpl),

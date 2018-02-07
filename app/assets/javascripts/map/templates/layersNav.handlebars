@@ -61,21 +61,31 @@
 
     {{!-- CARBON DENSITY --}}
     <li class="carbon-density">
-      <span class="category-name">CARBON DENSITY<i id="carbon_density-category-num" class="category-num"></i></span>
+      <span class="category-name">CARBON DENSITY <i id="carbon_density-category-num" class="category-num"></i></span>
 
-       <div class="layers-nav">
+      <div class="layers-nav">
         <div class="layers-nav-header">
           <div class="category-icon"><svg><use xlink:href="#icon-layer-stories"></use></svg></div>
           <span class="category-name">CARBON DENSITY</span>
         </div>
         <ul class="layers-list">
-          <li class="layer" data-layer="carbon_stocks">
+          <li class="wrapped-layer" data-color="#36893D">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Aboveground Live Woody Biomass density<a href='#' data-source='aboveground_biomass' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
-          <li class="layer" data-layer="hwsd">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Soil Organic Carbon<a href='#' data-source='soil_organic_carbon' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Carbon density layers<a href="#" class="source"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-info">
+              <label data-layer="total_carbon" class="layer wrapped">
+                <span></span>
+                <input type="radio">Total Carbon
+              </label>
+              <label data-layer="biomass_carbon" class="layer wrapped">
+                <span></span>
+                <input type="radio">Biomass
+              </label>
+              <label data-layer="hwsd" class="layer wrapped">
+                <span></span>
+                <input type="radio">Soil Organic Carbon
+              </label>
+            </span>
           </li>
           <li class="layer" data-layer="global_mangroves_biomass">
             <span class="onoffswitch"><span></span></span>
@@ -84,6 +94,8 @@
         </ul>
       </div>
     </li>
+
+
 
     {{!-- LAND USE --}}
     <li class="land-use">

@@ -279,7 +279,7 @@ define([
       if (layer.slug == 'biomass_loss') {
         // Average of the aboveground live biomass
         if (data.biomass) {
-          p.averageAbovegroundBiomass = Math.round(data.biomass / parseInt(p.totalArea, 10));
+          p.averageAbovegroundBiomass = Math.round(data.biomass / p.totalArea);
         }
 
         // Average of carbon stored in aboveground live biomass

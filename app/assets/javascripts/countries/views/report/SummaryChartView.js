@@ -1,6 +1,7 @@
 define([
   'backbone',
   'underscore',
+  'nouislider',
   'd3',
   'moment',
   'helpers/NumbersHelper',
@@ -8,6 +9,7 @@ define([
 ], function(
   Backbone,
   _,
+  nouislider,
   d3,
   moment,
   NumbersHelper,
@@ -60,7 +62,54 @@ define([
       } else {
         this._renderNoData();
       }
+    },
 
+    _initSlides: function() {
+      this.yearsSlider = document.getElementById('years-slider');
+      this._initYearSlider();
+    },
+
+    _initYearSlider: function() {
+      nouislider.create(this.yearsSlider, {
+        start: [this.defaults.startYear, this.defaults.commonYear, this.defaults.endYear],
+      	animate: true,
+        connect: [false, true, true, false],
+        step: 1,
+      	range: {
+          min: this.defaults.minYear,
+          max: this.defaults.maxYear
+      	}
+      });
+
+      this.yearsSlider.noUiSlider.on('slide', function(value) {
+        var start = parseInt(value[0], 10);
+        var commonYear = parseInt(value[1], 10);
+        var end = parseInt(value[2], 10);
+
+        var params = {
+          startYear: start,
+          endYear: end,
+          commonYear: commonYear
+        };
+        this.trigger('summary:slider:change', params);
+      }.bind(this));
+
+      this.yearsSlider.noUiSlider.on('change', function(value) {
+        console.log(value);
+        if (value[1] === value[2]) {
+          this.yearsSlider.noUiSlider.set([
+            value[0],
+            parseInt(value[2]) - 1,
+            value[2]
+          ])
+        } else if (value[0] === value[1]) {
+          this.yearsSlider.noUiSlider.set([
+            value[0],
+            parseInt(value[0]) + 1,
+            value[2]
+          ])
+        }
+      }.bind(this));
     },
 
     _start: function() {
@@ -79,6 +128,7 @@ define([
       }));
 
       this.render();
+      this._initSlides();
     },
 
     _renderNoData: function() {
@@ -113,8 +163,7 @@ define([
      *  Parses the data for the chart
      */
     _parseData: function() {
-      var tzOffset = new Date().getTimezoneOffset();
-      var dates = [];
+      var tzOffset = new Date().getTimezoneOffset() + 60;
       this.chartData = [];
 
       for (var indictator in this.data) {
@@ -122,7 +171,6 @@ define([
         if (current && current.values) {
           current.values.forEach(function(data) {
             data.date = moment(data.year.toString()).add(tzOffset, 'minutes').toDate();
-            dates.push(data.date);
             this.chartData.push(data);
           }.bind(this));
         }
@@ -132,7 +180,10 @@ define([
       this.monitoringData = [];
       this.monitoringData.values = _.clone(this.data['monitor'].values);
       this.monitoringData.average = _.clone(this.data['monitor'].average);
-      this.dates = dates;
+      var dates = _.range(this.defaults.minYear, this.defaults.maxYear + 1);
+      this.dates = dates.map(function(date) {
+        return moment(date.toString()).add(tzOffset, 'minutes').toDate();
+      });
 
       // Copy the last value from the reference period as the
       // first on in the monitor
@@ -214,13 +265,16 @@ define([
      *  Get the domain values
      */
     _getDomain: function() {
-      var xValues = [];
+      var xValues = [moment(this.defaults.minYear.toString())];
+      // var xValues = [];
       var yValues = [];
 
       this.chartData.forEach(function(data) {
         xValues.push(data.date);
         yValues.push(data.value);
       });
+
+      xValues.push(moment(this.defaults.maxYear.toString()));
 
       return {
         x: d3.extent(xValues, function(d) { return d; }),

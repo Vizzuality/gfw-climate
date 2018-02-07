@@ -46,7 +46,7 @@ define([
         'reference_start_year': '2001',
         'reference_end_year': '2010',
         'monitor_start_year': '2011',
-        'monitor_end_year': '2015',
+        'monitor_end_year': '2016',
         'thresh': '30',
         'below': 'false',
         'primary_forest': 'false',
@@ -54,7 +54,7 @@ define([
         'co2': 'true'
       },
       minYear: 2001,
-      maxYear: 2015
+      maxYear: 2016
     },
 
     events: {
@@ -100,7 +100,7 @@ define([
     },
 
     _isDefaultPrimaryForest: function(iso) {
-      var primaryForestDefault = ['COD', 'IDN'];
+      var primaryForestDefault = ['COD'];
       return primaryForestDefault.indexOf(iso) >= 0;
     },
 
@@ -122,6 +122,7 @@ define([
       this.updateBox = this.$('.updates-box');
       this._cache();
       this._initModules();
+      this._listenModules();
     },
 
     parseTemplate: function() {
@@ -184,7 +185,7 @@ define([
     },
 
     _getAccuracyData: function() {
-      var url = window.gfw.config.GFW_API_HOST_V2 +  _.str.sprintf(ENDPOINT_ACCURACY, this.iso);
+      var url = window.gfw.config.GFW_API_HOST_PRO +  _.str.sprintf(ENDPOINT_ACCURACY, this.iso);
       $.when($.getJSON(url))
         .then(function(res) {
           this.accuracyData = res.data[0];
@@ -194,10 +195,14 @@ define([
 
     _initModules: function() {
       this._initSlides();
-
       this.summaryChart = new SummaryChartView({
         data: this.data.emissions,
-        country: this.data.country
+        country: this.data.country,
+        startYear: parseInt(this.status.get('reference_start_year'), 10),
+        endYear: parseInt(this.status.get('monitor_end_year'), 10),
+        commonYear: this.status.get('reference_end_year'),
+        minYear: this.defaults.minYear,
+        maxYear: this.defaults.maxYear
       });
 
       this.historicalTrendChart = new HistoricalTrendChartView({
@@ -227,123 +232,28 @@ define([
         iso: this.iso,
         country: this.data.country,
         ha: this.data.area
-      })
+      });
+    },
+
+    _listenModules: function() {
+      this.listenTo(this.summaryChart, 'summary:slider:change', function(data) {
+        this._updateYearsRange(data);
+      }.bind(this));
+    },
+
+    _updateYearsRange: function(params) {
+      this.status.set({
+        reference_start_year: params.startYear.toString(),
+        reference_end_year: params.commonYear.toString(),
+        monitor_start_year: params.commonYear === params.endYear ? params.endYear.toString() : (params.commonYear + 1).toString(),
+        monitor_end_year: params.endYear.toString()
+      });
+      this._setUpdateButtonVisibility(true);
     },
 
     _initSlides: function() {
-      this._initReferenceSlider();
-      this._initMonitorSlider();
       this._initHeightSlider();
       this._initCrownSlider();
-    },
-
-    _initReferenceSlider: function() {
-      this.referenceSlider = document.getElementById('reference-slider');
-      var startYear = parseInt(this.status.get('reference_start_year'), 10);
-      var endYear = parseInt(this.status.get('reference_end_year'), 10);
-
-      this._setSliderWidth('reference');
-
-      nouislider.create(this.referenceSlider, {
-        start: [startYear, endYear],
-      	animate: true,
-        connect: true,
-        margin: 1,
-        step: 1,
-      	range: {
-          min: this.defaults.minYear,
-          max: endYear
-      	},
-        pips: {
-          mode: 'steps',
-          stepped: false,
-          density: 1
-        }
-      });
-
-      this.referenceSlider.noUiSlider.on('slide', function(value) {
-        var start = parseInt(value[0], 10);
-        var end = parseInt(value[1], 10);
-        var startMonitor = end + 1;
-
-        this.status.set({
-          reference_start_year: start.toString(),
-          reference_end_year: end.toString(),
-          monitor_start_year: startMonitor.toString()
-        }, { silent: true });
-      }.bind(this));
-
-      this.referenceSlider.noUiSlider.on('change', function(value) {
-        this.updateBox.removeClass('-hide');
-        this.referenceSlider.noUiSlider.destroy();
-        this.monitorSlider.noUiSlider.destroy();
-        this._initReferenceSlider();
-        this._initMonitorSlider();
-      }.bind(this));
-    },
-
-    _initMonitorSlider: function() {
-      this.monitorSlider = document.getElementById('monitor-slider');
-      var startYear = parseInt(this.status.get('monitor_start_year'), 10);
-      var endYear = parseInt(this.status.get('monitor_end_year'), 10);
-
-      this._setSliderWidth('monitor');
-
-      nouislider.create(this.monitorSlider, {
-        start: [startYear, endYear],
-      	animate: true,
-        connect: true,
-        margin: 1,
-        step: 1,
-      	range: {
-          min: startYear,
-          max: this.defaults.maxYear
-      	},
-        pips: {
-          mode: 'steps',
-          stepped: false,
-          density: 1
-        }
-      });
-
-      this.monitorSlider.noUiSlider.on('slide', function(value) {
-        var start = parseInt(value[0], 10);
-        var end = parseInt(value[1], 10);
-        var endReference = start - 1;
-
-        this.status.set({
-          monitor_start_year: start.toString(),
-          monitor_end_year: end.toString(),
-          reference_end_year: endReference.toString()
-        }, { silent: true });
-      }.bind(this));
-
-      this.monitorSlider.noUiSlider.on('change', function(value) {
-        this.updateBox.removeClass('-hide');
-        this.referenceSlider.noUiSlider.destroy();
-        this.monitorSlider.noUiSlider.destroy();
-        this._initReferenceSlider();
-        this._initMonitorSlider();
-      }.bind(this));
-    },
-
-    _setSliderWidth: function (type) {
-      var totalYears = this.defaults.maxYear - this.defaults.minYear;
-      var contentWidth = this.yearSelector.clientWidth;
-
-      if (type === 'reference') {
-        var numYears = this.status.get('reference_end_year') -
-          this.defaults.minYear;
-
-        var width = (numYears * contentWidth) / 100;
-        this.yearSelectorReference.style.width = width + '%';
-      } else if (type === 'monitor') {
-        var numYears = this.defaults.maxYear -
-          this.status.get('monitor_start_year');
-
-        var width = (numYears * contentWidth) / 100;
-        this.yearSelectorMonitor.style.width = width + '%';
-      }
     },
 
     _initHeightSlider: function() {
@@ -389,11 +299,11 @@ define([
           max: 75
       	}
       });
-      this.crownSlider.noUiSlider.on('change', function(value){
+      this.crownSlider.noUiSlider.on('change', function(value) {
         this.status.set({
           thresh: parseInt(value[0])
         }, { silent: true });
-        this.updateBox.removeClass('-hide');
+        this._setUpdateButtonVisibility(true);
       }.bind(this));
     },
 
@@ -408,11 +318,7 @@ define([
         this.status.set(status, { silent: true });
       }
 
-      if (this.updateBox) {
-        this._checkInputsDiff()
-        ? this.updateBox.removeClass('-hide')
-        : this.updateBox.addClass('');
-      }
+      this._setUpdateButtonVisibility(this._checkInputsDiff());
     },
 
     _checkInputsDiff:function() {
@@ -426,6 +332,16 @@ define([
       this.$el.addClass('is-loading');
       this._updateParams();
       this._getData();
+    },
+
+    _setUpdateButtonVisibility:function(visible) {
+      if (this.updateBox) {
+        if (visible) {
+          this.updateBox.removeClass('-hide')
+        } else {
+          this.updateBox.addClass('-hide')
+        }
+      }
     },
 
     _validateEmail:function(email) {
