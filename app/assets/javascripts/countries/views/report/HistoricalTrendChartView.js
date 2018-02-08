@@ -1,17 +1,18 @@
 define([
+  'handlebars',
   'backbone',
   'underscore',
   'd3',
   'helpers/NumbersHelper',
   'text!countries/templates/report/historical-trend-chart.handlebars'
-], function(
+], function (
+  Handlebars,
   Backbone,
   _,
   d3,
   NumbersHelper,
   tpl
 ) {
-
   'use strict';
 
   var SummaryChart = Backbone.View.extend({
@@ -68,7 +69,7 @@ define([
       ]
     },
 
-    initialize: function(settings) {
+    initialize: function (settings) {
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
 
@@ -78,7 +79,7 @@ define([
       this.setListeners();
     },
 
-    _initChart: function() {
+    _initChart: function () {
       // Data parsing and initialization
       this._parseData();
       this.hasData = this.chartData && this.chartData.length;
@@ -91,10 +92,10 @@ define([
       }
     },
 
-    _setCustomLabels:  function() {
+    _setCustomLabels: function () {
       if (this.defaults.customLabels) {
-        this.defaults.customLabels.forEach(function(custom) {
-          var label = _.findWhere(this.defaults.labels, { slug : custom.slug });
+        this.defaults.customLabels.forEach(function (custom) {
+          var label = _.findWhere(this.defaults.labels, { slug: custom.slug });
 
           if (label) {
             label.name = custom.name;
@@ -103,7 +104,7 @@ define([
       }
     },
 
-    _start: function() {
+    _start: function () {
       this.$el.html(this.template({
         hasData: this.chartData.length
       }));
@@ -111,29 +112,29 @@ define([
       this.render();
     },
 
-    _renderNoData: function() {
+    _renderNoData: function () {
       this.$el.html(this.template({
         hasData: this.hasData,
       }));
     },
 
-    render: function() {
+    render: function () {
       this._setUpGraph();
       this._drawGrid();
       this._setAxisScale();
       this._setDomain();
       this._drawGraph();
-     },
+    },
 
     /**
      * Sets the listeners for the component
      */
-    setListeners: function() {
+    setListeners: function () {
       this.refreshEvent = _.debounce(_.bind(this._update, this), 30);
       window.addEventListener('resize', this.refreshEvent, false);
     },
 
-    unsetListeners: function() {
+    unsetListeners: function () {
       window.removeEventListener('resize', this.refreshEvent, false);
 
       this.refreshEvent = null;
@@ -142,15 +143,14 @@ define([
     /**
      *  Parses the data for the chart
      */
-    _parseData: function() {
-      var dates = [];
+    _parseData: function () {
       this.chartData = [];
 
-      for (var indicator in this.data) {
+      for (var indicator in this.data) { // eslint-disable-line
         var current = this.data[indicator];
         if (current && current.values) {
           current.total = NumbersHelper.round(current.total, 6);
-          current.values.forEach(function(data) {
+          current.values.forEach(function (data) { // eslint-disable-line
             if (data) {
               data.value = NumbersHelper.round(data.value, 6);
               data.type = indicator;
@@ -160,8 +160,8 @@ define([
         }
       }
 
-      this.referenceData = this.data['reference'];
-      this.monitoringData = this.data['monitor'];
+      this.referenceData = this.data.reference;
+      this.monitoringData = this.data.monitor;
       this.averageData = [
         {
           value: this.referenceData.average,
@@ -177,9 +177,9 @@ define([
     /**
      *  Sets up the SVG for the graph
      */
-    _setUpGraph: function() {
+    _setUpGraph: function () {
       this.chartEl = this.el.querySelector('#' + this.defaults.chartEl);
-      var el = this.chartEl
+      var el = this.chartEl;
       var margin = this.defaults.margin;
 
       el.innerHTML = '';
@@ -207,7 +207,7 @@ define([
     /**
      *  Sets the axis
      */
-    _setAxisScale: function() {
+    _setAxisScale: function () {
       var average = _.findWhere(this.defaults.labels, { slug: 'average' });
       var barsContentWidth = ((average.width * this.cWidthGrid) / 100) -
         (this.defaults.barMargin * 2);
@@ -227,17 +227,18 @@ define([
         .innerTickSize(0)
         .outerTickSize(0)
         .ticks(this.chartData.length)
-        .tickFormat(function(d, i) {
+        .tickFormat(function (d, i) {
           if (this.chartData[i]) {
             return this.chartData[i].year;
           }
+          return null;
         }.bind(this));
     },
 
     /**
      * Sets the domain
      */
-    _setDomain: function() {
+    _setDomain: function () {
       this.x.domain(this.domain.x);
       this.x2.domain(this.domain.x2);
       this.y.domain(this.domain.y);
@@ -246,10 +247,10 @@ define([
     /**
      *  Get the domain values
      */
-    _getDomain: function() {
+    _getDomain: function () {
       return {
-        x: [0, d3.max(this.chartData, function(d) { return d.value; })],
-        x2: [0, d3.max(this.averageData, function(d) { return d.value; })],
+        x: [0, d3.max(this.chartData, function (d) { return d.value; })],
+        x2: [0, d3.max(this.averageData, function (d) { return d.value; })],
         y: [0, this.chartData.length]
       };
     },
@@ -257,7 +258,7 @@ define([
     /**
      * Draws the entire graph
      */
-    _drawGraph: function() {
+    _drawGraph: function () {
       this._drawYears();
       this._drawLoss();
       this._drawDeviation();
@@ -269,12 +270,12 @@ define([
       this._drawFooterDeviation();
     },
 
-    _drawGrid: function() {
+    _drawGrid: function () {
       // X Lines
       var numLines = this.chartData.length;
       var rowOffset = this.defaults.rowHeight;
       var linesGroup = this.svg.append('g')
-        .attr('transform', 'translate(0, '+ this.defaults.rowHeight +')');
+        .attr('transform', 'translate(0, ' + this.defaults.rowHeight + ')');
 
       for (var x = 0; x < numLines; x++) {
         linesGroup.append('rect')
@@ -289,7 +290,7 @@ define([
 
       // Labels
       var marginOffset = 0;
-      this.defaults.labels.forEach(function(label) {
+      this.defaults.labels.forEach(function (label) {
         var margin = (label.width * this.cWidthGrid) / 100;
         var group = this.svg.append('g')
           .attr('transform', 'translate(' + marginOffset + ', 0)')
@@ -336,7 +337,7 @@ define([
         .attr('y', 0);
     },
 
-    _setCustomLabel: function(label, group) {
+    _setCustomLabel: function (label, group) {
       if (label.search(this.defaults.underscript) !== -1) {
         var unit = label.split(this.defaults.underscript);
         for (var x = 0; x < unit.length; x++) {
@@ -353,66 +354,66 @@ define([
       }
     },
 
-    _drawYears: function() {
+    _drawYears: function () {
       var yearGroup = this.svg.select('.year');
       var yearLabel = _.findWhere(this.defaults.labels, { slug: 'year' });
       var yearLabelWidth = (yearLabel.width * this.cWidthGrid) / 100;
       var yearsContent = this.svg.append('g')
-        .attr('transform', 'translate('+
+        .attr('transform', 'translate(' +
           (d3.transform(yearGroup.attr('transform')).translate[0]) + ', ' +
           this.defaults.rowHeight + ')');
 
       var yearsGroup = yearsContent.selectAll('g')
         .data(this.chartData)
         .enter().append('g')
-        .attr('transform', function(d, i) {
+        .attr('transform', function (d, i) {
           return 'translate(0, ' + (this.defaults.rowHeight * i) + ')';
         }.bind(this));
 
       yearsGroup.append('text')
         .attr('class', 'year')
-        .text(function(d) {
+        .text(function (d) {
           return d.year;
         })
-        .attr('dx', function() {
+        .attr('dx', function () {
           return yearLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
-        .attr('dy', function() {
+        .attr('dy', function () {
           return (this.defaults.rowHeight / 2) + this.defaults.barHeight;
         }.bind(this));
     },
 
-    _drawLoss: function() {
+    _drawLoss: function () {
       var lossGroup = this.svg.select('.loss');
       var lossLabel = _.findWhere(this.defaults.labels, { slug: 'loss' });
       var lossLabelWidth = (lossLabel.width * this.cWidthGrid) / 100;
       var lossContent = this.svg.append('g')
-        .attr('transform', 'translate('+
+        .attr('transform', 'translate(' +
           (d3.transform(lossGroup.attr('transform')).translate[0]) + ', ' +
           this.defaults.rowHeight + ')');
 
-      var lossGroup = lossContent.selectAll('g')
+      lossGroup = lossContent.selectAll('g')
         .data(this.chartData)
         .enter().append('g')
-        .attr('transform', function(d, i) {
+        .attr('transform', function (d, i) {
           return 'translate(0, ' + (this.defaults.rowHeight * i) + ')';
         }.bind(this));
 
       lossGroup.append('text')
         .attr('class', 'value')
-        .text(function(d) {
+        .text(function (d) {
           return NumbersHelper.addNumberDecimals(NumbersHelper.round(d.value, 6));
         })
-        .attr('dx', function() {
-          return lossLabelWidth - this.defaults.paddingXAxisLabels
+        .attr('dx', function () {
+          return lossLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
-        .attr('dy', function() {
+        .attr('dy', function () {
           return (this.defaults.rowHeight / 2) + this.defaults.barHeight;
         }.bind(this));
     },
 
-    _drawDeviation: function() {
-      var total = _.reduce(this.referenceData.values, function(memo, data){
+    _drawDeviation: function () {
+      var total = _.reduce(this.referenceData.values, function (memo, data) {
         return memo + data.value;
       }, 0);
       var average = total / this.referenceData.values.length;
@@ -421,20 +422,20 @@ define([
       var deviationLabelWidth = (deviationLabel.width * this.cWidthGrid) / 100;
 
       var deviationContent = this.svg.append('g')
-        .attr('transform', 'translate('+
+        .attr('transform', 'translate(' +
           d3.transform(deviationGroup.attr('transform')).translate[0] + ', ' +
           (this.defaults.rowHeight * (this.referenceData.values.length + 1)) + ')');
 
-      var deviationGroup = deviationContent.selectAll('g')
+      deviationGroup = deviationContent.selectAll('g')
         .data(this.monitoringData.values)
         .enter().append('g')
-        .attr('transform', function(d, i) {
+        .attr('transform', function (d, i) {
           return 'translate(0, ' + (this.defaults.rowHeight * i) + ')';
         }.bind(this));
 
       deviationGroup.append('text')
         .attr('class', 'value')
-        .text(function(d) {
+        .text(function (d) {
           var value = Math.round((((d.value - average) / average) * 100));
           var displayValue = value;
 
@@ -443,56 +444,55 @@ define([
           }
           return displayValue + '%';
         })
-        .attr('dx', function() {
-          return deviationLabelWidth - this.defaults.paddingXAxisLabels
+        .attr('dx', function () {
+          return deviationLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
-        .attr('dy', function() {
+        .attr('dy', function () {
           return (this.defaults.rowHeight / 2) + this.defaults.barHeight;
         }.bind(this));
     },
 
-    _drawBars: function() {
+    _drawBars: function () {
       var averageGroup = this.svg.select('.average');
       var leftOffset = d3.transform(averageGroup.attr('transform')).translate[0] +
         this.defaults.barMargin;
 
       var barsContent = this.svg.append('g')
-        .attr('transform', 'translate('+ leftOffset +', ' + this.defaults.rowHeight + ')');
+        .attr('transform', 'translate(' + leftOffset + ', ' + this.defaults.rowHeight + ')');
 
       var barGroup = barsContent.selectAll('g')
         .data(this.chartData)
         .enter().append('g')
-        .attr('transform', function(d, i) {
+        .attr('transform', function (d, i) {
           return 'translate(0, ' + (this.defaults.rowHeight * i) + ')';
         }.bind(this));
 
       barGroup.append('rect')
-        .attr('class', function(d) {
+        .attr('class', function (d) {
           return 'bar ' + d.type;
         })
         .attr('height', this.defaults.barHeight)
-        .attr('width', function(d) {
+        .attr('width', function (d) {
           var value = this.x(d.value);
           if (value === 0) {
             return this.defaults.defaultZeroValue;
-          } else {
-            return this.x(d.value);
           }
+          return this.x(d.value);
         }.bind(this))
-        .attr('y', function() {
+        .attr('y', function () {
           return (this.defaults.rowHeight / 2) - (this.defaults.barHeight / 2);
         }.bind(this));
     },
 
-    _drawGridFooter: function() {
+    _drawGridFooter: function () {
       var rowOffset = this.defaults.rowHeight * 2.5;
 
       var grid = this.svg.append('g')
-        .attr('transform', 'translate(0, '+ this.defaults.rowHeight * (this.chartData.length + 1.5) +')');
+        .attr('transform', 'translate(0, ' + this.defaults.rowHeight * (this.chartData.length + 1.5) + ')');
 
       // Labels
       var marginOffset = 0;
-      this.defaults.labels.forEach(function(label) {
+      this.defaults.labels.forEach(function (label) {
         var margin = (label.width * this.cWidthGrid) / 100;
         var group = grid.append('g')
           .attr('transform', 'translate(' + marginOffset + ', 0)')
@@ -500,10 +500,10 @@ define([
 
         group.append('text')
           .attr('class', 'label')
-          .attr('y', function() {
+          .attr('y', function () {
             return this.defaults.rowHeight / 2;
           }.bind(this))
-          .attr('x', function() {
+          .attr('x', function () {
             return margin - this.defaults.paddingXAxisLabels;
           }.bind(this))
           .style('text-anchor', 'end')
@@ -529,17 +529,16 @@ define([
         .attr('y', rowOffset / 2.5);
     },
 
-    _drawFooterLabels: function() {
+    _drawFooterLabels: function () {
       var rowOffset = this.defaults.rowHeight;
-      var yearGroup = this.svg.select('.year');
       var yearLabel = _.findWhere(this.defaults.labels, { slug: 'year' });
       var yearLabelWidth = (yearLabel.width * this.cWidthGrid) / 100;
       var content = this.svg.append('g')
-        .attr('transform', 'translate(0, '+ ((this.defaults.rowHeight * (this.chartData.length + 1.5)) + rowOffset) +')');
+        .attr('transform', 'translate(0, ' + ((this.defaults.rowHeight * (this.chartData.length + 1.5)) + rowOffset) + ')');
 
       content.append('text')
         .attr('class', 'label subtitle')
-        .attr('dx', function() {
+        .attr('dx', function () {
           return yearLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
         .attr('dy', this.defaults.rowHeight / 2)
@@ -547,10 +546,10 @@ define([
 
       content.append('text')
         .attr('class', 'label')
-        .attr('dx', function() {
+        .attr('dx', function () {
           return yearLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
-        .attr('dy', function() {
+        .attr('dy', function () {
           return (this.defaults.rowHeight) + this.defaults.barHeight;
         }.bind(this))
         .text(this.referenceData.values[0].year + '-' +
@@ -558,7 +557,7 @@ define([
 
       content.append('text')
         .attr('class', 'label subtitle')
-        .attr('dx', function() {
+        .attr('dx', function () {
           return yearLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
         .attr('dy', (rowOffset * 2.5) - (this.defaults.rowHeight / 2) + this.defaults.barHeight)
@@ -566,90 +565,90 @@ define([
 
       content.append('text')
         .attr('class', 'label')
-        .attr('dx', function() {
+        .attr('dx', function () {
           return yearLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
-        .attr('dy', function() {
+        .attr('dy', function () {
           return (rowOffset * 2.5) + this.defaults.barHeight + (this.defaults.barHeight / 2);
         }.bind(this))
         .text(this.monitoringData.values[0].year + '-' +
           this.monitoringData.values[this.monitoringData.values.length - 1].year);
     },
 
-    _drawFooterBars: function() {
+    _drawFooterBars: function () {
       var rowOffset = this.defaults.rowHeight;
-            var averageGroup = this.svg.select('.average');
+      var averageGroup = this.svg.select('.average');
       var leftOffset = d3.transform(averageGroup.attr('transform')).translate[0] +
         this.defaults.barMargin;
 
       var barsContent = this.svg.append('g')
-        .attr('transform', 'translate('+ leftOffset +', ' +
+        .attr('transform', 'translate(' + leftOffset + ', ' +
           ((this.defaults.rowHeight * (this.chartData.length + 1.5)) + rowOffset) + ')');
 
       var barGroup = barsContent.selectAll('g')
         .data(this.averageData)
         .enter().append('g')
-        .attr('transform', function(d, i) {
-          return 'translate(0, ' + ((rowOffset * 1.5)  * i) + ')';
-        }.bind(this));
+        .attr('transform', function (d, i) {
+          return 'translate(0, ' + ((rowOffset * 1.5) * i) + ')';
+        });
 
       barGroup.append('rect')
-        .attr('class', function(d) {
+        .attr('class', function (d) {
           return 'bar ' + d.type;
         })
         .attr('height', this.defaults.barHeight)
-        .attr('width', function(d) {
+        .attr('width', function (d) {
           return this.x(d.value);
         }.bind(this))
-        .attr('y', function() {
-          return ((rowOffset * 1.25) / 2)
-        }.bind(this));
+        .attr('y', function () {
+          return ((rowOffset * 1.25) / 2);
+        });
     },
 
-    _drawFooterAverages: function() {
+    _drawFooterAverages: function () {
       var rowOffset = this.defaults.rowHeight;
       var averageGroup = this.svg.select('.loss');
       var averageLabel = _.findWhere(this.defaults.labels, { slug: 'loss' });
       var averageLabelWidth = (averageLabel.width * this.cWidthGrid) / 100;
 
       var averageContent = this.svg.append('g')
-        .attr('transform', 'translate('+
+        .attr('transform', 'translate(' +
           (d3.transform(averageGroup.attr('transform')).translate[0]) + ', ' +
-            ((this.defaults.rowHeight * (this.chartData.length + 1.5)) + rowOffset) + ')');
+          ((this.defaults.rowHeight * (this.chartData.length + 1.5)) + rowOffset) + ')');
 
       var contentGroup = averageContent.selectAll('g')
         .data(this.averageData)
         .enter().append('g')
-        .attr('transform', function(d, i) {
+        .attr('transform', function (d, i) {
           return 'translate(0, ' + ((this.defaults.rowHeight * 1.8) * i) + ')';
         }.bind(this));
 
       contentGroup.append('text')
         .attr('class', 'value')
-        .text(function(d) {
+        .text(function (d) {
           return NumbersHelper.addNumberDecimals(NumbersHelper.round(d.value, 6));
         })
-        .attr('dx', function() {
-          return averageLabelWidth - this.defaults.paddingXAxisLabels
+        .attr('dx', function () {
+          return averageLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
-        .attr('dy', function() {
+        .attr('dy', function () {
           return (rowOffset * 1.25) / 2;
-        }.bind(this));
+        });
     },
 
-    _drawFooterDeviation: function() {
+    _drawFooterDeviation: function () {
       var rowOffset = this.defaults.rowHeight;
       var deviationGroup = this.svg.select('.deviation');
       var deviationLabel = _.findWhere(this.defaults.labels, { slug: 'deviation' });
       var deviationLabelWidth = (deviationLabel.width * this.cWidthGrid) / 100;
-      var total = _.reduce(this.referenceData.values, function(memo, data){
+      var total = _.reduce(this.referenceData.values, function (memo, data) {
         return memo + data.value;
       }, 0);
       var average = total / this.referenceData.values.length;
       var deviationContent = this.svg.append('g')
-        .attr('transform', 'translate('+
+        .attr('transform', 'translate(' +
           (d3.transform(deviationGroup.attr('transform')).translate[0]) + ', ' +
-            ((this.defaults.rowHeight * (this.chartData.length + 1.5)) + rowOffset) + ')');
+          ((this.defaults.rowHeight * (this.chartData.length + 1.5)) + rowOffset) + ')');
 
       var contentGroup = deviationContent.selectAll('g')
         .data(this.averageData)
@@ -658,7 +657,7 @@ define([
 
       contentGroup.append('text')
         .attr('class', 'value')
-        .text(function() {
+        .text(function () {
           var value = Math.round((((this.monitoringData.average - average) / average) * 100));
           var displayValue = value;
 
@@ -667,8 +666,8 @@ define([
           }
           return displayValue + '%';
         }.bind(this))
-        .attr('dx', function() {
-          return deviationLabelWidth - this.defaults.paddingXAxisLabels
+        .attr('dx', function () {
+          return deviationLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
         .attr('dy', 0);
     },
@@ -676,7 +675,7 @@ define([
     /**
      *  Renders the chart after a resize
      */
-    _update: function() {
+    _update: function () {
       this.remove({
         keepEvents: true
       });
@@ -686,8 +685,8 @@ define([
     /**
      * Removes the SVG
      */
-    remove: function(params) {
-      if(this.svg) {
+    remove: function (params) {
+      if (this.svg) {
         var svgContainer = this.chartEl.querySelector('svg');
 
         if (params && !params.keepEvents) {
@@ -703,5 +702,4 @@ define([
   });
 
   return SummaryChart;
-
 });

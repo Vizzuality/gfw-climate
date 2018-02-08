@@ -7,6 +7,8 @@
     $: true
   rules:
     one-var: 0
+    comma-dangle: 0
+    guard-for-in: 0
     new-cap: 0
     func-names: 0
     valid-jsdoc: 0

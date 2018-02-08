@@ -1,4 +1,5 @@
 define([
+  'handlebars',
   'backbone',
   'underscore',
   'nouislider',
@@ -6,7 +7,8 @@ define([
   'moment',
   'helpers/NumbersHelper',
   'text!countries/templates/report/summary-chart.handlebars'
-], function(
+], function (
+  Handlebars,
   Backbone,
   _,
   nouislider,
@@ -15,7 +17,6 @@ define([
   NumbersHelper,
   tpl
 ) {
-
   'use strict';
 
   var SummaryChart = Backbone.View.extend({
@@ -41,7 +42,7 @@ define([
       }
     },
 
-    initialize: function(settings) {
+    initialize: function (settings) {
       this.defaults = _.extend({}, this.defaults, settings);
       this.data = this.defaults.data;
       this.country = this.defaults.country;
@@ -52,7 +53,7 @@ define([
       this.setListeners();
     },
 
-    _initChart: function() {
+    _initChart: function () {
       // Data parsing and initialization
       this._parseData();
       this.hasData = this.chartData && this.chartData.length;
@@ -64,24 +65,24 @@ define([
       }
     },
 
-    _initSlides: function() {
+    _initSlides: function () {
       this.yearsSlider = document.getElementById('years-slider');
       this._initYearSlider();
     },
 
-    _initYearSlider: function() {
+    _initYearSlider: function () {
       nouislider.create(this.yearsSlider, {
         start: [this.defaults.startYear, this.defaults.commonYear, this.defaults.endYear],
-      	animate: true,
+        animate: true,
         connect: [false, true, true, false],
         step: 1,
-      	range: {
+        range: {
           min: this.defaults.minYear,
           max: this.defaults.maxYear
-      	}
+        }
       });
 
-      this.yearsSlider.noUiSlider.on('slide', function(value) {
+      this.yearsSlider.noUiSlider.on('slide', function (value) {
         var start = parseInt(value[0], 10);
         var commonYear = parseInt(value[1], 10);
         var end = parseInt(value[2], 10);
@@ -94,25 +95,25 @@ define([
         this.trigger('summary:slider:change', params);
       }.bind(this));
 
-      this.yearsSlider.noUiSlider.on('change', function(value) {
+      this.yearsSlider.noUiSlider.on('change', function (value) {
         console.log(value);
         if (value[1] === value[2]) {
           this.yearsSlider.noUiSlider.set([
             value[0],
-            parseInt(value[2]) - 1,
+            parseInt(value[2], 10) - 1,
             value[2]
-          ])
+          ]);
         } else if (value[0] === value[1]) {
           this.yearsSlider.noUiSlider.set([
             value[0],
-            parseInt(value[0]) + 1,
+            parseInt(value[0], 10) + 1,
             value[2]
-          ])
+          ]);
         }
       }.bind(this));
     },
 
-    _start: function() {
+    _start: function () {
       var referenceAvg = NumbersHelper.round(this.referenceData.average, 6);
       var monitoringAvg = NumbersHelper.round(this.monitoringData.average, 6);
       var increase = Math.round(((monitoringAvg - referenceAvg) / referenceAvg) * 100);
@@ -131,29 +132,29 @@ define([
       this._initSlides();
     },
 
-    _renderNoData: function() {
+    _renderNoData: function () {
       this.$el.html(this.template({
         hasData: this.hasData,
       }));
     },
 
-    render: function() {
+    render: function () {
       this._setUpGraph();
       this._setAxisScale();
       this._setDomain();
       this._drawAxis();
       this._drawGraph();
-     },
+    },
 
     /**
      * Sets the listeners for the component
      */
-    setListeners: function() {
+    setListeners: function () {
       this.refreshEvent = _.debounce(_.bind(this._update, this), 30);
       window.addEventListener('resize', this.refreshEvent, false);
     },
 
-    unsetListeners: function() {
+    unsetListeners: function () {
       window.removeEventListener('resize', this.refreshEvent, false);
 
       this.refreshEvent = null;
@@ -162,26 +163,26 @@ define([
     /**
      *  Parses the data for the chart
      */
-    _parseData: function() {
+    _parseData: function () {
       var tzOffset = new Date().getTimezoneOffset() + 60;
       this.chartData = [];
 
       for (var indictator in this.data) {
         var current = this.data[indictator];
         if (current && current.values) {
-          current.values.forEach(function(data) {
+          current.values.forEach(function (data) {
             data.date = moment(data.year.toString()).add(tzOffset, 'minutes').toDate();
             this.chartData.push(data);
           }.bind(this));
         }
       }
 
-      this.referenceData = this.data['reference'];
+      this.referenceData = this.data.reference;
       this.monitoringData = [];
-      this.monitoringData.values = _.clone(this.data['monitor'].values);
-      this.monitoringData.average = _.clone(this.data['monitor'].average);
+      this.monitoringData.values = _.clone(this.data.monitor.values);
+      this.monitoringData.average = _.clone(this.data.monitor.average);
       var dates = _.range(this.defaults.minYear, this.defaults.maxYear + 1);
-      this.dates = dates.map(function(date) {
+      this.dates = dates.map(function (date) {
         return moment(date.toString()).add(tzOffset, 'minutes').toDate();
       });
 
@@ -195,9 +196,9 @@ define([
     /**
      *  Sets up the SVG for the graph
      */
-    _setUpGraph: function() {
+    _setUpGraph: function () {
       this.chartEl = this.el.querySelector('#' + this.defaults.chartEl);
-      var el = this.chartEl
+      var el = this.chartEl;
       var margin = this.defaults.margin;
 
       el.innerHTML = '';
@@ -221,10 +222,10 @@ define([
     /**
      *  Sets the axis
      */
-    _setAxisScale: function() {
+    _setAxisScale: function () {
       var _this = this;
       var xTickFormat = d3.time.format(_this.defaults.dateFormat);
-      var yTickFormat = function(d) {
+      var yTickFormat = function (d) {
         return d > 999 ? (d / 1000) + 'k' : d;
       };
       var yNumTicks = 4;
@@ -256,7 +257,7 @@ define([
     /**
      * Sets the domain
      */
-    _setDomain: function() {
+    _setDomain: function () {
       this.x.domain(this.domain.x);
       this.y.domain(this.domain.y);
     },
@@ -264,12 +265,12 @@ define([
     /**
      *  Get the domain values
      */
-    _getDomain: function() {
+    _getDomain: function () {
       var xValues = [moment(this.defaults.minYear.toString())];
       // var xValues = [];
       var yValues = [];
 
-      this.chartData.forEach(function(data) {
+      this.chartData.forEach(function (data) {
         xValues.push(data.date);
         yValues.push(data.value);
       });
@@ -277,15 +278,15 @@ define([
       xValues.push(moment(this.defaults.maxYear.toString()));
 
       return {
-        x: d3.extent(xValues, function(d) { return d; }),
-        y: d3.extent(yValues, function(d) { return d; })
+        x: d3.extent(xValues, function (d) { return d; }),
+        y: d3.extent(yValues, function (d) { return d; })
       };
     },
 
     /**
      * Draws the axis
      */
-    _drawAxis: function() {
+    _drawAxis: function () {
       var _this = this;
 
       // X Axis
@@ -294,43 +295,43 @@ define([
         .attr('transform', 'translate(0,' + (this.cHeight) + ')')
         .call(this.xAxis);
 
-        xAxis.selectAll('text')
-          .attr('x', _this.defaults.paddingXAxisLabels)
-          .style('text-anchor', 'middle')
-          .attr('y', _this.defaults.paddingYAxisLabels);
+      xAxis.selectAll('text')
+        .attr('x', _this.defaults.paddingXAxisLabels)
+        .style('text-anchor', 'middle')
+        .attr('y', _this.defaults.paddingYAxisLabels);
 
-        xAxis.selectAll('line')
-          .attr('x1', _this.defaults.paddingXAxisLabels)
-          .attr('x2', _this.defaults.paddingXAxisLabels);
+      xAxis.selectAll('line')
+        .attr('x1', _this.defaults.paddingXAxisLabels)
+        .attr('x2', _this.defaults.paddingXAxisLabels);
 
 
       // Y Axis
       var yAxis = this.svg.append('g')
         .attr('class', 'y axis')
-        .attr('transform', 'translate('+ (-_this.defaults.paddingAxisLabels) +
-          ','+ -_this.defaults.paddingAxisLabels + ')');
+        .attr('transform', 'translate(' + (-_this.defaults.paddingAxisLabels) +
+          ',' + -_this.defaults.paddingAxisLabels + ')');
 
       yAxis.append('g')
         .call(this.yAxis)
         .selectAll('text')
-          .attr('x', 0);
+        .attr('x', 0);
 
       // Custom domain
       this.svg.append('g')
         .attr('class', 'custom-domain-group')
-        .attr('transform', 'translate('+ _this.defaults.paddingXAxisLabels +', ' + this.cHeight +')')
+        .attr('transform', 'translate(' + _this.defaults.paddingXAxisLabels + ', ' + this.cHeight + ')')
         .append('line')
-          .attr('class', 'curstom-domain')
-          .attr('x1', -_this.defaults.paddingAxisLabels)
-          .attr('x2', (this.cWidth  + _this.defaults.paddingAxisLabels))
-          .attr('y1', 0)
-          .attr('y2', 0);
+        .attr('class', 'curstom-domain')
+        .attr('x1', -_this.defaults.paddingAxisLabels)
+        .attr('x2', (this.cWidth + _this.defaults.paddingAxisLabels))
+        .attr('y1', 0)
+        .attr('y2', 0);
     },
 
     /**
      * Draws the entire graph
      */
-    _drawGraph: function() {
+    _drawGraph: function () {
       this._drawSolidLine();
       this._drawDots();
     },
@@ -338,15 +339,15 @@ define([
     /**
      * Draws the solid line
      */
-    _drawSolidLine: function() {
+    _drawSolidLine: function () {
       var _this = this;
       var solidLineGroup = this.svg.append('g')
         .attr('class', 'line-group')
-        .attr('transform', 'translate('+ _this.defaults.paddingXAxisLabels +' ,'+ -this.defaults.paddingAxisLabels + ')');
+        .attr('transform', 'translate(' + _this.defaults.paddingXAxisLabels + ' ,' + -this.defaults.paddingAxisLabels + ')');
 
       this.linePath = d3.svg.line()
-        .x(function(d) { return _this.x(d.date); })
-        .y(function(d) { return _this.y(d.value); })
+        .x(function (d) { return _this.x(d.date); })
+        .y(function (d) { return _this.y(d.value); })
         .interpolate(this.defaults.interpolate);
 
       this.graphLine = solidLineGroup.append('path')
@@ -361,41 +362,41 @@ define([
     /**
      * Draws the dots
      */
-    _drawDots: function() {
+    _drawDots: function () {
       var _this = this;
       var dotsGroup = this.svg.append('g')
         .attr('class', 'dots-group')
-        .attr('transform', 'translate('+ _this.defaults.paddingXAxisLabels +', '+ -this.defaults.paddingAxisLabels + ')');
+        .attr('transform', 'translate(' + _this.defaults.paddingXAxisLabels + ', ' + -this.defaults.paddingAxisLabels + ')');
 
       dotsGroup.selectAll('.dot.monitoring')
         .data(this.monitoringData.values)
         .enter().append('circle')
-          .attr('class', 'dot monitoring')
-          .attr('r', _this.defaults.circleRadius)
-          .attr('cx', function(d) {
-            return _this.x(d.date)
-          })
-          .attr('cy', function(d) {
-            return _this.y(d.value)
-          });
+        .attr('class', 'dot monitoring')
+        .attr('r', _this.defaults.circleRadius)
+        .attr('cx', function (d) {
+          return _this.x(d.date);
+        })
+        .attr('cy', function (d) {
+          return _this.y(d.value);
+        });
 
       dotsGroup.selectAll('.dot.reference')
         .data(this.referenceData.values)
         .enter().append('circle')
-          .attr('class', 'dot reference')
-          .attr('r', _this.defaults.circleRadius)
-          .attr('cx', function(d) {
-            return _this.x(d.date)
-          })
-          .attr('cy', function(d) {
-            return _this.y(d.value)
-          });
+        .attr('class', 'dot reference')
+        .attr('r', _this.defaults.circleRadius)
+        .attr('cx', function (d) {
+          return _this.x(d.date);
+        })
+        .attr('cy', function (d) {
+          return _this.y(d.value);
+        });
     },
 
     /**
      *  Renders the chart after a resize
      */
-    _update: function() {
+    _update: function () {
       this.remove({
         keepEvents: true
       });
@@ -405,8 +406,8 @@ define([
     /**
      * Removes the SVG
      */
-    remove: function(params) {
-      if(this.svg) {
+    remove: function (params) {
+      if (this.svg) {
         var svgContainer = this.chartEl.querySelector('svg');
 
         if (params && !params.keepEvents) {
@@ -422,5 +423,4 @@ define([
   });
 
   return SummaryChart;
-
 });

@@ -1,17 +1,18 @@
 define([
+  'handlebars',
   'backbone',
   'underscore',
   'd3',
   'helpers/NumbersHelper',
   'text!countries/templates/report/provinces-top-chart.handlebars'
 ], function(
+  Handlebars,
   Backbone,
   _,
   d3,
   NumbersHelper,
   tpl
 ) {
-
   'use strict';
 
   var ProvincesTopChart = Backbone.View.extend({
@@ -109,7 +110,7 @@ define([
       this._setAxisScale();
       this._setDomain();
       this._drawGraph();
-     },
+    },
 
     /**
      * Sets the listeners for the component
@@ -137,7 +138,7 @@ define([
      */
     _setUpGraph: function() {
       this.chartEl = this.el.querySelector('#' + this.defaults.chartEl);
-      var el = this.chartEl
+      var el = this.chartEl;
       var margin = this.defaults.margin;
 
       el.innerHTML = '';
@@ -189,6 +190,7 @@ define([
           if (this.chartData[i]) {
             return this.chartData[i].year;
           }
+          return null;
         }.bind(this));
     },
 
@@ -231,7 +233,7 @@ define([
       var numLines = this.chartData.length;
       var rowOffset = this.defaults.rowHeight;
       var linesGroup = this.svg.append('g')
-        .attr('transform', 'translate(0, '+ this.defaults.rowHeight +')');
+        .attr('transform', 'translate(0, ' + this.defaults.rowHeight + ')');
 
       for (var x = 0; x < numLines; x++) {
         linesGroup.append('rect')
@@ -259,21 +261,19 @@ define([
             .attr('x', 0)
             .style('text-anchor', 'start')
             .text(label.name);
-        } else {
-          if (this.defaults.customLabel && label.slug === 'loss') {
-            var customLabel = group.append('text')
-              .attr('class', 'label')
-              .attr('y', this.defaults.rowHeight / 2)
-              .attr('x', margin - this.defaults.paddingXAxisLabels);
+        } else if (this.defaults.customLabel && label.slug === 'loss') {
+          var customLabel = group.append('text')
+            .attr('class', 'label')
+            .attr('y', this.defaults.rowHeight / 2)
+            .attr('x', margin - this.defaults.paddingXAxisLabels);
 
-            this._setCustomLabel(this.defaults.customLabel, customLabel);
-          } else {
-            group.append('text')
-              .attr('class', 'label')
-              .attr('y', this.defaults.rowHeight / 2)
-              .attr('x', margin - this.defaults.paddingXAxisLabels)
-              .text(label.name);
-          }
+          this._setCustomLabel(this.defaults.customLabel, customLabel);
+        } else {
+          group.append('text')
+            .attr('class', 'label')
+            .attr('y', this.defaults.rowHeight / 2)
+            .attr('x', margin - this.defaults.paddingXAxisLabels)
+            .text(label.name);
         }
         marginOffset += margin;
       }.bind(this));
@@ -307,10 +307,8 @@ define([
 
     _drawProvinces: function() {
       var provinceGroup = this.svg.select('.province');
-      var provinceLabel = _.findWhere(this.defaults.labels, { slug: 'province' });
-      var provinceLabelWidth = (provinceLabel.width * this.cWidthGrid) / 100;
       var provincesContent = this.svg.append('g')
-        .attr('transform', 'translate('+
+        .attr('transform', 'translate(' +
           (d3.transform(provinceGroup.attr('transform')).translate[0]) + ', ' +
           this.defaults.rowHeight + ')');
 
@@ -337,11 +335,11 @@ define([
       var lossLabel = _.findWhere(this.defaults.labels, { slug: 'loss' });
       var lossLabelWidth = (lossLabel.width * this.cWidthGrid) / 100;
       var lossContent = this.svg.append('g')
-        .attr('transform', 'translate('+
+        .attr('transform', 'translate(' +
           (d3.transform(lossGroup.attr('transform')).translate[0]) + ', ' +
           this.defaults.rowHeight + ')');
 
-      var lossGroup = lossContent.selectAll('g')
+      lossGroup = lossContent.selectAll('g')
         .data(this.chartData)
         .enter().append('g')
         .attr('transform', function(d, i) {
@@ -354,7 +352,7 @@ define([
           return NumbersHelper.addNumberDecimals(Math.round(d.reference_avg));
         })
         .attr('dx', function() {
-          return lossLabelWidth - this.defaults.paddingXAxisLabels
+          return lossLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
         .attr('dy', function() {
           return (this.defaults.rowHeight / 2) + this.defaults.barHeight + (this.defaults.barHeight / 2);
@@ -366,7 +364,7 @@ define([
           return NumbersHelper.addNumberDecimals(Math.round(d.monitor_avg));
         })
         .attr('dx', function() {
-          return lossLabelWidth - this.defaults.paddingXAxisLabels
+          return lossLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
         .attr('dy', function() {
           return (this.defaults.rowHeight / 2) + (this.defaults.barHeight * 5);
@@ -378,11 +376,11 @@ define([
       var deviationLabel = _.findWhere(this.defaults.labels, { slug: 'deviation' });
       var deviationLabelWidth = (deviationLabel.width * this.cWidthGrid) / 100;
       var deviationContent = this.svg.append('g')
-        .attr('transform', 'translate('+
+        .attr('transform', 'translate(' +
           d3.transform(deviationGroup.attr('transform')).translate[0] + ', ' +
           (this.defaults.rowHeight) + ')');
 
-      var deviationGroup = deviationContent.selectAll('g')
+      deviationGroup = deviationContent.selectAll('g')
         .data(this.chartData)
         .enter().append('g')
         .attr('transform', function(d, i) {
@@ -401,7 +399,7 @@ define([
           return displayValue + '%';
         })
         .attr('dx', function() {
-          return deviationLabelWidth - this.defaults.paddingXAxisLabels
+          return deviationLabelWidth - this.defaults.paddingXAxisLabels;
         }.bind(this))
         .attr('dy', function() {
           return (this.defaults.rowHeight / 2) + (this.defaults.barHeight * 5);
@@ -414,7 +412,7 @@ define([
         this.defaults.barMargin;
 
       var barsContent = this.svg.append('g')
-        .attr('transform', 'translate('+ leftOffset +', ' + this.defaults.rowHeight + ')');
+        .attr('transform', 'translate(' + leftOffset + ', ' + this.defaults.rowHeight + ')');
 
       var barGroup = barsContent.selectAll('g')
         .data(this.chartData)
@@ -440,7 +438,7 @@ define([
           return this.x(d.monitor_avg);
         }.bind(this))
         .attr('y', function() {
-          return (this.defaults.rowHeight / 2) + (this.defaults.barHeight / 2) + (this.defaults.barHeight * 2) ;
+          return (this.defaults.rowHeight / 2) + (this.defaults.barHeight / 2) + (this.defaults.barHeight * 2);
         }.bind(this));
     },
 
@@ -458,7 +456,7 @@ define([
      * Removes the SVG
      */
     remove: function(params) {
-      if(this.svg) {
+      if (this.svg) {
         var svgContainer = this.chartEl.querySelector('svg');
 
         if (params && !params.keepEvents) {
@@ -474,5 +472,4 @@ define([
   });
 
   return ProvincesTopChart;
-
 });

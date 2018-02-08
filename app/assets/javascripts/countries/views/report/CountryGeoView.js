@@ -1,9 +1,11 @@
 define([
+  'handlebars',
   'backbone',
+  'underscore',
   'helpers/CountryHelper',
   'helpers/NumbersHelper',
   'text!countries/templates/report/country-geo.handlebars'
-], function(Backbone, CountryHelper, NumbersHelper, tpl) {
+], function(Handlebars, Backbone, _, CountryHelper, NumbersHelper, tpl) {
   'use strict';
 
   var CountryReportView = Backbone.View.extend({
@@ -27,18 +29,18 @@ define([
 
     init: function() {
       this._getData()
-        .then(function(data){
+        .then(function(data) {
           var topojson = null;
           if (data.rows.length > 0) {
             topojson = JSON.parse(data.rows[0].topojson);
           }
           this.topoJSON = topojson;
           this.render();
-        }.bind(this))
+        }.bind(this));
     },
 
     _getData: function() {
-      return $.getJSON(window.gfw.config.CDB_API_HOST + this.defaults.query + '\'' +this.iso + '\'');
+      return $.getJSON(window.gfw.config.CDB_API_HOST + this.defaults.query + '\'' + this.iso + '\'');
     },
 
     render: function() {
@@ -63,5 +65,4 @@ define([
   });
 
   return CountryReportView;
-
 });
