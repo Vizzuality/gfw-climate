@@ -1,5 +1,6 @@
 define([
   'backbone',
+  'underscore',
   'handlebars',
   'widgets/presenters/TabPresenter',
   'text!widgets/templates/tab.handlebars',
@@ -10,7 +11,7 @@ define([
   'widgets/indicators/pie/PieChartIndicator',
   'widgets/indicators/number/NumberChartIndicator',
   'widgets/indicators/list/ListChartIndicator',
-], function(Backbone, Handlebars, TabPresenter, tpl, averageTpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator, ListChartIndicator) {
+], function(Backbone, _, Handlebars, TabPresenter, tpl, averageTpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator, ListChartIndicator) {
 
   'use strict';
 
@@ -132,10 +133,11 @@ define([
     // SETTERS: indicator
     setIndicator: function() {
       var t = this.presenter.status.get('tabs');
+      var indicators;
       if (t && t.type) {
         switch(t.type) {
           case 'line':
-            var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
+            indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
             if (!!indicators.length) {
               this.indicator = new MultiLineChartIndicator({
                 el: this.$graphContainer,
@@ -163,7 +165,7 @@ define([
             break;
 
           case 'list':
-            var indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
+            indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
             if (!!indicators.length) {
               this.indicator = new ListChartIndicator({
                 el: this.$graphContainer,
@@ -182,7 +184,7 @@ define([
             break;
 
           case 'pie':
-            var indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
+            indicators = _.where(this.presenter.model.get('indicators'),{ section: t.section});
             if (!!indicators.length) {
               this.indicator = new PieChartIndicator({
                 el: this.$graphContainer,
@@ -204,7 +206,7 @@ define([
             break;
 
           case 'number':
-            var indicators = _.where(this.presenter.model.get('indicators'),{ tab: t.position});
+            indicators = _.where(this.presenter.model.get('indicators'),{ tab: t.position});
             if (!!indicators.length) {
               this.indicator = new NumberChartIndicator({
                 el: this.$graphContainer,
@@ -223,7 +225,13 @@ define([
             }
             break;
 
-        };
+          case 'stacked':
+            indicators = _.where(this.presenter.model.get('indicators'),{ tab: t.position});
+            console.log('TODO: create stacked indicators');
+            break;
+          default:
+            break;
+        }
       }
     },
 

@@ -6,6 +6,8 @@
     ga: true
     $: true
   rules:
+    one-var: 0
+    new-cap: 0
     func-names: 0
     valid-jsdoc: 0
     no-multi-str: 0
