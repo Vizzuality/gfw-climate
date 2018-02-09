@@ -13,9 +13,9 @@ define(
 
     var APIURLS = {
       getContinentsList:
-        '/query?sql=SELECT continent FROM {continentsDataset} where climate=true',
+        '/query?sql=SELECT continent, iso_code FROM {continentsDataset} where climate=true',
       getContinentsListGeo:
-        '/query?sql=SELECT topojson, continent FROM {continentsDataset} where climate=true'
+        '/query?sql=SELECT topojson, continent, iso_code FROM {continentsDataset} where climate=true'
     };
 
     var ContinentsService = Class.extend({
@@ -52,7 +52,7 @@ define(
                   var dataParsed = data.map(function(continent) {
                     return {
                       name: continent.continent,
-                      iso: continent.continent.split(' ').join('-'),
+                      iso: continent.iso_code,
                       topojson: continent.topojson
                     };
                   });

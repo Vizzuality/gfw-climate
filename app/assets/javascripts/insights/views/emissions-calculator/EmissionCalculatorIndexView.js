@@ -98,9 +98,13 @@ define(
       },
 
       onContinentsData(continentsData) {
+        var continents = _.map(continentsData, function(c) {
+          c.href = '/countries/' + c.iso + '/report';
+          return c;
+        });
         this.continentsView = new GeoListView({
           el: this.continentsEl,
-          data: continentsData,
+          data: continents,
           placeholder: 'Type continent name'
         });
         this.continentsEl.removeClass('is-loading');
