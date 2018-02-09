@@ -11,7 +11,8 @@ define([
   'widgets/indicators/pie/PieChartIndicator',
   'widgets/indicators/number/NumberChartIndicator',
   'widgets/indicators/list/ListChartIndicator',
-], function(Backbone, _, Handlebars, TabPresenter, tpl, averageTpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator, ListChartIndicator) {
+  'widgets/indicators/stacked/StackedChartIndicator',
+], function(Backbone, _, Handlebars, TabPresenter, tpl, averageTpl, LineChartIndicator, MultiLineChartIndicator, MapIndicator, PieChartIndicator, NumberChartIndicator, ListChartIndicator, StackedChartIndicator) {
 
   'use strict';
 
@@ -226,8 +227,24 @@ define([
             break;
 
           case 'stacked':
-            indicators = _.where(this.presenter.model.get('indicators'),{ tab: t.position});
-            console.log('TODO: create stacked indicators');
+            indicators = _.where(this.presenter.model.get('indicators'), { tab: t.position});
+            if (!!indicators.length) {
+              this.indicator = new StackedChartIndicator({
+                el: this.$graphContainer,
+                tab: this,
+                className: 'is-stacked',
+                model: {
+                  indicators: indicators,
+                  id: (!!t.unit) ? _.findWhere(indicators, { unit: t.unit }).id : indicators[0].id,
+                  template: t.template,
+                  type: 'stacked',
+                },
+                data: {
+                  location: this.presenter.model.get('location'),
+                  thresh: t.thresh,
+                }
+              });
+            }
             break;
           default:
             break;
