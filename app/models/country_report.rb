@@ -25,12 +25,45 @@ class CountryReport
   BOUNDARIES = [ADMIN_BOUNDARY, PRIMARY_FOREST_BOUNDARY,
                 INSIDE_PLANTATIONS_BOUNDARY]
 
+  CONTINENTS = {
+    AF: {
+      name: 'Africa',
+      countries: [
+        'DZA', 'AGO', 'SHN', 'BEN', 'BWA', 'BFA', 'BDI', 'CMR', 'CPV',
+        'CAF', 'TCD', 'COM', 'COG', 'COD', 'DJI', 'EGY', 'GNQ', 'ERI',
+        'ETH', 'GAB', 'GMB', 'GHA', 'GIN', 'GNB', 'CIV', 'KEN', 'LSO',
+        'LBR', 'LBY', 'MDG', 'MWI', 'MLI', 'MRT', 'MUS', 'MYT', 'MAR',
+        'MOZ', 'NAM', 'NER', 'NGA', 'STP', 'REU', 'RWA', 'STP', 'SEN',
+        'SYC', 'SLE', 'SOM', 'ZAF', 'SSD', 'SHN', 'SDN', 'SWZ', 'TZA',
+        'TGO', 'TUN', 'UGA', 'COD', 'ZMB', 'TZA', 'ZWE'
+      ]
+    },
+    AS: {
+      name: 'Asia',
+      countries: [
+        'AFG', 'ARM', 'AZE', 'BHR', 'BGD', 'BTN', 'BRN', 'KHM', 'CHN',
+        'CXR', 'CCK', 'IOT', 'GEO', 'HKG', 'IND', 'IDN', 'IRN', 'IRQ',
+        'ISR', 'JPN', 'JOR', 'KAZ', 'KWT', 'KGZ', 'LAO', 'LBN', 'MAC',
+        'MYS', 'MDV', 'MNG', 'MMR', 'NPL', 'PRK', 'OMN', 'PAK', 'PSE',
+        'PHL', 'QAT', 'SAU', 'SGP', 'KOR', 'LKA', 'SYR', 'TWN', 'TJK',
+        'THA', 'TUR', 'TKM', 'ARE', 'UZB', 'VNM', 'YEM'
+      ]
+    },
+    SA: {
+      name: 'South America',
+      countries: [
+        'ARG', 'BOL', 'BRA', 'CHL', 'COL', 'ECU', 'FLK', 'GUF', 'GUF',
+        'GUY', 'PRY', 'PER', 'SUR', 'URY', 'VEN'
+      ]
+    }
+  }
+
   def base_path
     "#{ENV["CDB_API_HOST"]}?q="
   end
 
   def initialize options
-    @iso = options[:iso] || "BRA"
+    @iso = options[:iso] || 'BRA'
     @reference_start_year = options[:reference_start_year].try(:to_i) || 2001
     @reference_end_year = options[:reference_end_year].try(:to_i) || 2010
     @monitor_start_year = options[:monitor_start_year].try(:to_i) || 2011
@@ -47,8 +80,12 @@ class CountryReport
 
   def fetch
     url = base_path
-    url += select_query
-    url += where_clause
+    if @iso.length == 2 && CONTINENTS.keys.include?(@iso.to_sym)
+      url += continents_query
+    else
+      url += select_query
+      url += where_clauseA
+    end
     url += ' ORDER BY year'
 
     puts url
@@ -252,6 +289,30 @@ class CountryReport
     response[:belowground] = below
     response[:total] = total
     response
+  end
+
+  def continents_query
+    continent = CONTINENTS[@iso.to_sym]
+    countries = continent[:countries]
+
+    <<-SQL
+      SELECT indicator_id, -1000 AS cartodb_id,
+      '#{@iso}' AS iso, NULL AS sub_nat_id, values.boundary, values.boundary_id,
+      values.thresh, '#{continent[:name]}' AS country, values.year,
+      SUM(values.value) AS value, NULL AS province,
+      boundaries.boundary_name
+      FROM #{CDB_INDICATORS_VALUES_TABLE} AS values
+      LEFT JOIN #{CDB_BOUNDARIES_TABLE} AS boundaries
+      ON values.boundary_id = boundaries.cartodb_id
+      WHERE values.iso IN (#{countries.map{|t| "'#{t}'"}.join(",")})
+        AND indicator_id IN (#{INDICATORS.join(",")})
+        AND thresh IN (#{@thresh}, 0)
+        AND boundary IN (#{BOUNDARIES.map{|t| "'#{t}'"}.join(",")})
+        AND ((values.year >= #{@reference_start_year}
+        AND values.year <= #{@monitor_end_year})
+        OR values.year = 0)
+      GROUP BY indicator_id, boundary, boundary_id, thresh, year, boundary_name
+    SQL
   end
 
   def select_query
