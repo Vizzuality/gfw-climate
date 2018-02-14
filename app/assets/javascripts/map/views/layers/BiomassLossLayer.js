@@ -51,9 +51,9 @@ define(
       },
 
       /**
-     * Filters the canvas imgdata.
-     * @override
-     */
+       * Filters the canvas imgdata.
+       * @override
+       */
       filterCanvasImgdata: function(imgdata, w, h, z) {
         'use asm';
         // We'll force the use of a 32bit integer wit `value |0`
@@ -124,10 +124,10 @@ define(
       },
 
       /**
-     * Used by UMDLoassLayerPresenter to set the dates for the tile.
-     *
-     * @param {Array} date 2D array of moment dates [begin, end]
-     */
+       * Used by UMDLoassLayerPresenter to set the dates for the tile.
+       *
+       * @param {Array} date 2D array of moment dates [begin, end]
+       */
       setCurrentDate: function(date) {
         this.currentDate = date;
         this.updateTiles();

@@ -6,7 +6,7 @@ define(
     'underscore',
     'jquery',
     'data-download/views/DownloadFilterCardView',
-    'data-download/views/SwitchView',
+    'views/shared/SwitchView',
     'helpers/utilsHelper',
     'text!data-download/templates/download-filters.handlebars'
   ],
@@ -60,20 +60,27 @@ define(
         }
       ],
       mandatorys: ['country_codes', 'widget_ids'],
-      validationMsg: 'Please select, at least, a country, an indicator and a year',
+      validationMsg:
+        'Please select, at least, a country, an indicator and a year',
       tresh: [10, 15, 20, 25, 30],
       switchs: [
         {
           el: 'outputTypeSwitch',
           param: 'pivot',
           label: 'Output Type',
-          options: [{ label: 'Table', value: 0 }, { label: 'Pivot', value: 1 }]
+          options: [
+            { label: 'Table', value: 0, selected: true },
+            { label: 'Pivot', value: 1 }
+          ]
         },
         {
           el: 'filerSwitch',
           param: 'json',
           label: 'File',
-          options: [{ label: '.csv', value: 0 }, { label: '.json', value: 1 }]
+          options: [
+            { label: '.csv', value: 0, selected: true },
+            { label: '.json', value: 1 }
+          ]
         }
       ],
 

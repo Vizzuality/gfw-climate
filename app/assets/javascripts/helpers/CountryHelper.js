@@ -1,37 +1,56 @@
-define(['d3', 'topojson'], function(d3, topojson) {
+define(['d3', 'topojson', 'underscore'], function(d3, topojson, _) {
   var CountryHelper = {
-    draw: function(topology, c, iso, options) {
-      var country = topojson.feature(topology, topology.objects[c]);
-      var width = options.width || 300;
-      var height = options.height || 300;
-      var el = '#' + iso;
-
-      if ($('body').hasClass('is-compare-page')) {
-        width = 150;
-        height = 150;
+    draw: function(topology, el, params) {
+      if (!topology) {
+        console.warn('topology is necessary');
+        return null;
+      } else if (!el) {
+        console.warn('el param is necessary');
+        return null;
       }
+      var defaults = {
+        index: 0,
+        width: 300,
+        height: 300,
+        alerts: false,
+        bounds: false
+      };
+      var options = _.extend({}, defaults, params);
 
-      if (!options.alerts) {
-        width = 150;
-        height = 150;
-        el = el + ' a';
-      }
+      var country = topojson.feature(topology, topology.objects[options.index]);
+
+      // if ($('body').hasClass('is-compare-page')) {
+      //   var width = 150, height = 150;
+      // }
+
+      // if (!options.alerts) {
+      //   width = 150;
+      //   height = 150;
+      //   el = el + ' a';
+      // }
 
       var svg = d3
         .select(el)
         .append('svg:svg')
-        .attr('width', width)
-        .attr('height', height);
+        .attr('width', options.width)
+        .attr('height', options.height);
 
-      var projection = d3.geo.mercator().scale(1).translate([0, 0]);
+      var projection = d3.geo
+        .mercator()
+        .scale(1)
+        .translate([0, 0]);
       var path = d3.geo.path().projection(projection);
 
-      var b = path.bounds((options && options.bounds) || country);
+      var b = path.bounds(options.bounds || country);
       var s =
-        1 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
+        1 /
+        Math.max(
+          (b[1][0] - b[0][0]) / options.width,
+          (b[1][1] - b[0][1]) / options.height
+        );
       var t = [
-        (width - s * (b[1][0] + b[0][0])) / 2,
-        (height - s * (b[1][1] + b[0][1])) / 2
+        (options.width - s * (b[1][0] + b[0][0])) / 2,
+        (options.height - s * (b[1][1] + b[0][1])) / 2
       ];
 
       projection.scale(s).translate(t);
@@ -40,12 +59,9 @@ define(['d3', 'topojson'], function(d3, topojson) {
         .append('svg:path')
         .data([country])
         .attr('d', path)
-        .attr(
-          'class',
-          options && options.bounds ? 'country_alt' : 'country_main'
-        );
+        .attr('class', options.bounds ? 'country_alt' : 'country_main');
 
-      if (options && options.alerts) {
+      if (options.alerts) {
         var forest = [];
 
         for (var i = 1; i < Object.keys(topology.objects).length; i++) {

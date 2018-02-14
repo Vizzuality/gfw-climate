@@ -4,20 +4,18 @@ define([
   'urijs/URI',
   'utils',
   'countries/services/PlaceService',
-  'countries/views/CountryIndexView',
-  'countries/views/CountryShowView',
-  'countries/views/CountryPantropicalView',
-  'countries/views/CountryReportView'
+  'insights/views/glad-alerts/InsightsGladAlertsView',
+  'insights/views/emissions-calculator/EmissionCalculatorIndexView',
+  'insights/views/emissions-calculator/EmissionCalculatorShowView'
 ], function(
   Backbone,
   mps,
   URI,
   utils,
   PlaceService,
-  CountryIndexView,
-  CountryShowView,
-  CountryPantropicalView,
-  CountryReportView
+  InsightsGladAlertsView,
+  EmissionCalculatorIndexView,
+  EmissionCalculatorShowView
 ) {
 
   'use strict';
@@ -27,20 +25,21 @@ define([
     params: new (Backbone.Model.extend()),
 
     routes: {
-      'countries'                           : '_initIndex',
-      'pantropical'                         : '_initPantropical',
-      'countries/:country/report'           : '_initReport',
-      'countries(/)(:country)(/)(:view)'    : '_initShow'
+      'insights/glad-alerts(/:iso)': '_initGladAlerts',
+      'insights/emissions-calculator': '_initEmissionsCalculatorIndex',
+      'insights/emissions-calculator/:id': '_initEmissionsCalculatorShow',
     },
 
     initialize: function() {
       this.placeService = new PlaceService(this);
+
       this.setSubscriptions();
       this.setEvents();
     },
 
     setSubscriptions: function() {
       mps.subscribe('Router/change', this.setParams.bind(this));
+      mps.subscribe('Router/goInsight', this.updateInsight.bind(this));
     },
 
     setEvents: function() {
@@ -74,6 +73,13 @@ define([
     },
 
     /**
+     * Update the country insight
+     */
+    updateInsight: function(iso) {
+      this.navigate('/insights/' + this.insight + '/' + iso, { trigger: false });
+    },
+
+    /**
      * Transform URL string params to object
      * @param  {String} paramsQuery
      * @return {Object}
@@ -101,43 +107,26 @@ define([
       return uri.search();
     },
 
-    _initIndex: function() {
-      new CountryIndexView();
-    },
+    _initGladAlerts: function(iso) {
+      this.iso = iso;
+      this.insight = 'glad-alerts';
 
-    _initShow: function(country, view) {
-
-      new CountryShowView();
-
-      var params = _.extend({
-        country: country,
-        view: view
-      }, _.parseUrl());
-
-      this.placeService.initPlace(params);
-    },
-
-    _initReport: function(country) {
-      var uri = new URI();
-      var newParams = uri.search(true);
-
-      this.setParams(newParams);
-
-      new CountryReportView({
-        iso: country,
-        params: this.getParams() || null
+      new InsightsGladAlertsView({
+        country: this.iso
       });
     },
 
-    _initPantropical: function() {
-      ga('send', 'event', 'pantropical','Choose visualisation','All countries');
-      new CountryPantropicalView();
+    _initEmissionsCalculatorIndex: function() {
+      this.insight = 'emissions-calculator';
+      new EmissionCalculatorIndexView();
     },
 
-    // updateUrl: function() {
-    //   var current= Backbone.history.getFragment();
-    //   this.navigate(current + '?thresh=30');
-    // }
+    _initEmissionsCalculatorShow: function(id) {
+      this.insight = 'emissions-calculator';
+      new EmissionCalculatorShowView({
+        id: id
+      });
+    }
   });
 
   return Router;

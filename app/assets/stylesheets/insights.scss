@@ -13,40 +13,14 @@
 @import "grid";
 @import "modules/notifications";
 
-
 // Modules
 @import "modules/modal";
 @import "modules/modal_new";
-@import "modules/modal_download_widget";
 @import "modules/shared";
 @import "modules/buttons";
 @import "modules/icons";
-@import "modules/slick";
-@import "modules/countries/header-profile";
-@import "modules/countries/header-stats";
-@import "modules/countries/header-show";
-@import "modules/countries/indicators-modal";
-@import "modules/countries/show";
-@import 'modules/countries/report';
-@import "modules/countries/no-indicators";
-@import 'modules/countries/tabs.scss';
-@import 'modules/countries/charts/line_chart';
 @import "modules/select";
 @import "modules/gridgraphs";
-@import "modules/slider";
-@import "modules/shared/geo-list";
-
-// Report modules
-@import "modules/countries/report/year-selector";
-@import "modules/countries/report/table-list";
-@import "modules/countries/report/summary-chart";
-@import "modules/countries/report/historical-trend-chart";
-@import "modules/countries/report/pie-chart";
-@import "modules/countries/report/provinces-top-chart";
-@import "modules/countries/report/geo-chart";
-
-// Grids
-@import "modules/countries/grid";
 
 // Widgets and charts
 @import "modules/widgets/*";
@@ -66,6 +40,10 @@
 @import "modules/common/m-toolbar";
 @import "modules/common/m-grid-button-box";
 @import "modules/common/m-modal-fields";
+
+// Modules
+@import "modules/shared/geo-list";
+@import "modules/shared/switch";
 
 // Layouts
 @import "layouts/countries";

@@ -5,7 +5,7 @@
   <div class="c-switch">
     <ul class="switcher-track">
       {{#each options}}
-        <li class="switcher-item js-option {{#if @first}}is-active{{/if}}" data-value="{{this.value}}">
+        <li class="switcher-item js-option {{#if this.selected}}is-active{{/if}}" data-value="{{this.value}}">
           {{this.label}}
         </li>
       {{/each}}
