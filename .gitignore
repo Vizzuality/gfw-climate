@@ -31,3 +31,6 @@ vendor/assets/bower_components
 .bower-tmp/*
 
 dump.rdb
+
+# Build files
+public/assets/*
