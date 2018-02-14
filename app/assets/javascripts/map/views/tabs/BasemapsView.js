@@ -75,11 +75,9 @@ define([
     selectMaptype: function(maptype) {
       // if (maptype == 'positron' || maptype == 'dark') {
       //   console.log(this.cartoAttribution);
-      //   // debugger;
       //   var self = this;
       //   setTimeout(_.bind(function() {
       //     $('#map').find('.gmnoprint span').ready(function(){
-      //       debugger
       //       $(this).addClass('showimportant').html(self.cartoAttribution)
       //     });
       //   }, self ), 2000);

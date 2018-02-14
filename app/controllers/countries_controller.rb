@@ -1,6 +1,6 @@
 class CountriesController < ApplicationController
 
-  before_action :set_country, only: [:show, :report]
+  before_action :set_country, only: [:show]
 
   def index
     @title = 'Country data'
@@ -18,9 +18,6 @@ class CountriesController < ApplicationController
   end
 
   def report
-    @name = 'Country report: ' + @country['name']
-    @country_name = @country['name']
-    @iso  = @country['iso']
   end
 
   private

@@ -9,6 +9,8 @@
     func-names: 0
     valid-jsdoc: 0
     no-multi-str: 0
+    no-loop-func: 1
+    guard-for-in: 1
     space-before-function-paren: 0
     indent: [2, 2, {"SwitchCase": 1}]
 
