@@ -9,6 +9,7 @@ define(
     '_string',
     'helpers/NumbersHelper',
     'countries/services/ReportService',
+    'services/ContinentService',
     'countries/views/report/SummaryChartView',
     'countries/views/report/HistoricalTrendChartView',
     'countries/views/report/PieChartView',
@@ -26,6 +27,7 @@ define(
     _string,
     NumbersHelper,
     ReportService,
+    ContinentService,
     SummaryChartView,
     HistoricalTrendChartView,
     PieChartView,
@@ -44,6 +46,8 @@ define(
       template: Handlebars.compile(tpl),
 
       status: new (Backbone.Model.extend())(),
+      continents: ['AF', 'AS', 'SA'],
+      isCountry: true,
 
       defaults: {
         settings: {
@@ -72,6 +76,9 @@ define(
         this.indicatorsList = this.options.indicators;
         this.defaultSettings = this.options.settings;
         this.iso = this.options.iso;
+        if (this.continents.indexOf(this.iso) > -1) {
+          this.isCountry = false;
+        }
 
         if (_.isEmpty(this.options.params)) {
           this._setDefaultParams();
@@ -265,33 +272,50 @@ define(
           data: this.data.forest_loss
         });
 
-        this.forestLossByProvinceChart = new ProvincesTopChartView({
-          el: '#forest-loss-province-chart',
-          data:
-            (this.data.provinces && this.data.provinces.forest_loss.top_five) ||
-            {}
-        });
-
-        this.co2EmissionsByProvinceChart = new ProvincesTopChartView({
-          el: '#co2-emissions-province-chart',
-          data:
-            (this.data.provinces && this.data.provinces.emissions.top_five) ||
-            {},
-          customLabel: 'Mt CO2/yr'
-        });
-
         this.forestRelatedEmissionsChart = new HistoricalTrendChartView({
           el: '#forest-related-emissions-chart',
           data: this.data.emissions || {},
           customLabel: 'Emissions (Mt CO2/yr)'
         });
 
-        this.countryGeo = new CountryGeoView({
-          el: '#report-country-geo',
-          iso: this.iso,
-          country: this.data.country,
-          ha: this.data.area
-        });
+        if (this.isCountry) {
+          this.forestLossByProvinceChart = new ProvincesTopChartView({
+            el: '#forest-loss-province-chart',
+            data:
+              (this.data.provinces &&
+                this.data.provinces.forest_loss.top_five) ||
+              {}
+          });
+
+          this.co2EmissionsByProvinceChart = new ProvincesTopChartView({
+            el: '#co2-emissions-province-chart',
+            data:
+              (this.data.provinces && this.data.provinces.emissions.top_five) ||
+              {},
+            customLabel: 'Mt CO2/yr'
+          });
+
+          this.countryGeo = new CountryGeoView({
+            el: '#report-country-geo',
+            iso: this.iso,
+            country: this.data.country,
+            ha: this.data.area
+          });
+        } else {
+          ContinentService.getContinents({ geo: true }).then(
+            function(continents) {
+              const topojson = _.findWhere(continents, { iso: this.iso })
+                .topojson;
+              this.countryGeo = new CountryGeoView({
+                el: '#report-country-geo',
+                iso: this.iso,
+                country: this.data.country,
+                ha: this.data.area,
+                topojson: topojson
+              });
+            }.bind(this)
+          );
+        }
       },
 
       _listenModules: function() {

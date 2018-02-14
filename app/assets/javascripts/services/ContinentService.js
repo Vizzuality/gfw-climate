@@ -13,9 +13,9 @@ define(
 
     var APIURLS = {
       getContinentsList:
-        '/query?sql=SELECT continent, iso_code FROM {continentsDataset} where climate=true',
+        '/query?sql=SELECT continent, iso_code FROM {continentsDataset} where climate=true ORDER BY continent ASC',
       getContinentsListGeo:
-        '/query?sql=SELECT topojson, continent, iso_code FROM {continentsDataset} where climate=true'
+        '/query?sql=SELECT topojson, continent, iso_code FROM {continentsDataset} where climate=true ORDER BY continent ASC'
     };
 
     var ContinentsService = Class.extend({

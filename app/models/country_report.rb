@@ -84,7 +84,7 @@ class CountryReport
       url += continents_query
     else
       url += select_query
-      url += where_clauseA
+      url += where_clause
     end
     url += ' ORDER BY year'
 
