@@ -25,36 +25,46 @@ class CountryReport
   BOUNDARIES = [ADMIN_BOUNDARY, PRIMARY_FOREST_BOUNDARY,
                 INSIDE_PLANTATIONS_BOUNDARY]
 
+  AF_COUNTRIES = [
+    'DZA', 'AGO', 'SHN', 'BEN', 'BWA', 'BFA', 'BDI', 'CMR', 'CPV',
+    'CAF', 'TCD', 'COM', 'COG', 'COD', 'DJI', 'EGY', 'GNQ', 'ERI',
+    'ETH', 'GAB', 'GMB', 'GHA', 'GIN', 'GNB', 'CIV', 'KEN', 'LSO',
+    'LBR', 'LBY', 'MDG', 'MWI', 'MLI', 'MRT', 'MUS', 'MYT', 'MAR',
+    'MOZ', 'NAM', 'NER', 'NGA', 'STP', 'REU', 'RWA', 'STP', 'SEN',
+    'SYC', 'SLE', 'SOM', 'ZAF', 'SSD', 'SHN', 'SDN', 'SWZ', 'TZA',
+    'TGO', 'TUN', 'UGA', 'COD', 'ZMB', 'TZA', 'ZWE'
+  ]
+
+  AS_COUNTRIES = [
+    'AFG', 'ARM', 'AZE', 'BHR', 'BGD', 'BTN', 'BRN', 'KHM', 'CHN',
+    'CXR', 'CCK', 'IOT', 'GEO', 'HKG', 'IND', 'IDN', 'IRN', 'IRQ',
+    'ISR', 'JPN', 'JOR', 'KAZ', 'KWT', 'KGZ', 'LAO', 'LBN', 'MAC',
+    'MYS', 'MDV', 'MNG', 'MMR', 'NPL', 'PRK', 'OMN', 'PAK', 'PSE',
+    'PHL', 'QAT', 'SAU', 'SGP', 'KOR', 'LKA', 'SYR', 'TWN', 'TJK',
+    'THA', 'TUR', 'TKM', 'ARE', 'UZB', 'VNM', 'YEM'
+  ]
+
+  SA_COUNTRIES = [
+    'ARG', 'BOL', 'BRA', 'CHL', 'COL', 'ECU', 'FLK', 'GUF', 'GUF',
+    'GUY', 'PRY', 'PER', 'SUR', 'URY', 'VEN'
+  ]
+
   CONTINENTS = {
     AF: {
       name: 'Africa',
-      countries: [
-        'DZA', 'AGO', 'SHN', 'BEN', 'BWA', 'BFA', 'BDI', 'CMR', 'CPV',
-        'CAF', 'TCD', 'COM', 'COG', 'COD', 'DJI', 'EGY', 'GNQ', 'ERI',
-        'ETH', 'GAB', 'GMB', 'GHA', 'GIN', 'GNB', 'CIV', 'KEN', 'LSO',
-        'LBR', 'LBY', 'MDG', 'MWI', 'MLI', 'MRT', 'MUS', 'MYT', 'MAR',
-        'MOZ', 'NAM', 'NER', 'NGA', 'STP', 'REU', 'RWA', 'STP', 'SEN',
-        'SYC', 'SLE', 'SOM', 'ZAF', 'SSD', 'SHN', 'SDN', 'SWZ', 'TZA',
-        'TGO', 'TUN', 'UGA', 'COD', 'ZMB', 'TZA', 'ZWE'
-      ]
+      countries: AF_COUNTRIES
     },
     AS: {
       name: 'Asia',
-      countries: [
-        'AFG', 'ARM', 'AZE', 'BHR', 'BGD', 'BTN', 'BRN', 'KHM', 'CHN',
-        'CXR', 'CCK', 'IOT', 'GEO', 'HKG', 'IND', 'IDN', 'IRN', 'IRQ',
-        'ISR', 'JPN', 'JOR', 'KAZ', 'KWT', 'KGZ', 'LAO', 'LBN', 'MAC',
-        'MYS', 'MDV', 'MNG', 'MMR', 'NPL', 'PRK', 'OMN', 'PAK', 'PSE',
-        'PHL', 'QAT', 'SAU', 'SGP', 'KOR', 'LKA', 'SYR', 'TWN', 'TJK',
-        'THA', 'TUR', 'TKM', 'ARE', 'UZB', 'VNM', 'YEM'
-      ]
+      countries: AS_COUNTRIES
     },
     SA: {
       name: 'South America',
-      countries: [
-        'ARG', 'BOL', 'BRA', 'CHL', 'COL', 'ECU', 'FLK', 'GUF', 'GUF',
-        'GUY', 'PRY', 'PER', 'SUR', 'URY', 'VEN'
-      ]
+      countries: SA_COUNTRIES
+    },
+    PT: {
+      name: 'Pantropical',
+      countries: AF_COUNTRIES + AS_COUNTRIES + SA_COUNTRIES
     }
   }
 
