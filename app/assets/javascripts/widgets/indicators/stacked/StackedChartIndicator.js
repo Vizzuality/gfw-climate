@@ -29,7 +29,6 @@ define([
       this.model = new (Backbone.Model.extend({
         defaults: setup.model
       }));
-      debugger;
       this.fetchData(setup);
     },
 
@@ -60,10 +59,16 @@ define([
         if (!!values.length) {
           values = _.groupBy(values, 'indicator_id');
 
-          var data = _.map(this.model.get('indicators'), function (i) {
+          var filtered = _.filter(this.model.get('indicators'), function(i){
+            return values[i.id] && values[i.id][0]
+          });
+          var data = _.map(filtered, function (i) {
             var aux = values[i.id][0];
-            var displayName = aux.id_1 ? aux.sub_nat_name : // eslint-disable-line
+            var displayName = '';
+            if (aux) {
+              displayName = aux.id_1 ? aux.sub_nat_name : // eslint-disable-line
               (aux.boundary_id !== 1 ? aux.boundary_name : aux.country_name);
+            }
             i.location_name = displayName;
             i.data = values[i.id];
             return i;
@@ -77,7 +82,6 @@ define([
     },
 
     render: function () {
-      debugger;
       this.$el.html('<div id="stacked-graph"></div>');
       this.cacheVars();
       this.setStatusValues();
@@ -129,11 +133,17 @@ define([
     graphData: function () {
       debugger;
       var stackedIndicators = _.where(this.model.get('data'), { type: 'stacked' });
-      return _.map(stackedIndicators, function (i) {
+      return _.map(stackedIndicators, function (indicator) {
         return {
-          name: i.direction,
-          value: i.data[0].value
-        };
+          name: indicator.name,
+          id: indicator.id,
+          value: _.map(indicator.data, function (data) {
+            return {
+              x: data.year,
+              y: data.value
+            };
+          })
+        }
       });
     },
 

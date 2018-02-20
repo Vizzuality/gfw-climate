@@ -4,14 +4,11 @@ define([
   $, d3, _, enquire
 ) {
 
-  var svg, pie, color, arc;
+  var svg, stacked, color, arc;
 
-
-  var arrayColor = ['#5B80A0', '#b6b6ba'];
-
-  var PieChart = function (options) {
+  var StackedChart = function (options) {
     this.options = options;
-    this.data = this._defindeData(options.data);
+    this.data = options.data;
 
     enquire.register("screen and (max-width:" + window.gfw.config.GFW_MOBILE + "px)", {
       match: _.bind(function () {
@@ -22,43 +19,36 @@ define([
     this.sizing = options.sizing;
     this.innerPadding = options.innerPadding;
 
-    color = d3.scale.ordinal()
-      .range(arrayColor);
     this.parentWidth = $(this.options.el).outerWidth();
     this.parentHeight = $(this.options.el).outerHeight();
     this.width = this.parentWidth - this.sizing.left - this.sizing.right,
       // this.height = this.parentHeight - this.sizing.top - this.sizing.bottom;
 
-      this.height = function () {
-        if (this.mobile) {
-          return this.parentHeight - this.sizing.top - this.sizing.bottom - 40;
-        } else {
-          return this.parentHeight - this.sizing.top - this.sizing.bottom;
-        }
-      }.bind(this)();
-
-    this.radius = Math.min(this.width, this.height) / 2;
-    arc = d3.svg.arc()
-      .outerRadius(this.radius)
-      .innerRadius(this.radius - 60);
+    this.height = function () {
+      if (this.mobile) {
+        return this.parentHeight - this.sizing.top - this.sizing.bottom - 40;
+      } else {
+        return this.parentHeight - this.sizing.top - this.sizing.bottom;
+      }
+    }.bind(this)();
 
     this._createEl();
     this._createDefs();
-    this._createPie();
+    this._createScales();
 
     // $(window).resize(_.debounce(this.resize.bind(this), 100));
   };
 
 
-  PieChart.prototype._createEl = function () {
+  StackedChart.prototype._createEl = function () {
     svg = d3.select(this.options.el)
       .append("svg")
-      .attr('class', 'pieChart')
+      .attr('class', 'stackedChart')
       .attr("width", this.parentWidth)
       .attr("height", this.parentHeight)
   };
 
-  PieChart.prototype._createDefs = function () {
+  StackedChart.prototype._createDefs = function () {
     svg.append("defs").append("clipPath")
       .attr("id", "clip")
       .append("rect")
@@ -66,56 +56,66 @@ define([
       .attr("height", this.height);
   };
 
-  PieChart.prototype._createPie = function () {
-    pie = d3.layout.pie()
-      .sort(d3.descending)
-      .value(function (d) { return d.value })
+  StackedChart.prototype._createScales = function () {
+    var x = d3.scaleBand()
+      .rangeRound([this.innerPadding.left, this.width - this.innerPadding.right])
+      .paddingInner(0.05)
+      .align(0.1);
+
+    var y = d3.scaleLinear()
+      .rangeRound([this.height, 0]);
+
+    var z = d3.scaleOrdinal()
+      .range(['#5B809E', '#5B809E', '#B6B6BA', '#E2E2E3']);
+
+
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom")
+      .tickFormat(d3.time.format("%b"));
+
+    var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("right");
   };
 
-  PieChart.prototype._defindeData = function (data) {
-    var total = _.reduce(data, function (memo, i) { return memo + i.value; }, 0);
-    return _.sortBy(_.map(data, function (i) {
-      return {
-        name: i.name,
-        value: ((i.value / total) * 100).toFixed(2)
-      };
-    }), function (a, b) {
-      return b - a;
-    });
+  StackedChart.prototype._createStacked = function () {
+    stacked = d3.layout.stack()
+      .value(function(d) { return d.value})
   };
 
-  PieChart.prototype.render = function () {
+  StackedChart.prototype.render = function () {
+    debugger;
     if (!!this.data.length) {
-      var g = svg.selectAll('.arc')
-        .data(pie(this.data))
-        .enter().append('g')
-        .attr('class', 'arc')
-        .attr('transform', function () {
-          if (this.mobile) {
-            return 'translate(' + (this.parentWidth / 2 - 10) + ', ' + this.parentHeight / 2 + ')';
-          } else {
-            return 'translate(' + (this.parentWidth - this.parentHeight / 2) + ', ' + this.parentHeight / 2 + ')';
-          }
-        }.bind(this))
+      var stacked = svg.selectAll(".stacked")
+        .data(stacked(this.data))
+        .enter().append("g")
+        .attr("class", "layer")
+        .style("fill", function(d, i) { return z(i); });
 
-      g.append('path')
-        .attr('d', arc)
-        .style('fill', function (d) { return color(d.data.name); })
-        .attr('data-legend', function (d) { return d.data.name })
-        .attr('data-legend-color', function (d) { return color(d.data.name); });
+      stacked.selectAll("rect")
+          .data(function(d) { return d; })
+        .enter().append("rect")
+          .attr("x", function(d) { return x(d.x); })
+          .attr("y", function(d) { return y(d.y + d.y0); })
+          .attr("height", function(d) { return y(d.y0) - y(d.y + d.y0); })
+          .attr("width", x.rangeBand() - 1);
 
-      g.append('text')
-        .attr('transform', function (d) { return 'translate(' + arc.centroid(d) + ')'; })
-        .attr('dy', '.35em')
-        .style('text-anchor', 'middle')
-        .style('fill', '#FFF')
-        .text(function (d) { return d.data.value + '%'; });
+      svg.append("g")
+          .attr("class", "axis axis--x")
+          .attr("transform", "translate(0," + this.height + ")")
+          .call(xAxis);
 
-      this._createLegend(this.mobile, this.parentHeight);
+      svg.append("g")
+          .attr("class", "axis axis--y")
+          .attr("transform", "translate(" + this.width + ",0)")
+          .call(yAxis);
+
+      // this._createLegend(this.mobile, this.parentHeight);
     }
   };
 
-  PieChart.prototype._createLegend = function (mobile, mobileHeight) {
+  StackedChart.prototype._createLegend = function (mobile, mobileHeight) {
     var self = this;
     var legendDotSize = 12;
     var legendSpacing = 4;
@@ -156,5 +156,5 @@ define([
       .text(function (d) { return d; });
   };
 
-  return PieChart;
+  return StackedChart;
 });

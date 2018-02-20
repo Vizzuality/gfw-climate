@@ -5,11 +5,12 @@
  */
 define([
   'underscore',
+  'backbone',
   'handlebars',
   'enquire',
   'map/presenters/tabs/BasemapsPresenter',
   'text!map/templates/tabs/basemaps.handlebars'
-], function(_, Handlebars, enquire, Presenter, tpl) {
+], function(_, Backbone, Handlebars, enquire, Presenter, tpl) {
 
   'use strict';
 
