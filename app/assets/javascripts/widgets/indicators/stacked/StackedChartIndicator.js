@@ -82,7 +82,7 @@ define([
     },
 
     render: function () {
-      this.$el.html('<div id="stacked-graph"></div>');
+      this.$el.html('<div id="stacked-graph" class="stacked-graph"></div>');
       this.cacheVars();
       this.setStatusValues();
       this.drawGraph();
@@ -121,29 +121,56 @@ define([
 
     // GRAPH
     drawGraph: function () {
-      var stackedChart = new StackedChart({
+      var data = this.getGraphData();
+      var rangeX = this.getRangeX(data);
+      var rangeY = this.getRangeY(data);
+      var indicators = this.model.get('indicators');
+
+      this.stackedChart = new StackedChart({
+        parent: this,
         el: this.$el.find('#stacked-graph')[0],
-        data: this.graphData(),
-        sizing: { top: 0, right: 0, bottom: 0, left: 0 },
-        innerPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+        id: _.pluck(indicators, 'id').join(''),
+        data: data,
+        indicators: indicators,
+        unit: this.model.get('unit'),
+        unitname: this.model.get('unitname'),
+        rangeX: rangeX,
+        rangeY: rangeY,
+        lock: this.model.get('lock'),
+        sizing: {top: 10, right: 10, bottom: 20, left: 0},
+        innerPadding: { top: 15, right: 10, bottom: 20, left: 50 },
+        keys: { x: 'year', y: 'value' }
       });
-      stackedChart.render();
+      this.stackedChart.render();
     },
 
-    graphData: function () {
-      debugger;
+    // get the range of years;
+    getRangeX: function() {
+      var values = _.flatten(_.union(Array.prototype.slice.call(arguments)));
+      var min = _.min(values, function(o){return o.year;}).year;
+      var max = _.max(values, function(o){return o.year;}).year;
+      return [min,max];
+    },
+
+    // get the range of values;
+    getRangeY: function() {
+      var values = _.flatten(_.union(Array.prototype.slice.call(arguments)));
+      var min = _.min(values, function(o){return o.value;}).value;
+      var max = _.max(values, function(o){return o.value;}).value;
+      // We add the 20º part of the max and the min value to prevent the y-axis disappear,
+      return [min - Math.abs(min/20), max + Math.abs(max/20)];
+    },
+
+    getGraphData: function () {
+      var parseDate = d3.time.format("%Y").parse;
       var stackedIndicators = _.where(this.model.get('data'), { type: 'stacked' });
       return _.map(stackedIndicators, function (indicator) {
-        return {
-          name: indicator.name,
-          id: indicator.id,
-          value: _.map(indicator.data, function (data) {
-            return {
-              x: data.year,
-              y: data.value
-            };
-          })
-        }
+        return _.map(indicator.data, function (data) {
+          return {
+            year: parseDate(data.year.toString()),
+            value: data.value
+          };
+        })
       });
     },
 
