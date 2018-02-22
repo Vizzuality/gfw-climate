@@ -6,14 +6,18 @@ define([
   'widgets/views/IndicatorView',
   'widgets/models/IndicatorModel',
   'widgets/indicators/stacked/StackedChart',
-  'text!widgets/templates/indicators/no-data.handlebars'
-], function (Backbone, _, d3, Handlebars, IndicatorView, IndicatorModel, StackedChart, noDataTpl) {
+  'text!widgets/templates/indicators/no-data.handlebars',
+  'text!widgets/templates/indicators/stacked/stackedchart.handlebars',
+  'text!widgets/templates/indicators/stacked/stackedchart-legend.handlebars',
+], function (Backbone, _, d3, Handlebars, IndicatorView, IndicatorModel, StackedChart, noDataTpl, tpl, legendTpl) {
   'use strict';
 
   var StackedChartIndicator = IndicatorView.extend({
 
     templates: {
-      'noData': Handlebars.compile(noDataTpl)
+      'noData': Handlebars.compile(noDataTpl),
+      'legend': Handlebars.compile(legendTpl),
+      'chart': Handlebars.compile(tpl),
     },
 
     events: function () {
@@ -52,15 +56,15 @@ define([
       $.when.apply(null, status.promises).then(_.bind(function () {
         this.$el.removeClass('is-loading');
         var args = Array.prototype.slice.call(arguments);
-        var values = _.compact(_.map(args, function (i) {
-          return i.values[0];
-        }));
+        var values = _.flatten(_.compact(_.map(args, function (i) {
+          return i.values;
+        })));
 
         if (!!values.length) {
           values = _.groupBy(values, 'indicator_id');
-
+          var unit = this.model.get('unit');
           var filtered = _.filter(this.model.get('indicators'), function(i){
-            return values[i.id] && values[i.id][0]
+            return values[i.id] && values[i.id][0] && i.unit === unit;
           });
           var data = _.map(filtered, function (i) {
             var aux = values[i.id][0];
@@ -82,7 +86,7 @@ define([
     },
 
     render: function () {
-      this.$el.html('<div id="stacked-graph" class="stacked-graph"></div>');
+      this.$el.html(this.templates.chart());
       this.cacheVars();
       this.setStatusValues();
       this.drawGraph();
@@ -102,8 +106,7 @@ define([
     },
 
     cacheVars: function () {
-      this.$section = this.$el.find('.section');
-      this.$section_name = this.$el.find('.section-name');
+      this.$legend = this.$el.find('.stacked-legend');
     },
 
     setStatusValues: function () {
@@ -142,6 +145,10 @@ define([
         keys: { x: 'year', y: 'value' }
       });
       this.stackedChart.render();
+    },
+
+    _drawLegend: function(legend) {
+      this.$legend.html(this.templates.legend({ legend: legend }));
     },
 
     // get the range of years;

@@ -118,8 +118,11 @@ define([
       .selectAll("text")
       .attr("y", -10)
       .attr("x", 5)
-      .attr("transform", "translate(0," + (this.innerPadding.top) + ")")
       .style("text-anchor", "start");
+  };
+
+  StackedChart.prototype._getColorByIndex = function (i) {
+    return this.color[i % this.color.length];
   };
 
   StackedChart.prototype._drawData = function () {
@@ -128,16 +131,16 @@ define([
       .data(this.stacked)
       .enter().append("g")
       .attr("class", "layer")
-      .style("fill", function(d, i) { return self.color[i % self.color.length]; });
+      .style("fill", function(d, i) { return self._getColorByIndex(i); });
 
-    this.bars.selectAll("rect")
+    this.rectangles = this.bars.selectAll("rect")
         .data(function(d) { return d; })
         .enter()
         .append("rect")
-        .attr("x", function(d) { return self.x(d.x); })
+        .attr("x", function(d) { return (self.x(d.x) + self.x.rangeBand() / 4); })
         .attr("y", function(d) { return self.y(d.y + d.y0); })
         .attr("height", function(d) { return self.y(d.y0) - self.y(d.y + d.y0); })
-        .attr("width", self.x.rangeBand() - 1);
+        .attr("width", self.x.rangeBand() - self.x.rangeBand() / 2);
   };
 
   StackedChart.prototype._drawLegend = function () {
@@ -145,7 +148,7 @@ define([
     var legend = _.map(self.indicators, function (indicator, i) {
       return {
         name: indicator.name,
-        color: self.color[i],
+        color: self._getColorByIndex(i),
         // We need to ensure that the data is in order
         visible: !!self.data[i]
       }
@@ -170,13 +173,13 @@ define([
       .style('visibility', 'hidden')
       .style('stroke', '#DDD');
 
-    this.bars
+    this.rectangles
       .on("mouseenter", function () {
         self.positioner.style("visibility", "visible");
         self.tooltip.style("visibility", "visible");
       })
       .on('mousemove', function (d) {
-        self.setTooltip(d[0], false);
+        self.setTooltip(d, false);
         mps.publish('StackedChart/mousemove' + self.options.slug_compare + self.options.id, [d[0]]);
       })
       .on("mouseleave", function () {
@@ -237,7 +240,7 @@ define([
       self._drawAxes();
       self._drawData();
       self._drawTooltip();
-      // self._drawLegend();
+      self._drawLegend();
     };
   }
 

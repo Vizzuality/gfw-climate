@@ -234,8 +234,8 @@ define([
                 tab: this,
                 className: 'is-stacked',
                 model: {
+                  unit: t.unit,
                   indicators: indicators,
-                  id: (!!t.unit) ? _.findWhere(indicators, { unit: t.unit }).id : indicators[0].id,
                   template: t.template,
                   type: 'stacked',
                 },
