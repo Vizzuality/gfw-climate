@@ -64,7 +64,7 @@ define([
           values = _.groupBy(values, 'indicator_id');
           var unit = this.model.get('unit');
           var filtered = _.filter(this.model.get('indicators'), function(i){
-            return values[i.id] && values[i.id][0] && i.unit === unit;
+            return values[i.id] && values[i.id][0];
           });
           var data = _.map(filtered, function (i) {
             var aux = values[i.id][0];

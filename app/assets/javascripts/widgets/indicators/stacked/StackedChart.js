@@ -193,12 +193,14 @@ define([
   StackedChart.prototype.setTooltip = function (value, is_reflect) {
     var self = this;
     if (!!value) {
-      var info = [{
-        color: self.color[0],
-        value: value.y
-      }]
       var year = d3.time.format("%Y")(value.x);
       var formatDate = d3.time.format("%Y");
+      var valueFormatted = d3.format(".4r")(value.y) + ' ' + self.unitname;
+      var info = [{
+        color: self.color[0],
+        value: valueFormatted
+      }]
+
       self.tooltip
         .classed("is-reflect", is_reflect)
         .html(this.templateTooltip({ year: year, tootip_info: info }))

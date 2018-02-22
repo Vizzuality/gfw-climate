@@ -227,7 +227,7 @@ define([
             break;
 
           case 'stacked':
-            indicators = _.where(this.presenter.model.get('indicators'), { tab: t.position});
+            indicators = _.where(this.presenter.model.get('indicators'),{ unit: t.unit });
             if (!!indicators.length) {
               this.indicator = new StackedChartIndicator({
                 el: this.$graphContainer,
@@ -235,6 +235,7 @@ define([
                 className: 'is-stacked',
                 model: {
                   unit: t.unit,
+                  unitname: _.findWhere(this.model.data.switch, { unit: t.unit }).unitname,
                   indicators: indicators,
                   template: t.template,
                   type: 'stacked',
