@@ -3,6 +3,69 @@
 }
 
 
+.lineChart {
+  .axis line {
+    stroke: #E5E5DF;
+    shape-rendering: crispEdges;
+  }
+
+  .axis text {
+    fill: $font-color-1;
+    font-weight: 500;
+    font-size: 11px;
+  }
+
+  .axis path {
+    stroke: #E5E5DF;
+    stroke-width: 3px;
+    fill: none;
+  }
+
+  .axis.y path {
+    visibility: hidden;
+  }
+
+  .axis2 path {
+    visibility: hidden;
+  }
+
+  .axis2 line {
+    fill: none;
+    stroke: #E5E5DF;
+    shape-rendering: crispEdges;
+  }
+
+  .axis2 text {
+    fill: $font-color-1;
+    font-size: 10px;
+  }
+
+  //Horizontal lines
+  .axis.y line {
+    fill :none;
+    stroke: none;
+  }
+
+  .axis.x .tick line {
+    visibility: hidden;
+  }
+
+  .total-count {
+    fill: $font-color-1;
+    font-size: 12px;
+  }
+
+  .layer {
+    .total-count {
+      display: none;
+    }
+    &:last-of-type .total-count {
+      display: block;
+    }
+  }
+}
+
+
 .stacked-legend {
   margin: 0;
 

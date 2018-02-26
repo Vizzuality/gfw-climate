@@ -63,11 +63,28 @@ define([
   };
 
   StackedChart.prototype._createStack = function () {
+    var self = this;
     this.stacked = d3.layout.stack()(this.data.map(function(d) {
       return d.map(function(i) {
         return {x: i.year, y: i.value}
       })
     }));
+    this.stackedTotals = _.map(this.stacked, function(data) {
+      return d3.format(".4r")(_.reduce(data, function(total, item) {
+        return total + item.y;
+      }, 0));
+    })
+
+    this.stackedTotals = [];
+    if (this.data.length) {
+      for (let index = 0; index < this.data[0].length; index++) {
+        let total = 0;
+        for (let e = 0; e < this.data.length; e++) {
+          total += this.data[e][index].value || 0;
+        }
+        this.stackedTotals.push(d3.format(".4r")(total));
+      }
+    }
   }
 
   StackedChart.prototype._createScales = function () {
@@ -133,14 +150,35 @@ define([
       .attr("class", "layer")
       .style("fill", function(d, i) { return self._getColorByIndex(i); });
 
+    var getXPos = function(d) {
+      return (self.x(d.x) + self.x.rangeBand() / 4);
+    }
+
+    var getYPos = function(d) {
+      return self.y(d.y + d.y0);
+    }
+
     this.rectangles = this.bars.selectAll("rect")
         .data(function(d) { return d; })
         .enter()
         .append("rect")
-        .attr("x", function(d) { return (self.x(d.x) + self.x.rangeBand() / 4); })
-        .attr("y", function(d) { return self.y(d.y + d.y0); })
+        .attr("x", getXPos)
+        .attr("y", getYPos)
         .attr("height", function(d) { return self.y(d.y0) - self.y(d.y + d.y0); })
         .attr("width", self.x.rangeBand() - self.x.rangeBand() / 2);
+
+
+    this.text = this.bars.selectAll("text")
+      .data(function(d) { return d; })
+      .enter()
+      .append("text")
+      .attr('class', 'total-count')
+      .attr("y", function(d) { return getYPos(d) - 10; })
+      .attr("x", function(d) { return getXPos(d) + self.x.rangeBand() / 4})
+      .attr("text-anchor","middle")
+      .style("fill",'#000')
+      .text(function(d, i) { return self.stackedTotals[i] });
+
   };
 
   StackedChart.prototype._drawLegend = function () {
