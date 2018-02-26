@@ -1185,5 +1185,98 @@
         "_comment": "indicator 'created' to show data for plantations inside sub national areas, while the application doesn't support that. based on indicator 75"
       }
     ]
+  },
+  {
+    "id": 17,
+    "name": "Potential tree biomass gain",
+    "slug": "potential_tree_biomass_gain",
+    "type_slug": "carbon_gain",
+    "type": "Forest and Carbon Data",
+    "type_chart": "stacked",
+    "default_thresh": "0",
+    "default": false,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Potential carbon sequestration (Chazdon et al. 2016)",
+        "type": "stacked",
+        "template" : "tree_biomass_gain",
+        "default": true,
+        "switch" : [
+          {
+            "unit": "tg-c",
+            "unitname": "Tg C",
+            "unitfullname": "Teragrams of carbon"
+          },
+          {
+            "unit": "mt-co2",
+            "unitname": "Mt CO2",
+            "unitfullname": "Million tons of Carbon dioxide"
+          }
+        ]
+      }
+    ],
+    "indicators": [
+      {
+        "id": 80,
+        "name": "Young Secondary Forest",
+        "type": "stacked",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 81,
+        "name": "Mid-Age Secondary Forests",
+        "type": "stacked",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 82,
+        "name": "Pasture Area",
+        "type": "stacked",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 83,
+        "name": "Crops",
+        "type": "stacked",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 84,
+        "name": "Young Secondary Forest",
+        "type": "stacked",
+        "unit": "mt-co2",
+        "tab": 1
+      },
+      {
+        "id": 85,
+        "name": "Mid-Age Secondary Forests",
+        "type": "stacked",
+        "unit": "mt-co2",
+        "tab": 1
+      },
+      {
+        "id": 86,
+        "name": "Pasture Area",
+        "type": "stacked",
+        "unit": "mt-co2",
+        "tab": 1
+      },
+      {
+        "id": 87,
+        "name": "Crops",
+        "type": "stacked",
+        "unit": "mt-co2",
+        "tab": 1
+      }
+    ]
   }
 ]

@@ -94,7 +94,8 @@
   .tab-graph {
     position: relative;
 
-    &.is-line {
+    &.is-line,
+    &.is-stacked, {
       min-height: 300px;
     }
 
