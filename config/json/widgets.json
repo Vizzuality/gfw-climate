@@ -1202,6 +1202,7 @@
         "type": "stacked",
         "template" : "tree_biomass_gain",
         "default": true,
+        "cumulative": true,
         "switch" : [
           {
             "unit": "tg-c",
