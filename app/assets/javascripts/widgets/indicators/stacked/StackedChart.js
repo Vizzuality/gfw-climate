@@ -203,17 +203,8 @@ define([
       .attr('class', 'linegraph-tooltip')
       .style('visibility', 'hidden')
 
-    this.positioner = this.svg.append('svg:line')
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('x2', 0)
-      .attr('y2', this.height)
-      .style('visibility', 'hidden')
-      .style('stroke', '#DDD');
-
     this.rectangles
       .on("mouseenter", function () {
-        self.positioner.style("visibility", "visible");
         self.tooltip.style("visibility", "visible");
       })
       .on('mousemove', function (d) {
@@ -221,7 +212,6 @@ define([
         mps.publish('StackedChart/mousemove' + self.options.slug_compare + self.options.id, [d[0]]);
       })
       .on("mouseleave", function () {
-        self.positioner.style("visibility", "hidden");
         self.tooltip.style("visibility", "hidden");
         mps.publish('StackedChart/mouseout' + self.options.slug_compare + self.options.id);
       })
@@ -257,9 +247,6 @@ define([
       this.subcriptions = [
         mps.subscribe('StackedChart/mouseout' + this.options.slug + this.options.id, function () {
           if (!!self.svg) {
-            self.positioner
-              .classed("is-reflect", false)
-              .style("visibility", "hidden");
             self.tooltip
               .classed("is-reflect", false)
               .style("visibility", "hidden");
