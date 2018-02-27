@@ -48,7 +48,6 @@ define([
     },
 
     parseData: function() {
-      console.log(this.presenter.model.attributes)
       return this.presenter.model.get('data');
     },
 
