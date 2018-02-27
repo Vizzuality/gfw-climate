@@ -40,7 +40,7 @@ define([
 
     /**
      * Place GO
-     */    
+     */
     placeGo: function(params) {
       if (! !!this.status.get('widgets')) {
         new WidgetCollection()
@@ -84,6 +84,7 @@ define([
         return {
           type: t.type,
           position: t.position,
+          cumulative: t.cumulative,
           unit: (t.switch) ? t['switch'][0]['unit'] : null,
           start_date: (t.range) ? t['range'][0] : null,
           end_date: (t.range) ? t['range'][t['range'].length - 1] : null,

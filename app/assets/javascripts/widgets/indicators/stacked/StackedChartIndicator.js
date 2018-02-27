@@ -98,7 +98,7 @@ define([
       var shortened = d3.format(',.0f')(totalVal);
       var scientific = d3.format('.3s')(totalVal);
       return {
-        sectionswitch: this.model.get('sectionswitch'),
+        cumulative: this.model.get('cumulative'),
         location_name: this.model.get('data')[0].location_name,
         total: totalVal > 1000 ? scientific : shortened,
         millionsTotal: shortened
@@ -141,7 +141,7 @@ define([
         rangeY: rangeY,
         lock: this.model.get('lock'),
         sizing: {top: 10, right: 10, bottom: 20, left: 0},
-        innerPadding: { top: 15, right: 10, bottom: 20, left: 50 },
+        innerPadding: { top: 20, right: 10, bottom: 20, left: 50 },
         keys: { x: 'year', y: 'value' }
       });
       this.stackedChart.render();
