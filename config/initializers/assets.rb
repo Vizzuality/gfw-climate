@@ -14,6 +14,8 @@ Rails.application.config.assets.version = '1.1'
 Rails.application.config.assets.precompile += %w( map.js )
 Rails.application.config.assets.precompile += %w( map.css )
 
+Rails.application.config.assets.precompile += %w( insights.js )
+Rails.application.config.assets.precompile += %w( insights.css )
 
 Rails.application.config.assets.precompile += %w( countries.js )
 Rails.application.config.assets.precompile += %w( countries.css )

@@ -1,19 +1,11 @@
 .layout-content
   section#countryListView.section.country-profiles
-    .inner
-      h2.title-section #{@title}
-    .inner.countries-list-title
-      h3
-        |Select a country or go to the
-        a< (href="/insights") insights page
-    .inner
-      .search-countries-box
-        input#searchCountry(autofocus="true" type="text" placeholder="Type country name")
+    .l-header
+      .inner.insights-title
+        h2 #{@title}
+        h3
+          |Select a country or go to the
+          a< (href="/insights") insights page
 
-    ul.inner.countries_list_index
-      - @countries.each do |country|
-        - if country['iso'].present?
-          li(id="#{country['iso']}" class="country")
-            a.country-href (href="#{country_path(country['iso'])}")
-              span.country-content
-                h3.country-name #{country['name']}
+    .inner
+      #geoListView.is-loading.loading-placeholder

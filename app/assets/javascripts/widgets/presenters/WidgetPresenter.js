@@ -54,7 +54,9 @@ define([
 
       tabs = {
         type: t.type,
+        name: t.name,
         position: position,
+        cumulative: t.cumulative,
         unit: (t.switch) ? t['switch'][0]['unit'] : null,
         start_date: (t.range) ? t['range'][0] : null,
         end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
@@ -63,7 +65,7 @@ define([
         template: (t.template) ? t['template'] : null,
         lock: (this.status.get('tabs').lock != null && this.status.get('tabs').lock != undefined) ? this.status.get('tabs').lock : true,
       }
-      
+
       this.status.set('tabs',tabs);
     },
 
@@ -76,12 +78,17 @@ define([
       this.publish();
     },
 
-
     publish: function() {
       mps.publish('Options/updated', [this.model.get('id'),this.model.get('slugw'),this.status.toJSON()]);
       if (this.status.get('tabs').lock) {
         mps.publish('Compare/reflection', [this.model.get('id'),this.model.get('slugw_compare'),this.status.toJSON()]);
       }
+    },
+
+    openDownload: function() {
+      var status = this.status.toJSON().tabs;
+      status.name = status.name || this.model.attributes.tabs[0].name;
+      mps.publish('DownloadWidget/open', [status, this.model.toJSON()]);
     },
 
     deleteWidget: function() {

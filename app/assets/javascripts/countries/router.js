@@ -7,8 +7,7 @@ define([
   'countries/views/CountryIndexView',
   'countries/views/CountryShowView',
   'countries/views/CountryPantropicalView',
-  'countries/views/CountryReportView',
-  'insights/views/InsightsView'
+  'countries/views/CountryReportView'
 ], function(
   Backbone,
   mps,
@@ -18,8 +17,7 @@ define([
   CountryIndexView,
   CountryShowView,
   CountryPantropicalView,
-  CountryReportView,
-  InsightsView
+  CountryReportView
 ) {
 
   'use strict';
@@ -31,21 +29,18 @@ define([
     routes: {
       'countries'                           : '_initIndex',
       'pantropical'                         : '_initPantropical',
-      'insights(/)(:insight)(/)(:iso)'      : '_initInsights',
       'countries/:country/report'           : '_initReport',
       'countries(/)(:country)(/)(:view)'    : '_initShow'
     },
 
     initialize: function() {
       this.placeService = new PlaceService(this);
-
       this.setSubscriptions();
       this.setEvents();
     },
 
     setSubscriptions: function() {
       mps.subscribe('Router/change', this.setParams.bind(this));
-      mps.subscribe('Router/goInsight', this.updateInsight.bind(this));
     },
 
     setEvents: function() {
@@ -76,13 +71,6 @@ define([
       uri.query(this._serializeParams(params));
       // {replace: true} update the URL without creating an entry in the browser's history and allow us to go back
       this.navigate(uri.path().slice(1) + uri.search(), { trigger: true, replace: true });
-    },
-
-    /**
-     * Update the country insight
-     */
-    updateInsight: function(iso) {
-      this.navigate('/insights/' + this.insight + '/' + iso, { trigger: false });
     },
 
     /**
@@ -144,14 +132,6 @@ define([
     _initPantropical: function() {
       ga('send', 'event', 'pantropical','Choose visualisation','All countries');
       new CountryPantropicalView();
-    },
-
-    _initInsights: function(insight, iso) {
-      this.insight = insight;
-      new InsightsView({
-        insight: insight,
-        iso: iso
-      });
     },
 
     // updateUrl: function() {

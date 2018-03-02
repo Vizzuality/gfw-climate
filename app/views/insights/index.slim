@@ -6,21 +6,48 @@
           | Insights
         h3
           | Moving beyond data to deliver actionable insights
-    .inner
-      .insights
+    .insights
+      .inner
         .visualization-list
           .item
-            a class="link" href="./insights/glad-alerts"
-              .thumb
-                img class="image" src="#{image_url('insights/insights_glad_alerts.jpg')}"
-              .content
-                .title Monitor progress in near-real time
-                .text The political will to reduce tropical deforestation has never been higher. <span class="is-bold-slim">Are countries on track to meet commitments?</span> Track progress in near real-time with weekly forest disturbance alert data.
+            .thumb
+              a  href="./insights/glad-alerts"
+                img class="image" src="#{image_url('insights/thumb_insight1@2x.jpg')}"
+            .content
+              .title Monitor progress in near-real time
+              .text The political will to reduce tropical deforestation has never been higher. <span class="is-bold-slim">Are countries on track to meet commitments?</span> Track progress in near real-time with weekly forest disturbance alert data.
+            .link
+              a class="btn medium blue" href="./insights/glad-alerts" Explore
 
           .item
-            a class="link" href="./pantropical"
-              .thumb
-                img class="image" src="#{image_url('insights/insights_pantropical.jpg')}"
-              .content
-                .title Benchmark for assessing deforestation commitments
-                .text The New York Declaration on Forests calls for halving deforestation by 2020. <span class="is-bold-slim">What benchmark can be used</span> for evaluating success or failure?
+            .thumb
+              a href="./pantropical"
+                img class="image" src="#{image_url('insights/thumb_insight2@2x.jpg')}"
+            .content
+              .title Benchmark for assessing deforestation commitments
+              .text The New York Declaration on Forests calls for halving deforestation by 2020. <span class="is-bold-slim">What benchmark can be used</span> for evaluating success or failure?
+            .link
+              a class="btn medium blue" href="./pantropical" Explore
+
+          .item
+            .thumb
+              a href="./insights/emissions-calculator"
+                img class="image" src="#{image_url('insights/thumb_insight3@2x.jpg')}"
+            .content
+              .title Deforestation and Emissions Calculator
+              .text Create and customize a Forest Monitoring Report with the latest forest related emissions
+            .link
+              / a class="btn medium blue" href="./insights/emissions-calculator" Explore
+              a class="btn medium is-disabled" href="#" Coming soon
+    .insights.background
+      .inner
+        .download-teaser
+          .item-2
+            .thumb
+              a href="./data-download"
+                img class="image" src="#{image_url('insights/data-downloader@2x.jpg')}"
+          .item-2
+            .content
+              .title Build your own insights with our custom dataset downloader
+            .link
+              a class="btn medium blue" href="./data-download" Explore

@@ -5,6 +5,7 @@ modules:
   - name: 'compare'
   - name: 'embed'
   - name: 'data-download'
+  - name: 'insights'
 
 waitSeconds: 200
 
