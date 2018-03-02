@@ -6,10 +6,11 @@
 define([
   'underscore',
   'handlebars',
+  'backbone',
   'enquire',
   'map/presenters/NavMobilePresenter',
   'text!map/templates/navmobile.handlebars'
-], function(_, Handlebars, enquire, Presenter, tpl) {
+], function(_, Handlebars, Backbone, enquire, Presenter, tpl) {
 
   'use strict';
 

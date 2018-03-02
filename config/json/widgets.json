@@ -1,145 +1,6 @@
 [
   {
     "id": 1,
-    "name": "Deforestation rate",
-    "slug": "deforestation-rate",
-    "type_slug": "forest-and-carbon-data",
-    "type": "Forest and Carbon Data",
-    "type_chart": "line",
-    "default_thresh": "25",
-    "default": true,
-    "tabs": [
-      {
-        "position": 1,
-        "name": "Annual gross tree cover loss",
-        "subname": "(Hansen/UMD/Google/USGS/NASA)",
-        "ipcc" : "(IPCC Approach 3)",
-        "type": "line",
-        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016],
-        "rangetype" : "year",
-        "switch" : [
-          {
-            "unit": "hectares",
-            "unitname": "ha",
-            "unitfullname": "hectares"
-          },
-          {
-            "unit": "percentage",
-            "unitname": "%",
-            "unitfullname": "percentage"
-          }
-        ],
-        "thresh": 25,
-        "threshunit": "loss",
-        "default": true
-      },
-      {
-        "position": 2,
-        "name": "Other national data",
-        "subname": "(Sources vary)",
-        "ipcc" : "(IPCC Approach 3)",
-        "type": "line",
-        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016],
-        "rangetype" : "year",
-        "switch" : [
-          {
-            "unit": "hectares",
-            "unitname": "ha",
-            "unitfullname": "hectares"
-          },
-          {
-            "unit": "percentage",
-            "unitname": "%",
-            "unitfullname": "percentage"
-          }
-        ]
-      },
-      {
-        "position": 3,
-        "name": "Net forest conversion",
-        "subname": "(FAO FRA 2015)",
-        "ipcc" : "(IPCC Approach 1)",
-        "type": "line",
-        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016],
-        "rangetype" : "year",
-        "switch" : [
-          {
-            "unit": "hectares",
-            "unitname": "ha",
-            "unitfullname": "hectares"
-          },
-          {
-            "unit": "percentage",
-            "unitname": "%",
-            "unitfullname": "percentage"
-          }
-        ],
-        "note" : "FAO uses a 10% canopy density by default"
-      }
-    ],
-    "indicators": [
-      {
-        "id": 1,
-        "name": "Gross tree cover loss",
-        "type": "line",
-        "unit": "hectares",
-        "tab": 1,
-        "default": true
-      },
-      {
-        "id": 1000,
-        "name": "Tree cover loss in primary forest",
-        "type": "line",
-        "unit": "hectares",
-        "tab": 1,
-        "default": true
-      },
-      {
-        "id": 2,
-        "name": "Gross tree cover loss",
-        "type": "line",
-        "unit": "percentage",
-        "tab": 1
-      },
-      {
-        "id": 1001,
-        "name": "Tree cover loss in primary forest",
-        "type": "line",
-        "unit": "percentage",
-        "tab": 1
-      },
-      {
-        "id": 15,
-        "name": "FAO FRA 2015 (IPCC Approach 1)",
-        "type": "line",
-        "unit": "hectares",
-        "tab": 3
-      },
-      {
-        "id": 16,
-        "name": "FAO FRA 2015 (IPCC Approach 1)",
-        "type": "line",
-        "unit": "percentage",
-        "tab": 3
-      },
-      {
-        "id": 31,
-        "name": "National Data (IPCC Approach 2/3)",
-        "type": "line",
-        "unit": "hectares",
-        "tab": 2
-      },
-      {
-        "id": 32,
-        "name": "National Data (IPCC Approach 2/3)",
-        "type": "line",
-        "unit": "percentage",
-        "tab": 2
-      }
-    ]
-  },
-  {
-    "id": 2,
     "name": "Carbon emissions",
     "slug": "carbon-emissions",
     "type_slug": "forest-and-carbon-data",
@@ -278,7 +139,240 @@
     ]
   },
   {
+    "id": 2,
+    "name": "Potential tree biomass gain",
+    "slug": "potential_tree_biomass_gain",
+    "type_slug": "carbon_gain",
+    "type": "Forest and Carbon Data",
+    "type_chart": "stacked",
+    "default_thresh": "0",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Potential carbon sequestration (Chazdon et al. 2016)",
+        "type": "stacked",
+        "template" : "tree_biomass_gain",
+        "default": true,
+        "cumulative": true,
+        "switch" : [
+          {
+            "unit": "tg-c",
+            "unitname": "Tg C",
+            "unitfullname": "Teragrams of carbon"
+          },
+          {
+            "unit": "mt-co2",
+            "unitname": "Mt CO2",
+            "unitfullname": "Million tons of Carbon dioxide"
+          }
+        ]
+      }
+    ],
+    "indicators": [
+      {
+        "id": 80,
+        "name": "Young Secondary Forest",
+        "type": "stacked",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 81,
+        "name": "Mid-Age Secondary Forests",
+        "type": "stacked",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 82,
+        "name": "Pasture Area",
+        "type": "stacked",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 83,
+        "name": "Crops",
+        "type": "stacked",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 84,
+        "name": "Young Secondary Forest",
+        "type": "stacked",
+        "unit": "mt-co2",
+        "tab": 1
+      },
+      {
+        "id": 85,
+        "name": "Mid-Age Secondary Forests",
+        "type": "stacked",
+        "unit": "mt-co2",
+        "tab": 1
+      },
+      {
+        "id": 86,
+        "name": "Pasture Area",
+        "type": "stacked",
+        "unit": "mt-co2",
+        "tab": 1
+      },
+      {
+        "id": 87,
+        "name": "Crops",
+        "type": "stacked",
+        "unit": "mt-co2",
+        "tab": 1
+      }
+    ]
+  },
+  {
     "id": 3,
+    "name": "Deforestation rate",
+    "slug": "deforestation-rate",
+    "type_slug": "forest-and-carbon-data",
+    "type": "Forest and Carbon Data",
+    "type_chart": "line",
+    "default_thresh": "25",
+    "default": true,
+    "tabs": [
+      {
+        "position": 1,
+        "name": "Annual gross tree cover loss",
+        "subname": "(Hansen/UMD/Google/USGS/NASA)",
+        "ipcc" : "(IPCC Approach 3)",
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha",
+            "unitfullname": "hectares"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%",
+            "unitfullname": "percentage"
+          }
+        ],
+        "thresh": 25,
+        "threshunit": "loss",
+        "default": true
+      },
+      {
+        "position": 2,
+        "name": "Other national data",
+        "subname": "(Sources vary)",
+        "ipcc" : "(IPCC Approach 3)",
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha",
+            "unitfullname": "hectares"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%",
+            "unitfullname": "percentage"
+          }
+        ]
+      },
+      {
+        "position": 3,
+        "name": "Net forest conversion",
+        "subname": "(FAO FRA 2015)",
+        "ipcc" : "(IPCC Approach 1)",
+        "type": "line",
+        "range": [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016],
+        "rangetype" : "year",
+        "switch" : [
+          {
+            "unit": "hectares",
+            "unitname": "ha",
+            "unitfullname": "hectares"
+          },
+          {
+            "unit": "percentage",
+            "unitname": "%",
+            "unitfullname": "percentage"
+          }
+        ],
+        "note" : "FAO uses a 10% canopy density by default"
+      }
+    ],
+    "indicators": [
+      {
+        "id": 1,
+        "name": "Gross tree cover loss",
+        "type": "line",
+        "unit": "hectares",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 1000,
+        "name": "Tree cover loss in primary forest",
+        "type": "line",
+        "unit": "hectares",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 2,
+        "name": "Gross tree cover loss",
+        "type": "line",
+        "unit": "percentage",
+        "tab": 1
+      },
+      {
+        "id": 1001,
+        "name": "Tree cover loss in primary forest",
+        "type": "line",
+        "unit": "percentage",
+        "tab": 1
+      },
+      {
+        "id": 15,
+        "name": "FAO FRA 2015 (IPCC Approach 1)",
+        "type": "line",
+        "unit": "hectares",
+        "tab": 3
+      },
+      {
+        "id": 16,
+        "name": "FAO FRA 2015 (IPCC Approach 1)",
+        "type": "line",
+        "unit": "percentage",
+        "tab": 3
+      },
+      {
+        "id": 31,
+        "name": "National Data (IPCC Approach 2/3)",
+        "type": "line",
+        "unit": "hectares",
+        "tab": 2
+      },
+      {
+        "id": 32,
+        "name": "National Data (IPCC Approach 2/3)",
+        "type": "line",
+        "unit": "percentage",
+        "tab": 2
+      }
+    ]
+  },
+  {
+    "id": 4,
     "name": "Total carbon stored in trees",
     "slug": "total-carbon-stored-in-trees",
     "type_slug": "forest-and-carbon-data",
@@ -508,7 +602,7 @@
     ]
   },
   {
-    "id": 4,
+    "id": 5,
     "name": "Total carbon stored in soil",
     "slug": "total-carbon-stored-in-soil",
     "type_slug": "forest-and-carbon-data",
@@ -540,7 +634,7 @@
     ]
   },
   {
-    "id": 5,
+    "id": 6,
     "name": "Forest area 2000",
     "slug": "forest-area-2000",
     "type_slug": "forest-and-carbon-data",
@@ -604,7 +698,7 @@
     ]
   },
   {
-    "id": 6,
+    "id": 7,
     "name": "Average carbon stored in trees per unit area",
     "slug": "average-carbon-stored-in-trees-per-unit-area",
     "type_slug": "forest-and-carbon-data",
@@ -834,7 +928,7 @@
     ]
   },
   {
-    "id": 7,
+    "id": 8,
     "name": "Emissions from Deforestation vs. All Other Sectors",
     "slug": "emissions-from-deforestation-vs-all-other-sectors",
     "type_slug": "policy-and-drivers",
@@ -863,7 +957,7 @@
     ]
   },
   {
-    "id": 8,
+    "id": 9,
     "name": "Average carbon stored in soils per unit area",
     "slug": "average-carbon-stored-in-soils-per-unit-area",
     "type_slug": "forest-and-carbon-data",
@@ -895,7 +989,7 @@
     ]
   },
   {
-    "id": 9,
+    "id": 10,
     "name": "Emissions from peat drainage",
     "slug": "emissions-from-peat-drainage",
     "type_slug": "forest-and-carbon-data",
@@ -932,7 +1026,7 @@
     ]
   },
   {
-    "id": 10,
+    "id": 11,
     "name": "Top 5 crops expanding in the area",
     "slug": "top-5-crops-expanding-in-the-area",
     "type_slug": "policy-and-drivers",
@@ -962,7 +1056,7 @@
     ]
   },
   {
-    "id": 11,
+    "id": 12,
     "name": "Drivers of deforestation and degradation",
     "slug": "drivers-of-deforestation-and-degradation",
     "type_slug": "policy-and-drivers",
@@ -990,7 +1084,7 @@
     ]
   },
   {
-    "id": 12,
+    "id": 13,
     "name": "Human population trends",
     "slug": "human-population-trends",
     "type_slug": "policy-and-drivers",
@@ -1036,7 +1130,7 @@
     ]
   },
   {
-    "id": 13,
+    "id": 14,
     "name": "Value of Primary Agricultural Export Commodity",
     "slug": "value-of-primary-agricultural-export-commodity",
     "type_slug": "policy-and-drivers",
@@ -1074,7 +1168,7 @@
     ]
   },
   {
-    "id": 14,
+    "id": 15,
     "name": "Value of Primary Wood Product Export Commodity",
     "slug": "value-of-primary-wood-product-export-commodity",
     "type": "Policy and Drivers",
@@ -1112,7 +1206,7 @@
     ]
   },
   {
-    "id": 15,
+    "id": 16,
     "name": "Emissions from Peat Fires",
     "slug": "emissions-from-peat-fires",
     "type_slug": "forest-and-carbon-data",
@@ -1149,7 +1243,7 @@
     ]
   },
   {
-    "id": 16,
+    "id": 17,
     "name": "Emissions from peat drainage on plantations",
     "slug": "emissions-from-peat-drainage-on-plantations",
     "type_slug": "forest-and-carbon-data",

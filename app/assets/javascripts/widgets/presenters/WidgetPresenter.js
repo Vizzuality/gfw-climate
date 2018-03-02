@@ -56,6 +56,7 @@ define([
         type: t.type,
         name: t.name,
         position: position,
+        cumulative: t.cumulative,
         unit: (t.switch) ? t['switch'][0]['unit'] : null,
         start_date: (t.range) ? t['range'][0] : null,
         end_date: (t.range) ? t['range'][t['range'].length - 1] : null,
