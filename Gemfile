@@ -26,7 +26,6 @@ gem 'responders', '~> 2.0'
 gem 'google_drive'
 
 gem 'rubyzip'
-
 gem 'raddocs'
 
 group :development do

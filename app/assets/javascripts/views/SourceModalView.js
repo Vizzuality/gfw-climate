@@ -97,7 +97,7 @@ define(
         );
       },
 
-      sourceError: function(error) {
+      sourceError: function() {
         this.$current.find('svg').attr('class', '');
         console.info('The id you are searching for does not exist in the API');
         this.sourceStatic(this.sourceModel.get('slug'));

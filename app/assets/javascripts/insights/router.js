@@ -7,8 +7,7 @@ define(
     'utils',
     'countries/services/PlaceService',
     'insights/views/glad-alerts/InsightsGladAlertsView',
-    'insights/views/emissions-calculator/EmissionCalculatorIndexView',
-    'insights/views/emissions-calculator/EmissionCalculatorShowView'
+    'insights/views/emissions-calculator/EmissionCalculatorIndexView'
   ],
   function(
     Backbone,
@@ -18,8 +17,7 @@ define(
     utils,
     PlaceService,
     InsightsGladAlertsView,
-    EmissionCalculatorIndexView,
-    EmissionCalculatorShowView
+    EmissionCalculatorIndexView
   ) {
     'use strict';
 
@@ -126,13 +124,6 @@ define(
       _initEmissionsCalculatorIndex: function() {
         this.insight = 'emissions-calculator';
         new EmissionCalculatorIndexView();
-      },
-
-      _initEmissionsCalculatorShow: function(id) {
-        this.insight = 'emissions-calculator';
-        new EmissionCalculatorShowView({
-          id: id
-        });
       }
     });
 

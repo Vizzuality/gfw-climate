@@ -1,3 +1,36 @@
+# 1.3.0 (24/08/2016)
+
+* Adds new GLAD visualizations
+* Adds new item to home page carousel
+* Reorganizes pantropical into INSIGHTS together with Glad Visualization
+
+# 1.2.0 (18/04/2016)
+
+* Adds peat drainage layer
+* Adds country specific layers
+* Updates colours for tree biomass loss and density
+* Fixes bugs and makes all work better!
+
+# 1.1.0 (9/03/2016)
+
+* Tropics overlay
+* Fixes to the homepage
+* Several bug fixes since last release
+
+# 1.0.1 (1/12/2015)
+
+* Unbroken links
+* Quicker timeline
+
+# 1.0 (1/12/2015)
+
+* Map with timeline
+* Static pages
+* Pantropical view + Pantropical view embed
+* Compare countries
+* Inspect Country
+>>>>>>> master
+
 # 0.5.1
 
 * New data on countries endpoints

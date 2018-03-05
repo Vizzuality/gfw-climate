@@ -330,6 +330,6 @@ http_interactions:
         NjE5Njk2XX0ifV0sInRpbWUiOjAuMDExLCJmaWVsZHMiOnsiaXNvIjp7InR5
         cGUiOiJzdHJpbmcifSwibmFtZSI6eyJ0eXBlIjoic3RyaW5nIn0sImxhdGxu
         ZyI6eyJ0eXBlIjoic3RyaW5nIn19LCJ0b3RhbF9yb3dzIjoxMDN9
-    http_version: 
+    http_version:
   recorded_at: Wed, 08 Nov 2017 18:56:45 GMT
 recorded_with: VCR 3.0.3

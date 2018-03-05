@@ -40,17 +40,15 @@ http_interactions:
       Cache-Control:
       - no-cache,max-age=31536000,must-revalidate,public
       Surrogate-Key:
-      - t:d7vJOZ t:fWy6gG t:uiJFJp
+      - t:0Qor5H t:d7vJOZ t:uiJFJp
       Last-Modified:
-      - Tue, 07 Nov 2017 00:15:41 GMT
-      X-Sqlapi-Profiler:
+      - Tue, 21 Nov 2017 15:46:27 GMT
       - '{"setDBAuth":1,"queryExplain":9,"eventedQuery":1,"beforeSink":1339,"total":1350}'
       X-Varnish:
       - '202900430'
       Age:
       - '0'
       X-Cache:
-      - MISS
     body:
       encoding: ASCII-8BIT
       string: '{"rows":[{"indicator_id":1,"cartodb_id":339949,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2001,"value":2761617.79522,"text_value":null,"sub_nat_name":null,"boundary_name":"administrative
@@ -70,7 +68,7 @@ http_interactions:
         boundary"},{"indicator_id":1,"cartodb_id":340033,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2015,"value":2261281.62139,"text_value":null,"sub_nat_name":null,"boundary_name":"administrative
         boundary"},{"indicator_id":1,"cartodb_id":340039,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2016,"value":5435241.16354,"text_value":null,"sub_nat_name":null,"boundary_name":"administrative
         boundary"}],"time":1.341,"fields":{"indicator_id":{"type":"number"},"cartodb_id":{"type":"number"},"iso":{"type":"string"},"sub_nat_id":{"type":"number"},"boundary":{"type":"string"},"boundary_id":{"type":"number"},"thresh":{"type":"number"},"the_geom":{"type":"geometry"},"the_geom_webmercator":{"type":"geometry"},"admin0_name":{"type":"string"},"year":{"type":"number"},"value":{"type":"number"},"text_value":{"type":"string"},"sub_nat_name":{"type":"string"},"boundary_name":{"type":"string"}},"total_rows":16}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 09 Nov 2017 15:49:49 GMT
 - request:
     method: get
@@ -142,6 +140,6 @@ http_interactions:
         boundary"},{"indicator_id":1,"cartodb_id":340033,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2015,"value":2261281.62139,"text_value":null,"sub_nat_name":null,"boundary_name":"administrative
         boundary"},{"indicator_id":1,"cartodb_id":340039,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":25,"the_geom":null,"the_geom_webmercator":null,"admin0_name":"Brazil","year":2016,"value":5435241.16354,"text_value":null,"sub_nat_name":null,"boundary_name":"administrative
         boundary"}],"time":1.341,"fields":{"indicator_id":{"type":"number"},"cartodb_id":{"type":"number"},"iso":{"type":"string"},"sub_nat_id":{"type":"number"},"boundary":{"type":"string"},"boundary_id":{"type":"number"},"thresh":{"type":"number"},"the_geom":{"type":"geometry"},"the_geom_webmercator":{"type":"geometry"},"admin0_name":{"type":"string"},"year":{"type":"number"},"value":{"type":"number"},"text_value":{"type":"string"},"sub_nat_name":{"type":"string"},"boundary_name":{"type":"string"}},"total_rows":16}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 09 Nov 2017 15:49:56 GMT
 recorded_with: VCR 3.0.3

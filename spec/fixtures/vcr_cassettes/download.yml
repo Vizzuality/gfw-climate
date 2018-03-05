@@ -60,6 +60,6 @@ http_interactions:
         boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":340099,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":30,"country":"Brazil","year":2010,"value":2688896.17627,"province":null,"boundary_name":"administrative
         boundary","indicator_name":"Tree cover loss","units":"hectares"},{"indicator_id":1,"cartodb_id":340105,"iso":"BRA","sub_nat_id":null,"boundary":"admin","boundary_id":1,"thresh":30,"country":"Brazil","year":2011,"value":1923363.69455,"province":null,"boundary_name":"administrative
         boundary","indicator_name":"Tree cover loss","units":"hectares"}],"time":1.21,"fields":{"indicator_id":{"type":"number"},"cartodb_id":{"type":"number"},"iso":{"type":"string"},"sub_nat_id":{"type":"number"},"boundary":{"type":"string"},"boundary_id":{"type":"number"},"thresh":{"type":"number"},"country":{"type":"string"},"year":{"type":"number"},"value":{"type":"number"},"province":{"type":"string"},"boundary_name":{"type":"string"},"indicator_name":{"type":"string"},"units":{"type":"string"}},"total_rows":6}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 08 Nov 2017 18:56:41 GMT
 recorded_with: VCR 3.0.3

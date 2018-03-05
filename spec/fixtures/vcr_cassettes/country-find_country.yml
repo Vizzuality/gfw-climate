@@ -52,7 +52,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"rows":[{"iso":"BRA","name":"Brazil","latlng":"{\"type\":\"Point\",\"coordinates\":[-53.0924814310442,-10.78085967622]}"}],"time":0.002,"fields":{"iso":{"type":"string"},"name":{"type":"string"},"latlng":{"type":"string"}},"total_rows":1}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 08 Nov 2017 18:56:49 GMT
 - request:
     method: get
@@ -298,7 +298,7 @@ http_interactions:
         aWRfMSI6eyJ0eXBlIjoibnVtYmVyIn0sImNhcnRvZGJfaWQiOnsidHlwZSI6
         Im51bWJlciJ9LCJib3VuZHMiOnsidHlwZSI6IkpTT04ifX0sInRvdGFsX3Jv
         d3MiOjI3fQ==
-    http_version: 
+    http_version:
   recorded_at: Wed, 08 Nov 2017 18:56:50 GMT
 - request:
     method: get
@@ -369,6 +369,6 @@ http_interactions:
         ZHMiOnsiaWQiOnsidHlwZSI6Im51bWJlciJ9LCJuYW1lIjp7InR5cGUiOiJz
         dHJpbmcifSwiY29kZSI6eyJ0eXBlIjoic3RyaW5nIn19LCJ0b3RhbF9yb3dz
         IjoxM30=
-    http_version: 
+    http_version:
   recorded_at: Wed, 08 Nov 2017 18:56:51 GMT
 recorded_with: VCR 3.0.3

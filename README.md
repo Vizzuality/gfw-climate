@@ -27,6 +27,7 @@ Just execute the script file in bin/setup
 RACK_ENV=development
 GFW_URL=http://www.globalforestwatch.org
 GFW_API_HOST=http://gfw-apis.appspot.com
+CLIMATE_API_HOST=/api
 GFW_DATA_S3=
 BLOG_HOST=http://blog.globalforestwatch.org
 TERMS_COOKIE=cookie_terms
