@@ -5,11 +5,12 @@
  */
 define([
   'underscore',
+  'backbone',
   'handlebars',
   'd3',
   'map/presenters/tabs/SpinnerPresenter',
 
-], function(_, Handlebars, d3, Presenter) {
+], function(_, Backbone, Handlebars, d3, Presenter) {
 
   'use strict';
 

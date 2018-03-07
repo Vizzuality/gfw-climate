@@ -40,6 +40,20 @@ $height: auto;
     }
   }
 
+  &.is-large {
+    @media screen and (min-width: $br-mobile) {
+      .modal-window {
+        width: 800px;
+        min-height: 460px;
+
+        .modal-wrapper {
+          padding: 0;
+          max-height: none;
+        }
+      }
+    }
+  }
+
   &.is-huge {
     @media screen and (min-width: $br-mobile) {
       .modal-window {
@@ -156,7 +170,7 @@ $height: auto;
     bottom: 55px;
     right: 0;
     left: 0;
-    padding: 20px; 
+    padding: 20px;
 
     @media (min-width: $br-mobile){
       max-height: 450px;

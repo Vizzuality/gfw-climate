@@ -53,12 +53,6 @@ define([
     render: function() {
       var tpl = this.model.get('template');
 
-      // TODO: remove after data fixed
-      if (this.model.attributes.id === 75 && this.data.id_1) {
-        this.$el.html(this.templates['nodata']({ classname: 'number' }));
-        return;
-      }
-
       if (!!this.model.get('data')[0]) {
         this.$el.html(this.templates[tpl](this.parseData()));
       } else {

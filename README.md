@@ -12,6 +12,11 @@
 
 ## SETUP ##
 
+### Docker
+To run using docker, `cd` to the gfw-climate folder, ensure the files `entrypoint.sh` and `gfw-climate.sh` are execututable (`chmod +x <filename>`), and then execute `./gfw-climate.sh develop` to start the development server on port `localhost:5000`.
+
+### Local
+
 Just execute the script file in bin/setup
 
   Depends on gfwc [repository](https://github.com/Vizzuality/gfw-climate)

@@ -124,6 +124,10 @@
         color: $font-color-3;
         font-weight: 500;
         margin-bottom: 20px;
+
+        &.-flex {
+          display: flex;
+        }
       }
 
       .heading {

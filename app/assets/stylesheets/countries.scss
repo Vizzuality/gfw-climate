@@ -17,13 +17,13 @@
 // Modules
 @import "modules/modal";
 @import "modules/modal_new";
+@import "modules/modal_download_widget";
 @import "modules/shared";
 @import "modules/buttons";
 @import "modules/icons";
 @import "modules/slick";
 @import "modules/countries/header-profile";
 @import "modules/countries/header-stats";
-@import "modules/countries/list";
 @import "modules/countries/header-show";
 @import "modules/countries/indicators-modal";
 @import "modules/countries/show";
@@ -34,6 +34,7 @@
 @import "modules/select";
 @import "modules/gridgraphs";
 @import "modules/slider";
+@import "modules/shared/geo-list";
 
 // Report modules
 @import "modules/countries/report/year-selector";

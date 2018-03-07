@@ -1,11 +1,12 @@
 define([
   'backbone',
+  'handlebars',
   'underscore',
   'd3',
   'moment',
   'helpers/NumbersHelper',
-  'text!insights/templates/insights-glad-alerts-tooltip.handlebars',
-], function(Backbone, _, d3, moment, NumbersHelper, tplTooltip) {
+  'text!insights/templates/glad-alerts/insights-glad-alerts-tooltip.handlebars',
+], function(Backbone, Handlebars, _, d3, moment, NumbersHelper, tplTooltip) {
 
   'use strict';
 
@@ -125,6 +126,7 @@ define([
       this.year = this.defaults.year;
       this.imageURI = this.defaults.imageURI;
       this.locations = this.defaults.locations;
+      this.currentLocation = this.defaults.currentLocation;
 
       this._initChart();
 
@@ -289,10 +291,10 @@ define([
           .text(')');
       }
 
-      if (this.iso === 'IDN13') {
+      if (this.currentLocation && this.currentLocation.legend) {
         yAxisLabel.append('tspan')
           .attr('class', 'light')
-          .text(' *data reflect loss occurring within primary forests only, rather than all tree cover loss');
+          .text(' *' + this.currentLocation.legend);
       }
 
       this.svg = svg.append('g')
@@ -508,7 +510,7 @@ define([
       var _this = this;
       var allYData = _.pluck(this.chartData, this.dataColumns.semiDashed.y);
       var allXData = _.pluck(this.chartData, this.dataColumns.semiDashed.x);
-      var label = '2001 - 2013 Average:';
+      var label = '2001 - 2014 Average:';
 
       if (this.iso === 'BRA') {
         label = '2013 Average:';

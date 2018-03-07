@@ -6,7 +6,8 @@
 define([
   'underscore',
   'handlebars',
-], function(_, Handlebars) {
+  'backbone',
+], function(_, Handlebars, Backbone) {
 
   'use strict';
 

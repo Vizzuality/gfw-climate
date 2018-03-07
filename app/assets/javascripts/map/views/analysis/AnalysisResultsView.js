@@ -142,7 +142,8 @@ define([
       this.$resultsHide.removeClass('hidden');
       this.$el.addClass('hidden');
       this.presenter.deleteAnalysis();
-      ga('send', 'event', 'Map', 'Delete-Analysis', 'Layer: ' + this.params.layer.title);
+      var title = this.params && this.params.layer ? this.params.layer.title : 'No layer title';
+      ga('send', 'event', 'Map', 'Delete-Analysis', 'Layer: ' + title);
     },
 
     _deleteAnalysisView: function(){
