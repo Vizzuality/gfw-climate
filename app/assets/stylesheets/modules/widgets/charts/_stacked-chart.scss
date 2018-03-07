@@ -46,8 +46,16 @@
     stroke: none;
   }
 
-  .axis.x .tick line {
-    visibility: hidden;
+  .axis.x .tick {
+    @media (max-width: $br-mobile) {
+      &:nth-child(odd) {
+        display: none;
+      }
+    }
+
+    line {
+      visibility: hidden;
+    }
   }
 
   .total-count {
@@ -59,8 +67,10 @@
     .total-count {
       display: none;
     }
-    &:last-of-type .total-count {
-      display: block;
+    @media (min-width: $br-mobile) {
+      &:last-of-type .total-count {
+        display: block;
+      }
     }
   }
 }
