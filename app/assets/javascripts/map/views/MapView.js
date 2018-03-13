@@ -533,7 +533,7 @@ define(
         for (var i = 1999; i < 2013; i++) {
           this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
         }
-        if (FEATURE_PANTROPICAL_DATA) {
+        if (!FEATURE_PANTROPICAL_DATA) {
           this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
         }
       },
