@@ -18,7 +18,8 @@ define(
     'map/views/maptypes/landsatMaptype',
     'map/views/maptypes/basemapStyles',
     'map/views/GeoStylingView',
-    'map/helpers/layersHelper'
+    'map/helpers/layersHelper',
+    'text!map/geojson_overlays/tropics.json'
   ],
   function(
     Backbone,
@@ -33,9 +34,12 @@ define(
     landsatMaptype,
     BasemapStyles,
     GeoStylingView,
-    layersHelper
+    layersHelper,
+    tropicsOverlay
   ) {
     'use strict';
+
+    var FEATURE_PANTROPICAL_DATA = window.gfw.config.FEATURE_PANTROPICAL_DATA === 'true';
 
     var MapView = Backbone.View.extend({
       el: '#map',
@@ -528,6 +532,9 @@ define(
         this.map.mapTypes.set('positron', positronMaptype());
         for (var i = 1999; i < 2013; i++) {
           this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
+        }
+        if (FEATURE_PANTROPICAL_DATA) {
+          this.map.data.addGeoJson(JSON.parse(tropicsOverlay));
         }
       },
 
