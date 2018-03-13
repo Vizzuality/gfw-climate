@@ -30,6 +30,8 @@ define(
   ) {
     'use strict';
 
+    var FEATURE_CARBON_UPDATE = false;
+
     var LayersNavView = Backbone.View.extend({
       template: Handlebars.compile(tpl),
       templateCountry: Handlebars.compile(tplCountry),
@@ -69,7 +71,7 @@ define(
       },
 
       render: function() {
-        this.$el.append(this.template());
+        this.$el.append(this.template({ carbonUpdate: FEATURE_CARBON_UPDATE }));
         //Experiment
         this.presenter.initExperiment('source');
 
