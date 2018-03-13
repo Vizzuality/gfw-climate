@@ -69,24 +69,35 @@
           <span class="category-name">CARBON DENSITY</span>
         </div>
         <ul class="layers-list">
-          <li class="wrapped-layer" data-color="#36893D">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Carbon density layers<a href="#" class="source"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">
-              <label data-layer="total_carbon" class="layer wrapped">
-                <span></span>
-                <input type="radio">Total Carbon
-              </label>
-              <label data-layer="biomass_carbon" class="layer wrapped">
-                <span></span>
-                <input type="radio">Biomass
-              </label>
-              <label data-layer="hwsd" class="layer wrapped">
-                <span></span>
-                <input type="radio">Soil Organic Carbon
-              </label>
-            </span>
-          </li>
+          {{#if carbonUpdate}}
+            <li class="wrapped-layer" data-color="#36893D">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Carbon density layers<a href="#" class="source"><svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">
+                <label data-layer="total_carbon" class="layer wrapped">
+                  <span></span>
+                  <input type="radio">Total Carbon
+                </label>
+                <label data-layer="biomass_carbon" class="layer wrapped">
+                  <span></span>
+                  <input type="radio">Biomass
+                </label>
+                <label data-layer="hwsd" class="layer wrapped">
+                  <span></span>
+                  <input type="radio">Soil Organic Carbon
+                </label>
+              </span>
+           </li>
+          {{else}}
+            <li class="layer" data-layer="carbon_stocks">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Aboveground Live Woody Biomass density<a href='#' data-source='aboveground_biomass' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+            <li class="layer" data-layer="hwsd">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Soil Organic Carbon<a href='#' data-source='soil_organic_carbon' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+          {{/if}}
           <li class="layer" data-layer="global_mangroves_biomass">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Global Distribution of Modelled Mangrove Biomass (2014)<a href='#' data-source='Aboveground_mangrove_biomass_density' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
