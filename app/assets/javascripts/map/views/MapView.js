@@ -39,7 +39,7 @@ define(
   ) {
     'use strict';
 
-    var FEATURE_PANTROPICAL_DATA = false;
+    var FEATURE_PANTROPICAL_DATA = window.gfw.config.FEATURE_PANTROPICAL_DATA === 'true';
 
     var MapView = Backbone.View.extend({
       el: '#map',

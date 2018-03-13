@@ -30,7 +30,7 @@ define(
   ) {
     'use strict';
 
-    var FEATURE_CARBON_UPDATE = false;
+    var FEATURE_CARBON_UPDATE = window.gfw.config.FEATURE_CARBON_UPDATE === 'true';
 
     var LayersNavView = Backbone.View.extend({
       template: Handlebars.compile(tpl),
