@@ -1,11 +1,7 @@
-define([
-  'backbone'
-], function(Backbone) {
-
+define(['backbone'], function(Backbone) {
   'use strict';
 
   var IndicatorView = Backbone.View.extend({
-
     events: {},
 
     initialize: function(setup) {
@@ -17,19 +13,22 @@ define([
     setFetchParams: function(data) {
       if (data.location) {
         data.iso = data.location.iso;
-        data.id_1 = (!!data.location.jurisdiction && Number(data.location.jurisdiction) != 0) ? data.location.jurisdiction : null;
-        data.area = (!!data.location.area && Number(data.location.area) != 0) ? data.location.area : null;
-        delete data.location
+        data.id_1 =
+          !!data.location.jurisdiction &&
+          Number(data.location.jurisdiction) != 0
+            ? data.location.jurisdiction
+            : null;
+        data.area =
+          !!data.location.area && Number(data.location.area) != 0
+            ? data.location.area
+            : null;
+        delete data.location;
       }
       return data;
     },
 
-    destroy: function() {
-
-    }
-
+    destroy: function() {}
   });
 
   return IndicatorView;
-
-})
+});

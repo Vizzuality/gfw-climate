@@ -1,12 +1,12 @@
 .module-legend {
   width: 100%;
   bottom: 0;
-  left: 0px;
+  left: 0;
   color: $dark;
   font-size: 13px;
   max-height: 75%;
   overflow: auto;
-  padding: 0px 0 56px;
+  padding: 0 0 56px;
   z-index: 22;
   background: $white;
   transition: all 0.25s $easeInOutSine;
@@ -36,9 +36,11 @@
     right: 0;
     display: block;
     z-index: 5;
+
     svg{
       stroke: $dark;
     }
+
     @media (min-width: $br-mobileMap){
       display: none;
     }
@@ -48,20 +50,24 @@
   // @ul
   .categories{
     margin: 20px 0;
+
     &.divided{
       margin: 15px 0;
+
       @media (min-width: $br-mobileMap){
         margin: 0 0 20px;
       }
     }
+
     h2{
       padding: 10px 15px;
       margin: 0 0 15px;
-      background: #F0F0F0;
+      background: #f0f0f0;
       font-weight: 500;
       color: $dark;
       font-size: 14px;
       text-transform: uppercase;
+
       @media (min-width: $br-mobileMap){
         padding: 10px 20px;
       }
@@ -69,8 +75,10 @@
     // @li
     .category {
       padding: 0 20px 25px;
+
       &.closed{
         padding: 0 20px 10px;
+
         .category-name {
           &:after{
             transform: translate(0,-100%) rotate(180deg);
@@ -78,9 +86,11 @@
           em{ display: inline-block;}
         }
       }
+
       &:last-child{
         padding: 0 20px;
       }
+
       .category-name {
         text-transform: uppercase;
         font-weight: 500;
@@ -91,6 +101,7 @@
         display: block;
         position: relative;
         cursor: pointer;
+
         &:after{
           display: none;
           content: "";
@@ -108,6 +119,7 @@
             display: block;
           }
         }
+
         em{
           display: none;
           font-size: 11px;
@@ -124,7 +136,9 @@
     .layer {
       width: 100%;
       margin-bottom: 10px;
+
       @include clearfix();
+
       &:last-child {
         margin-bottom: 0;
       }
@@ -138,6 +152,7 @@
         @media (min-width: $br-mobileMap){
           padding: 0 38px 0 13px;
         }
+
         .circle{
           position: absolute;
           top: -2px;
@@ -146,16 +161,18 @@
 
         .subtitle {
           font-size: 11px;
-          padding: 5px 8px 0 0px;
+          padding: 5px 8px 0 0;
           display: block;
-          color: #AAA;
+          color: #aaa;
           word-wrap: break-word;
         }
       }
+
       .layer-sublayer {
         cursor: pointer;
         padding: 10px 5px 5px 14px;
         position: relative;
+
         .onoffswitch {
           margin-top: 1px;
         }
@@ -165,6 +182,7 @@
           margin-left: 5px;
           color: #ccc;
           display: inline-block;
+
           .source {
             top: 9px;
           }
@@ -177,6 +195,7 @@
   // @div
   .source, .layer-close {
     @extend .info-icon;
+
     display: inline-block;
     position: absolute;
     top: -2px;
@@ -200,7 +219,7 @@
       right: 17px;
       width: auto;
       background: $white;
-      border: 1px solid #AAA;
+      border: 1px solid #aaa;
       padding: 0 5px 0 14px;
       font-size: 9px;
       line-height: 14px;
@@ -214,27 +233,33 @@
 
       span {
         display: block;
-        color: #AAA;
+        color: #aaa;
+
         @media (min-width: $br-mobileMap){
           display: none;
         }
       }
+
       &:hover{
         border: 1px solid red;
+
         span{
           color: red;
         }
+
         svg{
           fill: red;
         }
       }
+
       svg{
         left: 2px;
         right: auto;
-        fill: #AAA;
+        fill: #aaa;
         width: 10px;
         height: 10px;
         transition: all 0s;
+
         @media (min-width: $br-mobileMap){
           left: 0;
           right: 0;
@@ -251,7 +276,9 @@
   }
 
   /*****************/
+
   /* Layer details */
+
   /*****************/
   .layer-details {
     margin: 8px 0 0 13px;
@@ -265,6 +292,7 @@
 
     .layer-colors li {
       margin-bottom: 4px;
+
       &:last-child {
         margin-bottom: 0;
       }
@@ -286,9 +314,11 @@
       font-size: 11px;
       line-height: 14px;
       text-transform: uppercase;
+
       span {
         font-weight: 500;
       }
+
       &.toggle-title {
         color: #999;
         cursor: pointer;
@@ -296,14 +326,17 @@
         padding: 10px 0 0;
         position: relative;
         z-index: 1;
+
         span {
           transition: all 0.25s linear;
           display: inline-block;
+
           &.active {
             transform: rotate(90deg);
           }
         }
       }
+
       .canopy-button {
         background: $blue;
         color: $white;
@@ -317,6 +350,7 @@
         top: -7px;
         right: -45px;
         float: right;
+
         &:hover{
           background: darken($blue,5%);
           box-shadow: 0 0 0 1px darken($blue,5%);
@@ -374,6 +408,7 @@
       margin: 7px 0 0;
       box-shadow: inset 0 2px 5px #cecece;
       z-index: 0;
+
       &:before {
         content: '.';
         width: 15px;
@@ -381,7 +416,7 @@
         background-color: $white;
         color: $white;
         transform: rotate(45deg);
-        box-shadow: inset -1px -1px 0px #cecece;
+        box-shadow: inset -1px -1px 0 #cecece;
         position: absolute;
         top: -7px;
         display: block;
@@ -404,6 +439,7 @@
           display: block;
           margin: 5px 0 15px;
         }
+
         .canopy-button {
           float: none;
           top: initial;
@@ -425,12 +461,14 @@
             font-size: 10px;
           }
         }
+
         &.minavgmax {
           position: relative;
+
           .canopy-button {
             background: $white;
             color: $font-color-1;
-            box-shadow: 0 0 0 1px #5B80A0;
+            box-shadow: 0 0 0 1px #5b80a0;
             padding: 0;
             font-size: 10px;
             line-height: 18px;
@@ -439,17 +477,19 @@
               padding: 0 15px;
 
             }
+
             .current {
               background: $blue;
               color: $white;
               border-radius: 9px;
-              padding: 0px 6px;
+              padding: 0 6px;
               display: inline-block;
             }
           }
         }
       }
     }
+
     sup {
       vertical-align: top;
       font-size: 0.8em;
@@ -458,16 +498,20 @@
 
 
   /*****************/
+
   /* Layer details */
+
   /*****************/
   .layer-details-loss {
     .canopy{
       margin: 7px 0 0;
+
       &:first-child{
         margin: 0;
       }
+
       a{
-        background: #AAA;
+        background: #aaa;
         width: 12px;
         height: 12px;
         display: inline-block;
@@ -475,8 +519,9 @@
         color: $white;
         border-radius: 50%;
         font-weight: 500;
+
         &:hover{
-          background: darken(#AAA, 10%);
+          background: darken(#aaa, 10%);
         }
       }
     }
@@ -484,7 +529,9 @@
 
 
   /***************************/
+
   /* Forest2000Layer details */
+
   /***************************/
   .layer-details-forest2000 {
     .quartiles {
@@ -496,7 +543,7 @@
     }
 
     .quartile {
-      background: #4EC54E;
+      background: #4ec54e;
       float: left;
       font-size: 10px;
       color: #fff;
@@ -505,15 +552,17 @@
       height: 100%;
       text-align: center;
       padding: 6px 0;
-      text-shadow: 0px 0px 2px black;
-      &:first-child {background: #9DD89D;}
-      &:last-child {background: #00B300;}
+      text-shadow: 0 0 2px black;
+      &:first-child {background: #9dd89d;}
+      &:last-child {background: #00b300;}
     }
   }
 
   /****************************/
+
   /* PantropicalLayer details &
      Biomass Loss */
+
   /****************************/
   .layer-details-pantropical,
   .layer-details-biomass_loss,
@@ -538,6 +587,7 @@
       li:first-child {float: left;}
       li:last-child {float: right;width: 50%;text-align: right;}
     }
+
     .range-bar {
       display: none;
       position: absolute;
@@ -547,38 +597,41 @@
         display: block;
       }
     }
+
     .quartile-bar {
       clear: both;
       height: 12px;
       width: 100%;
       border: 1px solid #ccc;
       border-radius: 10px;
-      background: #FFFFD4;
-      background: -moz-linear-gradient(left, #FFFFD4 0%, #dd8653 100%);
-      background: -webkit-gradient(linear, left top, right top, color-stop(0%,#FFFFD4), color-stop(100%,#dd8653));
-      background: -webkit-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-      background: -o-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-      background: -ms-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
-      background: linear-gradient(to right, #FFFFD4 0%,#dd8653 100%);
+      background: #ffffd4;
+      background: -moz-linear-gradient(left, #ffffd4 0%, #dd8653 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffd4), color-stop(100%,#dd8653));
+      background: -webkit-linear-gradient(left, #ffffd4 0%,#dd8653 100%);
+      background: -o-linear-gradient(left, #ffffd4 0%,#dd8653 100%);
+      background: -ms-linear-gradient(left, #ffffd4 0%,#dd8653 100%);
+      background: linear-gradient(to right, #ffffd4 0%,#dd8653 100%);
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFD4', endColorstr='#dd8653', GradientType=1);
-      background-image: -ms-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
+      background-image: -ms-linear-gradient(left, #ffffd4 0%,#dd8653 100%);
     }
+
     .quartile-bar-biomass {
       clear: both;
       height: 12px;
       width: 100%;
       border: 1px solid #ccc;
       border-radius: 10px;
-      background: #FFFFD4;
-      background: -moz-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #39A401 100%);
-      background: -webkit-gradient(linear, left top, right top, color-stop(10%,#895122),color-stop(35%,#957F4F),color-stop(75%,#9DB38A), color-stop(100%,#39A401));
-      background: -webkit-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #39A401 100%);
-      background: -o-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #39A401 100%);
-      background: -ms-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #39A401 100%);
-      background: linear-gradient(to right, #895122 10%, #957F4F 35%, #9DB38A 75%, #39A401 100%);
+      background: #ffffd4;
+      background: -moz-linear-gradient(left, #895122 10%, #957f4f 35%, #9db38a 75%, #39a401 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(10%,#895122),color-stop(35%,#957f4f),color-stop(75%,#9db38a), color-stop(100%,#39a401));
+      background: -webkit-linear-gradient(left, #895122 10%, #957f4f 35%, #9db38a 75%, #39a401 100%);
+      background: -o-linear-gradient(left, #895122 10%, #957f4f 35%, #9db38a 75%, #39a401 100%);
+      background: -ms-linear-gradient(left, #895122 10%, #957f4f 35%, #9db38a 75%, #39a401 100%);
+      background: linear-gradient(to right, #895122 10%, #957f4f 35%, #9db38a 75%, #39a401 100%);
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#895122', endColorstr='#39A401', GradientType=1);
-      background-image: -ms-linear-gradient(left, #895122 10%, #957F4F 35%, #9DB38A 75%, #39A401 100%);
+      background-image: -ms-linear-gradient(left, #895122 10%, #957f4f 35%, #9db38a 75%, #39a401 100%);
     }
+
     .quartile-bar-loss-biomass {
       clear: both;
       height: 12px;
@@ -594,22 +647,26 @@
 
     &.layer-details-carbon_gain {
       .quartile-bar {
-        background: #8FDFD2;
-        background: linear-gradient(to right, #071F0A 0%, #84E992 100%);
+        background: #8fdfd2;
+        background: linear-gradient(to right, #071f0a 0%, #84e992 100%);
       }
     }
 
   }
 
   /****************************/
+
   /* ImazonLayer details */
+
   /****************************/
   .layer-details-imazon {
     .layer-colors {
-      .deforestation {color: #F13689;}
-      .degradation {color: #FA98B9;}
+      .deforestation {color: #f13689;}
+      .degradation {color: #fa98b9;}
+
       .alerts {
         color: rgb(255, 189, 21);
+
         &:before {
           content: ' -';
           line-height: 7px;
@@ -624,7 +681,9 @@
   }
 
   /****************************/
+
   /* intactForestLayer2013 details */
+
   /****************************/
   .layer-details-intact-2013 {
     .layer-colors {
@@ -634,22 +693,27 @@
   }
 
   /*********************************/
+
   /* IdnPrimaryLayer details */
+
   /*********************************/
   .layer-details-idn-primary {
     .layer-colors {
-      .intact {color: #007A4D;}
-      .degraded {color: #97BD3D;}
+      .intact {color: #007a4d;}
+      .degraded {color: #97bd3d;}
     }
   }
 
   /*********************************/
+
   /* UserStoriesLayer details */
+
   /*********************************/
   .layer-details-stories {
     .canopy{
       a{
         color: #f3830a;
+
         &:hover{
           color: lighten(#f3830a, 10%);
         }
@@ -658,16 +722,20 @@
   }
 
   /****************************/
+
   /* FiresLayer details */
+
   /****************************/
   .layer-details-fires {
     a {
-      color: #ED4602;
+      color: #ed4602;
+
       &:hover{
-        color: lighten(#ED4602, 10%);
+        color: lighten(#ed4602, 10%);
       }
     }
   }
+
   .layer-details-grump{
     .canopy{
       margin: 5px 0 0;

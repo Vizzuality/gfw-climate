@@ -1,12 +1,7 @@
-define([
-  'Class',
-  'jquery'
-], function(Class, $) {
-
-  var CONVERTER_URL = "http://ogre.adc4gis.com/convert";
+define(['Class', 'jquery'], function(Class, $) {
+  var CONVERTER_URL = 'http://ogre.adc4gis.com/convert';
 
   var ShapefileService = Class.extend({
-
     init: function(options) {
       options = options || {};
       this.shapefile = options.shapefile;
@@ -16,7 +11,7 @@ define([
       var deferred = $.Deferred();
 
       var xhr = new XMLHttpRequest();
-      xhr.open("POST", CONVERTER_URL, true);
+      xhr.open('POST', CONVERTER_URL, true);
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
           deferred.resolve(JSON.parse(xhr.responseText));
@@ -30,9 +25,7 @@ define([
 
       return deferred.promise();
     }
-
   });
 
   return ShapefileService;
-
 });

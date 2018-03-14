@@ -72,7 +72,7 @@
 .insights {
   &.background {
     padding-top: 50px;
-    background-image: linear-gradient(to top, #ffffff, #f7f7f7);
+    background-image: linear-gradient(to top, #fff, #f7f7f7);
     border-bottom: solid 1px #bebcc2;
   }
 
@@ -133,13 +133,13 @@
     .title {
       font-size: 34px;
       font-weight: 300;
-      color: #555555;
+      color: #555;
       margin-bottom: 15px;
     }
 
     .text {
       font-size: 14px;
-      color: #555555;
+      color: #555;
       line-height: 21px;
     }
   }
@@ -176,15 +176,15 @@
       height: 20px;
       margin-right: 5px;
       border-radius: 10px;
-      border: 1px solid #CACACA;
+      border: 1px solid #cacaca;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
 
       &.-info {
-        border-color: #4E819F;
-        background: #4E819F;
+        border-color: #4e819f;
+        background: #4e819f;
 
         .btn-action {
           position: relative;
@@ -198,7 +198,7 @@
         svg {
           width: 8px;
           height: 9px;
-          fill: #FFFFFF;
+          fill: #fff;
           margin: 0 0 1px 0 !important;
         }
       }
@@ -207,7 +207,7 @@
         svg {
           width: 11px;
           height: 11px;
-          fill: #BDBDBD;
+          fill: #bdbdbd;
           margin-right: 1px;
         }
       }

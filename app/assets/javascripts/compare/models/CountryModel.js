@@ -1,10 +1,5 @@
-define([
-  'backbone',
-  'jquery'
-], function(Backbone, $) {
-
+define(['backbone', 'jquery'], function(Backbone, $) {
   var CountryModel = Backbone.Model.extend({
-
     initialize: function() {
       this.url += this.get('id');
     },
@@ -14,9 +9,7 @@ define([
     parse: function(data) {
       return data.country;
     }
-
   });
 
   return CountryModel;
-
 });

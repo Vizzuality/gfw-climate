@@ -103,8 +103,8 @@ $height: auto;
     .modal-close {
       display: block;
       position: absolute;
-      top: 0px;
-      right: 0px;
+      top: 0;
+      right: 0;
       width: 40px;
       height: 40px;
       z-index: 20;
@@ -142,11 +142,13 @@ $height: auto;
 
   &:before {
     top: 0;
+
     @include gradient(to bottom,rgba(255,255,255,1),rgba(255,255,255,0));
   }
 
   &:after {
     bottom: 0;
+
     @include gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,1));
   }
 
@@ -182,7 +184,6 @@ $height: auto;
       height: auto;
       width: 100%;
       outline: none;
-
       font-size: 15px;
       color: $font-color-1;
 
@@ -190,6 +191,7 @@ $height: auto;
 
       p a:not(.btn){
         color: $blue;
+
         &:hover{
           color: darken($blue,5%);
         }
@@ -210,6 +212,7 @@ $height: auto;
   width: 100%;
   background: $white;
   z-index: 2;
+
   @include clearfix();
 
   @media screen and (min-width: $br-mobile) {
@@ -224,6 +227,7 @@ $height: auto;
     width: 100%;
     left: 0;
     top: 100%;
+
     @include gradient(to bottom,rgba(255,255,255,1),rgba(255,255,255,0));
   }
 
@@ -246,9 +250,11 @@ $height: auto;
       cursor: pointer;
       font-weight: 500;
       border-radius: 40px;
+
       &:hover {
         background: darken($white,1%);
       }
+
       &.is-active {
         color: $white;
         background: $font-color-3;
@@ -280,6 +286,7 @@ $height: auto;
     left: 0;
     right: 10px;
     bottom: 100%;
+
     @include gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,1));
   }
 
@@ -297,7 +304,7 @@ $height: auto;
     width: 100%;
 
     &.even {
-      background: #F2F2F3;
+      background: #f2f2f3;
     }
 
     dt {
@@ -307,7 +314,6 @@ $height: auto;
       border-bottom: 1px solid #ccc;
       font-weight: 500;
       font-size: 11px;
-
       text-transform: uppercase;
     }
 
@@ -327,16 +333,19 @@ $height: auto;
 
       }
     }
+
     sup {
       position: relative;
       top: -3px;
       font-size: 80%;
     }
+
     sub {
       position: relative;
       top: 2px;
       font-size: 80%;
     }
+
     em {
       font-style: italic;
       font-size: 90%;
@@ -345,9 +354,11 @@ $height: auto;
 
   .source_table {
     font-size: 12px;
+
     th,td {
       padding: 5px;
       border: 1px solid $border;
+
       strong {
         font-weight: 500;
       }
@@ -417,17 +428,20 @@ $height: auto;
       list-style-type: disc;
       color: $font-color-1;
       margin: 0 0 0 10px;
+
       > li{
         list-style-type: disc;
         padding: 10px 0 0;
         font-size: 13px;
         margin-left: 20px;
         line-height: 1.5;
+
         &:first-child{
           padding: 0;
         }
       }
     }
+
     strong {
       font-weight: bold;
     }
@@ -440,14 +454,17 @@ $height: auto;
 
     .hidden {
       display: none;
+
       &.read_more {
         display: block;
       }
     }
+
     .em {
       font-style: italic;
       font-size: 90%;
     }
+
     .source_summary{
       margin: 0 0 15px;
     }
@@ -469,7 +486,6 @@ $height: auto;
     margin-top: 5px;
     font-size: 13px;
     line-height: 1.2;
-
     color: #999;
   }
 
@@ -503,23 +519,25 @@ $height: auto;
     border-bottom: 2px solid #ccc;
     margin: 0 0 20px;
   }
+
   .carbon_loss .source_category_title {
-    color: #C98E6C;
-    border-bottom-color: #C98E6C;
+    color: #c98e6c;
+    border-bottom-color: #c98e6c;
   }
 
   .carbon_density .source_category_title {
-    color: #B2D26E;
-    border-bottom-color: #B2D26E;
+    color: #b2d26e;
+    border-bottom-color: #b2d26e;
   }
 
   .forest_use .source_category_title {
-    color: #C98E6C;
-    border-bottom-color: #C98E6C;
+    color: #c98e6c;
+    border-bottom-color: #c98e6c;
   }
+
   .forest_cover .source_category_title {
-    color: #B2D26E;
-    border-bottom-color: #B2D26E;
+    color: #b2d26e;
+    border-bottom-color: #b2d26e;
   }
 
   .source_category_title {

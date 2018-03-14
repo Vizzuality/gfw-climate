@@ -44,153 +44,157 @@
  *
  * @return {PlaceService} The PlaceService class
  */
-define([
-  'underscore',
-  'mps',
-  'uri',
-  'compare/presenters/PresenterClass',
-], function (_, mps, UriTemplate, PresenterClass) {
+define(
+  ['underscore', 'mps', 'uri', 'compare/presenters/PresenterClass'],
+  function(_, mps, UriTemplate, PresenterClass) {
+    'use strict';
 
-  'use strict';
+    var urlDefaultsParams = {};
 
-  var urlDefaultsParams = {};
+    var PlaceService = PresenterClass.extend({
+      // _uriTemplate: {
+      //   show: '{name}{/iso}{/area}{?display,widgets}',
+      //   compare: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}'
+      // },
 
-  var PlaceService = PresenterClass.extend({
+      _uriTemplate:
+        '{name}{/country1}{/country2}{/country3}{?threshold,widgets}',
 
-    // _uriTemplate: {
-    //   show: '{name}{/iso}{/area}{?display,widgets}',
-    //   compare: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}'
-    // },
+      /**
+       * Create new PlaceService with supplied Backbone.Router.
+       *
+       * @param  {Backbond.Router} router Instance of Backbone.Router
+       */
+      init: function(router) {
+        this.router = router;
+        this._presenters = [];
+        this._name = null;
+        this._super();
+      },
 
-    _uriTemplate: '{name}{/country1}{/country2}{/country3}{?threshold,widgets}',
+      /**
+       * Subscribe to application events.
+       */
+      _subscriptions: [
+        {
+          'Place/register': function(presenter) {
+            this._presenters = _.union(this._presenters, [presenter]);
+          }
+        },
+        {
+          'Place/update': function() {
+            this._updatePlace();
+          }
+        }
+      ],
 
-    /**
-     * Create new PlaceService with supplied Backbone.Router.
-     *
-     * @param  {Backbond.Router} router Instance of Backbone.Router
-     */
-    init: function(router) {
-      this.router = router;
-      this._presenters = [];
-      this._name = null;
-      this._super();
-    },
+      /**
+       * Init by the router to set the name
+       * and publish the first place.
+       *
+       * @param  {String} name   Place name
+       * @param  {Object} params Url params
+       */
+      initPlace: function(name, params) {
+        this._name = name;
+        this._newPlace(params);
+      },
 
-    /**
-     * Subscribe to application events.
-     */
-    _subscriptions: [{
-      'Place/register': function(presenter) {
-        this._presenters = _.union(this._presenters, [presenter]);
+      /**
+       * Silently updates the url from the presenter params.
+       */
+      _updatePlace: function() {
+        var route, params;
+        params = this._destandardizeParams(
+          this._getPresenterParams(this._presenters)
+        );
+
+        route = this._getRoute(params);
+        this.router.navigate(route, { silent: true });
+      },
+
+      /**
+       * Handles a new place.
+       *
+       * @param  {Object}  params The place parameters
+       */
+      _newPlace: function(params) {
+        var place = {};
+
+        place.params = this._standardizeParams(params);
+        mps.publish('Place/go', [place]);
+      },
+
+      /**
+       * Return route URL for supplied route name and route params.
+       *
+       * @param  {Object} params The route params
+       * @return {string} The route URL
+       */
+      _getRoute: function(param) {
+        var url = new UriTemplate(this._uriTemplate).fillFromObject(param);
+        return decodeURIComponent(url);
+      },
+
+      /**
+       * Return standardized representation of supplied params object.
+       *
+       * @param  {Object} params The params to standardize
+       * @return {Object} The standardized params.
+       */
+      _standardizeParams: function(params) {
+        var p = _.extendNonNull({}, urlDefaultsParams, params);
+        p.name = this._name ? this._name : null;
+
+        // We have to develop this with our params
+        p.country1 = p.country1 ? p.country1.toString() : null;
+        p.country2 = p.country2 ? p.country2.toString() : null;
+        p.country3 = p.country3 ? p.country3.toString() : null;
+
+        return p;
+      },
+
+      /**
+       * Return formated URL representation of supplied params object based on
+       * a route name.
+       *
+       * @param  {Object} params Place to standardize
+       * @return {Object} Params ready for URL
+       */
+      _destandardizeParams: function(params) {
+        var p = _.extendNonNull({}, urlDefaultsParams, params);
+        p.name = this._name ? this._name : null;
+
+        // We have to develop this with our params
+        p.country1 = p.country1 ? p.country1.toString() : null;
+        p.country2 = p.country2 ? p.country2.toString() : null;
+        p.country3 = p.country3 ? p.country3.toString() : null;
+
+        return p;
+      },
+
+      /**
+       * Return param object representing state from all registered presenters
+       * that implement getPlaceParams().
+       *
+       * @param  {Array} presenters The registered presenters
+       * @return {Object} Params representing state from all presenters
+       */
+      _getPresenterParams: function(presenters) {
+        var p = {};
+
+        _.each(
+          presenters,
+          function(presenter) {
+            _.extend(p, presenter.getPlaceParams());
+          },
+          this
+        );
+
+        return p;
       }
-    }, {
-      'Place/update': function() {
-        this._updatePlace();
-      }
-    }],
+    });
 
-    /**
-     * Init by the router to set the name
-     * and publish the first place.
-     *
-     * @param  {String} name   Place name
-     * @param  {Object} params Url params
-     */
-    initPlace: function(name, params) {
-      this._name = name;
-      this._newPlace(params);
-    },
-
-    /**
-     * Silently updates the url from the presenter params.
-     */
-    _updatePlace: function() {
-      var route, params;
-      params = this._destandardizeParams(
-        this._getPresenterParams(this._presenters));
-
-      route = this._getRoute(params);
-      this.router.navigate(route, {silent: true});
-    },
-
-    /**
-     * Handles a new place.
-     *
-     * @param  {Object}  params The place parameters
-     */
-    _newPlace: function(params) {
-      var place = {};
-
-      place.params = this._standardizeParams(params);
-      mps.publish('Place/go', [place]);
-    },
-
-    /**
-     * Return route URL for supplied route name and route params.
-     *
-     * @param  {Object} params The route params
-     * @return {string} The route URL
-     */
-    _getRoute: function(param) {
-      var url = new UriTemplate(this._uriTemplate).fillFromObject(param);
-      return decodeURIComponent(url);
-    },
-
-    /**
-     * Return standardized representation of supplied params object.
-     *
-     * @param  {Object} params The params to standardize
-     * @return {Object} The standardized params.
-     */
-    _standardizeParams: function(params) {
-      var p = _.extendNonNull({}, urlDefaultsParams, params);
-      p.name = this._name ? this._name : null;
-
-      // We have to develop this with our params
-      p.country1 = p.country1 ? p.country1.toString() : null;
-      p.country2 = p.country2 ? p.country2.toString() : null;
-      p.country3 = p.country3 ? p.country3.toString() : null;
-
-      return p;
-    },
-
-    /**
-     * Return formated URL representation of supplied params object based on
-     * a route name.
-     *
-     * @param  {Object} params Place to standardize
-     * @return {Object} Params ready for URL
-     */
-    _destandardizeParams: function(params) {
-      var p = _.extendNonNull({}, urlDefaultsParams, params);
-      p.name = this._name ? this._name : null;
-
-      // We have to develop this with our params
-      p.country1 = p.country1 ? p.country1.toString() : null;
-      p.country2 = p.country2 ? p.country2.toString() : null;
-      p.country3 = p.country3 ? p.country3.toString() : null;
-
-      return p;
-    },
-
-    /**
-     * Return param object representing state from all registered presenters
-     * that implement getPlaceParams().
-     *
-     * @param  {Array} presenters The registered presenters
-     * @return {Object} Params representing state from all presenters
-     */
-    _getPresenterParams: function(presenters) {
-      var p = {};
-
-      _.each(presenters, function(presenter) {
-        _.extend(p, presenter.getPlaceParams());
-      }, this);
-
-      return p;
-    }
-
-  });
-
-  return PlaceService;
-});
+    return PlaceService;
+  }
+);

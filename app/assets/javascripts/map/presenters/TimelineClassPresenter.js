@@ -3,16 +3,10 @@
  *
  * @return TimelineClassPresenter class
  */
-define([
-  'Class',
-  'underscore',
-  'mps'
-], function(Class, _, mps) {
-
+define(['Class', 'underscore', 'mps'], function(Class, _, mps) {
   'use strict';
 
   var TimelineClassPresenter = Class.extend({
-
     init: function(view) {
       this.view = view;
     },
@@ -26,7 +20,7 @@ define([
      */
     updateTimelineDate: function(date) {
       mps.publish('Timeline/date-change', [this.view.getName(), date]);
-      mps.publish('Place/update', [{go: false}]);
+      mps.publish('Place/update', [{ go: false }]);
     },
 
     startPlaying: function() {
@@ -36,9 +30,7 @@ define([
     stopPlaying: function() {
       mps.publish('Timeline/stop-playing', []);
     }
-
   });
 
   return TimelineClassPresenter;
-
 });

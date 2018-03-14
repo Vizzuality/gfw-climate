@@ -3,16 +3,14 @@
  *
  * @return SubscribePresenter class.
  */
-define([
-  'underscore',
-  'mps',
-  'map/presenters/PresenterClass',
-], function(_, mps, PresenterClass) {
-
+define(['underscore', 'mps', 'map/presenters/PresenterClass'], function(
+  _,
+  mps,
+  PresenterClass
+) {
   'use strict';
 
   var SubscribePresenter = PresenterClass.extend({
-
     init: function(view) {
       this.view = view;
       this._super();
@@ -21,37 +19,40 @@ define([
     /**
      * Application subscriptions.
      */
-    _subscriptions: [{
-      'Subscribe/show': function(options) {
-        this.view.show(options);
+    _subscriptions: [
+      {
+        'Subscribe/show': function(options) {
+          this.view.show(options);
+        }
+      },
+      {
+        'Subscribe/hide': function() {
+          this.view.hide();
+        }
+      },
+      {
+        'Subscribe/geom': function(geom) {
+          this.geom_for_subscription = geom;
+        }
+      },
+      {
+        'Tab/opened': function(id) {
+          this.view.hide();
+        }
       }
-    }, {
-      'Subscribe/hide': function() {
-        this.view.hide();
-      }
-    },{
-      'Subscribe/geom': function(geom) {
-        this.geom_for_subscription = geom;
-      }
-    },{
-      'Tab/opened': function(id) {
-        this.view.hide();
-      }
-    }],
+    ],
 
-    subscribeEnd: function(){
+    subscribeEnd: function() {
       mps.publish('Subscribe/end');
     },
 
-    hide: function(){
+    hide: function() {
       mps.publish('Subscribe/end');
     },
 
-    notificate: function(id){
+    notificate: function(id) {
       mps.publish('Notification/open', [id]);
-    },
-
-
+    }
   });
 
   return SubscribePresenter;

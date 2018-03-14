@@ -5,6 +5,7 @@
   transition: all 0.5s $easeInOutSine;
   opacity: 1;
   visibility: visible;
+
   @media (min-width: $br-mobileMap){
     background: $white;
     box-shadow: $shadow1;
@@ -14,17 +15,21 @@
     opacity: 0;
     visibility: hidden;
   }
+
   .title-dialog{
     font-size: 21px;
-    padding: 20px 15px 0px;
+    padding: 20px 15px 0;
     font-weight: 300;
+
     span{
       display: none;
     }
+
     @media (min-width: $br-mobileMap){
       display: none;
     }
   }
+
   .button-box-embed-legend{
     display: none;
   }

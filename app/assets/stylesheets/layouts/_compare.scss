@@ -51,7 +51,6 @@ $l-padding: 50px;
   @media screen and (min-width: $br-mobile) {
     display: flex;
     justify-content: space-between;
-
     margin: 40px 0;
   }
 }
@@ -70,7 +69,6 @@ $l-padding: 50px;
   //To avoid white space due to l-cutpoint.
   position: relative;
   top: -1px;
-
   padding: 8px 20px;
   background-color: #404040;
 

@@ -1,5 +1,4 @@
 .m-modal-field {
-
   &.-scroll {
     position: absolute;
     top: 40px;
@@ -19,20 +18,19 @@
   }
 
   .m-modal--tab {
-
     @media screen and (min-width: $br-mobile) {
       top: 40px;
       bottom: 0;
     }
 
     display: none;
+
     &.is-active {
       display: block;
     }
   }
 
   .m-field {
-
     &.-scroll {
       position: absolute;
       top: 0;
@@ -87,7 +85,7 @@
       color: $dark;
       text-align: center;
       font-weight: 500;
-      opacity: .5;
+      opacity: 0.5;
 
       @media screen and (min-width: $br-mobile) {
         text-align: left;
@@ -122,7 +120,7 @@
       .m-field-list-item:not(.is-active) {
         opacity: 0.6;
         pointer-events: none;
-        background-color: rgba($black, .2);
+        background-color: rgba($black, 0.2);
       }
     }
 
@@ -134,7 +132,7 @@
       padding-right: 55px;
       font-size: 14px;
       font-weight: 500;
-      color: rgba($black, .5);
+      color: rgba($black, 0.5);
       border: 1px solid $border;
       border-radius: 5px;
       cursor: pointer;
@@ -202,17 +200,21 @@
           border-radius: 50%;
         }
       }
+
       &.is-active {
         color: $white;
         background: $font-color-3;
+
         &:before {
           border: 1px solid $white;
         }
+
         &.is-checkbox {
           svg {
             display: block;
           }
         }
+
         &.is-data {
           svg {
             fill: $white;

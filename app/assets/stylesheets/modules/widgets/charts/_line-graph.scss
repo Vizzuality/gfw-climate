@@ -33,7 +33,6 @@
 }
 
 .lineChart {
-
   .overlay {
     fill: none;
     pointer-events: all;
@@ -46,11 +45,11 @@
   }
 
   .area {
-    fill: #61BED4;
+    fill: #61bed4;
   }
 
   .axis line {
-    stroke: #E5E5DF;
+    stroke: #e5e5df;
     shape-rendering: crispEdges;
   }
 
@@ -61,7 +60,7 @@
   }
 
   .axis path {
-    stroke: #E5E5DF;
+    stroke: #e5e5df;
     stroke-width: 3px;
     fill: none;
   }
@@ -76,7 +75,7 @@
 
   .axis2 line {
     fill: none;
-    stroke: #E5E5DF;
+    stroke: #e5e5df;
     shape-rendering: crispEdges;
   }
 
@@ -97,7 +96,7 @@
 
   .brush .extent {
     fill: #333;
-    fill-opacity: .125;
+    fill-opacity: 0.125;
     shape-rendering: crispEdges;
   }
 
@@ -107,7 +106,7 @@
   }
 
   .context .background {
-    fill: #3DAFCB;
+    fill: #3dafcb;
   }
 
   .hoverOverlay circle {

@@ -3,28 +3,31 @@
  *
  * @return CanvasLayer class (extends Class).
  */
-define([
-  'underscore',
-  '_string',
-  'abstract/layer/OverlayLayerClass'
-], function(_, _string, OverlayLayerClass) {
-
+define(['underscore', '_string', 'abstract/layer/OverlayLayerClass'], function(
+  _,
+  _string,
+  OverlayLayerClass
+) {
   'use strict';
 
   var MAX_MONTHS = 200;
   var BASE_MONTH = 72;
 
   var CanvasJSONLayerClass = OverlayLayerClass.extend({
-
     defaults: {
       cartodbUserName: 'wri-01',
-      dataMaxZoom: 17,
+      dataMaxZoom: 17
     },
 
     init: function(layer, options, map) {
       this.tiles = {};
       this.layer = layer;
-      this.top_date = (((moment(this.layer.maxdate).year()  - moment(this.layer.mindate).year()) * 12) + moment(this.layer.maxdate).month()) - 2;
+      this.top_date =
+        (moment(this.layer.maxdate).year() -
+          moment(this.layer.mindate).year()) *
+          12 +
+        moment(this.layer.maxdate).month() -
+        2;
       this._super(layer, options, map);
       this.getDates();
       this.cartoSQL = new cartodb.SQL({
@@ -70,33 +73,37 @@ define([
       var sql = this._getSQL(coord.x, coord.y, zoom);
       var zoomDiff = zoom + 8 - Math.min(zoom + 8, 16);
 
-      this.cartoSQL.execute(sql, _.bind(function(data) {
-        if (!data) {return;}
+      this.cartoSQL.execute(
+        sql,
+        _.bind(function(data) {
+          if (!data) {
+            return;
+          }
 
-        var tile = {
-          canvas: canvas,
-          ctx: canvas.ctx,
-          width: this.tileSize.width,
-          coord: coord,
-          zoom: zoom,
-          height: this.tileSize.height,
-          cells: this.preCacheMonths(data.rows, coord, zoom,
-            zoomDiff),
-          top_date : data.top_date
-        };
+          var tile = {
+            canvas: canvas,
+            ctx: canvas.ctx,
+            width: this.tileSize.width,
+            coord: coord,
+            zoom: zoom,
+            height: this.tileSize.height,
+            cells: this.preCacheMonths(data.rows, coord, zoom, zoomDiff),
+            top_date: data.top_date
+          };
 
-        //set unique id
-        var tileId = '{0}_{1}_{2}'.format(coord.x, coord.y, zoom);
-        canvas.setAttribute('id', tileId);
+          //set unique id
+          var tileId = '{0}_{1}_{2}'.format(coord.x, coord.y, zoom);
+          canvas.setAttribute('id', tileId);
 
-        if (tileId in this.tiles) {
-          delete this.tiles[tileId];
-        }
+          if (tileId in this.tiles) {
+            delete this.tiles[tileId];
+          }
 
-        this.tiles[tileId] = tile;
+          this.tiles[tileId] = tile;
 
-        this._render(tile);
-      }, this));
+          this._render(tile);
+        }, this)
+      );
 
       return canvas;
     },
@@ -112,14 +119,16 @@ define([
       // se contains the deforestation for each entry in sd
       // take se and sd as a matrix [se|sd]
       var sql = _.str.sprintf(
-        'SELECT cartodb_id, x, y, sd, se FROM %(tableName)s WHERE z = %(z)s  AND x >= %(cx)s AND x < %(cx1)s AND y >= %(cy)s AND y < %(cy1)s', {
+        'SELECT cartodb_id, x, y, sd, se FROM %(tableName)s WHERE z = %(z)s  AND x >= %(cx)s AND x < %(cx1)s AND y >= %(cy)s AND y < %(cy1)s',
+        {
           tableName: this.layer.table_name,
           cx: (x * 256) >> zoom_diff,
           cx1: ((x + 1) * 256) >> zoom_diff,
           cy: (y * 256) >> zoom_diff,
           cy1: ((y + 1) * 256) >> zoom_diff,
           z: pixel_zoom
-        });
+        }
+      );
       return sql;
     },
 
@@ -142,11 +151,11 @@ define([
       // render cells
       var len = cells.length;
       var pixel_size = cells.size;
-      var index, index0, index1,mul;
+      var index, index0, index1, mul;
       var previous = [];
       for (var i = 0; i < len; ++i) {
         mul = MAX_MONTHS * i;
-        index  = mul + month;
+        index = mul + month;
         index0 = mul + month_start;
         index1 = mul + month_change;
         // set pixel by hand faster than doing fill rect (below)
@@ -154,7 +163,10 @@ define([
           ctx.fillStyle = '#F69';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
-        if (month >= month_change && cells.deforestation[index] - cells.deforestation[index1] > 0) {
+        if (
+          month >= month_change &&
+          cells.deforestation[index] - cells.deforestation[index1] > 0
+        ) {
           ctx.fillStyle = 'rgb(233, 189, 21)';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
@@ -162,15 +174,14 @@ define([
     },
 
     preCacheMonths: function(rows, coord, zoom, zoom_diff) {
-      var row,
-          xcoords,
-          ycoords,
-          deforestation;
+      var row, xcoords, ycoords, deforestation;
 
-      if (typeof(ArrayBuffer) !== 'undefined') {
-        xcoords       = new Uint8Array(new ArrayBuffer(rows.length));
-        ycoords       = new Uint8Array(new ArrayBuffer(rows.length));
-        deforestation = new Uint8Array(new ArrayBuffer(rows.length * MAX_MONTHS)); // 256 months
+      if (typeof ArrayBuffer !== 'undefined') {
+        xcoords = new Uint8Array(new ArrayBuffer(rows.length));
+        ycoords = new Uint8Array(new ArrayBuffer(rows.length));
+        deforestation = new Uint8Array(
+          new ArrayBuffer(rows.length * MAX_MONTHS)
+        ); // 256 months
       } else {
         // fallback
         xcoords = [];
@@ -217,18 +228,23 @@ define([
 
     updateTiles: function() {
       this.getDates();
-      _.each(this.tiles, _.bind(function(tile) {
-        this._render(tile);
-      }, this));
+      _.each(
+        this.tiles,
+        _.bind(function(tile) {
+          this._render(tile);
+        }, this)
+      );
     },
 
     getDates: function() {
-      this.startMonth = Math.abs(moment(this.layer.mindate).diff(this.currentDate[0], 'months'));
-      this.endMonth = Math.abs(moment(this.layer.mindate).diff(this.currentDate[1], 'months'));
+      this.startMonth = Math.abs(
+        moment(this.layer.mindate).diff(this.currentDate[0], 'months')
+      );
+      this.endMonth = Math.abs(
+        moment(this.layer.mindate).diff(this.currentDate[1], 'months')
+      );
     }
-
   });
 
   return CanvasJSONLayerClass;
-
 });

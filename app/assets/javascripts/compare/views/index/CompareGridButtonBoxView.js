@@ -1,38 +1,37 @@
-define([
-  'backbone',
-  'handlebars',
-  'compare/presenters/CompareGridButtonBoxPresenter',
-  'text!compare/templates/compareGridButtonBox.handlebars',
-], function(Backbone, Handlebars, CompareGridButtonBoxPresenter, tpl) {
+define(
+  [
+    'backbone',
+    'handlebars',
+    'compare/presenters/CompareGridButtonBoxPresenter',
+    'text!compare/templates/compareGridButtonBox.handlebars'
+  ],
+  function(Backbone, Handlebars, CompareGridButtonBoxPresenter, tpl) {
+    var CompareGridButtonBoxView = Backbone.View.extend({
+      el: '#compareGridButtonBox',
 
-  var CompareGridButtonBoxView = Backbone.View.extend({
+      template: Handlebars.compile(tpl),
 
-    el: '#compareGridButtonBox',
+      events: {
+        'click .addIndicators': 'showIndicatorModal'
+      },
 
-    template: Handlebars.compile(tpl),
+      initialize: function() {
+        this.presenter = new CompareGridButtonBoxPresenter(this);
+        this.render();
+      },
 
-    events: {
-      'click .addIndicators' : 'showIndicatorModal'
-    },
+      render: function() {
+        this.$el.html(this.template());
+      },
 
-    initialize:function() {
-      this.presenter = new CompareGridButtonBoxPresenter(this);
-      this.render();
-    },
+      // Events
+      showIndicatorModal: function(e) {
+        ga('send', 'event', 'customise', 'compare');
+        e && e.preventDefault();
+        this.presenter.showIndicatorModal();
+      }
+    });
 
-    render: function() {
-      this.$el.html(this.template());
-    },
-
-    // Events
-    showIndicatorModal: function(e) {
-      ga('send', 'event','customise','compare');
-      e && e.preventDefault();
-      this.presenter.showIndicatorModal();
-    }
-
-  });
-
-  return CompareGridButtonBoxView;
-
-});
+    return CompareGridButtonBoxView;
+  }
+);

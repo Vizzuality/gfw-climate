@@ -30,7 +30,8 @@ define(
       },
 
       _drawCountry: function() {
-        var iso = this.presenter.status.get('iso'), sql;
+        var iso = this.presenter.status.get('iso'),
+          sql;
 
         if (!iso) {
           return;
@@ -47,11 +48,12 @@ define(
           '&format=topojson'
         ].join(' ');
 
-        $.getJSON(gfw.config.CDB_API_HOST + '?q=' + sql)
-          .then(function(topology) {
+        $.getJSON(gfw.config.CDB_API_HOST + '?q=' + sql).then(
+          function(topology) {
             var el = '#figure-' + iso.toLowerCase();
             CountryHelper.draw(topology, el, { alerts: true });
-          }.bind(this));
+          }.bind(this)
+        );
       }
     });
 

@@ -1,16 +1,14 @@
 /**
  * CountryService provides access to information about countries.
  */
-define([
-  'Class',
-  'uri',
-  'map/services/DataService'
-], function (Class, UriTemplate, ds) {
-
+define(['Class', 'uri', 'map/services/DataService'], function(
+  Class,
+  UriTemplate,
+  ds
+) {
   'use strict';
 
   var CountryService = Class.extend({
-
     requestId: 'CountryService',
 
     _uriTemplate: window.gfw.config.GFW_API_HOST + '/countries/{iso}',
@@ -27,21 +25,25 @@ define([
     /**
      * The configuration for client side caching of results.
      */
-    _cacheConfig: {type: 'persist', duration: 1, unit: 'days'},
+    _cacheConfig: { type: 'persist', duration: 1, unit: 'days' },
 
     /**
      * Defines requests used by CountryService.
      */
     _defineRequests: function() {
       var cache = this._cacheConfig;
-      var config = {cache: cache, url: this._uriTemplate};
+      var config = { cache: cache, url: this._uriTemplate };
 
       ds.define(this.requestId, config);
     },
 
     execute: function(iso, successCb, failureCb) {
-      var config = {resourceId: this.requestId, data: {iso: iso},
-        success: successCb, error: failureCb};
+      var config = {
+        resourceId: this.requestId,
+        data: { iso: iso },
+        success: successCb,
+        error: failureCb
+      };
 
       ds.request(config);
     }

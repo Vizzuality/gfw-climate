@@ -8,7 +8,7 @@
     width: 200%;
     overflow: hidden;
     transform: translatex(0);
-    transition: all .5s $easeInCubic;
+    transition: all 0.5s $easeInCubic;
   }
 
   @media screen and (min-width: $br-mobile) {
@@ -27,7 +27,6 @@
   border: 1px solid rgba($font-color-2,0.3);
   border-radius: 10px;
   background-color: $dark-grey;
-
   cursor: pointer;
 
   &:first-child {
@@ -43,6 +42,7 @@
     position: absolute;
     top: 35%;
     right: 20px;
+
     @include arrow(10px, $white, 2px, -135deg);
   }
 
@@ -51,7 +51,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
     width: 47.5%;
     min-height: 280px;
 
@@ -83,7 +82,7 @@
   .m-compare-selector-not-empty {
     color: $white;
     font-size: 14px;
-    opacity: .5;
+    opacity: 0.5;
   }
 
   .selection-name {

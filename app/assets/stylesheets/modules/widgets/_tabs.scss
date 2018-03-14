@@ -3,6 +3,7 @@
   .sup-options {
     // overflow: hidden;
     @include clearfix();
+
     margin: 25px 0 15px 0;
     font-size: 12px;
 
@@ -29,6 +30,7 @@
 
     .canopy-threshold {
       float: right;
+
       > span {
         line-height: 20px;
       }
@@ -42,7 +44,7 @@
         left: 0;
         bottom: auto;
         top: -10px;
-        transform: translate(0px,-100%);
+        transform: translate(0,-100%);
 
         &:after {
           bottom: 0;
@@ -53,7 +55,6 @@
 
       &:first-child {
         .tooltip1 {
-
           &:after {
             left: 0;
           }
@@ -61,7 +62,6 @@
       }
 
       &:nth-child(2) {
-
         .tooltip1 {
           &:after {
             left: 0;
@@ -117,7 +117,6 @@
     }
 
     .tab-graph--no-data {
-
       div {
         position: absolute;
         top: 0;

@@ -1,11 +1,12 @@
-$reference-color: #5B80A0;
-$monitoring-color: #EDB04A;
+$reference-color: #5b80a0;
+$monitoring-color: #edb04a;
 
 .m-summary-chart {
   width: 100%;
 
   .years-selector {
     padding: 0 35px 0 75px;
+
     .noUi-target {
       margin: 0;
     }
@@ -37,7 +38,7 @@ $monitoring-color: #EDB04A;
 
         .tick {
           text {
-            fill: #555555;
+            fill: #555;
             stroke-width: 0;
             font-size: 10px;
           }
@@ -56,7 +57,7 @@ $monitoring-color: #EDB04A;
 
           text {
             stroke-width: 0;
-            fill: #555555;
+            fill: #555;
             font-size: 10px;
             text-transform: uppercase;
           }
@@ -80,7 +81,7 @@ $monitoring-color: #EDB04A;
 
     .dots-group {
       .dot {
-        stroke: #FFFFFF;
+        stroke: #fff;
         stroke-width: 1.5;
 
         &.reference {
@@ -94,7 +95,7 @@ $monitoring-color: #EDB04A;
     }
 
     .curstom-domain {
-      stroke: #E5E5DF;
+      stroke: #e5e5df;
       stroke-width: 3;
       shape-rendering: crispEdges;
     }
@@ -147,7 +148,7 @@ $monitoring-color: #EDB04A;
 
       .table {
         width: 100%;
-        border: 1px solid #E5E5DF;
+        border: 1px solid #e5e5df;
         padding: 30px 40px;
         margin-top: 40px;
 

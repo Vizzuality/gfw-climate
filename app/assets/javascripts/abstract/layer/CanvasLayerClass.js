@@ -3,16 +3,14 @@
  *
  * @return CanvasLayer class (extends Class).
  */
-define([
-  'underscore',
-  'uri',
-  'abstract/layer/OverlayLayerClass'
-], function(_, UriTemplate, OverlayLayerClass) {
-
+define(['underscore', 'uri', 'abstract/layer/OverlayLayerClass'], function(
+  _,
+  UriTemplate,
+  OverlayLayerClass
+) {
   'use strict';
 
   var CanvasLayerClass = OverlayLayerClass.extend({
-
     defaults: {
       dataMaxZoom: 17
     },
@@ -62,52 +60,67 @@ define([
       canvas.width = this.tileSize.width;
       canvas.height = this.tileSize.height;
 
-      var url = this._getUrl.apply(this,
-        this._getTileCoords(coord.x, coord.y, zoom));
+      var url = this._getUrl.apply(
+        this,
+        this._getTileCoords(coord.x, coord.y, zoom)
+      );
 
-      this._getImage(url, _.bind(function(image) {
-        var canvasData = {
-          tileId: tileId,
-          canvas: canvas,
-          image: image,
-          x: coord.x,
-          y: coord.y,
-          z: zoom
-        };
+      this._getImage(
+        url,
+        _.bind(function(image) {
+          var canvasData = {
+            tileId: tileId,
+            canvas: canvas,
+            image: image,
+            x: coord.x,
+            y: coord.y,
+            z: zoom
+          };
 
-        this._cacheTile(canvasData);
-        this._drawCanvasImage(canvasData);
-      }, this));
+          this._cacheTile(canvasData);
+          this._drawCanvasImage(canvasData);
+        }, this)
+      );
 
       return canvas;
     },
 
     _drawCanvasImage: function(canvasData) {
-      "use asm";
+      'use asm';
       var canvas = canvasData.canvas,
-          ctx    = canvas.getContext('2d'),
-          image  = canvasData.image,
-          zsteps = this._getZoomSteps(canvasData.z) |0; // force 32bit int type
+        ctx = canvas.getContext('2d'),
+        image = canvasData.image,
+        zsteps = this._getZoomSteps(canvasData.z) | 0; // force 32bit int type
 
-      ctx.clearRect(0, 0, 256, 256);                    // this will allow us to sum up the dots when the timeline is running
+      ctx.clearRect(0, 0, 256, 256); // this will allow us to sum up the dots when the timeline is running
 
       if (zsteps < 0) {
         ctx.drawImage(image, 0, 0);
-      } else {                                          // over the maxzoom, we'll need to scale up each tile
+      } else {
+        // over the maxzoom, we'll need to scale up each tile
 
-        ctx.imageSmoothingEnabled = false;              // disable pic enhancement
+        ctx.imageSmoothingEnabled = false; // disable pic enhancement
         ctx.mozImageSmoothingEnabled = false;
 
         // tile scaling
-        var srcX = (256 / Math.pow(2, zsteps) * (canvasData.x % Math.pow(2, zsteps))) |0,
-            srcY = (256 / Math.pow(2, zsteps) * (canvasData.y % Math.pow(2, zsteps))) |0,
-            srcW = (256 / Math.pow(2, zsteps)) |0,
-            srcH = (256 / Math.pow(2, zsteps)) |0;
+        var srcX =
+            (256 / Math.pow(2, zsteps) * (canvasData.x % Math.pow(2, zsteps))) |
+            0,
+          srcY =
+            (256 / Math.pow(2, zsteps) * (canvasData.y % Math.pow(2, zsteps))) |
+            0,
+          srcW = (256 / Math.pow(2, zsteps)) | 0,
+          srcH = (256 / Math.pow(2, zsteps)) | 0;
 
         ctx.drawImage(image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
       }
       var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, canvasData.z);
+      this.filterCanvasImgdata(
+        I.data,
+        canvas.width,
+        canvas.height,
+        canvasData.z
+      );
       ctx.putImageData(I, 0, 0);
     },
 
@@ -118,11 +131,11 @@ define([
     _getImage: function(url, callback) {
       var xhr = new XMLHttpRequest();
 
-      xhr.onload = function () {
+      xhr.onload = function() {
         var url = URL.createObjectURL(this.response);
         var image = new Image();
 
-        image.onload = function () {
+        image.onload = function() {
           image.crossOrigin = '';
           callback(image);
           URL.revokeObjectURL(url);
@@ -136,16 +149,20 @@ define([
     },
 
     _getUrl: function(x, y, z) {
-      return new UriTemplate(this.options.urlTemplate).fillFromObject({x: x, y: y, z: z});
+      return new UriTemplate(this.options.urlTemplate).fillFromObject({
+        x: x,
+        y: y,
+        z: z
+      });
     },
 
     _getTileCoords: function(x, y, z) {
       if (z > this.options.dataMaxZoom) {
-        x = Math.floor(x / (Math.pow(2, z - this.options.dataMaxZoom)));
-        y = Math.floor(y / (Math.pow(2, z - this.options.dataMaxZoom)));
+        x = Math.floor(x / Math.pow(2, z - this.options.dataMaxZoom));
+        y = Math.floor(y / Math.pow(2, z - this.options.dataMaxZoom));
         z = this.options.dataMaxZoom;
       } else {
-        y = (y > Math.pow(2, z) ? y % Math.pow(2, z) : y);
+        y = y > Math.pow(2, z) ? y % Math.pow(2, z) : y;
         if (x >= Math.pow(2, z)) {
           x = x % Math.pow(2, z);
         } else if (x < 0) {
@@ -172,12 +189,11 @@ define([
     },
 
     updateTiles: function() {
-      for(var i in this.tiles) {
+      for (var i in this.tiles) {
         this._drawCanvasImage(this.tiles[i]);
       }
     }
   });
 
   return CanvasLayerClass;
-
 });

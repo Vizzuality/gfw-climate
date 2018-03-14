@@ -7,6 +7,7 @@
   height: 100%;
   background: rgba($dark,0.5);
   z-index: 100;
+
   .search-box{
     position: absolute;
     top: 110px;
@@ -17,19 +18,22 @@
     box-shadow: $shadow1;
     background: $white;
     transform: translate(-50%,0%);
+
     @media (min-width: $br-mobileMap){
       width: 100%;
       top: 300px;
     }
+
     .searching-kinds {
       display: block;
       position: absolute;
       bottom: 100%;
-      left: 0px;
+      left: 0;
       font-size: 80%;
       color: #fff;
       font-weight: 100;
       z-index: 2;
+
       .kind {
         display: block;
         background-color: #c9c9c9;
@@ -37,9 +41,11 @@
         cursor: pointer;
         float: left;
         margin: 0 0 0 2px;
+
         @media (min-width: $br-mobileMap){
           padding: 5px 10px;
         }
+
         &:first-child{
           margin: 0;
         }
@@ -48,14 +54,17 @@
         //   border-right: 1px solid white;
         // }
       }
+
       .selected {
         background-color: #fff;
-        color: #7B7B7B;
+        color: #7b7b7b;
       }
     }
+
     .search:not(.selected) {
       display: none;
     }
+
     input {
       margin: 0;
       padding: 13px 40px 10px 10px;

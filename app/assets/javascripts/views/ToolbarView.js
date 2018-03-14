@@ -1,26 +1,22 @@
 /**
  * The Footer view.
  */
-define([
-  'jquery',
-  'backbone',
-  'views/ShareView',
-
-], function($,Backbone,ShareView) {
-
+define(['jquery', 'backbone', 'views/ShareView'], function(
+  $,
+  Backbone,
+  ShareView
+) {
   'use strict';
 
   var ToolbarView = Backbone.View.extend({
-
     el: '#toolbarView',
 
     events: {
-      'click .btn-share' : 'share',
-      'click .btn-save' : 'save'
+      'click .btn-share': 'share',
+      'click .btn-save': 'save'
     },
 
-    initialize: function() {
-    },
+    initialize: function() {},
 
     // EVENTS
     share: function(e) {
@@ -30,10 +26,8 @@ define([
 
     save: function(e) {
       return false;
-    },
-
+    }
   });
 
   return ToolbarView;
-
 });

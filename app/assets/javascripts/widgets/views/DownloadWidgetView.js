@@ -1,95 +1,109 @@
-define([
-  'jquery',
-  'enquire',
-  'backbone',
-  'handlebars',
-  'chosen',
-  'views/ModalView',
-  'widgets/presenters/DownloadWidgetPresenter',
-  'text!widgets/templates/widget-download.handlebars',
-], function($, enquire, Backbone, Handlebars, chosen, ModalView, DownloadWidgetPresenter, tpl) {
+define(
+  [
+    'jquery',
+    'enquire',
+    'backbone',
+    'handlebars',
+    'chosen',
+    'views/ModalView',
+    'widgets/presenters/DownloadWidgetPresenter',
+    'text!widgets/templates/widget-download.handlebars'
+  ],
+  function(
+    $,
+    enquire,
+    Backbone,
+    Handlebars,
+    chosen,
+    ModalView,
+    DownloadWidgetPresenter,
+    tpl
+  ) {
+    var DownloadModalView = ModalView.extend({
+      id: 'downloadWidgetModal',
 
-  var DownloadModalView = ModalView.extend({
+      className: 'modal modal-download is-large',
 
-    id: 'downloadWidgetModal',
+      template: Handlebars.compile(tpl),
 
-    className: "modal modal-download is-large",
+      initialize: function(options) {
+        // Init the parent view with the same scope
+        this.constructor.__super__.initialize.apply(this);
+        this.presenter = new DownloadWidgetPresenter(this);
+        this.options = _.extend(this.defaults, options);
+        this.setMobile();
+        this.setListeners();
+        this._initVars();
+        this.$body = $('body');
+        this.$body.append(this.el);
+      },
 
-    template: Handlebars.compile(tpl),
+      setMobile: function() {
+        enquire.register(
+          'screen and (max-width:' + window.gfw.config.GFW_MOBILE + 'px)',
+          {
+            match: _.bind(function() {
+              this.mobile = true;
+            }, this)
+          }
+        );
 
-    initialize: function(options) {
-      // Init the parent view with the same scope
-      this.constructor.__super__.initialize.apply(this);
-      this.presenter = new DownloadWidgetPresenter(this);
-      this.options = _.extend(this.defaults, options);
-      this.setMobile();
-      this.setListeners();
-      this._initVars();
-      this.$body = $('body');
-      this.$body.append(this.el);
-    },
+        enquire.register(
+          'screen and (min-width:' + window.gfw.config.GFW_MOBILE + 'px)',
+          {
+            match: _.bind(function() {
+              this.mobile = false;
+            }, this)
+          }
+        );
+      },
 
-    setMobile: function() {
-       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          this.mobile = true;
-        },this)
-      });
+      initChosen: function() {
+        this.$selects = this.$el.find('.chosen-select');
+        this.$selects.chosen({
+          disable_search: true
+        });
+      },
 
-      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          this.mobile = false;
-        },this)
-      });
-    },
+      setListeners: function(e) {
+        this.$el.on('click', '.js-submit', _.bind(this.handleSubmit, this));
+        this.$el.on('click', '.js-back', _.bind(this.handleBack, this));
+      },
 
-    initChosen: function() {
-      this.$selects = this.$el.find('.chosen-select');
-      this.$selects.chosen({
-        disable_search: true
-      });
-    },
+      unsetListeners: function(e) {
+        this.$el.off('click', '.js-submit', _.bind(this.handleSubmit, this));
+        this.$el.on('click', '.js-back', _.bind(this.handleBack, this));
+      },
 
-    setListeners: function(e) {
-      this.$el.on('click', '.js-submit', _.bind(this.handleSubmit, this ));
-      this.$el.on('click', '.js-back', _.bind(this.handleBack, this ));
-    },
+      handleSubmit: function(e) {
+        e.preventDefault();
+        var indicators = this.$('#download-indicators').val();
+        var data = {
+          indicators: indicators || [],
+          start_date: this.$('#download-start-date').val(),
+          end_date: this.$('#download-end-date').val(),
+          thresh: this.$('#download-thresh').val()
+        };
+        this.presenter.submit(data);
+      },
 
-    unsetListeners: function(e) {
-      this.$el.off('click', '.js-submit', _.bind(this.handleSubmit, this ));
-      this.$el.on('click', '.js-back', _.bind(this.handleBack, this ));
-    },
+      handleBack: function(index) {
+        this.presenter.goBack();
+      },
 
-    handleSubmit: function(e) {
-      e.preventDefault();
-      var indicators = this.$('#download-indicators').val();
-      var data = {
-        indicators: indicators || [],
-        start_date: this.$('#download-start-date').val(),
-        end_date: this.$('#download-end-date').val(),
-        thresh: this.$('#download-thresh').val()
-      };
-      this.presenter.submit(data);
-    },
+      render: function(data) {
+        this.$el.html(this.template(data));
+        if (!this.mobile) {
+          this.initChosen();
+        }
+        return this;
+      },
 
-    handleBack: function(index){
-      this.presenter.goBack();
-    },
-
-    render: function(data) {
-      this.$el.html(this.template(data));
-      if (!this.mobile) {
-        this.initChosen();
+      remove: function() {
+        this.unsetListeners();
       }
-      return this;
-    },
+    });
 
-    remove: function() {
-      this.unsetListeners();
-    }
-
-  });
-
-  return DownloadModalView;
-
-});
+    return DownloadModalView;
+  }
+);

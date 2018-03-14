@@ -3,25 +3,24 @@
  *
  * @return ProtectedAreasLayer class (extends CartoDBLayerClass)
  */
-define([
-  'underscore',
-  'abstract/layer/ImageMaptypeLayerClass',
-  'map/services/SitesService'
-], function(_, ImageMaptypeLayerClass, SitesService) {
+define(
+  [
+    'underscore',
+    'abstract/layer/ImageMaptypeLayerClass',
+    'map/services/SitesService'
+  ],
+  function(_, ImageMaptypeLayerClass, SitesService) {
+    'use strict';
 
-  'use strict';
+    var ProtectedAreasLayer = ImageMaptypeLayerClass.extend({
+      options: {
+        urlTemplate: 'http://maps.protectedplanet.net/blue{/z}{/x}{/y}',
+        infowindow: true,
+        infowindowAPI: SitesService,
+        analysis: true
+      }
+    });
 
-  var ProtectedAreasLayer = ImageMaptypeLayerClass.extend({
-
-    options: {
-      urlTemplate: 'http://maps.protectedplanet.net/blue{/z}{/x}{/y}',
-      infowindow: true,
-      infowindowAPI: SitesService,
-      analysis: true
-    }
-
-  });
-
-  return ProtectedAreasLayer;
-
-});
+    return ProtectedAreasLayer;
+  }
+);

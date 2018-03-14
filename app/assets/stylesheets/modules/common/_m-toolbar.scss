@@ -10,6 +10,7 @@
     .options_item {
       padding: 0 20px;
       cursor: pointer;
+
       svg {
         display: inline-block;
         width: 15px;
@@ -38,6 +39,7 @@
         pointer-events: none;
         cursor: default;
         opacity: 0.5;
+
         a,button{
           pointer-events: none;
           cursor: default;

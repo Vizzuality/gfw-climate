@@ -3,16 +3,14 @@
  *
  * @return OverlayLayer class (extends Class).
  */
-define([
-  'Class',
-  'underscore',
-  'map/views/layers/CustomInfowindow'
-], function(Class, _, CustomInfowindow) {
-
+define(['Class', 'underscore', 'map/views/layers/CustomInfowindow'], function(
+  Class,
+  _,
+  CustomInfowindow
+) {
   'use strict';
 
   var OverlayLayerClass = Class.extend({
-
     defaults: {
       infowindow: false,
       infowindowContent: null,
@@ -25,20 +23,21 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.tileSize = new google.maps.Size(256, 256);
-      this.options = _.extend({}, this.defaults, this.options || {});
+      this.options = _.extend({}, this.defaults, this.options || {});
     },
 
     addLayer: function(position, success) {
-      this._getLayer().then(_.bind(function(layer) {
-        this.map.overlayMapTypes.setAt(position, layer);
-        if (this.options.infowindow && this.options.interactivity) {
-          this.setInfowindow(layer);
-        }
-        if (success) {
-          success();
-        }
-      }, this));
-
+      this._getLayer().then(
+        _.bind(function(layer) {
+          this.map.overlayMapTypes.setAt(position, layer);
+          if (this.options.infowindow && this.options.interactivity) {
+            this.setInfowindow(layer);
+          }
+          if (success) {
+            success();
+          }
+        }, this)
+      );
     },
 
     removeLayer: function() {
@@ -59,26 +58,31 @@ define([
      */
     setInfowindow: function() {
       if (!this.infowindow && this.options.infowindowAPI) {
+        google.maps.event.addListener(
+          this.map,
+          'click',
+          _.bind(function(ev) {
+            if (!!!ev.latLng) {
+              return;
+            }
+            var params = {
+              lat: ev.latLng.lat(),
+              lon: ev.latLng.lng()
+            };
 
-        google.maps.event.addListener(this.map, 'click', _.bind(function(ev) {
-          if (!(!! ev.latLng)) {
-            return;
-          }
-          var params = {
-            lat: ev.latLng.lat(),
-            lon: ev.latLng.lng()
-          };
+            this.removeInfowindow();
 
-          this.removeInfowindow();
-
-          this.options.infowindowAPI.execute(params, _.bind(function(data) {
-            data[0].analysis = this.options.analysis;
-            this.infowindow = new CustomInfowindow(ev.latLng, this.map, {
-              infowindowData: data[0]
-            });
-          }, this));
-
-        }, this));
+            this.options.infowindowAPI.execute(
+              params,
+              _.bind(function(data) {
+                data[0].analysis = this.options.analysis;
+                this.infowindow = new CustomInfowindow(ev.latLng, this.map, {
+                  infowindowData: data[0]
+                });
+              }, this)
+            );
+          }, this)
+        );
       }
     },
 
@@ -90,20 +94,21 @@ define([
 
     _getOverlayIndex: function() {
       var index = -1;
-      _.each(this.map.overlayMapTypes.getArray(), _.bind(function(layer, i){
-        if (layer && layer.name === this.getName()) {
-          index = i;
-        }
-      }, this ));
+      _.each(
+        this.map.overlayMapTypes.getArray(),
+        _.bind(function(layer, i) {
+          if (layer && layer.name === this.getName()) {
+            index = i;
+          }
+        }, this)
+      );
       return index;
     },
 
     getName: function() {
       return this.name;
-    },
-
+    }
   });
 
   return OverlayLayerClass;
-
 });

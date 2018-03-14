@@ -3,16 +3,14 @@
  *º
  * @return SearchboxPresenter class.
  */
-define([
-  'underscore',
-  'mps',
-  'map/presenters/PresenterClass'
-], function(_, mps, PresenterClass) {
-
+define(['underscore', 'mps', 'map/presenters/PresenterClass'], function(
+  _,
+  mps,
+  PresenterClass
+) {
   'use strict';
 
   var SearchboxPresenter = PresenterClass.extend({
-
     init: function(view) {
       this.view = view;
       this._super();
@@ -21,11 +19,13 @@ define([
     /**
      * Application subscriptions.
      */
-    _subscriptions: [{
-      'MapControlsSearch/show': function() {
-        this.view.toggleSearch();
+    _subscriptions: [
+      {
+        'MapControlsSearch/show': function() {
+          this.view.toggleSearch();
+        }
       }
-    }],
+    ],
 
     /**
      * Used by searchbox view to handle a fitbounds.

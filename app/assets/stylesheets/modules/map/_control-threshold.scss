@@ -7,10 +7,12 @@
   height: 100%;
   background: rgba($dark,0.5);
   z-index: 100;
+
   &.fixed{
     position: fixed;
     z-index: 1000;
   }
+
   .overlay{
     position: absolute;
     top: 0;
@@ -31,27 +33,34 @@
   z-index: 2;
   background: $white;
   transform: translate(-50%,-50%);
+
   header{
     text-align: center;
     font-size: 13px;
+
     @include clearfix();
+
     h2{
       font-size: 21px;
       padding: 0 0 10px;
       text-align: center;
     }
+
     p{
       button{
         margin: 7px auto 0;
         display: block;
       }
+
       .source{
         @extend .info-icon;
+
         display: inline-block;
         top: 2px;
         position: relative;
       }
     }
+
     ol{
       text-align: left;
       list-style-type: decimal;
@@ -61,11 +70,14 @@
       max-width: 80%;
       left: 50%;
       transform: translate(-50%,0);
+
       li{
         padding: 5px 0 0;
         &:first-child{ margin: 0;}
+
         .source{
           @extend .info-icon;
+
           display: inline-block;
           top: 2px;
           position: relative;
@@ -77,10 +89,11 @@
   .close {
     display: block;
     position: absolute;
-    top: 0px; right: 0px;
+    top: 0; right: 0;
     width: 40px;
     height: 40px;
     z-index: 20;
+
     svg{
       position: absolute;
       top: 50%;
@@ -90,6 +103,7 @@
       fill: $dark;
       transform: translate(-50%,-50%);
     }
+
     &:hover{
       svg{
         fill: darken($dark,10%);
@@ -123,11 +137,13 @@
 
   .slider-container{
     width: 100%;
+
     ul{
       width: calc(75% - 12px);
       height: 11px;
       position: relative;
       margin: 0 auto 3px;
+
       &:before,
       &:after{
         position: absolute;
@@ -137,14 +153,17 @@
         font-weight: 500;
         font-size: 10px;
       }
+
       &:before{
         content: "0%";
         right: 112.5%;
       }
+
       &:after{
         content: "100%";
         left: 112.5%;
       }
+
       li{
         position: absolute;
         text-align: center;
@@ -153,9 +172,11 @@
         font-weight: 500;
         cursor: pointer;
         transform: translate(-50%,0);
+
         &:hover{
           color: darken($blue, 5%);
         }
+
         @for $i from 0 through 6 {
           &:nth-child(#{$i + 1}){
             left: $i * 16.666666%;
@@ -163,11 +184,13 @@
         }
       }
     }
+
     .range-box{
       position: relative;
       height: 10px;
       width: 75%;
       margin: 0 auto;
+
       .dots{
         position: absolute;
         width: 125%;
@@ -177,6 +200,7 @@
         transform: translate(-50%,0);
         margin: 1px 0 0;
         background: image-url('/assets/icons/point.png') repeat-x 1px center;
+
         &:after{
           content: "";
           position: absolute;
@@ -190,6 +214,7 @@
           border-radius: 2px;
         }
       }
+
       .progress{
         position: absolute;
         top: 50%;
@@ -234,6 +259,7 @@
 
 
     // THUMB
+
     /* Special styling for WebKit/Blink */
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -245,6 +271,7 @@
       background: $white;
       cursor: pointer;
       box-shadow: $shadow1;
+
       &:after{
         content: "";
         position: absolute;
@@ -268,6 +295,7 @@
       background: $white;
       cursor: pointer;
       box-shadow: $shadow1;
+
       &:after{
         content: "";
         position: absolute;
@@ -291,6 +319,7 @@
       background: $white;
       cursor: pointer;
       box-shadow: $shadow1;
+
       &:after{
         content: "";
         position: absolute;
@@ -348,8 +377,9 @@
       background: #2a6495;
       border: 0.2px solid #010101;
       border-radius: 2.6px;
-      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      box-shadow: 1px 1px 1px #000, 0 0 1px #0d0d0d;
     }
+
     input[type=range]:focus::-ms-fill-lower {
       background: #3071a9;
     }
@@ -358,8 +388,9 @@
       background: #3071a9;
       border: 0.2px solid #010101;
       border-radius: 2.6px;
-      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      box-shadow: 1px 1px 1px #000, 0 0 1px #0d0d0d;
     }
+
     input[type=range]:focus::-ms-fill-upper {
       background: #367ebd;
     }

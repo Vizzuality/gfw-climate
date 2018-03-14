@@ -3,28 +3,27 @@
  *
  * @return ImazonTimeline class (extends TimelineMonthClass)
  */
-define([
-  'moment',
-  'abstract/timeline/TimelineMonthClass',
-  'map/presenters/TimelineClassPresenter'
-], function(moment, TimelineMonthClass, Presenter) {
+define(
+  [
+    'moment',
+    'abstract/timeline/TimelineMonthClass',
+    'map/presenters/TimelineClassPresenter'
+  ],
+  function(moment, TimelineMonthClass, Presenter) {
+    'use strict';
 
-  'use strict';
+    var ImazonTimeline = TimelineMonthClass.extend({
+      initialize: function(layer, currentDate) {
+        this.options = {
+          dateRange: [moment(layer.mindate), moment(layer.maxdate)],
+          player: false
+        };
 
-  var ImazonTimeline = TimelineMonthClass.extend({
+        this.presenter = new Presenter(this);
+        ImazonTimeline.__super__.initialize.apply(this, [layer, currentDate]);
+      }
+    });
 
-    initialize: function(layer, currentDate) {
-      this.options = {
-        dateRange: [moment(layer.mindate), moment(layer.maxdate)],
-        player: false
-      };
-
-      this.presenter = new Presenter(this);
-      ImazonTimeline.__super__.initialize.apply(this, [layer, currentDate]);
-    }
-
-  });
-
-  return ImazonTimeline;
-
-});
+    return ImazonTimeline;
+  }
+);

@@ -3,16 +3,20 @@
  */
 require([
   'backbone',
-  'handlebars',  
-  'helpers/handlebarsPlugins',  
+  'handlebars',
+  'helpers/handlebarsPlugins',
   'compare/router',
   'compare/views/CompareIndexView'
-], function(Backbone, Handlebars, HandlebarsPlugins, RouterView, CompareIndexView) {
-
+], function(
+  Backbone,
+  Handlebars,
+  HandlebarsPlugins,
+  RouterView,
+  CompareIndexView
+) {
   'use strict';
 
   var ComparePage = Backbone.View.extend({
-
     el: document.body,
 
     initialize: function() {
@@ -26,7 +30,7 @@ require([
      */
     _initApp: function() {
       if (!Backbone.History.started) {
-        Backbone.history.start({pushState: true});
+        Backbone.history.start({ pushState: true });
       }
     },
 
@@ -36,10 +40,8 @@ require([
 
     _initViews: function() {
       new CompareIndexView();
-    },
-
+    }
   });
 
   new ComparePage();
-
 });

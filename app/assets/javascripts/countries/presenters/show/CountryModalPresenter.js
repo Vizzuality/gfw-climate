@@ -1,45 +1,47 @@
-define([
-  'mps',
-  'countries/presenters/PresenterClass'
-], function(mps, PresenterClass) {
-
+define(['mps', 'countries/presenters/PresenterClass'], function(
+  mps,
+  PresenterClass
+) {
   var ReportsPanelPresenter = PresenterClass.extend({
-
     init: function(view) {
       this._super();
       this.view = view;
 
-      this.status = new (Backbone.Model.extend());
+      this.status = new (Backbone.Model.extend())();
 
       mps.publish('Place/register', [this]);
     },
 
-    _subscriptions: [{
-      'Modal/open': function() {
-        this.view.show();
-      },
-      'Modal/close': function() {
-        this.view.hide();
-      },
+    _subscriptions: [
+      {
+        'Modal/open': function() {
+          this.view.show();
+        },
+        'Modal/close': function() {
+          this.view.hide();
+        },
 
-      'View/update': function(view){
-        this._setView(view)
-        this._resetIndicators();
-      },
-      'Place/go': function(params) {
-        this._onPlaceGo(params);
-      },
-      'Widgets/update': function(p) {
+        'View/update': function(view) {
+          this._setView(view);
+          this._resetIndicators();
+        },
+        'Place/go': function(params) {
+          this._onPlaceGo(params);
+        },
+        'Widgets/update': function(p) {
+          if (this.status.get('options')) {
+            this.status.set(
+              'options',
+              _.extend(this.status.get('options'), { activedWidgets: p })
+            );
+          } else {
+            this.status.set('options', { activedWidgets: p });
+          }
 
-        if(this.status.get('options')) {
-          this.status.set('options', _.extend(this.status.get('options'), {activedWidgets: p}));
-        } else {
-          this.status.set('options', {activedWidgets: p});
+          this.view.update();
         }
-
-        this.view.update();
       }
-    }],
+    ],
 
     /**
      * Used by PlaceService to get the current view param.
@@ -79,7 +81,7 @@ define([
 
     setJurisdictions: function(j) {
       this.status.set({
-        jurisdictions: j,
+        jurisdictions: j
       });
     },
 
@@ -100,9 +102,7 @@ define([
         options: o
       });
     }
-
   });
 
   return ReportsPanelPresenter;
-
 });

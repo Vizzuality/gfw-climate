@@ -1,16 +1,10 @@
 /**
  * The Footer view.
  */
-define([
-  'jquery',
-  'backbone',
-  'slick'
-], function($,Backbone,slick) {
-
+define(['jquery', 'backbone', 'slick'], function($, Backbone, slick) {
   'use strict';
 
   var FooterView = Backbone.View.extend({
-
     el: '#footerView',
 
     initialize: function() {
@@ -34,22 +28,24 @@ define([
       this.setListeners();
     },
 
-    setListeners: function(){
+    setListeners: function() {
       if (this.$footerFixed.length) {
-        this.$footerToggle.on('click',_.bind(function(e){
-          ga('send', 'event', 'Map', 'Toggle', 'Footer');
-          this.$footerFixed.toggleClass('active');
-          (this.$footerFixed.hasClass('active')) ? this.$footerToggle.text('Hide footer') : this.$footerToggle.text('Show footer');
-        }, this ));
+        this.$footerToggle.on(
+          'click',
+          _.bind(function(e) {
+            ga('send', 'event', 'Map', 'Toggle', 'Footer');
+            this.$footerFixed.toggleClass('active');
+            this.$footerFixed.hasClass('active')
+              ? this.$footerToggle.text('Hide footer')
+              : this.$footerToggle.text('Show footer');
+          }, this)
+        );
         // this.$footerClose.on('click',_.bind(function(e){
         //   this.$footerFixed.removeClass('active');
         // }, this ));
       }
     }
-
-
   });
 
   return FooterView;
-
 });

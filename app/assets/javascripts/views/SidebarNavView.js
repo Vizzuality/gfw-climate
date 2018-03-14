@@ -1,13 +1,12 @@
 /**
  * The SidebarNavView view.
  */
-define([
-  'jquery',
-  'backbone',
-  'underscore',
-  'mps'
-], function($,Backbone, _,mps) {
-
+define(['jquery', 'backbone', 'underscore', 'mps'], function(
+  $,
+  Backbone,
+  _,
+  mps
+) {
   'use strict';
 
   var SidebarNavModel = Backbone.Model.extend({
@@ -18,24 +17,22 @@ define([
     }
   });
 
-
   var SidebarNavView = Backbone.View.extend({
-
     el: '#sidebarNavView',
 
     events: {
-      'click .nav-item' : 'changeSourceNav',
-      'click .nav-title' : 'scrollTo',
-      'click .source_header' : 'toggleSources',
-      'click .source_dropdown_header' : 'toggleDropdown',
-      'click .source_dropdown_menu a' : 'showSubContent',
-      'click #back-btn' : 'returnBack',
+      'click .nav-item': 'changeSourceNav',
+      'click .nav-title': 'scrollTo',
+      'click .source_header': 'toggleSources',
+      'click .source_dropdown_header': 'toggleDropdown',
+      'click .source_dropdown_menu a': 'showSubContent',
+      'click #back-btn': 'returnBack',
       'click .downloadDoc': 'onDownloadDoc'
     },
 
     initialize: function() {
       if (!this.$el.length) {
-        return
+        return;
       }
 
       this.model = new SidebarNavModel();
@@ -59,8 +56,7 @@ define([
       //VARS
       this.padding = 40;
       this.first = true;
-      this.mobile = (this.$window.width() > 850) ? false : true;
-
+      this.mobile = this.$window.width() > 850 ? false : true;
 
       //INIT
       this.setListeners();
@@ -74,59 +70,61 @@ define([
       if (location) {
         $('.nav-item').removeClass('selected');
         var slug = location.split('=')[1];
-        $('a[data-slug='+ slug +']').addClass('selected');
+        $('a[data-slug=' + slug + ']').addClass('selected');
       }
     },
 
-    setListeners: function(){
-
+    setListeners: function() {
       this.calculateOffsets();
       this.scrollDocument();
-      this.$document.on('scroll',_.bind(this.scrollDocument,this));
-      this.$window.on('resize',_.bind(this.calculateOffsets,this));
+      this.$document.on('scroll', _.bind(this.scrollDocument, this));
+      this.$window.on('resize', _.bind(this.calculateOffsets, this));
 
-      mps.subscribe('SourceStatic/change',_.bind(this.changeSource,this));
-      mps.subscribe('SubItem/change',_.bind(this.calculateOffsets,this));
+      mps.subscribe('SourceStatic/change', _.bind(this.changeSource, this));
+      mps.subscribe('SubItem/change', _.bind(this.calculateOffsets, this));
 
-      _.delay(_.bind(function(){
-        this.$loaderMobile.addClass('loaded');
-      }, this ), 250)
-
+      _.delay(
+        _.bind(function() {
+          this.$loaderMobile.addClass('loaded');
+        }, this),
+        250
+      );
     },
 
-
-    calculateOffsets: function(){
-      this.mobile = (this.$window.width() > 850) ? false : true;
-      this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
-      this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;
+    calculateOffsets: function() {
+      this.mobile = this.$window.width() > 850 ? false : true;
+      this.offset =
+        this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
+      this.offsetBottom =
+        this.$cut.offset().top - this.$sideBarAside.height() - this.padding;
       if (!this.mobile) {
-        this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
+        this.$sideBarBox.css({ 'min-height': this.$sideBarAside.height() });
         this.$htmlbody.removeClass('active');
       }
     },
 
-    scrollDocument: function(e){
+    scrollDocument: function(e) {
       var scrollTop = this.$document.scrollTop();
       if (scrollTop > this.offset) {
         this.$sideBarBox.addClass('fixed');
         this.firstFixed = false;
-        if(scrollTop < this.offsetBottom) {
+        if (scrollTop < this.offsetBottom) {
           this.$sideBarAside.removeClass('bottom').addClass('fixed');
-        }else{
+        } else {
           this.$sideBarAside.removeClass('fixed').addClass('bottom');
         }
-      }else{
+      } else {
         this.$sideBarAside.removeClass('fixed bottom');
         this.$sideBarBox.removeClass('fixed');
         this.firstFixed = true;
       }
     },
 
-    changeSourceNav: function(e){
+    changeSourceNav: function(e) {
       e && e.preventDefault();
-      this.model.set('section',$(e.currentTarget).data('slug'));
+      this.model.set('section', $(e.currentTarget).data('slug'));
       this.model.set('interesting', $(e.currentTarget).data('interesting'));
-      this.model.set('t',null);
+      this.model.set('t', null);
       this.updateSource();
 
       /**/
@@ -135,53 +133,71 @@ define([
       $('article').hide();
       var slug = $(e.target).data('slug');
       $('#' + slug).show();
-      $(this.el).find('.selected').removeClass('selected');
-      $(this.el).find('a[data-slug=' + slug + ']').addClass('selected');
+      $(this.el)
+        .find('.selected')
+        .removeClass('selected');
+      $(this.el)
+        .find('a[data-slug=' + slug + ']')
+        .addClass('selected');
     },
 
-    toggleSources: function(e){
-      ($(e.currentTarget).hasClass('active')) ? this.model.set('t', null) : this.model.set('t', $(e.currentTarget).parent().attr('id'));
+    toggleSources: function(e) {
+      $(e.currentTarget).hasClass('active')
+        ? this.model.set('t', null)
+        : this.model.set(
+            't',
+            $(e.currentTarget)
+              .parent()
+              .attr('id')
+          );
       this.$sourceHeader.removeClass('active');
       this.$sourceBody.hide(0);
       this.updateSource();
     },
 
-    toggleDropdown: function(e){
+    toggleDropdown: function(e) {
       e && e.preventDefault();
-      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').toggle(0);
+      $(e.currentTarget)
+        .parents('.source_dropdown')
+        .find('.source_dropdown_menu')
+        .toggle(0);
     },
 
-    updateSource: function(){
+    updateSource: function() {
       var params = {
         section: this.model.get('section'),
         interesting: this.model.get('interesting'),
         t: this.model.get('t')
-      }
+      };
       this.$sideBarBox.addClass('active');
       this.changeHelper();
       // mps.publish('SourceStatic/update',[params]);
     },
 
-    changeSource: function(params){
+    changeSource: function(params) {
       //spinner
       this.$sourceSpinner.removeClass('start');
       if (params.section) {
         this.section = true;
         this.model.set('section', params.section);
         this.model.set('interesting', params.interesting);
-        (params.t) ? this.model.set('t', params.t) : null;
-      }else{
+        params.t ? this.model.set('t', params.t) : null;
+      } else {
         this.section = false;
-        (!this.mobile) ? this.model.set('section', this.$navItem.eq(0).data('slug')) : null;
+        !this.mobile
+          ? this.model.set('section', this.$navItem.eq(0).data('slug'))
+          : null;
         this.model.set('interesting', this.$navItem.eq(0).data('interesting'));
       }
-      mps.publish('Interesting/update',[this.model.get('interesting')]);
+      mps.publish('Interesting/update', [this.model.get('interesting')]);
       this.changeHelper();
     },
 
-    changeHelper: function(){
-      var section = this.model.get('section'), tab = this.model.get('t'), $tab = $('#'+tab);
-      var time = (this.first) ? 250 : 0;
+    changeHelper: function() {
+      var section = this.model.get('section'),
+        tab = this.model.get('t'),
+        $tab = $('#' + tab);
+      var time = this.first ? 250 : 0;
       // mobile
       if (this.mobile) {
         if (section) {
@@ -189,9 +205,9 @@ define([
           this.$backBtn.addClass('active');
           this.$htmlbody.addClass('active');
           this.$headerH1.addClass('active');
-          this.$sideBarBox.addClass('active')
+          this.$sideBarBox.addClass('active');
         }
-      }else{
+      } else {
         this.padding = 40;
         this.$htmlbody.removeClass('active');
         this.$headerH1.removeClass('active');
@@ -200,33 +216,45 @@ define([
 
       //aside
       this.$navItem.removeClass('selected');
-      $('.'+section).addClass('selected');
+      $('.' + section).addClass('selected');
 
       //section
       this.$sourceArticle.removeClass('selected');
-      $('#'+section).addClass('selected');
+      $('#' + section).addClass('selected');
 
       //tab
       if (tab) {
         if (this.mobile) {
-          this.$sideBarBox.animate({ scrollTop: $tab.offset().top - this.$backBtn.innerHeight() },0, _.bind(function(){
-            $tab.find('.source_header').addClass('active');
-            $tab.find('.source_body').show(0);
-            this.calculateOffsets();
-          }, this ));
-        }else{
-          this.$htmlbody.animate({ scrollTop: $tab.offset().top },0, _.bind(function(){
-            $tab.find('.source_header').addClass('active');
-            $tab.find('.source_body').show(0);
-            this.calculateOffsets();
-          }, this ));
+          this.$sideBarBox.animate(
+            { scrollTop: $tab.offset().top - this.$backBtn.innerHeight() },
+            0,
+            _.bind(function() {
+              $tab.find('.source_header').addClass('active');
+              $tab.find('.source_body').show(0);
+              this.calculateOffsets();
+            }, this)
+          );
+        } else {
+          this.$htmlbody.animate(
+            { scrollTop: $tab.offset().top },
+            0,
+            _.bind(function() {
+              $tab.find('.source_header').addClass('active');
+              $tab.find('.source_body').show(0);
+              this.calculateOffsets();
+            }, this)
+          );
         }
-      }else{
+      } else {
         if (this.section) {
-          this.$htmlbody.delay(time).animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },time, _.bind(function(){
-            this.calculateOffsets();
-          }, this ));
-        }else{
+          this.$htmlbody.delay(time).animate(
+            { scrollTop: this.$sideBarBox.offset().top - this.padding },
+            time,
+            _.bind(function() {
+              this.calculateOffsets();
+            }, this)
+          );
+        } else {
           this.calculateOffsets();
         }
       }
@@ -234,22 +262,29 @@ define([
       this.first = false;
     },
 
-    showSubContent:function(e){
+    showSubContent: function(e) {
       e && e.preventDefault();
-      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').hide(0);
+      $(e.currentTarget)
+        .parents('.source_dropdown')
+        .find('.source_dropdown_menu')
+        .hide(0);
 
       var text = $(e.currentTarget).text();
       var id = $(e.currentTarget).data('slug');
-      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_header').find('.overview_title').children('span').text(text);
+      $(e.currentTarget)
+        .parents('.source_dropdown')
+        .find('.source_dropdown_header')
+        .find('.overview_title')
+        .children('span')
+        .text(text);
 
       $('.source_dropdown_body').hide(0);
-      $('#'+id).show(0);
+      $('#' + id).show(0);
 
       this.calculateOffsets();
     },
 
-
-    returnBack: function(e){
+    returnBack: function(e) {
       e && e.preventDefault();
 
       this.$headerH1.removeClass('active');
@@ -257,23 +292,21 @@ define([
       this.$backBtn.removeClass('active');
       this.$navItem.removeClass('selected');
 
-      this.$htmlbody.removeClass('active').animate({ scrollTop: this.$sideBarAside.offset().top },0);
-
+      this.$htmlbody
+        .removeClass('active')
+        .animate({ scrollTop: this.$sideBarAside.offset().top }, 0);
     },
 
     onDownloadDoc: function(e) {
-      ga('send', 'event', 'About', 'Download',$(e.target).data('type'));
+      ga('send', 'event', 'About', 'Download', $(e.target).data('type'));
       return true;
     },
 
-    scrollTo: function(e){
+    scrollTo: function(e) {
       e && e.preventDefault();
-      this.$htmlbody.animate({ scrollTop: 0 },500);
+      this.$htmlbody.animate({ scrollTop: 0 }, 500);
     }
-
-
   });
 
   return SidebarNavView;
-
 });

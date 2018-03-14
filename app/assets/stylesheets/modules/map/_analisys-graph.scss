@@ -10,7 +10,7 @@
 
   .line {
     fill: none;
-    stroke: #ff6699;
+    stroke: #f69;
     stroke-width: 2px;
   }
 }
@@ -24,24 +24,28 @@
   z-index: 1;
   pointer-events: none;
   font-size: 12px;
-  background: #FFF;
+  background: #fff;
   padding: 10px;
   box-shadow: $shadow1;
 
   .line-value{
-    color: #ff6699;
+    color: #f69;
+
     &:before {
-      color: #ff6699;
+      color: #f69;
       border-radius: 50%;
-      border: 3px solid #ff6699;
+      border: 3px solid #f69;
     }
   }
+
   .bar-value {
     color: $light-grey;
+
     &:before {
       background-color: $light-grey;
     }
   }
+
   .year-value {
     font-size: 21px;
   }
@@ -50,9 +54,11 @@
     position: relative;
     padding: 0 0 0 15px;
     margin: 5px 0 0;
+
     &:first-child {
       margin: 0;
     }
+
     &:before {
       content: "";
       display: block;
@@ -74,6 +80,7 @@
 
   > * {
     margin-top: 5px;
+
     &:first-child {
       margin-top: 0;
     }
@@ -95,6 +102,7 @@
     font-size: 12px;
     float: left;
     padding-left: 20px;
+
     &:before {
       content: "";
       display: block;
@@ -105,10 +113,11 @@
       height: 10px;
     }
   }
+
   .line-value p:before {
-    color: #ff6699;
+    color: #f69;
     border-radius: 50%;
-    border: 3px solid #ff6699;
+    border: 3px solid #f69;
   }
 
   .bars-value p:before {
