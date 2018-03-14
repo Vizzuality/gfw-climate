@@ -3,112 +3,120 @@
  *
  * @return BasemapsView instance (extends Backbone.View).
  */
-define([
-  'underscore',
-  'backbone',
-  'handlebars',
-  'enquire',
-  'map/presenters/tabs/BasemapsPresenter',
-  'text!map/templates/tabs/basemaps.handlebars'
-], function(_, Backbone, Handlebars, enquire, Presenter, tpl) {
+define(
+  [
+    'underscore',
+    'backbone',
+    'handlebars',
+    'enquire',
+    'map/presenters/tabs/BasemapsPresenter',
+    'text!map/templates/tabs/basemaps.handlebars'
+  ],
+  function(_, Backbone, Handlebars, enquire, Presenter, tpl) {
+    'use strict';
 
-  'use strict';
+    var BasemapsView = Backbone.View.extend({
+      el: '#basemaps-tab',
 
-  var BasemapsView = Backbone.View.extend({
+      template: Handlebars.compile(tpl),
 
-    el: '#basemaps-tab',
+      events: {
+        'click .maptype': '_setMaptype',
+        'click .landsat-years li': '_setMaptype',
+        'click .landsatSelector': 'toggleLandsat',
+        'mouseover .landsat': 'showLandsat',
+        'mouseout .landsat': 'hideLandsat'
+      },
 
-    template: Handlebars.compile(tpl),
+      initialize: function() {
+        _.bindAll(this, 'selectMaptype');
+        this.presenter = new Presenter(this);
+        this.render();
+        //Experiment
+        this.presenter.initExperiment('source');
+        this.cartoAttribution =
+          'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.';
+      },
 
-    events: {
-      'click .maptype': '_setMaptype',
-      'click .landsat-years li': '_setMaptype',
-      'click .landsatSelector' : 'toggleLandsat',
-      'mouseover .landsat' : 'showLandsat',
-      'mouseout .landsat' : 'hideLandsat'
-    },
+      render: function() {
+        this.$el.html(this.template());
+        this.$maptypeslist = this.$el;
+        this.$maptypes = this.$el.find('.maptype');
+        this.$landsatYears = $('.landsat-years');
+        enquire.register(
+          'screen and (min-width:' + window.gfw.config.GFW_MOBILE + 'px)',
+          {
+            match: _.bind(function() {
+              this.mobile = false;
+            }, this)
+          }
+        );
+        enquire.register(
+          'screen and (max-width:' + window.gfw.config.GFW_MOBILE + 'px)',
+          {
+            match: _.bind(function() {
+              this.mobile = true;
+            }, this)
+          }
+        );
+      },
 
-    initialize: function() {
-      _.bindAll(this, 'selectMaptype');
-      this.presenter = new Presenter(this);
-      this.render();
-      //Experiment
-      this.presenter.initExperiment('source');
-      this.cartoAttribution =  'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.';
-    },
+      _setMaptype: function(e) {
+        e && e.preventDefault();
+        if (
+          !$(e.target).hasClass('source') &&
+          !$(e.target)
+            .parent()
+            .hasClass('source')
+        ) {
+          var $currentTarget = $(e.currentTarget);
+          var maptype = $currentTarget.data('maptype');
+          if (maptype) {
+            this.presenter.setMaptype(maptype);
+            ga('send', 'event', 'Map', 'Toggle', maptype);
+          }
+        }
+      },
 
-    render: function(){
-      this.$el.html(this.template());
-      this.$maptypeslist = this.$el;
-      this.$maptypes = this.$el.find('.maptype');
-      this.$landsatYears = $('.landsat-years');
-      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          this.mobile = false;
-        },this)
-      });
-      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          this.mobile = true;
-        },this)
-      });
+      /**
+       * Add selected mapview to .maptype-selected
+       * and close the widget.
+       *
+       * @param  {string} maptype
+       */
+      selectMaptype: function(maptype) {
+        // if (maptype == 'positron' || maptype == 'dark') {
+        //   console.log(this.cartoAttribution);
+        //   var self = this;
+        //   setTimeout(_.bind(function() {
+        //     $('#map').find('.gmnoprint span').ready(function(){
+        //       $(this).addClass('showimportant').html(self.cartoAttribution)
+        //     });
+        //   }, self ), 2000);
+        // }
+        this.$maptypes.removeClass('selected');
+        this.$maptypeslist.find('.' + maptype).addClass('selected');
+      },
 
-    },
+      showLandsat: function() {
+        if (!this.mobile) {
+          this.$landsatYears.addClass('active');
+        }
+      },
 
-    _setMaptype: function(e) {
-      e && e.preventDefault();
-      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source')) {
-        var $currentTarget = $(e.currentTarget);
-        var maptype = $currentTarget.data('maptype');
-        if (maptype) {
-          this.presenter.setMaptype(maptype);
-          ga('send', 'event', 'Map', 'Toggle', maptype);
+      hideLandsat: function() {
+        if (!this.mobile) {
+          this.$landsatYears.removeClass('active');
+        }
+      },
+
+      toggleLandsat: function() {
+        if (this.mobile) {
+          this.$landsatYears.toggleClass('active');
         }
       }
-    },
+    });
 
-    /**
-     * Add selected mapview to .maptype-selected
-     * and close the widget.
-     *
-     * @param  {string} maptype
-     */
-    selectMaptype: function(maptype) {
-      // if (maptype == 'positron' || maptype == 'dark') {
-      //   console.log(this.cartoAttribution);
-      //   var self = this;
-      //   setTimeout(_.bind(function() {
-      //     $('#map').find('.gmnoprint span').ready(function(){
-      //       $(this).addClass('showimportant').html(self.cartoAttribution)
-      //     });
-      //   }, self ), 2000);
-      // }
-      this.$maptypes.removeClass('selected');
-      this.$maptypeslist.find('.' + maptype).addClass('selected');
-    },
-
-    showLandsat: function(){
-      if (!this.mobile) {
-        this.$landsatYears.addClass('active');
-      }
-    },
-
-    hideLandsat: function(){
-      if (!this.mobile) {
-        this.$landsatYears.removeClass('active');
-      }
-    },
-
-    toggleLandsat: function(){
-      if (this.mobile) {
-        this.$landsatYears.toggleClass('active');
-      }
-    }
-
-
-
-  });
-
-  return BasemapsView;
-
-});
+    return BasemapsView;
+  }
+);

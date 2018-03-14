@@ -3,16 +3,14 @@
  *º
  * @return SourceWindowPresenter class.
  */
-define([
-  'underscore',
-  'mps',
-  'map/presenters/PresenterClass'
-], function(_, mps, PresenterClass) {
-
+define(['underscore', 'mps', 'map/presenters/PresenterClass'], function(
+  _,
+  mps,
+  PresenterClass
+) {
   'use strict';
 
   var SourceWindowPresenter = PresenterClass.extend({
-
     init: function(view) {
       this.view = view;
       this._super();
@@ -21,11 +19,13 @@ define([
     // /**
     //  * Application subscriptions.
     //  */
-    _subscriptions: [{
-      'Source/open': function(source) {
-        this.view.showByParam(source);
+    _subscriptions: [
+      {
+        'Source/open': function(source) {
+          this.view.showByParam(source);
+        }
       }
-    }]
+    ]
   });
 
   return SourceWindowPresenter;

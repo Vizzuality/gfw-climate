@@ -1,9 +1,5 @@
-define([
-  'backbone'
-], function(Backbone) {
-
+define(['backbone'], function(Backbone) {
   var WidgetModel = Backbone.Model.extend({
-
     url: '/api/widgets/',
 
     initialize: function() {
@@ -13,9 +9,7 @@ define([
     parse: function(data) {
       return data.widget;
     }
-
   });
 
   return WidgetModel;
-
 });

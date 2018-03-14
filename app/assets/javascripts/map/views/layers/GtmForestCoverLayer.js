@@ -10,21 +10,16 @@
     }
  * @return LandRightsLayer class (extends CartoDBLayerClass)
  */
-define([
-  'abstract/layer/ImageLayerClass',
-], function(ImageLayerClass) {
-
+define(['abstract/layer/ImageLayerClass'], function(ImageLayerClass) {
   'use strict';
 
   var GtmForestCoverLayer = ImageLayerClass.extend({
-
-   options: {
-      urlTemplate: 'https://s3.amazonaws.com//wri-tiles/GTM/guatemalaforestcover{/z}{/x}{/y}.png',
+    options: {
+      urlTemplate:
+        'https://s3.amazonaws.com//wri-tiles/GTM/guatemalaforestcover{/z}{/x}{/y}.png',
       dataMaxZoom: 15
     }
-
   });
 
   return GtmForestCoverLayer;
-
 });

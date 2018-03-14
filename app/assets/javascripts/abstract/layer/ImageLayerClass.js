@@ -3,16 +3,14 @@
  *
  * @return ImageLayer class (extends Class).
  */
-define([
-  'underscore',
-  'uri',
-  'abstract/layer/OverlayLayerClass'
-], function(_, UriTemplate, OverlayLayerClass) {
-
+define(['underscore', 'uri', 'abstract/layer/OverlayLayerClass'], function(
+  _,
+  UriTemplate,
+  OverlayLayerClass
+) {
   'use strict';
 
   var ImageLayerClass = OverlayLayerClass.extend({
-
     defaults: {
       dataMaxZoom: 17
     },
@@ -41,8 +39,10 @@ define([
     getTile: function(coord, zoom, ownerDocument) {
       var zsteps = this._getZoomSteps(zoom);
 
-      var url = this._getUrl.apply(this,
-        this._getTileCoords(coord.x, coord.y, zoom));
+      var url = this._getUrl.apply(
+        this,
+        this._getTileCoords(coord.x, coord.y, zoom)
+      );
 
       var image = new Image();
       image.src = url;
@@ -62,8 +62,8 @@ define([
       var srcY = 256 * (coord.y % Math.pow(2, zsteps));
 
       image.style.position = 'absolute';
-      image.style.top      = -srcY + 'px';
-      image.style.left     = -srcX + 'px';
+      image.style.top = -srcY + 'px';
+      image.style.left = -srcX + 'px';
 
       var div = ownerDocument.createElement('div');
       div.appendChild(image);
@@ -81,16 +81,20 @@ define([
     },
 
     _getUrl: function(x, y, z) {
-      return new UriTemplate(this.options.urlTemplate).fillFromObject({x: x, y: y, z: z});
+      return new UriTemplate(this.options.urlTemplate).fillFromObject({
+        x: x,
+        y: y,
+        z: z
+      });
     },
 
     _getTileCoords: function(x, y, z) {
       if (z > this.options.dataMaxZoom) {
-        x = Math.floor(x / (Math.pow(2, z - this.options.dataMaxZoom)));
-        y = Math.floor(y / (Math.pow(2, z - this.options.dataMaxZoom)));
+        x = Math.floor(x / Math.pow(2, z - this.options.dataMaxZoom));
+        y = Math.floor(y / Math.pow(2, z - this.options.dataMaxZoom));
         z = this.options.dataMaxZoom;
       } else {
-        y = (y > Math.pow(2, z) ? y % Math.pow(2, z) : y);
+        y = y > Math.pow(2, z) ? y % Math.pow(2, z) : y;
         if (x >= Math.pow(2, z)) {
           x = x % Math.pow(2, z);
         } else if (x < 0) {

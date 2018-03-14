@@ -1,92 +1,99 @@
-define([
-  'd3',
-  'moment',
-  'underscore',
-  'handlebars',
-  'widgets/models/IndicatorModel',
-  'widgets/views/IndicatorView',
-  'text!widgets/templates/indicators/list/listchart.handlebars',
-], function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, Tpl) {
+define(
+  [
+    'd3',
+    'moment',
+    'underscore',
+    'handlebars',
+    'widgets/models/IndicatorModel',
+    'widgets/views/IndicatorView',
+    'text!widgets/templates/indicators/list/listchart.handlebars'
+  ],
+  function(d3, moment, _, Handlebars, IndicatorModel, IndicatorView, Tpl) {
+    'use strict';
 
-  'use strict';
+    var MultiLineChartIndicator = IndicatorView.extend({
+      template: Handlebars.compile(Tpl),
 
-  var MultiLineChartIndicator = IndicatorView.extend({
+      events: function() {
+        return _.extend({}, IndicatorView.prototype.events, {});
+      },
 
-    template: Handlebars.compile(Tpl),
+      initialize: function(setup) {
+        this.constructor.__super__.initialize.apply(this, [setup]);
 
-    events: function() {
-      return _.extend({}, IndicatorView.prototype.events, {});
-    },
+        this.tab = setup.tab;
 
-    initialize: function(setup) {
-      this.constructor.__super__.initialize.apply(this, [setup]);
+        // CeateModel
+        this.model = new (Backbone.Model.extend({ defaults: setup.model }))();
 
-      this.tab = setup.tab;
+        // Set Params
+        var params = _.extend({}, setup.data, {});
 
-      // CeateModel
-      this.model = new (Backbone.Model.extend({ defaults: setup.model}));
+        $.when.apply(null, this.getPromises(params)).then(
+          _.bind(function() {
+            this.$el.removeClass('is-loading');
+            this.render();
+          }, this)
+        );
+      },
 
-      // Set Params
-      var params = _.extend({},setup.data,{});
+      fetchIndicator: function(params, type, slugw) {
+        var r = new $.Deferred();
+        var promises = [];
 
-      $.when.apply(null, this.getPromises(params)).then(_.bind(function() {
-        this.$el.removeClass('is-loading');
-        this.render();
-      }, this));
+        // Fetch all the indicators of this tab
+        _.each(
+          this.model.get('indicators'),
+          _.bind(function(i) {
+            var deferred = new $.Deferred();
+            new IndicatorModel({ id: i.id })
+              .fetch({
+                data: this.setFetchParams(params)
+              })
+              .done(function(data) {
+                deferred.resolve(data);
+              });
+            promises.push(deferred.promise());
+          }, this)
+        );
 
-    },
+        // Fetch indicators complete!!
+        $.when.apply(null, promises).then(
+          _.bind(function() {
+            var values = _.flatten(
+              _.pluck(Array.prototype.slice.call(arguments), 'values')
+            );
+            this.model.set(type, values);
+            r.resolve();
+          }, this)
+        );
 
-    fetchIndicator: function(params, type, slugw) {
-      var r = new $.Deferred();
-      var promises = [];
+        return r.promise();
+      },
 
-      // Fetch all the indicators of this tab
-      _.each(this.model.get('indicators'), _.bind(function(i) {
-        var deferred = new $.Deferred();
-        new IndicatorModel({id: i.id})
-            .fetch({
-              data:this.setFetchParams(params)
-            })
-            .done(function(data){
-              deferred.resolve(data);
-            });
-        promises.push(deferred.promise());
-      }, this));
+      render: function() {
+        this.$el.html(this.template(this.parseData()));
+      },
 
-      // Fetch indicators complete!!
-      $.when.apply(null, promises).then(_.bind(function() {
-        var values = _.flatten(_.pluck(Array.prototype.slice.call(arguments),'values'));
-        this.model.set(type, values);
-        r.resolve();
-      }, this ));
+      parseData: function() {
+        return { list: _.pluck(this.model.get('data'), 'text_value') };
+      },
 
-      return r.promise();
-    },
+      // Helpers for parse data
+      getPromises: function(params, paramsCompare) {
+        this.$el.addClass('is-loading');
+        var slugw = this.model.get('slugw');
+        return [this.fetchIndicator(params, 'data', slugw)];
+      },
 
-    render: function() {
-      this.$el.html(this.template(this.parseData()));
-    },
-
-    parseData: function() {
-      return { list: _.pluck(this.model.get('data'),'text_value')}
-    },
-
-    // Helpers for parse data
-    getPromises: function(params,paramsCompare) {
-      this.$el.addClass('is-loading');
-      var slugw = this.model.get('slugw');
-      return [this.fetchIndicator(params, 'data',slugw)]
-    },
-
-    destroy: function() {
-      if (this.chart) {
-       this.chart.destroy();
-       this.chart = null;
+      destroy: function() {
+        if (this.chart) {
+          this.chart.destroy();
+          this.chart = null;
+        }
       }
-    },
+    });
 
-  });
-
-  return MultiLineChartIndicator;
-
-});
+    return MultiLineChartIndicator;
+  }
+);

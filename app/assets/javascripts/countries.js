@@ -10,12 +10,19 @@ require([
   'countries/router',
   'countries/views/CountryShowView',
   'countries/views/CountryIndexView'
-], function($, _, Backbone, Handlebars, HandlebarsPlugins, RouterView, CountryShowView, CountryIndexView) {
-
+], function(
+  $,
+  _,
+  Backbone,
+  Handlebars,
+  HandlebarsPlugins,
+  RouterView,
+  CountryShowView,
+  CountryIndexView
+) {
   'use strict';
 
   var CountriesPage = Backbone.View.extend({
-
     el: document.body,
 
     initialize: function() {
@@ -28,16 +35,14 @@ require([
      */
     _initApp: function() {
       if (!Backbone.History.started) {
-        Backbone.history.start({pushState: true});
+        Backbone.history.start({ pushState: true });
       }
     },
 
     _initRouter: function() {
       this.router = new RouterView();
-    },
-
+    }
   });
 
   new CountriesPage();
-
 });

@@ -3,23 +3,21 @@
  * Applies styles for different types
  * of geojson.
  */
-define([
-  'underscore',
-  'handlebars',
-  'backbone',
-], function(_, Handlebars, Backbone) {
-
+define(['underscore', 'handlebars', 'backbone'], function(
+  _,
+  Handlebars,
+  Backbone
+) {
   'use strict';
 
   var GeoStylingView = Backbone.View.extend({
-
     defaults: {
       styles: {
         tropics: {
           strokeWeight: 0,
           fillOpacity: 0.3,
           fillColor: '#000',
-          strokeColor: "#000",
+          strokeColor: '#000',
           strokeOpacity: 0
         },
         analysis: {
@@ -57,18 +55,20 @@ define([
     },
 
     setStyles: function() {
-      this.map.data.setStyle(_.bind(function(feature){
-        for (var current in this.styles) {
-          var style = this.styles[current];
+      this.map.data.setStyle(
+        _.bind(function(feature) {
+          for (var current in this.styles) {
+            var style = this.styles[current];
 
-          if (style && feature.getProperty('polyType') === current) {
-            if (style.icon) {
-              style.icon = this._getIcon(style.icon);
+            if (style && feature.getProperty('polyType') === current) {
+              if (style.icon) {
+                style.icon = this._getIcon(style.icon);
+              }
+              return style;
             }
-            return style;
           }
-        }
-      }, this ));
+        }, this)
+      );
     },
 
     getStyles: function(type) {
@@ -95,8 +95,6 @@ define([
       }
       return icon;
     }
-
   });
   return GeoStylingView;
-
 });

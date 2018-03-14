@@ -1,24 +1,23 @@
-define([
-  'Class', 'uri', 'bluebird',
-  'map/services/DataService'
-], function(Class, UriTemplate, Promise, ds) {
-
+define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
+  Class,
+  UriTemplate,
+  Promise,
+  ds
+) {
   'use strict';
 
   var GET_REQUEST_ID = 'GeostoreService:get',
-      SAVE_REQUEST_ID = 'GeostoreService:save';
+    SAVE_REQUEST_ID = 'GeostoreService:save';
 
   var URL = window.gfw.config.GFW_API_HOST_V2 + '/geostore/{id}';
 
   var GeostoreService = Class.extend({
-
     get: function(id) {
       return new Promise(function(resolve, reject) {
-
-        var url = new UriTemplate(URL).fillFromObject({id: id});
+        var url = new UriTemplate(URL).fillFromObject({ id: id });
 
         ds.define(GET_REQUEST_ID, {
-          cache: {type: 'persist', duration: 1, unit: 'days'},
+          cache: { type: 'persist', duration: 1, unit: 'days' },
           url: url,
           type: 'GET'
         });
@@ -29,13 +28,11 @@ define([
         };
 
         ds.request(requestConfig);
-
       });
     },
 
     save: function(geojson, timeout) {
       return new Promise(function(resolve, reject) {
-
         var url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(SAVE_REQUEST_ID, {
@@ -47,7 +44,7 @@ define([
         var requestConfig = {
           resourceId: SAVE_REQUEST_ID,
           data: JSON.stringify({
-            geojson: geojson,
+            geojson: geojson
           }),
           success: function(response) {
             resolve(response.data.attributes.hash);
@@ -56,13 +53,11 @@ define([
         };
 
         ds.request(requestConfig);
-
       }).timeout(timeout || 15000);
     },
 
     use: function(provider) {
       return new Promise(function(resolve, reject) {
-
         var url = new UriTemplate(URL).fillFromObject({});
 
         ds.define(SAVE_REQUEST_ID, {
@@ -85,12 +80,9 @@ define([
         };
 
         ds.request(requestConfig);
-
       });
     }
-
   });
 
   return new GeostoreService();
-
 });

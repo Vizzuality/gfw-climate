@@ -10,12 +10,19 @@ require([
   'home/views/sliderView',
   'views/SourceWindowView',
   'views/SidebarNavView'
-], function($, _, Class, Backbone, _string, sliderView, SourceWindowView, SidebarNavView) {
-
+], function(
+  $,
+  _,
+  Class,
+  Backbone,
+  _string,
+  sliderView,
+  SourceWindowView,
+  SidebarNavView
+) {
   'use strict';
 
   var HomePage = Class.extend({
-
     $el: $('body'),
 
     init: function() {
@@ -27,7 +34,7 @@ require([
      */
     _initApp: function() {
       if (!Backbone.History.started) {
-        Backbone.history.start({pushState: true});
+        Backbone.history.start({ pushState: true });
       }
     },
 
@@ -41,9 +48,7 @@ require([
       new sliderView();
       new SidebarNavView();
     }
-
   });
 
   new HomePage();
-
 });

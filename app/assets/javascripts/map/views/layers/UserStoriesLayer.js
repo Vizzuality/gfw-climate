@@ -3,26 +3,25 @@
  *
  * @return UserStoriesLayer class (extends CartoDBLayerClass)
  */
-define([
-  'handlebars',
-  'abstract/layer/MarkersLayerClass',
-  'map/services/UserStoryService',
-  'text!map/templates/thumbMarker.handlebars'
-], function(Handlebars , MarkersLayerClass, UserStoryService, markerTemplate) {
+define(
+  [
+    'handlebars',
+    'abstract/layer/MarkersLayerClass',
+    'map/services/UserStoryService',
+    'text!map/templates/thumbMarker.handlebars'
+  ],
+  function(Handlebars, MarkersLayerClass, UserStoryService, markerTemplate) {
+    'use strict';
 
-  'use strict';
+    var UserStoriesLayer = MarkersLayerClass.extend({
+      service: UserStoryService,
 
-  var UserStoriesLayer = MarkersLayerClass.extend({
+      options: {
+        icon: '/assets/icons/marker_exclamation.png',
+        template: Handlebars.compile(markerTemplate)
+      }
+    });
 
-    service: UserStoryService,
-
-    options: {
-      icon: '/assets/icons/marker_exclamation.png',
-      template: Handlebars.compile(markerTemplate)
-    }
-
-  });
-
-  return UserStoriesLayer;
-
-});
+    return UserStoriesLayer;
+  }
+);

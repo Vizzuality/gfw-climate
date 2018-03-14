@@ -1,17 +1,11 @@
-define([
-  'jquery',
-  'backbone',
-  'underscore',
-], function($,Backbone, _) {
-
+define(['jquery', 'backbone', 'underscore'], function($, Backbone, _) {
   var SourceWindowModel = Backbone.Model.extend({
     defaults: {
-      hidden: true,
+      hidden: true
     }
   });
 
   var sourceWindowView = Backbone.View.extend({
-
     el: 'body',
 
     events: {
@@ -27,16 +21,19 @@ define([
 
       // Init
       // this.render();
-      this.model.on("change:hidden", this._toggle, this);
+      this.model.on('change:hidden', this._toggle, this);
     },
 
     _initVars: function(options) {
       this.$htmlbody = $('html, body');
       this.$window = $(window);
       this.$document = $(document);
-      this.$sourceWindow = (!!options && !!options.sourceWindow) ? $(options.sourceWindow) : $('#window');
+      this.$sourceWindow =
+        !!options && !!options.sourceWindow
+          ? $(options.sourceWindow)
+          : $('#window');
       this.$backdrop = $('#backdrop');
-      this.mobile = (this.$window.width() > 850) ? false : true;
+      this.mobile = this.$window.width() > 850 ? false : true;
       this.$content = this.$sourceWindow.find('.content');
       this.$contentWrapper = this.$sourceWindow.find('.content-wrapper');
       this.$close = this.$sourceWindow.find('.close');
@@ -45,28 +42,34 @@ define([
     },
 
     _initBindings: function() {
-      this.mobile = (this.$window.width() > 850) ? false : true;
+      this.mobile = this.$window.width() > 850 ? false : true;
       this.scrollTop = this.$document.scrollTop();
-      if(this.mobile) {
+      if (this.mobile) {
         this.$htmlbody.addClass('active');
-        this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
+        this.$htmlbody.animate({ scrollTop: this.scrollTop }, 0);
       }
       // document keyup
-      this.$document.on('keyup', _.bind(function(e) {
-        if (e.keyCode === 27) {
-          this.hide();
-        }
-      },this));
+      this.$document.on(
+        'keyup',
+        _.bind(function(e) {
+          if (e.keyCode === 27) {
+            this.hide();
+          }
+        }, this)
+      );
       // backdrop
-      this.$backdrop.on('click', _.bind(function() {
-        this.hide();
-      },this));
+      this.$backdrop.on(
+        'click',
+        _.bind(function() {
+          this.hide();
+        }, this)
+      );
     },
 
     _stopBindings: function() {
-      if(this.mobile) {
+      if (this.mobile) {
         this.$htmlbody.removeClass('active');
-        this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
+        this.$htmlbody.animate({ scrollTop: this.scrollTop }, 0);
       }
       this.$document.off('keyup');
       this.$backdrop.off('click');
@@ -101,7 +104,9 @@ define([
       this.$contentWrapper.animate({ scrollTop: 0 }, 0);
       var data_slug = $(e.currentTarget).data('source');
       var data_iframe = $(e.currentTarget).data('iframe');
-      (data_iframe) ? this.$sourceWindow.addClass('iframe') : this.$sourceWindow.removeClass('iframe');
+      data_iframe
+        ? this.$sourceWindow.addClass('iframe')
+        : this.$sourceWindow.removeClass('iframe');
 
       this.$content.html($('#' + data_slug).clone());
 
@@ -118,9 +123,7 @@ define([
     //   this.$close = this.$sourceWindow.find('.close');
     //   return this.$sourceWindow;
     // }
-
   });
 
   return sourceWindowView;
-
 });

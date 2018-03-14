@@ -7,7 +7,8 @@ define(['abstract/layer/ImageMaptypeLayerClass'], function(
   ImageMaptypeLayerClass
 ) {
   'use strict';
-  var FEATURE_CARBON_UPDATE = window.gfw.config.FEATURE_CARBON_UPDATE === 'true';
+  var FEATURE_CARBON_UPDATE =
+    window.gfw.config.FEATURE_CARBON_UPDATE === 'true';
 
   var SoilOrganicCarbonDLayer = ImageMaptypeLayerClass.extend({
     options: {
