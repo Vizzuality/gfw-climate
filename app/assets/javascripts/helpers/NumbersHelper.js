@@ -1,7 +1,4 @@
-define([
-  'underscore'
-], function(_) {
-
+define(['underscore'], function(_) {
   var numbersHelper = {
     /**
      * Returns a number with its decimals
@@ -14,7 +11,9 @@ define([
 
       if (number) {
         if (number > 1) {
-          formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          formattedNumber = number
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         } else {
           formattedNumber = number;
         }
@@ -29,11 +28,13 @@ define([
      * @return {string} String
      */
     toThousands: function(number) {
-      return number > 999 ? (number/ 1000).toFixed(1) + 'k' : (number * 1).toFixed(2);
+      return number > 999
+        ? (number / 1000).toFixed(1) + 'k'
+        : (number * 1).toFixed(2);
     },
 
     padNumberToTwo: function(number) {
-      return ("0" + number.toString()).slice(-2);
+      return ('0' + number.toString()).slice(-2);
     },
 
     round: function(number, decimals) {

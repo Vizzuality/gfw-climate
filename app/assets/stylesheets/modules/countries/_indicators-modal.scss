@@ -11,6 +11,7 @@
     .source_header {
       margin-bottom: 25px;
       padding: 0;
+
       .source_title {
         font-size: 32px;
         font-weight: 300;
@@ -24,8 +25,9 @@
       .jurisdictions-group,
       .areas-group {
         margin: 25px 0;
+
         h3 {
-          color: rgba($dark, .5);
+          color: rgba($dark, 0.5);
           font-size: 16px;
           font-weight: 500;
         }
@@ -35,6 +37,7 @@
           margin-top: 10px;
           flex-grow: 1;
           flex-wrap: wrap;
+
           .item {
             display: inline-flex;
             align-items: center;
@@ -47,23 +50,26 @@
             border-radius: 6px;
             line-height: 1.1;
             cursor: pointer;
+
             .item__name {
               position: relative;
               display: inline-block;
               width: 100%;
               padding-right: 20px;
-              color: rgba($black, .5);
+              color: rgba($black, 0.5);
               font-size: 14px;
               font-weight: 500;
               text-transform: uppercase;
+
               .checkbox {
                 position: absolute;
                 top: 0;
                 right: 0;
                 width: 12px;
                 height: 12px;
-                border: 1px solid rgba($dark, .5);
+                border: 1px solid rgba($dark, 0.5);
                 border-radius: 3px;
+
                 .icon-check {
                   display: none;
                   left: 0;
@@ -72,25 +78,32 @@
                 }
               }
             }
+
             &.is-selected {
               border-color: $blue;
               background: $blue;
+
               .item__name {
                 color: $white;
               }
+
               svg {
                 fill: $white;
               }
+
               .checkbox {
                 border-color: $white;
+
                 .icon-check {
                   display: block;
                 }
               }
             }
+
             .jurisdiction {
               text-transform: initial;
             }
+
             svg {
               position: absolute;
               top: 50%;
@@ -108,6 +121,7 @@
     .row {
       text-align: center;
       position: relative;
+
       .svg-left-arrow {
         position: absolute;
         top: 50%;
@@ -117,6 +131,7 @@
         width: 15px;
         height: 16px;
       }
+
       .btn--back {
         position: absolute;
         top: 50%;

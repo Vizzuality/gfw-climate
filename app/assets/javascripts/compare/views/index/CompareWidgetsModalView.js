@@ -1,88 +1,103 @@
-define([
-  'jquery',
-  'backbone',
-  'underscore',
-  'handlebars',
-  'views/ModalView',
-  'compare/presenters/CompareModalWidgetsPresenter',
-  'text!compare/templates/compareWidgetsModal.handlebars'
-], function($, Backbone, _, Handlebars, ModalView, CompareModalWidgetsPresenter, tpl) {
+define(
+  [
+    'jquery',
+    'backbone',
+    'underscore',
+    'handlebars',
+    'views/ModalView',
+    'compare/presenters/CompareModalWidgetsPresenter',
+    'text!compare/templates/compareWidgetsModal.handlebars'
+  ],
+  function(
+    $,
+    Backbone,
+    _,
+    Handlebars,
+    ModalView,
+    CompareModalWidgetsPresenter,
+    tpl
+  ) {
+    'use strict';
 
-  'use strict';
+    var CountryWidgetsModalView = ModalView.extend({
+      id: 'compareWidgetsModal',
 
-  var CountryWidgetsModalView = ModalView.extend({
+      className: 'modal is-huge',
 
-    id: 'compareWidgetsModal',
+      template: Handlebars.compile(tpl),
 
-    className: 'modal is-huge',
+      events: function() {
+        return _.extend({}, ModalView.prototype.events, {
+          'click .js-field-list-checkbox-widget': 'changeWidgets',
+          'click .js-btn-continue': 'hide'
+        });
+      },
 
-    template: Handlebars.compile(tpl),
+      initialize: function() {
+        // Inits
+        this.constructor.__super__.initialize.apply(this);
+        // Presenter & status
+        this.presenter = new CompareModalWidgetsPresenter(this);
+        this.status = this.presenter.status;
 
-    events: function() {
-      return _.extend({}, ModalView.prototype.events, {
-        'click .js-field-list-checkbox-widget' : 'changeWidgets',
-        'click .js-btn-continue' : 'hide',
-      });
-    },
+        this.render();
+        this.$body.append(this.el);
+      },
 
-    initialize: function() {
-      // Inits
-      this.constructor.__super__.initialize.apply(this);
-      // Presenter & status
-      this.presenter = new CompareModalWidgetsPresenter(this);
-      this.status = this.presenter.status;
+      setListeners: function() {},
 
-      this.render();
-      this.$body.append(this.el);
-    },
+      render: function() {
+        this.$el.html(this.template(this.parseData()));
+        this._initVars();
+        this.cacheVars();
+      },
 
-    setListeners: function() {
-    },
+      parseData: function() {
+        return {
+          widgets: this.status.get('widgets')
+        };
+      },
 
-    render: function() {
-      this.$el.html(this.template(this.parseData()));
-      this._initVars();
-      this.cacheVars();
-    },
+      cacheVars: function() {
+        this.$checkboxes = this.$el.find('.js-field-list-checkbox-widget');
+      },
 
-    parseData: function() {
-      return {
-        widgets: this.status.get('widgets')
+      setWidgetsStatus: function() {
+        _.each(
+          this.$checkboxes,
+          _.bind(function(el) {
+            var is_active = _.contains(
+              this.status.get('widgetsActive'),
+              $(el).data('id')
+            );
+            $(el).toggleClass('is-active', is_active);
+          }, this)
+        );
+      },
+
+      enableSelection: function() {
+        this.$el.removeClass('-disabled');
+      },
+
+      disableSelection: function() {
+        this.$el.addClass('-disabled');
+      },
+
+      hide: function(e) {
+        e && e.preventDefault();
+        this.model.set('hidden', true);
+        this.$htmlbody.removeClass('active');
+        this.presenter.setActiveWidgets();
+      },
+
+      changeWidgets: function(e) {
+        this.presenter.changeActiveWidgets(
+          $(e.currentTarget).data('id'),
+          $(e.currentTarget).hasClass('is-active')
+        );
       }
-    },
+    });
 
-    cacheVars: function() {
-      this.$checkboxes = this.$el.find('.js-field-list-checkbox-widget');
-    },
-
-    setWidgetsStatus: function() {
-      _.each(this.$checkboxes, _.bind(function(el){
-        var is_active = _.contains(this.status.get('widgetsActive'),$(el).data('id'));
-        $(el).toggleClass('is-active', is_active);
-      }, this ));
-    },
-
-    enableSelection: function() {
-      this.$el.removeClass('-disabled');
-    },
-
-    disableSelection: function() {
-      this.$el.addClass('-disabled');
-    },
-
-    hide: function(e) {
-      e && e.preventDefault();
-      this.model.set('hidden', true);
-      this.$htmlbody.removeClass('active');
-      this.presenter.setActiveWidgets();
-    },
-
-    changeWidgets: function(e) {
-      this.presenter.changeActiveWidgets($(e.currentTarget).data('id'),$(e.currentTarget).hasClass('is-active'))
-    }
-
-  });
-
-  return CountryWidgetsModalView;
-
-});
+    return CountryWidgetsModalView;
+  }
+);

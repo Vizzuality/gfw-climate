@@ -12,7 +12,6 @@
     border-top: 1px solid $border;
 
     > .feature-content {
-
       .translated-image {
         width: 150%;
         transform: translate(20%, 0);
@@ -29,7 +28,6 @@
     }
 
     > .feature-content {
-
       .description-container {
         padding: 0;
       }
@@ -39,7 +37,6 @@
       }
 
       .description-container > .link-container {
-
         @media screen and (max-width: $br-tablet) {
           flex-wrap: wrap;
 
@@ -66,7 +63,6 @@
   }
 
   &.-compare-countries {
-
     .description-container {
       padding: 20px 0 20px 60px;
 
@@ -76,8 +72,7 @@
     }
 
     .image-compare {
-
-        display: none;
+      display: none;
 
     }
 
@@ -96,7 +91,7 @@
 
   &.-country-profiles,
   &.-compare-countries {
-    background: rgba($gray, .2);
+    background: rgba($gray, 0.2);
   }
 
   &.-profiles {

@@ -1,5 +1,6 @@
 .circle {
   $width: 318px;
+
   position: absolute;
   top: -160px; left: 50%;
   width: 318px;
@@ -7,7 +8,9 @@
   margin-top: -1*$width/2;
   margin-left: -1*$width/2;
   opacity: 0;
+
   @include home-icons-sprite(circle);
+
   text-align: center;
 
   &:hover {
@@ -28,7 +31,9 @@
   height: 74px;
   width: 74px;
   background: image-url('home-icons/green_circle.png') no-repeat 50% 50%;
+
   @include background-size(10%);
+
   opacity: 0;
 
   i {
@@ -41,6 +46,7 @@
     margin: -14px 0 0 -13px;
     width: 26px;
     height: 28px;
+
     @include home-icons-sprite(flag);
   }
 
@@ -48,6 +54,7 @@
     margin: -17px 0 0 -18px;
     width: 36px;
     height: 34px;
+
     @include home-icons-sprite(area);
   }
 
@@ -55,6 +62,7 @@
     margin: -17px 0 0 -26px;
     width: 52px;
     height: 34px;
+
     @include home-icons-sprite(breaking);
   }
 }
@@ -66,7 +74,6 @@
   width: 195px;
   font-size: 15px;
   line-height: 18px;
-
   color: #fff;
 }
 
@@ -74,7 +81,6 @@
   text-align: center;
   font-weight: 300;
   font-size: 67px;
-
   color: $blue;
 }
 
@@ -100,7 +106,6 @@
   top: -58px;
   font-weight: 500;
   font-size: 13px;
-
   text-transform: uppercase;
   text-align: center;
   color: #fff;
@@ -115,7 +120,9 @@
   height: 250px;
   margin-top: 35px;
   margin-left: 35px;
+
   @include home-icons-sprite(four_arrows);
+
   opacity: 0;
   cursor: pointer;
 }

@@ -3,16 +3,14 @@
  *º
  * @return MapControlsPresenter class.
  */
-define([
-  'underscore',
-  'mps',
-  'map/presenters/PresenterClass'
-], function(_, mps, PresenterClass) {
-
+define(['underscore', 'mps', 'map/presenters/PresenterClass'], function(
+  _,
+  mps,
+  PresenterClass
+) {
   'use strict';
 
   var MapControlsPresenter = PresenterClass.extend({
-
     init: function(view) {
       this.view = view;
       this._super();
@@ -21,43 +19,52 @@ define([
     // /**
     //  * Application subscriptions.
     //  */
-    _subscriptions: [{
-      'Map/set-zoom': function(zoom) {
-        this.view.setZoom(zoom);
+    _subscriptions: [
+      {
+        'Map/set-zoom': function(zoom) {
+          this.view.setZoom(zoom);
+        }
+      },
+      {
+        'Map/fit-bounds': function(bounds) {
+          this.view.saveBounds(bounds);
+        }
+      },
+      {
+        'AnalysisResults/delete-analysis': function() {
+          this.view.saveBounds(null);
+        }
+      },
+      {
+        'AnalysisTool/stop-drawing': function() {
+          this.view.model.set({
+            hidden: false
+          });
+        }
+      },
+      {
+        'AnalysisTool/start-drawing': function() {
+          this.view.model.set({
+            hidden: true
+          });
+        }
+      },
+      {
+        'Timeline/toggle': function(toggle) {
+          this.view.toogleTimeline(toggle);
+        }
+      },
+      {
+        'Layers/toggle': function(toggle) {
+          this.view.toogleTimeline(false);
+        }
+      },
+      {
+        'Analysis/toggle': function(toggle) {
+          this.view.toogleTimeline(false);
+        }
       }
-    },{
-      'Map/fit-bounds': function(bounds) {
-        this.view.saveBounds(bounds);
-      }
-    },{
-      'AnalysisResults/delete-analysis': function() {
-        this.view.saveBounds(null);
-      }
-    },{
-      'AnalysisTool/stop-drawing': function() {
-        this.view.model.set({
-          hidden: false
-        });
-      }
-    },{
-      'AnalysisTool/start-drawing': function() {
-        this.view.model.set({
-          hidden: true
-        });
-      }
-    },{
-      'Timeline/toggle' : function(toggle){
-        this.view.toogleTimeline(toggle);
-      }
-    }, {
-      'Layers/toggle': function(toggle) {
-        this.view.toogleTimeline(false);
-      }
-    }, {
-      'Analysis/toggle': function(toggle) {
-        this.view.toogleTimeline(false);
-      }
-    }],
+    ],
 
     // *
     //  * Used by ToggleWidgets view to handle a fitbounds.
@@ -80,10 +87,10 @@ define([
      */
     onZoomChange: function(zoom) {
       mps.publish('Map/zoom-change', [zoom]);
-      mps.publish('Place/update', [{go: false}]);
+      mps.publish('Place/update', [{ go: false }]);
     },
 
-    onAutolocate: function(){
+    onAutolocate: function() {
       mps.publish('Map/autolocate');
     },
 
@@ -96,7 +103,7 @@ define([
       mps.publish('Map/fit-bounds', [bounds]);
     },
 
-    notificate: function(id){
+    notificate: function(id) {
       mps.publish('Notification/open', [id]);
     },
 
@@ -105,11 +112,9 @@ define([
       this.view.toogleTimeline(false);
     },
 
-    openAnalysis: function(){
+    openAnalysis: function() {
       mps.publish('Analysis/toggle');
-    },
-
-
+    }
   });
 
   return MapControlsPresenter;

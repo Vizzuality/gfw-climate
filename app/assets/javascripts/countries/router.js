@@ -1,145 +1,156 @@
-define([
-  'backbone',
-  'mps',
-  'urijs/URI',
-  'utils',
-  'countries/services/PlaceService',
-  'countries/views/CountryIndexView',
-  'countries/views/CountryShowView',
-  'countries/views/CountryPantropicalView',
-  'countries/views/CountryReportView'
-], function(
-  Backbone,
-  mps,
-  URI,
-  utils,
-  PlaceService,
-  CountryIndexView,
-  CountryShowView,
-  CountryPantropicalView,
-  CountryReportView
-) {
+define(
+  [
+    'backbone',
+    'mps',
+    'urijs/URI',
+    'utils',
+    'countries/services/PlaceService',
+    'countries/views/CountryIndexView',
+    'countries/views/CountryShowView',
+    'countries/views/CountryPantropicalView',
+    'countries/views/CountryReportView'
+  ],
+  function(
+    Backbone,
+    mps,
+    URI,
+    utils,
+    PlaceService,
+    CountryIndexView,
+    CountryShowView,
+    CountryPantropicalView,
+    CountryReportView
+  ) {
+    'use strict';
 
-  'use strict';
+    var Router = Backbone.Router.extend({
+      params: new (Backbone.Model.extend())(),
 
-  var Router = Backbone.Router.extend({
+      routes: {
+        countries: '_initIndex',
+        pantropical: '_initPantropical',
+        'countries/:country/report': '_initReport',
+        'countries(/)(:country)(/)(:view)': '_initShow'
+      },
 
-    params: new (Backbone.Model.extend()),
+      initialize: function() {
+        this.placeService = new PlaceService(this);
+        this.setSubscriptions();
+        this.setEvents();
+      },
 
-    routes: {
-      'countries'                           : '_initIndex',
-      'pantropical'                         : '_initPantropical',
-      'countries/:country/report'           : '_initReport',
-      'countries(/)(:country)(/)(:view)'    : '_initShow'
-    },
+      setSubscriptions: function() {
+        mps.subscribe('Router/change', this.setParams.bind(this));
+      },
 
-    initialize: function() {
-      this.placeService = new PlaceService(this);
-      this.setSubscriptions();
-      this.setEvents();
-    },
+      setEvents: function() {
+        this.params.on('change', this.updateUrl, this);
+      },
 
-    setSubscriptions: function() {
-      mps.subscribe('Router/change', this.setParams.bind(this));
-    },
+      /**
+       * Setting new params and update it
+       * @param {Object} params
+       */
+      setParams: function(params) {
+        this.params.clear({ silent: true }).set(params);
+      },
 
-    setEvents: function() {
-      this.params.on('change', this.updateUrl, this);
-    },
+      /**
+       * Namespace to get current params
+       */
+      getParams: function() {
+        return this.params.attributes;
+      },
 
-    /**
-     * Setting new params and update it
-     * @param {Object} params
-     */
-    setParams: function(params) {
-      this.params.clear({ silent: true }).set(params);
-    },
-
-    /**
-     * Namespace to get current params
-     */
-    getParams: function() {
-      return this.params.attributes;
-    },
-
-    /**
-     * Change URL with current params
-     */
-    updateUrl: function() {
-      var uri = new URI();
-      var params = _.omit(this.getParams(), 'vars', 'defaults','params');
-      uri.query(this._serializeParams(params));
-      // {replace: true} update the URL without creating an entry in the browser's history and allow us to go back
-      this.navigate(uri.path().slice(1) + uri.search(), { trigger: true, replace: true });
-    },
-
-    /**
-     * Transform URL string params to object
-     * @param  {String} paramsQuery
-     * @return {Object}
-     * @example https://medialize.github.io/URI.js/docs.html
-     */
-    _unserializeParams: function(paramsQuery) {
-      var params = {};
-      if (typeof paramsQuery === 'string' && paramsQuery.length) {
+      /**
+       * Change URL with current params
+       */
+      updateUrl: function() {
         var uri = new URI();
-        uri.query(paramsQuery);
-        params = uri.search(true);
+        var params = _.omit(this.getParams(), 'vars', 'defaults', 'params');
+        uri.query(this._serializeParams(params));
+        // {replace: true} update the URL without creating an entry in the browser's history and allow us to go back
+        this.navigate(uri.path().slice(1) + uri.search(), {
+          trigger: true,
+          replace: true
+        });
+      },
+
+      /**
+       * Transform URL string params to object
+       * @param  {String} paramsQuery
+       * @return {Object}
+       * @example https://medialize.github.io/URI.js/docs.html
+       */
+      _unserializeParams: function(paramsQuery) {
+        var params = {};
+        if (typeof paramsQuery === 'string' && paramsQuery.length) {
+          var uri = new URI();
+          uri.query(paramsQuery);
+          params = uri.search(true);
+        }
+        return params;
+      },
+
+      /**
+       * Transform object params to URL string
+       * @param  {Object} params
+       * @return {String}
+       * @example https://medialize.github.io/URI.js/docs.html
+       */
+      _serializeParams: function(params) {
+        var uri = new URI();
+        uri.search(params);
+        return uri.search();
+      },
+
+      _initIndex: function() {
+        new CountryIndexView();
+      },
+
+      _initShow: function(country, view) {
+        new CountryShowView();
+
+        var params = _.extend(
+          {
+            country: country,
+            view: view
+          },
+          _.parseUrl()
+        );
+
+        this.placeService.initPlace(params);
+      },
+
+      _initReport: function(country) {
+        var uri = new URI();
+        var newParams = uri.search(true);
+
+        this.setParams(newParams);
+
+        new CountryReportView({
+          iso: country,
+          params: this.getParams() || null
+        });
+      },
+
+      _initPantropical: function() {
+        ga(
+          'send',
+          'event',
+          'pantropical',
+          'Choose visualisation',
+          'All countries'
+        );
+        new CountryPantropicalView();
       }
-      return params;
-    },
 
-    /**
-     * Transform object params to URL string
-     * @param  {Object} params
-     * @return {String}
-     * @example https://medialize.github.io/URI.js/docs.html
-     */
-    _serializeParams: function(params) {
-      var uri = new URI();
-      uri.search(params);
-      return uri.search();
-    },
+      // updateUrl: function() {
+      //   var current= Backbone.history.getFragment();
+      //   this.navigate(current + '?thresh=30');
+      // }
+    });
 
-    _initIndex: function() {
-      new CountryIndexView();
-    },
-
-    _initShow: function(country, view) {
-
-      new CountryShowView();
-
-      var params = _.extend({
-        country: country,
-        view: view
-      }, _.parseUrl());
-
-      this.placeService.initPlace(params);
-    },
-
-    _initReport: function(country) {
-      var uri = new URI();
-      var newParams = uri.search(true);
-
-      this.setParams(newParams);
-
-      new CountryReportView({
-        iso: country,
-        params: this.getParams() || null
-      });
-    },
-
-    _initPantropical: function() {
-      ga('send', 'event', 'pantropical','Choose visualisation','All countries');
-      new CountryPantropicalView();
-    },
-
-    // updateUrl: function() {
-    //   var current= Backbone.history.getFragment();
-    //   this.navigate(current + '?thresh=30');
-    // }
-  });
-
-  return Router;
-
-});
+    return Router;
+  }
+);

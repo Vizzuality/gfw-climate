@@ -26,6 +26,7 @@
 h2 {
   font-size: 35px;
   color: $white;
+
   @media (min-width: $br-mobile) {
     font-size: 59px;
   }
@@ -36,6 +37,7 @@ h3 {
   line-height: 1.25;
   font-weight: 500;
   color: rgba($white, 0.5);
+
   @media (min-width: $br-mobile) {
     font-size: 14px;
   }
@@ -51,6 +53,7 @@ h4 {
   h2 {
     padding: 0 0 25px;
   }
+
   h3 {
     padding: 0 0 10px;
   }
@@ -64,12 +67,15 @@ h4 {
 
 .btn-download {
   margin: 15px 0;
+
   @media (min-width: $br-mobile) {
     margin: 0;
   }
+
   .btn {
     margin: 0 auto;
     display: block;
+
     @media (min-width: $br-mobile) {
       margin: 0;
     }

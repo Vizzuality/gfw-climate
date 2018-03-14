@@ -3,16 +3,14 @@
  *º
  * @return MapControlsPresenter class.
  */
-define([
-  'underscore',
-  'mps',
-  'map/presenters/PresenterClass'
-], function(_, mps, PresenterClass) {
-
+define(['underscore', 'mps', 'map/presenters/PresenterClass'], function(
+  _,
+  mps,
+  PresenterClass
+) {
   'use strict';
 
   var MapControlsPresenter = PresenterClass.extend({
-
     init: function(view) {
       this.view = view;
       this._super();
@@ -21,21 +19,24 @@ define([
     // /**
     //  * Application subscriptions.
     //  */
-    _subscriptions: [{
-      'Tab/open': function(id, backbutton) {
-        this.view.openTab(id, backbutton);
+    _subscriptions: [
+      {
+        'Tab/open': function(id, backbutton) {
+          this.view.openTab(id, backbutton);
+        }
+      },
+      {
+        'Layers/toggle': function(toggle) {
+          this.view.toggleMobileLayers(toggle);
+        }
       }
-    },{
-      'Layers/toggle': function(toggle) {
-        this.view.toggleMobileLayers(toggle);
-      }
-    }],
+    ],
 
-    onTabOpen: function(id){
+    onTabOpen: function(id) {
       mps.publish('Tab/opened', [id]);
     },
 
-    onTabMobileClose : function () {
+    onTabMobileClose: function() {
       mps.publish('Tab/closed');
     },
 
@@ -44,9 +45,8 @@ define([
       mps.publish('AnalysisService/cancel', []);
       mps.publish('AnalysisResults/delete-analysis', []);
       mps.publish('AnalysisResults/Delete', []);
-      mps.publish('Place/update', [{go: false}]);
+      mps.publish('Place/update', [{ go: false }]);
     }
-
   });
 
   return MapControlsPresenter;

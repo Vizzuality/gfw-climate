@@ -1,5 +1,4 @@
 .section-title {
-
   @media only screen and (max-width: 480px) {
     padding: 85px 0 0;
   }
@@ -11,13 +10,15 @@
   background: #333;
   margin-top: 36px;
   top: -20px;
+
   @media only screen and (max-width: 480px) {
     top: 0;
-    margin-top: 0px;
+    margin-top: 0;
   }
+
   .embed & {
     margin-top: 0;
-    top: 0px;
+    top: 0;
   }
 }
 
@@ -29,6 +30,7 @@
   @media only screen and (min-width: 481px) and (max-width: 1010px) {
     width: 100%;
   }
+
   .graph_tab, .all_countries {
     @media only screen and (min-width: 481px) and (max-width: 1010px) {
       width: 25%;
@@ -37,24 +39,27 @@
 
   .umdoptions_dialog {
     left: auto;
-    right: 0px;
+    right: 0;
     top: 10px;
     display: block;
     position: absolute;
     width: 442px;
-      &::after {
-        top: -271px;
-        left: 237px;
-      }
-      &::before {
-        top: -28px;
-        left: 237px;
-      }
+
+    &::after {
+      top: -271px;
+      left: 237px;
+    }
+
+    &::before {
+      top: -28px;
+      left: 237px;
+    }
   }
 }
 
 .overview_graph__area {
   height: 371px;
+
   svg {
     border-top: 1px solid $dark;
     position: relative;
@@ -71,12 +76,14 @@
 
 .grid_h {
   @extend .tick;
-  stroke: rgba(#fff, .1);
+
+  stroke: rgba(#fff, 0.1);
 }
 
 .grid_v {
   @extend .tick;
-  stroke: rgba(#fff, .3);
+
+  stroke: rgba(#fff, 0.3);
 }
 
 .linedot {
@@ -86,7 +93,8 @@
   cursor: pointer;
 
   &.gain {
-    stroke: #6D6DE5;
+    stroke: #6d6de5;
+
     &.extent {
       stroke: #97bd3d;
     }
@@ -95,15 +103,17 @@
 
 .overview_line {
   @extend .tick;
+
   stroke-width: 7px;
-  stroke: #6D6DE5;
+  stroke: #6d6de5;
 }
 
 .minioverview_line {
   @extend .tick;
+
   stroke: #444;
   stroke-dasharray: 11px, 2px;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .overview_graph__tabs {
@@ -119,7 +129,7 @@
       a {
         position: relative;
         border-bottom-color: transparent;
-        color: rgba(#fff, .75);
+        color: rgba(#fff, 0.75);
         background: #333;
       }
     }
@@ -134,11 +144,11 @@
     }
 
     &.all_countries a {
-      background: #95BC3B;
+      background: #95bc3b;
       margin-bottom: 0;
 
       &:hover {
-        background: darken(#95BC3B, 5%);
+        background: darken(#95bc3b, 5%);
         border-bottom: 1px solid $dark;
       }
     }
@@ -156,7 +166,7 @@
   vertical-align: middle;
   text-align: center;
   text-transform: uppercase;
-  color: rgba(#fff, .75);
+  color: rgba(#fff, 0.75);
   text-decoration: none;
 
   span {
@@ -166,7 +176,7 @@
     display: block;
     font-size: 12px;
     line-height: 1.5;
-    color: #A39FAA;
+    color: #a39faa;
   }
 }
 
@@ -200,6 +210,7 @@
     background: $light;
     width: 16px;
     height: 16px;
+
     svg{
       width: 16px;
       height: 65%;
@@ -210,6 +221,7 @@
       transform: translate(-50%,-50%);
     }
   }
+
   .trigger-mode {
     background-color: #7b7b7b;
     color: #eee;
@@ -223,14 +235,17 @@
     right: 60px;
     top: 8px;
     border-radius:  50x;
+
     strong {
       background-color: #eee;
       color: #7b7b7b;
       border-radius:  inerit;
     }
+
     span {
       cursor: pointer;
     }
+
     span,
     strong {
       width: 50%;
@@ -238,6 +253,7 @@
       justify-content: center;
       align-items: center;
     }
+
     @media only screen and (max-width: 480px) {
       position: relative;
       margin: 10px auto;
@@ -252,25 +268,32 @@
   width: 100%;
   text-align: center;
   padding: 50px;
+
   span {
     margin: 25px 0;
     color: #fff;
     font-size: 120px;
+
     .embed &{
       font-size: 80px;
     }
   }
+
   .unit {
     font-weight: 100;
   }
+
   .figure {
-    color: #6D6DE5;
+    color: #6d6de5;
+
     &.extent {
       color: $blue;
     }
   }
+
   @media only screen and (max-width: 480px) {
     padding: 0 0 20px;
+
     span{
       font-size: 50px;
     }
@@ -285,28 +308,32 @@
   width: 100%;
   height: 28px;
   margin: 0 auto;
-  border-bottom: 1px solid #CCC;
+  border-bottom: 1px solid #ccc;
   line-height: 28px;
   font-size: 12px;
   font-weight: 500;
-  color: #9D9AA5;
+  color: #9d9aa5;
   text-align: right;
 
   span {
     text-transform: lowercase;
   }
+
   .loss-vs-gain {
     display: none !important;
+
     strong {
       color: #666;
       text-decoration: underline;
     }
+
     span {
       cursor: pointer;
       text-transform: none;
     }
   }
 }
+
 .overview_graph__years{
   width: 960px;
 }
@@ -329,7 +356,7 @@
   font-size: 37px;
   line-height: 1.1;
   text-align: center;
-  color: #463F52;
+  color: #463f52;
   vertical-align: top;
   margin: 0 auto;
   max-width: 700px;
@@ -338,18 +365,21 @@
     position: relative;
     top: -14px;
     font-size: 23px;
+
     @media only screen and (min-width: 481px) and (max-width: 1010px) {
       display: block;
       top: 0;
     }
   }
 }
+
 .is-overview-action {
   .countries_list ul li {
     border-bottom: 1px solid #ccc;
     padding: 18px 0 18px 40px;
   }
 }
+
 .countries_list {
   margin:0 auto !important;
   width: 100%;
@@ -361,11 +391,14 @@
   ul  {
     width: 100%;
   }
+
   li {
     position: relative;
+
     @extend .clearfix;
+
     &:hover {
-      background: rgba(#ddd, .3);
+      background: rgba(#ddd, 0.3);
 
       .bar {
         opacity: 1;
@@ -377,13 +410,12 @@
       }
 
       .countries_list__minioverview {
-
         .loss {
-          color: #C443FF;
+          color: #c443ff;
         }
 
         .gain {
-          color: #6D6DE5;
+          color: #6d6de5;
         }
       }
     }
@@ -392,23 +424,26 @@
 
 .countries_list__header__minioverview,
 .countries_list__minioverview {
-
   &.per-loss{
     width: auto;
     right: 171px;
   }
+
   &.total-loss{
     width: auto;
     right: 67px;
   }
+
   &.ratio-loss-gain{
     width: auto;
     right: 25px;
   }
+
   &.cover-extent{
     width: auto;
     right: 57px;
   }
+
   &.huge {
     width: 330px;
   }
@@ -434,6 +469,7 @@
   width: 45px;
   padding: 0 10px;
 }
+
 .countries_list__data {
   position: absolute;
   top: 50%;
@@ -461,18 +497,20 @@
 
   .line {
     float: left;
-    color: #A2A0A9;
+    color: #a2a0a9;
     position: relative;
     box-sizing: content-box;
     min-width: 140px;
     padding: 0 10px 0 0;
     text-align: left;
+
     span{
       min-width: 50px;
       text-align: right;
       float: left;
       margin-right: 4px;
     }
+
     &.percent {
       margin-right: 20px;
       font-size: 1.3rem;
@@ -492,24 +530,29 @@
     &.percent::after {
       display: none;
     }
+
     &.gain::after {
       // right: -8px;
-      background-color: #6D6DE5;
+      background-color: #6d6de5;
     }
   }
+
   div[id^="ext_"] {
     .line{
       float: right;
+
       &:after {
         display: none;
       }
     }
 
   }
+
   .perct {
     float: right;
   }
 }
+
 .countries_list__header__title,
 .countries_list__title {
   padding-left: 15px;
@@ -539,7 +582,7 @@
   overflow: hidden;
   max-width: 450px;
   white-space: nowrap;
-  color: #A2A0A9;
+  color: #a2a0a9;
   margin-left: 15px;
 
   @media only screen and (min-width: 481px) and (max-width: 1010px) {
@@ -548,10 +591,12 @@
     overflow: visible;
     white-space: normal;
   }
+
   a {
-    color: #463F52;
+    color: #463f52;
     text-decoration: none;
     font-weight: 300;
+
     &:hover {
       color: #88aa37;
     }
@@ -564,22 +609,22 @@
   font-size: 29px;
   line-height: 50px;
   font-weight: 500;
-  color: #A2A0A9;
+  color: #a2a0a9;
 
   @media only screen and (max-width: 650px) {
     display: none;
   }
 
   .loss {
-    color: rgba(#C443FF, .5);
+    color: rgba(#c443ff, 0.5);
   }
 
   .gain {
-    color: rgba(#6D6DE5, .5);
+    color: rgba(#6d6de5, 0.5);
   }
 
   .bar {
-    fill: #FF6699;
+    fill: #f69;
 
     &.extent {
       fill: $blue;
@@ -616,13 +661,13 @@
 }
 
 .countries_list__footer {
-  background: rgba(#6D6DE5, .15);
+  background: rgba(#6d6de5, 0.15);
   text-align: center;
   padding: 30px 0;
 
   a {
     display: inline-block;
-    border: 2px solid rgba(#464253, .25);
+    border: 2px solid rgba(#464253, 0.25);
     width: 192px;
     padding: 0 20px;
     font-size: 14px;
@@ -630,7 +675,7 @@
     font-weight: 500;
     text-align: left;
     text-transform: uppercase;
-    color: #463F52;
+    color: #463f52;
     border-radius: 21px;
 
     i {
@@ -642,7 +687,7 @@
     }
 
     &:hover {
-      border: 2px solid rgba(#464253, .5);
+      border: 2px solid rgba(#464253, 0.5);
     }
   }
 }
@@ -718,8 +763,10 @@
   &.total_extent {
     height: 0;
     overflow: hidden;
+
     .legend {
       top: 40px;
+
       li:last-child i {
         background: #97bd3d;
       }
@@ -734,14 +781,14 @@
     li {
       font-size: 19px;
       line-height: 1.5;
-      text-shadow: 0 0 5px rgba(#000, .8);
+      text-shadow: 0 0 5px rgba(#000, 0.8);
 
       &:first-child i {
-        background: #FF6699;
+        background: #f69;
       }
 
       &:last-child i {
-        background: #6D6DE5;
+        background: #6d6de5;
       }
 
       i {
@@ -767,8 +814,8 @@
 }
 
 .ball {
-  fill: #6D6DE5;
-  opacity: .8;
+  fill: #6d6de5;
+  opacity: 0.8;
 }
 
 .label {
@@ -781,13 +828,15 @@
 .axis {
   font-size: 12px;
   font-weight: 500;
-  fill: #9D9AA5;
+  fill: #9d9aa5;
 }
+
 .axis_country {
   font-size: 10px;
   font-weight: 500;
   fill: #555;
 }
+
 .source_window .conventions .credits {
   margin-bottom: 30px;
 }
@@ -795,21 +844,25 @@
 
 .overview_button_group {
   position: relative;
-  background: #EEEEEE;
+  background: #eee;
   width: 100%;
+
   &.is-max{
     .inner{
       max-width: 960px;
     }
   }
+
   .inner {
     width: 100%;
     overflow: hidden;
     padding: 8px;
+
     .countries_show & {
       width: 790px;
     }
   }
+
   .share_control, .item, .download-spatial {
     position: relative;
     box-sizing: content-box;
@@ -822,6 +875,7 @@
     text-transform: uppercase;
     color: $dark;
     cursor: pointer;
+
     a {
       color: $dark;
     }
@@ -831,7 +885,7 @@
       position: absolute;
       top: 50%;
       transform: translate(0,-50%);
-      right: 0px;
+      right: 0;
       height: 18px;
       width: 18px;
       fill: $dark;
@@ -853,48 +907,53 @@
     &:hover {
       border-color: rgba(54,51,64,0.35);
     }
+
     &.settings {
       &.disable {
         opacity: 0.5;
         background-color: #fafafa;
         pointer-events: none;
       }
+
       &.no_def {
         svg{
           fill: $blue;
         }
       }
     }
+
     @media only screen and (max-width: 480px) {
-      margin: 0 0px 0 20px;
+      margin: 0 0 0 20px;
     }
   }
 
   .share_control {
-
     @media only screen and (max-width: 480px) {
       margin: 0 20px 0 20px;
     }
+
     .share {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translate(0, -50%);
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(0, -50%);
     }
   }
 
   .country-share .share_control {
-      width: 105px;
-      display: block;
-      background: none;
-      background-color: transparent;
-      text-decoration: none;
-    }
+    width: 105px;
+    display: block;
+    background: none;
+    background-color: transparent;
+    text-decoration: none;
+  }
 }
+
 .show-more-countries {
   display: block;
   height: 120px;
   margin: 0 auto;
+
   .btn {
     position: absolute;
     top: 50%;
@@ -959,9 +1018,11 @@
 
     .line {
       min-width: 120px;
+
       &::after {
         right: 0;
       }
+
       .gain::after {
         right: 0;
       }
@@ -1064,6 +1125,7 @@
     border-bottom: 0;
 
     .year { display: none; }
+
     .year:first-child,
     .year:last-child {
       display: inherit;

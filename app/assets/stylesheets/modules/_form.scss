@@ -6,19 +6,19 @@
 
 .field_with_errors {
   label {
-    color: #C12000;
+    color: #c12000;
   }
 
   input[type="text"],
   input[type="email"] {
-    border: 1px solid #C12000;
+    border: 1px solid #c12000;
   }
 
   p {
     margin-bottom: 25px;
     font-weight: 500;
     font-size: 12px;
-    color: #C12000;
+    color: #c12000;
     text-transform: uppercase;
   }
 }
@@ -51,7 +51,9 @@ textarea {
 
 .field {
   @include clearfix();
+
   width: 100%;
+
   @media (min-width: $br-mobile) {
     max-width: 582px;
   }
@@ -76,6 +78,7 @@ textarea {
       float: right;
       font-size: 13px;
       color: #666;
+
       &.drop_pin{
         @media (max-width: $br-mobile - 1) {
           display: block;

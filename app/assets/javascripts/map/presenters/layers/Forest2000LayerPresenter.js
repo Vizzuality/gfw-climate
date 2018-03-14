@@ -3,16 +3,14 @@
  *
  * @return UMDLossLayerPresenter class
  */
-define([
-  'underscore',
-  'mps',
-  'map/presenters/PresenterClass'
-], function(_, mps, PresenterClass) {
-
+define(['underscore', 'mps', 'map/presenters/PresenterClass'], function(
+  _,
+  mps,
+  PresenterClass
+) {
   'use strict';
 
   var Forest2000LayerPresenter = PresenterClass.extend({
-
     init: function(view) {
       this.view = view;
       this._super();
@@ -21,20 +19,23 @@ define([
     /**
      * Application subscriptions.
      */
-    _subscriptions: [{
-      'Threshold/changed': function(threshold) {
-        this.view.setThreshold(threshold);
+    _subscriptions: [
+      {
+        'Threshold/changed': function(threshold) {
+          this.view.setThreshold(threshold);
+        }
       },
-    }, {
-      'Uncertainty/changed': function(uncertainty) {
-        this.view._updateUncertainty(uncertainty);
+      {
+        'Uncertainty/changed': function(uncertainty) {
+          this.view._updateUncertainty(uncertainty);
+        }
+      },
+      {
+        'Range/set': function(range, layer) {
+          if (layer === 'carbon_stocks') this.view._updateRange(range);
+        }
       }
-    },{
-      'Range/set': function(range,layer) {
-        if (layer === 'carbon_stocks')
-          this.view._updateRange(range);
-      }
-    }],
+    ],
 
     layerRendered: function() {
       mps.publish('Layer/rendered');

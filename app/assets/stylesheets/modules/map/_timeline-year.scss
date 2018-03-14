@@ -1,7 +1,9 @@
 .widget-timeline .timeline-year {
   height: 100%;
+
   @media (min-width: $br-mobileMap){
     padding-left: 50px;
+
     &.no-play{
       padding-left: 0;
     }
@@ -17,9 +19,11 @@
     height: 100%;
     cursor: pointer;
     padding: 20px;
+
     @media (min-width: $br-mobileMap){
       width: 50px;
     }
+
     &:after{
       content: "";
       position: absolute;
@@ -65,32 +69,41 @@
   .time {
     height: 100%;
     position: relative;
+
     @media (min-width: $br-mobileMap){
       padding: 0 5px;
     }
+
     svg{
       width: auto;
     }
+
     .select-timeline-container{
       display: flex;
       justify-content: center;
       align-items: center;
       line-height: 46px;
+
       .select-timeline-box{
         margin: 0 0 0 10px;
+
         &:first-child{
           margin: 0;
         }
+
         position: relative;
+
         span{
           font-size: 12px;
           // text-transform: uppercase;
         }
+
         button{
           top: -1px;
           padding: 0 20px;
           margin: 0 0 0 5px;
         }
+
         select{
           opacity: 0;
           position: absolute;
@@ -115,9 +128,11 @@
         fill: $blue;
       }
     }
+
     .tick{
       // transform: translateY(3px);
     }
+
     .domain {
       stroke: $blue;
       stroke-width: 4;
@@ -125,17 +140,21 @@
       // shape-rendering: crispEdges;
     }
   }
+
   .xaxis-years{
     @media (max-width: $br-mobileMap - 1){
       display: none;
     }
+
     text {
       font-size: 11px;
       fill: $dark;
       font-weight: 500;
+
       &:hover{
         fill: $blue;
       }
+
       &.selected {
         fill: $blue;
       }

@@ -3,21 +3,16 @@
  *
  * @return UsaLandCoverLayer class (extends ImageLayerClass)
  */
-define([
-  'abstract/layer/ImageLayerClass',
-], function(ImageLayerClass) {
-
+define(['abstract/layer/ImageLayerClass'], function(ImageLayerClass) {
   'use strict';
 
   var UsaLandCoverChangeLayer = ImageLayerClass.extend({
-
     options: {
-      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/usa_landcover_change{/z}{/x}{/y}.png',
+      urlTemplate:
+        'https://s3.amazonaws.com/wri-tiles/usa_landcover_change{/z}{/x}{/y}.png',
       dataMaxZoom: 12
     }
-
   });
 
   return UsaLandCoverChangeLayer;
-
 });

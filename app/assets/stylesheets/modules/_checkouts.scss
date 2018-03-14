@@ -6,7 +6,7 @@
     width: 115px;
     max-height: 40px;
     border-radius: 6px;
-    border: 2px solid #EF1731;
+    border: 2px solid #ef1731;
     position: relative;
     z-index: 1030;
     display: block;
@@ -16,30 +16,32 @@
     text-align: center;
     text-transform: uppercase;
     font-size: 11px;
-    color: #7B7784;
+    color: #7b7784;
     padding: 8px;
     font-weight: 500;
     line-height: 15px;
     background-color: rgba(254, 254, 254, 0.7);
 
     &.for_business {
-      border-color: #EB8300;
+      border-color: #eb8300;
+
       span {
-        color: #EB8300;
+        color: #eb8300;
       }
     }
 
     &:hover {
       background-color: rgba(251, 251, 251, 1);
-      color: #7B7784;
+      color: #7b7784;
     }
 
     span {
       display: block;
       font-weight: 500;
-      color: #EF1731;
+      color: #ef1731;
     }
   }
+
   .gfw_testers {
     height: 85px;
     width: 85px;
@@ -52,8 +54,9 @@
     top: 140px;
     padding-top: 0;
     left: 322px;
+
     span {
-      left: 0px;
+      left: 0;
       position: absolute;
       font-size: 11px;
       font-weight: 500;

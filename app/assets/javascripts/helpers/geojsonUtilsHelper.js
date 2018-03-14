@@ -1,8 +1,4 @@
-define([
-  'd3',
-  'geojsonArea'
-], function(d3, geojsonArea) {
-
+define(['d3', 'geojsonArea'], function(d3, geojsonArea) {
   var geojsonUtilsHelper = {
     /**
      * Generates a GEOJSON form a path.
@@ -16,15 +12,16 @@ define([
       coordinates = _.map(path, function(latlng) {
         return [
           _.toNumber(latlng.lng().toFixed(4)),
-          _.toNumber(latlng.lat().toFixed(4))];
+          _.toNumber(latlng.lat().toFixed(4))
+        ];
       });
 
       // First and last coordinate should be the same
       coordinates.push(_.first(coordinates));
 
       return {
-        'type': 'Polygon',
-        'coordinates': [coordinates]
+        type: 'Polygon',
+        coordinates: [coordinates]
       };
     },
 
@@ -34,22 +31,22 @@ define([
      * @param  {object} geojson
      * @return {array} paths
      */
-     geojsonToPath: function(geojson) {
-       if (geojson.type === 'Polygon') {
-         var coords = geojson.coordinates[0];
-         return _.map(coords, function(g) {
-           return new google.maps.LatLng(g[1], g[0]);
-         });
-       } else if (geojson.type === 'MultiPolygon') {
-         return geojson.coordinates.map(function(polygon) {
-           return polygon[0].map(function(coords) {
-             return new google.maps.LatLng(coords[1], coords[0]);
-           });
-         });
-       } else {
-         return false;
-       }
-     },
+    geojsonToPath: function(geojson) {
+      if (geojson.type === 'Polygon') {
+        var coords = geojson.coordinates[0];
+        return _.map(coords, function(g) {
+          return new google.maps.LatLng(g[1], g[0]);
+        });
+      } else if (geojson.type === 'MultiPolygon') {
+        return geojson.coordinates.map(function(polygon) {
+          return polygon[0].map(function(coords) {
+            return new google.maps.LatLng(coords[1], coords[0]);
+          });
+        });
+      } else {
+        return false;
+      }
+    },
 
     /**
      * Get Bounds from the suplied geojson.
@@ -60,8 +57,12 @@ define([
     getBoundsFromGeojson: function(geojson) {
       var d3bounds = d3.geo.bounds(geojson);
 
-      if (_.isNaN(d3bounds[0][1]) || _.isNaN(d3bounds[0][0]) ||
-        _.isNaN(d3bounds[1][1]) || _.isNaN(d3bounds[1][0])) {
+      if (
+        _.isNaN(d3bounds[0][1]) ||
+        _.isNaN(d3bounds[0][0]) ||
+        _.isNaN(d3bounds[1][1]) ||
+        _.isNaN(d3bounds[1][0])
+      ) {
         return null;
       }
 
@@ -97,7 +98,7 @@ define([
      * @return {String} hectares
      */
     getHectares: function(geojson) {
-      return Math.round((geojsonArea(geojson) / 10000));
+      return Math.round(geojsonArea(geojson) / 10000);
       // changed function to calculate areas in cartodb instead of using the google library
 
       // var area;
@@ -114,9 +115,7 @@ define([
       // });
       // return area;
     }
-
   };
 
   return geojsonUtilsHelper;
-
 });

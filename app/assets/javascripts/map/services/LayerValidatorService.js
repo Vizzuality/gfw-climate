@@ -3,20 +3,12 @@
  *
  * @return LayerValidator instance.
  */
-define([
-  'Class',
-  'underscore',
-  'mps'
-], function(Class, _, mps) {
-
+define(['Class', 'underscore', 'mps'], function(Class, _, mps) {
   'use strict';
 
   var LayerValidatorService = Class.extend({
-
     baselayersOpts: {
-      allowCombined: [
-        ['loss', 'gain']
-      ]
+      allowCombined: [['loss', 'gain']]
     },
 
     init: function() {
@@ -28,9 +20,12 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
-        this.activeLayers = place.params.layers;
-      }, this));
+      mps.subscribe(
+        'Place/go',
+        _.bind(function(place) {
+          this.activeLayers = place.params.layers;
+        }, this)
+      );
     },
 
     /**

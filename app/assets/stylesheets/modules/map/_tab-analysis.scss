@@ -2,12 +2,12 @@
   width: 100%;
   position: fixed;
   bottom: 0;
-  left: 0px;
+  left: 0;
   color: $dark;
   font-size: 13px;
   max-height: 75%;
   overflow: auto;
-  padding: 0px 0 56px;
+  padding: 0 0 56px;
   z-index: 22;
   background: $white;
   transition: all 0.25s $easeInOutSine;
@@ -26,9 +26,11 @@
     right: 0;
     display: block;
     z-index: 5;
+
     svg{
       stroke: $dark;
     }
+
     @media (min-width: $br-mobileMap){
       display: none;
     }
@@ -45,6 +47,7 @@
     .select-box-mobile{
       margin: 10px 0 0;
       position: relative;
+
       &:after{
         content: "";
         display: block;
@@ -57,10 +60,12 @@
         background: image-url('svg/arrow-down.svg') center no-repeat;
         background-size: contain;
       }
+
       &:first-child{
         margin: 0;
       }
     }
+
     select{
       -webkit-appearance: none;
       width: 100%;
@@ -74,12 +79,14 @@
       background: $white;
       font-family: inherit;
       text-transform: uppercase;
+
       option{
         text-transform: none;
       }
     }
   }
 }
+
 .tab-analysis, .tab-subscription{
   overflow: visible;
 
@@ -92,26 +99,32 @@
   .is-subscribing &{
     min-height: 250px;
   }
+
   nav{
     display: block;
+
     ul{
       display: flex;
+
       li{
         width: 100%;
         padding: 8px 6px;
         text-transform: uppercase;
         text-align: center;
         font-size: 12px;
-        color: #7F7F7F;
+        color: #7f7f7f;
         cursor: pointer;
+
         @media (min-width: $br-mobileMap){
           width: 33.333333%;
         }
+
         &:hover{
           svg{
             fill: $blue;
           }
         }
+
         &.active{
           background: $light;
           // border-bottom: 2px solid $dark;
@@ -119,22 +132,26 @@
             fill: $blue;
           }
         }
+
         &.disabled{
           opacity: 0.5;
           // pointer-events: none;
           cursor: default;
+
           &:hover{
             svg{
-              fill: #7F7F7F;
+              fill: #7f7f7f;
             }
           }
         }
+
         svg{
           display: block;
           width: 25px;
           height: 25px;
           margin: 0 auto 7px;
-          fill: #7F7F7F;
+          fill: #7f7f7f;
+
           @media (min-width: 1500px){
             width: 30px;
             height: 30px;
@@ -143,33 +160,41 @@
       }
     }
   }
+
   .analysis-content,
   .subscription-content{
     .analysis-tab-content,
     .subscription-tab-content{
       display: none;
       padding: 15px;
+
       @media (min-width: $br-mobileMap){
         padding: 15px;
       }
+
       @media (min-width: 1500px){
         padding: 20px;
       }
+
       &.active{
         display: block;
       }
+
       &.hidden{
         display: none;
       }
     }
   }
+
   .is-analysis &{
     nav{
       // display: none;
     }
+
     .analysis-content{
       .analysis-tab-content{
         padding: 15px 15px 0;
+
         @media (min-width: 1500px){
           padding: 20px 20px 0;
         }
@@ -186,6 +211,7 @@
     position: relative;
     width: 100%;
     padding-bottom: 75.454545454545%;
+
     &:before{
       content: "";
       position: absolute;
@@ -211,7 +237,6 @@
 //DRAW TAB
 .analysis-tab-content.draw-tab,
 .subscription-tab-content.draw-tab{
-
   .p-center {
     text-align: center;
     padding: 10px 0;
@@ -259,17 +284,21 @@
     margin: 15px 0 0;
     padding: 5px 0;
     display: inline-block;
+
     @media (min-height: 770px){
       display: none;
     }
   }
+
   .img-box{
     margin: 15px 0 0;
     position: relative;
     display: none;
+
     @media (min-height: 770px){
       display: block;
     }
+
     @media (min-width: 1500px){
       margin: 20px 0 0;
     }
@@ -284,6 +313,7 @@
       z-index: 2;
       background: rgba(#000, 0.75);
       cursor: pointer;
+
       @media (min-width: 1500px){
         width: calc(100% + 40px);
         height: calc(100% + 20px);
@@ -303,12 +333,14 @@
         left: 50%;
         transform: translate(-50%,-50%);
       }
+
       &:before{
         width: 50px;
         height: 50px;
         background: $white;
         border-radius: 50%;
       }
+
       &:after{
         width: 0;
         height: 0;
@@ -339,6 +371,7 @@
   padding: 20px 20px 56px;
   transform: translate(0,100%);
   transition: all 0.25s $easeInOutSine;
+
   &.active{
     transform: translate(0,0);
   }
@@ -364,9 +397,11 @@
     right: 0;
     display: block;
     z-index: 5;
+
     svg{
       stroke: $dark;
     }
+
     @media (min-width: $br-mobileMap){
       display: none;
     }
@@ -397,6 +432,7 @@
       margin-bottom: 3px;
       text-transform: uppercase;
       display: block;
+
       .stats-threshold {
         text-transform: lowercase;
         font-weight: normal;
@@ -404,10 +440,12 @@
         margin-left: 4px;
       }
     }
+
     .stats-count {
       font-weight: 500;
       font-size: 15px;
       color: #666;
+
       strong {
         font-size: 18px;
         display: inline-block;
@@ -417,7 +455,7 @@
     .stats-notice {
       font-size: 11px;
       background: $border;
-      border: 1px solid #CCC;
+      border: 1px solid #ccc;
       padding: 10px;
       text-align: center;
       line-height: 1.25;
@@ -426,7 +464,7 @@
     &.-compact {
       display: flex;
       flex-direction: column;
-      border-top: 1px solid #D9D9D9;
+      border-top: 1px solid #d9d9d9;
       padding-top: 15px;
       margin-bottom: 15px;
 
@@ -471,21 +509,25 @@
     display: flex;
     align-items: center;
     display: none !important;
+
     .label{
       display: inline-block;
       width: 50%;
       font-size: 10px;
       text-transform: uppercase;
       padding: 2px 0 0 20px;
-      color: #AAA;
+      color: #aaa;
+
       &:first-child{
         padding: 2px 20px 0 0;
         text-align: right;
       }
+
       &.checked{
         color: $dark;
       }
     }
+
     .onoffswitch{
       position: absolute;
       top: 50%;
@@ -494,6 +536,7 @@
       margin: 0;
       background: $dark;
       transform: translate(-50%,-50%);
+
       &.checked{
         background: rgb(22, 133, 0);
       }
@@ -505,21 +548,25 @@
   .analysis-footer{
     margin: 10px 0 0;
     border-top: 1px solid $border;
+
     @media (min-width: 1500px){
       margin: 15px 0 0;
     }
 
     >ul{
       @include row();
+
       >li{
         width: 100%;
         position: relative;
         padding: 10px 0;
         cursor: pointer;
+
         @media (max-width: $br-mobileMap - 1){
           &#analysis-subscribe{
             // display: none;
           }
+
           .tooltipmap{
             opacity: 1;
             visibility: visible;
@@ -534,6 +581,7 @@
             display: block;
             white-space: normal;
             line-height: 1;
+
             &:after{
               display: none;
             }
@@ -557,6 +605,7 @@
           svg{
             @include animation(pulse_animation,0.75s,4,$easeInOutSine);
           }
+
           .tooltipmap{
             opacity: 1;
             visibility: visible;
@@ -579,6 +628,7 @@
             display: none;
           }
         }
+
         svg{
           fill: $dark;
           width: 18px;
@@ -598,6 +648,7 @@
 
           }
         }
+
         .download-dropdown {
           text-align: left;
           width: 90px;
@@ -611,9 +662,11 @@
           background-color: $white;
           border-radius: 3px;
           box-shadow: $shadow1;
+
           &.hidden{
             display: none;
           }
+
           &:after{
             content: "";
             display: block;
@@ -635,6 +688,7 @@
             display: block;
             border-bottom: 1px solid #f2f2f2;
             color: $blue;
+
             &:hover{
               background-color: darken($white,2.5%);
             }
@@ -656,6 +710,7 @@
   padding: 20px 20px 56px;
   transform: translate(0,100%);
   transition: all 0.25s $easeInOutSine;
+
   &.active{
     transform: translate(0,0);
     opacity: 1;
@@ -673,6 +728,7 @@
     opacity: 0;
     visibility: hidden;
     transform: translate(0,0);
+
     &.active{
       opacity: 1;
       visibility: visible;
@@ -687,12 +743,14 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: #FFF;
+    background: #fff;
     transform: translate(0%,0);
     transition: all 0.25s $easeInOutSine;
+
     @media (min-width: $br-mobileMap){
       transform: translate(100%,0);
     }
+
     &.active{
       transform: translate(0%,0);
     }
@@ -706,25 +764,31 @@
       padding: 5px;
       cursor: pointer;
     }
+
     header{
       text-align: center;
       font-size: 13px;
+
       @include clearfix();
+
       h2{
         font-size: 21px;
         padding: 0 0 15px;
         text-align: center;
+
         span{
           color: $blue;
           &.source{ cursor: pointer;}
         }
       }
+
       p{
         button{
           margin: 7px auto 0;
           display: block;
         }
       }
+
       ol{
         text-align: left;
         list-style-type: decimal;
@@ -734,11 +798,14 @@
         max-width: 80%;
         left: 50%;
         transform: translate(-50%,0);
+
         li{
           padding: 5px 0 0;
           &:first-child{ margin: 0;}
+
           .source{
             @extend .info-icon;
+
             display: inline-block;
             top: 2px;
             position: relative;
@@ -758,14 +825,18 @@
       width: 100%;
       height: 100%;
       padding: 15px;
+
       @media (min-width: 1500px){
         padding: 20px;
       }
+
       transform: translate(0%,100%);
       transition: all 0.25s $easeInOutSine;
+
       @media (min-width: $br-mobileMap){
         transform: translate(100%,0);
       }
+
       &.current{
         transform: translate(0%,0);
       }

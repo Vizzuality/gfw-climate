@@ -3,20 +3,15 @@
  *
  * @return FormaCoverLayer class (extends CanvasLayerClass)
  */
-define([
-  'abstract/layer/CartoDBLayerClass',
-], function(CartoDBLayerClass) {
-
+define(['abstract/layer/CartoDBLayerClass'], function(CartoDBLayerClass) {
   'use strict';
 
   var ProdesCoverLayer = CartoDBLayerClass.extend({
-
     options: {
-      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
+      sql:
+        "SELECT *, '{tableName}' AS layer, '{tableName}' AS name FROM {tableName}"
     }
-
   });
 
   return ProdesCoverLayer;
-
 });

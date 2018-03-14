@@ -1,7 +1,7 @@
 .m-fixed-header {
   width: 100%;
   z-index: 1000;
-  transition: .2s all ease;
+  transition: 0.2s all ease;
   top: 0;
   left: 0;
   transform: translate(0, -100%);
@@ -30,6 +30,7 @@
     display: flex;
     justify-content: space-between;
     padding: 0 0 0 15px;
+
     li {
       width: 47.5%;
       padding: 10px 0;
@@ -39,9 +40,9 @@
     &.-country {
       display: inline-block;
       height: 36px;
-
       transform: translate(0, 0);
-      transition: .2s all ease;
+      transition: 0.2s all ease;
+
       li {
         float: left;
         width: 100%;
