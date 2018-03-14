@@ -9,11 +9,9 @@ require([
   'backbone',
   'embed/router'
 ], function($, d3, Handlebars, HandlebarsPlugins, Backbone, RouterView) {
-
   'use strict';
 
   var EmbedPage = Backbone.View.extend({
-
     el: document.body,
 
     initialize: function() {
@@ -35,10 +33,8 @@ require([
 
     _initRouter: function() {
       this.router = new RouterView();
-    },
-
+    }
   });
 
   new EmbedPage();
-
 });

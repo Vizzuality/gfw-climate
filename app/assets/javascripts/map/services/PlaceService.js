@@ -44,196 +44,219 @@
  *
  * @return {PlaceService} The PlaceService class
  */
-define([
-  'underscore',
-  'mps',
-  'uri',
-  'map/presenters/PresenterClass',
-  'map/services/LayerSpecService',
-  'map/services/GeostoreService'
-], function (_, mps, UriTemplate, PresenterClass, layerSpecService,
-  GeostoreService) {
+define(
+  [
+    'underscore',
+    'mps',
+    'uri',
+    'map/presenters/PresenterClass',
+    'map/services/LayerSpecService',
+    'map/services/GeostoreService'
+  ],
+  function(
+    _,
+    mps,
+    UriTemplate,
+    PresenterClass,
+    layerSpecService,
+    GeostoreService
+  ) {
+    'use strict';
 
-  'use strict';
+    var urlDefaultsParams = {
+      baselayers: 'biomass_loss',
+      zoom: 3,
+      lat: 15,
+      lng: 27,
+      maptype: 'dark',
+      iso: 'ALL'
+    };
 
-  var urlDefaultsParams = {
-    baselayers: 'biomass_loss',
-    zoom: 3,
-    lat: 15,
-    lng: 27,
-    maptype: 'dark',
-    iso: 'ALL'
-  };
+    var PlaceService = PresenterClass.extend({
+      _uriTemplate:
+        '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,rangearray}',
 
-  var PlaceService = PresenterClass.extend({
+      /**
+       * Create new PlaceService with supplied Backbone.Router.
+       *
+       * @param  {Backbond.Router} router Instance of Backbone.Router
+       */
+      init: function(router) {
+        this.router = router;
+        this._presenters = [];
+        this._name = null;
+        this._presenters.push(layerSpecService); // this makes the test fail
+        this._super();
+      },
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,geostore,wdpaid,begin,end,threshold,dont_analyze,rangearray}',
+      /**
+       * Subscribe to application events.
+       */
+      _subscriptions: [
+        {
+          'Place/register': function(presenter) {
+            this._presenters = _.union(this._presenters, [presenter]);
+          }
+        },
+        {
+          'Place/update': function() {
+            this._updatePlace();
+          }
+        }
+      ],
 
-    /**
-     * Create new PlaceService with supplied Backbone.Router.
-     *
-     * @param  {Backbond.Router} router Instance of Backbone.Router
-     */
-    init: function(router) {
-      this.router = router;
-      this._presenters = [];
-      this._name = null;
-      this._presenters.push(layerSpecService); // this makes the test fail
-      this._super();
-    },
+      /**
+       * Init by the router to set the name
+       * and publish the first place.
+       *
+       * @param  {String} name   Place name
+       * @param  {Object} params Url params
+       */
+      initPlace: function(name, params) {
+        this._name = name;
+        this._newPlace(params);
+      },
 
-    /**
-     * Subscribe to application events.
-     */
-    _subscriptions: [{
-      'Place/register': function(presenter) {
-        this._presenters = _.union(this._presenters, [presenter]);
-      }
-    }, {
-      'Place/update': function() {
-        this._updatePlace();
-      }
-    }],
+      /**
+       * Silently updates the url from the presenter params.
+       */
+      _updatePlace: function() {
+        var route, params;
+        params = this._destandardizeParams(
+          this._getPresenterParams(this._presenters)
+        );
 
-    /**
-     * Init by the router to set the name
-     * and publish the first place.
-     *
-     * @param  {String} name   Place name
-     * @param  {Object} params Url params
-     */
-    initPlace: function(name, params) {
-      this._name = name;
-      this._newPlace(params);
-    },
+        route = this._getRoute(params);
+        this.router.navigateTo(route, { silent: true });
+      },
 
-    /**
-     * Silently updates the url from the presenter params.
-     */
-    _updatePlace: function() {
-      var route, params;
-      params = this._destandardizeParams(
-        this._getPresenterParams(this._presenters));
+      /**
+       * Handles a new place.
+       *
+       * @param  {Object}  params The place parameters
+       */
+      _newPlace: function(params) {
+        var where,
+          place = {};
 
-      route = this._getRoute(params);
-      this.router.navigateTo(route, {silent: true});
-    },
+        place.params = this._standardizeParams(params);
 
-    /**
-     * Handles a new place.
-     *
-     * @param  {Object}  params The place parameters
-     */
-    _newPlace: function(params) {
-      var where, place = {};
+        where = _.union(place.params.baselayers, place.params.sublayers);
 
-      place.params = this._standardizeParams(params);
+        layerSpecService.toggle(
+          where,
+          _.bind(function(layerSpec) {
+            place.layerSpec = layerSpec;
+            mps.publish('Place/go', [place]);
+          }, this)
+        );
 
-      where = _.union(place.params.baselayers,
-        place.params.sublayers);
+        if (place.params.geostore) {
+          GeostoreService.get(place.params.geostore).then(function(geostore) {
+            mps.publish('Geostore/go', [geostore]);
+          });
+        }
+      },
 
-      layerSpecService.toggle(
-        where,
-        _.bind(function(layerSpec) {
-          place.layerSpec = layerSpec;
-          mps.publish('Place/go', [place]);
-        }, this)
-      );
+      /**
+       * Return route URL for supplied route name and route params.
+       *
+       * @param  {Object} params The route params
+       * @return {string} The route URL
+       */
+      _getRoute: function(param) {
+        var url = new UriTemplate(this._uriTemplate).fillFromObject(param);
+        return decodeURIComponent(url);
+      },
 
-      if (place.params.geostore) {
-        GeostoreService.get(place.params.geostore).then(function(geostore) {
-          mps.publish('Geostore/go', [geostore]);
+      /**
+       * Return standardized representation of supplied params object.
+       *
+       * @param  {Object} params The params to standardize
+       * @return {Object} The standardized params.
+       */
+      _standardizeParams: function(params) {
+        var p = _.extendNonNull({}, urlDefaultsParams, params);
+        p.name = this._name;
+
+        p.baselayers = _.map(p.baselayers.split(','), function(slug) {
+          return { slug: slug };
         });
+
+        p.sublayers = p.sublayers
+          ? _.map(p.sublayers.split(','), function(id) {
+              return { id: _.toNumber(id) };
+            })
+          : [];
+
+        p.zoom = _.toNumber(p.zoom);
+        p.lat = _.toNumber(p.lat);
+        p.lng = _.toNumber(p.lng);
+        p.iso = _.object(['country', 'region'], p.iso.split('-'));
+        p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
+        p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
+        p.geojson = p.geojson
+          ? JSON.parse(decodeURIComponent(p.geojson))
+          : null;
+        p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
+        p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
+        p.subscribe_alerts = p.subscribe_alerts === 'subscribe' ? true : null;
+        p.rangearray = p.rangearray
+          ? JSON.parse(atob(encodeURI(p.rangearray)))
+          : null;
+        p.referral = p.referral;
+        return p;
+      },
+
+      /**
+       * Return formated URL representation of supplied params object based on
+       * a route name.
+       *
+       * @param  {Object} params Place to standardize
+       * @return {Object} Params ready for URL
+       */
+      _destandardizeParams: function(params) {
+        var p = _.extendNonNull({}, urlDefaultsParams, params);
+        var baselayers = _.pluck(p.baselayers, 'slug');
+        p.name = this._name;
+        p.baselayers = baselayers.length > 0 ? baselayers : 'none';
+        p.sublayers = p.sublayers ? p.sublayers.join(',') : null;
+        p.zoom = String(p.zoom);
+        p.lat = p.lat.toFixed(2);
+        p.lng = p.lng.toFixed(2);
+        p.iso = _.compact(_.values(p.iso)).join('-') || 'ALL';
+        p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
+        p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
+        p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
+        p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
+        p.threshold = p.threshold ? String(p.threshold) : null;
+        p.rangearray = p.rangearray
+          ? encodeURI(btoa(JSON.stringify(p.rangearray)))
+          : null;
+        return p;
+      },
+
+      /**
+       * Return param object representing state from all registered presenters
+       * that implement getPlaceParams().
+       *
+       * @param  {Array} presenters The registered presenters
+       * @return {Object} Params representing state from all presenters
+       */
+      _getPresenterParams: function(presenters) {
+        var p = {};
+
+        _.each(
+          presenters,
+          function(presenter) {
+            _.extend(p, presenter.getPlaceParams());
+          },
+          this
+        );
+        return p;
       }
-    },
+    });
 
-    /**
-     * Return route URL for supplied route name and route params.
-     *
-     * @param  {Object} params The route params
-     * @return {string} The route URL
-     */
-    _getRoute: function(param) {
-      var url = new UriTemplate(this._uriTemplate).fillFromObject(param);
-      return decodeURIComponent(url);
-    },
-
-    /**
-     * Return standardized representation of supplied params object.
-     *
-     * @param  {Object} params The params to standardize
-     * @return {Object} The standardized params.
-     */
-    _standardizeParams: function(params) {
-      var p = _.extendNonNull({}, urlDefaultsParams, params);
-      p.name = this._name;
-
-      p.baselayers = _.map(p.baselayers.split(','), function(slug) {
-        return {slug: slug};
-      });
-
-      p.sublayers = p.sublayers ? _.map(p.sublayers.split(','), function(id) {
-        return {id: _.toNumber(id)};
-      }) : [];
-
-      p.zoom = _.toNumber(p.zoom);
-      p.lat = _.toNumber(p.lat);
-      p.lng = _.toNumber(p.lng);
-      p.iso = _.object(['country', 'region'], p.iso.split('-'));
-      p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
-      p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
-      p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
-      p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
-      p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
-      p.subscribe_alerts = (p.subscribe_alerts === 'subscribe') ? true : null;
-      p.rangearray = p.rangearray ? JSON.parse(atob(encodeURI(p.rangearray))) : null;
-      p.referral = p.referral;
-      return p;
-    },
-
-    /**
-     * Return formated URL representation of supplied params object based on
-     * a route name.
-     *
-     * @param  {Object} params Place to standardize
-     * @return {Object} Params ready for URL
-     */
-    _destandardizeParams: function(params) {
-      var p = _.extendNonNull({}, urlDefaultsParams, params);
-      var baselayers = _.pluck(p.baselayers, 'slug');
-      p.name = this._name;
-      p.baselayers = (baselayers.length > 0) ? baselayers : 'none';
-      p.sublayers = p.sublayers ? p.sublayers.join(',') : null;
-      p.zoom = String(p.zoom);
-      p.lat = p.lat.toFixed(2);
-      p.lng = p.lng.toFixed(2);
-      p.iso = _.compact(_.values(p.iso)).join('-') || 'ALL';
-      p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
-      p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
-      p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
-      p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
-      p.threshold = p.threshold ? String(p.threshold) : null;
-      p.rangearray = p.rangearray ? encodeURI(btoa(JSON.stringify(p.rangearray))) : null;
-      return p;
-    },
-
-    /**
-     * Return param object representing state from all registered presenters
-     * that implement getPlaceParams().
-     *
-     * @param  {Array} presenters The registered presenters
-     * @return {Object} Params representing state from all presenters
-     */
-    _getPresenterParams: function(presenters) {
-      var p = {};
-
-      _.each(presenters, function(presenter) {
-        _.extend(p, presenter.getPlaceParams());
-      }, this);
-      return p;
-    }
-
-  });
-
-  return PlaceService;
-});
+    return PlaceService;
+  }
+);

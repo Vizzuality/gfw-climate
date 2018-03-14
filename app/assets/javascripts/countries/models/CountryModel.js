@@ -1,11 +1,5 @@
-define([
-  'mps',
-  'backbone',
-  'jquery'
-], function(mps, Backbone, $) {
-
+define(['mps', 'backbone', 'jquery'], function(mps, Backbone, $) {
   var CountryModel = Backbone.Model.extend({
-
     url: '/api/countries/',
 
     initialize: function(setup) {
@@ -15,9 +9,7 @@ define([
     parse: function(data) {
       return data.country;
     }
-
   });
 
   return CountryModel;
-
 });

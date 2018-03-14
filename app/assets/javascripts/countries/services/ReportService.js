@@ -1,10 +1,9 @@
-define([
-  'Class',
-  'uri',
-  'bluebird',
-  'map/services/DataService'
-], function(Class, UriTemplate, Promise, ds) {
-
+define(['Class', 'uri', 'bluebird', 'map/services/DataService'], function(
+  Class,
+  UriTemplate,
+  Promise,
+  ds
+) {
   'use strict';
 
   var GET_REQUEST_ID = 'ReportService:get';
@@ -12,49 +11,49 @@ define([
   var APIURL = window.gfw.config.GFW_API_HOST_V2;
 
   var APIURLS = {
-    'indicators': '/api/reports/{?iso,reference_start_year,reference_end_year,monitor_start_year,monitor_end_year,thresh,above,below,primary_forest,exclude_plantations}'
+    indicators:
+      '/api/reports/{?iso,reference_start_year,reference_end_year,monitor_start_year,monitor_end_year,thresh,above,below,primary_forest,exclude_plantations}'
   };
 
   var ReportService = Class.extend({
-
     get: function(status) {
-      return new Promise(function(resolve, reject) {
-        this.report = status;
-        var url = this.getUrl();
+      return new Promise(
+        function(resolve, reject) {
+          this.report = status;
+          var url = this.getUrl();
 
-        ds.define(GET_REQUEST_ID, {
-          cache: false,
-          url: url,
-          type: 'GET',
-          dataType: 'json',
-          contentType: 'application/json; charset=utf-8',
-          decoder: function ( data, status, xhr, success, error ) {
-            if ( status === "success" ) {
-              success( data, xhr );
-            } else if ( status === "fail" || status === "error" ) {
-              error(xhr.responseText);
-            } else if ( status === "abort") {
-
-            } else {
-              error(xhr.responseText);
+          ds.define(GET_REQUEST_ID, {
+            cache: false,
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            decoder: function(data, status, xhr, success, error) {
+              if (status === 'success') {
+                success(data, xhr);
+              } else if (status === 'fail' || status === 'error') {
+                error(xhr.responseText);
+              } else if (status === 'abort') {
+              } else {
+                error(xhr.responseText);
+              }
             }
-          }
-        });
+          });
 
-        var requestConfig = {
-          resourceId: GET_REQUEST_ID,
-          success: function(data, status) {
-            resolve(data,status);
-          },
-          error: function(errors) {
-            reject(errors);
-          }
-        };
+          var requestConfig = {
+            resourceId: GET_REQUEST_ID,
+            success: function(data, status) {
+              resolve(data, status);
+            },
+            error: function(errors) {
+              reject(errors);
+            }
+          };
 
-        this.abortRequest();
-        this.currentRequest = ds.request(requestConfig);
-
-      }.bind(this));
+          this.abortRequest();
+          this.currentRequest = ds.request(requestConfig);
+        }.bind(this)
+      );
     },
 
     getUrl: function() {
@@ -70,9 +69,7 @@ define([
         this.currentRequest = null;
       }
     }
-
   });
 
   return new ReportService();
-
 });

@@ -1,7 +1,4 @@
-define([
-  'underscore'
-], function(_) {
-
+define(['underscore'], function(_) {
   'use strict';
 
   var CustomMarker = function(latlng, map, opts) {
@@ -47,9 +44,13 @@ define([
       div.appendChild(img);
 
       // Trigger click event
-      google.maps.event.addDomListener(div, 'click', _.bind(function() {
-        google.maps.event.trigger(this, 'click');
-      }, this));
+      google.maps.event.addDomListener(
+        div,
+        'click',
+        _.bind(function() {
+          google.maps.event.trigger(this, 'click');
+        }, this)
+      );
 
       // Then add the overlay to the DOM
       this.getPanes().floatPane.appendChild(div);
@@ -81,5 +82,4 @@ define([
   };
 
   return CustomMarker;
-
 });

@@ -1,10 +1,7 @@
-define([
-	'underscore'
-], function (_) {
+define(['underscore'], function(_) {
+  'use strict';
 
-	'use strict';
-
-	if (!String.prototype.format) {
+  if (!String.prototype.format) {
     String.prototype.format = function() {
       var args = arguments;
       return this.replace(/{(\d+)}/g, function(match, number) {
@@ -41,7 +38,7 @@ define([
     },
 
     toNumber: function(val) {
-      if ((val === undefined || val === null || String(val).trim() === '')) {
+      if (val === undefined || val === null || String(val).trim() === '') {
         return undefined;
       } else if (isNaN(val)) {
         return undefined;
@@ -51,14 +48,13 @@ define([
     },
 
     extendNonNull: function(obj) {
-      _.each(_.rest(arguments,1), function(source) {
+      _.each(_.rest(arguments, 1), function(source) {
         if (source) {
           for (var prop in source) {
-            if( _.isObject(source[prop]) && _.isObject(obj[prop])){
-               obj[prop] = _.extendNonNull(obj[prop], source[prop]);
-            }
-            else if( !_.isNull(source[prop])){
-               obj[prop] = source[prop];
+            if (_.isObject(source[prop]) && _.isObject(obj[prop])) {
+              obj[prop] = _.extendNonNull(obj[prop], source[prop]);
+            } else if (!_.isNull(source[prop])) {
+              obj[prop] = source[prop];
             }
           }
         }
@@ -66,5 +62,4 @@ define([
       return obj;
     }
   });
-
 });

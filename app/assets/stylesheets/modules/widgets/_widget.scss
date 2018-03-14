@@ -4,7 +4,6 @@
 
   // HEADER
   > .m-widget-header {
-
     .-compare & {
       position: absolute;
       top: 35px;
@@ -44,7 +43,7 @@
     > .name {
       font-size: 14px;
       text-transform: uppercase;
-      color: rgba(0,0,0, .5);
+      color: rgba(0,0,0, 0.5);
       font-weight: 500;
       max-width: 48%;
     }
@@ -70,7 +69,6 @@
           display: flex;
           align-items: center;
           justify-content: center;
-
           border: 1px $color-3 solid;
           border-radius: 50%;
           color: $font-color-1;
@@ -106,7 +104,7 @@
             border-color: $blue;
 
             &:hover {
-              background-color: darken($blue, .1);
+              background-color: darken($blue, 0.1);
             }
 
             svg {
@@ -144,6 +142,7 @@
         &:last-child {
           border-right: 1px solid $border;
         }
+
         &.-selected {
           color: $black;
           background: $white;
@@ -154,12 +153,15 @@
           display: block;
           width: 100%;
         }
+
         .subname,.ipcc {
           color: #777;
         }
+
         .subname {
           font-size: 10px;
         }
+
         .ipcc {
           font-size: 9px;
         }
@@ -186,14 +188,12 @@
     .tab-selector {
       max-width: 100%;
       width: 100%;
-
       -webkit-appearance: none;
       height: 25px;
       padding-left: 20px;
       border-radius: 50px;
       background: none;
       border-color: #ddd;
-
       font-family: "Fira Sans";
       
       option {

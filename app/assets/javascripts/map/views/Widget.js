@@ -19,16 +19,10 @@
  *
  * @return the Widget class (extends Backbone.View).
  */
-define([
-  'jquery',
-  'underscore',
-  'backbone'
-], function($, _, Backbone) {
-
+define(['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
   'use strict';
 
   var Widget = Backbone.View.extend({
-
     events: {
       'click .widget-toggle': '_toggleBoxClosed',
       'click .widget-btn': '_toggleBoxHidden'
@@ -76,8 +70,8 @@ define([
 
     _setModel: function(params) {
       this.model = new (Backbone.Model.extend())();
-      this.model.bind('change:boxClosed',    this._setBoxClosed, this);
-      this.model.bind('change:boxHidden',    this._setBoxHidden, this);
+      this.model.bind('change:boxClosed', this._setBoxClosed, this);
+      this.model.bind('change:boxHidden', this._setBoxHidden, this);
       this.model.bind('change:boxDraggable', this._setBoxDraggable, this);
       this.model.bind('change:hidden', this._setHidden, this);
       this.model.bind('change:forceHidden', this._setHidden, this);
@@ -89,11 +83,12 @@ define([
     },
 
     _setBoxHidden: function() {
-      this.model.get('boxHidden') ? this.$widgetBox.hide() : this.$widgetBox.show();
+      this.model.get('boxHidden')
+        ? this.$widgetBox.hide()
+        : this.$widgetBox.show();
     },
 
     _setBoxDraggable: function() {
-
       if (this.model.get('boxDraggable')) {
         var params = {};
         params.containment = this.model.get('containment');
@@ -106,14 +101,13 @@ define([
           this.$widgetBox.draggable('destroy');
         }
       }
-
     },
 
     _setHidden: function() {
       if (this.model.get('hidden')) {
         this.$el.hide();
       } else {
-        if(!this.model.get('forceHidden')) {
+        if (!this.model.get('forceHidden')) {
           this.$el.show();
         }
       }
@@ -138,10 +132,8 @@ define([
       this.$widgetBox.addClass('closed');
       this.$widgetClosed.show();
       this.$widgetOpened.hide();
-    },
-
+    }
   });
 
   return Widget;
-
 });

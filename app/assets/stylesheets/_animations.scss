@@ -3,14 +3,17 @@
   from { transform: translate(-50%,-50%) rotate(0deg);}
   to { transform: translate(-50%,-50%) rotate(360deg);}
 }
+
 @-moz-keyframes loader {
   from { transform: translate(-50%,-50%) rotate(0deg);}
   to { transform: translate(-50%,-50%) rotate(360deg);}
 }
+
 @-ms-keyframes loader {
   from { transform: translate(-50%,-50%) rotate(0deg);}
   to { transform: translate(-50%,-50%) rotate(360deg);}
 }
+
 @keyframes loader {
   from { transform: translate(-50%,-50%) rotate(0deg);}
   to { transform: translate(-50%,-50%) rotate(360deg);}
@@ -25,6 +28,7 @@
   75%{ transform: translate(0%,50%);}
   100%{ transform: translate(0%,0%);}
 }
+
 @-moz-keyframes updown {
   0%{ transform: translate(0%,0%);}
   25%{ transform: translate(0%,-50%);}
@@ -32,6 +36,7 @@
   75%{ transform: translate(0%,50%);}
   100%{ transform: translate(0%,0%);}
 }
+
 @-ms-keyframes updown {
   0%{ transform: translate(0%,0%);}
   25%{ transform: translate(0%,-50%);}
@@ -39,6 +44,7 @@
   75%{ transform: translate(0%,50%);}
   100%{ transform: translate(0%,0%);}
 }
+
 @keyframes updown {
   0%{ transform: translate(0%,0%);}
   25%{ transform: translate(0%,-50%);}
@@ -55,16 +61,19 @@
   50% { transform: scale(1.5) }
   100% { transform: scale(1) }
 }
+
 @-moz-keyframes pulse_animation {
   0% { transform: scale(1) }
   50% { transform: scale(1.5) }
   100% { transform: scale(1) }
 }
+
 @-ms-keyframes pulse_animation {
   0% { transform: scale(1) }
   50% { transform: scale(1.5) }
   100% { transform: scale(1) }
 }
+
 @keyframes pulse_animation {
   0% { transform: scale(1) }
   50% { transform: scale(1.5) }

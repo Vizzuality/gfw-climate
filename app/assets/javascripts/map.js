@@ -29,13 +29,36 @@ require([
   'views/DownloadView',
 
   '_string'
-], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, SourceModalView, SourceMobileFriendlyView, AnalysisService, DataService, MapView,
-    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, NavMobileView, HeaderView, FooterView, NotificationsView, DownloadView) {
-
+], function(
+  $,
+  _,
+  Class,
+  Backbone,
+  chosen,
+  utils,
+  enquire,
+  mps,
+  Router,
+  SourceModalView,
+  SourceMobileFriendlyView,
+  AnalysisService,
+  DataService,
+  MapView,
+  MapControlsView,
+  TabsView,
+  AnalysisResultsView,
+  LayersNavView,
+  LegendView,
+  TimelineView,
+  NavMobileView,
+  HeaderView,
+  FooterView,
+  NotificationsView,
+  DownloadView
+) {
   'use strict';
 
   var MapPage = Class.extend({
-
     $el: $('body'),
 
     init: function() {
@@ -56,7 +79,7 @@ require([
      */
     _initApp: function() {
       if (!Backbone.History.started) {
-        Backbone.history.start({pushState: true});
+        Backbone.history.start({ pushState: true });
       }
     },
 
@@ -87,12 +110,11 @@ require([
      */
     _cartodbHack: function() {
       cdb.core.Template.compilers = _.extend(cdb.core.Template.compilers, {
-        handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
+        handlebars:
+          typeof Handlebars === 'undefined' ? null : Handlebars.compile
       });
-    },
-
+    }
   });
 
   new MapPage();
-
 });

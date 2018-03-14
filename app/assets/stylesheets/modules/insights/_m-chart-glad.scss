@@ -1,5 +1,6 @@
 .chart-glad {
   $hoverOpacity: 0.4;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,7 +13,7 @@
 
       .tick {
         text {
-          fill: #555555;
+          fill: #555;
           stroke-width: 0;
           font-size: 12px;
 
@@ -33,12 +34,12 @@
         line {
           stroke-width: 1;
           shape-rendering: crispEdges;
-          stroke: #EDEDED;
+          stroke: #ededed;
         }
 
         text {
           stroke-width: 0;
-          fill: #555555;
+          fill: #555;
           font-size: 13px;
           text-transform: uppercase;
         }
@@ -48,17 +49,17 @@
 
   .y-label {
     text-anchor: start;
-    fill: #555555;
+    fill: #555;
     font-size: 13px;
 
     .light {
-      fill: rgba(#555555, 0.6);
+      fill: rgba(#555, 0.6);
     }
   }
 
   .line-label {
     text-anchor: end;
-    fill: #555555;
+    fill: #555;
     font-size: 13px;
   }
 
@@ -68,31 +69,31 @@
 
   .line-dashed-group {
     .dash-line-path {
-      stroke: #999999;
+      stroke: #999;
       fill: transparent;
       stroke-width: 2;
       stroke-dasharray: 13, 6;
-      transition: .2s ease;
+      transition: 0.2s ease;
     }
   }
 
   .line-semidashed-group {
     .semidash-line-path {
       shape-rendering: crispEdges;
-      stroke: #999999;
+      stroke: #999;
       fill: transparent;
       stroke-width: 1;
       stroke-dasharray: 3, 3;
-      transition: .2s ease;
+      transition: 0.2s ease;
     }
   }
 
   .line-solid-group {
     .line-solid-path {
-      stroke: #5B80A0;
+      stroke: #5b80a0;
       fill: transparent;
       stroke-width: 3;
-      transition: .2s ease;
+      transition: 0.2s ease;
 
       @media only screen and (max-width: $br-mobile) {
         // stroke-width: 1.5;
@@ -102,16 +103,16 @@
 
   .dots-group {
     .dot {
-      stroke: #FFFFFF;
+      stroke: #fff;
       stroke-width: 2;
-      fill: #5B80A0;
-      transition: .2s ease;
+      fill: #5b80a0;
+      transition: 0.2s ease;
       opacity: 0;
 
       &.hovered {
         opacity: 1;
         stroke-width: 2;
-        stroke: #FFFFFF;
+        stroke: #fff;
       }
     }
   }
@@ -125,14 +126,14 @@
     text-anchor: middle;
     font-size: 12px;
     stroke-width: 0;
-    fill: #555555;
+    fill: #555;
     font-weight: 500;
   }
 
   .handle-triangle {
-    fill: #F9F9F9;
+    fill: #f9f9f9;
     stroke-width: 1;
-    stroke: #BCBDBE;
+    stroke: #bcbdbe;
 
     &.-fill {
       stroke-width: 0;
@@ -141,12 +142,12 @@
 
   &.deforestation {
     .line-solid-path {
-      stroke: #FF6398;
+      stroke: #ff6398;
     }
 
     .dots-group {
       .dot {
-        fill: #FF6398;
+        fill: #ff6398;
       }
     }
   }

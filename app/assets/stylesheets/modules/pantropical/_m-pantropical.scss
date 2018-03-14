@@ -32,6 +32,7 @@
 
   &:after {
     @include equi-triangle(7px, rgba(255,255,255,0.9), 'bottom');
+
     right: inherit;
     bottom: -35px;
     top: 110%;
@@ -84,7 +85,9 @@
 
 .pantropical-options {
   display: block;
+
   @include clearfix();
+
   display: flex;
   justify-content: flex-end;
   margin: 0 0 -53px;
@@ -241,6 +244,7 @@
 
     li {
       margin: 4px 0;
+
       &:before {
         content: ' ';
         height: 15px;
@@ -252,28 +256,35 @@
         position: relative;
         margin: 0 3px 0 0;
       }
+
       &.latam:before {
         background-color: #3593c5;
       }
+
       &.africa:before {
         background-color: #a0cddb;
       }
+
       &.asia:before {
         background-color: #fb8f5e;
       }
     }
+
     sup,
     sub {
       font-size: 10px;
       position: relative;
       top: 2px;
     }
+
     sup {
       top: -3px;
     }
+
     &.all {
       display: block;
     }
+
     .year-picker {
       height: 34px;
       width: 103px;
@@ -292,10 +303,12 @@
         position: relative;
         z-index: 3;
       }
+
       .minusy {
         cursor: pointer;
         font-size: 20px;
         color: #5b80a0;
+
         &.stop {
           color: #eaeaea;
           cursor: default;
@@ -323,6 +336,7 @@
         font-weight: 600;
         transform: translatex(-50%);
       }
+
       #play-pause {
         position: relative;
         top: 30px;
@@ -330,6 +344,7 @@
         width: 40px;
         cursor: pointer;
       }
+
       input {
         position: absolute;
         right: 0;
@@ -464,6 +479,7 @@
 
   circle {
     cursor: pointer;
+
     &.searched {
       fill: black;
     }

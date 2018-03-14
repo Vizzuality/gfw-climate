@@ -3,20 +3,17 @@
  *
  * @return PantropicalLayer class (extends CartoDBLayerClass)
  */
-define([
-  'abstract/layer/ImageMaptypeLayerClass',
-], function(ImageMaptypeLayerClass) {
-
+define(['abstract/layer/ImageMaptypeLayerClass'], function(
+  ImageMaptypeLayerClass
+) {
   'use strict';
 
   var PantropicalLayer = ImageMaptypeLayerClass.extend({
-
     options: {
-      urlTemplate:'https://s3.amazonaws.com/wri-tiles/tropicalcarbonstock{/z}{/x}{/y}.png'
+      urlTemplate:
+        'https://s3.amazonaws.com/wri-tiles/tropicalcarbonstock{/z}{/x}{/y}.png'
     }
-
   });
 
   return PantropicalLayer;
-
 });

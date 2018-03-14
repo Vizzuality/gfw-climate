@@ -7,6 +7,7 @@
   padding: 20px 40px 20px 20px;
   transition: all 0.25s $easeInOutSine;
   transform: translate(0,-100%);
+
   @media (min-width: $br-mobileMap){
     padding: 20px;
     text-align: center;
@@ -16,11 +17,12 @@
   .close {
     display: block;
     position: absolute;
-    top: 50%; right: 0px;
+    top: 50%; right: 0;
     width: 40px;
     height: 40px;
     z-index: 20;
     transform: translate(0,-50%);
+
     svg{
       position: absolute;
       top: 50%;
@@ -30,6 +32,7 @@
       fill: $white;
       transform: translate(-50%,-50%);
     }
+
     &:hover{
       svg{
         fill: darken($white,10%);
@@ -54,13 +57,16 @@
   &.success{
     background: rgba($blue, 0.85);
   }
+
   &.info{
     background: rgba(#3182bd, 0.85);
   }
+
   &.warning{
-    background: rgba(#ED4602, 0.85);
+    background: rgba(#ed4602, 0.85);
   }
+
   &.error{
-    background: rgba(#FF4848, 0.85);
+    background: rgba(#ff4848, 0.85);
   }
 }

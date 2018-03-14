@@ -2,18 +2,16 @@
  * Module for executing async HTTP requests and caching responses.
  *
  */
-define([
-  'Class',
-  'mps',
-  'moment',
-  'amplify',
-  'underscore'
-], function (Class, mps, moment, amplify, _) {
-
+define(['Class', 'mps', 'moment', 'amplify', 'underscore'], function(
+  Class,
+  mps,
+  moment,
+  amplify,
+  _
+) {
   'use strict';
 
   var DataService = Class.extend({
-
     // Added for Jasmine testing to bypass cache and use 'json' dataType
     test: false,
 
@@ -22,8 +20,7 @@ define([
      *
      * @return {DataService} instance
      */
-    init: function() {
-    },
+    init: function() {},
 
     /**
      * Define a data service with supplied id and config object.
@@ -77,8 +74,15 @@ define([
      * @return {moment.Duration} The duration object
      */
     _getDuration: function(number, unit) {
-      var units = ['seconds', 'minutes', 'hours', 'days', 'weeks', 'months',
-        'years'];
+      var units = [
+        'seconds',
+        'minutes',
+        'hours',
+        'days',
+        'weeks',
+        'months',
+        'years'
+      ];
 
       // Check for valid unit
       if (_.indexOf(units, unit) === -1) {

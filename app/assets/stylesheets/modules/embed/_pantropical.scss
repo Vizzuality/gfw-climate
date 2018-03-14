@@ -5,9 +5,9 @@
   }
 
   .pantropical-vis {
-
     .btn-group {
       position: relative;
+
       > .btn {
         flex: 1;
       }
@@ -19,6 +19,7 @@
       height: 100%;
       background: $blue;
       cursor: pointer;
+
       &:hover {
         background: darken($blue, 10%);
       }
@@ -107,6 +108,7 @@
 
           > .left, .right {
             display: flex;
+
             >.country-legend {
               display: flex;
               flex-direction: column;

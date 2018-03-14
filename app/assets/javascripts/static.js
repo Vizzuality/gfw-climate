@@ -8,11 +8,9 @@ require([
   'backbone',
   'views/SidebarNavView'
 ], function($, _, Class, Backbone, SidebarNavView) {
-
   'use strict';
 
   var Static = Class.extend({
-
     $el: $('body'),
 
     init: function() {
@@ -24,7 +22,7 @@ require([
      */
     _initApp: function() {
       if (!Backbone.History.started) {
-        Backbone.history.start({pushState: true});
+        Backbone.history.start({ pushState: true });
       }
     },
 
@@ -36,9 +34,7 @@ require([
     _initViews: function() {
       new SidebarNavView();
     }
-
   });
 
   new Static();
-
 });

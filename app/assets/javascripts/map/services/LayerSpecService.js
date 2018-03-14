@@ -3,207 +3,223 @@
  *
  * @return LayerSpec instance.
  */
-define([
-  'Class',
-  'underscore',
-  'moment',
-  'map/services/MapLayerService',
-  'map/models/LayerSpecModel'
-], function(Class, _, moment, mapLayerService, LayerSpecModel) {
+define(
+  [
+    'Class',
+    'underscore',
+    'moment',
+    'map/services/MapLayerService',
+    'map/models/LayerSpecModel'
+  ],
+  function(Class, _, moment, mapLayerService, LayerSpecModel) {
+    'use strict';
 
-  'use strict';
+    var LayerSpecService = Class.extend({
+      options: {
+        forbidCombined: {
+          carbon_loss: {
+            except: [['carbon_stocks', 'biomass_loss']]
+          },
+          carbon_gain: {},
+          geographic_coverage: {}
+        }
+      },
 
-  var LayerSpecService = Class.extend({
+      init: function() {
+        _.bindAll(this, '_removeLayer');
+        this.model = new LayerSpecModel();
+      },
 
-    options: {
-      forbidCombined: {
-        carbon_loss: {
-          except: [
-            ['carbon_stocks', 'biomass_loss']
-          ]
-        },
-        carbon_gain: {},
-        geographic_coverage: {}
-      }
-    },
+      /**
+       * Call mapLayerService to get the requested layers, and
+       * then call _toggleLayer to toggle them.
+       *
+       * @param  {array}    where   layer slugs and ids
+       * @param  {function} success callback
+       * @param  {function} error   callback
+       */
+      toggle: function(where, success, error) {
+        mapLayerService.getLayers(
+          where,
+          _.bind(function(layers) {
+            _.each(layers, this._toggleLayer, this);
+            success(this.model);
+          }, this),
+          error
+        );
+      },
 
-    init: function() {
-      _.bindAll(this, '_removeLayer');
-      this.model = new LayerSpecModel();
-    },
+      /**
+       * Add/delete a layer from the model.
+       *
+       * @param  {object} layer
+       * @return {layer}  return layer or false.
+       */
+      _toggleLayer: function(layer) {
+        var current = this.model.getLayer({ slug: layer.slug });
+        var baselayers = this.model.getBaselayers();
 
-    /**
-     * Call mapLayerService to get the requested layers, and
-     * then call _toggleLayer to toggle them.
-     *
-     * @param  {array}    where   layer slugs and ids
-     * @param  {function} success callback
-     * @param  {function} error   callback
-     */
-    toggle: function(where, success, error) {
-      mapLayerService.getLayers(
-        where,
-        _.bind(function(layers) {
-          _.each(layers, this._toggleLayer, this);
-          success(this.model);
-        }, this),
-        error);
-    },
+        // At least one baselayer active.
+        // if (current && current.category_slug === 'forest_clearing' &&
+        //   _.keys(baselayers).length === 1) {
+        //   return false;
+        // }
 
-    /**
-     * Add/delete a layer from the model.
-     *
-     * @param  {object} layer
-     * @return {layer}  return layer or false.
-     */
-    _toggleLayer: function(layer) {
-      var current = this.model.getLayer({slug: layer.slug});
-      var baselayers = this.model.getBaselayers();
-
-      // At least one baselayer active.
-      // if (current && current.category_slug === 'forest_clearing' &&
-      //   _.keys(baselayers).length === 1) {
-      //   return false;
-      // }
-
-      if (current) {
-        this._removeLayer(current);
-        return false;
-      } else {
-        // TODO: set forbidden between tabs dinamically
-        if (!this._combinationIsValid(layer)) {
-          var carbonLossLayer = this.model.get('carbon_loss');
-          if (layer.category_slug === 'carbon_gain' && carbonLossLayer && carbonLossLayer['biomass_loss']) {
-            this._removeLayer(carbonLossLayer['biomass_loss']);
+        if (current) {
+          this._removeLayer(current);
+          return false;
+        } else {
+          // TODO: set forbidden between tabs dinamically
+          if (!this._combinationIsValid(layer)) {
+            var carbonLossLayer = this.model.get('carbon_loss');
+            if (
+              layer.category_slug === 'carbon_gain' &&
+              carbonLossLayer &&
+              carbonLossLayer['biomass_loss']
+            ) {
+              this._removeLayer(carbonLossLayer['biomass_loss']);
+            }
+            _.each(this.model.get(layer.category_slug), this._removeLayer);
           }
-          _.each(this.model.get(layer.category_slug), this._removeLayer);
+          if (
+            layer.category_slug === 'carbon_loss' &&
+            this.model.get('carbon_gain')
+          ) {
+            _.each(this.model.get('carbon_gain'), this._removeLayer);
+          }
+
+          this._addLayer(layer);
+          return layer;
         }
-        if (layer.category_slug === 'carbon_loss' && this.model.get('carbon_gain')) {
-          _.each(this.model.get('carbon_gain'), this._removeLayer);
+      },
+
+      /**
+       * Add a layer to the model.
+       *
+       * @param {object} layer
+       */
+      _addLayer: function(layer) {
+        var category = this._getCategory(layer.category_slug);
+        category[layer.slug] = this._standardizeAttrs(layer);
+      },
+
+      /**
+       * Remove a layer and its sublayer.
+       * If the category stays empty, it deletes it.
+       *
+       * @param  {object} layer The layer object
+       */
+      _removeLayer: function(layer) {
+        // delete layer
+        delete this.model.get(layer.category_slug)[layer.slug];
+
+        // delete its sublayers
+        if (layer.sublayer) {
+          var sublayer = this.model.getLayer({ slug: layer.sublayer });
+          sublayer && this._removeLayer(sublayer);
         }
 
-        this._addLayer(layer);
+        // delete category if empty
+        if (_.isEmpty(this.model.get(layer.category_slug))) {
+          this._removeCategory(layer.category_slug);
+        }
+      },
+
+      /**
+       * Set/get a layer category from the model.
+       *
+       * @param  {string} slug category slug
+       * @return {object}      category
+       */
+      _getCategory: function(slug) {
+        !this.model.get(slug) && this.model.set(slug, {});
+        return this.model.get(slug);
+      },
+
+      /**
+       * Remove a layer category from the model.
+       *
+       * @param  {string} slug category slug
+       */
+      _removeCategory: function(slug) {
+        this.model.unset(slug);
+      },
+
+      /**
+       * Validate is current layer combination is valid or not.
+       *
+       * @param  {object}  layer layer object
+       * @return {boolean}       combination is valid
+       */
+      _combinationIsValid: function(layer) {
+        var currentLayers = this.model.get(layer.category_slug);
+        var forbidden = this.options.forbidCombined[layer.category_slug];
+        if (!forbidden) {
+          return true;
+        }
+        var validCombination = false;
+
+        if (forbidden.except) {
+          var combination = _.union(_.pluck(currentLayers, 'slug'), [
+            layer.slug
+          ]);
+          combination.push(layer.slug);
+          _.each(
+            forbidden.except,
+            function(exception) {
+              if (_.difference(combination, exception).length < 1) {
+                validCombination = true;
+              }
+            },
+            this
+          );
+        }
+
+        return validCombination;
+      },
+
+      /**
+       * Standarize layer attributes.
+       *
+       * @param  {object} layer layer object
+       * @return {object} layer
+       */
+      _standardizeAttrs: function(layer) {
+        if (layer.mindate) {
+          layer.mindate = layer.mindate;
+        }
+
+        if (layer.maxdate) {
+          layer.maxdate = layer.maxdate;
+        }
+
         return layer;
+      },
+
+      /**
+       * Called by PlaceService. Returns place parameters representing the
+       * state of the layers.
+       *
+       * @return {object} params
+       */
+      getPlaceParams: function() {
+        var p = {};
+        var sublayers = this.model.getSublayers();
+
+        p.name = 'map';
+        p.baselayers = _.map(_.keys(this.model.getBaselayers()), function(
+          slug
+        ) {
+          return { slug: slug };
+        });
+        p.sublayers = !_.isEmpty(sublayers) ? _.pluck(sublayers, 'id') : null;
+
+        return p;
       }
-    },
+    });
 
-    /**
-     * Add a layer to the model.
-     *
-     * @param {object} layer
-     */
-    _addLayer: function(layer) {
-      var category = this._getCategory(layer.category_slug);
-      category[layer.slug] = this._standardizeAttrs(layer);
-    },
+    var service = new LayerSpecService();
 
-    /**
-     * Remove a layer and its sublayer.
-     * If the category stays empty, it deletes it.
-     *
-     * @param  {object} layer The layer object
-     */
-    _removeLayer: function(layer) {
-      // delete layer
-      delete this.model.get(layer.category_slug)[layer.slug];
-
-      // delete its sublayers
-      if (layer.sublayer) {
-        var sublayer = this.model.getLayer({slug: layer.sublayer});
-        sublayer && this._removeLayer(sublayer);
-      }
-
-      // delete category if empty
-      if (_.isEmpty(this.model.get(layer.category_slug))) {
-        this._removeCategory(layer.category_slug);
-      }
-    },
-
-    /**
-     * Set/get a layer category from the model.
-     *
-     * @param  {string} slug category slug
-     * @return {object}      category
-     */
-    _getCategory: function(slug) {
-      !this.model.get(slug) && this.model.set(slug, {});
-      return this.model.get(slug);
-    },
-
-    /**
-     * Remove a layer category from the model.
-     *
-     * @param  {string} slug category slug
-     */
-    _removeCategory: function(slug) {
-      this.model.unset(slug);
-    },
-
-    /**
-     * Validate is current layer combination is valid or not.
-     *
-     * @param  {object}  layer layer object
-     * @return {boolean}       combination is valid
-     */
-    _combinationIsValid: function(layer) {
-      var currentLayers = this.model.get(layer.category_slug);
-      var forbidden = this.options.forbidCombined[layer.category_slug];
-      if (!forbidden) {return true;}
-      var validCombination = false;
-
-      if (forbidden.except) {
-        var combination = _.union(_.pluck(currentLayers, 'slug'), [layer.slug]);
-        combination.push(layer.slug);
-        _.each(forbidden.except, function(exception) {
-          if (_.difference(combination, exception).length < 1) {
-            validCombination = true;
-          }
-        }, this);
-      }
-
-      return validCombination;
-    },
-
-    /**
-     * Standarize layer attributes.
-     *
-     * @param  {object} layer layer object
-     * @return {object} layer
-     */
-    _standardizeAttrs: function(layer) {
-      if (layer.mindate) {
-        layer.mindate = layer.mindate;
-      }
-
-      if (layer.maxdate) {
-        layer.maxdate = layer.maxdate;
-      }
-
-      return layer;
-    },
-
-    /**
-     * Called by PlaceService. Returns place parameters representing the
-     * state of the layers.
-     *
-     * @return {object} params
-     */
-    getPlaceParams: function() {
-      var p = {};
-      var sublayers = this.model.getSublayers();
-
-      p.name = 'map';
-      p.baselayers = _.map(_.keys(this.model.getBaselayers()), function(slug) {
-        return {slug: slug};
-      });
-      p.sublayers = !_.isEmpty(sublayers) ? _.pluck(sublayers, 'id') : null;
-
-      return p;
-    },
-  });
-
-  var service = new LayerSpecService();
-
-  return service;
-
-});
+    return service;
+  }
+);

@@ -1,10 +1,5 @@
-define([
-  'backbone',
-  'jquery'
-], function(Backbone, $) {
-
+define(['backbone', 'jquery'], function(Backbone, $) {
   var IndicatorModel = Backbone.Model.extend({
-
     url: '/api/indicators/',
 
     // We use "1" because API hasn't got more data
@@ -14,11 +9,9 @@ define([
     },
 
     parse: function(d) {
-      return { data : d.values };
+      return { data: d.values };
     }
-
   });
 
   return IndicatorModel;
-
 });

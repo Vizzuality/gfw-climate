@@ -21,12 +21,12 @@
     }
 
     .yAxis {
-      fill: #E5E5DF;
+      fill: #e5e5df;
       shape-rendering: crispEdges;
     }
 
     .xAxis {
-      fill: #E5E5DF;
+      fill: #e5e5df;
       shape-rendering: crispEdges;
     }
 
@@ -34,11 +34,11 @@
       shape-rendering: crispEdges;
 
       &.reference {
-        fill: #5B80A0;
+        fill: #5b80a0;
       }
 
       &.monitor {
-        fill: #EDB04A;
+        fill: #edb04a;
       }
     }
 
@@ -96,13 +96,13 @@
 
           &.-reference {
             > .icon {
-              background: #5B80A0;
+              background: #5b80a0;
             }
           }
 
           &.-monitoring {
             > .icon {
-              background: #EDB04A;
+              background: #edb04a;
             }
           }
         }

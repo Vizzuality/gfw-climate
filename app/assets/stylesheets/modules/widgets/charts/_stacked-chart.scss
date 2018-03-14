@@ -5,7 +5,7 @@
 
 .lineChart {
   .axis line {
-    stroke: #E5E5DF;
+    stroke: #e5e5df;
     shape-rendering: crispEdges;
   }
 
@@ -16,7 +16,7 @@
   }
 
   .axis path {
-    stroke: #E5E5DF;
+    stroke: #e5e5df;
     stroke-width: 3px;
     fill: none;
   }
@@ -31,7 +31,7 @@
 
   .axis2 line {
     fill: none;
-    stroke: #E5E5DF;
+    stroke: #e5e5df;
     shape-rendering: crispEdges;
   }
 
@@ -67,6 +67,7 @@
     .total-count {
       display: none;
     }
+
     @media (min-width: $br-mobile) {
       &:last-of-type .total-count {
         display: block;

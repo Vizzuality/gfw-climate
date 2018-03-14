@@ -17,6 +17,7 @@
     box-shadow: 1px 1px 0 0 rgba($dark, 0.5);
     transform: translate(-50%, 50%) rotate(45deg);
   }
+
   &.hidden{
     visibility: hidden;
     opacity: 0;
@@ -27,21 +28,25 @@
   .cartodb-popup{
     position: relative;
     width: 250px;
+
     @media (max-width: $br-mobile) {
       width: 200px;
     }
+
     height: auto;
     padding: 0;
     padding-right: 0;
     margin: 0;
     background: $white;
+
     .jspPane {
       padding: 0 !important;
     }
+
     a.cartodb-popup-close-button{
       position: absolute;
-      top: 0px;
-      right: 0px;
+      top: 0;
+      right: 0;
       width: 36px;
       height: 26px;
       padding: 0;
@@ -61,19 +66,24 @@
       overflow-x: hidden;
       background: $white;
       padding: 0;
+
       &.analysis-active{
         padding: 0 0 67px;
       }
+
       .cartodb-popup-header{
         h2{
           font-size: 21px;
+
           @media (max-width: $br-mobile) {
             font-size: 18px;
           }
+
           line-height: 1.25;
           padding: 20px 20px 15px;
         }
       }
+
       .cartodb-popup-fixed{
         position: absolute;
         bottom: 0;
@@ -85,6 +95,7 @@
         border-top: 1px solid $border;
         display: flex;
         justify-content: space-between;
+
         @media (max-width: $br-mobile - 1) {
           padding: 0 10px;
         }
@@ -92,15 +103,18 @@
         .btn{
           width: 100%;
           margin: 15px 1px;
+
           @media (max-width: $br-mobileMap - 1){
             font-size: 12px;
           }
+
           &.dont-analyze{
             // display: none !important;
             opacity: 0.5;
           }
         }
       }
+
       .cartodb-popup-content{
         display: block;
         width: 100%;
@@ -114,22 +128,29 @@
         overflow-x: hidden!important;
         outline: none;
         text-align: left;
+
         .cartodb-popup-content-inside{
           padding: 20px 20px 10px;
+
           @include clearfix();
+
           @media (max-width: $br-mobile) {
-            padding: 0px 20px;
+            padding: 0 20px;
           }
         }
+
         h2,h3,h4,p{
           font-family: "Fira Sans" , Helvetica;
           width: 100%;
         }
+
         h2{
           font-size: 21px;
+
           @media (max-width: $br-mobile) {
             font-size: 18px;
           }
+
           line-height: 1.25;
           padding: 0 0 10px;
 
@@ -137,12 +158,15 @@
             padding: 0;
           }
         }
+
         h4{
           color: $dark;
           font-size: 12px;
+
           @media (max-width: $br-mobile) {
             font-size: 10px;
           }
+
           font-weight: 500;
           width: 50%;
           float: left;
@@ -150,23 +174,28 @@
           min-height: 1px;
           clear: both;
           padding: 8px 5px 0 0;
+
           &.no-float{
             width: 100%;
             float: none;
             padding: 0 0 5px;
           }
         }
+
         p{
           color: $dark;
           font-size: 13px;
+
           @media (max-width: $br-mobile) {
             font-size: 11px;
           }
+
           width: 50%;
           float: left;
           line-height: 1.25;
           min-height: 1px;
           padding: 8px 0 0;
+
           &.no-float{
             width: 100%;
             float: none;
@@ -177,12 +206,14 @@
             top: -0.5em;
           }
         }
+
         .btn{
           width: 100%;
           margin: 5px 0;
         }
       }
     }
+
     .cartodb-popup-tip-container{
       display: none;
       background: none;
@@ -199,6 +230,7 @@
 
 // STORY INFOWINDOW
 $story-w: 215px;
+
 .story-infowindow{
   position: absolute;
   width: $story-w;
@@ -221,28 +253,33 @@ $story-w: 215px;
     .story-popup-content{
       a{
         color: $white;
+
         h3{
           font-size: 17px;
+
           span{
             display: block;
             text-align: right;
             font-size: 12px;
           }
         }
+
         p{
           margin: 5px 0 0;
           color: $blue;
           font-size: 12px;
+
           &:hover{
             color: lighten($blue, 5%);
           }
         }
       }
     }
+
     .close{
       position: absolute;
-      top: 0px;
-      right: 0px;
+      top: 0;
+      right: 0;
       width: 26px;
       height: 26px;
       padding: 5px;

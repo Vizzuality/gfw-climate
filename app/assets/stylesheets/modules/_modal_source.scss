@@ -28,6 +28,7 @@
   .modal-table {
     margin: 10px 0 0;
     border: 1px solid $border;
+
     @media (min-width: $br-mobile){
       border: none;
       border-top: 1px solid $border;
@@ -35,10 +36,12 @@
 
     .modal-row {
       width: 100%;
+
       @media (min-width: $br-mobile){
         display: table;
+
         &:nth-child(even) {
-          background: #F2F2F3;
+          background: #f2f2f3;
         }
       }
 
@@ -48,7 +51,8 @@
         font-weight: 500;
         font-size: 11px;
         text-transform: uppercase;
-        background: #F2F2F3;
+        background: #f2f2f3;
+
         @media (min-width: $br-mobile){
           display: table-cell;
           width: 120px;
@@ -61,6 +65,7 @@
         padding: 10px;
         font-size: 13px;
         vertical-align: middle;
+
         @media (min-width: $br-mobile){
           display: table-cell;
           padding: 10px 10px 10px 15px;

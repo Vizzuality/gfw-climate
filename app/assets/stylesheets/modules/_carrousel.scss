@@ -3,20 +3,23 @@
   padding: 20px;
   background: #222;
   display: none;
+
   @media (min-width: $br-mobile) {
     display: block;
   }
 
   .player-box{
     width: 100%;
+
     @media (min-width: $br-mobile) {
       width: calc(100% - 225px);
     }
 
     .player-responsive{
-      padding-bottom: 56.2790%;
+      padding-bottom: 56.279%;
       position: relative;
       overflow: hidden;
+
       iframe{
         position: absolute;
         top: 0;
@@ -26,12 +29,14 @@
       }
     }
   }
+
   aside{
     width: 100%;
     overflow-y: hidden;
     overflow-x: auto;
     padding: 0 0 15px;
     -webkit-overflow-scrolling: touch;
+
     @media (min-width: $br-mobile) {
       position: absolute;
       height: 100%;
@@ -41,30 +46,36 @@
       right: 0;
       padding: 0;
     }
+
     ul{
       position: relative;
       width: calc((150px * 5) + (20px * 4));
       height: auto;
-      padding: 0px;
+      padding: 0;
+
       @media (min-width: $br-mobile) {
         position: absolute;
         top: 20px;
         width: 100%;
         height: calc(100% - 40px);
-        padding: 0px 20px 0 0;
+        padding: 0 20px 0 0;
         overflow: auto;
       }
+
       li{
         margin: 20px 0 0 20px;
         width: 150px;
         float: left;
+
         &:first-child{
           margin: 20px 0 0;
         }
+
         @media (min-width: $br-mobile) {
           margin: 20px 0 0;
           width: 100%;
           float: none;
+
           &:first-child{
             margin: 0;
           }
@@ -73,6 +84,7 @@
         a{
           .img{
             position: relative;
+
             &:before, &:after{
               content: "";
               position: absolute;
@@ -80,6 +92,7 @@
               visibility: hidden;
               transition: all 0.25s $easeInOutSine;
             }
+
             &:before{
               top: 50%;
               left: 50%;
@@ -91,6 +104,7 @@
               border-color: transparent transparent transparent $white;
               transform: translate(-50%,-50%);
             }
+
             &:after{
               top: 0;
               left: 0;
@@ -99,12 +113,14 @@
               height: 100%;
               background: rgba($dark,0.75);
             }
+
             img{
               width: 100%;
               display: block;
               outline: none;
             }
           }
+
           h4{
             display: block;
             top: 0;
@@ -112,6 +128,7 @@
             padding: 10px 0 0;
             font-size: 14px;
           }
+
           &:hover{
             .img{
               &:before, &:after{
@@ -120,6 +137,7 @@
               }
             }
           }
+
           &.visible{
             .img{
               &:before, &:after{
@@ -137,13 +155,16 @@
 
 .carrousel{
   padding: 30px 0 0;
+
   .carrousel-box{
     max-width: 800px;
     margin: 0 auto;
+
     ul{
-      padding-bottom: 56.2790%;
+      padding-bottom: 56.279%;
       position: relative;
       overflow: hidden;
+
       li{
         position: absolute;
         top: 0;
@@ -153,10 +174,12 @@
         opacity: 0;
         visibility: hidden;
         transition: all 0.5s $easeInOutSine;
+
         &.visible{
           opacity: 1;
           visibility: visible;
         }
+
         iframe{
           position: absolute;
           top: 0;
@@ -167,8 +190,10 @@
       }
     }
   }
+
   .button-box{
     max-width: 500px;
+
     @media (min-width: $br-mobile) {
       max-width: none;
     }
@@ -176,14 +201,18 @@
     li{
       margin: 0 5px;
       width: 100%;
+
       @media (min-width: $br-mobile-portrait) {
         width: auto;
       }
+
       a{
         opacity: 0.75;
+
         &.disabled{
           opacity: 0.25;
         }
+
         &.visible{
           opacity: 1;
         }

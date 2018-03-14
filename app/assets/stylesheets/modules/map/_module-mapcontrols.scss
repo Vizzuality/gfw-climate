@@ -1,4 +1,5 @@
 $w-control: 38px;
+
 .module-mapcontrols {
   top: auto;
   bottom: 110px;
@@ -9,6 +10,7 @@ $w-control: 38px;
   &.timeline-open{
     transform: translate(0,-45px);
   }
+
   @media (min-width: $br-mobile){
     bottom: 60px;
   }
@@ -18,6 +20,7 @@ $w-control: 38px;
     bottom: 50px;
     left: 35px;
   }
+
   ul{
     width: $w-control;
     display: flex;
@@ -25,6 +28,7 @@ $w-control: 38px;
     background: $white;
     box-shadow: $shadow1;
     margin: 10px 0 0;
+
     &:first-child{
       margin: 0;
     }
@@ -35,6 +39,7 @@ $w-control: 38px;
       box-shadow: none;
       margin: 0;
     }
+
     li{
       display: flex;
       justify-content: center;
@@ -44,6 +49,7 @@ $w-control: 38px;
       height: $w-control;
       position: relative;
       cursor: pointer;
+
       .handler{
         display: flex;
         justify-content: center;
@@ -52,25 +58,32 @@ $w-control: 38px;
         width: 100%;
         height: 100%;
       }
+
       &.hidden{
         display: none;
       }
+
       @media (max-width: $br-mobileMap - 1){
         border-top: 1px solid $border;
+
         &:first-child{
           border-top: none;
         }
       }
+
       @media (min-width: $br-mobileMap){
         &:nth-child(even){
           border-left: 1px solid $border;
         }
+
         &:nth-child(n+3){
           border-top: 1px solid $border;
         }
       }
+
       svg{
         fill: $dark;
+
         &.hidden{
           display: none;
         }
@@ -82,21 +95,26 @@ $w-control: 38px;
           opacity: 1;
         }
       }
+
       &:active{
         background: darken($white,5%);
       }
+
       &.active{
         svg{
           fill: $blue;
         }
       }
+
       &.disabled{
         opacity: 0.5;
         cursor: default;
       }
+
       &.toggle-modules{
         .toggle-on { display: none;}
         .toggle-off { display: block;}
+
         &.active{
           .toggle-on { display: block;}
           .toggle-off { display: none;}
@@ -104,6 +122,7 @@ $w-control: 38px;
       }
     }
   }
+
   &.module-mapcontrols-mobile{
     top: auto;
     bottom: 110px;
@@ -112,6 +131,7 @@ $w-control: 38px;
     &.timeline-open{
       transform: translate(0,-45px);
     }
+
     @media (min-width: $br-mobileMap){
       display: none;
     }

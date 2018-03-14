@@ -1,15 +1,10 @@
 /**
  * Application entry point.
  */
-require([
-  'backbone',
-  'insights/router'
-], function(Backbone,RouterView) {
-
+require(['backbone', 'insights/router'], function(Backbone, RouterView) {
   'use strict';
 
   var InsightsPage = Backbone.View.extend({
-
     el: document.body,
 
     initialize: function() {
@@ -22,16 +17,14 @@ require([
      */
     _initApp: function() {
       if (!Backbone.History.started) {
-        Backbone.history.start({pushState: true});
+        Backbone.history.start({ pushState: true });
       }
     },
 
     _initRouter: function() {
       this.router = new RouterView();
-    },
-
+    }
   });
 
   new InsightsPage();
-
 });

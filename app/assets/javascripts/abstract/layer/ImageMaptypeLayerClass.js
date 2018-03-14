@@ -3,16 +3,14 @@
  *
  * @return ImageLayer class (extends Class).
  */
-define([
-  'underscore',
-  'uri',
-  'abstract/layer/OverlayLayerClass',
-], function(_, UriTemplate, OverlayLayerClass) {
-
+define(['underscore', 'uri', 'abstract/layer/OverlayLayerClass'], function(
+  _,
+  UriTemplate,
+  OverlayLayerClass
+) {
   'use strict';
 
   var ImageMaptypeLayerClass = OverlayLayerClass.extend({
-
     defaults: {
       urlTemplate: ''
     },

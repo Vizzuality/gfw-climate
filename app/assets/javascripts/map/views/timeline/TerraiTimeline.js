@@ -3,33 +3,32 @@
  *
  * @return LossTimeline class (extends TimelineYearClass)
  */
-define([
-  'moment',
-  'abstract/timeline/TimelineMonthClass',
-  'map/presenters/TimelineClassPresenter'
-], function(moment, TimelineMonthClass, Presenter) {
+define(
+  [
+    'moment',
+    'abstract/timeline/TimelineMonthClass',
+    'map/presenters/TimelineClassPresenter'
+  ],
+  function(moment, TimelineMonthClass, Presenter) {
+    'use strict';
 
-  'use strict';
+    var TerraiTimeline = TimelineMonthClass.extend({
+      /**
+       * Get the layer spec.
+       *
+       * @param  {object} layer The layer object
+       */
+      initialize: function(layer, currentDate) {
+        this.options = {
+          dateRange: [layer.mindate, layer.maxdate],
+          playSpeed: 120
+        };
 
-  var TerraiTimeline = TimelineMonthClass.extend({
+        this.presenter = new Presenter(this);
+        TerraiTimeline.__super__.initialize.apply(this, [layer, currentDate]);
+      }
+    });
 
-    /**
-     * Get the layer spec.
-     *
-     * @param  {object} layer The layer object
-     */
-    initialize: function(layer, currentDate) {
-      this.options = {
-        dateRange: [layer.mindate, layer.maxdate],
-        playSpeed: 120
-      };
-
-      this.presenter = new Presenter(this);
-      TerraiTimeline.__super__.initialize.apply(this, [layer, currentDate]);
-    }
-  });
-
-  return TerraiTimeline;
-});
-
-
+    return TerraiTimeline;
+  }
+);

@@ -1,28 +1,27 @@
-define([
-  'backbone',
-  'handlebars',  
-  'embed/presenters/EmbedCountryHeaderPresenter',
-  'text!embed/templates/embed-country-header.handlebars'  
+define(
+  [
+    'backbone',
+    'handlebars',
+    'embed/presenters/EmbedCountryHeaderPresenter',
+    'text!embed/templates/embed-country-header.handlebars'
+  ],
+  function(Backbone, Handlebars, Presenter, tpl) {
+    'use strict';
 
-], function(Backbone, Handlebars, Presenter, tpl) {
-  'use strict';
+    var EmbedCountryHeaderView = Backbone.View.extend({
+      el: '#embedHeader',
 
-  var EmbedCountryHeaderView = Backbone.View.extend({
+      template: Handlebars.compile(tpl),
 
-    el: '#embedHeader',
+      initialize: function() {
+        this.presenter = new Presenter(this);
+      },
 
-    template: Handlebars.compile(tpl),
+      render: function() {
+        this.$el.html(this.template(this.presenter.status.toJSON()));
+      }
+    });
 
-    initialize: function() {
-      this.presenter = new Presenter(this);
-    },
-
-    render: function() {
-      this.$el.html(this.template(this.presenter.status.toJSON()));
-    }
-
-  });
-
-  return EmbedCountryHeaderView;
-
-});
+    return EmbedCountryHeaderView;
+  }
+);
