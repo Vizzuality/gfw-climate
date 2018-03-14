@@ -1,0 +1,66 @@
+.carbon-section {
+  min-height: 860px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 40px 80px;
+
+  .carbon-section-title {
+    font-size: 35px;
+    color: $font-color-1;
+  }
+
+  .carbon-section-content {
+    > h3 {
+      font-size: 21px;
+      line-height: 1.38;
+      color: $font-color-3;
+    }
+    > p {
+      font-size: 19px;
+      line-height: 1.68;
+      color: $font-color-1;
+      display: flex;
+
+      > span {
+        font-size: 14px;
+        line-height: 1.93;
+        color: $font-color-1;
+      }
+    }
+  }
+}
+
+.step1 {
+  border-color: navy;
+}
+
+.step2 {
+  border-color: tomato;
+}
+
+.scroll {
+  position: relative;
+}
+
+.scroll__graphic {
+  position: absolute;
+  text-align: center;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &.-fixed {
+    position: fixed;
+  }
+
+  &.-bottom {
+    top: auto;
+    bottom: 0;
+  }
+}
+
+.scroll__text {
+  position: relative;
+}
