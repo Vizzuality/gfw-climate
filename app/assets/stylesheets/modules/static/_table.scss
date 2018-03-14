@@ -5,6 +5,7 @@
     border-collapse: collapse;
     border-spacing: 2em;
     font-size: 14px;
+
     > thead {
       th {
         padding: 0 5px 20px 5px;
@@ -18,6 +19,7 @@
         &.header-source {
           text-align: left;
         }
+
         &.header-data-type {
           text-align: justify;
         }
@@ -25,15 +27,16 @@
     }
 
     > tbody {
-
       tr {
         &:nth-child(odd) {
           border-top: 1px solid $border;
         }
+
         > td {
           position: relative;
           padding: 15px 5px;
           line-height: 19px;
+
           span {
             display: block;
           }
@@ -58,11 +61,13 @@
               background: $border;
             }
           }
+
           &.col-country > .country {
             font-size: 24px;
             line-height: 28px;
             margin: 5px 10px 10px 0;
           }
+
           &.col-country > .tier {
             font-weight: 500;
             color: $blue;
@@ -83,9 +88,11 @@
           &.col-source {
             padding: 0;
           }
+
           &.col-source > .primary-source {
             padding-bottom: 0;
           }
+
           &.col-source > .secondary-source {
             padding-bottom: 15px;
           }
@@ -96,14 +103,13 @@
 
   &.biomass-table {
     table {
-
       > thead {
         th {
           text-align: left;
 
           &.header-diameter > .subtitle {
             font-size: 14px;
-            opacity: .5;
+            opacity: 0.5;
             text-transform: none;
           }
         }

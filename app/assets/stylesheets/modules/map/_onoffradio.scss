@@ -1,4 +1,5 @@
 $w: 10px;
+
 .onoffradio {
   display: inline-block;
   width: $w;
@@ -25,6 +26,5 @@ $w: 10px;
   transform: translate(-50%,-50%) scale(0);
   border-radius: 50%;
   transition: all 0.2s $easeInOutSine;
-
   background: white;
 }

@@ -8,6 +8,7 @@
   opacity: 0;
   visibility: hidden;
   background: $dark;
+
   &.active{
     opacity: 1;
     visibility: visible;

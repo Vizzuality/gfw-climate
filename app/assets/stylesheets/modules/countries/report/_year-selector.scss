@@ -19,18 +19,19 @@
 
     &.reference {
       margin: 15px 30px 15px 15px;
+
       .label {
-        color: #5B80A0;
+        color: #5b80a0;
       }
     }
 
     &.monitor {
       .label {
-        color: #EDB04A;
+        color: #edb04a;
       }
 
       .noUi-connect {
-        background: #EDB04A;
+        background: #edb04a;
       }
     }
   }

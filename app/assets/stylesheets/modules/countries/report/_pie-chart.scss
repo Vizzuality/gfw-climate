@@ -8,7 +8,7 @@
 
     .arc {
       .path {
-        stroke: #FFFFFF;
+        stroke: #fff;
         stroke-width: 2;
       }
     }
@@ -43,7 +43,7 @@
           font-size: 14px;
           color: $font-color-1;
           padding: 7px 0 6px 0;
-          border-bottom: 1px solid #E5E5DF;
+          border-bottom: 1px solid #e5e5df;
 
           &:last-child {
             border-bottom: 0;

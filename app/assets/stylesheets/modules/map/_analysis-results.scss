@@ -1,10 +1,9 @@
 .widget-analysis-results {
-
   .widget-box {
     right: 35px;
     top: 135px;
-    padding: 0px;
-    background: #F1F1F1;
+    padding: 0;
+    background: #f1f1f1;
   }
 
   .widget-closed,
@@ -66,23 +65,28 @@
       margin-bottom: 3px;
       text-transform: uppercase;
       display: block;
+
       .stats-threshold {
         text-transform: lowercase;
         font-weight: normal;
         font-size: 9px;
         margin-left: 4px;
+
         a{
           color: $dark;
+
           &:hover{
             color: darken($dark,10%);
           }
         }
       }
     }
+
     .stats-count {
       font-weight: 500;
       font-size: 15px;
       color: #666;
+
       strong {
         font-size: 18px;
         display: inline-block;
@@ -102,11 +106,12 @@
       position: relative;
 
       span {
-        color: #F69;
+        color: #f69;
         font-weight: 500;
         cursor: pointer;
+
         a{
-          color: #F69;
+          color: #f69;
         }
       }
 
@@ -122,14 +127,17 @@
         border-radius: 3px;
         border: 1px solid #ccc;
         box-shadow: 0 0 3px rgba(0,0,0,0.2);
+
         &.hidden{
           display: none;
         }
+
         > li a {
           padding: 8px 10px;
           display: block;
           border-bottom: 1px solid #f2f2f2;
           color: $blue;
+
           &:hover{
             background-color: darken($white,2.5%);
           }
@@ -165,6 +173,7 @@
       &.analysis-control-subscribe {
         // @include home-icons-sprite(control_buttons_subscribe);
         background: image-url('home-icons/control_buttons_subscribe.png');
+
         svg{
           position: absolute;
           top: 50%;
@@ -173,13 +182,15 @@
           height: 60%;
           padding: 2px;
           fill: #999;
-          background: #F1F1F1;
+          background: #f1f1f1;
           transform: translate(-50%,-50%);
         }
+
         &:hover {
           position: relative;
           // @include home-icons-sprite(control_buttons_subscribe_hover);
           background: image-url('home-icons/control_buttons_subscribe_hover.png');
+
           svg{
             fill: #555;
           }
@@ -200,30 +211,37 @@
         width: 31px;
         // @include home-icons-sprite(control_buttons_reset);
         background: image-url('home-icons/control_buttons_reset.png');
+
         &:hover {
           // @include home-icons-sprite(control_buttons_reset_hover);
           position: relative;
           background: image-url('home-icons/control_buttons_reset_hover.png');
         }
+
         &:active {
           // @include home-icons-sprite(control_buttons_reset_active);
           background: image-url('home-icons/control_buttons_reset_active.png');
         }
       }
     }
+
     .analysis-control-names {
       font-size: 9px;
       position: relative;
       left: 3px;
+
       li {
         display: inline;
+
         span {
           position: relative;
           margin: 0 3px;
+
           &.disabled {
             opacity: 0;
           }
         }
+
         &:first-child {
           span {
             margin: 0;
@@ -233,6 +251,7 @@
     }
   }
 }
+
 .is-embed-action {
   .widget-analysis-results {
     .widget-box {

@@ -1,7 +1,9 @@
 $letterW: 20px;
+
 .tab-countries{
   .countries-content{
     padding: 15px;
+
     @media (min-width: 1500px){
       padding: 20px;
     }
@@ -10,6 +12,7 @@ $letterW: 20px;
       .submenu {
         display: flex;
         margin: 10px 0;
+
         li {
           display: flex;
           width: 33.3333%;
@@ -17,17 +20,21 @@ $letterW: 20px;
           justify-content: center;
           align-items: center;
           cursor: pointer;
+
           span {
             margin-top: 5px;
             font-size: 11px;
             text-transform: uppercase;
           }
+
           &.is-selected {
             border-radius: 7px;
             background-color: $blue;
+
             svg {
               fill: $white;
             }
+
             span {
               color: $white;
             }
@@ -38,37 +45,43 @@ $letterW: 20px;
 
     // Select box
     .select-box{
-
       .chosen-container-single {
         margin-bottom: 5px;
+
         &.chosen-disabled {
           span {
-            color: rgba($dark, .3);
+            color: rgba($dark, 0.3);
           }
         }
       }
 
       .chzn-container-single{
         margin: 0 0 5px;
+
         &:last-child{
           margin: 0;
         }
       }
+
       .country-ul-mobile{
         margin: 0 -15px;
+
         >li{
           padding: 10px 20px;
           border-bottom: 1px solid $border;
           font-size: 14px;
+
           &:last-child{
             border-bottom: none;
           }
         }
       }
+
       .letters-ul-mobile-box{
         position: relative;
         margin: -15px -15px 0;
         border-bottom: 1px solid $border;
+
         &:before,&:after{
           content: "";
           position: absolute;
@@ -76,22 +89,29 @@ $letterW: 20px;
           width: 15px;
           height: 100%;
         }
+
         &:before{
           left: 0;
+
           @include gradient(to right,rgba(255,255,255,1),rgba(255,255,255,0));
         }
+
         &:after{
           right: 0;
+
           @include gradient(to left,rgba(255,255,255,1),rgba(255,255,255,0));
         }
+
         .scroll-none{
           overflow: auto;
           padding: 15px 0 13px;
         }
+
         .letters-ul-mobile{
           width: 27.5 * $letterW;
-          padding: 0px 15px;
+          padding: 0 15px;
           overflow: hidden;
+
           >li{
             float: left;
             color: $blue;
@@ -100,10 +120,12 @@ $letterW: 20px;
             line-height: $letterW;
             text-align: center;
             text-transform: uppercase;
+
             &.disabled{
               color: $dark;
               opacity: 0.75;
             }
+
             &.current{
               font-weight: 500;
             }
@@ -115,9 +137,11 @@ $letterW: 20px;
     // Toggle Countries content
     .toggle-countries-content{
       display: none;
+
       &.active{
         display: block;
       }
+
       .countries-layers{
         header{
           h2{
@@ -125,34 +149,42 @@ $letterW: 20px;
             line-height: 1.2;
             font-weight: 400;
           }
+
           h3{
             padding: 20px 0;
             font-size: 16px;
             font-weight: 300;
           }
+
           .alone{
             padding: 20px 0 10px;
             line-height: 1.25;
             font-size: 14px;
           }
         }
+
         .layers-list{
           overflow-y: auto;
           overflow-x: hidden;
           max-height: 35vh;
           border-bottom: none;
+
           li{
             padding-left: 5px;
           }
         }
       }
+
       .layers{
         margin: 5px 0 20px;
         text-align: center;
+
         li{
           width: 100%;
           margin-bottom: 10px;
+
           @include clearfix();
+
           &:last-child {
             margin-bottom: 0;
           }
@@ -162,10 +194,12 @@ $letterW: 20px;
             position: relative;
             padding: 0 17px 0 13px;
             font-size: 13px;
+
             .circle{
               position: absolute;
               top: -2px;
               left: 0;
+
               &:before {
                 content: ' \25CF';
                 font-size: 16px;
@@ -175,22 +209,26 @@ $letterW: 20px;
           }
         }
       }
+
       .countries-buttons{
         @media (max-width: $br-mobileMap - 1){
           margin: 0 -15px;
         }
+
         .button-container{
           position: relative;
           bottom: 0;
           left: 0;
           box-shadow: none;
           justify-content: flex-start;
+
           @media (max-width: $br-mobileMap - 1){
-            padding: 18px 0px 18px 0px;
+            padding: 18px 0 18px 0;
             margin: 0;
             border-bottom: 1px solid $border;
+
             &:first-child{
-              padding: 0 0px 12px 0px;
+              padding: 0 0 12px 0;
             }
           }
 
@@ -198,10 +236,12 @@ $letterW: 20px;
             @media (max-width: $br-mobileMap - 1){
               padding: 0;
               border-left: 1px solid $border;
+
               &:first-child{
                 border-left: none;
               }
             }
+
             .btn{
               @media (max-width: $br-mobileMap - 1){
                 font-size: 14px;
@@ -209,6 +249,7 @@ $letterW: 20px;
                 border: none;
                 padding: 0;
                 background: none;
+
                 &:hover{
                   background-color: $white;
                 }

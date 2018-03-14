@@ -5,7 +5,7 @@ body,html{
 
   #headerGfw {
     top: 0 !important;
-    transition: top .2s linear;
+    transition: top 0.2s linear;
 
     .line-dashboard {
       top: 45px !important;
@@ -57,12 +57,12 @@ body,html{
     .logo-menu {
       top: 0 !important;
       position: relative !important;
-      transition: .2s linear;
+      transition: 0.2s linear;
 
       @media (min-width: $br-mobile){
         top: 45px !important;
         position: fixed !important;
-        transition: .2s linear;
+        transition: 0.2s linear;
       }
 
       &.-show {
@@ -94,7 +94,7 @@ body,html{
   left: 0;
   z-index: 10;
   width: 100%;
-  transition: top .2s linear;
+  transition: top 0.2s linear;
 
   &.-show {
     top: 42px;
@@ -105,9 +105,11 @@ body,html{
   .layout-header{
     top: auto;
     bottom: 0;
+
     .layout-header-top{
       position: absolute;
     }
+
     .layout-header-bottom {
       position: fixed;
     }
@@ -122,6 +124,7 @@ body,html{
   top: 0;
   left: 0;
   width: 100%;
+
   @media (min-width:$br-mobile){
     height: calc(100% - 34px);
     top: 34px;
@@ -149,6 +152,7 @@ body,html{
       z-index: 0;
     }
   }
+
   .footer-toggle{
     position: absolute;
     left: 50%;
@@ -173,6 +177,7 @@ body,html{
   cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
 
   @include user-select(none);
+
   transition: opacity 1s ease;
 
   &.is-loaded {
@@ -200,9 +205,11 @@ body,html{
 
   .zoom-in {
     background: transparent url(icons/map_zoom.png) no-repeat 0 0;
+
     &:hover {
       background-position: (-$zoomWidth) 0;
     }
+
     &:active {
       background-position: -(2*$zoomWidth) 0;
     }
@@ -210,9 +217,11 @@ body,html{
 
   .zoom-out {
     background: transparent url(icons/map_zoom.png) no-repeat 0 (-$zoomHeight);
+
     &:hover {
       background-position: (-$zoomWidth) (-$zoomHeight);
     }
+
     &:active {
       background-position: -(2*$zoomWidth) -29px;
     }
@@ -231,6 +240,7 @@ body,html{
   width: 19px;
   margin: -10px 0 0 -8px;
   pointer-events:none;
+
   &.hide{
     opacity: 0;
     visibility: hidden;
@@ -240,11 +250,12 @@ body,html{
 
 .map-logos {
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
   left: 70px;
   height: 38px;
   z-index: 100;
   display: none;
+
   @media (min-width:$br-mobile){
     display: block;
   }
@@ -254,6 +265,7 @@ body,html{
     margin-left: 15px;
     position: relative;
     top: 3px;
+
     &.whrc > img {
       width: 125px;
     }
@@ -270,10 +282,11 @@ body,html{
   position: absolute;
   bottom: 20px;
   right: 12px;
-  color: #FFF;
+  color: #fff;
   font-size: 11px;
   font-weight: 500;
-  text-shadow: 0px 0px 3px #000;
+  text-shadow: 0 0 3px #000;
+
   &.hidden{
     display: none;
   }
@@ -290,6 +303,7 @@ body,html{
   opacity: 0;
   visibility: hidden;
   transition: all 0.25s $easeInOutSine;
+
   @media (min-width:$br-mobile){
     display: none !important;
   }
@@ -306,10 +320,11 @@ body,html{
   font-family: Arial, 'sans-serif';
   margin: 0;
   padding: 1px 6px;
-  background-color: #D2DADE;
+  background-color: #d2dade;
   color: $dark;
   white-space: nowrap;
   z-index: 9999999 !important;
+
   a{
     color: $dark;
   }
@@ -321,6 +336,7 @@ body,html{
     top: 0 !important;
     bottom: auto !important;
   }
+
   .gm-style .gm-style-cc span, .gm-style .gm-style-cc a, .gm-style .gm-style-mtc div {
     font-size: 8px !important;
   }

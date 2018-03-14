@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
+
   @media screen and (min-width: $br-mobile) {
     margin-bottom: 0;
   }
@@ -17,6 +18,7 @@
       font-weight: 500;
       color: $blue3;
     }
+
     .detail {
       font-size: 14px;
       font-weight: 300;
@@ -24,6 +26,7 @@
       opacity: 0.5;
     }
   }
+
   .actions {
     > .action {
       display: inline-block;
@@ -69,6 +72,7 @@
       align-items: center;
       justify-content: center;
     }
+
     .list-item {
       padding: 5px 15px;
     }
@@ -119,7 +123,7 @@
         bottom: 0;
         left: auto;
         background-color: transparent;
-        transition: all .3s ease;
+        transition: all 0.3s ease;
       }
 
       &:after {
@@ -132,7 +136,7 @@
         right: 4px;
         left: auto;
         background-color: transparent;
-        transition: all .3s ease;
+        transition: all 0.3s ease;
       }
 
     }

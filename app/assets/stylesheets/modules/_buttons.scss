@@ -13,11 +13,12 @@
 // Btn
 .btn {
   @extend %reset-btn;
+
   background: $border;
   position: relative;
   display: inline-block;
   z-index: 1;
-  padding: 0px 12px;
+  padding: 0 12px;
   border-radius: 40px;
   font-size: 14px;
   text-decoration: none;
@@ -26,7 +27,7 @@
   text-align: center;
   font-weight: 500;
   white-space: nowrap;
-  transition: background .15s linear;
+  transition: background 0.15s linear;
 
   &:hover {
     background: $blue;
@@ -41,28 +42,33 @@
   &.medium {
     // font-size: 18px;
     text-transform: uppercase;
-    padding: 0px 35px;
+    padding: 0 35px;
   }
+
   &.huge {
     font-size: 18px;
     text-transform: uppercase;
     height: 38px;
     line-height: 40px;
-    padding: 0px 20px;
+    padding: 0 20px;
+
     @media (min-width: $br-mobile) {
       font-size: 21px;
     }
   }
+
   &.little{
     font-size: 10px;
     text-transform: uppercase;
     height: 25px;
     line-height: 24px;
   }
+
   &.full-width{
     display: block;
     width: 100%;
   }
+
   &.lines{
     line-height: 1;
     white-space: normal;
@@ -72,7 +78,7 @@
   }
 
   &.is-disabled {
-    opacity: .5;
+    opacity: 0.5;
     pointer: cursor;
     pointer-events: none;
   }
@@ -82,44 +88,55 @@
   &.dark {
     color: $white;
     background: $dark;
+
     &:hover {
       background: darken($dark,25%);
     }
   }
+
   &.white {
     color: $dark;
     background: $white;
+
     &:hover {
       background: darken($white,10%);
     }
   }
+
   &.gray {
     color: $dark;
     background: $white;
     border-color: $blue;
+
     &:hover {
       background: darken($white,5%);
     }
   }
+
   &.blue {
     //importants due to pantropical items
     color: $white !important;
     background: $blue !important;
+
     &:hover {
       background: darken($blue,10%);
     }
   }
+
   &.light {
     color: $white;
-    background: #CBCCBF;
+    background: #cbccbf;
+
     &:hover {
-      background: darken(#CBCCBF,5%);
+      background: darken(#cbccbf,5%);
     }
   }
+
   &.light2 {
     color: $dark;
     background: $border;
     font-weight: 400;
+
     &:hover {
       background: darken($border,5%);
     }
@@ -128,9 +145,11 @@
   &.red {
     color: $white;
     background: $red;
+
     &:hover {
       background: darken($red,10%);
     }
+
     &.disabled{
       &:hover {
         background: $red;
@@ -154,9 +173,11 @@
 
   &.with-icon{
     min-width: 0;
+
     @media (min-width: $br-mobile) {
       padding-right: 36px;
     }
+
     svg{
       width: 26px;
       height: 26px;
@@ -167,12 +188,15 @@
       transform: translate(0,-50%);
     }
   }
+
   &.with-center-icon{
     min-width: 0;
+
     span{
       position: relative;
       padding-right: 25px;
     }
+
     svg{
       width: 20px;
       height: 20px;
@@ -180,7 +204,7 @@
       top: 50%;
       right: 0;
       fill: $white;
-      transform: translate(0px,-50%);
+      transform: translate(0,-50%);
     }
   }
 }
@@ -202,8 +226,9 @@
   width: 50px;
   padding: 10px;
   border-radius: 50%;
-  transition: all .25s $easeInOutCubic;
+  transition: all 0.25s $easeInOutCubic;
   transform: translate(-50%,-50%);
+
   svg {
     fill: none;
     stroke: $white;
@@ -230,6 +255,7 @@
 
   .prev-step {
     cursor: pointer;
+
     @media screen and (min-width: $br-mobile) {
       position: absolute;
       top: 50%;
@@ -246,6 +272,7 @@
       height: 16px;
       stroke: $black;
     }
+
     .btn-back {
       margin: 0 0 0 8px;
       background: none;

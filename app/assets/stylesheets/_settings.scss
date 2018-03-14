@@ -11,21 +11,21 @@ $br-tablet: 1050px;
 $br-mobileMap: 1000px;
 
 //Colors
-$blue: #5B80A0;
-$blue1: #429EC9;
+$blue: #5b80a0;
+$blue1: #429ec9;
 $blue2: #0098cf;
 $blue3: #6c94b6;
-$white: #FFF;
+$white: #fff;
 $black: #000;
-$dark: #555555;
-$light: #FAFAFA;
-$red: #ED1846;
-$orange: #E98300;
+$dark: #555;
+$light: #fafafa;
+$red: #ed1846;
+$orange: #e98300;
 
-$border: #E5E5DF;
-$gfw-green: #97BD3D;
-$gray: #D8D8D8;
-$brown: #BEBBAC;
+$border: #e5e5df;
+$gfw-green: #97bd3d;
+$gray: #d8d8d8;
+$brown: #bebbac;
 
 
 //Grey
@@ -33,7 +33,7 @@ $grey: #e6e6e6;
 $grey2: #979797;
 $dark-grey: #333;
 $light-grey: #bebcc2;
-$medium-grey: #999999;
+$medium-grey: #999;
 $extra-light-grey: #eee;
 
 //Theme color
@@ -47,13 +47,13 @@ $font-color-2: $white;
 $font-color-3: $blue;
 $font-color-4: $medium-grey;
 
-$shadow1: 0px 1px 2px rgba(0,0,0,0.25);
+$shadow1: 0 1px 2px rgba(0,0,0,0.25);
 //Animations
 // Cubic
-$easeInCubic:  cubic-bezier(0.550, 0.055, 0.675, 0.190);
-$easeOutCubic:  cubic-bezier(0.215, 0.610, 0.355, 1.000);
-$easeInOutCubic :  cubic-bezier(0.645, 0.045, 0.355, 1.000);
+$easeInCubic:  cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$easeOutCubic:  cubic-bezier(0.215, 0.61, 0.355, 1);
+$easeInOutCubic :  cubic-bezier(0.645, 0.045, 0.355, 1);
 // Sine
-$easeInSine:  cubic-bezier(0.470, 0.000, 0.745, 0.715);
-$easeOutSine:  cubic-bezier(0.390, 0.575, 0.565, 1.000);
-$easeInOutSine:  cubic-bezier(0.445, 0.050, 0.550, 0.950);
+$easeInSine:  cubic-bezier(0.47, 0, 0.745, 0.715);
+$easeOutSine:  cubic-bezier(0.39, 0.575, 0.565, 1);
+$easeInOutSine:  cubic-bezier(0.445, 0.05, 0.55, 0.95);

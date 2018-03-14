@@ -21,20 +21,21 @@
     &.is-active{
       background: rgba($blue1,0.3);
     }
+
     &::-webkit-input-placeholder {
-       color: $font-color-3;
+      color: $font-color-3;
     }
 
     &:-moz-placeholder { /* Firefox 18- */
-       color: $font-color-3;
+      color: $font-color-3;
     }
 
     &::-moz-placeholder {  /* Firefox 19+ */
-       color: $font-color-3;
+      color: $font-color-3;
     }
 
     &:-ms-input-placeholder {
-       color: $font-color-3;
+      color: $font-color-3;
     }
   }
 

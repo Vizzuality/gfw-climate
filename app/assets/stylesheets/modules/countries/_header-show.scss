@@ -40,7 +40,7 @@
       display: inline-block;
       height: 39px;
       width: 310px;
-      border: 1px solid #6B6B6B;
+      border: 1px solid #6b6b6b;
       border-radius: 39px;
     }
 
@@ -48,7 +48,7 @@
       margin: 20px 0;
       font-size: 19px;
       line-height: 1.3;
-      color: rgba($white, .7)
+      color: rgba($white, 0.7)
     }
 
     .header-country__preview-country {
@@ -57,10 +57,12 @@
       right: 0;
       width: 300px;
       padding: 40px 0 0;
+
       svg {
         fill: $blue;
       }
     }
+
     .header-country__display-options {
       position: absolute;
       right: 0;
@@ -74,7 +76,7 @@
           display: inline-block;
           padding: 0 10px;
           font-size: 10px;
-          color: rgba($white, .5);
+          color: rgba($white, 0.5);
           text-transform: uppercase;
           cursor: pointer;
 
