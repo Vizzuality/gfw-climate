@@ -67,7 +67,7 @@ define(
           switch (step) {
             case 1:
               if (this.currentStep < step) {
-                scene = 'industry';
+                scene = 'init';
               } else {
                 scene = 'sea_out';
               }
@@ -87,8 +87,20 @@ define(
           }
           this.svg.mc.gotoAndPlay(scene);
           this.currentStep = step;
+          // data.element.classList.add('-current');
         }
       },
+
+      // handleStepExit: function(data) {
+      //   data.element.classList.remove('-current');
+      // },
+
+      // markCurrentOnExit: function(direction) {
+      //   var selector = direction === 'up'
+      //     ? ':first'
+      //     : ':last';
+      //   $('.scroll__text .step' + selector).addClass('-current');
+      // },
 
       handleContainerEnter: function() {
         this.graphicEl.removeClass('-bottom');
@@ -100,12 +112,14 @@ define(
         if (response.direction === 'down') {
           this.graphicEl.addClass('-bottom');
         }
+        // this.markCurrentOnExit(response.direction);
       },
 
       initScroller: function() {
         this.scroller = Scrollama();
         this.scroller
           .setup({
+            offset: 0.2,
             step: '.scroll__text .step',
             container: '.scroll',
             graphic: '.scroll__graphic'

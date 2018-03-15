@@ -1,22 +1,32 @@
+
 .carbon-section {
-  min-height: 860px;
+  height: 95vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-direction: column;
-  padding: 40px 80px;
+  position: relative;
+  // opacity: 0.3;
+  // transition: opacity 0.3s ease;
 
-  .carbon-section-title {
-    font-size: 35px;
-    color: $font-color-1;
+  &.-current {
+    opacity: 1;
   }
 
   .carbon-section-content {
-    > h3 {
-      font-size: 21px;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+
+    > h2 {
+      font-size: 35px;
       line-height: 1.38;
       color: $font-color-3;
     }
+
     > p {
       font-size: 19px;
       line-height: 1.68;
@@ -47,9 +57,14 @@
 .scroll__graphic {
   position: absolute;
   text-align: center;
-  top: 200px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
+  right: 0;
+
+  svg {
+    height: 75vh;
+    width: 100%;
+  }
 
   &.-fixed {
     position: fixed;
@@ -63,4 +78,8 @@
 
 .scroll__text {
   position: relative;
+}
+
+.end {
+  min-height: 1000px;
 }
