@@ -4,7 +4,6 @@
   </div>
 </div>
 
-
 <div class='scroll'>
   <div class='scroll__graphic'>
     <div id="animation"></div>
@@ -39,4 +38,18 @@
     </section>
   </div>
 </div>
-<div class="end"></div>
+
+<div class="store-wrapper inner">
+  <h2 class="store-title">Store / Reservoir</h2>
+  <h3 class="store-subtitle">On average, forests store up to 32 times more carbon in live biomass than alternative land uses of grasslands or croplands. </h3>
+  <div class="store-carbon-slider">
+    {{#each this.slides}}
+      <a href="#" class="store-carbon-slide" style="background-image: url('{{this.img}}')">
+        <div href="#">
+          <p class="store-carbon-slide-title">{{this.title}}</p>
+          <p class="store-carbon-slide-legend">{{this.legend}}</p>
+        </div>
+      </a>
+    {{/each}}
+  </div>
+</div>
