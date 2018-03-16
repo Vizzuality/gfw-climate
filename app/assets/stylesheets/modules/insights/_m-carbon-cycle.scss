@@ -1,37 +1,38 @@
 
 .carbon-section {
-  height: 95vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   flex-direction: column;
   position: relative;
-  // opacity: 0.3;
-  // transition: opacity 0.3s ease;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
 
   &.-current {
     opacity: 1;
   }
 
   .carbon-section-content {
-    height: 25%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: white;
 
     > h2 {
       font-size: 35px;
       line-height: 1.38;
       color: $font-color-3;
+      background-color: white;
     }
 
     > p {
       font-size: 19px;
       line-height: 1.68;
       color: $font-color-1;
+      padding: 2px 10px;
       display: flex;
+      background-color: white;
 
       > span {
         font-size: 14px;
@@ -40,14 +41,6 @@
       }
     }
   }
-}
-
-.step1 {
-  border-color: navy;
-}
-
-.step2 {
-  border-color: tomato;
 }
 
 .scroll {

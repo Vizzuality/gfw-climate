@@ -26,6 +26,7 @@ define(
     var EmisionCalculatorIndex = Backbone.View.extend({
       el: '#insights',
       currentStep: 0,
+      totalSteps: 0,
 
       defaults: {
         jsonUrl: '/assets/animations/carbon-cycle.json',
@@ -44,10 +45,27 @@ define(
 
       render: function() {
         this.$el.html(this.template());
+        this.totalSteps = this.$('.step').length - 1;
+      },
+
+      setListeners: function() {
+        this.onResizeEvent = _.debounce(_.bind(this.onResize, this), 150);
+        window.addEventListener('resize', this.onResizeEvent, false);
+      },
+
+      unsetListeners: function() {
+        window.removeEventListener('resize', this.onResizeEvent, false);
+        this.onResizeEvent = null;
       },
 
       cache: function() {
         this.graphicEl = this.$('.scroll__graphic');
+      },
+
+      onResize: function() {
+        if (this.scroller) {
+          this.scroller.resize();
+        }
       },
 
       initSvg: function(data) {
@@ -87,20 +105,23 @@ define(
           }
           this.svg.mc.gotoAndPlay(scene);
           this.currentStep = step;
-          // data.element.classList.add('-current');
+          data.element.classList.add('-current');
         }
       },
 
-      // handleStepExit: function(data) {
-      //   data.element.classList.remove('-current');
-      // },
+      handleStepExit: function(data) {
+        var isFirst = data.direction === 'up' && data.index === 0;
+        var isLast =
+          data.direction === 'down' && data.index === this.totalSteps;
+        if (!isFirst && !isLast) {
+          data.element.classList.remove('-current');
+        }
+      },
 
-      // markCurrentOnExit: function(direction) {
-      //   var selector = direction === 'up'
-      //     ? ':first'
-      //     : ':last';
-      //   $('.scroll__text .step' + selector).addClass('-current');
-      // },
+      markCurrentOnExit: function(direction) {
+        var selector = direction === 'up' ? ':first' : ':last';
+        $('.scroll__text .step' + selector).addClass('-current');
+      },
 
       handleContainerEnter: function() {
         this.graphicEl.removeClass('-bottom');
@@ -112,7 +133,7 @@ define(
         if (response.direction === 'down') {
           this.graphicEl.addClass('-bottom');
         }
-        // this.markCurrentOnExit(response.direction);
+        this.markCurrentOnExit(response.direction);
       },
 
       initScroller: function() {
@@ -125,6 +146,7 @@ define(
             graphic: '.scroll__graphic'
           })
           .onStepEnter(this.handleStepEnter.bind(this))
+          .onStepExit(this.handleStepExit.bind(this))
           .onContainerEnter(this.handleContainerEnter.bind(this))
           .onContainerExit(this.handleContainerExit.bind(this));
         this.cache();
@@ -138,8 +160,13 @@ define(
         this.getData().done(data => {
           this.initSvg(data);
           this.initScroller();
+          this.setListeners();
           this.$el.removeClass('is-loading');
         });
+      },
+
+      remove: function() {
+        this.unsetListeners();
       }
     });
 
