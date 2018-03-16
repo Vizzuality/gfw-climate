@@ -8,6 +8,7 @@ define(
     'snapsvganim',
     'intersectionobserver',
     'scrollama',
+    'views/shared/MouseScrollView',
     'text!insights/templates/carbon-cycle/carbon-cycle.handlebars'
   ],
   function(
@@ -19,6 +20,7 @@ define(
     SnapSVGAnim, // we need to import the library but then it is used as SVGAnim
     Intersectionobserver,
     Scrollama,
+    MouseScrollView,
     tpl
   ) {
     'use strict';
@@ -86,6 +88,7 @@ define(
 
       cache: function() {
         this.graphicEl = this.$('.scroll__graphic');
+        this.mouseScroll = this.$('#mouse-scroll-wrapper');
       },
 
       onResize: function() {
@@ -144,22 +147,18 @@ define(
         }
       },
 
-      markCurrentOnExit: function(direction) {
-        var selector = direction === 'up' ? ':first' : ':last';
-        $('.scroll__text .step' + selector).addClass('-current');
-      },
-
       handleContainerEnter: function() {
         this.graphicEl.removeClass('-bottom');
         this.graphicEl.addClass('-fixed');
+        this.mouseScroll.show();
       },
 
       handleContainerExit: function(response) {
         this.graphicEl.removeClass('-fixed');
         if (response.direction === 'down') {
           this.graphicEl.addClass('-bottom');
+          this.mouseScroll.hide();
         }
-        this.markCurrentOnExit(response.direction);
       },
 
       initScroller: function() {
@@ -183,6 +182,9 @@ define(
       },
 
       init: function() {
+        this.scroll = new MouseScrollView({
+          el: '#mouse-scroll-wrapper'
+        });
         this.getData().done(data => {
           this.initSvg(data);
           this.initScroller();
