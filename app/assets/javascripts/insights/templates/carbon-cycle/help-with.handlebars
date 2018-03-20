@@ -1,0 +1,8 @@
+<div class="help-with-wrapper inner" style="background-image: url({'{this.bgImage}}'');">
+  {{#each this.slides}}
+    <div {{#if @index == this.activeIndex}}checked{{/if}} style="background-image: url('{{this.image}}'');">
+      <input type="radio" name="help-with" value="{{@index}}">
+      {{this.text}}
+    </div>
+  {{/each}}
+</div>

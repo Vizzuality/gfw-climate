@@ -9,6 +9,7 @@ define(
     'intersectionobserver',
     'scrollama',
     'views/shared/MouseScrollView',
+    'insights/views/carbon-cycle/HelpWithView',
     'text!insights/templates/carbon-cycle/carbon-cycle.handlebars'
   ],
   function(
@@ -21,6 +22,7 @@ define(
     Intersectionobserver,
     Scrollama,
     MouseScrollView,
+    HelpWithView,
     tpl
   ) {
     'use strict';
@@ -68,12 +70,17 @@ define(
       initialize: function(settings) {
         this.settings = _.extend({}, this.defaults, settings);
         this.render();
+        this.startModules();
         this.init();
       },
 
       render: function() {
         this.$el.html(this.template({ slides: this.slides }));
         this.totalSteps = this.$('.step').length - 1;
+      },
+
+      startModules: function() {
+        this.helpWith = new HelpWithView();
       },
 
       setListeners: function() {
