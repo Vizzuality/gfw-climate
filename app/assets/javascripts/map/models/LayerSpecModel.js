@@ -117,7 +117,9 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       'carbon_stocks',
       'peatland_drainage',
       'idn_peatland_drainage',
-      'biomass_loss'
+      'biomass_loss',
+      'forest_carbon_change',
+      'forest_carbon_stocks'
     ],
 
     categoryOrder: [
@@ -138,7 +140,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
       var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
       _.each(
         layerOrder,
-        _.bind(function(slug, i) {
+        _.bind(function(slug) {
           layers[slug].position = this.layerOrder.indexOf(slug);
         }, this)
       );
@@ -148,7 +150,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 
     getLayer: function(where) {
       if (!where) {
-        return;
+        return null;
       }
       var layer = _.findWhere(this.getLayers(), where, this);
       return layer;

@@ -21,6 +21,8 @@ define(
     'map/views/layers/PlantationsLayerBySpecies',
     'map/views/layers/ProtectedAreasCDBLayer',
     'map/views/layers/PeatLandsDrainageLayer',
+    'map/views/layers/ForestCarbonChangeLayer',
+    'map/views/layers/ForestCarbonStocksLayer',
     'map/views/layers/IdnPrimaryLayer',
     'map/views/layers/CafLoggingLayer',
     'map/views/layers/CanLoggingLayer',
@@ -133,6 +135,8 @@ define(
     PlantationsLayerBySpecies,
     ProtectedAreasCDBLayer,
     PeatLandsDrainageLayer,
+    ForestCarbonChangeLayer,
+    ForestCarbonStocksLayer,
     IdnPrimaryLayer,
     CafLoggingLayer,
     CanLoggingLayer,
@@ -400,6 +404,12 @@ define(
       },
       idn_peatland_drainage: {
         view: PeatLandsDrainageLayer
+      },
+      forest_carbon_change: {
+        view: ForestCarbonChangeLayer
+      },
+      forest_carbon_stocks: {
+        view: ForestCarbonStocksLayer
       },
       total_carbon: {
         view: TotalCarbonLayer
