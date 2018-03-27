@@ -182,6 +182,7 @@ define(
           .onContainerEnter(this.handleContainerEnter.bind(this))
           .onContainerExit(this.handleContainerExit.bind(this));
         this.cache();
+        this.mouseScroll.hide();
       },
 
       getData: function() {

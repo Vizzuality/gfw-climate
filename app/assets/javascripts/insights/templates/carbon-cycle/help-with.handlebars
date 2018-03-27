@@ -1,11 +1,15 @@
-<div class="help-with-wrapper inner" style="background-image: url('{{this.bgImage}}');">
-  {{this.activeTitle}}
-  <div class="slides">
+<div class="help-with-wrapper" style="background-image: url('{{this.bgImage}}');">
+  <h2 class="help-with-title">How can you help with the problem?</h2>
+  <div class="help-with-slides inner">
     {{#each this.slides}}
-      <label {{#if @isCurrent}}checked{{/if}} style="background-image: url('{{this.img}}');">
-        <input type="radio" name="help-with" value="{{@index}}">
+      <input type="radio" {{#if this.isCurrent}}checked{{/if}} name="help-with" id="slide-{{@index}}" value="{{@index}}">
+      <label for="slide-{{@index}}" style="background-image: url('{{this.img}}');">
       </label>
     {{/each}}
   </div>
-  {{this.activeContent}}
+  <h2 class="help-with-subtitle">{{this.activeTitle}}</h2>
+  <p class="help-with-content">{{this.activeContent}}</p>
+  {{#each this.slides}}
+    <div class="cache-image" style="background-image: url('{{this.bg}}');"></div>
+  {{/each}}
 </div>

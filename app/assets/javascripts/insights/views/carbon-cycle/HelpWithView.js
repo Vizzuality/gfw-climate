@@ -14,27 +14,29 @@ define(
       slides: [
         {
           id: 1,
-          title: 'Help restore forest 1',
+          title: 'Spend responsibly',
           content:
-            'Support local and international campaigns to restore forest landscapes. There are many organizations that actively reverse the effects of deforestation like Trillion Trees camapaign, TNC, arbor day foundation, Plant Your Future',
+            'Divest from fossil fuels. Track your climate goals with Oroeco. Offset travel. Consume less. Spread the word.',
           img: '/assets/insights/carbon-cycle/last-block-img1@2x.jpg',
-          bg: '/assets/insights/carbon-cycle/last-block-bg1@2x.jpg'
+          bg: '/assets/insights/carbon-cycle/last-block-bg1@2x.jpg',
+          isCurrent: true
         },
         {
           id: 2,
-          title: 'Help restore forest 2',
+          title: 'Use your fork to vote for climate action',
           content:
-            'Support local and international campaigns to restore forest landscapes. There are many organizations that actively reverse the effects of deforestation like Trillion Trees camapaign, TNC, arbor day foundation, Plant Your Future',
-          img: '/assets/insights/carbon-cycle/last-block-img2@2x.jpg',
-          bg: '/assets/insights/carbon-cycle/last-block-bg2@2x.jpg'
+            'Eat less meat, particularly beef. Waste less food. Buy products with certified labels e.g. RSPO. Forest500 company list. Demand transparency.',
+          img: '/assets/insights/carbon-cycle/last-block-img3@2x.jpg',
+          bg: '/assets/insights/carbon-cycle/last-block-bg3@2x.jpg'
         },
         {
           id: 3,
-          title: 'Help restore forest 3',
+          title:
+            'Support local and international campaigns to restore forest landscapes',
           content:
-            'Support local and international campaigns to restore forest landscapes. There are many organizations that actively reverse the effects of deforestation like Trillion Trees camapaign, TNC, arbor day foundation, Plant Your Future',
-          img: '/assets/insights/carbon-cycle/last-block-img3@2x.jpg',
-          bg: '/assets/insights/carbon-cycle/last-block-bg3@2x.jpg'
+            'Choose a country. (Trillion Trees campaign, TNC, arbor day foundation, Sarah Mann’s person, Plant Your Future, Australia, China, Brazilian NGOs? Where else?',
+          img: '/assets/insights/carbon-cycle/last-block-img2@2x.jpg',
+          bg: '/assets/insights/carbon-cycle/last-block-bg2@2x.jpg'
         }
       ],
       activeIndex: 0,

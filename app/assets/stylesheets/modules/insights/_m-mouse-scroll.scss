@@ -1,7 +1,14 @@
 #mouse-scroll-wrapper {
-  position: fixed;
-  right: 100px;
-  top: 49%;
+  display: none;
+  visibility: hidden;
+
+  @media (min-width: $br-mobile) {
+    visibility: visible;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 100px;
+  }
 }
 
 .mouse-scroll {

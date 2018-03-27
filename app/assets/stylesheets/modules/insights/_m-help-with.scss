@@ -1,31 +1,98 @@
 .help-with-wrapper {
-  height: 400px;
+  min-height: 680px;
   background-size: cover;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: white;
-  padding: 50px;
+  padding: 20px;
+  padding-top: 60px;
 
-  .slides {
+  @media (min-width: $br-mobile) {
+    padding: 50px;
+    padding-top: 180px;
+    min-height: 1000px;
+  }
+
+  .help-with-title {
+    font-size: 35px;
+    font-weight: 300;
+    color: white;
+    margin-bottom: 40px;
+
+    @media (min-width: $br-mobile) {
+      margin-bottom: 100px;
+    }
+  }
+
+  .help-with-subtitle {
+    font-size: 25px;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 10px;
+
+    @media (min-width: $br-mobile) {
+      margin-top: 80px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .help-with-content {
+    margin-top: 10px;
+    color: white;
+    font-size: 19px;
+    max-width: 760px;
+    font-weight: 300;
+    line-height: 1.68;
+    text-align: center;
+
+    @media (min-width: $br-mobile) {
+      margin-top: 30px;
+    }
+  }
+
+  .help-with-slides {
     display: flex;
+    align-items: center;
+    justify-content: center;
 
     > label {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100px;
-      height: 100px;
-      border-radius: 50px;
+      width: 80px;
+      height: 80px;
+      border-radius: 75px;
       margin: 0 10px;
+      border: 2px solid transparent;
+      background-size: cover;
       cursor: pointer;
+      transform: scale(1);
+      transition: transform 0.3s ease;
 
-      > input {
-        width: 100%;
-        height: 100%;
-        z-index: -1;
+      @media (min-width: $br-mobile) {
+        width: 150px;
+        height: 150px;
+      }
+
+      &:hover {
+        transform: scale(1.03);
       }
     }
+
+    > input {
+      width: 0;
+      height: 0;
+      z-index: -1;
+    }
+
+    > input:checked + label {
+      border: 2px solid white;
+    }
+  }
+
+  .cache-image {
+    opacity: 0;
+    height: 0;
+    width: 0;
   }
 }
