@@ -9,6 +9,7 @@ define(
     'intersectionobserver',
     'scrollama',
     'views/shared/MouseScrollView',
+    'insights/views/carbon-cycle/StoreReservoirView',
     'insights/views/carbon-cycle/HelpWithView',
     'text!insights/templates/carbon-cycle/carbon-cycle.handlebars'
   ],
@@ -22,6 +23,7 @@ define(
     Intersectionobserver,
     Scrollama,
     MouseScrollView,
+    StoreReservoirView,
     HelpWithView,
     tpl
   ) {
@@ -80,6 +82,7 @@ define(
       },
 
       startModules: function() {
+        this.storeReservoir = new StoreReservoirView();
         this.helpWith = new HelpWithView();
       },
 
