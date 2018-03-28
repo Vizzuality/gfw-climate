@@ -23,12 +23,32 @@
       margin-bottom: 80px;
 
       > li {
+        position: relative;
         font-size: 21px;
         line-height: 1.38;
         letter-spacing: 0.1px;
         color: $font-color-3;
-        padding: 10px 0;
+        padding: 10px 30px 10px 0;
         border-bottom: 1px solid rgba($font-color-3, 0.2);
+        cursor: pointer;
+
+        &:after {
+          content: "";
+          position: absolute;
+          right: 0;
+          top: 19px;
+          padding: 4px;
+          transition: opacity 0.2s ease;
+          border: solid $color-1;
+          border-width: 0 2px 2px 0;
+          display: inline-block;
+          transform: rotate(-45deg);
+          opacity: 0;
+        }
+
+        &:hover:after {
+          opacity: 1;
+        }
       }
     }
 
@@ -43,6 +63,8 @@
 
 .carbon-forest {
   position: relative;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .carbon-forest-graphic {
@@ -51,7 +73,7 @@
   top: 0;
   left: 50%;
   bottom: auto;
-  right: 0;
+  right: 10%;
 
   &-animation {
     position: absolute;

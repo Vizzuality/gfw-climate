@@ -15,6 +15,9 @@ define(
       el: '#carbon-in-forest',
       template: Handlebars.compile(tpl),
       totalSteps: 0,
+      events: {
+        'click .js-forest-list': 'onListClick'
+      },
 
       initialize: function(settings) {
         this.settings = _.extend({}, this.defaults, settings);
@@ -29,6 +32,11 @@ define(
 
       cache: function() {
         this.graphicEl = this.$('.carbon-forest-graphic');
+      },
+
+      onListClick: function(e) {
+        var step = e.currentTarget.dataset.step;
+        console.info('Clicked on ', step);
       },
 
       handleStepEnter: function(e) {

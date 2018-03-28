@@ -46,6 +46,35 @@
     padding-left: 20px;
     padding-right: 20px;
   }
+
+  &.-with-subtitle {
+    display: flex;
+    flex-wrap: wrap;
+
+    > h2 {
+      padding: 20px 0;
+      flex-basis: 100%;
+
+      @media screen and (min-width: $br-mobile) {
+        flex-basis: 60%;
+      }
+    }
+  }
+
+  .insights-subtitle {
+    padding: 20px 0;
+    flex-basis: 100%;
+    color: $white;
+    font-size: 19px;
+    font-weight: 300;
+
+    @media screen and (min-width: $br-mobile) {
+      border-left: 1px solid $color-1;
+      flex-basis: 40%;
+      line-height: 1.5;
+      padding: 5px 0 0 40px;
+    }
+  }
 }
 
 .is-embed-page {
