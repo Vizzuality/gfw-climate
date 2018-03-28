@@ -9,6 +9,7 @@ define(
     'intersectionobserver',
     'scrollama',
     'views/shared/MouseScrollView',
+    'insights/views/carbon-cycle/CarbonInForestView',
     'insights/views/carbon-cycle/StoreReservoirView',
     'insights/views/carbon-cycle/HelpWithView',
     'text!insights/templates/carbon-cycle/carbon-cycle.handlebars'
@@ -23,6 +24,7 @@ define(
     Intersectionobserver,
     Scrollama,
     MouseScrollView,
+    CarbonInForestView,
     StoreReservoirView,
     HelpWithView,
     tpl
@@ -31,32 +33,6 @@ define(
 
     var EmisionCalculatorIndex = Backbone.View.extend({
       el: '#insights',
-      slides: [
-        {
-          id: 1,
-          title: 'Tropical Rainforest 1',
-          legend: '150 t/ha',
-          img: '/assets/insights/carbon-cycle/slider1@2x.jpg'
-        },
-        {
-          id: 2,
-          title: 'Tropical Rainforest 2',
-          legend: '120 t/ha',
-          img: '/assets/insights/carbon-cycle/slider2@2x.jpg'
-        },
-        {
-          id: 3,
-          title: 'Tropical Rainforest 3',
-          legend: '160 t/ha',
-          img: '/assets/insights/carbon-cycle/slider3@2x.jpg'
-        },
-        {
-          id: 4,
-          title: 'Tropical Rainforest 4',
-          legend: '200 t/ha',
-          img: '/assets/insights/carbon-cycle/slider4@2x.jpg'
-        }
-      ],
       currentStep: 0,
       totalSteps: 0,
 
@@ -77,11 +53,12 @@ define(
       },
 
       render: function() {
-        this.$el.html(this.template({ slides: this.slides }));
+        this.$el.html(this.template());
         this.totalSteps = this.$('.step').length - 1;
       },
 
       startModules: function() {
+        this.carbonForest = new CarbonInForestView();
         this.storeReservoir = new StoreReservoirView();
         this.helpWith = new HelpWithView();
       },
