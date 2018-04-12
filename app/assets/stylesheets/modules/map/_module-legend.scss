@@ -632,6 +632,19 @@
       background-image: -ms-linear-gradient(left, #895122 10%, #957f4f 35%, #9db38a 75%, #39a401 100%);
     }
 
+    .quartile-bar-forest-carbon-stocks {
+      clear: both;
+      height: 12px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #F6E88F;
+      background: -moz-linear-gradient(left,  #F6E88F 0%, #EDA078 27%, #E56464 52%, #A32424 77%, #5C0909 100%);
+      background: -webkit-linear-gradient(left,  #F6E88F 0%,#EDA078 27%,#E56464 52%,#A32424 77%,#5C0909 100%);
+      background: linear-gradient(to right,  #F6E88F 0%,#EDA078 27%,#E56464 52%,#A32424 77%,#5C0909 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F6E88F', endColorstr='#5C0909',GradientType=1 );
+    }
+    
     .quartile-bar-loss-biomass {
       clear: both;
       height: 12px;

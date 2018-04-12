@@ -1,0 +1,34 @@
+{{#if threshold}}
+  <div class="layer-details layer-details-biomass_loss" data-layer-group="biomass_loss">
+    <div class="total-carbon-bar">
+      <ul class="labels">
+        <li><em class="js-min-label">{{minvalue}}</em></li>
+        <li><em class="js-max-label">{{maxvalue}} </em> <span class="units js-unit">{{{unit}}}</span></li>
+      </ul>
+      <span class="range-bar">|</span>
+      <span class="range-bar">|</span>
+      <div class="quartile-bar-forest-carbon-stocks"></div>
+    </div>
+    <p class="canopy toggle-title">layer settings <span>►</span></p>
+    <div class="toggle-legend-option" data-layer-toggle="biomass">
+      <p class="canopy range">
+        Show values between
+        <span class="button-wrapper">
+          <span class="canopy-button range min">
+            <input type="number" class="js-min" step="1" value="{{minvalue}}"/>
+          </span>
+            to
+            <span class="canopy-button range max">
+              <input type="number" class="js-max" step="1" value="{{maxvalue}}"/>
+            </span>
+          </span>
+        </p>
+      <p class="canopy">
+        Show areas with tree cover
+        <span class="button-wrapper">
+          <span class="canopy-button"> > {{threshold}} %</span>
+        </span>
+      </p>
+    </div>
+  </div>
+{{/if}}
