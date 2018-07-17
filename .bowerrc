@@ -1,8 +1,9 @@
 {
   "directory": "vendor/assets/bower_components",
+  "registry": "https://registry.bower.io",
   "storage" : {
-  "packages" : ".bower-cache",
-  "registry" : ".bower-registry"
+    "packages" : ".bower-cache",
+    "registry" : ".bower-registry"
   },
   "tmp" : ".bower-tmp"
 }
