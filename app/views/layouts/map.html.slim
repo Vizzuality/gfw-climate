@@ -64,7 +64,7 @@ html
     = render 'shared/sources_map'
 
     = javascript_include_tag \
-      "https://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA&v=3.12",
+      "https://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=#{ENV['GOOGLE_MAPS_API_KEY']}&v=3.12",
       "http://libs.cartocdn.com/cartodb.js/v3/3.15.8/cartodb.js"
     script src="//www.google-analytics.com/cx/api.js"
 
