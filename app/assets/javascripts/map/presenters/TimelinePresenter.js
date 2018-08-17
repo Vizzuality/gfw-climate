@@ -101,7 +101,7 @@ define(
         var date;
         var currentTimeline = this.status.get('timeline');
         var baselayer = _.values(
-          _.omit(baselayers, ['forestgain', 'nothing'])
+          _.omit(baselayers, ['forestgain', 'nothing','total_sg', 'total_2028'])
         )[0];
 
         if (!baselayer) {

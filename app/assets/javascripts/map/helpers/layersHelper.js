@@ -102,6 +102,7 @@ define(
     'map/views/layers/WMSLayer',
     'map/views/layers/MangroveBiomassLayer',
     'map/views/layers/UptakeTotalSGCarbonGainLayer',
+    'map/views/layers/UptakeTotal2028Layer',
     'map/views/layers/UptakeCropsCarbonGainLayer',
     'map/views/layers/UptakeYSGCarbonGainLayer',
     'map/views/layers/UptakePasturesCarbonGainLayer',
@@ -214,6 +215,7 @@ define(
     WMSLayer,
     MangroveBiomassLayer,
     UptakeTotalSGCarbonGainLayer,
+    UptakeTotal2028Layer,
     UptakeCropsCarbonGainLayer,
     UptakeYSGCarbonGainLayer,
     UptakePasturesCarbonGainLayer,
@@ -532,6 +534,10 @@ define(
       },
       total_sg: {
         view: UptakeTotalSGCarbonGainLayer,
+        timelineView: GainTimeline
+      },
+      total_2028: {
+        view: UptakeTotal2028Layer,
         timelineView: GainTimeline
       },
       crops_1: {

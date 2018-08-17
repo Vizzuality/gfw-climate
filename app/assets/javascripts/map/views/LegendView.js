@@ -131,6 +131,7 @@ define(
           },
           // Carbon Gain
           total_sg: carbonGainConfig,
+          total_2028: carbonGainConfig,
           ysg_msg: carbonGainConfig,
           pastures: carbonGainConfig,
           crops_1: carbonGainConfig,
@@ -228,6 +229,7 @@ define(
         per_mining: Handlebars.compile(per_miningTpl),
         global_mangroves_biomass: Handlebars.compile(mangrove_biomassTpl),
         total_sg: Handlebars.compile(carbon_gainTpl),
+        total_2028: Handlebars.compile(carbon_gainTpl),
         ysg_msg: Handlebars.compile(carbon_gainTpl),
         pastures: Handlebars.compile(carbon_gainTpl),
         crops_1: Handlebars.compile(carbon_gainTpl)
