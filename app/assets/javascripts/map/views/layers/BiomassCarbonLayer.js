@@ -10,6 +10,7 @@ define(['abstract/layer/ImageMaptypeLayerClass'], function(
 
   var BiomassCarbonLayer = ImageMaptypeLayerClass.extend({
     options: {
+      dataMaxZoom: 12,
       urlTemplate:
         'https://storage.googleapis.com/gfw-climate-tiles/biomass/{z}/{x}/{y}.png'
     }
