@@ -41,7 +41,8 @@ define(
     'text!map/templates/legend/per_mining.handlebars',
     'text!map/templates/legend/raisg_mining.handlebars',
     'text!map/templates/legend/mangrove_biomass.handlebars',
-    'text!map/templates/legend/carbon_gain.handlebars'
+    'text!map/templates/legend/carbon_gain.handlebars',
+    'text!map/templates/legend/forest_carbon_stocks.handlebars'
   ],
   function(
     _,
@@ -80,7 +81,8 @@ define(
     per_miningTpl,
     raisg_miningTpl,
     mangrove_biomassTpl,
-    carbon_gainTpl
+    carbon_gainTpl,
+    forest_carbon_stocksTpl
   ) {
     'use strict';
 
@@ -153,6 +155,30 @@ define(
               },
               {
                 name: 'Mg C ha<sup>-1</sup>',
+                value: 'carbon'
+              }
+            ],
+            selectedUnit: 'carbon'
+          },
+
+          forest_carbon_stocks: {
+            ranges: {
+              biomass: {
+                min: 0,
+                max: 500
+              },
+              carbon: {
+                min: 0,
+                max: 2200
+              }
+            },
+            units: [
+              {
+                name: 'Mg biomass ha<sup>-1</sup>',
+                value: 'biomass'
+              },
+              {
+                name: 'Mg C0<sub>2</sub>e',
                 value: 'carbon'
               }
             ],
@@ -230,7 +256,8 @@ define(
         total_sg: Handlebars.compile(carbon_gainTpl),
         ysg_msg: Handlebars.compile(carbon_gainTpl),
         pastures: Handlebars.compile(carbon_gainTpl),
-        crops_1: Handlebars.compile(carbon_gainTpl)
+        crops_1: Handlebars.compile(carbon_gainTpl),
+        forest_carbon_stocks: Handlebars.compile(forest_carbon_stocksTpl)
       },
 
       initialize: function() {
