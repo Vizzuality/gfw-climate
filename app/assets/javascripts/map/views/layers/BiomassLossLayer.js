@@ -19,7 +19,7 @@ define(
         threshold: 30,
         dataMaxZoom: 12,
         urlTemplate:
-          'https://storage.googleapis.com/wri-public/biomass/v3/{threshold}/{z}/{x}/{y}.png',
+          'https://storage.googleapis.com/wri-public/biomass/2017/v1/{threshold}/{z}/{x}/{y}.png',
         uncertainty: 127,
         minrange: 0,
         maxrange: 255
