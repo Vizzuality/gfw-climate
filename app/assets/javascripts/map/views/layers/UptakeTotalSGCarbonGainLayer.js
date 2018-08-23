@@ -1,29 +1,20 @@
 /**
- * The ProtectedAreasCDB layer module.
+ *
+ *
  *
  * @return ProtectedAreasCDBLayer class (extends CartoDBLayerClass)
  */
-define(
-  [
-    'abstract/layer/CartoDBLayerClass',
-    'text!map/cartocss/uptake_pastures.cartocss'
-  ],
-  function(CartoDBLayerClass, uptake_pastures_coverCartoCSS) {
-    'use strict';
+define(['abstract/layer/ImageMaptypeLayerClass'], function(
+  ImageMaptypeLayerClass
+) {
+  'use strict';
 
-    var UptakeTotalSGCarbonGainLayer = CartoDBLayerClass.extend({
-      options: {
-        sql:
-          "SELECT *, '{tableName}' as tablename, '{tableName}' as layer FROM {tableName}",
-        cartocss: uptake_pastures_coverCartoCSS,
-        infowindow: false,
-        analysis: false,
-        interactivity: '',
-        raster: true,
-        raster_band: 1
-      }
-    });
+  var UptakeTotalSGCarbonGainLayer = ImageMaptypeLayerClass.extend({
+    options: {
+      urlTemplate:
+        'https://api.resourcewatch.org/v1/layer/c9e48a9f-2dca-4233-9400-0b5e4e07674f/tile/gee/{z}/{x}/{y}'
+    }
+  });
 
-    return UptakeTotalSGCarbonGainLayer;
-  }
-);
+  return UptakeTotalSGCarbonGainLayer;
+});
