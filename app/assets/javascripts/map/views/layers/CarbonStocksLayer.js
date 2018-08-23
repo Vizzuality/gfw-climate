@@ -18,7 +18,7 @@ define(
         threshold: 30,
         dataMaxZoom: 12,
         urlTemplate:
-          'http://storage.googleapis.com/earthenginepartners-wri/whrc-hansen-carbon-{threshold}-{z}{/x}{/y}.png',
+          'https://storage.googleapis.com/wri-public/biomass/2017/v1/{threshold}/{z}/{x}/{y}.png',
         uncertainty: 127,
         minrange: 0,
         maxrange: 255
