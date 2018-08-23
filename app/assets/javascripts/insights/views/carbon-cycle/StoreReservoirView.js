@@ -27,7 +27,7 @@ define(
         {
           id: 3,
           title: 'Temperate forest',
-          legend: '7 t C/ha',
+          legend: '67 t C/ha',
           sublegend:
             'Average of oceanic (90 t C/ha), continental (60 t C/ha) and mountain forest (50 t C/ha)',
           img: '/assets/insights/carbon-cycle/temperate-forest@2x.jpg'
