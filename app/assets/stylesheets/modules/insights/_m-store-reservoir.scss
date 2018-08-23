@@ -49,8 +49,13 @@
     transition: transform 0.3s ease;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 
-    @media (min-width: $br-mobile) {
+    @media (min-width: $br-mobile-portrait) {
       width: 25%;
+      min-height: 460px;
+    }
+
+    @media (min-width: $br-tablet) {
+      width: 16.6666%;
       min-height: 460px;
     }
 
@@ -63,6 +68,13 @@
     &-legend {
       font-size: 16px;
       color: $font-color-2;
+      font-weight: 300;
+    }
+
+    &-sublegend {
+      font-size: 12px;
+      color: $font-color-2;
+      margin-top: 8px;
       font-weight: 300;
     }
 
