@@ -46,7 +46,6 @@ define(
       template: Handlebars.compile(tpl),
 
       initialize: function(settings) {
-        console.log('initialized hook');
         this.settings = _.extend({}, this.defaults, settings);
         this.render();
         this.startModules();
@@ -167,7 +166,6 @@ define(
       },
 
       getData: function() {
-        console.log('requesting data');
         return $.getJSON(this.settings.jsonUrl);
       },
 
@@ -175,9 +173,7 @@ define(
         this.scroll = new MouseScrollView({
           el: '#mouse-scroll-wrapper'
         });
-        console.log('init method');
         this.getData().done(data => {
-          console.log('request resolved');
           this.initSvg(data);
           this.initScroller();
           this.setListeners();
