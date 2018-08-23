@@ -116,7 +116,7 @@ define([
           ranges: {
             tco: {
               min: 0,
-              max: 917
+              max: 900,
             }
           },
           units: [
@@ -144,7 +144,7 @@ define([
             },
             carbon: {
               min: 0,
-              max: 250
+              max: 280
             }
           },
           units: [
