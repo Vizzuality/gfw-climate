@@ -105,6 +105,7 @@
     border-bottom: solid 1px #bebcc2;
   }
 
+  .carbon-cycle,
   .download-teaser,
   .visualization-list {
     display: flex;
@@ -164,12 +165,17 @@
       font-weight: 300;
       color: #555;
       margin-bottom: 15px;
+      max-width: 450px;
     }
 
     .text {
       font-size: 14px;
       color: #555;
       line-height: 21px;
+    }
+
+    &.-large {
+      min-height: 410px;
     }
   }
 

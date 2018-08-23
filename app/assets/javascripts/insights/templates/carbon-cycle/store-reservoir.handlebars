@@ -1,14 +1,15 @@
-<div class="store-wrapper inner">
+<div class="store-wrapper">
   <h2 class="store-title">Store / Reservoir</h2>
   <h3 class="store-subtitle">On average, forests store up to 32 times more carbon in live biomass than alternative land uses of grasslands or croplands. </h3>
   <div class="store-carbon-slider">
     {{#each this.slides}}
-      <a href="#" class="store-carbon-slide" style="background-image: url('{{this.img}}')">
-        <div href="#">
+      <div href="#" class="store-carbon-slide" style="background-image: url('{{this.img}}')">
+        <div>
           <p class="store-carbon-slide-title">{{this.title}}</p>
           <p class="store-carbon-slide-legend">{{this.legend}}</p>
+          <p class="store-carbon-slide-sublegend">{{this.sublegend}}</p>
         </div>
-      </a>
+      </div>
     {{/each}}
   </div>
 </div>
