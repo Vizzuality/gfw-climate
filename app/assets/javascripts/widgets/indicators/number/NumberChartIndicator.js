@@ -85,7 +85,9 @@ define(
         var scientific = d3.format('.3s')(data.value);
         var displayName = data.id_1
           ? data.sub_nat_name
-          : data.boundary_name != 'administrative boundary' ? data.boundary_name : data.country_name;
+          : data.boundary_name != 'administrative boundary'
+            ? data.boundary_name
+            : data.country_name;
         return {
           location_name: displayName,
           valueString: data.value > 1000 ? scientific : shortened,
