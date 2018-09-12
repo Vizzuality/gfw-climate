@@ -45,9 +45,9 @@ class Download
 
   def results_to_csv results
     file_names = []
-    grouped = results.group_by{|t| t["indicator_name"]}
+    grouped = results.group_by{|t| t["indicator_id"]}
     grouped.each do |id, data|
-      csv_file = Tempfile.new([id, ".csv"])
+      csv_file = Tempfile.new([id.to_s, ".csv"])
       file_names << ["#{id}.csv", csv_file.path]
       CSV.open(csv_file, "wb") do |csv|
         csv << data.first.keys # adds the attributes name on the first line
@@ -70,18 +70,17 @@ class Download
 
   def select_query
     <<-SQL
-      SELECT values.indicator_id, values.cartodb_id AS cartodb_id,
-      values.iso, values.sub_nat_id, values.boundary, values.boundary_id,
-      values.thresh, values.admin0_name AS country, values.year,
-      values.value, subnat.name_1 AS province,
-      boundaries.boundary_name, indicators.indicator_short AS indicator_name,
-      indicators.value_units AS units
-      FROM #{CDB_INDICATORS_VALUES_TABLE} AS values
-      INNER JOIN indicators ON values.indicator_id = indicators.indicator_id
-      LEFT JOIN #{CDB_SUBNAT_TABLE} AS subnat
+      SELECT values.indicator_id, values.cartodb_id AS cartodb_id, values.iso, values.sub_nat_id,
+      values.boundary_code AS boundary, values.boundary_code AS boundary_id,
+      values.thresh, values.country,
+      values.year, CAST(values.value AS double precision) AS value, subnat.name_1 AS province,
+      boundaries.boundary_name, indicators.units AS units
+      FROM gfw_climate_country_pages_indicator_values_2017_data_20180828 AS values
+      INNER JOIN gfw_climate_country_pages_indicator_info_2017_data AS indicators ON values.indicator_id = indicators.indicator_id
+      LEFT JOIN gadm28_adm1 AS subnat
       ON values.sub_nat_id  = subnat.id_1 AND values.iso = subnat.iso
-      LEFT JOIN #{CDB_BOUNDARIES_TABLE} AS boundaries
-      ON values.boundary_id = boundaries.cartodb_id
+      LEFT JOIN gfw_climate_country_pages_boundary_info_2017_data AS boundaries
+      ON values.boundary_code = boundaries.boundary_code
     SQL
   end
 
@@ -95,7 +94,7 @@ class Download
       where += "AND thresh IN (#{@thresholds.join(",")})"
     end
 
-    where += "AND values.boundary_id = #{@area.blank? ? ADMIN_BOUNDARY_ID : area}"
+    where += "AND values.boundary_code = #{@area.blank? ? "'#{ADMIN_BOUNDARY_ID}' " : area}"
     where += "AND values.sub_nat_id #{@id_1.blank? ? 'IS NULL' : "= #{@id_1}"}"
 
     if @start_year && @end_year
