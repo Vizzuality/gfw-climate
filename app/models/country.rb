@@ -64,7 +64,7 @@ class Country
 
     def areas_of_interest_for iso
       sql = <<-SQL
-        SELECT DISTINCT b.boundary_code AS id, boundary_name AS name,
+        SELECT DISTINCT b.cartodb_id AS id, boundary_name AS name,
         b.boundary_code AS code
         FROM #{CDB_INDICATORS_VALUES_TABLE} i
         INNER JOIN #{CDB_BOUNDARIES_TABLE} b ON

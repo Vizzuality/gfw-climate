@@ -87,7 +87,7 @@ class Indicator
       <<-SQL
         AND values.iso = UPPER('#{iso}')
         AND values.sub_nat_id #{id_1.blank? ? 'IS NULL' : "= #{id_1}" }
-        AND values.boundary_code = #{area.blank? ? "'#{ADMIN_BOUNDARY_ID}'" : area}
+        #{area.blank? ? "AND values.boundary_code = '#{ADMIN_BOUNDARY_ID}'" : "AND boundaries.cartodb_id = #{area}"}
       SQL
     end
 
