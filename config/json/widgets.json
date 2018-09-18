@@ -383,6 +383,7 @@
           }
         ],
         "template" : "biomass-carbon-stocks",
+        "default_thresh": "30",
         "default": true,
         "note" : "biomass/carbon only available for 30% canopy density"
       },
@@ -463,7 +464,7 @@
         "direction": "belowground"
       },
       {
-        "id": 2020,
+        "id": 2012,
         "name": "Woods Hole/Baccini",
         "type": "total",
         "unit": "number",
@@ -707,10 +708,11 @@
             "unitname": "carbon"
           }
         ],
+        "default_thresh": "30",
         "threshunit": "biomass/carbon",
         "template" : "biomass-density",
         "default": true,
-        "note" : "biomass/carbon density only available for 30% canopy density"
+        "note": "biomass/carbon density only available for 30% canopy density"
       },
       {
         "position": 2,

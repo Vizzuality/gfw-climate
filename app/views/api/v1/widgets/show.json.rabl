@@ -25,6 +25,7 @@ def tabs
       rangetype:     tab['rangetype'],
       switch:        tab['switch'],
       thresh:        tab['thresh'],
+      default_thresh: tab['default_thresh'],
       threshunit:    tab['threshunit'],
       cumulative:    tab['cumulative'],
       sectionswitch: tab['sectionswitch'],
