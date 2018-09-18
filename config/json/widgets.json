@@ -384,7 +384,7 @@
         ],
         "template" : "biomass-carbon-stocks",
         "default": true,
-        "note" : "biomass/carbon density only available for 30% canopy density"
+        "note" : "biomass/carbon only available for 30% canopy density"
       },
       {
         "position": 2,
@@ -688,7 +688,7 @@
     "type_slug": "forest-and-carbon-data",
     "type": "Forest and Carbon Data",
     "type_chart": "pie",
-    "default_thresh": "25",
+    "default_thresh": "30",
     "default": true,
     "_text": "On average there are #{value} tons of #{section} per hectare in #{country}'s forests.",
     "tabs": [
@@ -707,10 +707,10 @@
             "unitname": "carbon"
           }
         ],
-        "thresh": 25,
         "threshunit": "biomass/carbon",
         "template" : "biomass-density",
-        "default": true
+        "default": true,
+        "note" : "biomass/carbon density only available for 30% canopy density"
       },
       {
         "position": 2,
