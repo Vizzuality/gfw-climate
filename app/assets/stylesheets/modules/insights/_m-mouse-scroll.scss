@@ -1,0 +1,72 @@
+#mouse-scroll-wrapper {
+  display: none;
+  visibility: hidden;
+
+  @media (min-width: $br-mobile) {
+    visibility: visible;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 100px;
+  }
+}
+
+.mouse-scroll {
+  height: 30px;
+  width: 18px;
+  border-radius: 15px;
+  border: 2px solid #5b80a0;
+
+  .wheel {
+    height: 5px;
+    width: 2px;
+    border-radius: 1px;
+    display: block;
+    margin: 5px auto;
+    background: #5b80a0;
+    animation: mouse-wheel 1.2s ease infinite;
+  }
+
+  .arrow {
+    display: block;
+    width: 6px;
+    height: 6px;
+    transform: rotate(45deg);
+    border-right: 2px solid #5b80a0;
+    border-bottom: 2px solid #5b80a0;
+    margin: 0 auto;
+    animation: mouse-scroll 1s infinite;
+    animation-direction: alternate;
+  }
+
+  .arrow1 {
+    margin-top: 25px;
+    animation-delay: 0.1s;
+  }
+
+  .arrow2 {
+    animation-delay: 0.3s;
+  }
+}
+
+@keyframes mouse-wheel {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes mouse-scroll {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

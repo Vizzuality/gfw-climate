@@ -7,7 +7,8 @@ define(
     'utils',
     'countries/services/PlaceService',
     'insights/views/glad-alerts/InsightsGladAlertsView',
-    'insights/views/emissions-calculator/EmissionCalculatorIndexView'
+    'insights/views/emissions-calculator/EmissionCalculatorIndexView',
+    'insights/views/carbon-cycle/CarbonCycleView'
   ],
   function(
     Backbone,
@@ -17,7 +18,8 @@ define(
     utils,
     PlaceService,
     InsightsGladAlertsView,
-    EmissionCalculatorIndexView
+    EmissionCalculatorIndexView,
+    CarbonCycleView
   ) {
     'use strict';
 
@@ -26,6 +28,7 @@ define(
 
       routes: {
         'insights/glad-alerts(/:iso)': '_initGladAlerts',
+        'insights/carbon-cycle': '_initCarbonCycle',
         'insights/emissions-calculator': '_initEmissionsCalculatorIndex',
         'insights/emissions-calculator/:id': '_initEmissionsCalculatorShow'
       },
@@ -116,14 +119,19 @@ define(
         this.iso = iso;
         this.insight = 'glad-alerts';
 
-        new InsightsGladAlertsView({
+        this.view = new InsightsGladAlertsView({
           country: this.iso
         });
       },
 
+      _initCarbonCycle: function() {
+        this.insight = 'carbon-cycle';
+        this.view = new CarbonCycleView();
+      },
+
       _initEmissionsCalculatorIndex: function() {
         this.insight = 'emissions-calculator';
-        new EmissionCalculatorIndexView();
+        this.view = new EmissionCalculatorIndexView();
       }
     });
 
