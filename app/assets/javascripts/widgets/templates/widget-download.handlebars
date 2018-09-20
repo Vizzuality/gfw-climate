@@ -28,7 +28,7 @@
         <div class="m-select -multi">
           <span class="label">Data</span>
           <div class="select-wrapper">
-            <select id="download-indicators" data-attribute="data" data-placeholder="Choose a indicator" class="chosen-select js-select" multiple style="width:100%;">
+            <select id="download-indicators" data-attribute="data" data-placeholder="Choose an indicator" class="chosen-select js-select" multiple style="width:100%;">
               {{#each data}}
                 <option value="{{this.value}}" {{#if selected}}selected{{/if}}>{{this.label}}</option>
               {{/each}}
@@ -38,7 +38,7 @@
         <div class="m-select -multi">
           <span class="label">Canopy density</span>
           <div class="select-wrapper">
-            <select id="download-thresh" data-attribute="thresh" data-placeholder="Choose a thresholder" class="chosen-select js-select" multiple style="width:100%;">
+            <select id="download-thresh" data-attribute="thresh" data-placeholder="Choose a threshold" class="chosen-select js-select" multiple style="width:100%;">
               {{#each treshold}}
                 <option value="{{this.value}}" {{#if selected}}selected{{/if}}>> {{this.label}}%</option>
               {{/each}}

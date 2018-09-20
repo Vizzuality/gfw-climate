@@ -143,13 +143,13 @@
         "switch" : [
           {
             "unit": "tg-c",
-            "unitname": "Tg C",
-            "unitfullname": "Teragrams of carbon"
+            "unitname": "Tg C over 40 years",
+            "unitfullname": "Teragrams of carbon over 40 years"
           },
           {
             "unit": "mt-co2",
-            "unitname": "Mt CO2",
-            "unitfullname": "Million tons of Carbon dioxide"
+            "unitname": "Mt CO2 per year",
+            "unitfullname": "Million tons of Carbon dioxide per year"
           }
         ]
       }
