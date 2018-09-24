@@ -94,7 +94,7 @@ define(
                 if (aux) {
                   displayName = aux.id_1
                     ? aux.sub_nat_name // eslint-disable-line
-                    : aux.boundary_id !== 1
+                    : aux.boundary_name !== 'administrative boundary'
                       ? aux.boundary_name
                       : aux.country_name;
                 }

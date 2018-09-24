@@ -84,7 +84,7 @@ define(
                 var aux = values[i.id][0];
                 var displayName = aux.id_1
                   ? aux.sub_nat_name
-                  : aux.boundary_id != 1 ? aux.boundary_name : aux.country_name;
+                  : aux.boundary_name != 'administrative boundary' ? aux.boundary_name : aux.country_name;
                 i.location_name = displayName;
                 i.data = values[i.id];
                 return i;

@@ -64,7 +64,7 @@ define(
           unit: t.switch ? t['switch'][0]['unit'] : null,
           start_date: t.range ? t['range'][0] : null,
           end_date: t.range ? t['range'][t['range'].length - 1] : null,
-          thresh: t.thresh ? this.thresh : 0,
+          thresh: t.thresh ? this.thresh : (t.default_thresh ? t.default_thresh : 0),
           section: t.sectionswitch ? t['sectionswitch'][0]['unit'] : null,
           template: t.template ? t['template'] : null,
           lock:

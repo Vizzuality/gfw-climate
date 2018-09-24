@@ -27,6 +27,9 @@
     </div>
   {{/if}}
   {{#if this.note}}
+    {{#if this.default_thresh}}
+      <input type="hidden" value="{{this.default_thresh}}" class="threshold" />
+    {{/if}}
     <div class="canopy-threshold">
       <span>{{this.note}}</span>
     </div>
