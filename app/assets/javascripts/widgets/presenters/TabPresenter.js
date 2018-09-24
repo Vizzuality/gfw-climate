@@ -25,7 +25,7 @@ define(['mps', 'backbone', 'countries/presenters/PresenterClass'], function(
       {
         'Threshold/change': function(thresh) {
           var tabs = _.clone(this.status.get('tabs'));
-          tabs.thresh = tabs.thresh ? thresh : 0;
+          tabs.thresh = tabs.thresh ? thresh : (tabs.default_thresh ? tabs.default_thresh : 0);
           this.status.set('tabs', tabs);
         }
       }

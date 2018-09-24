@@ -64,13 +64,14 @@ class Country
 
     def areas_of_interest_for iso
       sql = <<-SQL
-        SELECT DISTINCT boundary_id AS id, boundary_name AS name, boundary_code AS code
+        SELECT DISTINCT b.cartodb_id AS id, boundary_name AS name,
+        b.boundary_code AS code
         FROM #{CDB_INDICATORS_VALUES_TABLE} i
         INNER JOIN #{CDB_BOUNDARIES_TABLE} b ON
-        i.boundary_id = b.cartodb_id
-        WHERE UPPER(iso) = UPPER('#{iso}') AND
-        boundary <> 'admin'
-        ORDER BY boundary_id
+        i.boundary_code = b.boundary_code
+        WHERE UPPER(iso_and_sub_nat) = UPPER('#{iso}') AND
+        b.boundary_code <> 'admin'
+        ORDER BY b.boundary_code
       SQL
 
       get(base_countries_path+sql)['rows']
