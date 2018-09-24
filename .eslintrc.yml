@@ -4,7 +4,8 @@
   globals:
     define: true
     ga: true
-    $: true
+    SVGAnim: true
+    Stickyfill: true
   rules:
     one-var: 0
     comma-dangle: 0

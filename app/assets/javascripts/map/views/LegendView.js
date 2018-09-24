@@ -116,7 +116,7 @@ define([
           ranges: {
             tco: {
               min: 0,
-              max: 917
+              max: 900,
             }
           },
           units: [
@@ -144,7 +144,7 @@ define([
             },
             carbon: {
               min: 0,
-              max: 250
+              max: 560
             }
           },
           units: [
@@ -153,7 +153,7 @@ define([
               value: 'biomass'
             },
             {
-              name: 'Mg C ha<sup>-1</sup>',
+              name: 't ha<sup>-1</sup>',
               value: 'carbon'
             }
           ],
