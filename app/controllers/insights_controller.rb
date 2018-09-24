@@ -3,6 +3,7 @@ class InsightsController < ApplicationController
   layout 'insights'
 
   def index
+    @is_production = Rails.env.production?
   end
 
   def detail
