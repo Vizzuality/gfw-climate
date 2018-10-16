@@ -108,6 +108,21 @@
         "tab": 1
       },
       {
+        "id": 30110,
+        "name": "Gross carbon emissions in primary forest",
+        "type": "line",
+        "unit": "tg-c",
+        "tab": 1,
+        "default": true
+      },
+      {
+        "id": 30120,
+        "name": "Gross carbon emissions in primary forest",
+        "type": "line",
+        "unit": "mt-co2",
+        "tab": 1
+      },
+      {
         "id": 3031,
         "name": "National Data (IPCC Tier 2)",
         "type": "line",
