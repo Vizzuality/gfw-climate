@@ -7,15 +7,19 @@ class CountryReport
 
   FOREST_LOSS = 1110
   EMISSIONS = 3012
-  ABOVE_C_DENSITY = 78
-  BELOW_C_DENSITY = 2311
   ABOVE_C_STOCKS = 2110
   BELOW_C_STOCKS = 2111
+
+  # data for ABOVE_C_DENSITY, BELOW_C_DENSITY, TOTAL_C_DENSITY has year = 2000
+  # so the select query always requests this year
+  ABOVE_C_DENSITY = 2310
+  BELOW_C_DENSITY = 2311
+  TOTAL_C_DENSITY = 2312
 
   COUNTRY_AREA = 4110
 
   INDICATORS = [FOREST_LOSS, EMISSIONS, ABOVE_C_DENSITY, BELOW_C_DENSITY,
-                ABOVE_C_STOCKS, BELOW_C_STOCKS, COUNTRY_AREA]
+                TOTAL_C_DENSITY, ABOVE_C_STOCKS, BELOW_C_STOCKS, COUNTRY_AREA]
 
   BELOWGROUND_EMISSIONS_FACTOR = 1.26
   PRIMARY_FOREST_BOUNDARY = "primary_forest"
@@ -74,7 +78,7 @@ class CountryReport
 
   def initialize options
     @iso = options[:iso] || 'BRA'
-    @reference_start_year = options[:reference_start_year].try(:to_i) || 2001
+    @reference_start_year = options[:reference_start_year].try(:to_i) || 2000
     @reference_end_year = options[:reference_end_year].try(:to_i) || 2010
     @monitor_start_year = options[:monitor_start_year].try(:to_i) || 2011
     @monitor_end_year = options[:monitor_end_year].try(:to_i) || 2014
@@ -278,23 +282,31 @@ class CountryReport
       t["boundary_code"] == @use_boundary &&
         t["indicator_id"] == ABOVE_C_DENSITY &&
         t["sub_nat_id"] == nil &&
-        t["year"] = 0
+        t["year"] = 2000
     end.first
-    total += (val ? val["value"] : 0)
     above = val && val["value"] or nil
+
+    val = data.select do |t|
+      t["boundary_code"] == @use_boundary &&
+        t["indicator_id"] == TOTAL_C_DENSITY &&
+        t["sub_nat_id"] == nil &&
+        t["year"] = 2000
+    end.first
+
+    total = val && val["value"] or nil
 
     below = if @below
               val = data.select do |t|
                 t["boundary_code"] == @use_boundary &&
                   t["indicator_id"] == BELOW_C_DENSITY &&
                   t["sub_nat_id"] == nil &&
-                  t["year"] = 0
+                  t["year"] = 2000
               end.first
-              total += (val ? val["value"] : 0)
               val && val["value"] or nil
             else
               nil
             end
+
     response[:aboveground] = above
     response[:belowground] = below
     response[:total] = total
@@ -320,7 +332,7 @@ class CountryReport
         AND boundary IN (#{BOUNDARIES.map{|t| "'#{t}'"}.join(",")})
         AND ((values.year >= #{@reference_start_year}
         AND values.year <= #{@monitor_end_year})
-        OR values.year = 0)
+        OR values.year IN (0, 2000))
       GROUP BY indicator_id, boundary, boundary_id, thresh, year, boundary_name
     SQL
   end
@@ -348,7 +360,7 @@ class CountryReport
         AND values.boundary_code IN (#{BOUNDARIES.map{|t| "'#{t}'"}.join(",")})
         AND ((values.year >= #{@reference_start_year}
         AND values.year <= #{@monitor_end_year})
-        OR values.year = 0)
+        OR values.year IN (0,2000))
     SQL
   end
 
