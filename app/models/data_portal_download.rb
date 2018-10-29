@@ -101,7 +101,7 @@ class DataPortalDownload < Download
       where += "AND thresh IN (#{@thresholds.join(",")})"
     end
 
-    where += " AND values.boundary_id #{@area_ids.empty? ? "=#{ADMIN_BOUNDARY_ID}" : "IN (#{@area_ids.join(",")})"}"
+    where += " AND values.boundary_code #{@area_ids.empty? ? "='#{ADMIN_BOUNDARY_ID}'" : "IN (#{@area_ids.join(",")})"}"
     where += " AND values.sub_nat_id #{@jurisdiction_ids.empty? ? 'IS NULL' : "IN (#{@jurisdiction_ids.join(",")})"}"
 
     if @years.any?
