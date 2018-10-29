@@ -75,8 +75,8 @@ class Download
       values.thresh, values.country,
       values.year, CAST(values.value AS double precision) AS value, subnat.name_1 AS province,
       boundaries.boundary_name, indicators.units AS units
-      FROM gfw_climate_country_pages_indicator_values_2017_data_20180828 AS values
-      INNER JOIN gfw_climate_country_pages_indicator_info_2017_data AS indicators ON values.indicator_id = indicators.indicator_id
+      FROM #{CDB_INDICATORS_VALUES_TABLE} AS values
+      INNER JOIN #{CDB_INDICATORS_TABLE} AS indicators ON values.indicator_id = indicators.indicator_id
       LEFT JOIN gadm28_adm1 AS subnat
       ON values.sub_nat_id  = subnat.id_1 AND values.iso = subnat.iso
       LEFT JOIN gfw_climate_country_pages_boundary_info_2017_data AS boundaries
