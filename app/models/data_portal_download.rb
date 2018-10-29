@@ -1,6 +1,6 @@
 class DataPortalDownload < Download
   def initialize options
-    @country_codes = options[:country_codes].first.split(",") || []
+    @country_codes = options[:country_codes].present? ? options[:country_codes].first.split(",") : []
     @jurisdiction_ids = options[:jurisdiction_ids] || []
     @area_ids = options[:area_ids] || []
     @years = options[:years] || []
@@ -104,8 +104,6 @@ class DataPortalDownload < Download
     where += <<-SQL
       #{@area_ids.empty? ? "AND values.boundary_code  = '#{ADMIN_BOUNDARY_ID}'" : "AND boundaries.cartodb_id IN (#{@area_ids.join(",")})"}
     SQL
-
-    puts where
 
     where += " AND values.sub_nat_id #{@jurisdiction_ids.empty? ? 'IS NULL' : "IN (#{@jurisdiction_ids.join(",")})"}"
 
