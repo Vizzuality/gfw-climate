@@ -102,7 +102,6 @@ class CountryReport
     end
     url += ' ORDER BY year'
 
-    puts url.inspect
 
     results = {}
     results = CountryReport.get(url)["rows"]
@@ -319,21 +318,21 @@ class CountryReport
 
     <<-SQL
       SELECT indicator_id, -1000 AS cartodb_id,
-      '#{@iso}' AS iso, NULL AS sub_nat_id, values.boundary, values.boundary_id,
+      '#{@iso}' AS iso, NULL AS sub_nat_id, values.boundary_code,
       values.thresh, '#{continent[:name]}' AS country, values.year,
       SUM(values.value) AS value, NULL AS province,
       boundaries.boundary_name
       FROM #{CDB_INDICATORS_VALUES_TABLE} AS values
       LEFT JOIN #{CDB_BOUNDARIES_TABLE} AS boundaries
-      ON values.boundary_id = boundaries.cartodb_id
+      ON values.boundary_code = boundaries.boundary_code
       WHERE values.iso IN (#{countries.map{|t| "'#{t}'"}.join(",")})
         AND indicator_id IN (#{INDICATORS.join(",")})
         AND thresh IN (#{@thresh}, 0)
-        AND boundary IN (#{BOUNDARIES.map{|t| "'#{t}'"}.join(",")})
+        AND values.boundary_code IN (#{BOUNDARIES.map{|t| "'#{t}'"}.join(",")})
         AND ((values.year >= #{@reference_start_year}
         AND values.year <= #{@monitor_end_year})
         OR values.year IN (0, 2000))
-      GROUP BY indicator_id, boundary, boundary_id, thresh, year, boundary_name
+      GROUP BY indicator_id, values.boundary_code, thresh, year, boundary_name
     SQL
   end
 
