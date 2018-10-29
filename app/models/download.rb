@@ -70,7 +70,8 @@ class Download
 
   def select_query
     <<-SQL
-      SELECT values.indicator_id, values.cartodb_id AS cartodb_id, values.iso, values.sub_nat_id,
+      SELECT indicators.indicator_name, values.indicator_id,
+      values.iso, values.sub_nat_id,
       values.boundary_code AS boundary, values.boundary_code AS boundary_id,
       values.thresh, values.country,
       values.year, CAST(values.value AS double precision) AS value, subnat.name_1 AS province,
@@ -79,7 +80,7 @@ class Download
       INNER JOIN #{CDB_INDICATORS_TABLE} AS indicators ON values.indicator_id = indicators.indicator_id
       LEFT JOIN gadm28_adm1 AS subnat
       ON values.sub_nat_id  = subnat.id_1 AND values.iso = subnat.iso
-      LEFT JOIN gfw_climate_country_pages_boundary_info_2017_data AS boundaries
+      LEFT JOIN #{CDB_BOUNDARIES_TABLE} AS boundaries
       ON values.boundary_code = boundaries.boundary_code
     SQL
   end
