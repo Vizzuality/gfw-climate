@@ -125,8 +125,8 @@ define(
       },
 
       _start: function() {
-        var referenceAvg = NumbersHelper.round(this.referenceData.average, 6);
-        var monitoringAvg = NumbersHelper.round(this.monitoringData.average, 6);
+        var referenceAvg = NumbersHelper.round(this.referenceData.average, 3);
+        var monitoringAvg = NumbersHelper.round(this.monitoringData.average, 3);
         var increase = Math.round(
           (monitoringAvg - referenceAvg) / referenceAvg * 100
         );
