@@ -3,7 +3,7 @@ class InsightsController < ApplicationController
   layout 'insights'
 
   def index
-    @is_production = Rails.env.production?
+    @carbon_cycle_insight = ENV['FEATURE_CARBON_CYCLE_INSIGHT'].present?
   end
 
   def detail
