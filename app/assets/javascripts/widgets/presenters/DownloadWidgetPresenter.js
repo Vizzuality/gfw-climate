@@ -14,6 +14,8 @@ define(
         title: 'Download data',
         subtitle: '',
         iso: '',
+        area: '',
+        id_1: '',
         indicators: [],
         data: '',
         thresh: 30,
@@ -44,7 +46,9 @@ define(
           iso: model.iso,
           start_date: model.start_date,
           end_date: model.end_date,
-          thresh: model.thresh
+          thresh: model.thresh,
+          area: model.area,
+          id_1: model.id_1
         };
 
         data['indicator_ids[]'] = model.indicators.join(',') || '';
@@ -143,6 +147,8 @@ define(
             this.widget = widget;
             var data = status;
             data.iso = widget.slugw;
+            data.id_1 = widget.location.jurisdiction !== 0 ? widget.location.jurisdiction : null;
+            data.area = widget.location.area !== 0 ? widget.location.area : null;
             this.updateStatus(data);
             this.view.render(this.parseData(this.widget));
             this.view.show();

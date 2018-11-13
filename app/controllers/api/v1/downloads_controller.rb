@@ -9,8 +9,9 @@ module Api::V1
     private
 
     def download_params
-      params.permit(:iso, :id_1, :area, :start_year, :end_year,
-                    units: [], indicator_ids: [], thresholds: [])
+      params.permit(:iso, :id_1, :area,
+                    :start_date, :end_date, thresh: [],
+                    units: [], indicator_ids: [])
     end
   end
 end

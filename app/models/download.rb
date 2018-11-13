@@ -12,14 +12,14 @@ class Download
   end
 
   def initialize options
-    @iso = options[:iso]
+    @iso = options[:iso] && options[:iso][0,3]
     @id_1 = options[:id_1]
     @area = options[:area]
-    @start_year = options[:start_year]
-    @end_year = options[:end_year]
+    @start_year = options[:start_date]
+    @end_year = options[:end_date]
     @units = options[:units]
     @indicator_ids = options[:indicator_ids]
-    @thresholds = options[:thresholds]
+    @thresholds = options[:thresh]
   end
 
   def as_zip
