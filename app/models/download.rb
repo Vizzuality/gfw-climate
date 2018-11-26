@@ -95,7 +95,11 @@ class Download
       where += "AND thresh IN (#{@thresholds.join(",")})"
     end
 
-    where += "AND values.boundary_code = #{@area.blank? ? "'#{ADMIN_BOUNDARY_ID}' " : area}"
+    if @area.blank?
+      where += "AND values.boundary_code = '#{ADMIN_BOUNDARY_ID}'"
+    else
+      where += "AND boundaries.cartodb_id = #{@area}"
+    end
     where += "AND values.sub_nat_id #{@id_1.blank? ? 'IS NULL' : "= #{@id_1}"}"
 
     if @start_year && @end_year
