@@ -12,14 +12,14 @@ class Download
   end
 
   def initialize options
-    @iso = options[:iso]
+    @iso = options[:iso] && options[:iso][0,3]
     @id_1 = options[:id_1]
     @area = options[:area]
-    @start_year = options[:start_year]
-    @end_year = options[:end_year]
+    @start_year = options[:start_date]
+    @end_year = options[:end_date]
     @units = options[:units]
     @indicator_ids = options[:indicator_ids]
-    @thresholds = options[:thresholds]
+    @thresholds = options[:thresh]
   end
 
   def as_zip
@@ -95,7 +95,11 @@ class Download
       where += "AND thresh IN (#{@thresholds.join(",")})"
     end
 
-    where += "AND values.boundary_code = #{@area.blank? ? "'#{ADMIN_BOUNDARY_ID}' " : area}"
+    if @area.blank?
+      where += "AND values.boundary_code = '#{ADMIN_BOUNDARY_ID}'"
+    else
+      where += "AND boundaries.cartodb_id = #{@area}"
+    end
     where += "AND values.sub_nat_id #{@id_1.blank? ? 'IS NULL' : "= #{@id_1}"}"
 
     if @start_year && @end_year
