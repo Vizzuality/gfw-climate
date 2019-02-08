@@ -14,27 +14,25 @@ define(
       slides: [
         {
           id: 1,
-          title: 'Spend responsibly',
-          content:
-            'Divest from fossil fuels. Track your climate goals with Oroeco. Offset travel. Consume less. Spread the word.',
+          title: 'Restore carbon in trees and soil',
+          content: 'Lorem ipsum - waiting for text.',
           img: '/assets/insights/carbon-cycle/last-block-img1@2x.jpg',
           bg: '/assets/insights/carbon-cycle/last-block-bg1@2x.jpg',
           isCurrent: true
         },
         {
           id: 2,
-          title: 'Use your fork to vote for climate action',
+          title: 'Eat less meat',
           content:
-            'Eat less meat, particularly beef. Waste less food. Buy products with certified labels e.g. RSPO. Forest500 company list. Demand transparency.',
+            'What you put on your plate matters a lot more than where it came from. Meat and dairy production requires more land than plant-based proteins like beans and lentils. In particular, reducing your beef consumption is essential to achieving climate goals. This is because beef requires more land and generates more emissions per unit of protein than any other commonly consumed food.; cutting it in half can halve your dietary carbon footprint and reduce consumer demand for the products that cause deforestation.',
           img: '/assets/insights/carbon-cycle/last-block-img3@2x.jpg',
           bg: '/assets/insights/carbon-cycle/last-block-bg3@2x.jpg'
         },
         {
           id: 3,
-          title:
-            'Support local and international campaigns to restore forest landscapes',
+          title: 'Reduce food waste',
           content:
-            'Choose a country. (Trillion Trees campaign, TNC, arbor day foundation, Sarah Mann’s person, Plant Your Future, Australia, China, Brazilian NGOs? Where else?',
+            'By simply reducing your food waste – and only buying what you’ll actually eat - you can eliminate about xxxx tons of CO2 emissions every year. Each time you make a conscious decision to reduce your food waste, all the energy involved to grow, transport and refrigerate that wasted food can be saved from going into the atmosphere. This means less agricultural pressure on land, leaving more room for forests.',
           img: '/assets/insights/carbon-cycle/last-block-img2@2x.jpg',
           bg: '/assets/insights/carbon-cycle/last-block-bg2@2x.jpg'
         }
